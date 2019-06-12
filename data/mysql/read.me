@@ -1,0 +1,1 @@
+this folder shall contain the mysql schema and data backups
