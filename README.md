@@ -13,13 +13,20 @@ Clone this repository on your local computer and switch to branch `7.2.x`. Run t
 
 ```shell
 git clone https://github.com/BIIPBYTETECH/tms-docker.git
-cd docker-compose-lamp/
+cd tms-docker
 git fetch --all
-git checkout 7.2.x
+git checkout origin/master
 docker-compose up -d
 ```
 
-Your LAMP stack is now ready!! You can access it via `http://localhost`.
+Your LAMP stack is now ready!! . So, you can access it via `http://yourhostip`.
+
+## Windows
+To find out your hostip run following command in your shell prompt 
+
+    #docker-machine ip
+## On AWS 
+On aws ec2 instance your elseticip this the hostip 
 
 ## Configuration
 
