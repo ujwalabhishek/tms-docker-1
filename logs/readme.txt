@@ -1,0 +1,1 @@
+Local syncd directory for log files
