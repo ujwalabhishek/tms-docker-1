@@ -1,4 +1,4 @@
-# tms-docker is a LAMP stack built with Docker Compose
+# tms-docker is a LAMP stack built with Docker Compose and TMS code 
 
 This is a basic LAMP stack environment for TMS built using Docker Compose. It consists following:
 
