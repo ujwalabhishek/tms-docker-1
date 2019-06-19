@@ -75,12 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	//'database' => 't01_t02_db',
-        'database' => database_connection_check_url(),
-        //'database' => 'tms_live',
+	'hostname' => 'mysql',
+	'username' => 'biipmico_tms',
+	'password' => 'ksj784382*879#',
+    'database' => 'biipmico_tms',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
