@@ -567,7 +567,7 @@ public function get_training_details_new($user_id = NULL, $limit = NULL, $offset
             $this->db->join('enrol_pymnt_due epd','epd.pymnt_due_id = ei.pymnt_due_id and epd.user_id = enrol.user_id'); //added by shubhranshu on 23/11/2018
             $this->db->join('company_master com_mst', 'enrol.company_id = com_mst.company_id', "left");
             $this->db->where_in('enrol.enrol_status', array('ENRLBKD', 'ENRLACT'));
-            $this->db->group_by('ei.invoice_id');
+            //$this->db->group_by('ei.invoice_id'); //commented by shubhranshu for page load issue on 22/07/2019..
            if ($sort_by) {
                 $this->db->order_by($sort_by, $sort_order);
             } else {
