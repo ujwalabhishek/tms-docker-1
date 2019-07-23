@@ -2532,7 +2532,7 @@ class Class_Trainee_Model extends CI_Model {
     public function get_company_based_pay_invoice($tenant_id, $invoice, $company, $is_paid, $all_paid = 0, $paid = 0) {
 
         $this->db->select('crse.crse_name');
-
+        $this->db->select('count(*) as totalrows');
         $this->db->select('class.class_name');
 
         $this->db->select('inv.invoice_id');

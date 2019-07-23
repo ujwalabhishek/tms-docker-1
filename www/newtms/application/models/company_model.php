@@ -956,8 +956,19 @@ class Company_Model extends CI_Model {
         $this->db->join('tms_users_pers tup', "tup.user_id=tu.user_id");
         $this->db->where('tcu.tenant_id', $tenant_id);
         $this->db->where('tcu.company_id', $company_id);
-       $query = $this->db->return_query();
+       //$query = $this->db->return_query(); // commented by shubhranshu for page loading issue for view company
+        $query = $this->db->get_compiled_select();// added by shubhranshu for page loading issue for view company
         $rs = $this->db->query($query)->result();
+        
+        //--------------------added by shubhranshu on 22/07/19 to fix the generate query issue------------------------------
+        $this->db->select('count(*) as totalrows');
+        $this->db->from('tenant_company_users tcu');
+        $this->db->join('tms_users tu', "tu.user_id=tcu.user_id AND tu.account_type='TRAINE'");
+        $this->db->join('tms_users_pers tup', "tup.user_id=tu.user_id");
+        $this->db->where('tcu.tenant_id', $tenant_id);
+        $this->db->where('tcu.company_id', $company_id);
+        //----------------------added by shubhranshu on 22/07/19----------------------------
+        
         $search_by = $this->input->get('search_by');
         $search_company_trainee_name = trim($this->input->get('search_company_trainee_name'));
         $search_company_trainee_name_arr = explode(' (', $search_company_trainee_name);
@@ -978,6 +989,7 @@ class Company_Model extends CI_Model {
                 $this->db->like('tu.tax_code', $search_company_trainee_taxcode_arr[0]);
             }
         }
+        //$result = $this->db->get_compiled_select();echo $result;exit;
          $result = $this->db->get()->result();
        return array('totalrows' => $result[0]->totalrows, 'totalrows_no_search' => $rs[0]->totalrows);
     }
