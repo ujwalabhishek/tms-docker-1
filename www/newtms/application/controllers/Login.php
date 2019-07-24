@@ -7,11 +7,20 @@ class Login extends CI_Controller {
         $this->load->model('Login_Model', 'login');
         $this->load->model('acl_model', 'acl');
         $this->load->library('bcrypt');
+        $this->load->model('Manage_Tenant_Model', 'manage_tenant');
     }
     /**
      * default load
      */
     public function index() {
+        ////////////added by shubhranshu to show the landing page for all tenants////////////
+        $host=$_SERVER['HTTP_HOST'];
+        if($host == 'biipbyte.co'){
+            $data['page_title'] = 'BIIPMI Training Management Portal';
+            $data['tenants'] = $this->manage_tenant->list_all_tenants_for_landing_page();
+            $this->load->view('landing_page', $data);
+            exit;
+        }///////////////////////////////////////////
         $user_role = $this->session->userdata('userDetails')->role_id ?? '';
         if ($user_role == 'SADMN') {
             redirect('manage_tenant/');

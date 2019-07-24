@@ -74,7 +74,7 @@
 
                                                     </tr>
                                                     <?php 
-                                                    if(!$message){                                                        
+                                                    if(!isset($message)){                                                        
                                                     ?>
                                                     <tr>
                                                         <td colspan="2">                                                            
