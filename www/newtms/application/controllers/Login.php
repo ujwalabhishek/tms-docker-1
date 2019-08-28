@@ -13,18 +13,20 @@ class Login extends CI_Controller {
      * default load
      */
     public function index() {
-        ////////////added by shubhranshu to show the landing page for all tenants////////////
-        $host=$_SERVER['HTTP_HOST'];
-        if($host == 'biipbyte.co'){
-            $data['page_title'] = 'BIIPMI Training Management Portal';
-            $data['tenants'] = $this->manage_tenant->list_all_tenants_for_landing_page();
-            $this->load->view('landing_page', $data);
-            exit;
-        }///////////////////////////////////////////
+        
         $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        //echo $user_role;exit;
         if ($user_role == 'SADMN') {
             redirect('manage_tenant/');
         }
+
+        redirect('course_public/'); ///// added by shubhranshu
+
+        
+        
+    }
+    
+    public function administrator(){
         if (isset($this->session->userdata('userDetails')->user_id)) {
             $this->load->model('Dashboard_Model', 'dashboard');
             $data['page_title'] = 'Admin Home Page';
@@ -37,10 +39,10 @@ class Login extends CI_Controller {
 
             $data['role_id'] = 'ADMN';
             $this->load->view('layout', $data);
-        } else {
-            $data['page_title'] = 'Login page';
-            $this->load->view('layout_1', $data);
-        }
+            } else {
+                $data['page_title'] = 'Login page';
+                $this->load->view('layout_1', $data);
+            }
     }
 
     /* load tms dashboard */
@@ -110,7 +112,7 @@ class Login extends CI_Controller {
                 $this->session->sess_destroy();
                 redirect('login/');
             } else {
-                redirect('/');
+                redirect('login');
             }
         }
     }
