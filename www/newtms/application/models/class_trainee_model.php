@@ -2532,7 +2532,7 @@ class Class_Trainee_Model extends CI_Model {
     public function get_company_based_pay_invoice($tenant_id, $invoice, $company, $is_paid, $all_paid = 0, $paid = 0) {
 
         $this->db->select('crse.crse_name');
-
+        $this->db->select('count(*) as totalrows');
         $this->db->select('class.class_name');
 
         $this->db->select('inv.invoice_id');
@@ -9362,7 +9362,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * @return type
 
      */
-    public function get_course_class_list($type = 'data', $tenant_id, $limit, $offset, $sort_by, $sort_order) 
+    public function get_course_class_list($type = 'data', $tenant_id=0, $limit=0, $offset=0, $sort_by=0, $sort_order=0) 
     {
        $this->db->select("cls.course_id, cls.class_id,cls.lock_status, crse.crse_name,cls.class_name, cls.class_start_datetime, cls.class_end_datetime, "
                 . "cls.total_seats,cls.total_classroom_duration, cls.total_lab_duration, cls.assmnt_duration,"

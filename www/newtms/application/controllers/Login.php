@@ -7,15 +7,26 @@ class Login extends CI_Controller {
         $this->load->model('Login_Model', 'login');
         $this->load->model('acl_model', 'acl');
         $this->load->library('bcrypt');
+        $this->load->model('Manage_Tenant_Model', 'manage_tenant');
     }
     /**
      * default load
      */
     public function index() {
+        
         $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        //echo $user_role;exit;
         if ($user_role == 'SADMN') {
             redirect('manage_tenant/');
         }
+
+        redirect('course_public/'); ///// added by shubhranshu
+
+        
+        
+    }
+    
+    public function administrator(){
         if (isset($this->session->userdata('userDetails')->user_id)) {
             $this->load->model('Dashboard_Model', 'dashboard');
             $data['page_title'] = 'Admin Home Page';
@@ -28,10 +39,10 @@ class Login extends CI_Controller {
 
             $data['role_id'] = 'ADMN';
             $this->load->view('layout', $data);
-        } else {
-            $data['page_title'] = 'Login page';
-            $this->load->view('layout_1', $data);
-        }
+            } else {
+                $data['page_title'] = 'Login page';
+                $this->load->view('layout_1', $data);
+            }
     }
 
     /* load tms dashboard */
@@ -101,7 +112,7 @@ class Login extends CI_Controller {
                 $this->session->sess_destroy();
                 redirect('login/');
             } else {
-                redirect('/');
+                redirect('login');
             }
         }
     }

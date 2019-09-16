@@ -5,6 +5,14 @@
  */
 
 class Manage_Tenant_Model extends CI_Model {
+    
+    
+    ///// added by shubhranshu to show all tenants on the landing page///////////////
+    public function list_all_tenants_for_landing_page() {
+        $this->db->select('*');
+        $this->db->from('tenant_master');
+        return $this->db->get()->result_array();
+    }
 
    /**
     * This function to get all the tenants
@@ -15,6 +23,7 @@ class Manage_Tenant_Model extends CI_Model {
     * @param type $sort_order
     * @return type
     */
+    
     public function list_all_tenants($tenant_id = 0, $limit = NULL, $offset = NULL, $sort_by = 'account_created_on', $sort_order = 'DESC') {
         $this->db->select('tenant_name, tenant_address, tenant_city, tenant_state, tenant_country,
                 tenant_email_id, tenant_contact_num, account_status, tenant_id');

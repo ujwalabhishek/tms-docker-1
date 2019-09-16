@@ -6,6 +6,8 @@ if (!defined('BASEPATH'))
  * This is the helper class for all common functions used in the applications. 
  */
 
+    
+
 function generateEncryptedPwd() {
     $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
     $pass = array(); //remember to declare $pass as an array

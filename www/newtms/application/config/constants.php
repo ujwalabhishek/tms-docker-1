@@ -11,6 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | of this setting
 |
 */
+
 defined('SHOW_DEBUG_BACKTRACE') OR define('SHOW_DEBUG_BACKTRACE', TRUE);
 
 /*
@@ -131,9 +132,10 @@ define('SERVER_DATE_TIME_FORMAT',						'Y-m-d H:i:s');
 
 //define('APP_ADMN_LOGIN_LINK', "https://tms.xxxx.com/tmsadmin"); 
 define('ENROL_PYMNT_DUE', "enrol_pymnt_due"); 
-define('TENANT_ID', "tenant_id"); 
+define('TENANT_ID', "T02"); 
 define('METADATA', "metadata_id"); 
 define('RESETPWD', "1234"); 
+define('RECORDS_IN_MAIN_PAGE',10);
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
