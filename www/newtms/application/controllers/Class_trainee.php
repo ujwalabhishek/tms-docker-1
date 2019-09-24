@@ -14,7 +14,7 @@ class Class_Trainee extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('class_trainee_model', 'classtraineemodel');
-        $this->load->model('manage_tenant_todel', 'manage_tenant');
+        $this->load->model('manage_tenant_model', 'manage_tenant');
         $this->load->model('course_model', 'course');
         $this->load->model('class_model', 'class');
         $this->load->model('company_model', 'company');
