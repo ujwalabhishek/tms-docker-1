@@ -107,12 +107,12 @@ class Login extends CI_Controller {
             redirect('login/');
         } else {
             $user = $this->assign_my_role($user);
-            $this->session->set_userdata('userDetails', $user);print_r($user);exit;
+            $this->session->set_userdata('userDetails', $user);
             if (empty($user->role_id)) {
                 $this->session->sess_destroy();
                 redirect('login/');
-            } else {
-                redirect('login');
+            } else {echo "s";
+                redirect('login/');
             }
         }
     }
