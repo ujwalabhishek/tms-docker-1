@@ -12,7 +12,7 @@ class Course_public extends CI_Controller {
     public function __construct() {
 
         parent::__construct();
-         echo "ass";exit;
+         //echo "ass";exit;
         $this->load->model('course_public_model','course_model');
 
         $this->load->helper('metavalues_helper', 'common');
