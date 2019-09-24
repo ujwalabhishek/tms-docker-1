@@ -29,7 +29,7 @@
     width: 75%;
     float: left;
     margin: 0px auto;
-    padding-top: 9px;
+    padding-top: 35px;
     }
     .table{
         margin:0px auto;
@@ -52,7 +52,7 @@
                         </a>
                     </h3>
                     <div class="training1">
-                        <img src="<?php echo base_url()?>assets/images/TMS1.png">
+                        <img src="<?php echo base_url()?>assets/images/tms1.png">
                     </div>       
 <!--                    <div class="right_date">
                     </div>-->
