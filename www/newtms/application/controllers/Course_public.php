@@ -18,7 +18,7 @@ class course_public extends CI_Controller {
         $this->load->helper('metavalues_helper', 'common');
 
         $this->load->model('meta_values');
-        $this->load->model('Manage_Tenant_Model', 'manage_tenant');
+        $this->load->model('manage_tenant_model', 'manage_tenant');
         $host=$_SERVER['HTTP_HOST'];
         if($host != 'xprienz.net'){
             $tenent_details = $this->course_model->get_tenant_details();

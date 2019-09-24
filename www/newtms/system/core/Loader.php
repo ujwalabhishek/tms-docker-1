@@ -325,7 +325,6 @@ class CI_Loader {
 		}
 
 		$model = ucfirst($model);
-                //$model = strtolower($model); // added by shubhranshu to fix the loading issue
 		if ( ! class_exists($model, FALSE))
 		{
 			foreach ($this->_ci_model_paths as $mod_path)
