@@ -563,7 +563,7 @@ if ( ! function_exists('redirect'))
 				header('Refresh:0;url='.$uri);
 				break;
 			default:
-                                echo "s7";
+                                echo "s7".$code;
 				header('Location: '.$uri, TRUE, $code);
 				break;
 		}
