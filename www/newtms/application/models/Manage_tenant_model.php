@@ -108,7 +108,7 @@ class Manage_Tenant_Model extends CI_Model {
             'account_status' => 'ACTIVE',
             'Logo' => $this->input->post('logo'),
             'CopyRightText' => $this->input->post('copyright'),
-            'ApplicationName' => 'TMS1.png',
+            'ApplicationName' => 'tms1.png',
             'Currency' => $this->input->post('currency'),
             'Country' => $this->input->post('country_use'),
             'paypal_email_id' => $this->input->post('paypal_email'),
