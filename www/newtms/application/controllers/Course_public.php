@@ -7,7 +7,7 @@ if (!defined('BASEPATH'))
  * This is the controller class for course listing based  on different  parameters. 
  */
 
-class Course_public extends CI_Controller {
+class course_public extends CI_Controller {
 
     public function __construct() {
 
