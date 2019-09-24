@@ -8,7 +8,7 @@ if (!defined('BASEPATH'))
 class Internal_user extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $this->load->model('meta_values');
         $this->load->model('common_model', 'commonmodel');
         $this->load->helper('common');
