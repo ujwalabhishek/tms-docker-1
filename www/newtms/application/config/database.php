@@ -74,7 +74,7 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $dynamic_db_data = fetch_dynamic_db_details();
-//print_r($dynamic_db_data);exit;
+print_r($dynamic_db_data);exit;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => '172.18.0.2',
