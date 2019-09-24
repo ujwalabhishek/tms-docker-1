@@ -785,7 +785,7 @@ else
                     <?php } ?>
                     <div class="add_button space_style">
                         <?php 
-                        echo $this->session->flashdata('success');
+                        //echo $this->session->flashdata('success');
                         $current_date_time = strtotime(date("Y-m-d H:i:s"));
                         $class_start_date_time = strtotime($class_start_datetime);
                         if (!$is_report_page) 
@@ -795,7 +795,7 @@ else
                             {
                                 if($lock_status==0)
                                 {
-                                    echo $this->session->flashdata('success');
+                                    //echo $this->session->flashdata('success');
                                     if(strtotime($class_start_date) <= strtotime(date('Y-m-d'))) {
                                     ?>
                                     <button id="lock_attendance" class="label label-primary black-btn mar-bot" style="display:;">

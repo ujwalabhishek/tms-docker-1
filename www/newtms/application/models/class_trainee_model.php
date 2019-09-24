@@ -417,7 +417,7 @@ class Class_Trainee_Model extends CI_Model {
      * @param $sort_order
 
      */
-   public function get_class_trainee_list_for_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $sort_by, $sort_order, $attendance_status) {
+   public function get_class_trainee_list_for_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $sort_by, $sort_order, $attendance_status='') {
 
 //       $this->output->enable_profiler(TRUE);
         $date_from = $from_date->format('Y-m-d');
@@ -6739,7 +6739,8 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 //        $query2 = $this->list_all_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit, $offset, $sort_by, $sort_order, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
 $query2 = $this->list_all_online_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit, $offset, $sort_by, $sort_order, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
         //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
-        $this->db->select('c.course_id , c.crse_name, 
+        
+$this->db->select('c.course_id , c.crse_name, 
  cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
  ce . pymnt_due_id, ce.enrolment_mode, ce.enrolment_type, ce.company_id,ce.friend_id,ce.referral_details, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
@@ -6839,7 +6840,8 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 //        $query = $this->db->get();   
 //        echo $query1 = $this->db->last_query(); 
 //        exit();
-        $query1 = $this->db->return_query_clear();
+       
+        $query1 = $this->db->get_compiled_select();//changed by shubhranshu since the previous funtion is deprecated
         $query1 = str_replace('`', " ", $query1);
 
 
@@ -6864,6 +6866,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         }
 
         $query3 = $this->db->query("(" . $query1 . ") UNION (" . $query2 . ") order by $union_sort_by $sort_order $union_limit");
+ 
         return $query3->result_array();
     }
     /*END*/
@@ -7268,7 +7271,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         //$query = $this->db->get();        
 
-        $query2 = $this->db->return_query_clear();
+        $query2 = $this->db->get_compiled_select(); //changed the function by shubhranshu 20/09/2019
 
         $query2 = str_replace('`', " ", $query2);
 

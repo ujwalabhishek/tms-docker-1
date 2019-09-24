@@ -223,7 +223,7 @@ echo $pagination;
             var self = $(this),
             button = self.find('input[type="submit"],button'),
             submitValue = button.data('submit-value');
-            button.attr('disabled','disabled').val('Please Wait..');
+            button.attr('disabled','disabled').html('Please Wait..');
             return true;
            }else{
                return false;
@@ -237,8 +237,10 @@ echo $pagination;
         function form_validates() {
         $trainee_name_list = $('#trainee_name_list').val();
         $tax_codev = $('#tax_code').val();
+        $off_company_name = $('#off_company_name').find(":selected").text();
         
-            if($trainee_name_list != '' || $tax_codev != ''){
+        
+            if($trainee_name_list != '' || $tax_codev != '' || $off_company_name !=''){
                  remove_err('#trainee_name_list');
                  remove_err('#tax_code');
                  return true;

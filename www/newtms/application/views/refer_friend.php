@@ -1,101 +1,51 @@
-<?php 
+<?php
 $this->load->helper('metavalues_helper');
-
 $this->load->helper('common_helper');
-
 echo $this->load->view('common/refer_left_wrapper');
-
-//echo validation_errors('<div class="error1">', '</div>');
 ?>
+
+
 <script>
 
-    $siteurl = '<?php echo site_url(); ?>';
 
-    $baseurl = '<?php echo base_url(); ?>';
+var refer_friend = 1;    
+
 
 </script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/public_js/enrol_some_one.js"></script>
+
+<div class="ref_col ref_col_tax_code" style="min-height: 500px;">	
+
+    <div class="container_row">
 
 
+        <div class="col-md-12 min-pad">
 
-<div class="ref_col ref_col_tax_code">  
-    <h2 class="panel_heading_style">
-        <span aria-hidden="true" class="glyphicon glyphicon-user"></span> 
-        <?php if(!empty($user_id)){?> Enroll For Someone<?php }else{?> Registration Form <?php }?>
-
-    </h2>
-    <?php
-//            echo validation_errors('<div style="color:red;text-align:center;font-size:14px;">', '</div>');
-//            if (!empty($error_message)) {
-//                echo '<div style="color:red;text-align:center;font-size:14px;">' . $error_message . '</div>';
-//            }
-//            if (!empty($success_message)) {
-//                echo '<div style="color:green;text-align:center;font-size:14px; ">' . $success_message . '</div>';
-//            }
-    
-    if (!empty($error_message)) {
-                    echo '<div style="color:red;font-weight: bold;">' . $error_message . '</div>';
-                }
-    if ($this->session->flashdata('error')) {
-                    echo '<div style="color:red;font-weight: bold;">
-                            ' . $this->session->flashdata('error') . '
-                        </div>';
-                }
-    ?>
-<!--    <div class="tax_col">
-</div>-->
-
-    <?php //   echo $user_id;
-//            echo $country = $this->input->post('country_of_residence');
-//            echo $country1 = $this->input->post('country_of_residence1');
+            <?php
+            $country = $this->input->post('country_of_residence');
             $atr = 'id="trainee_form" name="trainee_form" onsubmit="return(validate(\'refer_form\'));"';
-           // echo form_open_multipart("course/enrol_once", $atr);
-            echo form_open_multipart("user/add_trainee", $atr);
-//             echo form_open_multipart("user/register_enroll", $atr);
-//            echo $user_id;
-          echo form_hidden('r_user_id', $user_id);
-//            echo $course_id;echo "<br/>";
-//            echo $class_id;
-            echo form_hidden('course_id', $course_id);
-            echo form_hidden('class_id', $class_id);
-            echo form_hidden('registration', '1');
-            
-    ?>  
-    <div id ='trainee_validation_div' class='reg_tbl_div'>
-        <div class="bs-example">                    
+            echo form_open_multipart("course/refer", $atr);
+            echo form_hidden('user_id', $user_id);
+            ?>
+
+            <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/trainee.png"/> WELCOME <?php echo ($user_data->gender == 'MALE') ? 'Mr. ' : 'Ms. '; ?><?php echo $user_data->first_name . ' ' . $user_data->last_name . '!' ?></h2>
+            <h2 class="sub_panel_heading_style form_thead_friend">Please enter your  friend's detail: </h2>
+            <?php
+            echo validation_errors('<div style="color:red;text-align:center;font-size:14px;">', '</div>');
+            if (!empty($error_message)) {
+                echo '<div style="color:red;text-align:center;font-size:14px;">' . $error_message . '</div>';
+            }
+            if (!empty($success_message)) {
+                echo '<div style="color:green;text-align:center;font-size:14px; ">' . $success_message . '</div>';
+            }
+            ?>
+            <br>
+            <div id ='trainee_validation_div' class='reg_tbl_div'>
+                <div class="bs-example">                    
                     <div class="table-responsive">
                         <table class="table table-striped" width="100%" >   
-
-
-                            <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/personal_details.png"/>  Access Detail</h2>
-                            
-                             <tr>
-                                <td width="20%" class="td_heading">please Enter NRIC:<span class="required">*</span></td>
-                                <td colspan="2"  >
-                                  
-                                    <?php                            
-                                            $taxcode_nric = array(
-                                                'name' => 'taxcode_nric',
-                                                'id' => 'taxcode_nric',
-                                                'value' => $this->input->post('taxcode_nric'),
-                                                'maxlength' => '25',
-                                                'class' => 'upper_case',
-                                                'onblur' => 'javascript:check_taxcode_nric(this.value,this.id);',
-                                                'style' => 'width:150px',
-
-                                            );
-                                             
-                                 echo form_input($taxcode_nric);
-                                    ?> 
-                                    <span id="nric_found"> </span>
-                                    <span id="nric_not_found"> </span>
-                                 <span id="success" style="color: green;"> </span>
-                                <span id="try" style="color: red;"> </span>
-                                    <span id="taxcode_nric_err"></span>
-                                </td>
-                            </tr>
-                            <tr id="nric_not_found1">
+                            <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/dashboard1.png"/> Referral Form</h2>
+                            <tr>
                                 <td width="20%" class="td_heading">Country of Residence:<span class="required">*</span></td>
                                 <td  width="15%">        
                                     <?php
@@ -112,14 +62,22 @@ echo $this->load->view('common/refer_left_wrapper');
                                     <span id="country_of_residence_err"></span>
                                 </td>
                                 <td class="td_heading" >
-                                    <SPAN id="IND" style="<?php echo ($country == 'IND') ? '' : 'display:none;'; ?>">PAN : <span class="required">* </span>
+
+
+                                    <SPAN id="IND" style="<?php echo ($country == 'IND') ? '' : 'display:none;'; ?>">PAN : 
+
+
                                         <?php
                                         $attr = array('name' => 'PAN', 'autocomplete' => "off", 'class' => 'upper_case alphanumeric', 'id' => 'PAN', 'onblur' => 'javascript:isunique_taxcode(this.value,this.id,uid=\'REFER_TRAINEE\');', 'maxlength' => '50');
                                         echo form_input($attr, $this->input->post('PAN'));
                                         ?>
                                         <span id="PAN_err"></span>
                                     </SPAN>
-                                    <SPAN id="SGP" style="<?php echo ($country == 'SGP') ? '' : 'display:none;'; ?>">NRIC Type: <span class="required">* </span>                  
+
+
+                                    <SPAN id="SGP" style="<?php echo ($country == 'SGP') ? '' : 'display:none;'; ?>">NRIC Type: 
+
+
                                         <?php
                                         $nric_value = $this->input->post('NRIC');
                                         $nrics = $meta_result[Meta_Values::NRIC];
@@ -135,7 +93,13 @@ echo $this->load->view('common/refer_left_wrapper');
                                     </SPAN> 
                                     <SPAN id="SGP_OTHERS" style="<?php echo ($nric_value == 'SNG_3') ? '' : 'display:none;'; ?>">
 
-                                        <label id="SGP_OTHERS_label"></label><span class="required">* </span>                  
+
+
+
+
+                                        <label id="SGP_OTHERS_label"></label>
+
+
                                         <?php
                                         $nric_other_value = $this->input->post('NRIC_OTHER');
                                         $nric_other = $meta_result[Meta_Values::NRIC_OTHER];
@@ -151,14 +115,24 @@ echo $this->load->view('common/refer_left_wrapper');
                                     </SPAN>
                                     <SPAN id="SGP_ID" style="<?php echo (!empty($nric_value) && ($country == 'SGP')) ? '' : 'display:none;'; ?>">
 
-                                        <label id="SGP_ID_label"></label><span class="required">* </span>                  
+
+
+
+
+                                        <label id="SGP_ID_label"></label>
+
+
                                         <?php
                                         $attr = array('name' => 'NRIC_ID', 'autocomplete' => "off", 'class' => 'upper_case alphanumeric', 'id' => 'NRIC_ID', 'onblur' => 'javascript:isunique_taxcode(this.value,this.id,uid=\'REFER_TRAINEE\');', 'maxlength' => '50');
                                         echo form_input($attr, $this->input->post('NRIC_ID'));
                                         ?>
                                         <span id="NRIC_ID_err"></span>
                                     </SPAN>
-                                    <SPAN id="USA" style="<?php echo ($country == 'USA') ? '' : 'display:none;'; ?>">SSN : <span class="required">* </span>
+
+
+                                    <SPAN id="USA" style="<?php echo ($country == 'USA') ? '' : 'display:none;'; ?>">SSN : 
+
+
                                         <?php
                                         $attr = array('name' => 'SSN', 'autocomplete' => "off", 'class' => 'upper_case alphanumeric', 'id' => 'SSN', 'onblur' => 'javascript:isunique_taxcode(this.value,this.id,uid=\'REFER_TRAINEE\');', 'maxlength' => '50');
                                         echo form_input($attr, $this->input->post('SSN'));
@@ -167,28 +141,9 @@ echo $this->load->view('common/refer_left_wrapper');
                                     </SPAN>
                                 </td>
                             </tr>
-                            
-<tr>
-                                <td class="td_heading" colspan="3">Your relationship with the trainee:<span class="required">*</span>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="radio" name="relationship" value="KIN" checked/> Kin &nbsp;&nbsp;
-                                    <input type="radio" name="relationship" value="FRIEND"  /> Friend &nbsp;&nbsp;
-                                    <input  type="radio" name="relationship" value="COLLEAGUE" /> Colleague &nbsp;&nbsp;
-                                    <input type="radio" name="relationship" value="OTHERS" id="other_relation"/> Others&nbsp;<span id="others_span" style="display:none;"><input type="text" name="others" id="others"/></span>
-                                </td>
-                            </tr>
-
-                        
-
-
-                        </table>
-                        <br>
-                        
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="nric_not_found2" width="100%"  >      
-                                <tr>
-                                <td width="20%"  class="td_heading" >Username:<span class="required">*</span></td>
-                                <td>
+                            <tr>
+                                <td width="20%" class="td_heading">Username:<span class="required">*</span></td>
+                                <td colspan="2"  >
                                     <?php
                                     $un = array(
                                         'name' => 'user_name',
@@ -202,10 +157,28 @@ echo $this->load->view('common/refer_left_wrapper');
                                     ?> 
                                     <span id="user_name_err"></span>
                                 </td>
-<!--                            </tr>-->
-<!--                                <tr>-->
-                                    <td width="20%" class="td_heading" >Name:<?php print_r($data);?><span class="required">*</span></td>
-                                    <td>
+                            </tr>
+                            <tr>
+                                <td class="td_heading" colspan="3">Your relationship with the trainee:<span class="required">*</span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="relationship" value="KIN" checked/> Kin &nbsp;&nbsp;
+                                    <input type="radio" name="relationship" value="FRIEND"  /> Friend &nbsp;&nbsp;
+                                    <input  type="radio" name="relationship" value="COLLEAGUE" /> Colleague &nbsp;&nbsp;
+                                    <input type="radio" name="relationship" value="OTHERS" id="other_relation"/> Others&nbsp;<span id="others_span" style="display:none;"><input type="text" name="others" id="others"/></span>
+                                </td>
+                            </tr>
+                        </table>
+
+
+                            <BR/>
+
+
+                        <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/personal_details.png"/> Personal Details</h2>
+                        <div class="table-responsive">
+                            <table class="table table-striped" width="100%"  >      
+                                <tr>
+                                    <td class="td_heading" width="20%">Name:<span class="required">*</span></td>
+                                    <td colspan="3">
                                         <?php
                                         $attr = array(
                                             'name' => 'pers_first_name',
@@ -216,12 +189,11 @@ echo $this->load->view('common/refer_left_wrapper');
                                             'autocomplete' => "off",
                                             'style' => 'width:200px',
                                         );
-
                                         echo form_input($attr, 'javascript: text-transform: uppercase;');
                                         ?>  
                                         <span id="pers_first_name_err"></span>
-                                    </td>                                                                        
-                                <!--</tr>-->
+                                    </td>                                    
+                                </tr>
                                 <tr>
                                     <td class="td_heading" width="20%">Gender:<span class="required">*</span></td>
                                     <td>
@@ -338,98 +310,17 @@ echo $this->load->view('common/refer_left_wrapper');
                                             'value' => $this->input->post('pers_additional_remarks'),
                                         );
                                         echo form_textarea($attr);
-                                        ?> 
+                                        ?>  
                                         <span id="pers_additional_remarks_err"></span>
                                     </td>                                                                        
                                 </tr>
                             </table> <br />
-                            
-                            <table class="table table-striped" id="existing_user" width="100%"  > 
-                            <tr>
-                                
-                                    <td class="td_heading" width="20%">
-                                        <?php $data = array(
-                                                'id' => 'search_select2',
-                                                'class' => 'search_select',
-                                                'name' => 'search_select',
-                                                'value' => '1',
-                                                'checked' => true
-                                            );
-                                            echo form_radio($data);
-                                            ?>&nbsp;&nbsp;
-                                        D.O.B.  
-                                       <?php
-                                            $pers_dob = array(
-                                                'name' => 'pers_dob',
-                                                'id' => 'pers_dob',
-                                                'maxlength' => '10',
-                                                'value' => set_value('pers_dob'),
-                                                'placeholder' => 'dd-mm-yyyy',
-                                            );
-                                           
-                                        ?> 
-                            
-                                    </td>
-                                    <td colspan="3"><?php echo form_input($pers_dob); ?> 
-                                        <span id="pers_dob_err"></span>
-                                    </td>
-                            </tr>
-                            <tr>
-                                    <td class="td_heading"> <?php $data = array(
-                                                'id' => 'search_select',
-                                                'class' => 'search_select',
-                                                'name' => 'search_select',
-                                                'value' => '2'
-                                            );
-                                            echo form_radio($data);
-                                            ?>&nbsp;&nbsp;Email
-                                        <?php
-                                            $e_email = array(
-                                                'name' => 'e_email',
-                                                'id' => 'e_email',
-                                                'class'=> 'e_email',
-                                                'value' => set_value('e_email') 
-                                            );
-                                        ?> 
-                            
-                                    </td>
-                                    <td><?php echo form_input($e_email); ?>  <span id="e_email_err"></span>
-                                    </td>
-                            </tr> 
-                            <tr>
-                                    <td class="td_heading"><?php $data = array(
-                                                'id' => 'search_select',
-                                                'class' => 'search_select',
-                                                'name' => 'search_select',
-                                                'value' => '3'
-                                            );
-                                            echo form_radio($data);
-                                            ?>&nbsp;&nbsp;Contact Number
-                                        <?php
-                                            $e_contact_no = array(
-                                                'name' => 'e_contact_no',
-                                                'id' => 'e_contact_no',
-                                                'maxlength' => '10',
-                                                'value' => set_value('e_contact_no'),
-                                                'class' => 'number'
-                                            );
-                                            
-                                        ?> 
-                            
-                                    </td>
-                                    <td><?php echo form_input($e_contact_no); ?> <span id="e_contact_no_err"></span>
-                                    </td>
-                            </tr> 
-                                    
-                                    
-                                
-                            </table><br/>
+                            <span class="required required_i">* Required Fields</span>                    
                             <div class="button_class99" >
-                            <button class="btn btn-sm btn-info" type="submit" name='submit' value="exit"><span class="glyphicon"></span> <strong>Register Now</strong></button>
-                            <br/><br/></div>
-                            <div class="clear"></div> 
-                            
-                        </div>
+                                <button class="btn btn-sm btn-info" type="submit" name='submit' value="exit"><span class="glyphicon"></span> <strong>Save & Exit</strong></button>
+                                <button class="btn btn-sm btn-info" type="submit" name='submit' value="continue"><span class="glyphicon"></span> <strong>Save & Add More</strong></button>
+                            </div>                  
+                            <br /><br /> <div class="clear"></div>  </div>
 
                         <?php echo form_close(); ?> 
 
@@ -438,16 +329,11 @@ echo $this->load->view('common/refer_left_wrapper');
 
                 </div>
             </div>
-        
-     <br/><br/>
-     
-       
-     
-     <?php // echo form_close(); ?>   
-    </div>
 
-<br/><br/>
-<script src="<?php echo base_url(); ?>assets/public_js/validation_old.js" type="text/javascript"></script>
+        </div>
+    </div>
+</div>
+<script src="<?php echo base_url(); ?>assets/js/validation.js" type="text/javascript"></script>
 
 <script>
 

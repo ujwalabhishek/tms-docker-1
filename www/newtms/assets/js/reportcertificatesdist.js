@@ -16,7 +16,7 @@ $(document).ready(function() {
         },
     });
   
-// pritam
+// shubhranshu
 
         $( "#displayText" ).click(function() {
           $( "#alertmsg" ).show();

@@ -484,7 +484,7 @@ class Class_Model extends CI_Model {
     /**
      * this function to get the class status by its start and end date
      */
- public function get_class_status($cid, $status) {
+ public function get_class_status($cid, $status='') {
         if (!empty($status)) {
             switch ($status) {
                 case 'IN_PROG':
@@ -675,7 +675,7 @@ class Class_Model extends CI_Model {
      /**
      * class sales executive details
      */
-      function get_class_salesexec1($tenant_id,$course_id,$class_id,$ids) 
+      function get_class_salesexec1($tenant_id,$course_id,$class_id,$ids='') 
                 {
         if (empty($ids)) {
             return;

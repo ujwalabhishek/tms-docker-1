@@ -34,8 +34,8 @@ class Class_Trainee extends CI_Controller {
 
     public function index()
     {
-        ini_set('max_execution_time', 0);
-        $this->output->enable_profiler(TRUE);
+        //ini_set('max_execution_time', 0);
+        //$this->output->enable_profiler(TRUE);
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
          extract($_GET);
@@ -335,6 +335,7 @@ class Class_Trainee extends CI_Controller {
 //        echo $this->db->last_query();
 //        print_r($totalrows);
 //        exit();
+      
         $new_tabledata = array();
         $role_array = array("TRAINER", "COMPACT", "SLEXEC");
         foreach ($tabledata as $k => $row) 
@@ -505,7 +506,7 @@ class Class_Trainee extends CI_Controller {
  
         }
         $this->db->cache_off();
-        
+       
         $total_trainee_enrolled = $this->classtraineemodel->get_total_enrolled_trainee($tenant_id);
      }
         $data['tabledata'] = $new_tabledata;
@@ -1609,14 +1610,17 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 $tenant_details = $this->classtraineemodel->get_tenant_masters($tenant_id);
                 $tenant_details->tenant_state = rtrim($this->course->get_metadata_on_parameter_id($tenant_details->tenant_state), ', ');
                 $tenant_details->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($tenant_details->tenant_country), ', ');
-				$mark_count = $this->classtraineemodel->get_rows_count($course_id,$class_id);
+		$mark_count = $this->classtraineemodel->get_rows_count($course_id,$class_id);
+                
                 if ($export == 'xls_week'){
                     $this->load->helper('export_helper');
                     return generate_class_attendance_sheet_xls($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
                 }
                 $this->load->helper('pdf_reports_helper');
                 if ($export == 'pdf') {
-                    return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data, $mark_count);
+                    //return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data, $mark_count);
+                    return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data); // removed mark count by shubhranshu
+                    
                 } else if ($export == 'pdf_week') {
                     return generate_class_attendance_sheet_pdf($results, $class_details, $tenant_details, $class_schedule_data);
                 }

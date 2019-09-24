@@ -230,11 +230,11 @@
             <div>
             <span class="pull-right">
                 
-                  <a href="<?php echo site_url('/reports/certificates_dist_export_xls') . '?' . $_SERVER['QUERY_STRING']; ?>" class="small_text1"  style="cursor: default;">
+                  <a href="javascript:void(0)" class="small_text1"  id="displayText" style="cursor: default;">
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
                 <a href="javascript:void(0)" class="small_text1" id="displayText1">
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>
-                    <div id="alertmsg" style="display: none;color:#ff0000;">Please Select One of the above filter to export PDF.</div>
+                    <div id="alertmsg" style="display: none;color:#ff0000;padding:5px">Please Select One of the above filter to export PDF/XLS.</div>
             </span>
                   
             </div>

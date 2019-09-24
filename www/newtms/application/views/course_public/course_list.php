@@ -23,7 +23,7 @@
                     </td>
                     <td width="35%" align="center">                        
                         <button title="Search" value="Search" type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-search"></span> <strong>Search</strong></button>
-                        <a href="<?php echo site_url(); ?>course" style="text-decoration:none !important; color:#000;" title="All" id="srch_all" class="btn btn-sm btn-info">
+                        <a href="<?php echo site_url(); ?>course_public" style="text-decoration:none !important; color:#000;" title="All" id="srch_all" class="btn btn-sm btn-info">
                             <span class="glyphicon glyphicon-refresh"></span> <strong>All</strong>
                         </a>
                      </td>
@@ -59,7 +59,7 @@
                                     ?>
                                     <tr>
                                         <td>
-<!--                                            <a href="<?php echo site_url(); ?>course/course_class_schedule/<?php echo $course['course_id']; ?>"><?php echo $course['course_id']; ?></a>-->
+<!--                                            <a href="<?php echo site_url(); ?>course_public/course_class_schedule/<?php echo $course['course_id']; ?>"><?php echo $course['course_id']; ?></a>-->
                                            <?php echo $course['course_id']; ?>
                                         </td>
                                         <td><?php echo $course['crse_name']; ?></td>
@@ -92,7 +92,7 @@
 
                                                     </td>
 <!--                                                    <td>
-                                                        <a href="<?php echo site_url(); ?>course/course_class_schedule/<?php echo $course['course_id']; ?>">
+                                                        <a href="<?php echo site_url(); ?>course_public/course_class_schedule/<?php echo $course['course_id']; ?>">
                                                             Check Schedule</a>
                                                     </td>-->
                                                     <td>
@@ -100,7 +100,7 @@
                                                         <?php
                                                         if(in_array($course['course_id'],$course_id))
                                                         {?>
-                                                        <a style="margin-top: 4px;" href="<?php echo site_url(); ?>course/course_class_schedule/<?php echo $course['course_id']; ?>" class="small_text1 pull-right btn1">
+                                                        <a style="margin-top: 4px;" href="<?php echo site_url(); ?>course_public/course_class_schedule/<?php echo $course['course_id']; ?>" class="small_text1 pull-right btn1">
                                                             <span class="label label-default black-btn"><span class="glyphicon glyphicon-ok"></span> Check Schedule</span>
                                                         </a>
                                                         <?php 

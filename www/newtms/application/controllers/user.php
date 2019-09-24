@@ -355,14 +355,14 @@ class User extends CI_Controller {
         if ($this->input->server('REQUEST_METHOD') === 'POST')
         {
             
-            $res = $this->course_model->save_reg_trainee();
+            $res = $this->course_public_model->save_reg_trainee();
         
            $user_id = $res;
             if ($user_id=='') {
                 
                             $error = 'Unable to Register, Please try again !';
                             $this->session->set_flashdata('error', $error);
-                            return redirect('course/register');
+                            return redirect('course_public/register');
                         }
                         else
                         {
@@ -378,7 +378,7 @@ class User extends CI_Controller {
                             }
                             $success = 'Thanks for the registration';
                             $this->session->set_flashdata('success', $success);
-                            return redirect('course');
+                            return redirect('course_public');
                                 
                             
                         }  

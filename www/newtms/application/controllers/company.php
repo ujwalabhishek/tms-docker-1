@@ -661,7 +661,7 @@ class Company extends CI_Controller {
         } else {
             $this->db->order_by('cm.last_modified_on', 'DESC');
         }
-        $query = $this->db->return_query();
+        $query = $this->db->get_compiled_select(); // changed by shubhranshu for CI update
         $data = $this->db->query($query)->result();
         $excel_titles = array('Company Name', 'Registration No.', 'Business Type', 'Size', 'Country', 'Address', 'Phone Number', 'Fax Number', 'Local Discount', 'Foreign Discount', 'SME Type', 'Company Attn.', 'Company Email', 'Total Registered Trainees', 'Total Active Trainees', 'SCN', 'Last Activity', 'Company Status');
         $excel_data = array();
