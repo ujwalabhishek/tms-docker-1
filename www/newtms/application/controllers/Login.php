@@ -7,7 +7,7 @@ class Login extends CI_Controller {
         $this->load->model('login_model', 'login');
         $this->load->model('acl_model', 'acl');
         $this->load->library('bcrypt');
-        $this->load->model('manage_tenant_model', 'manage_tenant');echo "ss1";exit;
+        $this->load->model('manage_tenant_model', 'manage_tenant');
     }
     /**
      * default load
