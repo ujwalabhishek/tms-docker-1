@@ -13,7 +13,7 @@ class Login_Model extends CI_Model {
     /* 
      * This method validates the user credentials 
      */
-    public function check_user_valid() { echo "ss";exit;
+    public function check_user_valid() { 
         $user_name = $this->input->post('username');    
         $password = $this->input->post('password');
         $this->db->select('tenant_id, password, user_id, registered_email_id,user_name')
@@ -42,7 +42,7 @@ class Login_Model extends CI_Model {
         $this->db->join('tenant_master tm', 'tm.tenant_id = usr.tenant_id');
         $this->db->select('tm.account_status');
         $this->db->group_by("usr.user_id");
-        $result = $this->db->get()->row();
+        $result = $this->db->get()->row();print_r($result);exit;
         if ($this->bcrypt->check_password($password, $result->password)) {
             unset($result->password);
             if($result->role_id == 'COMPACT') {
