@@ -3,7 +3,7 @@
   * This is the Model class for Login  
   */
 
-class Login_Model extends CI_Model {
+class login_model extends CI_Model {
     
     public function __construct() {
         parent::__construct();        
