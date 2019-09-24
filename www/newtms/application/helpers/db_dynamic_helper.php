@@ -1,7 +1,4 @@
-
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-
 function switch_db_dynamic($name_db)
 {
     $config_app['dsn'] = '';
