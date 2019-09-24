@@ -113,7 +113,7 @@ class Login extends CI_Controller {
                 redirect('login/');
             } else {
                 //redirect('login/');
-                header('http://xprienz.xprienz.net/login');
+                header('Location: http://xprienz.xprienz.net/login');
             }
         }
     }
