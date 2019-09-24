@@ -7,7 +7,7 @@ function switch_db_dynamic($name_db)
     $config_app['dsn'] = '';
     $config_app['hostname'] = 'localhost';
     $config_app['username'] = 'root';
-    $config_app['password'] = '';
+    $config_app['password'] = 'tms#8938480*';
     $config_app['database'] = $name_db;
     $config_app['dbdriver'] = 'mysqli';
     $config_app['dbprefix'] = '';
