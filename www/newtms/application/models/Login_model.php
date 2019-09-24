@@ -13,7 +13,7 @@ class Login_Model extends CI_Model {
     /* 
      * This method validates the user credentials 
      */
-    public function check_user_valid() { 
+    public function check_user_valid() { echo "ss";exit;
         $user_name = $this->input->post('username');    
         $password = $this->input->post('password');
         $this->db->select('tenant_id, password, user_id, registered_email_id,user_name')
