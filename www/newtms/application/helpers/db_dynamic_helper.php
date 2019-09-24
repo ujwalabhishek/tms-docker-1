@@ -37,7 +37,7 @@ function fetch_dynamic_db_details(){
         
         return $object;
     }
-    $config_app = switch_db_dynamic('biipmico_tms_masterdata');
+    //$config_app = switch_db_dynamic('biipmico_tms_masterdata');
     $CI =& get_instance();
     $CI->dbs = $CI->load->database($config_app,TRUE);
     //print_r($CI->dbs);exit;
