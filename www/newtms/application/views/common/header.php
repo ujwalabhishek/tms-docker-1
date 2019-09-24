@@ -9,7 +9,7 @@
             </a>
         </div>
         <div class="training" style='margin: 15px 0px'>
-            <img src="<?php echo base_url(); ?>assets/images/<?php echo $this->data['tenant_details']->applicationname; ?>" border="0" title="Training Management System" />
+            <img src="<?php echo base_url(); ?>assets/images/tms1.png<?php //echo $this->data['tenant_details']->applicationname; ?>" border="0" title="Training Management System" />
         </div>
         <div class="right_date">
 <table class="pull-right">
