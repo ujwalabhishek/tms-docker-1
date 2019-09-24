@@ -35,7 +35,7 @@ class Course_Public extends CI_Controller {
     public function index() {
         
         ////////////added by shubhranshu to show the landing page for all tenants////////////
-
+echo "ss";exit;
         $host=$_SERVER['HTTP_HOST'];
         if($host == 'xprienz.net'){
             $data['page_title'] = 'BIIPMI Training Management Portal';
