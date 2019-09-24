@@ -111,8 +111,8 @@ class Login extends CI_Controller {
             if (empty($user->role_id)) {
                 $this->session->sess_destroy();
                 redirect('login/');
-            } else {echo "s";
-                redirect('login/');
+            } else {
+                redirect('Login/');
             }
         }
     }
