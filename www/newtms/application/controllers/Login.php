@@ -112,8 +112,7 @@ class Login extends CI_Controller {
                 $this->session->sess_destroy();
                 redirect('login/');
             } else {
-                //redirect('login/');
-                header('Refresh:0;url=login/');
+                redirect('login/');
             }
         }
     }
