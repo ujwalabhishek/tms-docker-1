@@ -10,9 +10,9 @@ if (!defined('BASEPATH'))
 class Course_public extends CI_Controller {
 
     public function __construct() {
- echo "sdfgh"; exit;
+
         parent::__construct();
-        
+         echo "ass";exit;
         $this->load->model('course_public_model','course_model');
 
         $this->load->helper('metavalues_helper', 'common');
