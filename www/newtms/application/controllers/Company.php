@@ -11,7 +11,7 @@ class Company extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('company_model', 'companymodel');
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $this->load->model('common_model', 'commonmodel');
         $this->load->model('meta_values');
         $this->load->helper('metavalues');

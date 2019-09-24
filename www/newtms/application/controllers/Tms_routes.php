@@ -1,5 +1,4 @@
 <?php
-
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 //------------------------ Common Pages accessible to logged in user -------------------------------------

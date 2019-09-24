@@ -13,17 +13,17 @@ class Class_Trainee extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Class_Trainee_Model', 'classtraineemodel');
-        $this->load->model('Manage_Tenant_Model', 'manage_tenant');
-        $this->load->model('Course_Model', 'course');
-        $this->load->model('Class_Model', 'class');
-        $this->load->model('Company_Model', 'company');
+        $this->load->model('class_trainee_model', 'classtraineemodel');
+        $this->load->model('manage_tenant_todel', 'manage_tenant');
+        $this->load->model('course_model', 'course');
+        $this->load->model('class_model', 'class');
+        $this->load->model('company_model', 'company');
         $this->load->model('reports_model', 'reportsModel'); 
         $this->load->helper('common');
         $this->load->helper('metavalues_helper');
         $this->load->model('meta_values', 'meta');
         $this->load->model('trainee_model', 'traineemodel'); 
-        $this->load->model('Activity_Log_Model', 'activitylog');
+        $this->load->model('activity_log_model', 'activitylog');
         $this->user = $this->session->userdata('userDetails');
         $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;        
     }

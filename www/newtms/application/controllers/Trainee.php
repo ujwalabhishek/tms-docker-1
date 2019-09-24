@@ -8,10 +8,10 @@ class Trainee extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('trainee_model', 'traineemodel');
-        $this->load->model('Manage_Tenant_Model', 'manage_tenant');
+        $this->load->model('manage_tenant_model', 'manage_tenant');
         $this->load->model('course_model', 'course');
         $this->load->model('common_model', 'commonmodel');
-        $this->load->model('Class_Trainee_Model', 'classtraineemodel');
+        $this->load->model('class_trainee_model', 'classtraineemodel');
         $this->load->helper('common');
         $this->load->helper('metavalues_helper');
         $this->load->model('meta_values', 'meta');

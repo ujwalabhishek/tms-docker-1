@@ -16,10 +16,10 @@ class accounting extends CI_Controller {
      */
     public function __construct() {
         parent::__construct();
-        $this->load->model('Class_Trainee_Model', 'classTraineeModel');
-        $this->load->model('Class_Model', 'classModel');
-        $this->load->model('Company_Model', 'companyModel');
-        $this->load->model('Tenant_Model', 'tenantModel');
+        $this->load->model('class_trainee_model', 'classTraineeModel');
+        $this->load->model('class_Model', 'classModel');
+        $this->load->model('company_model', 'companyModel');
+        $this->load->model('tenant_model', 'tenantModel');
         $this->load->helper('common');
         $this->load->helper('metavalues_helper');
         $this->load->model('meta_values', 'meta');

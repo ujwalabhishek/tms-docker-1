@@ -11,8 +11,8 @@ class Classes extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;
-        $this->load->model('Class_Model', 'classmodel');
-        $this->load->model('Course_Model', 'coursemodel');
+        $this->load->model('class_model', 'classmodel');
+        $this->load->model('course_model', 'coursemodel');
         $this->load->model('meta_values');
     }
 

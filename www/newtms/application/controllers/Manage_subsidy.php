@@ -7,7 +7,7 @@ if (!defined('BASEPATH'))
 class Manage_Subsidy extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Manage_Subsidy_Model', 'manage_subsidy');        
+        $this->load->model('manage_subsidy_model', 'manage_subsidy');        
         $this->view_folder = 'tenant/';
         $this->controller_name = 'manage_subsidy/';
     }

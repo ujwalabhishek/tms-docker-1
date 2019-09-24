@@ -7,11 +7,11 @@ if (!defined('BASEPATH'))
 class Manage_tenant extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Manage_Tenant_Model', 'manage_tenant');
-        $this->load->model('Meta_Values', 'meta');
+        $this->load->model('manage_tenant_model', 'manage_tenant');
+        $this->load->model('meta_values', 'meta');
         
-        $this->load->model('Tenant_Model', 'tenantModel');
-        $this->load->model('Course_Model', 'courseModel');
+        $this->load->model('tenant_model', 'tenantModel');
+        $this->load->model('course_model', 'courseModel');
         
         $this->meta_map = $this->meta->get_param_map();
         $this->view_folder = 'tenant/';

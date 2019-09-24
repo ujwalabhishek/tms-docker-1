@@ -26,7 +26,7 @@ class Activity_log extends CI_Controller {
 
         //$this->load->model('Internal_User_Model', 'internaluser');
 
-        $this->load->model('Activity_Log_Model', 'activitylog');
+        $this->load->model('activity_log_model', 'activitylog');
 
         $this->load->model('meta_values');
 

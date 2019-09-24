@@ -28,9 +28,9 @@ class Course extends CI_Controller {
 
         $this->load->model('meta_values');
 
-        $this->load->model('Course_Model', 'course');
+        $this->load->model('course_model', 'course');
 
-        $this->load->model('Class_Model', 'classmodel');
+        $this->load->model('class_model', 'classmodel');
 
         $this->load->library('form_validation');
 
