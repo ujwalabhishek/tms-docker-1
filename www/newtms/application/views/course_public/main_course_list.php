@@ -14,7 +14,7 @@
 if(count($notifications) > 0) {
     $style = "";
     $class = "col-md-8";
-    $class_style = "style = 'margin-top:-16px;'"; 
+    $class_style = "style = 'margin-top:0px;'"; 
 }else {
     $style = "style = 'display:none;'";
     $class = "col-md-10";    
@@ -30,7 +30,7 @@ if(count($course_list) == 0) {
     <div class="table-responsive">
         <?php
         $attr = 'onsubmit = "return validate_search()" method="GET"';
-        echo form_open('course', $attr);
+        echo form_open('course_public', $attr);
         ?>
         <table class="table table-striped" <?php echo $form_style; ?> >
             <tbody>
@@ -40,7 +40,7 @@ if(count($course_list) == 0) {
                     </td>
                     <td width="35%" align="center">                        
                         <button title="Search" value="Search" type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-search"></span> <strong>Search</strong></button>
-                        <a href="<?php echo site_url(); ?>course" style="text-decoration:none !important; color:#000;" title="All" id="srch_all" class="btn btn-sm btn-info">
+                        <a href="<?php echo site_url(); ?>course_public" style="text-decoration:none !important; color:#000;" title="All" id="srch_all" class="btn btn-sm btn-info">
                             <span class="glyphicon glyphicon-refresh"></span> <strong>All</strong>
                         </a>
                      </td>
@@ -61,7 +61,7 @@ if(count($course_list) == 0) {
                         <div class="col-md-12 min-pad content">
                             <h3 class="course_heading">
                                 <?php echo $crse->crse_name; ?>   </h3>                            
-                                    <a href="<?php echo site_url(); ?>course/course_class_schedule/<?php echo $crse->course_id; ?>" class="small_text1 pull-right btn1">
+                                    <a href="<?php echo site_url(); ?>course_public/course_class_schedule/<?php echo $crse->course_id; ?>" class="small_text1 pull-right btn1">
                                         <span class="label label-default black-btn"><span class="glyphicon glyphicon-ok"></span> Check Class Schedule</span>
                                     </a>
                                 

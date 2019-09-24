@@ -29,9 +29,11 @@ class Internal_user extends CI_Controller {
         foreach ($_GET as $k => $v) {
             $export_url .="$k=$v&";
         }
+       
         $export_url = rtrim($export_url, '&');
         $data['export_url'] = $export_url;
         $data['sort_link'] = $sort_link = "user_role=" . $this->input->get('user_role') . "&first_last_name=" . $this->input->get('first_last_name') . "&filter_status=" . $this->input->get('filter_status') . "&search_radio=" . $this->input->get('search_radio').'&user_id='.$this->input->get('user_id');
+        
         $totalrows = $this->internaluser->get_internal_user_count_by_tenant_id($tenant_id);
         $field = ($this->input->get('f')) ? $this->input->get('f') : 'usr.last_modified_on';
         $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
@@ -50,6 +52,7 @@ class Internal_user extends CI_Controller {
         $data['controllerurl'] = 'internal_user/';
         $this->load->helper('pagination');
         $data['pagination'] = get_pagination($records_per_page, $pageno, $baseurl, $totalrows, $field, $order_by . '&' . $sort_link);
+       
         $data['main_content'] = 'internaluser/userlist';
         $data['roles'] = $this->internaluser->get_user_role($tenant_id);
         $data['filter_status'] = fetch_metavalues_by_category_id(Meta_Values::STATUS);
@@ -533,7 +536,7 @@ class Internal_user extends CI_Controller {
         return;
     }
     ////// added by shubhranshu for valid email (internal user view page) on 4/12/2018///////////////////
-    public function check_email_status($email) {
+    public function check_email_status($email='') {
         extract($_POST);
         $email_id = trim($email);
         $exists = $this->internaluser->check_email_status($email_id,$usrid);
@@ -548,7 +551,7 @@ class Internal_user extends CI_Controller {
     /*
      * Method for checking if pan id is already exists in add Interanl user.
      */
-    public function check_pan($pan) { 
+    public function check_pan($pan='') { /// modified by shubhranshu
         extract($_POST);        
         if($country_of_residence == "SGP") {
             $valid = validate_nric_code($nric, $pan_id);            

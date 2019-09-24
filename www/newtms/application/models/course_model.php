@@ -12,6 +12,7 @@
 
 class Course_Model extends CI_Model {
 
+    
     /*
 
      * This method gets the Active  Course list for a tenant

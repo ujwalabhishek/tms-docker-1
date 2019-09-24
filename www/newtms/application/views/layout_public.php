@@ -30,7 +30,7 @@
                          <?php if (isset($data->user_id)) :?>
                         <?php 
                             $this->load->view('common/navigation_public'); 
-                            $this->load->helper('breadcrumb');
+                            $this->load->helper('breadcrumb_public');
                             echo create_breadcrumb();
                         ?>
                     <?php endif; ?>

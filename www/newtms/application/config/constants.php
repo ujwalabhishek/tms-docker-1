@@ -127,8 +127,8 @@ define('ROLE_PRIORITY_ARRAY', 'ADMN,CRSEMGR,TRAINER,SLEXEC');
  * Date time formats
  */
 
-define('CLIENT_DATE_FORMAT',							'd/m/Y');
-define('SERVER_DATE_TIME_FORMAT',						'Y-m-d H:i:s');
+define('CLIENT_DATE_FORMAT','d/m/Y');
+define('SERVER_DATE_TIME_FORMAT','Y-m-d H:i:s');
 
 //define('APP_ADMN_LOGIN_LINK', "https://tms.xxxx.com/tmsadmin"); 
 define('ENROL_PYMNT_DUE', "enrol_pymnt_due"); 

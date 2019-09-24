@@ -12,7 +12,7 @@ class Course_Public extends CI_Controller {
     public function __construct() {
 
         parent::__construct();
-        
+         
         $this->load->model('course_public_model','course_model');
 
         $this->load->helper('metavalues_helper', 'common');
@@ -20,12 +20,12 @@ class Course_Public extends CI_Controller {
         $this->load->model('meta_values');
         $this->load->model('Manage_Tenant_Model', 'manage_tenant');
         $host=$_SERVER['HTTP_HOST'];
-        if($host != 'biipbyte.co'){
+        if($host != 'biipmi.co'){
             $tenent_details = $this->course_model->get_tenant_details();
         }
         $this->session->set_userdata('public_tenant_details', $tenent_details);
 
-        $data = $this->session->userdata('userDetails');
+        $data = $this->session->userdata('userDetails');    
     }
 
     /*
@@ -37,16 +37,19 @@ class Course_Public extends CI_Controller {
         ////////////added by shubhranshu to show the landing page for all tenants////////////
 
         $host=$_SERVER['HTTP_HOST'];
-        if($host == 'biipbyte.co'){
+        if($host == 'biipmi.co'){
             $data['page_title'] = 'BIIPMI Training Management Portal';
             $data['tenants'] = $this->manage_tenant->list_all_tenants_for_landing_page();
             $this->load->view('landing_page', $data);
             exit;
         }
         $user_role = $this->session->userdata('userDetails')->role_id ?? '';
-        if($user_role == 'ADMN'){
-            redirect('login/administrator/'); ///// added by shubhranshu
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
         }
+        
         ////////////////////////////////////////////////////////////////////////////////////////
         $search_value = $this->input->get('search_value');
 
@@ -160,11 +163,11 @@ class Course_Public extends CI_Controller {
         $tenant_id = TENANT_ID;
         $field = $this->input->get('f');
         $order_by = $this->input->get('o');
-        $baseurl = base_url() . 'course/course_class_schedule/' . $course_id . '/';
+        $baseurl = base_url() . 'course_public/course_class_schedule/' . $course_id . '/';
         $data['tabledata'] = $this->course_model->get_course_class_list($course_id, $tenant_id, $records_per_page, $offset, $field, $order_by);
         $data['crid'] = $course_id;
         $data['sort_order'] = $order_by;
-        $data['controllerurl'] = 'course/course_class_schedule/' . $course_id . '/';
+        $data['controllerurl'] = 'course_public/course_class_schedule/' . $course_id . '/';
         $meta_result = fetch_all_metavalues();
         $values = $meta_result[Meta_Values::LANGUAGE];
         $meta_map = $this->meta_values->get_param_map();
@@ -192,8 +195,8 @@ class Course_Public extends CI_Controller {
         $data['status_lookup_language'] = $status_lookup_language;
         $data['status_lookup_location'] = $status_lookup_location;
         $data['course_name'] = $this->course_model->get_course_name($course_id);
-        $data['main_content'] = 'course/course_class_schedule';
-        $this->load->view('layout', $data);
+        $data['main_content'] = 'course_public/course_class_schedule';
+        $this->load->view('layout_public', $data);
     }
 
     /* This function show the total booking in a specifc corse and class */
@@ -402,7 +405,7 @@ class Course_Public extends CI_Controller {
         if (!empty($search_value)) {
             $search_value = trim($search_value);
             $search_value = htmlspecialchars($search_value, ENT_QUOTES, 'UTF-8');
-            $baseurl = base_url() . "course/course_list/$search_value/";
+            $baseurl = base_url() . "course_public/course_list/$search_value/";
             $pageno = (empty($pageno)) ? $this->uri->segment(3) : $pageno;
         } else {
             $search_value = NULL;
@@ -3286,7 +3289,7 @@ class Course_Public extends CI_Controller {
 
     public function class_member_check($course_id=0, $class_id=0) {
 
-        //$this->session->sess_destroy();
+        $this->session->sess_destroy();
         $data['page_title'] = 'Sign In';
 
         $data['course_id'] = $course_id;
@@ -3296,8 +3299,6 @@ class Course_Public extends CI_Controller {
         if ($this->session->userdata('userDetails') != '') {
 
             //$data['main_content'] = 'course/payment_details';
-
-
 
             redirect(base_url() . 'course_public/enrol_friend');
 
@@ -3314,10 +3315,11 @@ class Course_Public extends CI_Controller {
         $this->load->view('layout_public', $data);
     }
 
-    public function register($class_id, $course_id, $data) {
+    //public function register($class_id, $course_id, $data) {
+    public function register() {
         $data['page_title'] = 'Add Trainee';
         $data['main_content'] = 'addtrainee';
-        $this->load->view('layout', $data);
+        $this->load->view('layout_public', $data);
     }
 
     /**

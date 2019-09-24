@@ -26,6 +26,10 @@ class Meta_Values extends CI_Model {
     const SAL_RANGE = 'CAT18';
     const EMAIL_ACT = 'CAT04';
     
+    const CLASS_LANGUAGE = 'CAT23_01';
+    const CLASSROOM_LOCATION = 'CAT25';
+    const FEEDBACK='CAT32';
+    
     const DESIGNATION = 'CAT48';
     
     const STATUS = 'CAT02';

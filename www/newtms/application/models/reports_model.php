@@ -1526,9 +1526,7 @@ SELECT  {$calc_rows} c.crse_name,
     public function get_all_certificates_dist_count($tenant_id, $course_id, $class_id,$comp_id, $trainee, $status, $start_date, $end_date) 
     {
         $cur_date = date('Y-m-d');
-        $this->db->select('enrol.course_id,enrol.company_id, crse.crse_name, enrol.class_id,cls.class_name, enrol.user_id, 
-        enrol.certificate_coll_on, usrs.tax_code, pers.first_name, pers.last_name, crse.crse_cert_validity, 
-        cls.class_end_datetime, cls.certi_coll_date');
+        $this->db->select('*');////modified by shubhranshu to optimize query
         //,cm.comp_email,cm.company_name,cm.company_id
         $this->db->from('class_enrol enrol');
         if ($this->data['user']->role_id == 'CRSEMGR') {

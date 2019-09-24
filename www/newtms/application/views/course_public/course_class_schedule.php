@@ -262,11 +262,11 @@
                         {
                             if(res == 1) {
                                $('.enrol_for_self').html("<button class='btn btn-primary btn1' type='button' style='background-color: gray;cursor:default;    border-color: gray;'>Already Enrolled</button>");
-                                $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course/register_enroll/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
+                                $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course_public/register_enroll/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
                             }else{
                                 //$('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course/create_enroll_self_loggedin/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
-                                $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course/class_enroll1/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
-                                $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course/register_enroll/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
+                                $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course_public/class_enroll1/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
+                                $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course_public/register_enroll/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
                             }
 
 
@@ -297,10 +297,10 @@
             var href_link = $(this).attr('href');
            
            //$('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course/register_enroll/"+course +"/"+cls+"'> <button class='btn btn-primary' type='button'>Enroll For Self</button></a>");
-         $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course/class_member_check/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
+         $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course_public/class_member_check/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
            
             
-            $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course/referral_credentials1/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
+            $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course_public/referral_credentials1/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
             $('.course_name').text(course);
             $('.class_name').text(cls);
             $('.href_link').attr('href',href_link);

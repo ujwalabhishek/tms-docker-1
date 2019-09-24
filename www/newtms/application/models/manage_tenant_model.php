@@ -5,10 +5,13 @@
  */
 
 class Manage_Tenant_Model extends CI_Model {
-    
-    
     ///// added by shubhranshu to show all tenants on the landing page///////////////
+    public $dbs;
+    
     public function list_all_tenants_for_landing_page() {
+        //$this->load->helper('db_dynamic_helper');
+        //$config_app = switch_db_dynamic('biipmico_tms_masterdata');
+        //$this->dbs = $this->load->database($config_app,TRUE);
         $this->db->select('*');
         $this->db->from('tenant_master');
         return $this->db->get()->result_array();

@@ -819,7 +819,7 @@ function export_all_fields($titles, $sub_titles, $data, $sub_data, $filename, $s
 /*
  * for mark attendance page
  */
-function export_attendance($results, $class_details, $start, $end, $class_schedule_data) 
+function export_attendance($results, $class_details, $start, $end, $class_schedule_data='') 
 {       
         $data=PAX_PER_SHEET;
         $num_of_sheets=ceil(count($results)/$data);

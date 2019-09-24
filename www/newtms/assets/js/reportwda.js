@@ -2,6 +2,12 @@
  * This js file includes in WDA reports page
  */
 $(document).ready(function() {
+    $( "#displayText" ).click(function() {
+          $( "#alertmsg" ).show();
+        });
+         $( "#displayText1" ).click(function() {
+          $( "#alertmsg" ).show();
+        });
     $("#start_date").datepicker({
         dateFormat: 'dd-mm-yy',
         changeMonth: true,

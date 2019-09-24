@@ -5752,7 +5752,8 @@ class Course_Public_Model extends CI_Model {
             $this->db->limit($limit, $limitvalue);
         }
 
-        return $this->db->get()->result();
+         return $this->db->get()->result();
+        
     }
 
 }
