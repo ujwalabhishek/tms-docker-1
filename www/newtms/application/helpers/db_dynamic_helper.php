@@ -29,7 +29,7 @@ function switch_db_dynamic($name_db)
 
 function fetch_dynamic_db_details(){
     $host=$_SERVER['HTTP_HOST'];
-    if($host == 'biipmi.co'){
+    if($host == 'xprienz.net'){
         $object = new stdClass();
         $object->tenant_db_name = 'biipmico_tms_masterdata';
         $object->tenant_db_user = 'root';
