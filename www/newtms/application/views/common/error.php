@@ -14,7 +14,7 @@
       <div class="container container_style">
 <div class="masthead">
 <h3 class="text-muted h3_logo"><img class="logo" src="<?php echo base_url(); ?>assets/images/biipmi.png" alt=""></h3>
-<div class="training"><img src="<?php echo base_url(); ?>assets/images/TMS1.png" alt="" title="Training Management System"></div>
+<div class="training"><img src="<?php echo base_url(); ?>assets/images/tms1.png" alt="" title="Training Management System"></div>
 </div>
 </div>  
 	  <div class="container_nav_style">

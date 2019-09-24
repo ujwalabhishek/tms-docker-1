@@ -13,7 +13,7 @@
         
         <div class="training1">
             <a href="<?php echo site_url(); ?>" title="Home" >
-            <img src="<?php echo base_url(); ?>assets/images/TMS1.png" border="0" title="Training Management System">
+            <img src="<?php echo base_url(); ?>assets/images/tms1.png" border="0" title="Training Management System">
         </a>
         </div>
                 <?php 
