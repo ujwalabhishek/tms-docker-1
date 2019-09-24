@@ -18,8 +18,8 @@ class Class_Trainee_Model extends CI_Model {
 
         $this->user = $this->session->userdata('userDetails');
 
-        $this->load->model('Class_Model', 'class');
-        $this->load->model('Course_Model', 'course');
+        $this->load->model('class_model', 'class');
+        $this->load->model('course_model', 'course');
 
         $this->tenant_id = $this->user->tenant_id;
     }
