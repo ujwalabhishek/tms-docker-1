@@ -7,7 +7,7 @@ if (!defined('BASEPATH'))
  * This is the controller class for course listing based  on different  parameters. 
  */
 
-class Course_Public extends CI_Controller {
+class Course_public extends CI_Controller {
 
     public function __construct() {
 
@@ -33,7 +33,7 @@ class Course_Public extends CI_Controller {
      */
 
     public function index() {
-        
+        echo "sdfgh"; exit;
         ////////////added by shubhranshu to show the landing page for all tenants////////////
 
         $host=$_SERVER['HTTP_HOST'];
