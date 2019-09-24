@@ -31,8 +31,8 @@ function fetch_dynamic_db_details(){
     $host=$_SERVER['HTTP_HOST'];
     if($host == 'xprienz.net'){
         $object = new stdClass();
-        $object->tenant_db_name = 'biipmico_tms_masterdata';
-        $object->tenant_db_user = 'biipmico_tms_master';
+        $object->tenant_db_name = 'biipmico_tms';
+        $object->tenant_db_user = 'biipmico_tms';
         $object->tenant_db_password = 'ksj784382*879#';
         
         return $object;
