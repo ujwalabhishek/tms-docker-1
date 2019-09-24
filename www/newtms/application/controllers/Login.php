@@ -96,7 +96,7 @@ class Login extends CI_Controller {
         }
         $year = time() + 31536000;
         setcookie('remember_me', $user_name, $year);
-        $user = $this->login->check_user_valid();print_r($user);exit;
+        $user = $this->login->check_user_valid();
         if ($user->account_status == 'INACTIV') {
             $this->session->set_flashdata('invalid', 'Your tenant account is inactive. Please get in touch with your Administrator.');
             redirect('login/');
@@ -107,7 +107,7 @@ class Login extends CI_Controller {
             redirect('login/');
         } else {
             $user = $this->assign_my_role($user);
-            $this->session->set_userdata('userDetails', $user);
+            $this->session->set_userdata('userDetails', $user);print_r($user);exit;
             if (empty($user->role_id)) {
                 $this->session->sess_destroy();
                 redirect('login/');
