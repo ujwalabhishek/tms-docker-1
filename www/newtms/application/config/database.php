@@ -77,7 +77,7 @@ $dynamic_db_data = fetch_dynamic_db_details();
 //print_r($dynamic_db_data);exit;
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => '172.18.0.2',
 	'username' => $dynamic_db_data->tenant_db_user,
 	'password' => $dynamic_db_data->tenant_db_password,
 //	'username' => 'root',
