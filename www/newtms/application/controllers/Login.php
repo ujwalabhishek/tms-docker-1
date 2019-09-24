@@ -28,7 +28,7 @@ class Login extends CI_Controller {
     
     public function administrator(){
         if (isset($this->session->userdata('userDetails')->user_id)) {
-            $this->load->model('Dashboard_Model', 'dashboard');
+            $this->load->model('dashboard_model', 'dashboard');
             $data['page_title'] = 'Admin Home Page';
             $data['main_content'] = 'dashboard/dashboard_page';
             $data['sideMenuData'] = fetch_non_main_page_content();
