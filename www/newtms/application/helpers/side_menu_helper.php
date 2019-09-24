@@ -1,10 +1,4 @@
-<?php  
-if (!defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * fetch the logged in user side menu
- * @return array
- */
- 
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
  function fetch_non_main_page_content() {
         $CI =& get_instance();
         $user = $CI->session->userdata('userDetails');
