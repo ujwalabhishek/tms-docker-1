@@ -4,7 +4,7 @@ if (!defined('BASEPATH'))
 class Login extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('login_model', 'login');
+        $this->load->model('Login_model', 'login');
         $this->load->model('acl_model', 'acl');
         $this->load->library('bcrypt');
         $this->load->model('Manage_Tenant_Model', 'manage_tenant');
