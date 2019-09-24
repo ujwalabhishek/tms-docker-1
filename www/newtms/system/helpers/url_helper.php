@@ -531,19 +531,19 @@ if ( ! function_exists('redirect'))
 	 */
 	function redirect($uri = '', $method = 'auto', $code = NULL)
 	{
-            echo "sr";exit;
+            
 		if ( ! preg_match('#^(\w+:)?//#i', $uri))
 		{
-			$uri = site_url($uri);
+			$uri = site_url($uri);echo "s1";exit;
 		}
 
 		// IIS environment likely? Use 'refresh' for better compatibility
 		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== FALSE)
 		{
-			$method = 'refresh';
+			$method = 'refresh';echo "s2";exit;
 		}
 		elseif ($method !== 'refresh' && (empty($code) OR ! is_numeric($code)))
-		{
+		{echo "s3";exit;
 			if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $_SERVER['SERVER_PROTOCOL'] === 'HTTP/1.1')
 			{
 				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET')
