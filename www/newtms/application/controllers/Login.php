@@ -96,7 +96,7 @@ class Login extends CI_Controller {
         }
         $year = time() + 31536000;
         setcookie('remember_me', $user_name, $year);
-        $user = $this->login->check_user_valid();
+        $user = $this->login->check_user_valid();print_r($user);exit;
         if ($user->account_status == 'INACTIV') {
             $this->session->set_flashdata('invalid', 'Your tenant account is inactive. Please get in touch with your Administrator.');
             redirect('login/');
