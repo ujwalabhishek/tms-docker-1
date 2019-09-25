@@ -373,7 +373,7 @@ class Reports_finance extends CI_Controller {
      * Refunds Report
      */
     public function refunds() {
-        $this->output->enable_profiler(TRUE);
+        //$this->output->enable_profiler(TRUE);
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $data['companies'] = $this->classTraineeModel->get_company_for_paidinvoice($tenant_id);
