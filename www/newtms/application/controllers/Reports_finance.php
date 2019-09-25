@@ -9,7 +9,7 @@ class Reports_finance extends CI_Controller {
         parent::__construct();
         $this->load->model('reports_model', 'reportsModel');
         $this->load->model('course_model', 'courseModel');
-        $this->load->model('Class_Model', 'classModel');
+        $this->load->model('class_model', 'classModel');
         $this->load->model('tenant_model', 'tenantModel');
         $this->load->model('class_trainee_model', 'classTraineeModel');
         $this->load->model('internal_user_model', 'usersModel');
