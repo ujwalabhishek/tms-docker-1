@@ -3296,19 +3296,19 @@ class course_public extends CI_Controller {
 
         $data['class_id'] = $class_id;
 
-        if ($this->session->userdata('userDetails') != '') {
+        //if ($this->session->userdata('userDetails') != '') {
 
             //$data['main_content'] = 'course/payment_details';
 
-            redirect(base_url() . 'course_public/enrol_friend');
+          //  redirect(base_url() . 'course_public/enrol_friend');
 
 //            redirect(base_url().'course/class_enroll');
-        } else {
+        //} else {
 
             $data['main_content'] = 'course_public/class_member';
 
             // redirect(base_url().'course/enrol_friend');
-        }
+       // }
 
 
 
