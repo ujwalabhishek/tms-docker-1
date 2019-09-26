@@ -557,7 +557,7 @@ class course_public extends CI_Controller {
      */
 
     public function referral_credentials1($course_id, $class_id) {
-
+        unlink($this->session->get_userdata('captcha_file'));
         $session_user_id = $this->session->userdata('userDetails')->user_id;
         if (!empty($session_user_id)) {
             redirect('register_enroll/' . $course_id . '/' . $class_id);
@@ -584,7 +584,7 @@ class course_public extends CI_Controller {
                 if ($this->form_validation->run() == TRUE) {
                     $this->session->unset_userdata('captcha_key');
                     $this->load->model('user_model');
-
+                        unlink($this->session->get_userdata('captcha_file'));
 //                    $this->db->trans_start();
                     $res = $this->course_model->save_imp_trainee_skm();
                     if ($res['user_id'] != 0) {
