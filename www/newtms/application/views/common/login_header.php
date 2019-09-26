@@ -14,7 +14,7 @@
 <script src="<?php echo base_url(); ?>assets/js/date_time.js" type="text/javascript" charset="utf-8"></script>
 <div class="container container_style">
     <div class="masthead">
-        <h3 class="text-muted h3_logo"><img class="logo" src="<?php echo base_url(); ?>logos/t01.png" border="0" width="64" height="64" /></h3>
+        <h3 class="text-muted h3_logo"><a href='<?php echo base_url();?>' ><img class="logo" src="<?php echo base_url(); ?>logos/t01.png" border="0" width="64" height="64" /></a></h3>
         <div class="training">
         <img src="<?php echo base_url(); ?>assets/images/training.png" border="0" title="Training Management System" /></div>
     </div>
