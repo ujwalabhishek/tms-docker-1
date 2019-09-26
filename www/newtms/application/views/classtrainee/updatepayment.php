@@ -946,9 +946,9 @@
                 $('#invoice_id').val($np_inv_id);
             }
             $('.search_button').trigger('click');
-            if ($np_acc_type == 'individual') {alert('individual');
-                //$('.trainee_invoice').attr('checked', 'checked');
-                $(".trainee_invoice" ).prop( "checked", true );
+            if ($np_acc_type == 'individual') {
+                $('.trainee_invoice').attr('checked', 'checked');
+                $(".trainee_invoice" ).prop( "checked", true);
                 $('.trainee_invoice').trigger('change');
             }
         }
