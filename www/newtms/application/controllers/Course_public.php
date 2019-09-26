@@ -3280,7 +3280,7 @@ class course_public extends CI_Controller {
         );
 //print_r($captcha_data);exit;
         $captcha = create_captcha($captcha_data);
-//print_r($captcha);exit;
+print_r($captcha);exit;
 
         $this->session->set_userdata('captcha_key', $captcha['word']);
 
