@@ -53,19 +53,22 @@ class User_Model extends CI_Model {
         $tenentName =  $gd  > $segmentCount ? $exploded[0] : DEFAULT_TENANT;
 //        print_r($this->db->database);
         // fetch tenent id based on tenant name
+        ///////////below code added by shubhranshu to check if the trainee is created by testadmin
         $this->db->select('tenant_id');
         $this->db->from('tms_users');
         $this->db->where('user_name', $uname);
         $this->db->limit(1);
-        $usr = $this->db->get()->row()->tenant_id;
+        $usr = $this->db->get()->row()->tenant_id;////////////////////////////
          //echo $this->db->last_query();exit;
-        echo $usr;
-        $this->db->select('tenant_id');
-        $this->db->from('tenant_master');
-        $this->db->where('tenant_short_name', $tenentName);
-        $this->db->limit(1);
-//        print_r($this->db->get()->row());exit;
-        $res = $this->db->get()->row()->tenant_id;
+        if($usr != 'T01'){   /////////////////////added by shubhranshu for if the trainee is not created by testadmin
+            $this->db->select('tenant_id');
+            $this->db->from('tenant_master');
+            $this->db->where('tenant_short_name', $tenentName);
+            $this->db->limit(1);
+    //        print_r($this->db->get()->row());exit;
+            $res = $this->db->get()->row()->tenant_id;
+        }
+        
 //        echo $this->db->last_query();exit;
         // if the tenent name doesnot exist in db redirect to default tenant        
         if(empty($res))
@@ -78,7 +81,7 @@ class User_Model extends CI_Model {
         
         // define tenant id 
         
-        define('TENANT_ID_PUB', $res);echo TENANT_ID_PUB;exit;
+        define('TENANT_ID_PUB', $res);
  
     }
 
@@ -120,7 +123,7 @@ class User_Model extends CI_Model {
 
         $result = $this->db->get()->row();
 
-//       echo $this->db->last_query();exit;
+       echo $this->db->last_query();exit;
 
 //        
 
