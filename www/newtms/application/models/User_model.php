@@ -40,7 +40,7 @@ class User_Model extends CI_Model {
 
     }
 
-    function configurationfunction(){
+    function configurationfunction($uname=''){
         $tenentName = "";
         $domain = str_replace("www.", "", $_SERVER ["HTTP_HOST"]);
         $exploded = explode('.', $domain);
@@ -54,10 +54,16 @@ class User_Model extends CI_Model {
 //        print_r($this->db->database);
         // fetch tenent id based on tenant name
         $this->db->select('tenant_id');
+        $this->db->from('tms_users');
+        $this->db->where('user_name', $uname);
+        $this->db->limit(1);
+        $usr = $this->db->get()->row()->tenant_id;
+        echo $usr;
+        $this->db->select('tenant_id');
         $this->db->from('tenant_master');
         $this->db->where('tenant_short_name', $tenentName);
         $this->db->limit(1);
-        print_r($this->db->get()->row());exit;
+//        print_r($this->db->get()->row());exit;
         $res = $this->db->get()->row()->tenant_id;
 //        echo $this->db->last_query();exit;
         // if the tenent name doesnot exist in db redirect to default tenant        
@@ -71,7 +77,7 @@ class User_Model extends CI_Model {
         
         // define tenant id 
         
-        define('TENANT_ID', $res);
+        define('TENANT_ID_PUB', $res);echo TENANT_ID_PUB;exit;
  
     }
 
@@ -88,9 +94,8 @@ class User_Model extends CI_Model {
         $uname = trim($username);
         $pwd = trim($password);
    
-        $this->configurationfunction();// added by shubhranshu for dynamic teanant_id
-        echo mysql_dbname();
-        echo TENANT_ID;exit;
+        $this->configurationfunction($uname='');// added by shubhranshu for dynamic teanant_id
+        
 
         $this->db->select('usr.password, pers.first_name, pers.last_name, pers.tenant_id, usr.user_id, ten.logo, ten.copyrighttext, '
 
@@ -110,11 +115,11 @@ class User_Model extends CI_Model {
 
         $this->db->where('usr.account_status', ACTIVE);
 
-        $this->db->where('usr.tenant_id', TENANT_ID);
+        $this->db->where('usr.tenant_id', TENANT_ID_PUB);
 
         $result = $this->db->get()->row();
 
-       echo $this->db->last_query();exit;
+//       echo $this->db->last_query();exit;
 
 //        
 
