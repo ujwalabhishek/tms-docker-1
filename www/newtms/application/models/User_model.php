@@ -1111,7 +1111,7 @@ class User_Model extends CI_Model {
                 //end
             $this->send_trainee_email($r_someone, $user_details, $acc_activation_type);
             //$this->send_trainee_email1($r_someone, $user_details, $acc_activation_type);
-            $this->load->model('course_model');
+            $this->load->model('course_public_model','course_model');
             $this->course_model->send_reg_someone_referal_email($r_someone, $user_details, $acc_activation_type);
 
 
