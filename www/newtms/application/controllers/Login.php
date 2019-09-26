@@ -99,12 +99,12 @@ class Login extends CI_Controller {
         $user = $this->login->check_user_valid();
         if ($user->account_status == 'INACTIV') {
             $this->session->set_flashdata('invalid', 'Your tenant account is inactive. Please get in touch with your Administrator.');
-            redirect('login/');
+            redirect('login/administrator');
         }
         if (empty($user)) {
             $this->session->set_flashdata('invalid', 'Invalid credentials/ User account inactive. '
                     . 'Please try again or get in touch with your Administrator.');
-            redirect('login/');
+            redirect('login/administrator');
         } else {
             $user = $this->assign_my_role($user);
             $this->session->set_userdata('userDetails', $user);
