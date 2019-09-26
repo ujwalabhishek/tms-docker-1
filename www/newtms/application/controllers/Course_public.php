@@ -3271,11 +3271,11 @@ class course_public extends CI_Controller {
 
         $captcha_data = array(
             'word' => $this->_get_random_code(),
-            'img_path' => './captcha/',
+            'img_path' => APPPATH .'captcha/',
             'img_url' => base_url() . 'captcha/',
             'img_width' => '120',
             'img_height' => '40',
-            'font_path' => './assets/fonts/ATBramley-Medium.ttf',
+            'font_path' => APPPATH .'assets/fonts/ATBramley-Medium.ttf',
             'expiration' => 7200
         );
 print_r($captcha_data);exit;
