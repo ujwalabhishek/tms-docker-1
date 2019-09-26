@@ -58,14 +58,14 @@ class User extends CI_Controller {
        
                 if($result == 0)
                 {
-                     redirect("course/class_enroll1/$course_id/$class_id");
+                     redirect("course_public/class_enroll1/$course_id/$class_id");
                      
                 }else{
                     
                     $res = $this->course_model->class_name($course_id,$class_id); // get the name for class based on courseid and class id
                     $error = 'You Are Already Enrolled In - '. "' $res->class_name '".' Class';
                     $this->session->set_flashdata('error', $error);
-                    redirect("course/course_class_schedule/$course_id");
+                    redirect("course_public/course_class_schedule/$course_id");
                 }
                 
             } else {

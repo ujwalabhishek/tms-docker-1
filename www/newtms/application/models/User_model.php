@@ -63,7 +63,7 @@ class User_Model extends CI_Model {
         if(empty($res))
            //redirect(DEFAULT_TENANT);
 	  // redirect ("http://www.biipmi.com");
-           redirect ("http://xprienzhr.com/");
+           redirect ("/");
         
         //rename cookie according to tenant so that session data are domain specific
         $this->config->set_item('cookie_prefix', $res);
@@ -112,7 +112,7 @@ class User_Model extends CI_Model {
 
         $result = $this->db->get()->row();
 
-//       echo $this->db->last_query();exit;
+       echo $this->db->last_query();exit;
 
 //        
 
