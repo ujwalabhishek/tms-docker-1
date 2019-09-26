@@ -1082,7 +1082,7 @@ class Reports_finance extends CI_Controller {
      /*  activity log code start */
     
     public function activity_log(){
-        $this->output->enable_profiler(true);
+        //$this->output->enable_profiler(true);
         $data['sideMenuData'] = fetch_non_main_page_content();
       
      
