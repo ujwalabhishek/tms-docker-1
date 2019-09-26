@@ -557,7 +557,7 @@ class course_public extends CI_Controller {
      */
 
     public function referral_credentials1($course_id, $class_id) {
-        unlink($this->session->get_userdata('captcha_file'));
+        echo $this->session->get_userdata('captcha_file');
         $session_user_id = $this->session->userdata('userDetails')->user_id;
         if (!empty($session_user_id)) {
             redirect('register_enroll/' . $course_id . '/' . $class_id);
@@ -1439,7 +1439,7 @@ class course_public extends CI_Controller {
 
 
 
-                return redirect('course/referral_credentials');
+                return redirect('course_public/referral_credentials');
             }
 
 
@@ -1462,7 +1462,7 @@ class course_public extends CI_Controller {
 
 
 
-                return redirect('course/referral_credentials');
+                return redirect('course_public/referral_credentials');
             }
 
             $data['course_details'] = $course_details = $this->course_model->course_basic_details($class_details->course_id);
@@ -1475,10 +1475,10 @@ class course_public extends CI_Controller {
 
                 if ($this->input->post('user_id') && $this->input->post('friend_id') != '') {
 
-                    return redirect('course/get_course_class_list/' . $trainee_id . '/' . $user_id);
+                    return redirect('course_public/get_course_class_list/' . $trainee_id . '/' . $user_id);
                 } else {
 
-                    return redirect('course/get_course_class_list');
+                    return redirect('course_public/get_course_class_list');
                 }
             }
 
