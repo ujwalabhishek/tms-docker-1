@@ -947,7 +947,7 @@
             }
             $('.search_button').trigger('click');
             if ($np_acc_type == 'individual') {alert('individual');
-                
+                $('.trainee_invoice').prop("checked",true);
                     $payid = $('.trainee_invoice:checked').val();
                     if ($payid.length > 0) {
                         $('#payment_due_id').val($payid);
