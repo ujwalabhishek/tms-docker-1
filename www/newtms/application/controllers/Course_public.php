@@ -136,7 +136,7 @@ class course_public extends CI_Controller {
             $data['course_class_count'][$cl->course_id] = $this->course_model->get_course_count($cl->course_id);
         }
 
-        $data['main_content'] = 'course/main_course_list1';
+        $data['main_content'] = 'course_public/main_course_list1';
 
         $this->load->view('layout1', $data);
     }
@@ -207,11 +207,11 @@ class course_public extends CI_Controller {
         $tenant_id = TENANT_ID;
         $field = $this->input->get('f');
         $order_by = $this->input->get('o');
-        $baseurl = base_url() . 'course/course_class_booked_seat/' . $course_id . '/';
+        $baseurl = base_url() . 'course_public/course_class_booked_seat/' . $course_id . '/';
         $data['tabledata'] = $this->course_model->get_course_class_list($course_id, $tenant_id, $records_per_page, $offset, $field, $order_by);
         $data['crid'] = $course_id;
         $data['sort_order'] = $order_by;
-        $data['controllerurl'] = 'course/course_class_booked_seat/' . $course_id . '/';
+        $data['controllerurl'] = 'course_public/course_class_booked_seat/' . $course_id . '/';
         $meta_result = fetch_all_metavalues();
         $values = $meta_result[Meta_Values::LANGUAGE];
         $meta_map = $this->meta_values->get_param_map();
@@ -240,8 +240,8 @@ class course_public extends CI_Controller {
         $data['status_lookup_language'] = $status_lookup_language;
         $data['status_lookup_location'] = $status_lookup_location;
         $data['course_name'] = $this->course_model->get_course_name($course_id);
-        $data['main_content'] = 'course/course_class_booking';
-        $this->load->view('layout', $data);
+        $data['main_content'] = 'course_public/course_class_booking';
+        $this->load->view('layout_public', $data);
     }
 
     /*
@@ -266,7 +266,7 @@ class course_public extends CI_Controller {
 
 
 
-        $baseurl = base_url() . 'course/classes_list_by_date/' . $class_date . '/';
+        $baseurl = base_url() . 'course_public/classes_list_by_date/' . $class_date . '/';
 
 
 
@@ -278,7 +278,7 @@ class course_public extends CI_Controller {
 
         $data['sort_order'] = $order_by;
 
-        $data['controllerurl'] = 'course/classes_list_by_date/' . $class_date . '/';
+        $data['controllerurl'] = 'course_public/classes_list_by_date/' . $class_date . '/';
 
 
 
@@ -337,9 +337,9 @@ class course_public extends CI_Controller {
 
         $data['course_date'] = $class_date;
 
-        $data['main_content'] = 'course/course_class_schedule_date';
+        $data['main_content'] = 'course_public/course_class_schedule_date';
 
-        $this->load->view('layout', $data);
+        $this->load->view('layout_public', $data);
     }
 
     /*
@@ -475,7 +475,7 @@ class course_public extends CI_Controller {
 
         $data['main_content'] = 'enrol_someone';
 
-        $this->load->view('layout', $data);
+        $this->load->view('layout_public', $data);
     }
 
 //end
@@ -734,7 +734,7 @@ class course_public extends CI_Controller {
 //                                $this->session->set_userdata('userDetails', $resp);
 //                            }//end
 
-                $message = 'You have successfully booked a seat. Click <a href="' . base_url() . 'course/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
+                $message = 'You have successfully booked a seat. Click <a href="' . base_url() . 'course_public/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
                 $data['success_message'] = $message;
 
                 $user_mailer_details = array('username' => $this->input->post('user_name'),
@@ -845,7 +845,7 @@ class course_public extends CI_Controller {
                 $data['booking_ack'] = $this->_get_booking_ack_data();
                 $data['page_title'] = 'Enrol';
                 $data['main_content'] = 'enrol/message_status';
-                $this->load->view('layout', $data);
+                $this->load->view('layout_public', $data);
             }
         } else {
 //                            This is comment because user can not login from enroll for some when udser details found
@@ -857,19 +857,19 @@ class course_public extends CI_Controller {
 //                                $this->session->set_userdata('userDetails', $resp);
 //                            }//end
 
-            $error = 'You are already enrolled in this class \'' . $course_details->crse_name . ' - ' . $class_details->class_name . '\'. Click <a href="' . base_url() . 'course/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
+            $error = 'You are already enrolled in this class \'' . $course_details->crse_name . ' - ' . $class_details->class_name . '\'. Click <a href="' . base_url() . 'course_public/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
 
             $error = 'You are already enrolled in this class \'' . $course_details->crse_name . ' - ' . $class_details->class_name . '\'.';
             //$error = 'You are already enrolled in this class \'' . $course_details->crse_name . ' - ' . $class_details->class_name . '>';
             $this->session->set_flashdata('error', $error);
-            //return redirect('course/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
-            return redirect('course/course_class_schedule/' . $class_details->course_id);
+            //return redirect('course_public/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
+            return redirect('course_public/course_class_schedule/' . $class_details->course_id);
         }
 
 //        }
 //        $data['page_title'] = 'Enrol';
 //        $data['main_content'] = 'enrol/message_status';
-//        $this->load->view('layout', $data);
+//        $this->load->view('layout_public', $data);
     }
 
     /*
@@ -969,7 +969,7 @@ class course_public extends CI_Controller {
 
             if ($registration == 1) {
 
-                return redirect(base_url() . 'course/register_enroll');
+                return redirect(base_url() . 'course_public/register_enroll');
             } else {
                 return redirect(current_url());
             }
@@ -994,7 +994,7 @@ class course_public extends CI_Controller {
 //                            echo "error msg if";
 
                 $error = 'You are already enrolled in this class \'' . $course_details->crse_name . ' - ' . $class_details->class_name . '\'. '
-                        . 'Please click <a href="' . base_url() . 'course/course_class_schedule/' . $course_id . '">here</a> to go back to the Course-Class list.';
+                        . 'Please click <a href="' . base_url() . 'course_public/course_class_schedule/' . $course_id . '">here</a> to go back to the Course-Class list.';
 
                 $this->session->set_flashdata('error', $error);
 
@@ -1004,7 +1004,7 @@ class course_public extends CI_Controller {
 
                 if ($registration == 1) {
 
-                    return redirect(base_url() . 'course/register_enroll');
+                    return redirect(base_url() . 'course_public/register_enroll');
                 } else {
                     return redirect(current_url());
                 }
@@ -1020,7 +1020,7 @@ class course_public extends CI_Controller {
 
                 $user_name = rtrim($user_name, ' ');
 
-                $data['success'] = 'Welcome ' . $user_name . ', please proceed with enrollment (or) click <a href="' . base_url() . 'course/course_class_schedule/' . $course_id . '">here</a> to go back to the Course-Class list.';
+                $data['success'] = 'Welcome ' . $user_name . ', please proceed with enrollment (or) click <a href="' . base_url() . 'course_public/course_class_schedule/' . $course_id . '">here</a> to go back to the Course-Class list.';
 
                 $data['user_id'] = $taxcode_details->user_id;
 
@@ -1047,9 +1047,9 @@ class course_public extends CI_Controller {
 
                 $data['classloc'] = ($class_details->classroom_location == 'OTH') ? 'Others (' . $class_details->classroom_venue_oth . ')' : $meta_result[$class_details->classroom_location];
 
-                $data['main_content'] = 'course/payment_details';
+                $data['main_content'] = 'course_public/payment_details';
 
-                return $this->load->view('layout', $data);
+                return $this->load->view('layout_public', $data);
             }
         }
     }
@@ -1162,7 +1162,7 @@ class course_public extends CI_Controller {
 
                         $data['main_content'] = 'refer_friend';
 
-                        return $this->load->view('layout', $data);
+                        return $this->load->view('layout_public', $data);
                     } else {
 
                         $data['error_message'] = 'Unable to create your account. Please try again or get in get in touch with our Administrator.';
@@ -1184,7 +1184,7 @@ class course_public extends CI_Controller {
 
                     $data['main_content'] = 'refer_friend';
 
-                    return $this->load->view('layout', $data);
+                    return $this->load->view('layout_public', $data);
                 }
             }
         }
@@ -1201,7 +1201,7 @@ class course_public extends CI_Controller {
 
         $data['main_content'] = 'refer_login';
 
-        $this->load->view('layout', $data);
+        $this->load->view('layout_public', $data);
     }
 
     /**
@@ -1242,7 +1242,7 @@ class course_public extends CI_Controller {
 
                 $data['main_content'] = 'refer_friend';
 
-                return $this->load->view('layout', $data);
+                return $this->load->view('layout_public', $data);
             } elseif ($submit == 'continue' || $submit == 'exit') {
 
 
@@ -1259,7 +1259,7 @@ class course_public extends CI_Controller {
 
                     $data['main_content'] = 'refer_friend';
 
-                    $this->load->view('layout', $data);
+                    $this->load->view('layout_public', $data);
                 } else {
 
                     if ($submit == 'continue') {
@@ -1282,12 +1282,12 @@ class course_public extends CI_Controller {
 
                     $this->session->set_userdata('submit_status', $data['submit']);
 
-                    redirect('course/get_course_class_list');
+                    redirect('course_public/get_course_class_list');
                 }
             }
         } else {
 
-            redirect('course/referral_credentials');
+            redirect('course_public/referral_credentials');
         }
     }
 
@@ -1351,7 +1351,7 @@ class course_public extends CI_Controller {
 
         $data['sort_order'] = $order_by;
 
-        $data['controllerurl'] = 'course/get_course_class_list/';
+        $data['controllerurl'] = 'course_public/get_course_class_list/';
 
         $meta_result = fetch_all_metavalues();
 
@@ -1375,7 +1375,7 @@ class course_public extends CI_Controller {
 
         $data['main_content'] = 'enrol/courselist';
 
-        $this->load->view('layout', $data);
+        $this->load->view('layout_public', $data);
     }
 
     /**
@@ -1518,7 +1518,7 @@ class course_public extends CI_Controller {
 
             $data['main_content'] = 'enrol/payment_details';
 
-            $this->load->view('layout', $data);
+            $this->load->view('layout_public', $data);
         }
     }
 
@@ -1777,7 +1777,7 @@ class course_public extends CI_Controller {
 
                         $this->session->set_flashdata('error', $error);
 
-                        return redirect('course/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
+                        return redirect('course_public/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
                     }
                 }
             } else {
@@ -1790,14 +1790,14 @@ class course_public extends CI_Controller {
 
 
 
-                //return redirect('course/get_course_class_list');
+                //return redirect('course_public/get_course_class_list');
 
                 if ($param['user_id'] != '' && $param['refer_id'] != '') {
 
-                    return redirect('course/get_course_class_list/' . $param['user_id'] . '/' . $param['refer_id']);
+                    return redirect('course_public/get_course_class_list/' . $param['user_id'] . '/' . $param['refer_id']);
                 } else {
 
-                    return redirect('course/get_course_class_list');
+                    return redirect('course_public/get_course_class_list');
                 }
             }
         }
@@ -2039,7 +2039,7 @@ class course_public extends CI_Controller {
 
         $data['main_content'] = 'enrol/message_status';
 
-        $this->load->view('layout', $data);
+        $this->load->view('layout_public', $data);
     }
 
     public function create_enroll_self_loggedin($course_id, $class_id) {
@@ -2141,7 +2141,7 @@ class course_public extends CI_Controller {
                 $data['booking_ack'] = $this->_get_booking_ack_data();
                 $data['page_title'] = 'Enrol';
                 $data['main_content'] = 'enrol/message_status';
-                $this->load->view('layout', $data);
+                $this->load->view('layout_public', $data);
             }
 
             //}
@@ -2200,7 +2200,7 @@ class course_public extends CI_Controller {
 //                    } else{
 //                        $error = 'We have not been able to enrol you to the class. Please try again or get in touch with your administrator.';
 //                        $this->session->set_flashdata('error', $error);
-//                        return redirect('course/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
+//                        return redirect('course_public/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
 //                    }
 //
 //                }
@@ -2209,11 +2209,11 @@ class course_public extends CI_Controller {
             $course_details = $this->course_model->course_basic_details($class_details->course_id);
             $this->session->set_flashdata('error', 'Your friend is already enrolled in this class \'' . $course_details->crse_name . ' - ' . $class_details->class_name . '\'. Please select another class.');
 
-            //return redirect('course/get_course_class_list');
+            //return redirect('course_public/get_course_class_list');
             if ($param['user_id'] != '' && $param['refer_id'] != '') {
-                return redirect('course/get_course_class_list/' . $param['user_id'] . '/' . $param['refer_id']);
+                return redirect('course_public/get_course_class_list/' . $param['user_id'] . '/' . $param['refer_id']);
             } else {
-                return redirect('course/get_course_class_list');
+                return redirect('course_public/get_course_class_list');
             }
         }
 
@@ -2358,7 +2358,7 @@ class course_public extends CI_Controller {
 //        }
 //             $data['page_title'] = 'Enrol';
 //             $data['main_content'] = 'enrol/message_status';
-//             $this->load->view('layout', $data);
+//             $this->load->view('layout_public', $data);
     }
 
     /**
@@ -2491,10 +2491,10 @@ class course_public extends CI_Controller {
 
                         $this->session->set_flashdata('error', $error);
 
-                        return redirect('course/course_class_schedule/' . $class_details->course_id . '/' . $class_details->class_id);
+                        return redirect('course_public/course_class_schedule/' . $class_details->course_id . '/' . $class_details->class_id);
                     } else {
 
-                        $message = 'You have successfully booked a seat. Click <a href="' . base_url() . 'course/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
+                        $message = 'You have successfully booked a seat. Click <a href="' . base_url() . 'course_public/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
 
                         $data['success_message'] = $message;
 
@@ -2514,7 +2514,7 @@ class course_public extends CI_Controller {
 
 
 
-                        $message = 'You have successfully booked a seat. Click <a href="' . base_url() . 'course/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
+                        $message = 'You have successfully booked a seat. Click <a href="' . base_url() . 'course_public/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
 
                         $data['success_message'] = $message;
 
@@ -2660,7 +2660,7 @@ class course_public extends CI_Controller {
 //
 //                        $this->session->set_flashdata('error', $error);
 //
-//                        return redirect('course/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
+//                        return redirect('course_public/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
 //
 //                    }
 //
@@ -2675,7 +2675,7 @@ class course_public extends CI_Controller {
 
                 $this->session->set_flashdata('error', $error);
 
-                return redirect('course/course_class_schedule/' . $class_details->course_id . '/' . $class_details->class_id);
+                return redirect('course_public/course_class_schedule/' . $class_details->course_id . '/' . $class_details->class_id);
             }
         }
 
@@ -2685,7 +2685,7 @@ class course_public extends CI_Controller {
 
         $data['main_content'] = 'enrol/message_status';
 
-        $this->load->view('layout', $data);
+        $this->load->view('layout_public', $data);
     }
 
     /**
@@ -3298,16 +3298,16 @@ class course_public extends CI_Controller {
 
         //if ($this->session->userdata('userDetails') != '') {
 
-            //$data['main_content'] = 'course/payment_details';
+            //$data['main_content'] = 'course_public/payment_details';
 
           //  redirect(base_url() . 'course_public/enrol_friend');
 
-//            redirect(base_url().'course/class_enroll');
+//            redirect(base_url().'course_public/class_enroll');
         //} else {
 
             $data['main_content'] = 'course_public/class_member';
 
-            // redirect(base_url().'course/enrol_friend');
+            // redirect(base_url().'course_public/enrol_friend');
        // }
 
 
@@ -3464,7 +3464,7 @@ class course_public extends CI_Controller {
                     if ($is_enrolled->num_rows() > 0) {
 
                         $error = 'You are already enrolled in this class \'' . $course_details->crse_name . ' - ' . $class_details->class_name . '\'. '
-                                . 'Please click <a href="' . base_url() . 'course/course_class_schedule/' . $course_id . '">here</a> to go back to the Course-Class list.';
+                                . 'Please click <a href="' . base_url() . 'course_public/course_class_schedule/' . $course_id . '">here</a> to go back to the Course-Class list.';
 
                         $this->session->set_flashdata('error', $error);
 
@@ -3479,7 +3479,7 @@ class course_public extends CI_Controller {
 
                         $user_name = rtrim($user_name, ' ');
 
-                        $data['success'] = 'Welcome ' . $user_name . ', please proceed with enrollment (or) click <a href="' . base_url() . 'course/course_class_schedule/' . $course_id . '">here</a> to go back to the Course-Class list.';
+                        $data['success'] = 'Welcome ' . $user_name . ', please proceed with enrollment (or) click <a href="' . base_url() . 'course_public/course_class_schedule/' . $course_id . '">here</a> to go back to the Course-Class list.';
 
                         $data['user_id'] = $taxcode_details->user_id;
 
@@ -3507,9 +3507,9 @@ class course_public extends CI_Controller {
 
                         $data['classloc'] = ($class_details->classroom_location == 'OTH') ? 'Others (' . $class_details->classroom_venue_oth . ')' : $meta_result[$class_details->classroom_location];
 
-                        $data['main_content'] = 'course/payment_details';
+                        $data['main_content'] = 'course_public/payment_details';
 
-                        return $this->load->view('layout', $data);
+                        return $this->load->view('layout_public', $data);
                     }
                 }
             }
@@ -3521,9 +3521,9 @@ class course_public extends CI_Controller {
 
         $data['captcha'] = $this->_create_captcha();
 
-        $data['main_content'] = 'course/class_enroll';
+        $data['main_content'] = 'course_public/class_enroll';
 
-        $this->load->view('layout', $data);
+        $this->load->view('layout_public', $data);
     }
 
     public function class_enroll1($course_id, $class_id, $data = NULL) {
@@ -3562,7 +3562,7 @@ class course_public extends CI_Controller {
 
         $user_name = rtrim($user_name, ' ');
 
-        $data['success'] = 'Welcome ' . $user_name . ', please proceed with enrollment (or) click <a href="' . base_url() . 'course/course_class_schedule/' . $course_id . '">here</a> to go back to the Course-Class list.';
+        $data['success'] = 'Welcome ' . $user_name . ', please proceed with enrollment (or) click <a href="' . base_url() . 'course_public/course_class_schedule/' . $course_id . '">here</a> to go back to the Course-Class list.';
 
         $data['user_id'] = $taxcode_details->user_id;
 
@@ -3623,9 +3623,9 @@ class course_public extends CI_Controller {
 
         $data['classloc'] = ($class_details->classroom_location == 'OTH') ? 'Others (' . $class_details->classroom_venue_oth . ')' : $meta_result[$class_details->classroom_location];
 
-        $data['main_content'] = 'course/payment_details';
+        $data['main_content'] = 'course_public/payment_details';
 
-        return $this->load->view('layout', $data);
+        return $this->load->view('layout_public', $data);
 
 
 
@@ -3700,9 +3700,9 @@ class course_public extends CI_Controller {
 
         $data['classloc'] = ($class_details->classroom_location == 'OTH') ? 'Others (' . $class_details->classroom_venue_oth . ')' : $meta_result[$class_details->classroom_location];
 
-        $data['main_content'] = 'course/payment_details';
+        $data['main_content'] = 'course_public/payment_details';
 
-        return $this->load->view('layout', $data);
+        return $this->load->view('layout_public', $data);
     }
 
 }
