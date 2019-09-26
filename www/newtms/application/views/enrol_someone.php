@@ -90,7 +90,7 @@ echo validation_errors('<div class="error1">', '</div>');
 
 //            echo form_open_multipart("user/add_trainee1", $atr);
 
-             echo form_open_multipart("course/referral_credentials1", $atr);
+             echo form_open_multipart("course_public/referral_credentials1", $atr);
 
             echo form_hidden('country_of_residence', 'SGP');
 
@@ -1608,7 +1608,7 @@ if($course_id!='' && $class_id!=''){
 
 <br/><br/>
 
-<script src="<?php echo base_url(); ?>assets/js/validation_old.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/public_js/validation_old.js" type="text/javascript"></script>
 
 <!--<script src="<?php echo base_url(); ?>assets/js/validation.js" type="text/javascript"></script>-->
 
