@@ -3271,7 +3271,7 @@ class course_public extends CI_Controller {
 
         $captcha_data = array(
             'word' => $this->_get_random_code(),
-            'img_path' => APPPATH .'captcha/',
+            'img_path' => base_url() .'captcha/',
             'img_url' => base_url() . 'captcha/',
             'img_width' => '120',
             'img_height' => '40',
