@@ -973,7 +973,11 @@ echo form_close();
         </div>
     </div>        
 </div>
+
+
+
 <script type="text/javascript">
+    
     function validate_search() {
         var fname = $.trim($("#search_user_firstname").val());
         if (fname == "") {
@@ -987,16 +991,11 @@ echo form_close();
         }
         return true;
     }
-</script>
-
-
-<script type="text/javascript">
     //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////
         $('#search_form').on('submit',function() {
             search_check = 1;
             //alert("form click");
-            validate_search();
-            var status=form_validates();
+            var status=validate_search();
             if(status){
             var self = $(this),
             button = self.find('input[type="submit"],button'),
