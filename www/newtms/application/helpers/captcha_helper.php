@@ -232,12 +232,12 @@ if ( ! function_exists('create_captcha'))
 
 		ImageJPEG($im, $img_path.$img_name);
                     $img_file = $img_url.$img_name;
-                $this->session->set_userdata('captcha_file', $img_file);
+                
 		$img = "<img src=\"$img_url$img_name\" width=\"$img_width\" height=\"$img_height\" style=\"border:0;\" alt=\" \" />";
 
 		ImageDestroy($im);
 
-		return array('word' => $word, 'time' => $now, 'image' => $img);
+		return array('word' => $word, 'time' => $now, 'image' => $img, 'img_file' => $img_file);
 	}
 }
 
