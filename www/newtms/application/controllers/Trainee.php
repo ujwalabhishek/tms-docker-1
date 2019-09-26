@@ -386,7 +386,7 @@ class Trainee extends CI_Controller {
         $data['page_title'] = 'View Trainee';
         $userid = $this->uri->segment(3);
         $data['trainee'] = $trainee = $this->traineemodel->get_trainee($userid);        
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         if ($trainee[userdetails]['account_status'] == 'INACTIV') 
         {
             $data['deactivated_by'] = $this->internaluser->get_user_details($this->session->userdata('userDetails')->tenant_id, $trainee[userdetails]['deacti_by']);
