@@ -58,7 +58,7 @@ class User_Model extends CI_Model {
         $this->db->where('user_name', $uname);
         $this->db->limit(1);
         $usr = $this->db->get()->row()->tenant_id;
-         echo $this->db->last_query();exit;
+         //echo $this->db->last_query();exit;
         echo $usr;
         $this->db->select('tenant_id');
         $this->db->from('tenant_master');
