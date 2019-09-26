@@ -231,13 +231,13 @@ if ( ! function_exists('create_captcha'))
 		$img_name = $now.'.jpg';
 
 		ImageJPEG($im, $img_path.$img_name);
-                    $img_file = $img_url.$img_name;
+                    
                 
 		$img = "<img src=\"$img_url$img_name\" width=\"$img_width\" height=\"$img_height\" style=\"border:0;\" alt=\" \" />";
 
 		ImageDestroy($im);
 
-		return array('word' => $word, 'time' => $now, 'image' => $img, 'img_file' => $img_file);
+		return array('word' => $word, 'time' => $now, 'image' => $img, 'img_file' => $img_name);
 	}
 }
 
