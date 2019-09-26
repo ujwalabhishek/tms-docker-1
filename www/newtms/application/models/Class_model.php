@@ -609,7 +609,7 @@ class Class_Model extends CI_Model {
     /**
      * this function gets the default assessment schedule for class id
      */
-    public function get_def_assessment($tenant_id, $class_id, $assmnt_type) {
+    public function get_def_assessment($tenant_id, $class_id, $assmnt_type='') {
         if ($assmnt_type == 'DEFAULT') {
             $result = $this->db->select('*')->from('class_assmnt_schld')->where('tenant_id', $tenant_id)
                             ->where('class_id', $class_id)->get()->row();
