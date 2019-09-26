@@ -58,9 +58,9 @@ class User_Model extends CI_Model {
         $this->db->from('tms_users');
         $this->db->where('user_name', $uname);
         $this->db->limit(1);
-        $usr = $this->db->get()->row()->tenant_id;////////////////////////////
+        $res = $this->db->get()->row()->tenant_id;////////////////////////////
          //echo $this->db->last_query();exit;
-        if($usr != 'T01'){   /////////////////////added by shubhranshu for if the trainee is not created by testadmin
+        if($res!= 'T01'){   /////////////////////added by shubhranshu for if the trainee is not created by testadmin
             $this->db->select('tenant_id');
             $this->db->from('tenant_master');
             $this->db->where('tenant_short_name', $tenentName);
