@@ -58,7 +58,7 @@ class User_Model extends CI_Model {
         $this->db->where('tenant_short_name', $tenentName);
         $this->db->limit(1);
         $res = $this->db->get()->row()->tenant_id;
-        //echo $this->db->last_query();exit;
+        echo $this->db->last_query();exit;
         // if the tenent name doesnot exist in db redirect to default tenant        
         if(empty($res))
            //redirect(DEFAULT_TENANT);
