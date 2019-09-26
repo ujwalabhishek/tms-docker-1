@@ -40,7 +40,7 @@ class User_Model extends CI_Model {
 
     }
 
-    function configurationfunction($uname=''){
+    function configurationfunction($uname){
         $tenentName = "";
         $domain = str_replace("www.", "", $_SERVER ["HTTP_HOST"]);
         $exploded = explode('.', $domain);
