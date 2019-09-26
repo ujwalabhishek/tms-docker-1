@@ -492,7 +492,7 @@ class Classes extends CI_Controller {
         $user_id = $this->session->userdata('userDetails')->user_id;
         $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_id);
         $data['course_name'] = $this->coursemodel->get_course_detailse($class->course_id);
-        $this->load->model('Class_Trainee_Model', 'classtraineemodel');
+        $this->load->model('class_trainee_model', 'classtraineemodel');
         $data['tenant_details'] = $this->classtraineemodel->get_tenant_masters($tenant_id);
         $data['tenant_details']->tenant_state = rtrim($this->coursemodel->get_metadata_on_parameter_id($data['tenant_details']->tenant_state), ', ');
         $data['tenant_details']->tenant_country = rtrim($this->coursemodel->get_metadata_on_parameter_id($data['tenant_details']->tenant_country), ', ');
