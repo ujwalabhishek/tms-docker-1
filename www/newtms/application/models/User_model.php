@@ -51,7 +51,7 @@ class User_Model extends CI_Model {
        
         // collect tenant name from url
         $tenentName =  $gd  > $segmentCount ? $exploded[0] : DEFAULT_TENANT;
-
+print_r($this->db);exit;
         // fetch tenent id based on tenant name
         $this->db->select('tenant_id');
         $this->db->from('tenant_master');
