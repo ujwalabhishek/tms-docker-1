@@ -123,7 +123,7 @@ class User_Model extends CI_Model {
 
         $result = $this->db->get()->row();
 
-       echo $this->db->last_query();exit;
+//       echo $this->db->last_query();exit;
 
 //        
 
