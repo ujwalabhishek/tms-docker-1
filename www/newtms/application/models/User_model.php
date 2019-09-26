@@ -58,7 +58,7 @@ class User_Model extends CI_Model {
         $this->db->where('tenant_short_name', $tenentName);
         $this->db->limit(1);
         $res = $this->db->get()->row()->tenant_id;
-        echo $this->db->last_query();exit;
+//        echo $this->db->last_query();exit;
         // if the tenent name doesnot exist in db redirect to default tenant        
         if(empty($res))
            //redirect(DEFAULT_TENANT);
@@ -88,7 +88,7 @@ class User_Model extends CI_Model {
         $pwd = trim($password);
    
         $this->configurationfunction();// added by shubhranshu for dynamic teanant_id
-        
+        echo TENANT_ID;exit;
 
         $this->db->select('usr.password, pers.first_name, pers.last_name, pers.tenant_id, usr.user_id, ten.logo, ten.copyrighttext, '
 
