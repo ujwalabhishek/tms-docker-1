@@ -959,7 +959,7 @@ function valid_email_address(emailAddress) {
     return pattern.test(emailAddress);
 }
 </script>
-<script src="<?php echo base_url(); ?>assets/js/my_profile.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/addmore.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/public_js/my_profile.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/public_js/addmore.js" type="text/javascript"></script>
 
 

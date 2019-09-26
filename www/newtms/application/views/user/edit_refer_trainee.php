@@ -330,6 +330,6 @@
 
     });
 </script>
-<script src="<?php echo base_url(); ?>assets/js/validation.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/public_js/validation.js" type="text/javascript"></script>
 
 <!--<script src="<?php echo base_url(); ?>assets/js/my_profile.js" type="text/javascript"></script>-->

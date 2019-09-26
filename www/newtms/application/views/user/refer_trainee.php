@@ -268,7 +268,7 @@ var refer_friend = 1;
             </div>
     </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/js/validation.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/public_js/validation.js" type="text/javascript"></script>
 
 <script>
     $("input:radio[name=relationship]").click(function() {
