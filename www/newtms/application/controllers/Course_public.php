@@ -720,9 +720,9 @@ class course_public extends CI_Controller {
 
             if ($result["status"] == FALSE) {
                 $error = 'We were not able to complete the enrollment in the class. Please try again later or contact your Administrator.
-                                Click <a href="' . base_url() . 'course/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
+                                Click <a href="' . base_url() . 'course_public/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
                 $this->session->set_flashdata('error', $error);
-                return redirect('course/referral_credentials1/' . $class_details->course_id . '/' . $class_details->class_id);
+                return redirect('course_public/referral_credentials1/' . $class_details->course_id . '/' . $class_details->class_id);
             } else {
 
                 /* session start when user select course &class & register and then enroll in class successfully */
