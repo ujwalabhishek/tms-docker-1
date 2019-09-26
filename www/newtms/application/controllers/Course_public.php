@@ -557,7 +557,7 @@ class course_public extends CI_Controller {
      */
 
     public function referral_credentials1($course_id, $class_id) {
-        print_r($this->session->userdata('captcha_file'));
+        unlink($this->session->userdata('captcha_file'));
         $session_user_id = $this->session->userdata('userDetails')->user_id;
         if (!empty($session_user_id)) {
             redirect('register_enroll/' . $course_id . '/' . $class_id);
