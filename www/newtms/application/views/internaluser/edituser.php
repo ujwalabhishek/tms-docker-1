@@ -17,7 +17,7 @@ if (!empty($tax_error)) {
     </h2>
     <div class="table-responsive">
         <?php
-        $atr = 'id="search_form" name="search_form" onclick="return validate_search();"';
+        $atr = 'id="search_form" name="search_form" onsubmit="return validate_search();"';
         echo form_open("internal_user/edit_user", $atr);
         ?>    
         <table class="table table-striped">      
