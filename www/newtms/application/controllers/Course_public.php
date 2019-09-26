@@ -604,7 +604,7 @@ class course_public extends CI_Controller {
                     } else {
                         $error = '<center>We are not able to complete the enrollment in this class. Please try again later or contact to Administrator.</center>';
                         $this->session->set_flashdata('error', $error);
-                        return redirect('course/referral_credentials1/' . $course_id . '/' . $class_id);
+                        return redirect('course_public/referral_credentials1/' . $course_id . '/' . $class_id);
                     }
 
 //                    $this->db->trans_complete();
@@ -636,7 +636,7 @@ class course_public extends CI_Controller {
                 //end
                 $data['captcha'] = $this->_create_captcha();
                 $data['main_content'] = 'enrol_someone';
-                $this->load->view('layout', $data);
+                $this->load->view('layout_public', $data);
             }
         }
     }
