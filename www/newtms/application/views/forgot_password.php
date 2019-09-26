@@ -91,7 +91,7 @@
                                     <span class="required required_i">* Required Fields</span>
                                     <div class="popup_cance89">
                                         <button class="btn btn-primary" type="button" onclick="validate_form()" >Submit</button>&nbsp;&nbsp;
-                                        <a href="<?php echo site_url()."user/login"; ?>"><button class="btn btn-primary" type="button" >Cancel</button></a>
+                                        <a href="<?php echo base_url(); ?>"><button class="btn btn-primary" type="button" >Cancel</button></a>
                                     </div>
                                     <?php echo form_close(); ?>
                             </div>
