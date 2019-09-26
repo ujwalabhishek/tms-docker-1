@@ -980,11 +980,13 @@ echo form_close();
     
     function validate_search() {
         var fname = $.trim($("#search_user_firstname").val());
+        
+        var search_user_id = $('#search_user_id').val();
         if (fname == "") {
             $("#search_user_firstname_err").text("[required]").addClass('error');
             $("#search_user_firstname").addClass('error');
             return false;
-        } else if (fname.indexOf('(') === -1) {
+        } else if (fname.indexOf('(') === -1 && search_user_id == '') {
             $("#search_user_firstname_err").text("[Select user from autofill-help]").addClass('error');
             $("#search_user_firstname").addClass('error');
             return false;
