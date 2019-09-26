@@ -231,8 +231,8 @@ if ( ! function_exists('create_captcha'))
 		$img_name = $now.'.jpg';
 
 		ImageJPEG($im, $img_path.$img_name);
-                    
-                $this->session->set_userdata('captcha_file', $img_url.$img_name);
+                    $img_file = $img_url.$img_name;
+                $this->session->set_userdata('captcha_file', $img_file);
 		$img = "<img src=\"$img_url$img_name\" width=\"$img_width\" height=\"$img_height\" style=\"border:0;\" alt=\" \" />";
 
 		ImageDestroy($im);
