@@ -51,14 +51,14 @@ class User_Model extends CI_Model {
        
         // collect tenant name from url
         $tenentName =  $gd  > $segmentCount ? $exploded[0] : DEFAULT_TENANT;
-print_r($this->db);exit;
+print_r($this->db->database);
         // fetch tenent id based on tenant name
         $this->db->select('tenant_id');
         $this->db->from('tenant_master');
         $this->db->where('tenant_short_name', $tenentName);
         $this->db->limit(1);
         $res = $this->db->get()->row()->tenant_id;
-//        echo $this->db->last_query();exit;
+        echo $this->db->last_query();exit;
         // if the tenent name doesnot exist in db redirect to default tenant        
         if(empty($res))
            //redirect(DEFAULT_TENANT);
