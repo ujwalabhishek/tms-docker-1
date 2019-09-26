@@ -67,7 +67,7 @@ class User_Model extends CI_Model {
             $this->db->limit(1);
     //        print_r($this->db->get()->row());exit;
             $res = $this->db->get()->row()->tenant_id;
-        }
+        }////////////////////////ssp///////////////////////////////////////
         
 //        echo $this->db->last_query();exit;
         // if the tenent name doesnot exist in db redirect to default tenant        

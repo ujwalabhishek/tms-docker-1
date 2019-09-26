@@ -54,7 +54,7 @@ class Login extends CI_Controller {
             redirect('manage_tenant/');
         }
         if (isset($this->session->userdata('userDetails')->user_id)) {
-            $this->load->model('Dashboard_Model', 'dashboard');
+            $this->load->model('dashboard_model', 'dashboard');
             $data['page_title'] = 'Admin Home Page';
             $data['main_content'] = 'dashboard/adminhomepage';
             $data['classes_start_this_week'] = $this->dashboard->classes_start_this_week();
