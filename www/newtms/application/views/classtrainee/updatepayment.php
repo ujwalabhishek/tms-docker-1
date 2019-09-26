@@ -947,9 +947,12 @@
             }
             $('.search_button').trigger('click');
             if ($np_acc_type == 'individual') {
-                $(".trainee_invoice").attr('checked', 'checked');
-                $(".trainee_invoice").prop("checked",true);
-                $(".trainee_invoice").trigger("change");
+                $("body").on("change", "input[name=trainee_invoice]:radio", function(){
+                    $(".trainee_invoice").attr('checked', 'checked');
+                    $(".trainee_invoice").prop("checked",true);
+                    $(".trainee_invoice").trigger("change");
+                });
+                
             }
         }
         
