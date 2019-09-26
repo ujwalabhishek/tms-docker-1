@@ -3278,9 +3278,9 @@ class course_public extends CI_Controller {
             'font_path' => FCPATH .'assets/fonts/ATBramley-Medium.ttf',
             'expiration' => 7200
         );
-print_r($captcha_data);
+//        print_r($captcha_data);
         $captcha = create_captcha($captcha_data);
-print_r($captcha);exit;
+//        print_r($captcha);exit;
 
         $this->session->set_userdata('captcha_key', $captcha['word']);
 
