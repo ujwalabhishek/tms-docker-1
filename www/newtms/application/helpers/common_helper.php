@@ -422,7 +422,7 @@ function common_reset_password($user_id, $pass = '') {
         $pwd=  random_key_generation();
     }
     //$pwd ='Pangchoon@#1956';
-    //$encrypted_password = $CI->bcrypt->hash_password($pwd);echo $encrypted_password;exit;
+    $encrypted_password = $CI->bcrypt->hash_password($pwd);
     $password_data = array('password' => $encrypted_password);
     $CI->db->trans_start();
     $CI->db->where('user_id', $user_id);
