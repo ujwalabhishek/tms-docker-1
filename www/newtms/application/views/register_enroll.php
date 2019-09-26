@@ -15,7 +15,7 @@ echo $this->load->view('common/refer_left_wrapper');
 
 </script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/enrol_some_one.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/public_js/enrol_some_one.js"></script>
 
 
 
@@ -558,7 +558,7 @@ if($course_id!='' && $class_id!=''){
 
 <br/><br/>
 <!--<script src="<?php echo base_url(); ?>assets/js/validation_old.js" type="text/javascript"></script>-->
-<script src="<?php echo base_url(); ?>assets/js/validation_register_enroll.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/public_js/validation_register_enroll.js" type="text/javascript"></script>
 <script>
 
 

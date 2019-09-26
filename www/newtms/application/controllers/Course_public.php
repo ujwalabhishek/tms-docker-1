@@ -508,7 +508,7 @@ class course_public extends CI_Controller {
 
         $data['main_content'] = 'register_enroll';
 
-        $this->load->view('layout', $data);
+        $this->load->view('layout_public', $data);
     }
 
 //end
