@@ -933,7 +933,7 @@
         
         $np_inv_id = '<?php echo $this->input->get('invoice_id'); ?>';
         
-        if ($np_inv_id.length > 0) {
+        if ($np_inv_id.length > 0) {alert();
             $np_acc_type = '<?php echo $this->input->get(enrol_mode); ?>';
             $('#account_type').val($np_acc_type);
             if ($np_acc_type == 'company') {
@@ -946,7 +946,7 @@
                 $('#invoice_id').val($np_inv_id);
             }
             $('.search_button').trigger('click');
-            if ($np_acc_type == 'individual') {
+            if ($np_acc_type == 'individual') {alert('individual');
                 $('.trainee_invoice').attr('checked', 'checked');
                 $('.trainee_invoice').trigger('change');
             }
