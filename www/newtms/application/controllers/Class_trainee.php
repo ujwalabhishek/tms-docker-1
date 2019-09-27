@@ -844,6 +844,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         }else{
             $li = "Report at center at 8:30 AM to register for class";
         }
+        //   echo removed by shubhranshu to [revent TCPDF header sent issue.
         /* end */
         
         $data = '<br><br>

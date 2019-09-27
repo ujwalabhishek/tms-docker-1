@@ -1351,7 +1351,7 @@ class Reports_finance extends CI_Controller {
 
     }
 
-    public function get_course_class_name_json($course_id){
+    public function get_course_class_name_json($course_id=''){
 
         $user = $this->session->userdata('userDetails');
 
