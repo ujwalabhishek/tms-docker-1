@@ -214,8 +214,8 @@
                 return true;
             }else{
                 disp_err('#first_last_name', '[Select Trainee from auto-complete]');
-                
-                
+                remove_err('#user_role');
+                remove_err('#filter_status');
                 return false;
             }
             
