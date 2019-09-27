@@ -304,11 +304,11 @@ class Trainee extends CI_Controller {
                 $NRIC = $this->input->post('NRIC');
                 $NRIC_OTHER = $this->input->post("NRIC_OTHER");
                 $NRIC_ID = $this->input->post('NRIC_ID');
-                $NRIC_ID_MATCH = $this->input->post('NRIC_ID_MATCH');
+                $NRIC_ID_MATCH = $this->input->post('NRIC_ID_MATCH'); // addded by shubhranshu for NRIC ID
                 $tax_code = $NRIC_ID;
                 
                 if($NRIC != "SNG_3"){
-                    if($NRIC_ID != $NRIC_ID_MATCH){
+                    if($NRIC_ID != $NRIC_ID_MATCH){ //added by shubhranshu for check NRIC if it does not match
                         $this->form_validation->set_rules('NRIC_ID', 'NRIC Number', 'required|max_length[50]|callback_check_unique_usertaxcode');   
                         if(!empty($NRIC)) {
                         $valid = validate_nric_code($NRIC, $NRIC_ID);

@@ -199,13 +199,17 @@
         $user_role = $('#user_role').find(":selected").text();
         $filter_status = $('#filter_status').find(":selected").text();
         $first_last_name = $('#first_last_name').val();
-        
-       if($first_last_name !='' || $filter_status !='All' || $user_role !='All'){
+        var user_id = $('#user_id').val();
+       if(user_id !='' || $filter_status !='All' || $user_role !='All'){
             remove_err('#user_role');
             remove_err('#filter_status');
             remove_err('#first_last_name');
             return true;
-        } 
+        } else if(user_id == ''){
+            $("#search_user_firstname_err").text("[Select user from autofill-help]").addClass('error');
+            $("#search_user_firstname").addClass('error');
+            return false;
+        }
         else {
             disp_err('#user_role', '[Select User role from auto-complete]');
             disp_err('#filter_status', '[select filter status from auto-complete]');
