@@ -195,7 +195,8 @@
             }
             return retval;
         }
-        function form_validates() {
+        // added by shubhranshu for dynamic prevention of search form
+    function form_validates() {
         $user_role = $('#user_role').find(":selected").text();
         $filter_status = $('#filter_status').find(":selected").text();
         $first_last_name = $('#first_last_name').val();
@@ -205,13 +206,24 @@
             remove_err('#filter_status');
             remove_err('#first_last_name');
             return true;
-        }else if(user_id == ''){
-             disp_err('#first_last_name', '[Select Trainee from auto-complete]');
-            return false;
-        }else {
-            disp_err('#user_role', '[Select User role from auto-complete]');
-            disp_err('#filter_status', '[select filter status from auto-complete]');
+        }else if($first_last_name != ''){
+            if(user_id !=''){
+                remove_err('#user_role');
+                remove_err('#filter_status');
+                remove_err('#first_last_name');
+                return true;
+            }else{
+                disp_err('#first_last_name', '[Select Trainee from auto-complete]');
+                
+                
+                return false;
+            }
+            
+        }else{
             disp_err('#first_last_name', '[Select Trainee from auto-complete]');
+            disp_err('#user_role', '[Select User role from dropdown]');
+            disp_err('#filter_status', '[select filter status from auto-complete]');
+
             return false;
         }
     }
