@@ -601,6 +601,7 @@ class Reports_finance extends CI_Controller {
      * Payments Received Report - Export to PDF
      */
     public function payments_received_reports_pdf() {
+        ini_set('memory_limit','256M');
         $tenant_id = $this->tenant_id;
         $company = $this->classTraineeModel->get_company_for_paidinvoice($tenant_id);
         $companies = array();
@@ -636,6 +637,7 @@ class Reports_finance extends CI_Controller {
      */
 
     public function payments_export_xls() {
+        ini_set('memory_limit','256M');
         $tenant_id = $this->tenant_id;
         $company = $this->input->get('company');
         $companies = $this->classTraineeModel->get_company_for_paidinvoice($tenant_id);
