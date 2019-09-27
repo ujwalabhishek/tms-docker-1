@@ -838,12 +838,12 @@ if (!empty($tenant_details->tenant_contact_num)) {
        /* reporting time skm start bcoz of sam request for AOP(67) on 18-may-17*/
         $time = strtotime($classes->class_start_datetime);
         $reporting_time = date("H:i A", strtotime('-30 minutes', $time));
-//        if($classes->course_id == 67 || $classes->course_id == 121)
-//        {
-//            echo $li = "Report at center at $reporting_time to register for class";
-//        }else{
-//            echo $li = "Report at center at 8:30 AM to register for class";
-//        }
+        if($classes->course_id == 67 || $classes->course_id == 121)
+        {
+            $li = "Report at center at $reporting_time to register for class";
+        }else{
+            $li = "Report at center at 8:30 AM to register for class";
+        }
         /* end */
         
         $data = '<br><br>
