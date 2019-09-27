@@ -1223,7 +1223,7 @@ class Company_Model extends CI_Model {
         $this->db->where('tenant_company_users.tenant_id', $user->tenant_id);
         $this->db->where('tenant_company_users.company_id', $company_id);
         $this->db->where('tms_users.account_type !=', 'TRAINE');
-        $this->db->update('tms_users JOIN ON tms_users.user_id = tenant_company_users.user_id');
+        $this->db->update('tms_users JOIN tenant_company_users ON tms_users.user_id = tenant_company_users.user_id');
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) {
             return FALSE;
