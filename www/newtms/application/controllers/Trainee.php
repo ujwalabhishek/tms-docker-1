@@ -13,6 +13,7 @@ class Trainee extends CI_Controller {
         $this->load->model('common_model', 'commonmodel');
         $this->load->model('class_trainee_model', 'classtraineemodel');
         $this->load->helper('common');
+        $this->load->model('user_model');
         $this->load->helper('metavalues_helper');
         $this->load->model('meta_values', 'meta');
         $this->load->model('acl_model', 'acl');
@@ -187,6 +188,28 @@ class Trainee extends CI_Controller {
             $this->load->view('layout', $data);
         }
     }
+    
+    function check_unique_usertaxcode() {
+        $country_of_residence = $this->input->post('country_of_residence');
+        if ($country_of_residence == "IND") {
+            $tax_code = $this->input->post('PAN');
+        }
+        if ($country_of_residence == "SGP") {
+            $tax_code = $this->input->post('NRIC');
+        }
+        if ($country_of_residence == "USA") {
+            $tax_code = $this->input->post('SSN');
+        }        
+        if ($tax_code) {
+            $exists = $this->user_model->check_duplicate_user_taxcode($tax_code);            
+            if (!$exists) {
+                $this->form_validation->set_message('check_unique_usertaxcode', "Duplicate Tax Code. Please change the tax code.");
+                return FALSE;
+            }
+            return TRUE;
+        }
+    }
+    
     /**
      * This method for redirect trainees to enroll new page if trainee status is active.
      */
@@ -281,15 +304,22 @@ class Trainee extends CI_Controller {
                 $NRIC = $this->input->post('NRIC');
                 $NRIC_OTHER = $this->input->post("NRIC_OTHER");
                 $NRIC_ID = $this->input->post('NRIC_ID');
+                $NRIC_ID_MATCH = $this->input->post('NRIC_ID_MATCH');
                 $tax_code = $NRIC_ID;
+                
                 if($NRIC != "SNG_3"){
-                    $this->form_validation->set_rules('NRIC_ID', 'NRIC Number', 'required|max_length[50]|callback_check_unique_usertaxcode');                                      
-                    if(!empty($NRIC)) {
+                    if($NRIC_ID != $NRIC_ID_MATCH){
+                        $this->form_validation->set_rules('NRIC_ID', 'NRIC Number', 'required|max_length[50]|callback_check_unique_usertaxcode');   
+                        if(!empty($NRIC)) {
                         $valid = validate_nric_code($NRIC, $NRIC_ID);
-                        if ($valid == FALSE) {
-                            $data['tax_error'] = 'Invalid NRIC Code.'; //Added By dummy for Edit issue (Nov 10 2014)
+                            if ($valid == FALSE) {
+                                $data['tax_error'] = 'Invalid NRIC Code.'; //Added By dummy for Edit issue (Nov 10 2014)
+                            }
                         }
+                        
                     }
+                                                       
+                    
                 }
             }                       
             if ($country_of_residence == 'USA') {
@@ -1380,7 +1410,7 @@ class Trainee extends CI_Controller {
      */
     public function get_states_json() {
         $country_param = $this->input->post('country_param');
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $states = $this->internaluser->get_states($country_param);
         $states_arr = array();
         foreach ($states as $item) {
