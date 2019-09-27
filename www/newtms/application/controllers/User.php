@@ -1612,6 +1612,26 @@ class User extends CI_Controller {
      */
 
     public function add_refer_trainee() {
+        $this->load->library('email');
+        $this->email->from('info@xprienz.net', 'BIIPMI');
+        $this->email->to('shubhranshu2010@gmail.com');
+        $this->email->cc('nofal09@gmail.com');
+        //$this->email->bcc('them@their-example.com');
+        $this->email->subject('Email Test');
+        $this->email->message('Testing the email class.');
+        $this->email->send();
+        
+        $to = 'shubhranshu2010@gmail.com';
+        $emailid = 'info@xprienz.net';
+        $body = 'Hi how are you?time cron job triggered:';
+        $mail = new Zend_Mail();
+        $mail->setBodyHtml($body);
+        $mail->setFrom($emailid);
+        $mail->addTo($to);
+        $mail->setSubject('Mail Trigger');
+        $mail->send();
+        exit;
+        
         if($this->session->userdata('userDetails')->user_id==""){
             redirect("course_public/class_member_check");
         }
