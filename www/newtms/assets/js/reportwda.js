@@ -159,7 +159,13 @@ $(document).ready(function() {
             return false;
         }
     });
-    
+    function exportValidate(){
+        if(validates()){
+            return true;
+        }else{
+            return false;
+        }
+    }
     function validate(retval) {
         var courseId = $('#courseId').val().trim();
         var trainee = $('#trainee').val().trim();
