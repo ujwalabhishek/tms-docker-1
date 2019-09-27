@@ -93,8 +93,8 @@
             if (count($tabledata) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['CRSE']) && (!in_array($this->session->userdata('userDetails')->role_id, $not_array))) {
                 ?>
                 <div class="add_button space_style">
-                    <a href="<?php echo site_url('/course/export_course_page' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export Page Fields</span></a> &nbsp;&nbsp;
-                    <a href="<?php echo site_url('/course/export_course_full' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export All Fields</span></a>                          
+                    <a href="<?php echo site_url('/course/export_course_page' . $export_url) ?>"  class="small_text1" onclick="return exportValidate()"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export Page Fields</span></a> &nbsp;&nbsp;
+                    <a href="<?php echo site_url('/course/export_course_full' . $export_url) ?>"  class="small_text1" onclick="return exportValidate()"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export All Fields</span></a>                          
                 </div>
             <?php } ?>
             <div style="clear:both;"></div>
