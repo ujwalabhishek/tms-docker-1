@@ -129,8 +129,8 @@ $this->load->model('meta_values');
                 if (count($tabledata) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['TRAINEE']) && (!in_array($this->session->userdata('userDetails')->role_id, $not_array))):
                     ?>
                     <div class="add_button">
-                        <a href="<?php echo site_url('/trainee/export_trainee_page' . $export_url) ?>"  class="small_text1" onclick="return exportValidates()"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export Page Fields</span></a> &nbsp;&nbsp;
-                        <a href="<?php echo site_url('/trainee/export_trainee_full' . $export_url) ?>"  class="small_text1" onclick="return exportValidates()"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export All Fields</span></a>
+                        <a href="<?php echo site_url('/trainee/export_trainee_page' . $export_url) ?>"  class="small_text1" onclick="return exportValidate()"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export Page Fields</span></a> &nbsp;&nbsp;
+                        <a href="<?php echo site_url('/trainee/export_trainee_full' . $export_url) ?>"  class="small_text1" onclick="return exportValidate()"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export All Fields</span></a>
                     </div>
 <?php endif; ?>
             </div>    
@@ -208,40 +208,6 @@ echo $pagination;
     </div>
 </div>
 <script>
-    $(document).ready(function() {
-        var search_check = 0;
-//        $('#search_form').submit(function() {
-//            search_check = 1;
-//            return validate(true);
-//        });
-
-        //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////
-        $('#search_form').on('submit',function() {
-            search_check = 1;
-            //alert("form click");
-            var status=form_validates();
-            if(status){
-            var self = $(this),
-            button = self.find('input[type="submit"],button'),
-            submitValue = button.data('submit-value');
-            button.attr('disabled','disabled').html('Please Wait..');
-            return true;
-           }else{
-               return false;
-           }
-        }); //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM///////////////////////
-        $('#search_form input').change(function() {
-            if (search_check == 1) {
-                return validate(false);
-            }
-        });
-    function exportValidates(){
-        if(form_validates()){
-            return true;
-        }else{
-            return false;
-        }
-    }
     function form_validates() {
         $trainee_name_list = $('#trainee_name_list').val();
         $tax_codev = $('#tax_code').val();
@@ -283,6 +249,33 @@ echo $pagination;
             return false;
         }
     }
+    $(document).ready(function() {
+        var search_check = 0;
+//        $('#search_form').submit(function() {
+//            search_check = 1;
+//            return validate(true);
+//        });
+
+        //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////
+        $('#search_form').on('submit',function() {
+            search_check = 1;
+            //alert("form click");
+            var status=form_validates();
+            if(status){
+            var self = $(this),
+            button = self.find('input[type="submit"],button'),
+            submitValue = button.data('submit-value');
+            button.attr('disabled','disabled').html('Please Wait..');
+            return true;
+           }else{
+               return false;
+           }
+        }); //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM///////////////////////
+        $('#search_form input').change(function() {
+            if (search_check == 1) {
+                return validate(false);
+            }
+        });
         
         function validate(retval) {
             var trainee_name_list = $('#trainee_name_list').val().trim();
