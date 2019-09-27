@@ -205,12 +205,10 @@
             remove_err('#filter_status');
             remove_err('#first_last_name');
             return true;
-        } else if(user_id == ''){
-            $("#search_user_firstname_err").text("[Select user from autofill-help]").addClass('error');
-            $("#search_user_firstname").addClass('error');
+        }else if(user_id == ''){
+             disp_err('#first_last_name', '[Select Trainee from auto-complete]');
             return false;
-        }
-        else {
+        }else {
             disp_err('#user_role', '[Select User role from auto-complete]');
             disp_err('#filter_status', '[select filter status from auto-complete]');
             disp_err('#first_last_name', '[Select Trainee from auto-complete]');
