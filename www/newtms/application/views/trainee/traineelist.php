@@ -79,6 +79,7 @@ $this->load->model('meta_values');
                         NRIC/FIN No.:
                     </td>
                     <?php
+                    echo form_hidden('tax_id', $this->input->get('tax_code'), 'tax_id');
                     $tax_code = array(
                         'name' => 'tax_code',
                         'id' => 'tax_code',
@@ -234,23 +235,49 @@ echo $pagination;
                 return validate(false);
             }
         });
-        function form_validates() {
+        
+    function form_validates() {
         $trainee_name_list = $('#trainee_name_list').val();
         $tax_codev = $('#tax_code').val();
         $off_company_name = $('#off_company_name').find(":selected").text();
-        
-        
-            if($trainee_name_list != '' || $tax_codev != '' || $off_company_name !=''){
-                 remove_err('#trainee_name_list');
-                 remove_err('#tax_code');
-                 return true;
-             } 
-             else {
-                 disp_err('#trainee_name_list', '[Select trainee name from auto-complete]');
-                 disp_err('#tax_code', '[select NRIC from auto-complete]');
-                 return false;
-             }
+        $status = $('#status').find(":selected").text();
+     
+        var user_id = $('#user_id').val();
+        var tax_id = $('#tax_id').val();
+       if(tax_id !='' || user_id !='' || $off_company_name !='All' || $status !='All'){
+            remove_err('#trainee_name_list');
+            remove_err('#tax_code');
+            
+            return true;
+        }else if($trainee_name_list != ''){
+            if(user_id !=''){
+                remove_err('#trainee_name_list');
+                remove_err('#tax_code');
+                return true;
+            }else{
+                disp_err('#trainee_name_list', '[Select Trainee from auto-complete]');
+                remove_err('#tax_code');
+                return false;
+            }
+            
+        }else if($tax_codev != ''){
+            if(tax_id !=''){
+                remove_err('#trainee_name_list');
+                remove_err('#tax_code');
+                return true;
+            }else{
+                disp_err('#tax_code', '[Select NRIC from auto-complete]');
+                remove_err('#trainee_name_list');
+                return false;
+            }
+            
+        }else {
+            disp_err('#trainee_name_list', '[Select Trainee from auto-complete]');
+            disp_err('#tax_code', '[Select NRIC from auto-complete]');
+            return false;
         }
+    }
+        
         function validate(retval) {
             var trainee_name_list = $('#trainee_name_list').val().trim();
             var tax_code = $('#tax_code').val().trim();

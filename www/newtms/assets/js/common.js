@@ -262,6 +262,7 @@ $(document).ready(function() {
         select: function(event, ui) {
             var id = ui.item.key;
             $('#user_id').val(id);
+            $('#tax_id').val(id);
         },
         minLength: 4
     });
