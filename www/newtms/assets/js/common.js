@@ -146,8 +146,11 @@ $(document).ready(function() {
             }, function(data) {
                 var d = jQuery.parseJSON(data);
                 response(d);
-                $('#course_code_id').val(d);
+                
             });
+        },select: function(event, ui) {
+            $('#course_code_id').val(ui.item.value);
+            return false;
         },
         minLength: 1
     });
