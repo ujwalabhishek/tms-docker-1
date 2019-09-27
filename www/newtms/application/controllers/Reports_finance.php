@@ -1083,6 +1083,7 @@ class Reports_finance extends CI_Controller {
     
     public function activity_log(){
         //$this->output->enable_profiler(true);
+        ini_set('memory_limit','256M');
         $data['sideMenuData'] = fetch_non_main_page_content();
       
      
