@@ -170,19 +170,19 @@
         var course_code_id = $('#course_code_id').val();
         
        if(course_code_id !='' || $off_company_name !='All' || $status !='All'){
-            remove_err('#$course_code');
+            remove_err('#course_code');
             return true;
         }else if($course_code != ''){
             if(course_code_id !=''){
                 remove_err('#$course_code');
                 return true;
             }else{
-                disp_err('#$course_code', '[Select course code from auto-complete]');
+                disp_err('#course_code', '[Select course code from auto-complete]');
                 return false;
             }
             
         }else {
-            disp_err('#$course_code', '[Select course code from auto-complete]');
+            disp_err('#course_code', '[Select course code from auto-complete]');
             return false;
         }
     }
