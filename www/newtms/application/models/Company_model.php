@@ -1220,7 +1220,6 @@ class Company_Model extends CI_Model {
             'tms_users.account_status'=>'ACTIVE'
         );
         $this->db->set($tms_users_data);
-        $this->db->_protect_identifiers=false;
         $this->db->where('tenant_company_users.tenant_id', $user->tenant_id);
         $this->db->where('tenant_company_users.company_id', $company_id);
         $this->db->where('tms_users.account_type !=', 'TRAINE');
