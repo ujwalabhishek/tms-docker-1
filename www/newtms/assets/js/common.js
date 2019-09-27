@@ -146,6 +146,7 @@ $(document).ready(function() {
             }, function(data) {
                 var d = jQuery.parseJSON(data);
                 response(d);
+                $('#course_code_id').val(d);
             });
         },
         minLength: 1
