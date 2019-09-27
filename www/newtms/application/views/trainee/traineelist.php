@@ -129,8 +129,8 @@ $this->load->model('meta_values');
                 if (count($tabledata) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['TRAINEE']) && (!in_array($this->session->userdata('userDetails')->role_id, $not_array))):
                     ?>
                     <div class="add_button">
-                        <a href="<?php echo site_url('/trainee/export_trainee_page' . $export_url) ?>"  class="small_text1" onclick="return exportValidate()"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export Page Fields</span></a> &nbsp;&nbsp;
-                        <a href="<?php echo site_url('/trainee/export_trainee_full' . $export_url) ?>"  class="small_text1" onclick="return exportValidate()"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export All Fields</span></a>
+                        <a href="<?php echo site_url('/trainee/export_trainee_page' . $export_url) ?>"  class="small_text1" onclick="return exportValidates()"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export Page Fields</span></a> &nbsp;&nbsp;
+                        <a href="<?php echo site_url('/trainee/export_trainee_full' . $export_url) ?>"  class="small_text1" onclick="return exportValidates()"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export All Fields</span></a>
                     </div>
 <?php endif; ?>
             </div>    
@@ -235,7 +235,13 @@ echo $pagination;
                 return validate(false);
             }
         });
-        
+    function exportValidates(){
+        if(form_validates()){
+            return true;
+        }else{
+            return false;
+        }
+    }
     function form_validates() {
         $trainee_name_list = $('#trainee_name_list').val();
         $tax_codev = $('#tax_code').val();
