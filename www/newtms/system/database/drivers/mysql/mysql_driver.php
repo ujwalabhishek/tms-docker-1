@@ -93,7 +93,7 @@ class CI_DB_mysql_driver extends CI_DB {
 	 *
 	 * @var	string
 	 */
-	protected $_escape_char = '`';
+	protected $_escape_char = '';
 
 	// --------------------------------------------------------------------
 
