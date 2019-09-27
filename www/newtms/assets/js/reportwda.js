@@ -1,6 +1,7 @@
 /**
  * This js file includes in WDA reports page
  */
+
 $(document).ready(function() {
     $( "#displayText" ).click(function() {
           $( "#alertmsg" ).show();
@@ -159,13 +160,7 @@ $(document).ready(function() {
             return false;
         }
     });
-    function exportValidate(){
-        if(validates()){
-            return true;
-        }else{
-            return false;
-        }
-    }
+    
     function validate(retval) {
         var courseId = $('#courseId').val().trim();
         var trainee = $('#trainee').val().trim();
@@ -180,5 +175,6 @@ $(document).ready(function() {
         }
         return retval;
     }
+    
     ///////added by shubhranshu to vaildate search operation///////////////////////////////////////////////////////////
 });
