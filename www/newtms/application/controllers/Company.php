@@ -273,7 +273,7 @@ class Company extends CI_Controller {
      */
     public function check_username($arg_username = '') {
         extract($_POST);
-        $user_name = trim(($username));
+        $user_name = trim($username);
         if ($arg_username != '') {
             $user_name = $arg_username;
         }
