@@ -138,6 +138,13 @@ $(document).ready(function() {
             $('#soa_report_form')[0].submit();
         }
     });
+    // below code added by shubhranshu for dynamic button search request
+    $('.select_soa_print').click(function(){
+        $('.print_soa_report').prop("disabled", false);
+         $('.print_soa_report').html("Print");
+         $('.submit_but').prop("disabled", false);
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span>Export");
+    });// below code added by shubhranshu for dynamic button search request
 });
 function form_validation($retval) {
     $course = $('#courseId').val();
