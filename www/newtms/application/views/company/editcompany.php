@@ -11,7 +11,9 @@
     ////added by shubhranshu for multiclick & validate input field
     function validate_search(){
         $compname=$('#edit_search_company_name').val();
-        if($compname == ''){
+        $compid=$('#edit_search_company_id').val();
+        
+        if($compname == '' || $compid == ''){
             disp_err('#edit_search_company_name', '[Select Company name from auto-complete]');
             return false;
         }else{
