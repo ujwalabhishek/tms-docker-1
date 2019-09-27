@@ -3772,7 +3772,7 @@ function generate_soa_report_csv($tabledata, $metadata) {
         }
         fputcsv($output, $data);
     }
-    return;
+    redirect('reports/soa_report');
 }
 
 /**
