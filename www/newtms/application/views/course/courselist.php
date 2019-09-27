@@ -59,6 +59,8 @@
                     </td>
                     <td>
                         <input type="text" value="<?php echo $this->input->get('course_code'); ?>" name="course_code" id="course_code">
+                        <input type="hidden" value="<?php echo $this->input->get('course_code'); ?>" name="course_code_id" id="course_code_id">
+                        <span id='course_code_err'></span>
                     </td>
                     <td width="13%" align="center">
                         <button title="Search" value="Search" type="submit" class="btn btn-xs btn-primary no-mar"><span class="glyphicon glyphicon-search"></span> Search</button>
@@ -160,6 +162,30 @@
             $("#course_name").val($("#course_name option:first").val());
         }
     });
+    function form_validates() {
+        $course_code = $('#course_code').val();
+        $off_company_name = $('#course_name').find(":selected").text();
+        $status = $('#filter_status').find(":selected").text();
+     
+        var course_code_id = $('#course_code_id').val();
+        
+       if(course_code_id !='' || $off_company_name !='All' || $status !='All'){
+            remove_err('#$course_code');
+            return true;
+        }else if($course_code != ''){
+            if(course_code_id !=''){
+                remove_err('#$course_code');
+                return true;
+            }else{
+                disp_err('#$course_code', '[Select course code from auto-complete]');
+                return false;
+            }
+            
+        }else {
+            disp_err('#$course_code', '[Select course code from auto-complete]');
+            return false;
+        }
+    }
     $(document).ready(function() {
         if ($("#course_name_radio").is(":checked")) {
             $('#course_code').attr('disabled', 'disabled');
@@ -172,19 +198,20 @@
         
         
         //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////
-    $('#search_form').on('submit',function() {
-//        form_check = 1;
-        //alert("form click");
-//        var status=form_validates();alert(status);
-//        if(status){
+    $('#search_form').on('submit',function(){
+        var status=form_validates();
+        if(status){
         var self = $(this),
         button = self.find('input[type="submit"],button'),
         submitValue = button.data('submit-value');
         button.attr('disabled','disabled').html('Please Wait..');
         return true;
-       
+        }else{
+            return false;
+        }
     }); //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////
-   });
+   
+ });
     
     
 </script> 
