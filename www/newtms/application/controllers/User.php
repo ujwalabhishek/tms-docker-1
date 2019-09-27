@@ -1612,6 +1612,9 @@ class User extends CI_Controller {
      */
 
     public function add_refer_trainee() {
+        if($this->session->userdata('userDetails')->user_id==""){
+            redirect("course_public/class_member_check");
+        }
         $data['page_title'] = 'Trainee Register';
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $country_of_residence = $this->input->post('country_of_residence');
