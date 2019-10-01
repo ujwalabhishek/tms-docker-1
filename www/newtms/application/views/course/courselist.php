@@ -162,6 +162,13 @@
             $("#course_name").val($("#course_name option:first").val());
         }
     });
+    ////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45P
+    $('#course_code').on("blur", function() {
+        $course_code = $('#course_code').val();
+            if($course_code ==''){
+                $("#course_code_id").val("");
+            }  
+       });
     function form_validates() {
         $course_code = $('#course_code').val();
         $off_company_name = $('#course_name').find(":selected").text();
