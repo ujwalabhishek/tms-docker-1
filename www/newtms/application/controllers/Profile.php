@@ -106,7 +106,7 @@ class Profile extends CI_Controller {
             }
             $this->form_validation->set_rules('user_registered_email', 'UserEmail', 'required|max_length[50]|callback_check_unique_useremail_edit');
             $this->form_validation->set_rules('pers_first_name', 'First Name', 'required');
-            if ($this->form_validation->run() == TRUE && $valid==TRUE) {echo "d";exit;
+            if ($this->form_validation->run() == TRUE && $valid==TRUE) {
                 $delete_image = $this->input->post('deleteimage') ? $this->input->post('deleteimage') : 'no';
                 $uid = $this->internaluser->update_user_data();
                 $this->load->helper('upload_helper');
@@ -140,7 +140,7 @@ class Profile extends CI_Controller {
     /*
      * Method for checking if pan id is already exists in add Interanl user.
      */
-    public function check_pan($pan) { 
+    public function check_pan($pan='') { 
         extract($_POST);        
         if($country_of_residence == "SGP" && $this->data['user']->role_id != 'ADMN') {
             $valid = validate_nric_code($nric, $pan_id);            
