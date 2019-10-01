@@ -247,7 +247,7 @@ class User extends CI_Controller {
      
     }//END
     
-    public function check_user_enrollment($user_id,$course_id,$class_id)
+    public function check_user_enrollment($user_id='',$course_id='',$class_id='')
     {
          $user_id = $this->input->post('user_id');
          $course_id = $this->input->post('course_id');
