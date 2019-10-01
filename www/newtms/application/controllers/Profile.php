@@ -183,6 +183,27 @@ class Profile extends CI_Controller {
             return TRUE;
         }
     }
+    
+    function check_unique_usertaxcode() {
+        $country_of_residence = $this->input->post('country_of_residence');
+        if ($country_of_residence == "IND") {
+            $tax_code = $this->input->post('PAN');
+        }
+        if ($country_of_residence == "SGP") {
+            $tax_code = $this->input->post('NRIC');
+        }
+        if ($country_of_residence == "USA") {
+            $tax_code = $this->input->post('SSN');
+        }        
+        if ($tax_code) {
+            $exists = $this->internaluser->check_duplicate_user_taxcode($tax_code);            
+            if (!$exists) {
+                $this->form_validation->set_message('check_unique_usertaxcode', "Duplicate Tax Code. Please change the tax code.");
+                return FALSE;
+            }
+            return TRUE;
+        }
+    }
     /*
      * This methord used for checking th taxcode unique.
      */
