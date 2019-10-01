@@ -183,7 +183,16 @@ class Profile extends CI_Controller {
             return TRUE;
         }
     }
-    
+    function check_unique_useremail_emp() {
+        if ($emp_email = $this->input->post('emp_email')) {
+            $exists = $this->internaluser->check_duplicate_user_email_company($emp_email);
+            if ($exists) {
+                $this->form_validation->set_message('check_unique_useremail_emp', "Employee Email ID Already exists!!.");
+                return FALSE;
+            }
+            return TRUE;
+        }
+    }
     function check_unique_usertaxcode() {
         $country_of_residence = $this->input->post('country_of_residence');
         if ($country_of_residence == "IND") {
