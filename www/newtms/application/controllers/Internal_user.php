@@ -524,7 +524,7 @@ class Internal_user extends CI_Controller {
     /*
      * Method for checking if email id is already exists in add Interanl user.
      */
-    public function check_email_id($email) {
+    public function check_email_id($email='') {
         extract($_POST);
         $email_id = trim($email);
         $exists = $this->internaluser->check_email($email_id);
