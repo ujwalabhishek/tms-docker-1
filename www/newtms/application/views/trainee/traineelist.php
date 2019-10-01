@@ -276,7 +276,19 @@ echo $pagination;
                 return validate(false);
             }
         });
-        
+         // added by shubhranshu for dynamic prevention of search form
+        $('#trainee_name_list').on("blur", function() {
+        $trainee_name_list = $('#trainee_name_list').val().trim();
+            if($trainee_name_list ==''){
+                $("#user_id").val("");
+            }  
+       });
+       $('#tax_code').on("blur", function() {
+        $tax_code = $('#tax_code').val().trim();
+            if($tax_code ==''){
+                $("#tax_id").val("");
+            }  
+       });
         function validate(retval) {
             var trainee_name_list = $('#trainee_name_list').val().trim();
             var tax_code = $('#tax_code').val().trim();
