@@ -620,7 +620,7 @@ class Internal_User_Model extends CI_Model {
             'doj' => $emp_doj,
             'designation' => strtoupper($emp_designation),
             'designation_others'=>strtoupper($emp_designation_others),
-            'off_email_id' => $emp_email,
+            //'off_email_id' => $emp_email,
             'off_contact_number' => $emp_contact_number,
             'off_address_bldg' => strtoupper($emp_address),
             'off_address_city' => strtoupper($emp_city),
