@@ -41,7 +41,7 @@ if (!empty($tax_error)) {
     <br>
     <?php echo validation_errors('<div class="error1">', '</div>'); ?>
     <?php
-    $atr = 'id="edit_user_form" name="edit_user_form" onclick="return(validate(true));"' . $form_style_attr;
+    $atr = 'id="edit_user_form" name="edit_user_form" onsubmit="return(validate(true));"' . $form_style_attr;
     echo form_open_multipart("internal_user/edit_user", $atr);
     ?>
     <input type="hidden" name="edit_user_id" id="edit_user_id" value="<?php echo $edit_user_id; ?>" />        
