@@ -201,7 +201,7 @@
             if($first_last_name ==''){
                 $("#user_id").val("");
             }  
-        });
+       });
     function form_validates() {
         $user_role = $('#user_role').find(":selected").text();
         $filter_status = $('#filter_status').find(":selected").text();

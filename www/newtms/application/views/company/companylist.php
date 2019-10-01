@@ -226,6 +226,12 @@ echo form_open("company", $atr);
               return validate(false);
           } 
        });
+       $('#list_search_company_name').on("blur", function() {
+        $list_search_company_name = $('#list_search_company_name').val().trim();
+            if($list_search_company_name ==''){
+                $("#list_search_company_id").val("");
+            }  
+       });
        function validate(retval){
            var company_name = $('#list_search_company_name').val().trim();
            var company_id = $('#list_search_company_id').val();
