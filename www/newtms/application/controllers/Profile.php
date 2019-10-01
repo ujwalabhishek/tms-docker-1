@@ -106,7 +106,8 @@ class Profile extends CI_Controller {
             }
             $this->form_validation->set_rules('user_registered_email', 'UserEmail', 'required|max_length[50]|callback_check_unique_useremail_edit');
             $this->form_validation->set_rules('pers_first_name', 'First Name', 'required');
-            echo $this->form_validation->run().' '.$valid;
+            if($this->form_validation->run()){echo "form_valid";};
+            if($valid){echo "valid";};
             if ($this->form_validation->run() == TRUE && $valid==TRUE) {echo 'ds';exit;
                 $delete_image = $this->input->post('deleteimage') ? $this->input->post('deleteimage') : 'no';
                 $uid = $this->internaluser->update_user_data();
