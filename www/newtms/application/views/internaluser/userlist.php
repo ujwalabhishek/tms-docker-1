@@ -197,7 +197,10 @@
         }
         // added by shubhranshu for dynamic prevention of search form
     $('#first_last_name').on("blur", function() {
-            $("#user_id").val("");
+        $first_last_name = $('#first_last_name').val();
+            if($first_last_name ==''){
+                $("#user_id").val("");
+            }  
         });
     function form_validates() {
         $user_role = $('#user_role').find(":selected").text();
