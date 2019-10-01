@@ -1686,11 +1686,11 @@ echo form_close();
             check = 1;
             return validate(true);
         });
-        $('#edit_user_form select,#edit_user_form input').change(function() {
-            if (check == 1) {
-                return validate(false);
-            }
-        });
+//        $('#edit_user_form select,#edit_user_form input').change(function() {
+//            if (check == 1) {
+//                return validate(false);
+//            }
+//        });
     });
     
     $("#reason_for_deactivation").change(function() {
