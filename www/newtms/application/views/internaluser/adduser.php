@@ -58,7 +58,7 @@ echo form_open_multipart("internal_user/add_user", $atr);
                             ?>
                             <span id="NRIC_err"></span>
                         </SPAN>              
-                        <SPAN id="SGP_OTHERS" style="display:none;">
+                        <SPAN id="SGP_OTHERS" style="<?php if(empty($this->input->post('NRIC_OTHER'))){echo "display:none";}?>">
                             <br /><br />
                             <label id="SGP_OTHERS_label">NRIC Code: </label><span class="required">* </span>                  
                             <?php
@@ -73,7 +73,7 @@ echo form_open_multipart("internal_user/add_user", $atr);
                             ?>
                             <span id="NRIC_OTHER_err"></span>
                         </SPAN>
-                        <SPAN id="SGP_ID" style="display:none;">
+                        <SPAN id="SGP_ID" style="<?php if(empty($this->input->post('NRIC_ID'))){echo "display:none";}?>">
                             <br /><br />
                             <label id="SGP_ID_label"> NRIC Code : </label><span class="required">* </span>                  
                             <?php
@@ -82,7 +82,7 @@ echo form_open_multipart("internal_user/add_user", $atr);
                             ?>
                             <span id="NRIC_ID_err"></span>                    
                         </SPAN>
-                        <SPAN id="USA" style="display:none;">SSN : <span class="required">* </span>
+                        <SPAN id="USA" style="<?php if(empty($this->input->post('SSN'))){echo "display:none";}?>">SSN : <span class="required">* </span>
                             <?php
                             $attr = array('name' => 'SSN', 'class' => 'upper_case alphanumeric', 'id' => 'SSN', 'onblur' => 'javascript:isunique_pan(this.value,this.id);');
                             echo form_input($attr, $this->input->post('SSN'));
