@@ -201,7 +201,7 @@
         $filter_status = $('#filter_status').find(":selected").text();
         $first_last_name = $('#first_last_name').val();
         var user_id = $('#user_id').val();
-       if(user_id !='' || $filter_status !='All' || $user_role !='All'){
+       if((user_id !='' && $first_last_name != '') || $filter_status !='All' || $user_role !='All'){
             remove_err('#user_role');
             remove_err('#filter_status');
             remove_err('#first_last_name');
