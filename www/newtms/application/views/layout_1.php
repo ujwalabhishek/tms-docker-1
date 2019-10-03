@@ -165,6 +165,7 @@ span.psw {
                                         
                                         <!--added the new login form by shubhranshu-->
                                         <form class="modal-content animate" action="<?php echo site_url() ?>login/validate_user"  method="post" id="signupForm">
+                                           <h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>
                                             <div class="imgcontainer">
                                               
                                               <img src="../assets/images/user2.png" alt="Avatar" class="avatar">

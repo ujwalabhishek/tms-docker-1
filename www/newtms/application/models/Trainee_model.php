@@ -1086,7 +1086,8 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
        if(!empty($res)){
            return $res;
        }else{
-           return $res['payment_status']='NULL';
+            $res['payment_status']='NULL';
+           return $res;
        }
        
     }
