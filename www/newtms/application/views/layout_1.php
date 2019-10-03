@@ -163,7 +163,7 @@ span.psw {
                                     ?>                                   
                                     <div class="table-responsive">
                                         
-                                        
+                                        <!--added the new login form by shubhranshu-->
                                         <form class="modal-content animate" action="<?php echo site_url() ?>login/validate_user"  method="post" id="signupForm">
                                             <div class="imgcontainer">
                                               
@@ -209,63 +209,9 @@ span.psw {
                                             </div>
                                           </form>
                                         
+                                         <!--added the new login form by shubhranshu-->
                                         
                                         
-                                        
-                                        
-                                        <form action="<?php echo site_url() ?>login/validate_user"  method="post" id="signupForm">
-                                            
-                                            <table class="table table-striped">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="td_heading" width="40%">Username:<span class="required" >*</span></td>
-                                                        <td width="60%"><input type="text" name="username"  class='form-control' id="uname"  value="<?php
-                                                            if (isset($_COOKIE['remember_me'])) {
-                                                                echo $_COOKIE['remember_me'];
-                                                            }
-                                                            ?>"/>
-                                                        <span id="uname_err"></span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="td_heading">Password:<span class="required">*</span></td>
-                                                        <td><input type="password" class='form-control' name="password" id="pwd"/>
-                                                         <span id="pass_err"></span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><input type="checkbox" name="remember" value="1" <?php
-                                                            if (isset($_COOKIE['remember_me'])) {
-                                                                echo 'checked="checked"';
-                                                            } else {
-                                                                echo '';
-                                                            }
-                                                            ?>/> Remember Username</td>
-                                                        <td>
-                                                            <button class="btn btn-primary" type="submit" onclick="return validate_form();" ><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</button>
-                                                        </td>
-
-                                                    </tr>
-                                                    <?php 
-                                                    if(!isset($message)){                                                        
-                                                    ?>
-                                                    <tr>
-                                                        <td colspan="2">                                                            
-                                                            <a href="<?php echo site_url();?>login/forgot_password" class="small_text1">Forgot your password?</a>
-                                                        </td>
-                                                    </tr>
-                                                    <?php }
-                                                    ?>
-                                                    <tr>
-                                                        <td colspan="2">Cookies must be enabled in your browser</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td colspan="2"><span class="required required_i">* Required Fields</span></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
