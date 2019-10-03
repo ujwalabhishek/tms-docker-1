@@ -1083,7 +1083,12 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
        $this->db->where('enrolment_mode','COMPSPON');
        $res=$this->db->get()->row();
        //echo $this->db->last_query();exit;
-       return $res;
+       if(!empty($res)){
+           return $res;
+       }else{
+           return $res['payment_status']='NULL';
+       }
+       
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
    /**
