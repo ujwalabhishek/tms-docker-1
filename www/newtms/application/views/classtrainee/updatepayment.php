@@ -954,7 +954,7 @@
         }
         
         
-        $('.trainee_invoice').on('change', '.trainee_invoice', function() {
+        $('.trainee_table').on('change', '.trainee_invoice', function() {
         $payid = $('.trainee_invoice:checked').val();
         if ($payid.length > 0) {
             $('#payment_due_id').val($payid);
