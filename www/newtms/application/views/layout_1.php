@@ -28,8 +28,8 @@
 
 /* Set a style for all buttons */
 button {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #428bca;
+  color: white !important;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
@@ -167,7 +167,7 @@ span.psw {
                                         <form class="modal-content animate" action="/action_page.php" method="post">
                                             <div class="imgcontainer">
                                               
-                                              <img src="../assets/images/user.png" alt="Avatar" class="avatar">
+                                              <img src="../assets/images/user2.png" alt="Avatar" class="avatar">
                                             </div>
 
                                             <div class="container-login">
@@ -178,6 +178,7 @@ span.psw {
                                               <input type="password" placeholder="Enter Password" name="psw" class='form-control' required>
 
                                               <button type="submit">Login</button>
+                                              <br>
                                               <label>
                                                 <input type="checkbox" checked="checked" name="remember"> Remember me
                                                 
@@ -185,12 +186,12 @@ span.psw {
                                               <label class="pull-right">
                                                   <span>Forgot <a href="#">password?</a></span>
                                               </label>
-                                              
+                                              <br>
                                             </div>
 
                                             <div class="container-login" style="background-color:#f1f1f1">
                                               <!--<button type="button" class="cancelbtn">Cancel</button>-->
-                                              
+                                              <br>
                                             </div>
                                           </form>
                                         
