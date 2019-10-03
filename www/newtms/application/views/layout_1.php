@@ -198,7 +198,7 @@ span.psw {
                                                 if(!isset($message)){                                                        
                                                 ?>
                                               <label class="pull-right">
-                                                  <span>Forgot <a href="<?php echo site_url();?>login/forgot_password">password?</a></span>
+                                                  <span><a href="<?php echo site_url();?>login/forgot_password">Forgot password?</a></span>
                                               </label>
                                                 <?php } ?>
                                               <br>
