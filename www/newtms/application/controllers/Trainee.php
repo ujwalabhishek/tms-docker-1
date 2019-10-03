@@ -1291,7 +1291,7 @@ class Trainee extends CI_Controller {
     public function check_username() {
         extract($_POST);
         $user_name = trim(($username));
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $exists = $this->internaluser->check_username($username);
         if ($exists) {
             echo 1;
