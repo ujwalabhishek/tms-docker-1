@@ -179,7 +179,7 @@ span.psw {
 
                                               <button type="submit">Login</button>
                                               <label>
-                                                <input type="checkbox" checked="checked" name="remember" class='form-control'> Remember me
+                                                <input type="checkbox" checked="checked" name="remember"> Remember me
                                                 
                                               </label>
                                               <label class="pull-right">
