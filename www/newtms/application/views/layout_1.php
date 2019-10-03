@@ -165,7 +165,7 @@ span.psw {
                                         
                                         <!--added the new login form by shubhranshu-->
                                         <form class="modal-content animate" action="<?php echo site_url() ?>login/validate_user"  method="post" id="signupForm">
-                                           <h2 class="panel_heading_style" style='text-align:center'>INTERNAL STAFF USE ONLY</h2>
+                                            <h2 class="panel_heading_style" style='text-align:center'><strong>Internal Staff Use Only</strong></h2>
                                             <div class="imgcontainer">
                                               
                                               <img src="../assets/images/user2.png" alt="Avatar" class="avatar">
