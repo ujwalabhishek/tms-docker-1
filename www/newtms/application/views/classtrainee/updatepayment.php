@@ -946,7 +946,7 @@
                 $('#invoice_id').val($np_inv_id);
             }
             $('.search_button').trigger('click');
-            if ($np_acc_type == 'individual') {alert();
+            if ($np_acc_type == 'individual') {
                 $('.trainee_invoice').attr('checked', 'checked');
                 $('.trainee_invoice').prop('checked',true);
                 $('.trainee_invoice').trigger('change');
@@ -954,7 +954,7 @@
         }
         
         
-        $(document).on('change', '.trainee_invoice', function() {
+        $('.trainee_invoice').on('change', '.trainee_invoice', function() {
         $payid = $('.trainee_invoice:checked').val();
         if ($payid.length > 0) {
             $('#payment_due_id').val($payid);
