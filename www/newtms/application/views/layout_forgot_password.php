@@ -71,69 +71,6 @@
                                 
                                 
                                 
-                                
-                                
-                                
-                                <?php
-                                    $atr = 'id="forgot_password_form" name="forgot_password_form"';
-                                    echo form_open("login/get_forgot_password", $atr);
-                                ?>
-                                <div class="table-responsive">    
-                                    <h2 class="panel_heading_style"><span class="glyphicon glyphicon-question-sign"></span> Forgot Password</h2>
-                                    <table class="table table-striped" width="100%" border="0" cellspacing="0" cellpadding="5">
-                                        <?php   if($this->session->flashdata('success')){ 
-                                                    echo '<div class="success">' . $this->session->flashdata('success') . '</div>';                                                               
-                                                }else if($this->session->flashdata('error')){
-                                                    echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';                                                    
-                                                }
-                                                if(!empty($form_success)){ 
-                                                    echo '<div class="success">' . $form_success . '</div>';                                                               
-                                                }else if(!empty($form_error)){
-                                                    echo '<div class="error1">' . $form_error . '</div>';
-                                                    $user_name = $this->input->post('username');
-                                                    $email = $this->input->post('email');
-                                                }
-                                        ?>        
-                                        <tr>
-                                            <td class="td_heading">Username:<span class="required">*</span></td>
-                                            <td>        
-                                                <?php
-                                                $attr = array(
-                                                    'name' => 'username',
-                                                    'id'   =>'username',
-                                                    'value' => "$user_name",
-                                                    'type' => 'text'                                                                
-                                                );
-                                                echo form_input($attr);
-                                                ?>
-                                                <span id="username_err"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td_heading">Email Id:<span class="required">*</span> </td>
-                                            <td>        
-                                                <?php
-                                                $attr = array(
-                                                    'name' => 'email',
-                                                    'type' => 'email',
-                                                    'maxlength' => '150',
-                                                    'value' => "$email",
-                                                    'id' => 'email'
-                                                );
-                                                echo form_input($attr);
-                                                ?>
-                                                <span id="email_err"></span>
-                                            </td>
-                                        </tr>
-                                    </table>        
-                                    <span class="required required_i">* Required Fields</span>
-                                    <div class="popup_cance89">
-                                        <button class="btn btn-primary submit_btn" type="button" onclick="validate_form()" ><span class="glyphicon glyphicon-save"></span> Submit</button>&nbsp;&nbsp;
-                                        <button style="display:none" class="btn btn-primary processing_btn" type="button"><span class="glyphicon glyphicon-save"></span> Processing...</button>&nbsp;&nbsp;
-                                        <a href="<?php echo site_url()."login/"; ?>" class="btn btn-primary">
-                                      <span class="glyphicon glyphicon-remove"></span> Cancel</a>
-                                    </div>
-                                    <?php echo form_close(); ?>
                             </div>
                         </div>
                     </div>
