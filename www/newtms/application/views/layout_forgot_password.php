@@ -55,20 +55,20 @@
                                       <span class="input-group-addon">Email ID<span class="required required_i">*</span></span>
                                       <input id="email" type="text" class="form-control" name="email" placeholder="Email" value='<?php echo $email;?>'>
                                     </div>
-                                    <div><span id="username_err"></span></div>
+                                    <div><span id="email_err"></span></div>
                                     <br>
                                     <div class="input-group">
                                       <span class="input-group-addon">User name<span class="required required_i">*</span></span>
                                       <input id="username" type="text" class="form-control" name="username" value='<?php echo $user_name;?>'placeholder="User Name">
                                     </div>
-                                    <div><span id="email_err"></span></div>
+                                    <div><span id="username_err"></span></div>
                                     <br>
                                     <div><span class="required required_i">* Required Fields</span></div>
                                     <br>
                                     <center>
                                       <div class="btn-group btn-group-justified">
-                                        <a href="javascript:void(0)" class="btn btn-primary submit_btn" onclick="validate_form()"><span class="glyphicon glyphicon-save"></span>Submit</a>
-                                        <a href="<?php echo site_url()."login/"; ?>" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancel</a>
+                                        <a href="javascript:void(0)" class="btn btn-primary submit_btn" onclick="validate_form()" style='padding:12px'><span class="glyphicon glyphicon-save"></span>Submit</a>
+                                        <a href="<?php echo site_url()."login/"; ?>" class="btn btn-danger" style='padding:12px'><span class="glyphicon glyphicon-remove"></span>Cancel</a>
                                         <button style="display:none" class="btn btn-primary processing_btn" type="button"><span class="glyphicon glyphicon-save"></span> Processing...</button>
                                       </div>
                                     </center>
