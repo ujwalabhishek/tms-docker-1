@@ -653,7 +653,7 @@ $(document).ready(function() {
             }
         });
     }
-    $(document).on('change', '.trainee_invoice', function() {
+    $(document).on('change', '.trainee_invoice', function() {alert();
         $payid = $('.trainee_invoice:checked').val();
         if ($payid.length > 0) {
             $('#payment_due_id').val($payid);

@@ -954,65 +954,7 @@
         }
         
         
-        $('.trainee_table').on('change', '.trainee_invoice', function() {
-        $payid = $('.trainee_invoice:checked').val();
-        if ($payid.length > 0) {
-            $('#payment_due_id').val($payid);
-            $.ajax({
-                url: $siteurl + "class_trainee/get_enroll_invoice",
-                type: "post",
-                dataType: "json",
-                data: {
-                    'payid': $payid,
-                },
-                beforeSend: function() {
-                    $('.payment_recd_view').removeClass('payment_recd_banned');
-                },
-                success: function(res) {
-                    remove_all();
-                    check = 0;
-                    reset_all();
-
-                    if (res.label == 'inactive') {
-                        $('.payment_recd_view').addClass('payment_recd_banned');
-                    }
-                    $('.amountdetails_div').show();
-                    var data = res.data;
-                    if (data != null) {
-                        $('.alert_invoice_id').html(data.invoice_id);
-                        $('.invoice_class_name').html(data.class_name);
-                        $('.invoice_course_name').html(data.crse_name);
-                        $('.invoice_class_fees').html(parseFloat(data.total_unit_fees).toFixed(2));
-                        $('.invoice_discount_label').html(data.discount_label);
-                        $('.invoice_discount_rate').html(parseFloat(data.discount_rate).toFixed(2));
-                        $('.invoice_discount_amount').html(parseFloat(data.total_inv_discnt).toFixed(2));
-                        $('.invoice_subsidy_amount').html(parseFloat(data.total_inv_subsdy).toFixed(2));
-                        $('.invoice_subsidy_type').html(res.subsidy_type_label);
-                        $('.invoice_gst_rate').html(parseFloat(data.gst_rate).toFixed(2));
-                        $('.invoice_total_gst').html(parseFloat(data.total_gst).toFixed(2));
-                        $('.invoice_net_due').html(parseFloat(data.total_inv_amount).toFixed(2));
-                        $('.invoice_gst_label').html(data.gst_label);
-                        $total_amount = data.total_inv_amount;
-                        $('.print_pdf').attr('href', $baseurl + 'class_trainee/export_payment_received/' + data.pymnt_due_id);
-                        $('.view_invoice_blocked').attr('href', $baseurl + 'class_trainee/export_generate_invoice/' + data.pymnt_due_id);
-                        $('.invoice_footer_text').html(data.invoice_footer_text);
-                    }
-                    var recd = res.recd;
-                    $payrcd_table = $('.payment_received tbody')
-                    $payrcd_table.empty();
-                    if (recd != '') {
-                        $.each(recd, function(i, item) {
-                            $html = '<tr><td>' + item.recd_on + '</td><td>' + item.mode + '</td><td>' + item.amount + '</td></tr>';
-                            $payrcd_table.append($html);
-                        });
-                    } else {
-                        $html = '<tr><td class="error" colspan="3">There is no payment available.</td></tr>';
-                        $payrcd_table.append($html);
-                    }
-                }
-            });
-        }
-    });
+       
     });
     
 </script>
