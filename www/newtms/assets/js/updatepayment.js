@@ -602,6 +602,17 @@ $(document).ready(function() {
             e.preventDefault();
         }
     });
+    $(document).ajaxStart(function () {
+         var self = $(".btn_srch"),
+            button = self.find('input[type="submit"],button');
+            button.attr('disabled','disabled').html('Please Wait..');
+            //$("#btnSubmit").attr("disabled", true);
+        });
+        $(document).ajaxComplete(function () {
+             $(".search_button").removeAttr("Disabled");
+                $(".search_button").html("<span class='glyphicon glyphicon-search'></span> Search");
+            //$("#btnSubmit").attr("disabled", false);
+        });
     function trigger_ajax($invoice_id, $taxcode_id, $trainee_id) {
          ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
         var self = $(".btn_srch"),

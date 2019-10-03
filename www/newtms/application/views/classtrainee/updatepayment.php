@@ -946,14 +946,14 @@
                 $('#invoice_id').val($np_inv_id);
             }
             $('.search_button').trigger('click');
-            if ($np_acc_type == 'individual') {alert('1');
-                $('.trainee_invoice').attr('checked', 'checked');alert('2');
-                $('.trainee_invoice').prop('checked',true);alert('3');
-                $('.trainee_invoice').trigger('change');alert('4');
+            if ($np_acc_type == 'individual') {
+                $('.trainee_invoice').attr('checked', 'checked');
+                $('.trainee_invoice').prop('checked',true);
+                $('.trainee_invoice').trigger('change');
             }
         }
         
-        $(document).on('change', '.trainee_invoice', function() {alert('5');
+        $(document).on('change', '.trainee_invoice', function() {
         $payid = $('.trainee_invoice:checked').val();
         if ($payid.length > 0) {
             $('#payment_due_id').val($payid);
