@@ -147,7 +147,7 @@ span.psw {
             <div class="container_nav_style">
                 <div class="container container_row">
                     <div class="row row_pushdown">
-                        <div class="col-md-12 col_10_height_other">
+                        <div class="col-md-12 col_10_height_other" style='height: 493px;'>
                             <div class="makecenter" style="margin: 0px auto 0;">
                                 <div class="bs-example">
                                     <h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>
@@ -172,16 +172,17 @@ span.psw {
 
                                             <div class="container-login">
                                               <label for="uname"><b>Username</b></label>
-                                              <input type="text" placeholder="Enter Username" name="uname" required>
+                                              <input type="text" placeholder="Enter Username" name="uname" class='form-control' required>
 
                                               <label for="psw"><b>Password</b></label>
-                                              <input type="password" placeholder="Enter Password" name="psw" required>
+                                              <input type="password" placeholder="Enter Password" name="psw" class='form-control' required>
 
                                               <button type="submit">Login</button>
                                               <label>
-                                                <input type="checkbox" checked="checked" name="remember"> Remember me
-                                                <span class="pull-right">Forgot <a href="#">password?</a></span>
+                                                <input type="checkbox" checked="checked" name="remember" class='form-control'> Remember me
+                                                
                                               </label>
+                                              <span class="pull-right">Forgot <a href="#">password?</a></span>
                                             </div>
 
                                             <div class="container-login" style="background-color:#f1f1f1">
