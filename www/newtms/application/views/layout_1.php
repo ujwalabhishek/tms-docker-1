@@ -182,7 +182,10 @@ span.psw {
                                                 <input type="checkbox" checked="checked" name="remember" class='form-control'> Remember me
                                                 
                                               </label>
-                                              <span class="pull-right">Forgot <a href="#">password?</a></span>
+                                              <label class="pull-right">
+                                                  <span>Forgot <a href="#">password?</a></span>
+                                              </label>
+                                              
                                             </div>
 
                                             <div class="container-login" style="background-color:#f1f1f1">
