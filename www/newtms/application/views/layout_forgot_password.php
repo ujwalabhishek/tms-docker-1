@@ -32,7 +32,7 @@
                                 
                                  <?php
                                     $atr = 'id="forgot_password_form" name="forgot_password_form"';
-                                    echo form_open("user/get_forgot_password", $atr);
+                                    echo form_open("login/get_forgot_password", $atr);
                                 ?>
                                 
                                 <h2 class="panel_heading_style"><center><span class="glyphicon glyphicon-question-sign"></span> Forgot Password</center></h2>
@@ -67,8 +67,8 @@
                                     <br>
                                     <center>
                                       <div class="btn-group btn-group-justified">
-                                        <a href="javascript:void(0)" class="btn btn-primary submit_btn" onclick="validate_form()" style='padding:12px'><span class="glyphicon glyphicon-save"></span>Submit</a>
-                                        <a href="<?php echo site_url()."login/"; ?>" class="btn btn-danger" style='padding:12px'><span class="glyphicon glyphicon-remove"></span>Cancel</a>
+                                        <a href="javascript:void(0)" class="btn btn-primary submit_btn" onclick="validate_form()" style='padding:12px !important'><span class="glyphicon glyphicon-save"></span>Submit</a>
+                                        <a href="<?php echo site_url()."login/"; ?>" class="btn btn-danger" style='padding:12px !important'><span class="glyphicon glyphicon-remove"></span>Cancel</a>
                                         <button style="display:none" class="btn btn-primary processing_btn" type="button"><span class="glyphicon glyphicon-save"></span> Processing...</button>
                                       </div>
                                     </center>
