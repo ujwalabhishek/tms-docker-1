@@ -150,7 +150,7 @@ $('#payment_type').change(function() {
         if($enrolment_mode == 'COMPSPON'){
             $.post(baseurl + "trainee/check_company_invoice_status", {comp_id: $company,crs_id: $course_id,cls_id: $class_id}, function(data) {
                 json_data = $.parseJSON(data);
-                if(json_data.payment_status == 'NOTPAID' || json_data.payment_status === undefined){
+                if(json_data.payment_status == 'NOTPAID' || json_data.payment_status === undefined || json_data.payment_status === NULL){
                      $('.book_now').show();
                      $('#paiddiv').hide();
                 }else{

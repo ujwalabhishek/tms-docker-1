@@ -1082,7 +1082,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
        $this->db->where('company_id',$comp_id);
        $this->db->where('enrolment_mode','COMPSPON');
        $res=$this->db->get()->row();
-       echo $this->db->last_query();exit;
+       //echo $this->db->last_query();exit;
        return $res;
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
