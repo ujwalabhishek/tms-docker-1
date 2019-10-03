@@ -56,7 +56,7 @@ button:hover {
 }
 
 img.avatar {
-  width: 40%;
+  width: 26%;
   border-radius: 50%;
 }
 
@@ -135,7 +135,7 @@ span.psw {
   }
 }
 .container-login{
-    padding:30px;
+    padding:0px 30px;
 }
 </style>
 </head>
@@ -148,7 +148,7 @@ span.psw {
                 <div class="container container_row">
                     <div class="row row_pushdown">
                         <div class="col-md-12 col_10_height_other">
-                            <div class="makecenter">
+                            <div class="makecenter" style="margin: 0px auto 0;">
                                 <div class="bs-example">
                                     <h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>
                                     <?php
@@ -180,12 +180,13 @@ span.psw {
                                               <button type="submit">Login</button>
                                               <label>
                                                 <input type="checkbox" checked="checked" name="remember"> Remember me
+                                                <span class="pull-right">Forgot <a href="#">password?</a></span>
                                               </label>
                                             </div>
 
-                                            <div class="container" style="background-color:#f1f1f1">
-                                              <button type="button" class="cancelbtn">Cancel</button>
-                                              <span class="psw">Forgot <a href="#">password?</a></span>
+                                            <div class="container-login" style="background-color:#f1f1f1">
+                                              <!--<button type="button" class="cancelbtn">Cancel</button>-->
+                                              
                                             </div>
                                           </form>
                                         
