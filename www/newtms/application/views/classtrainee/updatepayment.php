@@ -946,7 +946,7 @@
                 $('#invoice_id').val($np_inv_id);
             }
             $('.search_button').trigger('click');
-            if ($np_acc_type == 'individual') {
+            if ($np_acc_type == 'individual') {alert();
                 $('.trainee_invoice').attr('checked', 'checked');
                 $('.trainee_invoice').prop('checked',true);
                 $('.trainee_invoice').trigger('change');
