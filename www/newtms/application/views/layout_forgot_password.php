@@ -24,6 +24,56 @@
                     <div class="row row_pushdown">
                         <div class="col-md-12 col_10_height_other">
                             <div class="makecenter">
+                                
+                                 <?php
+                                    $atr = 'id="forgot_password_form" name="forgot_password_form"';
+                                    echo form_open("user/get_forgot_password", $atr);
+                                ?>
+                                
+                                <h2 class="panel_heading_style"><span class="glyphicon glyphicon-question-sign"></span> Forgot Password</h2>
+                                    
+                                <?php   if($this->session->flashdata('success')){ 
+                                                    echo '<div class="success">' . $this->session->flashdata('success') . '</div>';                                                               
+                                                }else if($this->session->flashdata('error')){
+                                                    echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';                                                    
+                                                }
+                                                if(!empty($form_success)){ 
+                                                    echo '<div class="success">' . $form_success . '</div>';                                                               
+                                                }else if(!empty($form_error)){
+                                                    echo '<div class="error1">' . $form_error . '</div>';
+                                                    $user_name = $this->input->post('username');
+                                                    $email = $this->input->post('email');
+                                                }
+                                        ?>        
+                                
+                                <div class="input-group">
+                                      <span class="input-group-addon">Email<span class="required required_i">*</span></span>
+                                      <input id="email" type="text" class="form-control" name="email" placeholder="Email" value='<?php echo $email;?>'>
+                                      <div><span id="username_err"></span></div>
+                                    </div>
+                                    <br>
+                                    <div class="input-group">
+                                      <span class="input-group-addon">User name<span class="required required_i">*</span></span>
+                                      <input id="username" type="text" class="form-control" name="username" value='<?php echo $user_name;?>'placeholder="User Name">
+                                      <div><span id="email_err"></span></div>
+                                    </div>
+                                    <br>
+                                    <div><span class="required required_i">* Required Fields</span></div>
+                                    <br>
+                                    <div class="popup_cance89">
+                                        <button class="btn btn-primary submit_btn" type="button" onclick="validate_form()" ><span class="glyphicon glyphicon-save"></span> Submit</button>&nbsp;&nbsp;
+                                        <button style="display:none" class="btn btn-primary processing_btn" type="button"><span class="glyphicon glyphicon-save"></span> Processing...</button>&nbsp;&nbsp;
+                                        <a href="<?php echo site_url()."login/"; ?>" class="btn btn-primary">
+                                      <span class="glyphicon glyphicon-remove"></span> Cancel</a>
+                                    </div>
+                                 <?php echo form_close(); ?>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
                                 <?php
                                     $atr = 'id="forgot_password_form" name="forgot_password_form"';
                                     echo form_open("login/get_forgot_password", $atr);

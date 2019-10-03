@@ -18,6 +18,10 @@
                         <div class="col-md-12 col_10_height_other">
                             <br><br><br>
                             <div class="makecenter">
+                                
+                               
+                                
+                                
                                 <?php
                                     $atr = 'id="forgot_password_form" name="forgot_password_form"';
                                     echo form_open("user/get_forgot_password", $atr);
