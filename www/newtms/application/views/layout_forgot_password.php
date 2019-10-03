@@ -30,7 +30,7 @@
                                     echo form_open("user/get_forgot_password", $atr);
                                 ?>
                                 
-                                <h2 class="panel_heading_style"><span class="glyphicon glyphicon-question-sign"></span> Forgot Password</h2>
+                                <h2 class="panel_heading_style"><center><span class="glyphicon glyphicon-question-sign"></span> Forgot Password</center></h2>
                                     
                                 <?php   if($this->session->flashdata('success')){ 
                                                     echo '<div class="success">' . $this->session->flashdata('success') . '</div>';                                                               
@@ -61,11 +61,19 @@
                                     <div><span class="required required_i">* Required Fields</span></div>
                                     <br>
                                     <center>
+                                      <div class="btn-group btn-group-justified">
+                                        <a href="javascript:void(0)" class="btn btn-primary submit_btn" onclick="validate_form()"><span class="glyphicon glyphicon-save"></span>Submit</a>
+                                        <a href="<?php echo site_url()."login/"; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span>Cancel</a>
+                                        <button style="display:none" class="btn btn-primary processing_btn" type="button"><span class="glyphicon glyphicon-save"></span> Processing...</button>
+                                      </div>
+                                    </center>
+                                     
+<!--                                    <center>
                                         <button class="btn btn-primary submit_btn" type="button" onclick="validate_form()" ><span class="glyphicon glyphicon-save"></span> Submit</button>&nbsp;&nbsp;
                                         <button style="display:none" class="btn btn-primary processing_btn" type="button"><span class="glyphicon glyphicon-save"></span> Processing...</button>&nbsp;&nbsp;
                                         <a href="<?php echo site_url()."login/"; ?>" class="btn btn-primary">
                                       <span class="glyphicon glyphicon-remove"></span> Cancel</a>
-                                    </center>
+                                    </center>-->
                                  <?php echo form_close(); ?>
                                 
                                 
