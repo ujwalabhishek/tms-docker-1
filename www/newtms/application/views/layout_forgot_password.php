@@ -47,25 +47,25 @@
                                         ?>        
                                 
                                 <div class="input-group">
-                                      <span class="input-group-addon">Email<span class="required required_i">*</span></span>
+                                      <span class="input-group-addon">Email ID<span class="required required_i">*</span></span>
                                       <input id="email" type="text" class="form-control" name="email" placeholder="Email" value='<?php echo $email;?>'>
-                                      <div><span id="username_err"></span></div>
                                     </div>
+                                    <div><span id="username_err"></span></div>
                                     <br>
                                     <div class="input-group">
                                       <span class="input-group-addon">User name<span class="required required_i">*</span></span>
                                       <input id="username" type="text" class="form-control" name="username" value='<?php echo $user_name;?>'placeholder="User Name">
-                                      <div><span id="email_err"></span></div>
                                     </div>
+                                    <div><span id="email_err"></span></div>
                                     <br>
                                     <div><span class="required required_i">* Required Fields</span></div>
                                     <br>
-                                    <div class="popup_cance89">
+                                    <center>
                                         <button class="btn btn-primary submit_btn" type="button" onclick="validate_form()" ><span class="glyphicon glyphicon-save"></span> Submit</button>&nbsp;&nbsp;
                                         <button style="display:none" class="btn btn-primary processing_btn" type="button"><span class="glyphicon glyphicon-save"></span> Processing...</button>&nbsp;&nbsp;
                                         <a href="<?php echo site_url()."login/"; ?>" class="btn btn-primary">
                                       <span class="glyphicon glyphicon-remove"></span> Cancel</a>
-                                    </div>
+                                    </center>
                                  <?php echo form_close(); ?>
                                 
                                 
