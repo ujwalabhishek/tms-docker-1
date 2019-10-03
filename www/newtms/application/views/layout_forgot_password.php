@@ -53,13 +53,13 @@
                                 
                                 <div class="input-group">
                                       <span class="input-group-addon">Email ID<span class="required required_i">*</span></span>
-                                      <input id="email" type="text" class="form-control" name="email" placeholder="Email" value='<?php echo $email;?>'>
+                                      <input id="email" type="text" class="form-control" name="email" placeholder="Enter Email" value='<?php echo $email;?>'>
                                     </div>
                                     <div><span id="email_err"></span></div>
                                     <br>
                                     <div class="input-group">
                                       <span class="input-group-addon">User name<span class="required required_i">*</span></span>
-                                      <input id="username" type="text" class="form-control" name="username" value='<?php echo $user_name;?>'placeholder="User Name">
+                                      <input id="username" type="text" class="form-control" name="username" value='<?php echo $user_name;?>'placeholder="Enter User Name">
                                     </div>
                                     <div><span id="username_err"></span></div>
                                     <br>
