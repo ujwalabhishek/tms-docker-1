@@ -150,7 +150,7 @@ span.psw {
                         <div class="col-md-12 col_10_height_other" style='height: 493px;'>
                             <div class="makecenter" style="margin: 0px auto 0;">
                                 <div class="bs-example">
-                                    <h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>
+                                    <!--<h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>-->
                                     <?php
                                     if ($this->session->flashdata('invalid')) {
                                         echo '<div class="error">' . $this->session->flashdata('invalid') . '</div>';
@@ -165,7 +165,7 @@ span.psw {
                                         
                                         <!--added the new login form by shubhranshu-->
                                         <form class="modal-content animate" action="<?php echo site_url() ?>login/validate_user"  method="post" id="signupForm">
-                                           <h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>
+                                           <h2 class="panel_heading_style" style='text-align:center'>INTERNAL STAFF USE ONLY</h2>
                                             <div class="imgcontainer">
                                               
                                               <img src="../assets/images/user2.png" alt="Avatar" class="avatar">
