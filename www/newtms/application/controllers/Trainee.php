@@ -1502,7 +1502,7 @@ class Trainee extends CI_Controller {
         $this->load->view('layout', $data);
     }
     ///////added by shubhranshu to prevent enrollment for paid company invoice on 05/12/2018////////////////
-    function check_company_invoice_status($course_id, $class_id,$company_id){
+    function check_company_invoice_status($course_id='', $class_id='',$company_id=''){
         $course_id = $this->input->post('crs_id');
         $class_id = $this->input->post('cls_id'); 
         $comp_id = $this->input->post('comp_id');
