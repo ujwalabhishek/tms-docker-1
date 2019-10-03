@@ -9957,7 +9957,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             //$cur_date = $start;
         }
 
-       echo $payment_due_id = get_max_lookup(ENROL_PYMNT_DUE);
+        $payment_due_id = get_max_lookup(ENROL_PYMNT_DUE);
 
         $class_status = $this->get_class_statustext($class_id);
 
