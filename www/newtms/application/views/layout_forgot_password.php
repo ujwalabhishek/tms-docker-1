@@ -16,7 +16,7 @@
 
 </script> 
 <style>
-    btn{
+    .btn{
         padding:12px !important;
     }
 </style>
