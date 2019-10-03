@@ -134,6 +134,9 @@ span.psw {
      width: 100%;
   }
 }
+.container-login{
+    padding:30px;
+}
 </style>
 </head>
 <body>
@@ -164,10 +167,10 @@ span.psw {
                                         <form class="modal-content animate" action="/action_page.php" method="post">
                                             <div class="imgcontainer">
                                               
-                                              <img src="img_avatar2.png" alt="Avatar" class="avatar">
+                                              <img src="../assets/images/user.png" alt="Avatar" class="avatar">
                                             </div>
 
-                                            <div class="container">
+                                            <div class="container-login">
                                               <label for="uname"><b>Username</b></label>
                                               <input type="text" placeholder="Enter Username" name="uname" required>
 
