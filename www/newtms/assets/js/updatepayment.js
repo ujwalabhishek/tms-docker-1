@@ -611,7 +611,7 @@ $(document).ready(function() {
         $.ajax({
             url: $siteurl + "class_trainee/search_trainee_updatepayment",
             type: "post",
-            //async: false,
+            async: false,
             dataType: "json",
             data: {
                 'invoice_id': $invoice_id,
