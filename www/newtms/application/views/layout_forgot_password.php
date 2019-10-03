@@ -15,6 +15,11 @@
   ga('send', 'pageview');
 
 </script> 
+<style>
+    btn{
+        padding:12px !important;
+    }
+</style>
 </head>
 <body>
     <div class="main_container_new_top"> 
@@ -63,7 +68,7 @@
                                     <center>
                                       <div class="btn-group btn-group-justified">
                                         <a href="javascript:void(0)" class="btn btn-primary submit_btn" onclick="validate_form()"><span class="glyphicon glyphicon-save"></span>Submit</a>
-                                        <a href="<?php echo site_url()."login/"; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span>Cancel</a>
+                                        <a href="<?php echo site_url()."login/"; ?>" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancel</a>
                                         <button style="display:none" class="btn btn-primary processing_btn" type="button"><span class="glyphicon glyphicon-save"></span> Processing...</button>
                                       </div>
                                     </center>
