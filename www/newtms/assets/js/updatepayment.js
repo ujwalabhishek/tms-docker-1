@@ -602,6 +602,7 @@ $(document).ready(function() {
             e.preventDefault();
         }
     });
+    ///////added by shubhranshu to prevent multiple clicks////////////////
     $(document).ajaxStart(function () {
          var self = $(".btn_srch"),
             button = self.find('input[type="submit"],button');

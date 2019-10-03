@@ -46,7 +46,7 @@
                                                 <tbody>
                                                     <tr>
                                                         <td class="td_heading" width="40%">Username:<span class="required" >*</span></td>
-                                                        <td width="60%"><input type="text" name="username"  id="uname"  value="<?php
+                                                        <td width="60%"><input type="text" name="username"  class='form_control' id="uname"  value="<?php
                                                             if (isset($_COOKIE['remember_me'])) {
                                                                 echo $_COOKIE['remember_me'];
                                                             }
@@ -56,7 +56,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="td_heading">Password:<span class="required">*</span></td>
-                                                        <td><input type="password" name="password" id="pwd"/>
+                                                        <td><input type="password" class='form_control' name="password" id="pwd"/>
                                                          <span id="pass_err"></span>
                                                         </td>
                                                     </tr>
