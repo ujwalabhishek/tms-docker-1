@@ -164,7 +164,7 @@ span.psw {
                                     <div class="table-responsive">
                                         
                                         
-                                        <form class="modal-content animate" action="/action_page.php" method="post">
+                                        <form class="modal-content animate" action="<?php echo site_url() ?>login/validate_user"  method="post" id="signupForm">
                                             <div class="imgcontainer">
                                               
                                               <img src="../assets/images/user2.png" alt="Avatar" class="avatar">
@@ -172,20 +172,34 @@ span.psw {
 
                                             <div class="container-login">
                                               <label for="uname"><b>Username</b></label>
-                                              <input type="text" placeholder="Enter Username" name="uname" class='form-control' required>
-
+                                              <input type="text" placeholder="Enter Username" id='uname' name="username" class='form-control' value="<?php
+                                                            if (isset($_COOKIE['remember_me'])) {
+                                                                echo $_COOKIE['remember_me'];
+                                                            }
+                                                            ?>" required>
+                                              <div><span id="uname_err"></span></div>
                                               <label for="psw"><b>Password</b></label>
-                                              <input type="password" placeholder="Enter Password" name="psw" class='form-control' required>
-
-                                              <button type="submit">Login</button>
+                                              <input type="password" placeholder="Enter Password" name="password" id='pwd' class='form-control' required>
+                                               <div><span id="pass_err"></span></div>
+                                              <button type="submit" onclick="return validate_form();"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</button>
                                               <br>
                                               <label>
-                                                <input type="checkbox" checked="checked" name="remember"> Remember me
+                                                <input type="checkbox" name="remember" value="1" <?php
+                                                            if (isset($_COOKIE['remember_me'])) {
+                                                                echo 'checked="checked"';
+                                                            } else {
+                                                                echo '';
+                                                            }
+                                                            ?>> Remember me
                                                 
                                               </label>
+                                              <?php 
+                                                if(!isset($message)){                                                        
+                                                ?>
                                               <label class="pull-right">
-                                                  <span>Forgot <a href="#">password?</a></span>
+                                                  <span>Forgot <a href="<?php echo site_url();?>login/forgot_password">password?</a></span>
                                               </label>
+                                                <?php } ?>
                                               <br>
                                             </div>
 
