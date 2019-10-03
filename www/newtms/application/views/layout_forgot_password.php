@@ -35,7 +35,7 @@
                                     echo form_open("login/get_forgot_password", $atr);
                                 ?>
                                 
-                                <h2 class="panel_heading_style"><center><span class="glyphicon glyphicon-question-sign"></span> Forgot Password</center></h2>
+                                <h2 class="panel_heading_style"><center> Forgot Password ?</center></h2>
                                     
                                 <?php   if($this->session->flashdata('success')){ 
                                                     echo '<div class="success">' . $this->session->flashdata('success') . '</div>';                                                               
