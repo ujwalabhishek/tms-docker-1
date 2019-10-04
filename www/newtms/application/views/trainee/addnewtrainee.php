@@ -2067,6 +2067,7 @@ if (!empty($tax_error)) {
             if ($('#trainee_validation_div span').hasClass('error')) {
                 retVal = false;
             }
+        return false;
         if(retVal == true){
             $('.button_class99 button[type=submit]').css('display','none');
         }
