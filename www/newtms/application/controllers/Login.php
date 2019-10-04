@@ -71,8 +71,8 @@ class Login extends CI_Controller {
         );
         
         $cap = create_captcha($vals);
-        $this->session->set_userdata('captcha_file', $captcha['img_file']);
-        $this->session->set_userdata('captcha_key', $captcha['word']);
+        //$this->session->set_userdata('captcha_file', $captcha['filename']);
+        //$this->session->set_userdata('captcha_key', $captcha['word']);
         return $cap['image'];
     }
     
