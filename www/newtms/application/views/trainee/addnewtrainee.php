@@ -353,7 +353,7 @@ if (!empty($tax_error)) {
                             'name' => 'user_registered_email',
                             'id' => 'user_registered_email',
                             'maxlength' => '50',
-                            'value' => set_value('pers_email'),
+                            'value' => set_value('user_registered_email'),
                             'onblur' => 'javascript:isunique_email(this.value,this.id);',
                             'style' => 'width:250px',
                         );
