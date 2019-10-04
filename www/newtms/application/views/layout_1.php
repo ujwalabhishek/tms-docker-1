@@ -182,12 +182,20 @@ span.psw {
                                               <label for="psw"><b>Password</b></label>
                                               <input type="password" placeholder="Enter Password" name="password" id='pwd' class='form-control' required>
                                                <div><span id="pass_err"></span></div>
+                                               <div class='row'>
+                                                   <div class='col-sm-6'>
+                                                       <label for="psw"><b>Captcha Code</b></label>
+                                                        <div><?php echo $captcha;?></div>
+                                                   </div>
+                                                   <div class='col-sm-6'>
+                                                       <label for="psw"><b>Enter Captcha</b></label>
+                                                        <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' required>
+                                                   </div>
+                                               </div>
                                                
-                                               <label for="psw"><b>Captcha</b></label>
-                                               <div><?php echo $captcha;?></div>
                                                    
-                                               <div><span id="pass_err"></span></div>
-                                               
+                                               <div><span id="captcha_err"></span></div>
+                                               <br>
                                               <button type="submit" onclick="return validate_form();"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</button>
                                               <br>
                                               <label>
