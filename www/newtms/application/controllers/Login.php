@@ -128,9 +128,7 @@ class Login extends CI_Controller {
         $user_name = $this->input->post('username');
         $captcha = $this->input->post('captcha');
         if($captcha != $this->session->userdata('captcha_key')){//added by shubhranshu
-            $this->session->unset_userdata('captcha_key');//added by shubhranshu
-             unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file')); // added by shubhranshu to delete the captcha file
-            $this->session->set_flashdata('invalid', 'Invalid captcha code');//added by shubhranshu
+            $this->session->set_flashdata('captcha_invalid', 'Invalid captcha code');//added by shubhranshu
             redirect('login/administrator');//added by shubhranshu
              
         }//added by shubhranshu

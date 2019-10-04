@@ -192,8 +192,10 @@ span.psw {
                                                         <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' required>
                                                    </div>
                                                </div>
-                                               
-                                                   
+                                                    <?php 
+                                                        if ($this->session->flashdata('captcha_invalid')) {
+                                                            echo '<center><div class="error">' . $this->session->flashdata('captcha_invalid') . '</div></center>';
+                                                 }  ?>
                                                <div><span id="captcha_err"></span></div>
                                                <br>
                                               <button type="submit" onclick="return validate_form();"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</button>
