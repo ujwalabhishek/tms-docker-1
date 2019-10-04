@@ -128,7 +128,7 @@ class Trainee extends CI_Controller {
                 $this->form_validation->set_rules('SSN', 'SSNNumber', 'required|max_length[50]|callback_check_unique_usertaxcode');
             }
             if ($this->input->post('bypassemail') == 'EMACRQ') {
-                $this->form_validation->set_rules('user_registered_email', 'Email', 'required|max_length[50]|valid_email|callback_check_email_id');
+                $this->form_validation->set_rules('user_registered_email', 'Email', 'required|max_length[50]|valid_email');
             }
             $this->form_validation->set_rules('user_name', 'Username', 'required|max_length[15]|callback_check_unique_username');
             $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
