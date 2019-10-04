@@ -1272,28 +1272,17 @@ class Trainee extends CI_Controller {
      * @param type $email
      * @return type
      */
-    public function check_user_email_id($email='') {
-        extract($_POST);
-        $email_id = trim($email);
-        $exists=$this->db->select('registered_email_id')->get_where('tms_users', array('registered_email_id' => $emailid), 1)->num_rows();
-       echo $exists;exit;
-        if ($exists >0) {
-            echo TRUE;
-        } else {
-            echo FALSE;
-        }
-    }
+   
     public function check_email_id($email='') {
         extract($_POST);
         $email_id = trim($email);
         $this->load->model('internal_user_model', 'internaluser');
         $exists = $this->internaluser->check_email($email_id);
         if ($exists) {
-            echo 1;
+            echo TRUE;
         } else {
-            echo 0;
+            echo FALSE;
         }
-        return;
     }
     /**
      * check user name

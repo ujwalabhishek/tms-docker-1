@@ -1704,7 +1704,7 @@ if (!empty($tax_error)) {
                 return false;
             } else {
                 $.ajax({                    
-                    url: "check_user_email_id",
+                    url: "check_email_id",
                     type: "post",
                     data: 'email=' + e,
                     success: function(res) {
