@@ -188,7 +188,7 @@ span.psw {
                                                         <div><?php echo $captcha;?></div>
                                                    </div>
                                                    <div class='col-sm-6'>
-                                                       <label for="psw"><b>Enter Captcha</b></label>
+                                                       <label for="psw"><b>Enter Captcha Code</b></label>
                                                         <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' required>
                                                    </div>
                                                </div>

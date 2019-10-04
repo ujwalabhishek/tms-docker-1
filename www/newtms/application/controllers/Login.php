@@ -71,8 +71,8 @@ class Login extends CI_Controller {
         );
         
         $cap = create_captcha($vals);
-        //$this->session->set_userdata('captcha_file', $captcha['filename']);
-        //$this->session->set_userdata('captcha_key', $captcha['word']);
+        $this->session->set_userdata('captcha_file', $captcha['filename']);
+        $this->session->set_userdata('captcha_key', $captcha['word']);
         return $cap['image'];
     }
     
@@ -122,6 +122,14 @@ class Login extends CI_Controller {
      */
     public function validate_user() {
         $user_name = $this->input->post('username');
+        $captcha = $this->input->post('captcha');
+        if($captcha != $this->session->userdata('captcha_key')){//added by shubhranshu
+            $this->session->unset_userdata('captcha_key');//added by shubhranshu
+             unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file')); // added by shubhranshu to delete the captcha file
+            $this->session->set_flashdata('invalid', 'Invalid captcha code');//added by shubhranshu
+            redirect('login/administrator');//added by shubhranshu
+             
+        }//added by shubhranshu
         if (empty($user_name)) {
             return FALSE;
         }
@@ -137,6 +145,9 @@ class Login extends CI_Controller {
                     . 'Please try again or get in touch with your Administrator.');
             redirect('login/administrator');
         } else {
+            
+            $this->session->unset_userdata('captcha_key');///added by shubhranshu
+            unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file')); // added by shubhranshu to delete the captcha file
             $user = $this->assign_my_role($user);
             $this->session->set_userdata('userDetails', $user);
             if (empty($user->role_id)) {
