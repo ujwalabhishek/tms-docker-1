@@ -886,7 +886,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         {
             
             $assign_company1 =explode("/",$assign_company);
-            print_r($assign_company1);exit;
+            
             $assign_company=$assign_company1[0];
             $assign_company2=$assign_company1[1];
             $company_data = array(
