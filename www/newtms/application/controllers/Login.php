@@ -40,10 +40,10 @@ class Login extends CI_Controller {
             $data['role_id'] = 'ADMN';
             $this->load->view('layout', $data);
             } else {
-                if(isset($this->session->userdata('captcha_key'))){
+                
                    $this->session->unset_userdata('captcha_key');//added by shubhranshu
                     unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file')); // added by shubhranshu to delete the captcha file 
-                }
+                
                 $data['captcha']=$this->generateCaptcha();
                 $data['page_title'] = 'Login page';
                 $this->load->view('layout_1', $data);
