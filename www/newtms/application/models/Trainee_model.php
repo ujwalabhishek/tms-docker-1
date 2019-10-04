@@ -886,7 +886,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         {
             
             $assign_company1 =explode("/",$assign_company);
-            print_r($assign_company1);exit;
+//            print_r($assign_company1);exit;
             $assign_company=$assign_company1[0];
             $assign_company2=$assign_company1[1];
             $company_data = array(
@@ -904,6 +904,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                 'last_modified_by' => $this->user->user_id,
                 'last_modified_on' => $dateTime
             );
+            print_r($company_data);exit;
             $this->db->insert('tenant_company_users', $company_data);
         }
        
