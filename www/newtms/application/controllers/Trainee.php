@@ -128,7 +128,7 @@ class Trainee extends CI_Controller {
                 $this->form_validation->set_rules('SSN', 'SSNNumber', 'required|max_length[50]|callback_check_unique_usertaxcode');
             }
             if ($this->input->post('bypassemail') == 'EMACRQ') {
-                $this->form_validation->set_rules('user_registered_email', 'Email', 'required|max_length[50]|valid_email|callback_check_unique_useremail');
+                $this->form_validation->set_rules('user_registered_email', 'Email', 'required|max_length[50]|valid_email|callback_check_email_id');
             }
             $this->form_validation->set_rules('user_name', 'Username', 'required|max_length[15]|callback_check_unique_username');
             $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
@@ -1272,7 +1272,7 @@ class Trainee extends CI_Controller {
      * @param type $email
      * @return type
      */
-   
+   /// added by shubhranshu
     public function check_email_id($email='') {
         extract($_POST);
         $email_id = trim($email);
