@@ -40,11 +40,42 @@ class Login extends CI_Controller {
             $data['role_id'] = 'ADMN';
             $this->load->view('layout', $data);
             } else {
+                $data['captcha']=$this->generateCaptcha();
                 $data['page_title'] = 'Login page';
                 $this->load->view('layout_1', $data);
             }
     }
+    
+    private function generateCaptcha(){
+        $this->load->helper('captcha');
+        $vals = array(
+                'word'          => 'Random word',
+                'img_path'      => FCPATH.'captcha/',
+                'img_url'       => base_url().'captcha/',
+                'font_path'     => FCPATH .'assets/fonts/ATBramley-Medium.ttf',
+                'img_width'     => '150',
+                'img_height'    => 30,
+                'expiration'    => 7200,
+                'word_length'   => 8,
+                'font_size'     => 16,
+                'img_id'        => 'Imageid',
+                'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
+                // White background and border, black text and red grid
+                'colors'        => array(
+                        'background' => array(255, 255, 255),
+                        'border' => array(255, 255, 255),
+                        'text' => array(0, 0, 0),
+                        'grid' => array(255, 40, 40)
+                )
+        );
+        
+        $cap = create_captcha($vals);
+        $this->session->set_userdata('captcha_file', $captcha['img_file']);
+        $this->session->set_userdata('captcha_key', $captcha['word']);
+        return $cap['image'];
+    }
+    
     /* load tms dashboard */
     public function dashboard() {
         $data['sideMenuData'] = fetch_non_main_page_content();

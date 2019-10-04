@@ -182,6 +182,12 @@ span.psw {
                                               <label for="psw"><b>Password</b></label>
                                               <input type="password" placeholder="Enter Password" name="password" id='pwd' class='form-control' required>
                                                <div><span id="pass_err"></span></div>
+                                               
+                                               <label for="psw"><b>Captcha</b></label>
+                                               <div><?php echo $captcha;?></div>
+                                                   
+                                               <div><span id="pass_err"></span></div>
+                                               
                                               <button type="submit" onclick="return validate_form();"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</button>
                                               <br>
                                               <label>
