@@ -1560,7 +1560,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
                             , 'last_modified_by' => $result->last_modified_by, 'last_modified_on' => $result->last_modified_on);
 
-                        $sales_exec_insert = $this->db->insert('`course_sales_exec', $course_sales_exec_data);
+                        $sales_exec_insert = $this->db->insert('course_sales_exec', $course_sales_exec_data);
 
                     }
 
