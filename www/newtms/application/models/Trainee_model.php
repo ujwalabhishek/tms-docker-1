@@ -904,7 +904,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                 'last_modified_by' => $this->user->user_id,
                 'last_modified_on' => $dateTime
             );
-            print_r($company_data);exit;
+//            print_r($company_data);exit;
             $this->db->insert('tenant_company_users', $company_data);
         }
        
