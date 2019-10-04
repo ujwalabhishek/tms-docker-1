@@ -175,11 +175,8 @@
         $status = $('#filter_status').find(":selected").text();
      
         var course_code_id = $('#course_code_id').val();
-        
-       if(course_code_id !='' || $off_company_name !='All' || $status !='All'){
-            remove_err('#course_code');
-            return true;
-        }else if($course_code != ''){
+       if ($("#course_code_radio").is(":checked")) {
+           
             if(course_code_id !=''){
                 remove_err('#$course_code');
                 return true;
@@ -187,10 +184,23 @@
                 disp_err('#course_code', '[Select course code from auto-complete]');
                 return false;
             }
-            
-        }else {
-            disp_err('#course_code', '[Select course code from auto-complete]');
-            return false;
+           
+       }
+//       if(course_code_id !='' || $off_company_name !='All' || $status !='All'){
+//            remove_err('#course_code');
+//            return true;
+//        }else if($course_code != ''){
+//            if(course_code_id !=''){
+//                remove_err('#$course_code');
+//                return true;
+//            }else{
+//                disp_err('#course_code', '[Select course code from auto-complete]');
+//                return false;
+//            }
+//            
+        else {
+//            disp_err('#course_code', '[Select course code from auto-complete]');
+            return true;
         }
     }
     $(document).ready(function() {
