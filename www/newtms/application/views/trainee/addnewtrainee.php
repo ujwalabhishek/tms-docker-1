@@ -1704,11 +1704,11 @@ if (!empty($tax_error)) {
                 return false;
             } else {
                 $.ajax({                    
-                    url: "check_email_id",
+                    url: "check_user_email_id",
                     type: "post",
                     data: 'email=' + e,
                     success: function(res) {
-                        if (res == 1) {
+                        if (res) {
                             window.email_id = 'exists';
                             $("#" + id + "_err").text("[Email Id exists!]").addClass('error');
                             $("#" + id).addClass('error');
