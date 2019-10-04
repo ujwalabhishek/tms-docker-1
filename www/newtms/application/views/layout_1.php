@@ -51,7 +51,7 @@ button:hover {
 /* Center the image and position the close button */
 .imgcontainer {
   text-align: center;
-  margin: 24px 0 12px 0;
+  margin: 10px 0 12px 0;
   position: relative;
 }
 
@@ -87,7 +87,7 @@ span.psw {
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  margin: 0% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
 }
@@ -151,18 +151,18 @@ span.psw {
                             <div class="makecenter" style="margin: 0px auto 0;">
                                 <div class="bs-example">
                                     <!--<h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>-->
-                                    <?php
+                                                           
+                                    <div class="table-responsive">
+                                         <?php
                                     if ($this->session->flashdata('invalid')) {
-                                        echo '<div class="error">' . $this->session->flashdata('invalid') . '</div>';
+                                        echo '<center><div class="error">' . $this->session->flashdata('invalid') . '</div></center>';
                                     }
                                     ?>	
                                     <?php
                                     if ($this->session->flashdata('warning')) {
-                                        echo '<div class="error">' . $this->session->flashdata('warning') . '</div>';
+                                        echo '<center><div class="error">' . $this->session->flashdata('warning') . '</div></center>';
                                     }
-                                    ?>                                   
-                                    <div class="table-responsive">
-                                        
+                                    ?>           
                                         <!--added the new login form by shubhranshu-->
                                         <form class="modal-content animate" action="<?php echo site_url() ?>login/validate_user"  method="post" id="signupForm">
                                             <h2 class="panel_heading_style" style='text-align:center'><strong>Internal Staff Use Only</strong></h2>
