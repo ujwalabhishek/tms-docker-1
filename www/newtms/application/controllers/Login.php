@@ -49,14 +49,14 @@ class Login extends CI_Controller {
     private function generateCaptcha(){
         $this->load->helper('captcha');
         $vals = array(
-                'word'          => 'Random word',
+                'word'          => '',
                 'img_path'      => FCPATH.'captcha/',
                 'img_url'       => base_url().'captcha/',
                 'font_path'     => FCPATH .'assets/fonts/ATBramley-Medium.ttf',
                 'img_width'     => '150',
                 'img_height'    => 30,
                 'expiration'    => 7200,
-                'word_length'   => 8,
+                'word_length'   => 6,
                 'font_size'     => 16,
                 'img_id'        => 'Imageid',
                 'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
