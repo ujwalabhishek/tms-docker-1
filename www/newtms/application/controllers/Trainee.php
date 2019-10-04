@@ -1276,7 +1276,7 @@ class Trainee extends CI_Controller {
         extract($_POST);
         $email_id = trim($email);
         $exists=$this->db->select('registered_email_id')->get_where('tms_users', array('registered_email_id' => $emailid), 1)->num_rows();
-       
+       echo $exists;exit;
         if ($exists >0) {
             echo TRUE;
         } else {
