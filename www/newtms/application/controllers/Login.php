@@ -49,7 +49,7 @@ class Login extends CI_Controller {
                 $this->load->view('layout_1', $data);
             }
     }
-    
+    /// below function was added by shubhranshu for captcha validation
     private function generateCaptcha(){
         $this->load->helper('captcha');
         $vals = array(
@@ -78,7 +78,7 @@ class Login extends CI_Controller {
         $this->session->set_userdata('captcha_file', $cap['filename']);
         $this->session->set_userdata('captcha_key', $cap['word']);
         return $cap['image'];
-    }
+    }/////////////////////////end ssp///////////////////////
     
     /* load tms dashboard */
     public function dashboard() {
@@ -127,7 +127,7 @@ class Login extends CI_Controller {
     public function validate_user() {
         $user_name = $this->input->post('username');
         $captcha = $this->input->post('captcha');
-        if($captcha != $this->session->userdata('captcha_key')){//added by shubhranshu
+        if(strtolower($captcha) != strtolower($this->session->userdata('captcha_key'))){//added by shubhranshu
             $this->session->set_flashdata('invalid', 'Invalid captcha code');//added by shubhranshu
             redirect('login/administrator');//added by shubhranshu
              
