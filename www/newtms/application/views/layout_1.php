@@ -153,16 +153,7 @@ span.psw {
                                     <!--<h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>-->
                                                            
                                     <div class="table-responsive">
-                                         <?php
-                                    if ($this->session->flashdata('invalid')) {
-                                        echo '<center><div class="error">' . $this->session->flashdata('invalid') . '</div></center>';
-                                    }
-                                    ?>	
-                                    <?php
-                                    if ($this->session->flashdata('warning')) {
-                                        echo '<center><div class="error">' . $this->session->flashdata('warning') . '</div></center>';
-                                    }
-                                    ?>           
+                                         
                                         <!--added the new login form by shubhranshu-->
                                         <form class="modal-content animate" action="<?php echo site_url() ?>login/validate_user"  method="post" id="signupForm">
                                             <h2 class="panel_heading_style" style='text-align:center'><strong>Internal Staff Use Only</strong></h2>
@@ -192,10 +183,16 @@ span.psw {
                                                         <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' required>
                                                    </div>
                                                </div>
-                                                    <?php 
-                                                        if ($this->session->flashdata('captcha_invalid')) {
-                                                            echo '<center><div class="error">' . $this->session->flashdata('captcha_invalid') . '</div></center>';
-                                                 }  ?>
+                                                    <?php
+                                                    if ($this->session->flashdata('invalid')) {
+                                                        echo '<center><div class="error">' . $this->session->flashdata('invalid') . '</div></center>';
+                                                    }
+                                                    ?>	
+                                                    <?php
+                                                    if ($this->session->flashdata('warning')) {
+                                                        echo '<center><div class="error">' . $this->session->flashdata('warning') . '</div></center>';
+                                                    }
+                                                    ?>          
                                                <div><span id="captcha_err"></span></div>
                                                <br>
                                               <button type="submit" onclick="return validate_form();"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</button>

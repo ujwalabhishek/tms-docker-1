@@ -128,7 +128,7 @@ class Login extends CI_Controller {
         $user_name = $this->input->post('username');
         $captcha = $this->input->post('captcha');
         if($captcha != $this->session->userdata('captcha_key')){//added by shubhranshu
-            $this->session->set_flashdata('captcha_invalid', 'Invalid captcha code');//added by shubhranshu
+            $this->session->set_flashdata('invalid', 'Invalid captcha code');//added by shubhranshu
             redirect('login/administrator');//added by shubhranshu
              
         }//added by shubhranshu
@@ -143,8 +143,8 @@ class Login extends CI_Controller {
             redirect('login/administrator');
         }
         if (empty($user)) {
-            $this->session->set_flashdata('invalid', 'Invalid credentials/ User account inactive. '
-                    . 'Please try again or get in touch with your Administrator.');
+            $this->session->set_flashdata('invalid', 'Invalid credentials. '
+                    . 'Please try again with valid credentials.');
             redirect('login/administrator');
         } else {
             
