@@ -400,7 +400,7 @@ class Classes extends CI_Controller {
             //$data['sideMenuData'] = $this->sideMenu;
             $data['sideMenuData'] = fetch_non_main_page_content();
             $this->load->view('layout', $data);
-            return;
+            
         } else {
             if($this->data['user']->role_id != 'ADMN'){
                 $start_date_timestamp = strtotime($this->input->post('start_date'));        
@@ -426,7 +426,7 @@ class Classes extends CI_Controller {
             }
         }
         
-        redirect("classes?course_id=" . $this->input->post('course_id'));
+        //redirect("classes?course_id=" . $this->input->post('course_id'));
     }
 
     /**
