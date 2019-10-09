@@ -424,7 +424,8 @@ class Classes extends CI_Controller {
                 $this->session->set_flashdata("error", "Unable to update class. Please try again later.");
             }
         }
-        redirect("classes?course_id=" . $this->input->post('course_id'));
+        
+        //redirect("classes?course_id=" . $this->input->post('course_id'));
     }
 
     /**
