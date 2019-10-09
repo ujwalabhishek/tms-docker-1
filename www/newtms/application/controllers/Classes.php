@@ -415,7 +415,7 @@ class Classes extends CI_Controller {
             $class_id = $this->input->post('class_hid');
             $result = $this->classmodel->get_class_info($class_id);          
             $previous_data = json_encode($result);
-            
+            echo "s";exit;
             $result = $this->classmodel->update_class($tenant_id, $user_id);
             if ($result == TRUE) {
                  user_activity(5,$class_id,$previous_data);
