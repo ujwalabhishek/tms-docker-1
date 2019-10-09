@@ -51,7 +51,7 @@ button:hover {
 /* Center the image and position the close button */
 .imgcontainer {
   text-align: center;
-  margin: 10px 0 12px 0;
+  /*margin: 10px 0 12px 0;*/
   position: relative;
 }
 
@@ -286,7 +286,7 @@ span.psw {
             $("#captcha_err").text("").removeClass('error'); 
         }
         if(retVal==true){ 
-            
+            //added by shubhranshu for disable of login button once clicked login
             $('#login').attr('disabled','disabled').css('background-color','#aeb4ba').html('Please Wait..');
             
             $('#signupForm').submit();
