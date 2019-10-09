@@ -137,7 +137,18 @@ span.psw {
 .container-login{
     padding:0px 30px;
 }
-
+#login{
+    font-size:15px;
+}
+.panel_heading_style{
+        border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.container-footer{
+    background-color:#f1f1f1;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
 </style>
 </head>
 <body>
@@ -148,7 +159,7 @@ span.psw {
             <div class="container_nav_style">
                 <div class="container container_row">
                     <div class="row row_pushdown">
-                        <div class="col-md-12 col_10_height_other" style='height: 493px;'>
+                        <div class="col-md-12 col_10_height_other" style='height: 520px;'>
                             <div class="makecenter" style="margin: 0px auto 0;">
                                 <div class="bs-example">
                                     <!--<h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>-->
@@ -229,7 +240,7 @@ span.psw {
                                               <br>
                                             </div>
 
-                                            <div class="container-login" style="background-color:#f1f1f1">
+                                            <div class="container-footer">
                                               <!--<button type="button" class="cancelbtn">Cancel</button>-->
                                               <br>
                                             </div>
