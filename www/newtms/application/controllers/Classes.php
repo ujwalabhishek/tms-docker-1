@@ -393,7 +393,7 @@ class Classes extends CI_Controller {
         $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
         $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
         $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
-//        $this->form_validation->set_rules('control_5', 'Class Room Trainer', 'required');
+        $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'required');
         if ($this->form_validation->run() == FALSE) {
             $data['page_title'] = 'Class';
             $data['main_content'] = 'class/editclass';
@@ -426,7 +426,7 @@ class Classes extends CI_Controller {
             }
         }
         
-        //redirect("classes?course_id=" . $this->input->post('course_id'));
+        redirect("classes?course_id=" . $this->input->post('course_id'));
     }
 
     /**
