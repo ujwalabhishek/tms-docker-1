@@ -176,7 +176,10 @@ span.psw {
                                                <div class='row'>
                                                    <div class='col-sm-6'>
                                                        <label for="psw"><b>Captcha Code</b></label>
-                                                        <div><?php echo $captcha;?></div>
+                                                        <div><?php echo $captcha;?>
+                                                            <a href="/" title="Refresh">
+											<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;"></span>
+										</a></div>
                                                    </div>
                                                    <div class='col-sm-6'>
                                                        <label for="psw"><b>Enter Captcha Code</b></label>
