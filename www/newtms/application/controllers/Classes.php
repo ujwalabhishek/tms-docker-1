@@ -377,7 +377,7 @@ class Classes extends CI_Controller {
     /**
      * this function to update the edited class
      */
-    public function update_class() { echo "s";exit;
+    public function update_class() { 
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
         $this->load->library('form_validation');
@@ -400,6 +400,7 @@ class Classes extends CI_Controller {
             //$data['sideMenuData'] = $this->sideMenu;
             $data['sideMenuData'] = fetch_non_main_page_content();
             $this->load->view('layout', $data);
+            return;
         } else {
             if($this->data['user']->role_id != 'ADMN'){
                 $start_date_timestamp = strtotime($this->input->post('start_date'));        
