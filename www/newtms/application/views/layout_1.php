@@ -207,7 +207,7 @@ span.psw {
                                                     ?>          
                                                
                                                <br>
-                                              <button type="submit" onclick="return validate_form();"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</button>
+                                              <button type="submit" onclick="return validate_form();" id='login'><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</button>
                                               <br>
                                               <label>
                                                 <input type="checkbox" name="remember" value="1" <?php
@@ -274,7 +274,11 @@ span.psw {
         }else{
             $("#captcha_err").text("").removeClass('error'); 
         }
-        if(retVal==true){            
+        if(retVal==true){   
+            var self = $('#login'),
+            button = self.find('input[type="submit"],button'),
+            submitValue = button.data('submit-value');
+            button.attr('disabled','disabled').html('Please Wait..');
             $('#signupForm').submit();
         }
         else{
