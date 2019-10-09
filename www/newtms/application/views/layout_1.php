@@ -189,7 +189,7 @@ span.psw {
                                                         <div><span id="captcha_err"></span>
                                                             <?php
                                                             if ($this->session->flashdata('invalid_captcha')) {
-                                                                echo '<center><div class="error">' . $this->session->flashdata('invalid_captcha') . '</div></center>';
+                                                                echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
                                                             }
                                                             ?>	
                                                         </div>
