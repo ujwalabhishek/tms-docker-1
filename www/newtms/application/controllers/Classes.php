@@ -401,7 +401,7 @@ class Classes extends CI_Controller {
             $data['sideMenuData'] = fetch_non_main_page_content();
             $this->load->view('layout', $data);
             
-        } else {
+        } else {print_r($this->data['user']);exit;
             if($this->data['user']->role_id != 'ADMN'){
                 $start_date_timestamp = strtotime($this->input->post('start_date'));        
                 $start_date_timestamp_hidden = strtotime($this->input->post('start_date_hidden'));        
