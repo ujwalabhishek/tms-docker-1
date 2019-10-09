@@ -285,8 +285,10 @@ span.psw {
         }else{
             $("#captcha_err").text("").removeClass('error'); 
         }
-        if(retVal==true){   
-            $('#login').attr('disabled','disabled').html('Please Wait..');
+        if(retVal==true){ 
+            
+            $('#login').attr('disabled','disabled').css('background-color','#aeb4ba').html('Please Wait..');
+            
             $('#signupForm').submit();
         }
         else{
