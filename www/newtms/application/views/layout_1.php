@@ -186,6 +186,7 @@ span.psw {
                                                    <div class='col-sm-6'>
                                                        <label for="psw"><b>Enter Captcha Code</b></label>
                                                         <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' required>
+                                                        <div><span id="captcha_err"></span></div>
                                                    </div>
                                                </div>
                                                     <?php
@@ -198,7 +199,7 @@ span.psw {
                                                         echo '<center><div class="error">' . $this->session->flashdata('warning') . '</div></center>';
                                                     }
                                                     ?>          
-                                               <div><span id="captcha_err"></span></div>
+                                               
                                                <br>
                                               <button type="submit" onclick="return validate_form();"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</button>
                                               <br>
@@ -246,6 +247,7 @@ span.psw {
     function validate_form(){
         var uname= $("#uname").val();
         var pwd= $("#pwd").val();
+        var captcha= $("#captcha").val();
         retVal = true;
         
         if(uname==""){
@@ -259,6 +261,12 @@ span.psw {
             retVal = false;
         }else{
             $("#pass_err").text("").removeClass('error'); 
+        }
+        if(captcha==""){
+            $("#captcha_err").text("[required]").addClass('error');            
+            retVal = false;
+        }else{
+            $("#captcha_err").text("").removeClass('error'); 
         }
         if(retVal==true){            
             $('#signupForm').submit();
