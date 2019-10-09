@@ -383,17 +383,17 @@ class Classes extends CI_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('class_name', 'Class Name', 'max_length[50]');
         $this->form_validation->set_rules('start_date', 'Start Date', 'required');
-        $this->form_validation->set_rules('end_date', 'End Date', 'required');
-        $this->form_validation->set_rules('total_seats', 'Total Seats', 'required|max_length[10]|integer');
-        $this->form_validation->set_rules('minimum_students', 'Minimum Students', 'max_length[10]|integer');
-        $this->form_validation->set_rules('fees', 'Fees', 'required|numeric');
-        $this->form_validation->set_rules('class_discount', 'Class Discount', 'numeric');
-        $this->form_validation->set_rules('display_class', 'Check box', 'trim');
-        $this->form_validation->set_rules('languages', 'Languages', 'required');
-        $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
-        $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
-        $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
-        $this->form_validation->set_rules('control_5', 'Class Room Trainer', 'required');
+//        $this->form_validation->set_rules('end_date', 'End Date', 'required');
+//        $this->form_validation->set_rules('total_seats', 'Total Seats', 'required|max_length[10]|integer');
+//        $this->form_validation->set_rules('minimum_students', 'Minimum Students', 'max_length[10]|integer');
+//        $this->form_validation->set_rules('fees', 'Fees', 'required|numeric');
+//        $this->form_validation->set_rules('class_discount', 'Class Discount', 'numeric');
+//        $this->form_validation->set_rules('display_class', 'Check box', 'trim');
+//        $this->form_validation->set_rules('languages', 'Languages', 'required');
+//        $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
+//        $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
+//        $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
+//        $this->form_validation->set_rules('control_5', 'Class Room Trainer', 'required');
         if ($this->form_validation->run() == FALSE) {
             $data['page_title'] = 'Class';
             $data['main_content'] = 'class/editclass';
