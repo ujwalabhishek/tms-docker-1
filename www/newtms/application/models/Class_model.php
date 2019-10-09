@@ -928,7 +928,7 @@ class Class_Model extends CI_Model {
      * @param type $userId
      * @param type $courseId
      */
-    public function update_class($tenantId, $userId) {
+    public function update_class($tenantId, $userId) {echo "s";exit;
         $display_class = 0;
         $control_4 = '';
         $control_5 = '';
@@ -1017,7 +1017,7 @@ class Class_Model extends CI_Model {
         $this->db->where('tenant_id', $tenantId);
         $this->db->where('class_id', $class_id);
         $this->db->trans_start();
-print_r($data_class);exit;
+
         $update_result = $this->db->update('course_class', $data_class);
         if ($update_result) {
             $totalbooked = $this->get_class_booked($course_id, $class_id, $tenantId);
