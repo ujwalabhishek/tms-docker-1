@@ -186,7 +186,13 @@ span.psw {
                                                    <div class='col-sm-6'>
                                                        <label for="psw"><b>Enter Captcha Code</b></label>
                                                         <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' required>
-                                                        <div><span id="captcha_err"></span></div>
+                                                        <div><span id="captcha_err"></span>
+                                                            <?php
+                                                            if ($this->session->flashdata('invalid_captcha')) {
+                                                                echo '<center><div class="error">' . $this->session->flashdata('invalid_captcha') . '</div></center>';
+                                                            }
+                                                            ?>	
+                                                        </div>
                                                    </div>
                                                </div>
                                                     <?php

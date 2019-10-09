@@ -128,7 +128,7 @@ class Login extends CI_Controller {
         $user_name = $this->input->post('username');
         $captcha = $this->input->post('captcha');
         if(strtolower($captcha) != strtolower($this->session->userdata('captcha_key'))){//added by shubhranshu
-            $this->session->set_flashdata('invalid', 'Invalid captcha code');//added by shubhranshu
+            $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
             redirect('login/administrator');//added by shubhranshu
              
         }//added by shubhranshu
