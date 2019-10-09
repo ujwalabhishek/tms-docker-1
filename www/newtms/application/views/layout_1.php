@@ -146,8 +146,8 @@ span.psw {
 }
 .container-footer{
     background-color:#f1f1f1;
-    border-top-left-radius: 7px;
-    border-top-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
 }
 </style>
 </head>
