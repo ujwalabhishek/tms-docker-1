@@ -380,6 +380,7 @@ class Classes extends CI_Controller {
     public function update_class() { 
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
+        $role_id = $this->session->userdata('userDetails')->role_id;// added by shubhranshu for fetching role id
         $this->load->library('form_validation');
         $this->form_validation->set_rules('class_name', 'Class Name', 'max_length[50]');
         $this->form_validation->set_rules('start_date', 'Start Date', 'required');
@@ -402,7 +403,7 @@ class Classes extends CI_Controller {
             $this->load->view('layout', $data);
             
         } else {print_r($this->data['user']);exit;
-            if($this->data['user']->role_id != 'ADMN'){
+            if($role_id != 'ADMN'){ // changed by shubhranshu for userdata issue
                 $start_date_timestamp = strtotime($this->input->post('start_date'));        
                 $start_date_timestamp_hidden = strtotime($this->input->post('start_date_hidden'));        
                 $today_date = strtotime(date('Y-m-d'));                                            
