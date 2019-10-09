@@ -137,9 +137,7 @@ span.psw {
 .container-login{
     padding:0px 30px;
 }
-#Imageid{
-    width:131px;
-}
+
 </style>
 </head>
 <body>
