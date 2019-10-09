@@ -275,10 +275,7 @@ span.psw {
             $("#captcha_err").text("").removeClass('error'); 
         }
         if(retVal==true){   
-            var self = $('#login'),
-            button = self.find('input[type="submit"],button'),
-            submitValue = button.data('submit-value');
-            button.attr('disabled','disabled').html('Please Wait..');
+            $('#login').attr('disabled','disabled').html('Please Wait..');
             $('#signupForm').submit();
         }
         else{
