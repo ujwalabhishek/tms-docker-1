@@ -8,6 +8,9 @@ if (!defined('BASEPATH'))
 class Manage_block_nric extends CI_Controller {
     public function __construct() {
         parent::__construct();
+        if($this->session->userdata('userDetails')->tenant_id != 'ISV01'){
+            $this->session->sess_destroy();
+        }
         $this->load->model('manage_tenant_model', 'manage_tenant');
         $this->load->model('meta_values', 'meta');
         $this->load->model('trainee_model', 'traineemodel');
@@ -23,7 +26,7 @@ class Manage_block_nric extends CI_Controller {
     
     public function index() {
         $data['sideMenuData'] = fetch_non_main_page_content();
-        if($this->data['user']->tenant_id == 'ISV01'){
+        
             $records_per_page = RECORDS_PER_PAGE;
             $pageno = ($this->uri->segment(2)) ? $this->uri->segment(2) : 1;
             $offset = ($pageno * $records_per_page);
@@ -41,9 +44,7 @@ class Manage_block_nric extends CI_Controller {
             $data['privilage_for_all'] = $this->manage_tenant->get_privilage();
             $data['main_content'] = $this->view_folder . 'block_nric_list';
             $this->load->view('layout', $data);
-        }else{
-            $this->load->view('error_404', $data);
-        }
+        
     }
     
     
