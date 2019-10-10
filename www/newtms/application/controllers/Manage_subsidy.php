@@ -14,7 +14,8 @@ class Manage_Subsidy extends CI_Controller {
     /**
      * This function to list tenant subsidy
      */
-    public function index() {        
+    public function index() {    
+        $data['sideMenuData'] = fetch_non_main_page_content(); // added by shubhranshu
         $records_per_page = RECORDS_PER_PAGE;        
         $pageno = ($this->uri->segment(2)) ? $this->uri->segment(2) : 1;        
         $offset = ($pageno * $records_per_page);

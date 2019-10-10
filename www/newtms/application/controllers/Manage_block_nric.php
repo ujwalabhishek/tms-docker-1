@@ -29,23 +29,23 @@ class Manage_Block_Nric extends CI_Controller {
         
         $data['sideMenuData'] = fetch_non_main_page_content(); // added by shubhranshu
         
-            $records_per_page = RECORDS_PER_PAGE;
-            $pageno = ($this->uri->segment(2)) ? $this->uri->segment(2) : 1;
-            $offset = ($pageno * $records_per_page);
-            $field = ($this->input->get('f')) ? $this->input->get('f') : 'id';
-            $tenant_id = ($this->input->get('tenant_id')) ? $this->input->get('tenant_id') : 0;
-            $data['sort_order'] = $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
-            $totalrows = $this->manage_tenant->list_blocked_nric($tenant_id)->num_rows();
-            $data['tabledata'] = $this->manage_tenant->list_blocked_nric($tenant_id, $records_per_page, $offset, $field, $order_by)->result_array();
-            $this->load->helper('pagination');
-            $data['sort_link'] = $sort_link = "tenant_name=" . $this->input->get('tenant_name') . "&tenant_id=" . $this->input->get('tenant_id');
-            $data['pagination'] = get_pagination($records_per_page, $pageno, base_url() . $this->controller_name, $totalrows, $field, $order_by . '&' . $sort_link);
-            $data['controllerurl'] = $this->controller_name;
-            $data['meta_map'] = $this->meta_map;
-            $data['page_title'] = 'Manage Tenants';
-            $data['privilage_for_all'] = $this->manage_tenant->get_privilage();
-            $data['main_content'] = $this->view_folder . 'block_nric_list';
-            $this->load->view('layout', $data);
+        $records_per_page = RECORDS_PER_PAGE;
+        $pageno = ($this->uri->segment(2)) ? $this->uri->segment(2) : 1;
+        $offset = ($pageno * $records_per_page);
+        $field = ($this->input->get('f')) ? $this->input->get('f') : 'id';
+        $tenant_id = ($this->input->get('tenant_id')) ? $this->input->get('tenant_id') : 0;
+        $data['sort_order'] = $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
+        $totalrows = $this->manage_tenant->list_blocked_nric($tenant_id)->num_rows();
+        $data['tabledata'] = $this->manage_tenant->list_blocked_nric($tenant_id, $records_per_page, $offset, $field, $order_by)->result_array();
+        $this->load->helper('pagination');
+        $data['sort_link'] = $sort_link = "tenant_name=" . $this->input->get('tenant_name') . "&tenant_id=" . $this->input->get('tenant_id');
+        $data['pagination'] = get_pagination($records_per_page, $pageno, base_url() . $this->controller_name, $totalrows, $field, $order_by . '&' . $sort_link);
+        $data['controllerurl'] = $this->controller_name;
+        $data['meta_map'] = $this->meta_map;
+        $data['page_title'] = 'Manage Tenants';
+        $data['privilage_for_all'] = $this->manage_tenant->get_privilage();
+        $data['main_content'] = $this->view_folder . 'block_nric_list';
+        $this->load->view('layout', $data);
         
     }
     
