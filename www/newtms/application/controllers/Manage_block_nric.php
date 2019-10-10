@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
  * This is the controller class for Manage blocked nric 
  * created by shubhranshu
  */
-class Manage_block_nric extends CI_Controller {
+class Manage_Block_Nric extends CI_Controller {
     public function __construct() {
         parent::__construct();
         print_r($this->session->userdata('userDetails'));exit;
