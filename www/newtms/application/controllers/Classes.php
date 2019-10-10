@@ -378,7 +378,7 @@ class Classes extends CI_Controller {
      * this function to update the edited class
      */
     public function update_class() { 
-        $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['sideMenuData'] = fetch_non_main_page_content();// added by shubhranshu
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
         $role_id = $this->session->userdata('userDetails')->role_id;// added by shubhranshu for fetching role id
