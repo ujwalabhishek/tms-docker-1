@@ -1045,7 +1045,7 @@ class Course extends CI_Controller {
         }
 
         $file_name = str_ireplace(' ', '_', $this->input->get('file_name'));
-
+        $file_name = $file_name.'.zip';
         header("Content-Type: application/octet-stream");
 
         header("Content-Disposition: attachment;filename=" . $file_name);
