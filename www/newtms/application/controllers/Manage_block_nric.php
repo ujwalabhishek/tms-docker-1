@@ -26,7 +26,7 @@ class Manage_Block_Nric extends CI_Controller {
      * /*  to show the blocked nric list //added by shubhranshu for client requirement on 21/03/2019 for restriction nric*/
     
     public function index() {
-        echo print_r($this->session->userdata('userDetails'));exit;
+        
         $data['sideMenuData'] = fetch_non_main_page_content();
         
             $records_per_page = RECORDS_PER_PAGE;
