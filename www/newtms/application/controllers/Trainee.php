@@ -1000,7 +1000,8 @@ class Trainee extends CI_Controller {
             }
             $i++;
         }
-        return $trainee;
+        print_r($trainee);exit;
+        //return $trainee;
     }
     /*
       function for bulk registration : uploading the bulk data excel file
