@@ -69,7 +69,7 @@ if(count($course_list) == 0) {
                             <div class="content-des">
                             <span class="pull-left mar-right">
                                 <?php if(!empty($crse->crse_icon)) { ?>
-                                <img src="<?php echo FCPATH . $crse->crse_icon; ?>" width="80">
+                                <img src="<?php echo base_url(). $crse->crse_icon; ?>" width="80">
                                 <?php } else { ?>
                                 <img src="<?php echo base_url() . "assets/images/default_course.jpg"; ?>" width="80">
                                 <?php } ?>
