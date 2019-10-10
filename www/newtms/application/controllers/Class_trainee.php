@@ -4131,6 +4131,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      * This methos used for confirme the enrollment in trainee registration.
      */
    public function enroll_pay_now() {
+       $data['sideMenuData'] = fetch_non_main_page_content();
         $trainee_id = $this->session->userdata('new_trainee_user_id');
         $trainee_name = $this->input->post('trainee_name');
         $course_id = $this->input->post('course_id');
