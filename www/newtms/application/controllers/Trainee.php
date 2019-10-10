@@ -986,7 +986,8 @@ class Trainee extends CI_Controller {
             }
             ///////////////////////////////////////////////////
             if ($trainee[$i][rowstatus] == 'success') {                
-                $status = true;//$this->traineemodel->save_bulk_user_data($trainee[$i]);
+                $status = true;
+                $this->traineemodel->save_bulk_user_data($trainee[$i]);
                
                 if ($status['status'] == FALSE) {
                     $trainee[$i][rowstatus] = 'fail';
