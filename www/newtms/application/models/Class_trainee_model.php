@@ -9988,6 +9988,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $salesexec = ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id == 'ADMN') ? $this->data['user']->user_id : NULL;
         }*/
          /* sales executive thread to tagged who enrolles on 18-07-2015 by prti*/
+        print_r($this->data['user']);exit;
         if ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id == 'CRSEMGR' || $this->data['user']->role_id == 'TRAINER') 
         {
             $salesexec = $this->data['user']->user_id;
