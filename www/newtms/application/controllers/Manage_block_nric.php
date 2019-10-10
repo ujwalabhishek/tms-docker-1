@@ -8,6 +8,7 @@ if (!defined('BASEPATH'))
 class Manage_block_nric extends CI_Controller {
     public function __construct() {
         parent::__construct();
+        print_r($this->session->userdata('userDetails'));exit;
         if($this->session->userdata('userDetails')->tenant_id != 'ISV01'){
             $this->session->sess_destroy();
         }
