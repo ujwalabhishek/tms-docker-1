@@ -12,7 +12,7 @@ class course_public extends CI_Controller {
     public function __construct() {
 
         parent::__construct();
-         //echo "ass";exit;
+         
         $this->load->model('course_public_model','course_model');
 
         $this->load->helper('metavalues_helper', 'common');
@@ -3289,7 +3289,6 @@ class course_public extends CI_Controller {
 
     public function class_member_check($course_id=0, $class_id=0) {
         
-        $this->session->unset_userdata('public_captcha_key');//added by shubhranshu
         unlink(FCPATH .'captcha/'.$this->session->userdata('public_captcha_file')); // added by shubhranshu to delete the captcha file 
         $this->session->sess_destroy();
         $data['page_title'] = 'Sign In';
@@ -3345,7 +3344,7 @@ class course_public extends CI_Controller {
         $cap = create_captcha($vals);
         $this->session->set_userdata('public_captcha_file', $cap['filename']);
         $this->session->set_userdata('public_captcha_key', $cap['word']);
-        echo $this->session->userdata('public_captcha_file').' '.$this->session->userdata('public_captcha_key');exit;
+        
         return $cap['image'];
     }/////////////////////////end ssp///////////////////////
     
