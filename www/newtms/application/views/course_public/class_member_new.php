@@ -138,7 +138,7 @@ span.psw {
 }
 </style>
 <div class="main_container_new_top"> 
-            <?php $this->load->view('common/login_header'); ?>	  
+             
             <div class="container_nav_style">
                 <div class="container container_row">
                     <div class="row row_pushdown">
@@ -150,8 +150,8 @@ span.psw {
                                     <div class="table-responsive">
                                          
                                         <!--added the new login form by shubhranshu-->
-                                        <form class="modal-content animate" action="<?php echo site_url() ?>login/validate_user"  method="post" id="signupForm">
-                                            <h2 class="panel_heading_style" style='text-align:center'><strong>Internal Staff Use Only</strong></h2>
+                                        <form class="modal-content animate" action="<?php echo site_url() ?>user/validate_public_user"  method="post" id="signupForm">
+                                            <h2 class="panel_heading_style" style='text-align:center'><strong>Trainee Use Only</strong></h2>
                                             <div class="imgcontainer">
                                               
                                               <img src="../assets/images/user2.png" alt="Avatar" class="avatar">
@@ -167,6 +167,8 @@ span.psw {
                                               <div><span id="uname_err"></span></div>
                                               <label for="psw"><b>Password</b></label>
                                               <input type="password" placeholder="Enter Password" name="password" id='pwd' class='form-control' required>
+                                              <input type="hidden" name="course_id" value="<?php echo $course_id;?>" />
+                                              <input type="hidden" name="class_id" value="<?php echo $class_id;?>" />
                                                <div><span id="pass_err"></span></div>
                                                <div class='row'>
                                                    <div class='col-sm-6'>
@@ -217,7 +219,7 @@ span.psw {
                                                 if(!isset($message)){                                                        
                                                 ?>
                                               <label class="pull-right">
-                                                  <span><a href="<?php echo site_url();?>login/forgot_password">Forgot password?</a></span>
+                                                  <span><a href="<?php echo site_url();?>user/forgot_password">Forgot password?</a></span>
                                               </label>
                                                 <?php } ?>
                                               <br>
@@ -239,7 +241,7 @@ span.psw {
                     </div>
                     <div style="clear:both;">
                     </div>
-                    <?php $this->load->view('common/login_footer'); ?>
+                    
                 </div>
             </div>
         </div>
