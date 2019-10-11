@@ -233,4 +233,39 @@ if (isset($_COOKIE['remember_me'])) {
         </div>
     </div>
 </div>
-
+<script>
+    function validate_form(){
+        var uname= $("#uname").val();
+        var pwd= $("#pwd").val();
+        var captcha= $("#captcha").val();
+        retVal = true;
+        
+        if(uname==""){
+            $("#uname_err").text("[required]").addClass('error');            
+            retVal = false;
+        }else{
+            $("#uname_err").text("").removeClass('error'); 
+        }
+        if(pwd==""){
+            $("#pass_err").text("[required]").addClass('error');            
+            retVal = false;
+        }else{
+            $("#pass_err").text("").removeClass('error'); 
+        }
+        if(captcha==""){
+            $("#captcha_err").text("[required]").addClass('error');            
+            retVal = false;
+        }else{
+            $("#captcha_err").text("").removeClass('error'); 
+        }
+        if(retVal==true){ 
+            //added by shubhranshu for disable of login button once clicked login
+            $('#login').attr('disabled','disabled').css('background-color','#aeb4ba').html('Please Wait..');
+            
+            $('#signupForm').submit();
+        }
+        else{
+            return retVal;
+        }        
+    }   
+    </script>
