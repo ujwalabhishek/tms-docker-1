@@ -39,6 +39,14 @@ class User extends CI_Controller {
          $class_id = $this->input->post('class_id');
         $year = time() + 31536000;
         setcookie('remember_me', $_POST['username'], $year);
+        
+        $captcha = $this->input->post('captcha');
+        if(strtolower($captcha) != strtolower($this->session->userdata('public_captcha_key'))){//added by shubhranshu
+            $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
+            redirect('course_public/class_member_check');//added by shubhranshu
+             
+        }//added by shubhranshu
+        
         $resp = $this->user_model->check_public_user_valid();
 
         if (empty($resp)) {
@@ -50,28 +58,32 @@ class User extends CI_Controller {
             }else { redirect('course_public/class_member_check');}
             
         } else {
+            
+                $this->session->unset_userdata('public_captcha_key');//added by shubhranshu
+                unlink(FCPATH .'captcha/'.$this->session->userdata('public_captcha_file')); // added by shubhranshu to delete the captcha file 
+               
                 $this->session->set_userdata('userDetails', $resp);
                 if (!empty($course_id) && is_numeric($course_id)) {
                     
                 $user_id = $resp->user_id; // retrive user_id when user loggedin successfully
                 $result = $this->course_model->is_user_enrolled1($user_id,$class_id,$course_id);// check user already enrolled in selected course & class.
        
-                if($result == 0)
-                {
-                     redirect("course_public/class_enroll1/$course_id/$class_id");
-                     
-                }else{
-                    
-                    $res = $this->course_model->class_name($course_id,$class_id); // get the name for class based on courseid and class id
-                    $error = 'You Are Already Enrolled In - '. "' $res->class_name '".' Class';
-                    $this->session->set_flashdata('error', $error);
-                    redirect("course_public/course_class_schedule/$course_id");
-                }
+                    if($result == 0)
+                    {
+                         redirect("course_public/class_enroll1/$course_id/$class_id");
+
+                    }else{
+
+                        $res = $this->course_model->class_name($course_id,$class_id); // get the name for class based on courseid and class id
+                        $error = 'You Are Already Enrolled In - '. "' $res->class_name '".' Class';
+                        $this->session->set_flashdata('error', $error);
+                        redirect("course_public/course_class_schedule/$course_id");
+                    }
                 
-            } else {
-                //redirect('user/dashboard');
-                redirect("course_public");
-            }
+                } else {
+                    //redirect('user/dashboard');
+                    redirect("course_public");
+                }
         }
     }
     

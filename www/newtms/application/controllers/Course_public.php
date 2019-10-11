@@ -3288,7 +3288,8 @@ class course_public extends CI_Controller {
     }
 
     public function class_member_check($course_id=0, $class_id=0) {
-
+        $this->session->unset_userdata('public_captcha_key');//added by shubhranshu
+        unlink(FCPATH .'captcha/'.$this->session->userdata('public_captcha_file')); // added by shubhranshu to delete the captcha file 
         $this->session->sess_destroy();
         $data['page_title'] = 'Sign In';
 
@@ -3304,8 +3305,8 @@ class course_public extends CI_Controller {
 
 //            redirect(base_url().'course_public/class_enroll');
         //} else {
-
-            $data['main_content'] = 'course_public/class_member';
+            $data['captcha']=$this->generateCaptcha(); // added by shubhranshu for capctha entry
+            $data['main_content'] = 'course_public/class_member_new'; // added by shubhranshu for new look of login
 
             // redirect(base_url().'course_public/enrol_friend');
        // }
@@ -3314,7 +3315,40 @@ class course_public extends CI_Controller {
 
         $this->load->view('layout_public', $data);
     }
+    
+    /// below function was added by shubhranshu for captcha validation
+    private function generateCaptcha(){
+        $this->load->helper('captcha');
+        $vals = array(
+                'word'          => '',
+                'img_path'      => FCPATH.'captcha/',
+                'img_url'       => base_url().'captcha/',
+                'font_path'     => FCPATH .'assets/fonts/ATBramley-Medium.ttf',
+                'img_width'     => '131',
+                'img_height'    => 30,
+                'expiration'    => 7200,
+                'word_length'   => 6,
+                'font_size'     => 16,
+                'img_id'        => 'Imageid',
+                'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
+                // White background and border, black text and red grid
+                'colors'        => array(
+                        'background' => array(255, 255, 255),
+                        'border' => array(255, 255, 255),
+                        'text' => array(0, 0, 0),
+                        'grid' => array(255, 40, 40)
+                )
+        );
+        
+        $cap = create_captcha($vals);
+        $this->session->set_userdata('public_captcha_file', $cap['filename']);
+        $this->session->set_userdata('public_captcha_key', $cap['word']);
+        return $cap['image'];
+    }/////////////////////////end ssp///////////////////////
+    
+    
+    
     //public function register($class_id, $course_id, $data) {
     public function register() {
         $data['page_title'] = 'Add Trainee';
