@@ -3290,7 +3290,7 @@ class course_public extends CI_Controller {
     public function class_member_check($course_id=0, $class_id=0) {
         
         unlink(FCPATH .'captcha/'.$this->session->userdata('public_captcha_file')); // added by shubhranshu to delete the captcha file 
-        $this->session->sess_destroy();
+        //$this->session->sess_destroy();
         $data['page_title'] = 'Sign In';
 
         $data['course_id'] = $course_id;
