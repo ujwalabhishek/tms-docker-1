@@ -3291,6 +3291,7 @@ class course_public extends CI_Controller {
         
         unlink(FCPATH .'captcha/'.$this->session->userdata('public_captcha_file')); // added by shubhranshu to delete the captcha file 
         //$this->session->sess_destroy();
+        unset($this->session->userdata('userDetails'));
         $data['page_title'] = 'Sign In';
 
         $data['course_id'] = $course_id;
