@@ -3317,7 +3317,7 @@ class course_public extends CI_Controller {
     }
     
     /// below function was added by shubhranshu for captcha validation
-    private function generateCaptcha(){
+    public function generateCaptcha(){
         $this->load->helper('captcha');
         $vals = array(
                 'word'          => '',
