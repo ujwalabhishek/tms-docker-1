@@ -3288,7 +3288,7 @@ class course_public extends CI_Controller {
     }
 
     public function class_member_check($course_id=0, $class_id=0) {
-        echo $this->session->userdata('public_captcha_file').' '.$this->session->userdata('public_captcha_key');exit;
+        
         $this->session->unset_userdata('public_captcha_key');//added by shubhranshu
         unlink(FCPATH .'captcha/'.$this->session->userdata('public_captcha_file')); // added by shubhranshu to delete the captcha file 
         $this->session->sess_destroy();
@@ -3345,6 +3345,7 @@ class course_public extends CI_Controller {
         $cap = create_captcha($vals);
         $this->session->set_userdata('public_captcha_file', $cap['filename']);
         $this->session->set_userdata('public_captcha_key', $cap['word']);
+        echo $this->session->userdata('public_captcha_file').' '.$this->session->userdata('public_captcha_key');exit;
         return $cap['image'];
     }/////////////////////////end ssp///////////////////////
     
