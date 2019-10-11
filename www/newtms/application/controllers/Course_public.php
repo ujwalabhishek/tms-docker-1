@@ -3305,7 +3305,7 @@ class course_public extends CI_Controller {
 //            redirect(base_url().'course_public/class_enroll');
         //} else {
 
-            $data['main_content'] = 'course_public/class_member_new';
+            $data['main_content'] = 'course_public/class_member';
 
             // redirect(base_url().'course_public/enrol_friend');
        // }
