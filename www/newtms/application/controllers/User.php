@@ -39,7 +39,7 @@ class User extends CI_Controller {
          $class_id = $this->input->post('class_id');
         $year = time() + 31536000;
         setcookie('remember_me', $_POST['username'], $year);
-        
+        echo $this->session->userdata('public_captcha_key');exit;
         $captcha = $this->input->post('captcha');
         if(strtolower($captcha) != strtolower($this->session->userdata('public_captcha_key'))){//added by shubhranshu
             $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
