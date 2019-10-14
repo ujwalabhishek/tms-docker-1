@@ -3692,7 +3692,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $account_type = $this->input->post('account_type');
         $this->load->library('form_validation');
         $this->form_validation->set_rules('course', 'Course', 'required');
-        if ($this->form_validation->run() == FALSE) {echo "s1";exit;
+        if ($this->form_validation->run() == FALSE) {
             $data['courses'] = $this->get_active_classcourse_list_by_tenant($tenant_id);
             if ($course) {
                 $result = $this->classtraineemodel->get_trainee_classes($this->tenant_id, $course, $trainee_id, $taxcode_id);
@@ -3711,7 +3711,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $data['main_content'] = 'classtrainee/addnewenroll';
             //$data['sideMenuData'] = $this->sideMenu;
             $this->load->view('layout', $data);
-        } else {echo "s";exit;
+        } else {
             $data['courses'] = $courses = $this->course->get_course_detailse($course);
             $data['course_manager'] = rtrim($this->course->get_managers($courses->crse_manager), ', ');
             $data['courseLevel'] = $this->course->get_metadata_on_parameter_id($courses->certi_level);

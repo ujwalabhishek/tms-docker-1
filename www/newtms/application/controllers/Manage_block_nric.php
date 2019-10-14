@@ -8,10 +8,7 @@ if (!defined('BASEPATH'))
 class Manage_Block_Nric extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        // added by shubhranshu prevent controller access for other tenant accept ISV admin////
-        if($this->session->userdata('userDetails')->tenant_id != 'ISV01'){
-            $this->session->sess_destroy();
-        }// end..........////
+        
         $this->load->model('manage_tenant_model', 'manage_tenant');
         $this->load->model('meta_values', 'meta');
         $this->load->model('trainee_model', 'traineemodel');
@@ -26,7 +23,10 @@ class Manage_Block_Nric extends CI_Controller {
      * /*  to show the blocked nric list //added by shubhranshu for client requirement on 21/03/2019 for restriction nric*/
     
     public function index() {
-        
+        // added by shubhranshu prevent controller access for other tenant accept ISV admin////
+        if($this->session->userdata('userDetails')->tenant_id != 'ISV01'){
+            $this->session->sess_destroy();
+        }// end..........////
         $data['sideMenuData'] = fetch_non_main_page_content(); // added by shubhranshu
         
         $records_per_page = RECORDS_PER_PAGE;
