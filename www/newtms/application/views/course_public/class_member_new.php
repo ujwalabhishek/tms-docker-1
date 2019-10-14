@@ -149,7 +149,7 @@ if (!defined('BASEPATH'))
                     <h2 class="panel_heading_style" style='text-align:center'><strong>Trainee Use Only</strong></h2>
                     <div class="imgcontainer">
 
-                        <img src="../assets/images/user2.png" alt="Avatar" class="avatar">
+                        <img src="../assets/images/group.png" alt="Avatar" class="avatar">
                     </div>
 
                     <div class="container-login">
