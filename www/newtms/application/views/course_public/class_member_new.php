@@ -43,6 +43,7 @@ if (!defined('BASEPATH'))
 
     img.avatar {
         width: 26%;
+       border: 4px solid #010101;
         border-radius: 50%;
     }
 
