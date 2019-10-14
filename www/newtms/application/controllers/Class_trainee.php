@@ -3711,7 +3711,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $data['main_content'] = 'classtrainee/addnewenroll';
             //$data['sideMenuData'] = $this->sideMenu;
             $this->load->view('layout', $data);
-        } else {
+        } else {echo "s";exit;
             $data['courses'] = $courses = $this->course->get_course_detailse($course);
             $data['course_manager'] = rtrim($this->course->get_managers($courses->crse_manager), ', ');
             $data['courseLevel'] = $this->course->get_metadata_on_parameter_id($courses->certi_level);
