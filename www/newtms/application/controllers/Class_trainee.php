@@ -3692,7 +3692,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $account_type = $this->input->post('account_type');
         $this->load->library('form_validation');
         $this->form_validation->set_rules('course', 'Course', 'required');
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == FALSE) {echo "s1";exit;
             $data['courses'] = $this->get_active_classcourse_list_by_tenant($tenant_id);
             if ($course) {
                 $result = $this->classtraineemodel->get_trainee_classes($this->tenant_id, $course, $trainee_id, $taxcode_id);
