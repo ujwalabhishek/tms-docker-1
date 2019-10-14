@@ -57,7 +57,7 @@ class Login extends CI_Controller {
                 'img_path'      => FCPATH.'captcha/',
                 'img_url'       => base_url().'captcha/',
                 'font_path'     => FCPATH .'assets/fonts/ATBramley-Medium.ttf',
-                'img_width'     => '131',
+                'img_width'     => '127',
                 'img_height'    => 30,
                 'expiration'    => 7200,
                 'word_length'   => 6,
