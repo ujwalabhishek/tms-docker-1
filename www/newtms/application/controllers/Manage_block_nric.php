@@ -25,7 +25,7 @@ class Manage_Block_Nric extends CI_Controller {
     public function index() {
         // added by shubhranshu prevent controller access for other tenant accept ISV admin////
         if($this->session->userdata('userDetails')->tenant_id != 'ISV01'){
-            $this->session->sess_destroy();
+            $this->session->sess_destroy();exit;
         }// end..........////
         $data['sideMenuData'] = fetch_non_main_page_content(); // added by shubhranshu
         
