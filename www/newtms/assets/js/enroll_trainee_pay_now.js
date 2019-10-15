@@ -5,6 +5,7 @@ $(document).ready(function() {
     var check = 0
     $('#enroll_pay_now_form').submit(function() {        
         //check = 1;
+        // added by shubhranshu to prevent multiple click////////////////
         $check= form_validate(true);
         if($check){
             $(".book_now").attr('disabled','disabled').html('Please Wait..');
@@ -12,7 +13,7 @@ $(document).ready(function() {
             return true;
         }else{
             return false;
-        }
+        }// added by shubhranshu to prevent multiple click////////////////
     })
     $('button[type="reset"]').click(function() {
         $('.error_text').text('');
