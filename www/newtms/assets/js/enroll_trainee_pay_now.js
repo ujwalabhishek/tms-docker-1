@@ -7,10 +7,8 @@ $(document).ready(function() {
         //check = 1;
         $check= form_validate(true);
         if($check){
-            var self = $(this),
-            button = self.find('input[type="submit"],button'),
-            submitValue = button.data('submit-value');
-            button.attr('disabled','disabled').html('Please Wait..');
+            $(".book_now").attr('disabled','disabled').html('Please Wait..');
+            $(".pay_now").attr('disabled','disabled').html('Please Wait..');
             return true;
         }else{
             return false;
