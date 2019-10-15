@@ -4,8 +4,17 @@
 $(document).ready(function() {
     var check = 0
     $('#enroll_pay_now_form').submit(function() {        
-        check = 1;
-        return form_validate(true);
+        //check = 1;
+        $check= form_validate(true);
+        if($check){
+            var self = $(this),
+            button = self.find('input[type="submit"],button'),
+            submitValue = button.data('submit-value');
+            button.attr('disabled','disabled').html('Please Wait..');
+            return true;
+        }else{
+            return false;
+        }
     })
     $('button[type="reset"]').click(function() {
         $('.error_text').text('');
@@ -39,7 +48,7 @@ $('#payment_type').change(function() {
         $('#giro_div').hide();
         $('#sfc_div').hide();
         $('#sfcato_div').hide();
-        $val = $(this).val();alert($val);
+        $val = $(this).val();
         if ($val.length > 0) {
             if ($val == 'CASH' || $val == 'NETS') {
                 $('#row_dim3').show();
@@ -81,7 +90,7 @@ $('#payment_type').change(function() {
                     $('.sfc_clm').show();
                 }
                 else
-                {alert('else');
+                {
                     remove_err('#sfc_claim');
                     $('#sfc_div').show();
                     $('#row_dim31').hide();

@@ -67,7 +67,7 @@ $this->load->model('meta_values');
                                 </td>
                                 <td>
                                     <?php  
-                                    $this->load->model('Class_Trainee_Model', 'classtraineemodel');
+                                    $this->load->model('class_trainee_model', 'classtraineemodel');
                                     $res = $this->classtraineemodel->schedule_chck($data->class_id);
                                     if($res == 1)
                                     {
