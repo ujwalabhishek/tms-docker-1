@@ -63,7 +63,8 @@ $this->load->model('meta_values');
                     echo form_hidden('user_id', $this->input->get('user_id'), 'user_id');
                     echo form_input($fn);
                     ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <div id="trainee_name_list_err"></div>
+                      <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>  
+                    <div id="trainee_name_list_err"></div>
                     </td>
                     <td class="td_heading">
                         <?php
@@ -87,6 +88,7 @@ $this->load->model('meta_values');
                     );
                     ?>
                     <td><?php echo form_input($tax_code); ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <div id="tax_code_err"></div>
                     </td>
 

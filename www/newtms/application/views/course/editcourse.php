@@ -25,6 +25,7 @@ $CI->load->model('settings_model');
                     <td width="22%" class="td_heading">Search by Course Name:</td>
                     <td colspan="3">
                         <input size="50" type="text" name="search_course_name" id="search_course_name" value="<?php echo $this->input->post('search_course_name'); ?>" class='upper_case' />
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="search_course_name_err"></span>
                     </td>
                     <td width="13%" align="center"><button type="submit" title="Search" value="Search" onclick='validate_search();' class="btn btn-xs btn-primary no-mar">

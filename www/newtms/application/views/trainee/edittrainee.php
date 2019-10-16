@@ -60,6 +60,7 @@ if (!empty($tax_error)) {
                         $user_id = ($this->input->post('user_id'))? $this->input->post('user_id') :$this->input->post('userid');
                         echo form_hidden('user_id',$user_id,'user_id');
                         ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="search_by_name_autocomplete_err"></span>
                     </td>                    
                 </tr>
@@ -92,6 +93,7 @@ if (!empty($tax_error)) {
                         );
                         echo form_input($un);
                         ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="search_by_taxcode_autocomplete_err"></span>
                     </td> 
                      <td width="18%" align="center"><button type="submit" title="Search" value="Search" class="btn btn-xs btn-primary no-mar"><span class="glyphicon glyphicon-search"></span> Search</button></td>

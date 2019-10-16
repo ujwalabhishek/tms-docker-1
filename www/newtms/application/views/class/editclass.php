@@ -58,6 +58,7 @@ if (!empty($tax_error)) {
                         );
                         echo form_input($course_id);
                         ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="course_name_err"></span>
                     </td>
                     <td class="td_heading" width="20%">Class Name:<span class="required">*</span></td>

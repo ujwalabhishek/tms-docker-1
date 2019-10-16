@@ -95,6 +95,7 @@
                         echo form_input($data);
                         ?>
                         <br>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="taxcode_err"></span>
                     </td>
                     <td width="15%" class="td_heading">
@@ -129,6 +130,7 @@
                         echo form_input($data);
                         ?>
                         <br>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="trainee_err"></span>
                     </td>
                 </tr>
@@ -148,6 +150,7 @@
                         echo form_input($company);
                         echo form_hidden('company_id', $this->input->get('company_id'), $id='company_id');
                         ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="company_name_err"></span>
                     <?php } else { ?>
                         <td colspan="5">

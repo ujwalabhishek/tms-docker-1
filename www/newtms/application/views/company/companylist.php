@@ -27,6 +27,7 @@ echo form_open("company", $atr);
               <input type="text" name="search_company_name" id="list_search_company_name" 
                      value="<?php echo $this->input->get('search_company_name'); ?>" style="width:550px"/>
               <input id="list_search_company_id" name="list_search_company_id" type="hidden" value="<?php echo $this->input->get('list_search_company_id') ?>"/>
+              <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
               <span id="list_search_company_name_err"></span>
           </td>
         </tr>
