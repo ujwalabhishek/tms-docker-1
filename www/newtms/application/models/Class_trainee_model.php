@@ -2790,6 +2790,7 @@ class Class_Trainee_Model extends CI_Model {
         $discount_rate = $result_array['discount_rate'];
 
         $discount_amount = $result_array['discount_amount'];
+        
 
         if ($discount_type == 'DISINDVI') {
 
@@ -9169,7 +9170,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $result = $this->db->select('Discount_Percent, Discount_Amount')->from('company_discount')
                         ->where('Tenant_ID', $tenant_id)->where('Company_ID', $company)->where('Course_ID', $course)
                         ->get()->row();
-
+echo print_r($result);exit;
         return $result;
     }
 
