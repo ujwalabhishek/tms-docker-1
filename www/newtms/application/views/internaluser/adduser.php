@@ -935,7 +935,10 @@ echo form_close();
         $('#SSN_err').text('').removeClass('error');
         $('#SSN').removeClass('error');
     }
-
+    /// added by shubhranshu to remove special character & space from NRIC client side
+    $('#NRIC_ID').keyup(function(){
+        $('#NRIC_ID').val(str.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, ''));
+    });
     $("#NRIC").change(function() {
         if (this.value == "") {
             $("#SGP_ID").hide();
