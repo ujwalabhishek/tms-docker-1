@@ -873,7 +873,7 @@ $(document).ready(function() {
                 } 
                 else 
                 {
-                    disp_err('#control_6', '[There are no unassigned trainees available.]');
+                    disp_err('#control_6', '[There are no assigned trainees available.]');
                     $('.search_button').hide();
                 }
             }
