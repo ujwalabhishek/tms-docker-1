@@ -1366,7 +1366,7 @@ class Class_Trainee_Model extends CI_Model {
                 {
                     //paid status
                     $qry="select * from enrol_paymnt_recd where invoice_id='$invoice_id'"; 
-                    $query = mysql_query($qry);
+                    $query = mysqli_query($qry);//modified by shubhranshu
             
                    if($query)
                     {
