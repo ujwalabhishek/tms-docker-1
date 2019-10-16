@@ -142,7 +142,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                              $comp[$company['company_id']] = $company['company_name'];
                        
                         endforeach;
-                        $attr_js = 'id="companies" ';
+                        $attr_js = 'id="companies" style="width:50%"';
                         echo form_dropdown('comp', $comp, $this->input->get('companies'), $attr_js);
                         
                     
@@ -320,7 +320,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td>
                 </tr>
                  <tr class="add_inv1" style="display: none;">
-                    <td colspan="3"><span><font color="red">[The Invoice for this company is already exist, Please enroll by using</font>  <a href="#" class="add_inv" style="display: none;" >Add enrollments to Company invoie</a><font color="red">.]</font></span></td>
+                    <td colspan="3"><span><font color="red">[The invoice for this company is already exist, Please enroll by using</font>  <a href="#" class="add_inv" style="display: none;" >Add enrollments to Company invoie</a><font color="red">.]</font></span></td>
                 </tr>
                 <tr class="new_span">
                     <td colspan="4" class="no-bg">

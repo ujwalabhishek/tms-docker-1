@@ -29,10 +29,13 @@ if (!empty($tax_error)) {
                         echo form_hidden('search_user_id',$this->input->get('search_user_id'),'search_user_id');
                         ?>
                         <input size="50" type="text" name="search_user_firstname" id="search_user_firstname" value="<?php echo $this->input->post('search_user_firstname'); ?>">
+                        <div style="color:blue; font-size:10px;">Enter minimum of 4 characters to search</div>
                         <span id="search_user_firstname_err"></span>
                     </td>      
                     <td align="center"><button type="submit" title="Search" value="Search" name="search_form_btn" id="search_form_btn" class="btn btn-xs btn-primary no-mar">
-                            <span class="glyphicon glyphicon-search"></span>  Search</button></td>
+                            <span class="glyphicon glyphicon-search"></span>  Search</button>
+                    
+                    </td>
                 </tr>                
             </tbody>
         </table>
