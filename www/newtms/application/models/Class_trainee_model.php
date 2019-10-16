@@ -8245,12 +8245,12 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
      */
     public function get_company_not_paid_invoice($tenant_id, $query = '') {
-
+        $extra='';
         if (!empty($query)) {
 
             $extra = " AND comp.company_name LIKE '%$query%' ";
         }
-
+        $crsemgr_where='';
         if ($this->data['user']->role_id == 'CRSEMGR') {
 
             $crsemgr_where = " AND FIND_IN_SET(" . $this->data['user']->user_id . ",crse.crse_manager) !=0";
