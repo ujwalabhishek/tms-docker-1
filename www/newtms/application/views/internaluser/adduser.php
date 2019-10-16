@@ -1473,8 +1473,10 @@ echo form_close();
                                 $('#account_status').text("'Pending Activation'");
                                 $('#inactive_id').show();
                             }
-                            $('#trainee_tax_code').text(e);
-                            $('#trainee_first_name').text(res.first_name+' '+res.last_name);
+                            $('#trainee_tax_code').text(e.toUpperCase());
+                            //$('#trainee_first_name').text(res.first_name+' '+res.last_name);
+                            // commented by shubhranshu due to null issue
+                            $('#trainee_first_name').text(res.first_name);
                             $('#trainee_nationality').text(res.nationality);
                             $('#trainee_gender').text(res.gender);
                             $('#trainee_dob').text(res.dob);
