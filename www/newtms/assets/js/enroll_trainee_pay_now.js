@@ -159,11 +159,12 @@ $('#payment_type').change(function() {
             $.post(baseurl + "trainee/check_company_invoice_status", {comp_id: $company,crs_id: $course_id,cls_id: $class_id}, function(data) {
                 json_data = $.parseJSON(data);
                 if(json_data.payment_status == 'NOTPAID' || json_data.payment_status === undefined || json_data.payment_status === 'NULL'){
-                     $('.book_now').show();
+                     $('.pay_now').show();
                      $('#paiddiv').hide();
                 }else{
                     $('#paiddiv').show();
                     $('.book_now').hide();
+                     $('.pay_now').hide();
                 }
             });
         }else{
