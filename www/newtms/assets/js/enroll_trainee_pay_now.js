@@ -3,7 +3,7 @@
  */
 $(document).ready(function() {
     var check = 0
-    $('#enroll_pay_now_form').submit(function() {        
+    $('#enroll_pay_now_form').submit(function() {      alert();  
         //check = 1;
         // added by shubhranshu to prevent multiple click////////////////
         $check= form_validate(true);
@@ -163,7 +163,7 @@ $('#payment_type').change(function() {
                      $('#paiddiv').hide();
                 }else{
                     $('#paiddiv').show();
-                    $('.book_now').hide();
+                    //$('.book_now').hide();
                      $('.pay_now').hide();
                 }
             });
