@@ -1620,7 +1620,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 $this->load->helper('pdf_reports_helper');
                 if ($export == 'pdf') {
                     //return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data, $mark_count);
-                    print_r($results);exit;
+                    //print_r($results);exit;
                     return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data); // removed mark count by shubhranshu
                     
                 } else if ($export == 'pdf_week') {
