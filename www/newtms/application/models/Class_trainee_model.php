@@ -2774,8 +2774,8 @@ class Class_Trainee_Model extends CI_Model {
 
      */
     public function calculate_discount_enroll($trainee_id, $company_id, $class_id, $course_id, $unit_fees) {
-
-        $tenant_id = $this->data['user']->tenant_id;
+     
+        $tenant_id = $this->user->tenant_id;
 
         if ($company_id == 0) {
 
@@ -9170,7 +9170,6 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $result = $this->db->select('Discount_Percent, Discount_Amount')->from('company_discount')
                         ->where('Tenant_ID', $tenant_id)->where('Company_ID', $company)->where('Course_ID', $course)
                         ->get()->row();
-echo print_r($this->db->last_query());exit;
         return $result;
     }
 
