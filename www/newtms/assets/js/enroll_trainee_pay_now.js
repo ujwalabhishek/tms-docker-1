@@ -3,7 +3,7 @@
  */
 $(document).ready(function() {
     var check = 0
-    $('#enroll_pay_now_form').submit(function() {      alert();  
+    $('#enroll_pay_now_form').submit(function() {   
         //check = 1;
         // added by shubhranshu to prevent multiple click////////////////
         $account_type = $('#account_type').val();
@@ -165,16 +165,27 @@ $('#payment_type').change(function() {
             $.post(baseurl + "trainee/check_company_invoice_status", {comp_id: $company,crs_id: $course_id,cls_id: $class_id}, function(data) {
                 json_data = $.parseJSON(data);
                 if(json_data.payment_status == 'NOTPAID' || json_data.payment_status === undefined || json_data.payment_status === 'NULL'){
-                     $('.pay_now').show();
+                     if($class_pymnt_enrol == 'PDENROL') {
+                         $('.pay_now').show();
+                     }else{
+                         $('.book_now').show();
+                     }
                      $('#paiddiv').hide();
                 }else{
+                    if($class_pymnt_enrol == 'PDENROL') {
+                         $('.pay_now').hide();
+                     }else{
+                         $('.book_now').hide();
+                     }
                     $('#paiddiv').show();
-                    //$('.book_now').hide();
-                     $('.pay_now').hide();
                 }
             });
         }else{
-             $('.book_now').show();
+             if($class_pymnt_enrol == 'PDENROL') {
+                $('.pay_now').show();
+            }else{
+                $('.book_now').show();
+            }
              $('#paiddiv').hide();
         }/////////////////////////////////////////////ssp//////////////////////////////////////////////////////////
         if($class_pymnt_enrol == 'PDENROL') {
