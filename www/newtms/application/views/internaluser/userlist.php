@@ -60,6 +60,7 @@
                         echo form_hidden('user_id', $this->input->get('user_id'), 'user_id');
                         ?>
                         <input  id="first_last_name" name="first_last_name" type="text" value="<?php echo $this->input->get('first_last_name'); ?>">
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <div id="first_last_name_err"></div>
                     </td>
                     <td align="center">

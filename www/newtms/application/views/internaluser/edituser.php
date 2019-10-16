@@ -29,7 +29,7 @@ if (!empty($tax_error)) {
                         echo form_hidden('search_user_id',$this->input->get('search_user_id'),'search_user_id');
                         ?>
                         <input size="50" type="text" name="search_user_firstname" id="search_user_firstname" value="<?php echo $this->input->post('search_user_firstname'); ?>">
-                        <div style="color:blue; font-size:10px;">Enter minimum of 4 characters to search</div>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="search_user_firstname_err"></span>
                     </td>      
                     <td align="center"><button type="submit" title="Search" value="Search" name="search_form_btn" id="search_form_btn" class="btn btn-xs btn-primary no-mar">
@@ -1651,8 +1651,8 @@ echo form_close();
                                 $('#account_status').text("'Pending Activation'");
                                 $('#inactive_id').show();
                             }
-                            $('#trainee_tax_code').text(e);
-                            $('#trainee_first_name').text(res.first_name+' '+res.last_name);
+                            $('#trainee_tax_code').text(e.toUpperCase());
+                            $('#trainee_first_name').text(res.first_name);
                             $('#trainee_nationality').text(res.nationality);
                             $('#trainee_gender').text(res.gender);
                             $('#trainee_dob').text(res.dob);
