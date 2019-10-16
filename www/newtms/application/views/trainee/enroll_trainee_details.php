@@ -668,7 +668,9 @@
             echo form_close();
             ?>
                 <!--added by shubhranshu to prevent trainee enrollment for paid company invoice-->
-            <div id="paiddiv" style="display:none;padding: 10px;font-weight: bold;" class="text-center bg-danger">Invoice is already paid for this company, If you wants to enroll kindly refund the invoice</div>
+            <div id="paiddiv" style="display:none;padding: 10px;font-weight: bold;" class="text-center bg-danger">Invoice is already paid for this company, If you wants to enroll kindly refund the invoice
+                <center><a href='accounting/refund_payment' class='btn btn-sm btn-info'>Refund Now</a></center>
+            </div>
 
            
             
