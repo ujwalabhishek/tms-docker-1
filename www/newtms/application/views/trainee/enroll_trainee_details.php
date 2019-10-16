@@ -173,9 +173,11 @@
                                 <?php
 //                                $type_options = array('' => 'Select', 'CASH' => 'Cash', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO');
                                  if($tenant_id == 'T02' || $tenant_id == 'T12' || $tenant_id == 'T01'){
-                                      $type_options = array('' => 'Select', 'CASH' => 'Cash', 'NETS'=>'NETS', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
+                                      //$type_options = array('' => 'Select', 'CASH' => 'Cash', 'NETS'=>'NETS', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
+                                     $type_options = array('' => 'Select', 'CASH' => 'Cash', 'NETS'=>'NETS', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO');
                                  }  else {
-                                       $type_options = array('' => 'Select', 'CASH' => 'Cash', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
+                                        $type_options = array('' => 'Select', 'CASH' => 'Cash', 'NETS'=>'NETS', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO');
+                                       //$type_options = array('' => 'Select', 'CASH' => 'Cash', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
                                  }
                               
                                 $type_js = 'id="payment_type"';
