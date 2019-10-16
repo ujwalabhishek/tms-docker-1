@@ -6,7 +6,13 @@ $(document).ready(function() {
     $('#enroll_pay_now_form').submit(function() {      alert();  
         //check = 1;
         // added by shubhranshu to prevent multiple click////////////////
-        $check= form_validate(true);
+        $account_type = $('#account_type').val();
+        if ($account_type == 'company') {
+            $check= form_validates(true);
+        }else{
+           $check= form_validate(true); 
+        }
+        
         if($check){
             $(".book_now").attr('disabled','disabled').html('Please Wait..');
             $(".pay_now").attr('disabled','disabled').html('Please Wait..');
@@ -423,7 +429,7 @@ function form_validate($retVal) {
     return $retVal;
 }
 
-function form_validate($retVal) {
+function form_validates($retVal) {
     $payment_type = $('#payment_type').val();
     $payment_type1 = $('#payment_type1').val();
     $account_type = $('#account_type').val();
