@@ -695,7 +695,7 @@ function trigger_ajax() {
     $.ajax({
         url: $baseurl + 'class_trainee/individual_enrollment',
         type: 'post',
-        async:false,
+        async:true,
         dataType: 'json',
         data: {
             course: $course, class: $class, user_id: $user_id, enrollment_type: $enrollment_type,
