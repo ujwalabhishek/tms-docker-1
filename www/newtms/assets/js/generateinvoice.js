@@ -605,12 +605,12 @@ $(document).ready(function() {
                 else
                 {  
                     if(parseFloat(data.total_inv_amount).toFixed(2)==0.00)
-                    {  
+                    {  alert($pend_rec);
                         $total_paid=0.00;
                         $company_total=0.00;
                         $pend_rec=0.00;
                         
-                    }
+                    }alert($pend_rec);
 //                    $('.c_total_amt_recd').html($total_paid);
                     $('.c_total_amt_recd').html(parseFloat(data.amount_recd).toFixed(2));
                     $('.c_tot_refundable_amt').html($company_total);
