@@ -604,8 +604,9 @@ $(document).ready(function() {
                 }
                 else
                 {  
-                       //added by shubhranshu
+                       //below code added by shubhranshu
                   $pend_rec = parseFloat(data.total_inv_amount) + parseFloat(data.amount_refund) + parseFloat(data.invoice_excess_amt) - parseFloat(data.amount_recd) - parseFloat(data.excess_refunded);
+                   ///////
                     if(parseFloat(data.total_inv_amount).toFixed(2)==0.00)
                     {  
                         $total_paid=0.00;

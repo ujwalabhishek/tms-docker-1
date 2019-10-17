@@ -486,7 +486,7 @@ class Trainee extends CI_Controller {
         if (empty($country_param)) {
             return;
         }
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $states = $this->internaluser->get_states($country_param);
         $states_arr = array();
         foreach ($states as $item) {
