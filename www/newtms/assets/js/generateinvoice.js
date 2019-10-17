@@ -604,7 +604,7 @@ $(document).ready(function() {
                 }
                 else
                 {  
-                    alert($pend_rec.'s');
+                    alert($pend_rec+'s');
                     if(parseFloat(data.total_inv_amount).toFixed(2)==0.00)
                     {  
                         $total_paid=0.00;
