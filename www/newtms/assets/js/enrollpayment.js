@@ -37,7 +37,7 @@ $(document).ready(function() {
             $('#subsidy_per').trigger('change');
             $('.save_book').show();
             $('.save_enroll').hide();
-            <button class="btn btn-primary save_book" type="button" style="display: inline-block;"><span class="glyphicon glyphicon-saved"></span>&nbsp;Book Now</button>
+            
         } else {
             $('.rowdim').show();
             $('.save_book').hide();
