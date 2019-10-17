@@ -1599,6 +1599,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 $session_arr = array('S1' => '1', 'BRK' => '3', 'S2' => '2');
                 $class_schedule_data[date('d/m/y', strtotime($row['class_date']))][$session_arr[$row['session_type_id']]] = date('h:i A', strtotime($row['session_start_time']));
             }
+            print_r($class_schedule_data);exit;
             if ($export == 'xls') 
             {
                 $results = $this->classtraineemodel->get_class_trainee_list_for_attendance($tenant_id, $course_id, $class_id, $subsidy, $class_start, $class_end, $sort_by, $sort_order);
