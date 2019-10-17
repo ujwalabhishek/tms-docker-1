@@ -37,7 +37,6 @@ $(document).ready(function() {
             $('#subsidy_per').trigger('change');
             $('.save_book').show();
             $('.save_enroll').hide();
-            
         } else {
             $('.rowdim').show();
             $('.save_book').hide();
@@ -462,21 +461,40 @@ function form_validate($retval) {
             } else if (($payment_enrol == 'PDENROL') && ($payment_retake == 1)) {
                 return validate_required($retval, 0, '');
             }
-           
+            ///////added by shubhranshu to prevent multiple clicks////////////////
+            if(validate_required($retval, 0, '')){
+                $('.push_right').html('<button class="btn btn-primary" type="button">Please Wait..</button>');
+                var self = $('.push_right'),
+                button = self.find('input[type="button"],button');
+                button.attr('disabled','disabled').html('Please Wait..');
+            ///////added by shubhranshu to prevent multiple clicks////////////////
+            }
             clear_required($retval, '');
         } else if ($enrollment_type == 2) {
             $payment_enrol = $('#payment_enrol').val();
             if (($payment_enrol == 'PDENROL') || ($('.pay_time:checked').val() == 1)) {
                 return validate_required($retval, 0, '');
             }
-           
+            ///////added by shubhranshu to prevent multiple clicks////////////////
+            if(validate_required($retval, 0, '')){
+                $('.push_right').html('<button class="btn btn-primary" type="button">Please Wait..</button>');
+                var self = $('.push_right'),
+                button = self.find('input[type="button"],button');
+                button.attr('disabled','disabled').html('Please Wait..');
+            ///////added by shubhranshu to prevent multiple clicks////////////////
+            }
             clear_required($retval, '');
         }
     } else {
         $retval = company_data_validate($retval);
         if ($retval == true) {
             $data = get_company_data('', '');
-          
+            ///////added by shubhranshu to prevent multiple clicks////////////////
+            $('.push_right').html('<button class="btn btn-primary" type="button">Please Wait..</button>');
+            var self = $('.push_right'),
+            button = self.find('input[type="button"],button');
+            button.attr('disabled','disabled').html('Please Wait..');
+            ///////added by shubhranshu to prevent multiple clicks////////////////
             trigger_company_ajax($data);
         } else {
             return $retval;
@@ -585,12 +603,6 @@ function validate_required($retval, $chk, $msg) {
         }
     }
     if ($retval == true) {
-        ///////added by shubhranshu to prevent multiple clicks////////////////
-            $('.push_right').html('<button class="btn btn-primary" type="button">Please Wait..</button>');
-            var self = $('.push_right'),
-            button = self.find('input[type="button"],button');
-            button.attr('disabled','disabled').html('Please Wait..');
-            ///////added by shubhranshu to prevent multiple clicks////////////////
         return trigger_ajax();
     }
     return $retval;
@@ -695,7 +707,6 @@ function trigger_ajax() {
     $.ajax({
         url: $baseurl + 'class_trainee/individual_enrollment',
         type: 'post',
-        async:true,
         dataType: 'json',
         data: {
             course: $course, class: $class, user_id: $user_id, enrollment_type: $enrollment_type,
