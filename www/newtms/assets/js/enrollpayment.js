@@ -352,11 +352,33 @@ $(document).ready(function() {
     var validate_check = 0;
     $('.save_enroll').click(function() {
         validate_check = 1;
-        return form_validate(true);
+        $return =form_validate(true);
+        if($return){
+            ///////added by shubhranshu to prevent multiple clicks////////////////
+            $('.push_right').html('<button class="btn btn-primary" type="button">Please Wait..</button>');
+            var self = $('.push_right'),
+            button = self.find('input[type="button"],button');
+            button.attr('disabled','disabled').html('Please Wait..');
+            ///////added by shubhranshu to prevent multiple clicks////////////////
+            return true;
+        }else{
+            return false;
+        }  
     });
     $('.save_book').click(function() {
         validate_check = 1;
-        return form_validate(true);
+        $return =form_validate(true);
+        if($return){
+            ///////added by shubhranshu to prevent multiple clicks////////////////
+            $('.push_right').html('<button class="btn btn-primary" type="button">Please Wait..</button>');
+            var self = $('.push_right'),
+            button = self.find('input[type="button"],button');
+            button.attr('disabled','disabled').html('Please Wait..');
+            ///////added by shubhranshu to prevent multiple clicks////////////////
+            return true;
+        }else{
+            return false;
+        }  
     });
     $('.col-md-10 input, .col-md-10 select').change(function() {
         if (validate_check == 1) {
@@ -461,36 +483,21 @@ function form_validate($retval) {
             } else if (($payment_enrol == 'PDENROL') && ($payment_retake == 1)) {
                 return validate_required($retval, 0, '');
             }
-            ///////added by shubhranshu to prevent multiple clicks////////////////
-            $('.push_right').html('<button class="btn btn-primary" type="button">Please Wait..</button>');
-            var self = $('.push_right'),
-            button = self.find('input[type="button"],button');
-            button.attr('disabled','disabled').html('Please Wait..');
-            ///////added by shubhranshu to prevent multiple clicks////////////////
+            
             clear_required($retval, '');
         } else if ($enrollment_type == 2) {
             $payment_enrol = $('#payment_enrol').val();
             if (($payment_enrol == 'PDENROL') || ($('.pay_time:checked').val() == 1)) {
                 return validate_required($retval, 0, '');
             }
-            ///////added by shubhranshu to prevent multiple clicks////////////////
-            $('.push_right').html('<button class="btn btn-primary" type="button">Please Wait..</button>');
-            var self = $('.push_right'),
-            button = self.find('input[type="button"],button');
-            button.attr('disabled','disabled').html('Please Wait..');
-            ///////added by shubhranshu to prevent multiple clicks////////////////
+        
             clear_required($retval, '');
         }
     } else {
         $retval = company_data_validate($retval);
         if ($retval == true) {
             $data = get_company_data('', '');
-            ///////added by shubhranshu to prevent multiple clicks////////////////
-            $('.push_right').html('<button class="btn btn-primary" type="button">Please Wait..</button>');
-            var self = $('.push_right'),
-            button = self.find('input[type="button"],button');
-            button.attr('disabled','disabled').html('Please Wait..');
-            ///////added by shubhranshu to prevent multiple clicks////////////////
+            
             trigger_company_ajax($data);
         } else {
             return $retval;
