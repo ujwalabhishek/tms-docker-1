@@ -8990,7 +8990,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             'invoiced_on' => $result->invoiced_on,
             'invoice_excess_amt' => $result->invoice_excess_amt
         );
-        //print_r($audit_inv_data);exit;
+//        print_r($audit_inv_data);exit;
         $this->db->trans_start();
 
         $this->db->insert('enrol_invoice_audittrail', $audit_inv_data);
