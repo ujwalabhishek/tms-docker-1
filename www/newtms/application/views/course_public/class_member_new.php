@@ -146,11 +146,11 @@ if (!defined('BASEPATH'))
             <div class="table-responsive">
 
                 <!--added the new login form by shubhranshu-->
-                <form class="modal-content animate" action="<?php echo site_url() ?>user/validate_public_user"  method="post" id="signupForm">
+                <form class="modal-content animate" action="<?php echo base_url();?>user/validate_public_user"  method="post" id="signupForm">
                     <h2 class="panel_heading_style" style='text-align:center'><strong>Trainee Use Only</strong></h2>
                     <div class="imgcontainer">
 
-                        <img src="../assets/images/group.png" alt="Avatar" class="avatar">
+                        <img src="<?php echo base_url();?>assets/images/group.png" alt="Avatar" class="avatar">
                     </div>
 
                     <div class="container-login">
