@@ -118,7 +118,7 @@
                         <td  width="20%" class="td_heading">Company:<span class="required">*</span></td>
                         <td class="">
                             <?php
-                            $company_js = 'id="company"';
+                            $company_js = 'id="company" style="width:50%"';
                             $company_options = array(
                                 '' => 'Select',
                             );
