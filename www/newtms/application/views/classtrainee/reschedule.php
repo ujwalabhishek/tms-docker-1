@@ -151,6 +151,7 @@
                             );
                             echo form_input($taxcode_id);
                             ?>
+                            <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                             <span id="trainee_name_err"></span>                        
                         </td>
                     </tr>
