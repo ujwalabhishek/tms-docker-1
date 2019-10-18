@@ -8969,10 +8969,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $this->db->where("pymnt_due_id", $payment_due_id);
 
-        //$result =
-                $this->db->get()->row();
-                print_r($this->db->last_query());exit;
-
+        $result =$this->db->get()->row();
+                //print_r($this->db->last_query());exit;
+print_r($result);
         $audit_inv_data = array(
             'invoice_id' => $result->invoice_id,
             'pymnt_due_id' => $result->pymnt_due_id,
@@ -8991,7 +8990,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             'invoiced_on' => $result->invoiced_on,
             'invoice_excess_amt' => $result->invoice_excess_amt
         );
-
+        print_r($audit_inv_data);exit;
         $this->db->trans_start();
 
         $this->db->insert('enrol_invoice_audittrail', $audit_inv_data);
