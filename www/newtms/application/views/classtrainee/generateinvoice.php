@@ -120,6 +120,8 @@ $role_check = $this->data['user']->role_id;
                                             echo form_radio($data);
                                             ?>
                                             &nbsp;&nbsp;NRIC/FIN No.:
+                                        </td>
+                                        <td>
                                             <?php
                                             $data = array(
                                                 'id' => 'taxcode',
@@ -149,6 +151,8 @@ $role_check = $this->data['user']->role_id;
                                             echo form_radio($data);
                                             ?>
                                             &nbsp;&nbsp;Trainee Name.:
+                                        </td>
+                                        <td>
                                             <?php
                                             $data = array(
                                                 'id' => 'trainee',
