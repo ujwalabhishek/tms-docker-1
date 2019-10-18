@@ -3311,8 +3311,10 @@ if (!empty($tenant_details->tenant_contact_num)) {
      * function export generate invoice
      */
     public function export_generate_invoice($id) {
-        if (empty($id)) {echo "Oops";exit;
-            return show_404();
+        if (empty($id)) {
+            //return show_404();
+            $this->session->set_flashdata('error', 'Oops! Invoice is not available since payment is not required!');
+            redirect("accounting/generate_invoice/");
         }
         $result = $this->get_payid_details($id, 1);
         $this->load->helper('pdf_reports_helper');
