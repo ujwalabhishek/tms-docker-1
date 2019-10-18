@@ -101,7 +101,7 @@ $role_check = $this->data['user']->role_id;
                         );
                         echo form_input($data);
                         ?>
-                        <div style='color:blue; font-size:10px;'>Enter minimum of 5 characters to search</div>
+                        <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                     </td>
                     <!--shubhranshu-->
                     <td colspan="">
@@ -136,6 +136,7 @@ $role_check = $this->data['user']->role_id;
                                             );
                                             echo form_input($data);
                                             ?>
+                                            <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                                         </td>
                                         <td class="td_heading">&nbsp;&nbsp;
                                             <?php
@@ -164,6 +165,7 @@ $role_check = $this->data['user']->role_id;
                                             );
                                             echo form_input($data);
                                             ?>
+                                            <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                                         </td>
                                     </tr>
                                 </tbody>

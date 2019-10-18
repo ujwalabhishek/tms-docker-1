@@ -3313,6 +3313,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
     public function export_generate_invoice($id) {
         if (empty($id)) {
             //return show_404();
+            // above is commented & below code is added by shubhranshu for 404 issue while payment not required
             $this->session->set_flashdata('error', 'Oops! Invoice is not available since payment is not required!');
             redirect("accounting/generate_invoice/");
         }
