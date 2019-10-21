@@ -3389,9 +3389,9 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                         'total_amount_due' => round($ind_net_due, 2),//sk4
                         'discount_type' => $dis_label,
                         'discount_rate' => $indv_discount_rate,
-                        'subsidy_type_id' => $subsidy_type_id ?? NULL,
+                        'subsidy_type_id' => $subsidy_type_id,
                         'subsidy_amount' => round($subsidy_amount, 2),//sk5
-                        'subsidy_recd_date' => $subsidy_recd_on ?? NULL,
+                        'subsidy_recd_date' => $subsidy_recd_on,
                         'subsidy_modified_on' => $cur_date,
                         'gst_amount' => round($ind_gst, 2),//sk6
                         'att_status' => $att_status
@@ -3481,6 +3481,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
             $invoice_id = '';
         }
         $this->db->trans_complete();
+        echo $this->db->trans_status().'d';exit;
         if ($this->db->trans_status() === FALSE) 
         {
             $status = FALSE;
