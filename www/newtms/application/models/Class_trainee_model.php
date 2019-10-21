@@ -3378,7 +3378,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 );
                 $this->db->trans_start();
                 $this->db->insert('class_enrol', $data);
-                echo $this->db->last_query().'<br>';
+                
                     
                 if (!empty($payment_due_id)) 
                 {
@@ -3389,15 +3389,15 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                         'total_amount_due' => round($ind_net_due, 2),//sk4
                         'discount_type' => $dis_label,
                         'discount_rate' => $indv_discount_rate,
-                        'subsidy_type_id' => $subsidy_type_id,
+                        'subsidy_type_id' => $subsidy_type_id ?? NULL,
                         'subsidy_amount' => round($subsidy_amount, 2),//sk5
-                        'subsidy_recd_date' => $subsidy_recd_on,
+                        'subsidy_recd_date' => $subsidy_recd_on ?? NULL,
                         'subsidy_modified_on' => $cur_date,
                         'gst_amount' => round($ind_gst, 2),//sk6
                         'att_status' => $att_status
                     );
                     $this->db->insert('enrol_pymnt_due', $data);
-                     echo $this->db->last_query().'<br>';
+                    
                 }
             } 
             else 
@@ -3474,7 +3474,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 );
            // }
             $this->db->insert('enrol_invoice', $data);
-             echo $this->db->last_query().'<br>';
+             
         } 
         else 
         {
