@@ -1180,13 +1180,13 @@ if (!empty($tenant_details->tenant_contact_num)) {
        
         $data['courses'] = $disp_courses;
         $data['companies'] = $companies;
-        if (!empty($course)) {echo "uo";exit;
+        if (!empty($course)) {
             $data['classes'] = $this->get_trainee_classes_forcourse($course);
         }
-        if (!empty($class)) {echo "ik";exit;
+        if (!empty($class)) {
             $data['salesexec'] = $this->class->get_class_salesexec($tenant_id, $course, $class_detail->sales_executive);
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {echo "uj";exit;
+        if ($this->data['user']->role_id == 'SLEXEC') {
             $data['salesexec_check'] = 1;
         }
         
