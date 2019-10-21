@@ -1137,21 +1137,21 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $class = $this->input->post('class');
         $salesexec = $this->input->post('salesexec');
 
-        if ($this->input->post('upload')) {echo "s";
+        if ($this->input->post('upload')) {
 
             $config['upload_path'] = './uploads/';
             $config['allowed_types'] = '*';
             $config['max_size'] = '2048';
             $config['max_width'] = '1024';
             $config['max_height'] = '768';
-echo "t";
+
             $this->load->library('upload', $config);
-echo "u";
-            if (!$this->upload->do_upload()) {echo "v";exit;
+
+            if (!$this->upload->do_upload()) {
                 $data['error'] = $this->upload->display_errors();
             } else {
                 $data = $this->upload->data();
-                $this->load->library('excel_reader');echo "t";exit;
+                $this->load->library('excel_reader');
                 $this->excel_reader->setOutputEncoding('CP1251');
                 $read_perm = $this->excel_reader->read($data['full_path']);
                 if ($read_perm == 'FALSE') {
@@ -1160,6 +1160,7 @@ echo "u";
                     $excel_data = $this->excel_reader->sheets[0][cells];
                     $class_detail = $this->class->get_class_details($tenant_id, $class);
                     $trainee = $this->validate_bulk_enroll($excel_data, $class, $course, $company, $salesexec, $class_detail);
+                    echo "v";exit;
                     if (!empty($trainee)) {
                         $data['details'] = $trainee;
                         //print_r($data);exit;
