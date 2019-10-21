@@ -1146,12 +1146,12 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $config['max_height'] = '768';
 echo "t";
             $this->load->library('upload', $config);
-echo "u";exit;
-            if (!$this->upload->do_upload()) {
+echo "u";
+            if (!$this->upload->do_upload()) {echo "v";exit;
                 $data['error'] = $this->upload->display_errors();
             } else {
                 $data = $this->upload->data();
-                $this->load->library('excel_reader');
+                $this->load->library('excel_reader');echo "t";exit;
                 $this->excel_reader->setOutputEncoding('CP1251');
                 $read_perm = $this->excel_reader->read($data['full_path']);
                 if ($read_perm == 'FALSE') {
