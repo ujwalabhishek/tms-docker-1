@@ -3911,6 +3911,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      */
     public function company_enrollment() 
     {
+        $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $curuser_id = $this->session->userdata('userDetails')->user_id;
         extract($_POST);
