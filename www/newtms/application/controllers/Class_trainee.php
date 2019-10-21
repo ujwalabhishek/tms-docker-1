@@ -1172,7 +1172,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                         $data['error'] = $this->class_error_msg;
                     }
                     
-                    unlink('./uploads/' . $data['file_name']);echo "d";exit;
+                    //unlink('./uploads/' . $data['file_name']);echo "d";exit;
 
                 }
             }
