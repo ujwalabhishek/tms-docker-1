@@ -1137,16 +1137,16 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $class = $this->input->post('class');
         $salesexec = $this->input->post('salesexec');
 
-        if ($this->input->post('upload')) {
+        if ($this->input->post('upload')) {echo "s";
 
             $config['upload_path'] = './uploads/';
             $config['allowed_types'] = '*';
             $config['max_size'] = '2048';
             $config['max_width'] = '1024';
             $config['max_height'] = '768';
-
+echo "t";
             $this->load->library('upload', $config);
-
+echo "u";exit;
             if (!$this->upload->do_upload()) {
                 $data['error'] = $this->upload->display_errors();
             } else {
