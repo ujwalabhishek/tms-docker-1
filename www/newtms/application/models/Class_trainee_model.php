@@ -3474,7 +3474,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 );
            // }
             $this->db->insert('enrol_invoice', $data);
-             echo $this->db->last_query();
+             echo $this->db->last_query();exit;
         } 
         else 
         {
