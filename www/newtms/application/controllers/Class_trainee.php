@@ -1172,12 +1172,12 @@ if (!empty($tenant_details->tenant_contact_num)) {
                         $data['error'] = $this->class_error_msg;
                     }
                     
-                    //unlink('./uploads/' . $data['file_name']);echo "d";exit;
+                    unlink('./uploads/' . $data['file_name']);
 
                 }
             }
         }
-       
+       echo "dtttt";exit;
         $data['courses'] = $disp_courses;
         $data['companies'] = $companies;
         if (!empty($course)) {
