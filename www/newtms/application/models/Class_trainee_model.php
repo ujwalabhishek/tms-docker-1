@@ -3481,14 +3481,14 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
         {
             $invoice_id = '';
         }
-        $this->db->trans_complete();
+        //$this->db->trans_complete();
         
         if ($this->db->trans_status() === FALSE) 
         {
-            $this->db->trans_rollback();
+            $this->db->trans_rollback();///added by shubhranshu
             $status = FALSE;
         }else{
-             $this->db->trans_commit();
+             $this->db->trans_commit();///added by shubhranshu
         }
         return array('err' => $err_arr, 'invoice' => $invoice_id, 'status' => $status, 'pymnt_due_id' => $payment_due_id);
     }
