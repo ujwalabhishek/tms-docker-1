@@ -1160,7 +1160,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     $excel_data = $this->excel_reader->sheets[0][cells];
                     $class_detail = $this->class->get_class_details($tenant_id, $class);
                     $trainee = $this->validate_bulk_enroll($excel_data, $class, $course, $company, $salesexec, $class_detail);
-                    echo "v";exit;
+                    
                     if (!empty($trainee)) {
                         $data['details'] = $trainee;
                         //print_r($data);exit;
@@ -1176,6 +1176,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 }
             }
         }
+       echo 's';
         $data['courses'] = $disp_courses;
         $data['companies'] = $companies;
         if (!empty($course)) {
@@ -1186,7 +1187,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         }
         if ($this->data['user']->role_id == 'SLEXEC') {
             $data['salesexec_check'] = 1;
-        }
+        }echo '3s';
         $data['files'] = $files;
         $data['filesa'] = $filesa;
         $data['filesb'] = $filesb;
@@ -1194,7 +1195,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $data['page_title'] = 'Class Trainee';
         $data['main_content'] = 'classtrainee/bulkenrollment';
         //$data['sideMenuData'] = $this->sideMenu;
-        $this->load->view('layout', $data);
+        $this->load->view('layout', $data);exit;
     }
 
     /**
