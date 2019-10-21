@@ -1189,7 +1189,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         if ($this->data['user']->role_id == 'SLEXEC') {echo "uj";exit;
             $data['salesexec_check'] = 1;
         }
-        echo "yu";exit;
+        
         $data['files'] = $files;
         $data['filesa'] = $filesa;
         $data['filesb'] = $filesb;
