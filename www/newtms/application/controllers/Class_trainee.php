@@ -1164,14 +1164,15 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     if (!empty($trainee)) {
                         $data['details'] = $trainee;
                         //print_r($data);exit;
-                        $this->load->helper('export');echo 's';exit;
+                        $this->load->helper('export');
                         $files = write_import_enroll_status($trainee, $company);
                         $filesa = write_import_enroll_statussuccess($trainee, $company);
                         $filesb = write_import_enroll_statusfailure($trainee, $company);
                     } else {
                         $data['error'] = $this->class_error_msg;
                     }
-                    unlink('./uploads/' . $data['file_name']);
+                    
+                    unlink('./uploads/' . $data['file_name']);echo "d";exit;
 
                 }
             }
