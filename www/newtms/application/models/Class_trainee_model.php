@@ -3261,7 +3261,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
         $courses = $this->db->select('subsidy_after_before,gst_on_off')->from('course')->where('course_id', $classes->course_id)->get()->row();
         $dis_label = ($discount_label == 'Class') ? 'DISCLASS' : 'DISCOMP';
         $cal_discount['discount_metalabel'] = $dis_label;
-        print_r($data);echo count($data);exit;
+        //print_r($data);echo count($data);exit;
         $total_trainee_count = count($data);
         if ($discount_changed == 'Y') 
         {
@@ -3376,8 +3376,11 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     'class_status' => $class_status,
                     'enrol_status' => $enrol_status
                 );
+                print_r($data);
                 $this->db->trans_start();
                 $this->db->insert('class_enrol', $data);
+                $this->db->last_query();
+                exit;
                 if (!empty($payment_due_id)) 
                 {
                     $data = array(
