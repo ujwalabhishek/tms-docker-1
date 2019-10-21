@@ -3381,12 +3381,12 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 if($sss)
                     {
                     echo "Success";
-                     exit;
+                     
                     }
                     else
                     {
                     echo "Error";
-                        exit;
+                       
                     }
                     
                 if (!empty($payment_due_id)) 
@@ -3405,7 +3405,17 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                         'gst_amount' => round($ind_gst, 2),//sk6
                         'att_status' => $att_status
                     );
-                    $this->db->insert('enrol_pymnt_due', $data);
+                    $ssss=$this->db->insert('enrol_pymnt_due', $data);
+                    if($ssss)
+                    {
+                    echo "Success";
+                     
+                    }
+                    else
+                    {
+                    echo "Error";
+                       
+                    }
                 }
             } 
             else 
@@ -3481,7 +3491,17 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     'gst_rule' => $gst_rule,
                 );
            // }
-            $this->db->insert('enrol_invoice', $data);
+            $sssss=$this->db->insert('enrol_invoice', $data);
+            if($sssss)
+                    {
+                    echo "Success";
+                     
+                    }
+                    else
+                    {
+                    echo "Error";
+                       
+                    }
         } 
         else 
         {
