@@ -3312,7 +3312,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 $tg_number = $row['tg'];
                 $subsidy_type_id = $row['subsidy_type'];
                 $class_status = $this->get_class_statustext($class);
-                print_r($this->data['user']);exit;
+                
                   /* sales executive thread*/
                 if ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id == 'CRSEMGR' || $this->data['user']->role_id == 'TRAINER') 
                 {
