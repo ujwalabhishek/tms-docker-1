@@ -1177,18 +1177,19 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 }
             }
         }
-       echo "dtttt";exit;
+       
         $data['courses'] = $disp_courses;
         $data['companies'] = $companies;
-        if (!empty($course)) {
+        if (!empty($course)) {echo "uo";exit;
             $data['classes'] = $this->get_trainee_classes_forcourse($course);
         }
-        if (!empty($class)) {
+        if (!empty($class)) {echo "ik";exit;
             $data['salesexec'] = $this->class->get_class_salesexec($tenant_id, $course, $class_detail->sales_executive);
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->data['user']->role_id == 'SLEXEC') {echo "uj";exit;
             $data['salesexec_check'] = 1;
         }
+        echo "yu";exit;
         $data['files'] = $files;
         $data['filesa'] = $filesa;
         $data['filesb'] = $filesb;
