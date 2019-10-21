@@ -3379,7 +3379,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 //$this->db->trans_start();
                 $this->db->trans_begin();
                 $this->db->insert('class_enrol', $data);
-               //echo $this->db->last_query();
+//               echo $this->db->last_query();
                     
                 if (!empty($payment_due_id)) 
                 {
@@ -3398,7 +3398,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                         'att_status' => $att_status
                     );
                     $this->db->insert('enrol_pymnt_due', $data);
-                    //echo $this->db->last_query();
+//                    echo $this->db->last_query();
                 }
             } 
             else 
@@ -3475,7 +3475,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 );
            // }
             $this->db->insert('enrol_invoice', $data);
-            //echo $this->db->last_query();exit;
+//            echo $this->db->last_query();exit;
         } 
         else 
         {
