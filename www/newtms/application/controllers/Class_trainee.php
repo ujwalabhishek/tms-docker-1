@@ -1164,7 +1164,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     if (!empty($trainee)) {
                         $data['details'] = $trainee;
                         //print_r($data);exit;
-                        $this->load->helper('export');
+                        $this->load->helper('export');echo 's';exit;
                         $files = write_import_enroll_status($trainee, $company);
                         $filesa = write_import_enroll_statussuccess($trainee, $company);
                         $filesb = write_import_enroll_statusfailure($trainee, $company);
@@ -1176,7 +1176,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 }
             }
         }
-       echo 's';
+       
         $data['courses'] = $disp_courses;
         $data['companies'] = $companies;
         if (!empty($course)) {
@@ -1187,7 +1187,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         }
         if ($this->data['user']->role_id == 'SLEXEC') {
             $data['salesexec_check'] = 1;
-        }echo '3s';
+        }
         $data['files'] = $files;
         $data['filesa'] = $filesa;
         $data['filesb'] = $filesb;
@@ -1195,7 +1195,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $data['page_title'] = 'Class Trainee';
         $data['main_content'] = 'classtrainee/bulkenrollment';
         //$data['sideMenuData'] = $this->sideMenu;
-        $this->load->view('layout', $data);exit;
+        $this->load->view('layout', $data);
     }
 
     /**
