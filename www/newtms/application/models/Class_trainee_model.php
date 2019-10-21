@@ -3390,7 +3390,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                         'total_amount_due' => round($ind_net_due, 2),//sk4
                         'discount_type' => $dis_label,
                         'discount_rate' => $indv_discount_rate,
-                        'subsidy_type_id' => $subsidy_type_id,
+                        'subsidy_type_id' => $subsidy_type_id ?? 0,
                         'subsidy_amount' => round($subsidy_amount, 2),//sk5
                         'subsidy_recd_date' => $subsidy_recd_on,
                         'subsidy_modified_on' => $cur_date,
@@ -3501,14 +3501,14 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
         $this->db->where('class_id',$class_id);
         $this->db->where('company_id',$company_id);
         $sql = $this->db->get();
-        echo $this->db->last_query(); echo"<br/>";
+        //echo $this->db->last_query(); echo"<br/>";
         if($sql->num_rows()>0)
         {
             foreach($sql->result() as $row)
             {
                 $result = array('pymnt_due_id'=>$row->pymnt_due_id);
             }
-           echo $result['pymnt_due_id'];
+           //echo $result['pymnt_due_id'];
             return $res = $this->get_company_invoice($result['pymnt_due_id']);
         }
 
