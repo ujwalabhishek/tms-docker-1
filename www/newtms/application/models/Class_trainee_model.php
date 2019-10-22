@@ -10630,12 +10630,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $data = $this->get_current_invoice_data($payment_due_id);
         if(empty($data)){// added by shubhranshu for blank data
             return FALSE;
-        }else{
-            print_r($data);exit;
-            echo "ss";exit;
         }
         $curr_invoice_details = json_decode($data);
-        
+        print_r($curr_invoice_details);exit;
         $this->db->trans_start();
 
         foreach ($seleced_trainee_list as $user_id) {
