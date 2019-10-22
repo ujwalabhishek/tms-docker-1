@@ -9248,15 +9248,17 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             'invoice_excess_amt' => $result->invoice_excess_amt
         );
 //        print_r($audit_inv_data);exit;
-        $this->db->trans_start();
+//        $this->db->trans_start();
 
-        $this->db->insert('enrol_invoice_audittrail', $audit_inv_data);
+        $ins =$this->db->insert('enrol_invoice_audittrail', $audit_inv_data);
 
-        $this->db->trans_complete();
+//        $this->db->trans_complete();
 
-        if ($this->db->trans_status() === FALSE) {
+        if ($ins) {
 
-            $insert_status = FALSE;
+            $insert_status = TRUE;
+        }else{
+             $insert_status = FALSE;
         }
 
         return $insert_status;
