@@ -3262,7 +3262,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
         $dis_label = ($discount_label == 'Class') ? 'DISCLASS' : 'DISCOMP';
         $cal_discount['discount_metalabel'] = $dis_label;
         $total_trainee_count = count($data);
-        print_r($classes);
+        //print_r($classes);
         if ($discount_changed == 'Y') 
         {
             $temp_ind_discnt_amt = $discount_amount;
@@ -3294,7 +3294,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
             {
                 $subsidy_recd_on = ($row['subsidy_date'] == '') ? '' : date('Y-m-d', strtotime($row['subsidy_date']));
                 $subsidy_amount = $row['subsidy_amount'];
-                $ind_net_due = $this->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate);
+                echo $this->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate);
                 echo $ind_net_due.'////';exit;
                 $ind_net_due = round($ind_net_due,2); //sk1 new add
                 $ind_gst = round($this->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate), 2);//sk2
