@@ -10631,6 +10631,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         if(empty($data)){// added by shubhranshu for blank data
             return FALSE;
         }else{
+            print_r($data);exit;
             echo "ss";exit;
         }
         $curr_invoice_details = json_decode($data);
