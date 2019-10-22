@@ -4034,7 +4034,7 @@ function generate_class_attendance_sheet_xls($results, $class_details,$start, $e
                     }
                     $sheet->setCellValue('A' . $row, $index);
                     $sheet->setCellValue('B' . $row, $res['record']['name']);
-                    $sheet->setCellValue('C' . $row, $res['record']['tax_code']);
+                    $sheet->setCellValue('C' . $row, mask_format($res['record']['tax_code']));
                     $res['record']['company_id'] = ($res['record']['company_id'] == 0)? '': $res['record']['company_id'];
                     $sheet->setCellValue('D' . $row, $res['record']['company_id']);
                     if(!empty($res['record']['company_id']))
@@ -4293,7 +4293,7 @@ function generate_class_attendance_sheet_xls($results, $class_details,$start, $e
                     }
                     $sheet->setCellValue('A' . $row, $index);
                     $sheet->setCellValue('B' . $row, $res['record']['name']);
-                    $sheet->setCellValue('C' . $row, $res['record']['tax_code']);
+                    $sheet->setCellValue('C' . $row, mask_format($res['record']['tax_code']));
                     $res['record']['company_id'] = ($res['record']['company_id'] == 0)? '': $res['record']['company_id'];
                     $sheet->setCellValue('D' . $row, $res['record']['company_id']);
                     if(!empty($res['record']['company_id'])){
