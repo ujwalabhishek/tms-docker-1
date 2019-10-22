@@ -3413,7 +3413,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     $i++;
                 }
             }else { 
-                $company_net_due = round(($company_net_due + $ind_net_due), 4);echo $company_net_due.'ed';exit;
+                $company_net_due = round(($company_net_due + $ind_net_due), 4);echo $company_net_due.'ed'.$company_net_due.'g'.$ind_net_due;exit;
                 $company_subsidy = round(( $company_subsidy + round($subsidy_amount, 4)), 4);
                 $company_gst = round(( $company_gst + $ind_gst), 2);//sk8
                 $company_total_unitfees = round(($company_total_unitfees + $classes->class_fees), 4); 
