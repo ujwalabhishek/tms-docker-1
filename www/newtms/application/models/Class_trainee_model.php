@@ -3378,10 +3378,10 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     'class_status' => $class_status,
                     'enrol_status' => $enrol_status
                 );
-                
+
                 $this->db->insert('class_enrol', $data);
 //                echo $this->db->last_query();
-              
+               
                 if (!empty($payment_due_id)) 
                 {
                     $data = array(
@@ -9248,17 +9248,15 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             'invoice_excess_amt' => $result->invoice_excess_amt
         );
 //        print_r($audit_inv_data);exit;
-//        $this->db->trans_start();
+        $this->db->trans_start();
 
-        $ins =$this->db->insert('enrol_invoice_audittrail', $audit_inv_data);
+        $this->db->insert('enrol_invoice_audittrail', $audit_inv_data);
 
-//        $this->db->trans_complete();
+        $this->db->trans_complete();
 
-        if ($ins) {
+        if ($this->db->trans_status() === FALSE) {
 
-            $insert_status = TRUE;
-        }else{
-             $insert_status = FALSE;
+            $insert_status = FALSE;
         }
 
         return $insert_status;
@@ -10630,7 +10628,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $total_subsidy_amount_due = 0;
         $data = $this->get_current_invoice_data($payment_due_id);
-        
+        if(empty($data)){// added by shubhranshu for blank data
+            return FALSE;
+        }
         $curr_invoice_details = json_decode($data);
         
         $this->db->trans_start();
