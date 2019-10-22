@@ -1779,8 +1779,6 @@ if (!empty($tenant_details->tenant_contact_num)) {
             if ($result == true) 
             {
                 $message = 'Attendance has been updated successfully.';
-            }else{
-                $message = 'Attendance has been updated successfully!.';
             }
         }
         $this->mark_attendance($message);
