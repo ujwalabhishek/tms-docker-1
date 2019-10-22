@@ -1142,7 +1142,7 @@ function export_attendance($results, $class_details, $start, $end, $class_schedu
                         $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
                     }
                     $sheet->setCellValue('A' . $row, $index);
-                    $sheet->setCellValue('B' . $row, $res['record']['tax_code']);
+                    $sheet->setCellValue('B' . $row, mask_format($res['record']['tax_code']));
                     $sheet->setCellValue('C' . $row, $res['record']['name']);
 
                     $sheet->setCellValue('D' . $row, 'Session1:');
