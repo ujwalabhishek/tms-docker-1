@@ -4369,7 +4369,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         ->where('epd.att_status',1)
 
                         ->get()->row();
-       
+       print_r($this->db->last_query());exit;
         return $result;
     }
     /* This function get the invoice details of company skm*/
