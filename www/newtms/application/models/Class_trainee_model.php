@@ -900,13 +900,13 @@ class Class_Trainee_Model extends CI_Model {
 
                 if ($status) {
                             //paid status
-                    $query=mysql_query("select * from enrol_paymnt_recd where invoice_id='$invoice_id1'");
+                    $query=mysqli_query("select * from enrol_paymnt_recd where invoice_id='$invoice_id1'");
                     if($query)
                     {
                         $invoice_id1=$invoice_id;
                         $invoice_id = $new_invoice_id;
-                        $sql=mysql_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
-                        $sql1=mysql_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
+                        $sql=mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
+                        $sql1=mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
                     }
                     //end paid status
                     $invoice_id = $new_invoice_id;
@@ -1069,22 +1069,22 @@ class Class_Trainee_Model extends CI_Model {
                         $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
                 if ($status) {
                             //paid status
-                    $query=mysql_query("select * from enrol_paymnt_recd where invoice_id='$invoice_id'");
+                    $query=mysqli_query("select * from enrol_paymnt_recd where invoice_id='$invoice_id'");
                     if($query)
                     {
                         $invoice_id1=$invoice_id;
                         $invoice_id = $new_invoice_id;
-                        $sql=mysql_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
-                        $sql1=mysql_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
+                        $sql=mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
+                        $sql1=mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
                     }
                     
-                    $query=mysql_query("select * from enrol_refund where invoice_id='$previous_inv_id'");
+                    $query=mysqli_query("select * from enrol_refund where invoice_id='$previous_inv_id'");
                     if($query)
                     {
                         $previous_inv_id=$previous_inv_id;
                         $invoice_id = $new_invoice_id;
-                        $sql=mysql_query("update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
-                        $sql1=mysql_query("update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
+                        $sql=mysqli_query("update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
+                        $sql1=mysqli_query("update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
                     }
                     
                     
@@ -1372,9 +1372,9 @@ class Class_Trainee_Model extends CI_Model {
                     {
                         $invoice_id1=$invoice_id;
                         $invoice_id = $new_invoice_id;
-                        $sql=mysql_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
+                        $sql=mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
                         
-                         $sql1=mysql_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
+                         $sql1=mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
              
                         
                     }
@@ -1389,19 +1389,19 @@ class Class_Trainee_Model extends CI_Model {
                         $previous_inv_id=$previous_inv_id;
                         $invoice_id = $new_invoice_id;                  
                         
-                         $sql=mysql_query("update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
+                         $sql=mysqli_query("update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
 
-                         $sql1=mysql_query("update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
+                         $sql1=mysqli_query("update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
                                               
                     }
 //                     $previous_inv_id = $invoice_id;
-//                    $query=mysql_query("select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'");
+//                    $query=mysqli_query("select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'");
 //                    if($query)
 //                    {
 //                      $previous_inv_id = $invoice_id;
 //                        $invoice_id = $new_invoice_id;
-//                        $sql=mysql_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
-//                        $sql1=mysql_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
+//                        $sql=mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
+//                        $sql1=mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
 //                    }
                     
                     //end paid status 
@@ -3170,28 +3170,28 @@ class Class_Trainee_Model extends CI_Model {
 //        $previous_inv_id = $input->invoice_id;
 //        $new_invoice_id = $invoice_id;
 //        $query1="select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'";
-//        $query =  mysql_query($query1);
+//        $query =  mysqli_query($query1);
 //                           
 //        if($query)
 //        { 
 //            $sql="update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//            $fi = mysql_query($sql); 
+//            $fi = mysqli_query($sql); 
 //            $sql1="update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//            $fi2 = mysql_query($sql1); 
+//            $fi2 = mysqli_query($sql1); 
 //
 //        }
 //
 //        $query2="select * from enrol_refund where invoice_id='$previous_inv_id'";
-//        $query = mysql_query($query2);
+//        $query = mysqli_query($query2);
 //
 //        if($query)
 //        { 
 //            $previous_inv_id = $input->invoice_id;
 //            $new_invoice_id = $invoice_id;
 //            $sql="update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//            $si = mysql_query($sql);
+//            $si = mysqli_query($sql);
 //            $sql1="update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//            $sifi = mysql_query($sql1);
+//            $sifi = mysqli_query($sql1);
 //
 //        }
         /* end */
@@ -8852,28 +8852,28 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                      /* update invoice id into invoice related table if invoice is paid and refund start */
 //                        $previous_inv_id =  $invoice_details->invoice_id;                       
 //                        $query1="select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'";
-//			$query =  mysql_query($query1);		   
+//			$query =  mysqli_query($query1);		   
 //			if($query)
 //			{ 
 //				
 //				
 //				$sql="update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//				$fi = mysql_query($sql); 
+//				$fi = mysqli_query($sql); 
 //				$sql1="update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//				$fi2 = mysql_query($sql1); 
+//				$fi2 = mysqli_query($sql1); 
 //				
 //			}
 //
 //			$query2="select * from enrol_refund where invoice_id='$previous_inv_id'";
-//			$query = mysql_query($query2);
+//			$query = mysqli_query($query2);
 //			if($query)
 //			{ 
 //				   $previous_inv_id =  $invoice_details->invoice_id;    
 //			
 //				$sql="update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//				$si = mysql_query($sql);
+//				$si = mysqli_query($sql);
 //				$sql1="update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//				$sifi = mysql_query($sql1);
+//				$sifi = mysqli_query($sql1);
 //				
 //			}
                     /* end */
@@ -9037,28 +9037,28 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                         /* update invoice id into invoice related table if invoice is paid and refund start */
 //                        $previous_inv_id =  $args['comp_invoice_id'];                       
 //                        $query1="select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'";
-//			$query =  mysql_query($query1);		   
+//			$query =  mysqli_query($query1);		   
 //			if($query)
 //			{ 
 //				
 //				
 //				$sql="update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//				$fi = mysql_query($sql); 
+//				$fi = mysqli_query($sql); 
 //				$sql1="update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//				$fi2 = mysql_query($sql1); 
+//				$fi2 = mysqli_query($sql1); 
 //				
 //			}
 //
 //			$query2="select * from enrol_refund where invoice_id='$previous_inv_id'";
-//			$query = mysql_query($query2);
+//			$query = mysqli_query($query2);
 //			if($query)
 //			{ 
 //				   $previous_inv_id =  $args['comp_invoice_id'];    
 //			
 //				$sql="update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//				$si = mysql_query($sql);
+//				$si = mysqli_query($sql);
 //				$sql1="update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//				$sifi = mysql_query($sql1);
+//				$sifi = mysqli_query($sql1);
 //				
 //			}
                     /* */
@@ -10423,30 +10423,30 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                         if ($status) {
 // commented by skm 02-01-17 because of refunded status remark in invoice st                           
 //                            $query1="select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'";
-//                            $query =  mysql_query($query1);
+//                            $query =  mysqli_query($query1);
 //                           
 //                            if($query)
 //                            { 
 //                                $invoice_id1 = $previous_inv_id;
 //                                $invoice_id = $new_invoice_id;
 //                             
-//                                $sql = mysql_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'"); 
+//                                $sql = mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'"); 
 //                              
-//                                $sql1 = mysql_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'"); 
+//                                $sql1 = mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'"); 
 //                                
 //                            }
 //
 //                            $query2="select * from enrol_refund where invoice_id='$previous_inv_id'";
-//                            $query = mysql_query($query2);
+//                            $query = mysqli_query($query2);
 //
 //                            if($query)
 //                            { 
 //                                $previous_inv_id=$previous_inv_id;
 //                                $invoice_id = $new_invoice_id;
 //                                
-//                                $sql = mysql_query("update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
+//                                $sql = mysqli_query("update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
 //                               
-//                                $sql1 = mysql_query("update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
+//                                $sql1 = mysqli_query("update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
 //                                
 //                            }
                             
@@ -10630,7 +10630,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $data = $this->get_current_invoice_data($payment_due_id);
         
         $curr_invoice_details = json_decode($data);
-        if(empty($curr_invoice_details->pymnt_due_id)){// added by shubhranshu for blank data
+        if(empty($curr_invoice_details->pymnt_due_id)){// added by shubhranshu for blank data since attendance status 0
             return FALSE;
         }
         $this->db->trans_start();
@@ -10685,29 +10685,29 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 //                        $previous_inv_id =  $curr_invoice_details->invoice_id;
 //                        
 //                        $query1="select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'";
-//			$query =  mysql_query($query1);		   
+//			$query =  mysqli_query($query1);		   
 //			if($query)
 //			{ 
 //				
 //				$sql="update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
 ////				$sql="update enrol_paymnt_recd set invoice_id='$new_invoice_id',amount_recd='$total_amount' where invoice_id='$previous_inv_id'";
-//				$fi = mysql_query($sql); 
+//				$fi = mysqli_query($sql); 
 //				$sql1="update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//				$fi2 = mysql_query($sql1); 
+//				$fi2 = mysqli_query($sql1); 
 //				
 //			}
 //
 //			$query2="select * from enrol_refund where invoice_id='$previous_inv_id'";
-//			$query = mysql_query($query2);
+//			$query = mysqli_query($query2);
 //			if($query)
 //			{ 
 //				$previous_inv_id= $curr_invoice_details->invoice_id;
 //                                
 //                                $sql="update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
 ////				$sql="update enrol_refund set invoice_id='$new_invoice_id',amount_refund ='$total_amount' where invoice_id='$previous_inv_id'";
-//				$si = mysql_query($sql);
+//				$si = mysqli_query($sql);
 //				$sql1="update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//				$sifi = mysql_query($sql1);
+//				$sifi = mysqli_query($sql1);
 //				
 //			}
                     /* end */
@@ -11408,27 +11408,27 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 {
 // commented by skm 02-01-17 because of refunded status remark in invoice st
 //                            $query1="select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'";
-//                            $query =  mysql_query($query1);
+//                            $query =  mysqli_query($query1);
 //                           
 //                            if($query)
 //                            { 
 //                                
 //                                $sql="update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//                                $fi = mysql_query($sql); 
+//                                $fi = mysqli_query($sql); 
 //                                $sql1="update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//                                $fi2 = mysql_query($sql1); 
+//                                $fi2 = mysqli_query($sql1); 
 //                                
 //                            }
 //                            $query2="select * from enrol_refund where invoice_id='$previous_inv_id'";
-//                            $query = mysql_query($query2);
+//                            $query = mysqli_query($query2);
 //
 //                            if($query)
 //                            { 
 //                              
 //                                $sql="update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//                                $si = mysql_query($sql);
+//                                $si = mysqli_query($sql);
 //                                $sql1="update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//                                $sifi = mysql_query($sql1);
+//                                $sifi = mysqli_query($sql1);
 //                                
 //                            }
 //ed
