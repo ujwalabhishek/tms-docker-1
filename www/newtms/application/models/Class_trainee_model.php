@@ -3377,8 +3377,8 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     'class_status' => $class_status,
                     'enrol_status' => $enrol_status
                 );
-//                $this->db->trans_start();
-//                $this->db->insert('class_enrol', $data);
+                $this->db->trans_start();
+                $this->db->insert('class_enrol', $data);
 //                echo $this->db->last_query();
                 print_r($data);
                 if (!empty($payment_due_id)) 
@@ -3397,9 +3397,9 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                         'gst_amount' => round($ind_gst, 2),//sk6
                         'att_status' => $att_status
                     );
-//                    $this->db->insert('enrol_pymnt_due', $data);
+                    $this->db->insert('enrol_pymnt_due', $data);
 //                    echo $this->db->last_query();
-                    print_r($data);
+                  
                 }
             } 
             else 
@@ -3475,19 +3475,19 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     'gst_rule' => $gst_rule,
                 );
            // }
-//            $this->db->insert('enrol_invoice', $data);
+            $this->db->insert('enrol_invoice', $data);
 //            echo $this->db->last_query();exit;
-                print_r($data);exit;
+
         } 
         else 
         {
             $invoice_id = '';
         }
-        //$this->db->trans_complete();
-//        if ($this->db->trans_status() === FALSE) 
-//        {
-//            $status = FALSE;
-//        }
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) 
+        {
+            $status = FALSE;
+        }
         return array('err' => $err_arr, 'invoice' => $invoice_id, 'status' => $status, 'pymnt_due_id' => $payment_due_id);
     }    
     
