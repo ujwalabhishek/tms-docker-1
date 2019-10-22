@@ -3295,7 +3295,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 $subsidy_recd_on = ($row['subsidy_date'] == '') ? '' : date('Y-m-d', strtotime($row['subsidy_date']));
                 $subsidy_amount = $row['subsidy_amount'];
                 $ind_net_due = $this->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate);
-                echo $ind_net_due.'////';
+                
                 $ind_net_due = round($ind_net_due,2); //sk1 new add
                 $ind_gst = round($this->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate), 2);//sk2
                 if (($enrollment_type == 1) && ($payment_retake == 2)) 
@@ -3380,6 +3380,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
 //                $this->db->trans_start();
 //                $this->db->insert('class_enrol', $data);
 //                echo $this->db->last_query();
+                print_r($data);
                 if (!empty($payment_due_id)) 
                 {
                     $data = array(
@@ -3398,6 +3399,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     );
 //                    $this->db->insert('enrol_pymnt_due', $data);
 //                    echo $this->db->last_query();
+                    print_r($data);
                 }
             } 
             else 
@@ -3406,7 +3408,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
             }
             if($check_attendance>0)
             {
-                if($check_attendance_trainee > 0){echo $company_net_due.'edt'.$company_net_due.'g'.$ind_net_due;exit;
+                if($check_attendance_trainee > 0){
                     $company_net_due = round(($company_net_due + $ind_net_due), 4);
                     $company_subsidy = round(( $company_subsidy + round($subsidy_amount, 4)), 4);
                     $company_gst = round(( $company_gst + $ind_gst), 2);//sk7
@@ -3414,7 +3416,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     $i++;
                 }
             }else { 
-                $company_net_due = round(($company_net_due + $ind_net_due), 4);echo $company_net_due.'ed'.$company_net_due.'g'.$ind_net_due;exit;
+                $company_net_due = round(($company_net_due + $ind_net_due), 4);
                 $company_subsidy = round(( $company_subsidy + round($subsidy_amount, 4)), 4);
                 $company_gst = round(( $company_gst + $ind_gst), 2);//sk8
                 $company_total_unitfees = round(($company_total_unitfees + $classes->class_fees), 4); 
@@ -3475,6 +3477,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
            // }
 //            $this->db->insert('enrol_invoice', $data);
 //            echo $this->db->last_query();exit;
+                print_r($data);exit;
         } 
         else 
         {
