@@ -4369,7 +4369,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         ->where('epd.att_status',1)
 
                         ->get()->row();
-       print_r($this->db->last_query());exit;
+
         return $result;
     }
     /* This function get the invoice details of company skm*/
@@ -10628,11 +10628,11 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $total_subsidy_amount_due = 0;
         $data = $this->get_current_invoice_data($payment_due_id);
-        if(empty($data)){// added by shubhranshu for blank data
+        
+        $curr_invoice_details = json_decode($data);
+        if(empty($curr_invoice_details->pymnt_due_id)){// added by shubhranshu for blank data
             return FALSE;
         }
-        $curr_invoice_details = json_decode($data);
-        print_r($curr_invoice_details);exit;
         $this->db->trans_start();
 
         foreach ($seleced_trainee_list as $user_id) {
