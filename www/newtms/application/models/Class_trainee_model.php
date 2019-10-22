@@ -2963,21 +2963,21 @@ class Class_Trainee_Model extends CI_Model {
 
      */
     public function calculate_net_due($gst_onoff, $subsidy_after_before, $feesdue, $subsidy, $gst_rate) {
-        
+
         if ($gst_onoff == 1) {
 
             if ($subsidy_after_before == 'GSTBSD') {
 
-                echo round((($feesdue + ($feesdue * ($gst_rate) / 100)) - $subsidy), 4);exit;
+                return round((($feesdue + ($feesdue * ($gst_rate) / 100)) - $subsidy), 4);
             } else {
 
                 $feesduetemp = ($feesdue - $subsidy);
 
-                echo round(( $feesduetemp + ( $feesduetemp * ($gst_rate) / 100)), 4);exit;
+                return round(( $feesduetemp + ( $feesduetemp * ($gst_rate) / 100)), 4);
             }
         } else {
 
-            echo round(($feesdue - $subsidy), 4);exit;
+            return round(($feesdue - $subsidy), 4);
         }
     }
 
@@ -3295,6 +3295,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 $subsidy_recd_on = ($row['subsidy_date'] == '') ? '' : date('Y-m-d', strtotime($row['subsidy_date']));
                 $subsidy_amount = $row['subsidy_amount'];
                 $ind_net_due = $this->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate);
+                echo $ind_net_due.'////';exit;
                 $ind_net_due = round($ind_net_due,2); //sk1 new add
                 $ind_gst = round($this->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate), 2);//sk2
                 if (($enrollment_type == 1) && ($payment_retake == 2)) 
@@ -3405,7 +3406,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
             }
             if($check_attendance>0)
             {
-                if($check_attendance_trainee > 0){echo $company_net_due.'edt'.$company_net_due.'gj'.$ind_net_due;exit;
+                if($check_attendance_trainee > 0){echo $company_net_due.'edt'.$company_net_due.'g'.$ind_net_due;exit;
                     $company_net_due = round(($company_net_due + $ind_net_due), 4);
                     $company_subsidy = round(( $company_subsidy + round($subsidy_amount, 4)), 4);
                     $company_gst = round(( $company_gst + $ind_gst), 2);//sk7
