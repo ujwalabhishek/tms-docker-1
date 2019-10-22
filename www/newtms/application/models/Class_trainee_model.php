@@ -571,6 +571,7 @@ class Class_Trainee_Model extends CI_Model {
         $is_updated = false;
         $is_inserted = false;
          $logged_in_user_id = $this->user->user_id;
+        $this->db->trans_start();
         $query=$this->db->query("select * from class_attendance where course_id='$course_id' and class_id='$class_id'");
 
         if($query->num_rows()> 0)
@@ -808,9 +809,15 @@ class Class_Trainee_Model extends CI_Model {
               
                  $this->db->last_query();
             }
-            return $query->result();
+            //return $query->result();
         }
-        return $is_inserted || $is_updated;
+        //return $is_inserted || $is_updated;
+        $this->db->trans_complete();
+        if($this->db->trans_status() === FALSE){
+            return FALSE;
+        }else{
+            return TRUE;
+        }
     }
     /*
      * add presentee to invoice ..
