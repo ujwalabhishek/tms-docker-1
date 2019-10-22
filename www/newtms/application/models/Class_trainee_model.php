@@ -3283,6 +3283,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
         $indv_fees_due = round(($classes->class_fees - $indv_discount_amt), 4);
         $gst_rate = $this->get_gst_current();
          $i=0;
+         $this->db->trans_start();
         foreach ($data as $row) 
         {
             $user_id = $row['user_id'];
@@ -3377,7 +3378,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     'class_status' => $class_status,
                     'enrol_status' => $enrol_status
                 );
-                $this->db->trans_start();
+                
                 $this->db->insert('class_enrol', $data);
 //                echo $this->db->last_query();
               
