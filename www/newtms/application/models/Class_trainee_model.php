@@ -2963,12 +2963,12 @@ class Class_Trainee_Model extends CI_Model {
 
      */
     public function calculate_net_due($gst_onoff, $subsidy_after_before, $feesdue, $subsidy, $gst_rate) {
-        echo $gst_onoff.'a'.$subsidy_after_before.'b'.$feesdue.'c'.$subsidy.'d'.$gst_rate;
+        
         if ($gst_onoff == 1) {
 
             if ($subsidy_after_before == 'GSTBSD') {
 
-                return round((($feesdue + ($feesdue * ($gst_rate) / 100)) - $subsidy), 4);
+                echo round((($feesdue + ($feesdue * ($gst_rate) / 100)) - $subsidy), 4);exit;
             } else {
 
                 $feesduetemp = ($feesdue - $subsidy);
