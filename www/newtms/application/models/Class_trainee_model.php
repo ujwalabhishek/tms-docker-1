@@ -3294,8 +3294,8 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
             {
                 $subsidy_recd_on = ($row['subsidy_date'] == '') ? '' : date('Y-m-d', strtotime($row['subsidy_date']));
                 $subsidy_amount = $row['subsidy_amount'];
-                echo $this->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate);
-                echo $ind_net_due.'////';exit;
+                $ind_net_due = $this->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate);
+                echo $ind_net_due.'////';
                 $ind_net_due = round($ind_net_due,2); //sk1 new add
                 $ind_gst = round($this->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate), 2);//sk2
                 if (($enrollment_type == 1) && ($payment_retake == 2)) 
@@ -3378,7 +3378,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     'enrol_status' => $enrol_status
                 );
 //                $this->db->trans_start();
-                $this->db->insert('class_enrol', $data);
+//                $this->db->insert('class_enrol', $data);
 //                echo $this->db->last_query();
                 if (!empty($payment_due_id)) 
                 {
@@ -3396,7 +3396,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                         'gst_amount' => round($ind_gst, 2),//sk6
                         'att_status' => $att_status
                     );
-                    $this->db->insert('enrol_pymnt_due', $data);
+//                    $this->db->insert('enrol_pymnt_due', $data);
 //                    echo $this->db->last_query();
                 }
             } 
@@ -3473,7 +3473,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     'gst_rule' => $gst_rule,
                 );
            // }
-            $this->db->insert('enrol_invoice', $data);
+//            $this->db->insert('enrol_invoice', $data);
 //            echo $this->db->last_query();exit;
         } 
         else 
