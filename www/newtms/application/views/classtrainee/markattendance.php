@@ -70,7 +70,7 @@ if($start_class!=$end_class  && $value_of_schedule_class>0)
                     <tr>
                         <td class="td_heading">Course Name:<span class="required">*</span></td>
                         <td>
-                            <?php echo form_dropdown("course_id", $courses, set_value('course_id'), 'id="select_course_id"') ?>
+                            <?php echo form_dropdown("course_id", $courses, set_value('course_id'), 'id="select_course_id" width="500px">') ?>
                         </td>
                     </tr>
                     <tr>
@@ -78,7 +78,7 @@ if($start_class!=$end_class  && $value_of_schedule_class>0)
 
                         <td colspan='3'>
                             <?php
-                            $attr_js = 'id="select_class_id" width="500px">';
+                            $attr_js = 'id="select_class_id"';
                             echo form_dropdown('class_id', $classes, set_value('class_id'), $attr_js);
                             ?>
                         </td>
