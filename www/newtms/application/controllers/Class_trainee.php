@@ -1581,6 +1581,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $sort_by = $this->input->get('b');
         $sort_order = $this->input->get('o');
         $class_details = $this->class->get_class_by_id($tenant_id, $course_id, $class_id);
+        print_r($class_details);exit;
         $from_date = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);
         $to_date = parse_date($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT);
         $week_start_date = parse_date($this->input->post('week_start'), CLIENT_DATE_FORMAT);
@@ -1663,7 +1664,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
 			$data['controllerurl'] = 'class_trainee/mark_attendance';
             $data['page_title'] = 'Class Trainee Enrollment - Mark Attendance';
             $data['main_content'] = 'classtrainee/markattendance';
-            $data['week_start'] = $from_date;
+            //$data['week_start'] = $from_date;
             //$data['sideMenuData'] = $this->sideMenu;
             if (!empty($message))
                 $data['message'] = $message;
