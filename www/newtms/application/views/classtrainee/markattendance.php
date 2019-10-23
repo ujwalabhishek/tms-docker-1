@@ -1,4 +1,4 @@
-<style>#select_course_id{width:500px;}</style> 
+<style>#select_course_id{width:500px;}#select_class_id{width:200px;}</style> 
   <?php
 $this->load->helper('common_helper');
 

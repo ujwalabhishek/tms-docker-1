@@ -1663,6 +1663,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
 			$data['controllerurl'] = 'class_trainee/mark_attendance';
             $data['page_title'] = 'Class Trainee Enrollment - Mark Attendance';
             $data['main_content'] = 'classtrainee/markattendance';
+            $data['week_start'] = $from_date;
             //$data['sideMenuData'] = $this->sideMenu;
             if (!empty($message))
                 $data['message'] = $message;
