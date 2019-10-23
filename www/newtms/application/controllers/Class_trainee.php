@@ -1655,7 +1655,6 @@ if (!empty($tenant_details->tenant_contact_num)) {
             }
             $data = get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order,'');
             $data['class_schedule'] = $this->class->get_all_class_schedule($tenant_id, $class_id);
-            print_r($data['class_schedule']);exit;
             $att = $this->classtraineemodel->get_attendance_lock_status($tenant_id,$course_id, $class_id);
             $data['lock_status']=$att->lock_status;
             $data['class_start_datetime']=$att->class_start_datetime;
