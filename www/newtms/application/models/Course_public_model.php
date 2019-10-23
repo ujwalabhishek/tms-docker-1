@@ -1228,7 +1228,7 @@ class Course_Public_Model extends CI_Model {
 
         $this->db->where('user_id', $user_id);
 
-        $this->db->where('tenant_id', TENANT_ID);
+        $this->db->where('tenant_id', $this->session->userdata('userDetails')->tenant_id);///modified by shubhranshu
 
         $sql = $this->db->get()->row();
 

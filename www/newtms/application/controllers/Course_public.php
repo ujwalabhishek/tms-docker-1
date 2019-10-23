@@ -3572,7 +3572,7 @@ class course_public extends CI_Controller {
        
         $taxcode = $this->course_model->get_loggedin_taxcode($user_id);
         
-print_r($this->session->userdata('userDetails'));exit;
+
 
 
 
