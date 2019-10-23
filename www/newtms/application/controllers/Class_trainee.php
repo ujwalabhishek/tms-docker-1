@@ -1585,7 +1585,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $from_date = date_parse($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);
         $to_date = date_parse($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT);
         $week_start_date = date_parse($this->input->post('week_start'), CLIENT_DATE_FORMAT);
-        echo $from_date.' ,'.$to_date.','.$week_start_date;exit;
+       // echo $from_date.' ,'.$to_date.','.$week_start_date;exit;
         $week = $this->input->post('week');
         $export = $this->input->post('export');
         $export1 = $this->input->post('export1');
