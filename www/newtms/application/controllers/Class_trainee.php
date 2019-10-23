@@ -4747,6 +4747,43 @@ if (!empty($tenant_details->tenant_contact_num)) {
         }
         return $error_msg;
     }
+    
+    public function get_invoice(){
+        $matches = array();
+        $paid = $this->input->post('paid');
+        $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
+        $result = $this->classtraineemodel->get_invoice($this->tenant_id, $query_string,$paid);
+        if ($result) {
+            foreach ($result as $row) {
+                $matches[] = array(
+                    'key' => $row->invoice_id,
+                    'label' => $row->invoice_id . ' (Name: ' . $row->first_name . ' ' . $row->last_name . ')'.$row->tax_code,
+                    'value' => $row->invoice_id
+                );
+            }
+        }
+        echo json_encode($matches);
+        exit();
+    }
+    
+    /*  added by shubhranshu for client requirement on 21/03/2019 */
+    public function chk_nric_restriction($nric='',$operation){
+        $exists = $this->traineemodel->check_nric_restriction($nric,$operation);
+        if ($exists) {
+            return 1;
+        } else { return 0;}
+    }
+    public function check_nric_restriction(){
+        extract($_POST);
+        $tax_code = trim(($tax_code));
+        $operation = trim(($operation));
+        $exists = $this->traineemodel->check_nric_restriction($tax_code,$operation);
+        if ($exists) {
+            echo 1;
+        } else { echo 0;}
+    }/*  added by shubhranshu for client requirement on 21/03/2019 */
+    
+    
     /**
      * This function will check trainee enrolment status before reschedule.
      */
@@ -4759,7 +4796,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         exit();
     }
 
-
+}
 /**
  * function to get course_class_starttime list
  * @param type $data_arr
@@ -4873,44 +4910,6 @@ function get_reschedule_class_att_status($data_arr){
      * @return string
      */
     
-
-    /*  added by shubhranshu for client requirement on 21/03/2019 */
-    public function chk_nric_restriction($nric='',$operation){
-        $exists = $this->traineemodel->check_nric_restriction($nric,$operation);
-        if ($exists) {
-            return 1;
-        } else { return 0;}
-    }
-    public function check_nric_restriction(){
-        extract($_POST);
-        $tax_code = trim(($tax_code));
-        $operation = trim(($operation));
-        $exists = $this->traineemodel->check_nric_restriction($tax_code,$operation);
-        if ($exists) {
-            echo 1;
-        } else { echo 0;}
-    }/*  added by shubhranshu for client requirement on 21/03/2019 */
-    
-    public function get_invoice(){
-        $matches = array();
-        $paid = $this->input->post('paid');
-        $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
-        $result = $this->classtraineemodel->get_invoice($this->tenant_id, $query_string,$paid);
-        if ($result) {
-            foreach ($result as $row) {
-                $matches[] = array(
-                    'key' => $row->invoice_id,
-                    'label' => $row->invoice_id . ' (Name: ' . $row->first_name . ' ' . $row->last_name . ')'.$row->tax_code,
-                    'value' => $row->invoice_id
-                );
-            }
-        }
-        echo json_encode($matches);
-        exit();
-    }
-
-}
-
 function get_links($enrolment_mode, $payment_status, $invoice_id, $user_id, $pymnt_due_id, $class_id, $view_trainee_data, $trainee_Status,$classStatus,$company_id, $att_status=NULL) {
         if ($payment_status == 'PYNOTREQD') { 
             $tempLinkStr .= '<span style="color:red">Payment Not Required</span>  <br>';
