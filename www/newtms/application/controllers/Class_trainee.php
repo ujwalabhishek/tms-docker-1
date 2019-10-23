@@ -3228,7 +3228,6 @@ if (!empty($tenant_details->tenant_contact_num)) {
 
         $result->total_inv_discnt = round($result->total_inv_discnt, 2);
         $result->total_unit_fees = round($result->total_unit_fees, 2);
-        if(empty($result->total_unit_fees)){$result->total_unit_fees = 0.0;}
         $result->total_inv_subsdy = round($result->total_inv_subsdy, 2);
         $result->gst_rate = round($result->gst_rate, 2);
 
