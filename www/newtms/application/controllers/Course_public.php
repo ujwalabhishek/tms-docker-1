@@ -3571,14 +3571,14 @@ class course_public extends CI_Controller {
         $user_id = $this->session->userdata('userDetails')->user_id;
 
         $taxcode = $this->course_model->get_loggedin_taxcode($user_id);
-
-
+        
+print_r($taxcode);exit;
 
 
 
         if (empty($course_id) || !is_numeric($course_id) || empty($class_id) || !is_numeric($class_id)) {
 
-            redirect('course');
+            redirect('course_public');
         }
 
 
