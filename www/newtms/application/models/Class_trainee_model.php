@@ -571,7 +571,7 @@ class Class_Trainee_Model extends CI_Model {
         $is_updated = false;
         $is_inserted = false;
          $logged_in_user_id = $this->user->user_id;
-//        $this->db->trans_start();/// added by shubhranshu to check all the query and return true
+        //$this->db->trans_start();/// added by shubhranshu to check all the query and return true
         $query=$this->db->query("select * from class_attendance where course_id='$course_id' and class_id='$class_id'");
 
         if($query->num_rows()> 0)
@@ -809,7 +809,7 @@ class Class_Trainee_Model extends CI_Model {
               
                  $this->db->last_query();
             }
-            return $query->result(); 
+            return $query->result(); // commented by shubhranshu since waste due to some condition does not show msg
         }
         return $is_inserted || $is_updated;// commented by shubhranshu since waste
 //        $this->db->trans_complete();/// added by shubhranshu to check all the query and return true strat code/////
