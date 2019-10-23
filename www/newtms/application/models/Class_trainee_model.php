@@ -809,7 +809,7 @@ class Class_Trainee_Model extends CI_Model {
               
                  $this->db->last_query();
             }
-            //return $query->result(); // commented by shubhranshu since waste due to some condition does not show msg
+            return $query->result(); 
         }
         //return $is_inserted || $is_updated;// commented by shubhranshu since waste
         $this->db->trans_complete();/// added by shubhranshu to check all the query and return true strat code/////

@@ -40,8 +40,8 @@ if (empty($details['invoice_id'])) {
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <td width="20%" class="td_heading">Select Company:<span class="required">*</span></td>
-                    <td colspan="3">
+                    <td width="30%" class="td_heading">Select Company:<span class="required">*</span></td>
+                    <td colspan="3" width="50%">
                         <?php
                         $options = array();
                         if($this->data['user']->role_id != 'COMPACT') {
@@ -69,7 +69,7 @@ if (empty($details['invoice_id'])) {
                         foreach ($courses as $k => $v) {
                             $options[$k] = $v;
                         }
-                        echo form_dropdown('course', $options, $this->input->post('course'), 'id="course"')
+                        echo form_dropdown('course', $options, $this->input->post('course'), 'id="course" width="500px"')
                         ?>
                         <span id="course_err"></span>
                     </td>
