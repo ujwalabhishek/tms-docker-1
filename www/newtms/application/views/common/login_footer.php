@@ -3,7 +3,6 @@
     <p>Copyright &copy; BIIPMI 2015-2019, All Rights Reserved.<font style="font-size:9px; color:#ac0000; font-weight:bold; float:right;">Powered by biipmi Pte Ltd.</font></p>
  </footer>-->
 
-<hr>
 
 <div id="footer" style="padding: 10px;margin: auto;box-shadow: 0px -2px 4px  rgba(0, 0, 255, .2);">
 
