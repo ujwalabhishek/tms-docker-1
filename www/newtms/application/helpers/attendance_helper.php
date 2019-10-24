@@ -313,7 +313,7 @@ echo "c";exit;
         }
 
     }
-print_r($class_start);exit;
+print_r($week_start_time);exit;
     if ($week == 1) {
 
         $week_start_time = strtotime("-7 days", $week_start_time);
