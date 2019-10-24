@@ -352,7 +352,7 @@ print_r($week_start_time+604800);exit;
         $first_sunday_datetime = $class_end;
 
     }    
-echo print_r($start_datetime);print_r($first_sunday_datetime);exit;////
+//echo print_r($start_datetime);print_r($first_sunday_datetime);exit;////
     return array($start_datetime, $first_sunday_datetime);
 
 }
