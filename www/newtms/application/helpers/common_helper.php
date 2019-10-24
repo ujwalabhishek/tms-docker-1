@@ -212,14 +212,14 @@ function compare_dates_without_time(DateTime $date1, DateTime $date2) {
  * @return DateTime parsed date on success or false on failure.
  */
 function parse_date($date_str, $format) {
-    //$date = date_create_from_format($format, $date_str);
-    if(!empty($date_str)){
-       $date = DateTime::createFromFormat($format, $date_str); /// added by shubhranshu
+    $date = date_create_from_format($format, $date_str);
+    //if(!empty($date_str)){
+       //$date = DateTime::createFromFormat($format, $date_str); /// added by shubhranshu
         //echo $date.'dd'.$date_str;exit;
         //$date = $date->format($format);/// added by shubhranshu
         //echo $date;exit;
         return $date; 
-    }
+    //}
     
 }
 
