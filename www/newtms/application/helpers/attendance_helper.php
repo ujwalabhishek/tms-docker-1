@@ -306,7 +306,7 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
 
 
             $week_start_time = strtotime('Monday this week 12:00:00', $class_start->getTimestamp());
-
+            $week_start_time = $week_start_time + 604800;
 
         }else{
 
@@ -318,7 +318,7 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
     //echo date_default_timezone_get();
     //echo 1571025600-$week_start_time.'-------';
     //$week_start_time = $week_start_time + 604800;
-print_r($week_start_time);exit;
+//print_r($week_start_time);exit;
     if ($week == 1) {
 
         $week_start_time = strtotime("-7 days", $week_start_time);
