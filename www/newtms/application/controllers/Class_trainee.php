@@ -1655,6 +1655,10 @@ if (!empty($tenant_details->tenant_contact_num)) {
                      
                 }
             }
+            if($week > 0){
+                echo $from_date.'--------'.$to_date;exit;
+            }
+            
             $data = get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order,'');
            
             $data['class_schedule'] = $this->class->get_all_class_schedule($tenant_id, $class_id);

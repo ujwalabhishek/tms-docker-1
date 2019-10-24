@@ -97,7 +97,7 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
         $from_date = clone $to_date;
 
    
-echo $from_date.'--------'.$to_date;exit;
+//echo $from_date.'--------'.$to_date;exit;
     list($week_start_date, $week_end_date) = calculate_start_end_date_range($from_date, $to_date, $class_start, $class_end, $week_start_date, $week);
 
  //previus commneted by sushil
