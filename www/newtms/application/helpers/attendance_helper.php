@@ -316,6 +316,7 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
 
     }
     //echo date_default_timezone_get();
+    echo 1571025600-$week_start_time.'-------';
 print_r($week_start_time);exit;
     if ($week == 1) {
 
