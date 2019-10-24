@@ -352,7 +352,7 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
         $first_sunday_datetime = $class_end;
 
     }    
-//echo print_r($start_datetime);print_r($first_sunday_datetime);exit;////
+echo print_r($start_datetime);print_r($first_sunday_datetime);exit;////
     return array($start_datetime, $first_sunday_datetime);
 
 }
