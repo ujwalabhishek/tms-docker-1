@@ -1593,7 +1593,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         if (!empty($export)) 
         {
             $class_details = $this->class->get_class_details_for_report($tenant_id, $course_id, $class_id);
-            $class_start = date_parse($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);
+            $class_start = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);
             $class_end = date_parse($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT);
             if (empty($class_start))
                 $class_start = new DateTime();
