@@ -330,9 +330,9 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
     }
 
     $first_sunday = strtotime("next Sunday 12:00:00", $week_start_time);
-print_r($first_sunday);exit;
-    $first_sunday_datetime = DateTime::createFromFormat('U', $first_sunday);
 
+    $first_sunday_datetime = DateTime::createFromFormat('U', $first_sunday);
+print_r($week_start_time);exit;print_r($first_sunday);exit;print_r($first_sunday_datetime);exit;
     if (!empty($to_date) && $to_date < $first_sunday_datetime && $to_date > $start_datetime) {
 
         $first_sunday_datetime = $to_date;
