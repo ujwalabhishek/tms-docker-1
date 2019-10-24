@@ -75,7 +75,7 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
     $data['class_start'] = date_format_singapore($class_details->class_start_datetime);
 
     $data['class_end'] = date_format_singapore($class_details->class_end_datetime);
-
+print_r($from_date);print_r($class_start);exit;
     if (empty($from_date) || $from_date < $class_start) {
 
         $from_date = $class_start;
