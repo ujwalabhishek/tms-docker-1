@@ -79,7 +79,7 @@
                             </a>
                    
                         </div>
-                        <div class="col-sm-10 header-ttl"><p>TRAINING MANAGEMENT SYSYTEM</p></div>
+                        <div class="col-sm-10 header-ttl"><p>TRAINING MANAGEMENT SYSTEM</p></div>
 
 
                     </div>
