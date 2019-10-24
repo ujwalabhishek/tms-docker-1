@@ -213,7 +213,9 @@ function compare_dates_without_time(DateTime $date1, DateTime $date2) {
  */
 function parse_date($date_str, $format) {
     $date = date_create_from_format($format, $date_str);
-    echo $date.'f';exit;
+    $date1 = DateTime::createFromFormat($format, $date_str);
+    //echo $date->format('Y-m-d');
+    echo $date1->format('Y-m-d').'f'.$format;exit;
     return $date;
 }
 
