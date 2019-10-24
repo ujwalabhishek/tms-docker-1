@@ -235,6 +235,7 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
 
     $data['week_end'] = $week_end_date->format(CLIENT_DATE_FORMAT);
 
+
     $data['class_id'] = $class_id;
 
     $data['course_id'] = $course_id;
@@ -247,7 +248,7 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
 
     $data['class_end_date'] = date('Y-m-d',strtotime($class_details->class_end_datetime));
 
-
+print_r($data);exit;
 
     return $data;
 
@@ -344,7 +345,7 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
         $first_sunday_datetime = $class_end;
 
     }    
-echo print_r($start_datetime);print_r($first_sunday_datetime);exit;////
+//echo print_r($start_datetime);print_r($first_sunday_datetime);exit;////
     return array($start_datetime, $first_sunday_datetime);
 
 }
