@@ -214,8 +214,8 @@ function compare_dates_without_time(DateTime $date1, DateTime $date2) {
 function parse_date($date_str, $format) {
     //$date = date_create_from_format($format, $date_str);
     $date = DateTime::createFromFormat($format, $date_str); /// added by shubhranshu
-    return $date->format($format);/// added by shubhranshu
-    //return $date;
+    $date = $date->format($format);/// added by shubhranshu
+    return $date;
 }
 
 /**
