@@ -305,10 +305,10 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
         }else if(strtotime('Monday this week 12:00:00', $week_start_date->getTimestamp()) == strtotime('Monday this week 12:00:00') && strtotime($class_end->format('Y-m-d')) < strtotime($week_start_date->format('Y-m-d'))) {
 
  
-echo gmdate('Y-m-d H:i:s', strtotime("2014-06-26 12:00:00"));
+//echo gmdate('Y-m-d H:i:s', strtotime("2014-06-26 12:00:00"));
 
             $week_start_time = strtotime('Monday this week 12:00:00', $class_start->getTimestamp());
-
+print_r($week_start_time);exit;
 
         }else{
 echo "c";exit;
@@ -317,7 +317,7 @@ echo "c";exit;
         }
 
     }
-    echo date_default_timezone_get();
+    //echo date_default_timezone_get();
 print_r($class_start);exit;
     if ($week == 1) {
 
