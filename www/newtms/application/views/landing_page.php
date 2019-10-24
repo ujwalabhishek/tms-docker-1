@@ -6,61 +6,63 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Biipmi Training Management System" />
-        <meta name="timezone" value="<?php date_default_timezone_set('Asia/Singapore');
-echo $timezone = date_default_timezone_get() . " / " . date('m/d/Y h:i:s a', time()); ?>">
+        <meta name="timezone" value="<?php date_default_timezone_set('Asia/Singapore');echo $timezone = date_default_timezone_get() . " / " . date('m/d/Y h:i:s a', time()); ?>">
         <title><?php echo $page_title; ?></title> 
-
-
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+        ga('create', 'UA-78372106-1', 'auto');
+        ga('send', 'pageview');
+
+      </script> 
         <style>
-                        #wrapper{
-                        margin:0;
-                        padding:0;
-                }
-		
-                .header-box{
-                        background-color: rgba(255, 255, 255, 0.2);
-                        -webkit-box-shadow: 0 3px 1px rgba(0, 0, 0, 0.2);
-                        padding: 20px;
-			
-                }
-                .header-div{margin:20px 0;}
-		
-		
-                .header-ttl{color:#446cb3;
+            #wrapper{
+                margin:0;
+                padding:0;
+            }
+
+            .header-box{
+                background-color: rgba(255, 255, 255, 0.2);
+                -webkit-box-shadow: 0 3px 1px rgba(0, 0, 0, 0.2);
+                padding: 20px;
+
+            }
+            .header-div{margin:20px 0;}
+
+            .header-ttl{color:#446cb3;
                 font-size: 40px;
-                    font-weight: 600;
-    text-shadow: 1px 1px 1px #161163;
+                font-weight: 600;
+                text-shadow: 1px 1px 1px #161163;
                 font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
-		
-                }
-		
-                .col-desg{
-                        padding:10px;
-                        height:100%;
-                        height:150px;
-                }
-	
-                .col-desg-tlt{
-                        background: #446cb3;
-                        padding: 10px;
-                        margin: 10px;
-                        height:40px;
-                        color: #fff;
-                        box-shadow: 0px -2px 6px 1px rgba(0, 0, 255, .2);
-                }
-		
-.col-desg-tlt:p{
-                        text-align: center;
-                        color: #fff;
-        margin-top: 30px;
-			
-                }
-		
-		
+
+            }
+
+            .col-desg{
+                padding:10px;
+                height:100%;
+                height:150px;
+            }
+
+            .col-desg-tlt{
+                background: #446cb3;
+                padding: 10px;
+                margin: 10px;
+                height:40px;
+                color: #fff;
+                box-shadow: 0px -2px 6px 1px rgba(0, 0, 255, .2);
+            }
+
+            .col-desg-tlt:p{
+                text-align: center;
+                color: #fff;
+                margin-top: 30px;	
+            }
 		
         </style>
 
@@ -118,7 +120,7 @@ echo $timezone = date_default_timezone_get() . " / " . date('m/d/Y h:i:s a', tim
                     </div>
                 </div>
             </div>
-
+       </div>
     </body>
 </html>
 
