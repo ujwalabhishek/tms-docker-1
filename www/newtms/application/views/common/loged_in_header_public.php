@@ -1,6 +1,6 @@
 
 <div class="container-fluid bg-3 text-center header-box">
-    <div class="container">
+    <div class="containers">
         <div class="row">
             <div class="col-sm-2">
                <a href="<?php echo base_url()?>" class='pull-left'>

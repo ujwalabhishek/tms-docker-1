@@ -52,9 +52,12 @@
                 color: #fff;
                 margin-top: 30px;	
             }
-            .welcome{
-                    padding-bottom: 10px;
-            }
+            .welcome {
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 12px;
+                    margin-bottom: 15px;
+                    font-weight: 600;
+                }
         </style>
     </head>
     <body>
