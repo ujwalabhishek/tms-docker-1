@@ -61,7 +61,7 @@ img.avatar {
 }
 
 .container {
-  /*padding: 16px;*/
+  padding: 16px;
 }
 
 span.psw {
