@@ -298,7 +298,7 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
 
     } else {
 
-        if(date('D',$week_start_date->getTimestamp())=='Sun'){echo "a";exit;
+        if(date('D',$week_start_date->getTimestamp())=='Sun'){
 
             $week_start_time = strtotime('Monday previous week 12:00:00', $week_start_date->getTimestamp());
 
