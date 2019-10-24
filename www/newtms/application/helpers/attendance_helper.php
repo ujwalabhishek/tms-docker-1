@@ -98,7 +98,7 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
 
    
 //echo $from_date.'--------'.$to_date;exit;
-    print_r($week_start_date);exit;
+   
     list($week_start_date, $week_end_date) = calculate_start_end_date_range($from_date, $to_date, $class_start, $class_end, $week_start_date, $week);
 
  //previus commneted by sushil
@@ -347,7 +347,7 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
         $first_sunday_datetime = $class_end;
 
     }    
-//echo print_r($start_datetime);print_r($first_sunday_datetime);exit;////
+echo print_r($start_datetime);print_r($first_sunday_datetime);exit;////
     return array($start_datetime, $first_sunday_datetime);
 
 }
