@@ -135,7 +135,7 @@ echo $timezone = date_default_timezone_get() . " / " . date('m/d/Y h:i:s a', tim
 
 
 
-
+<!--
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -192,8 +192,8 @@ echo $timezone = date_default_timezone_get() . " / " . date('m/d/Y h:i:s a', tim
                     <div class="training1">
                         <img src="<?php echo base_url()?>assets/images/tms1.png">
                     </div>       
-<!--                    <div class="right_date">
-                    </div>-->
+                    <div class="right_date">
+                    </div>
                 </div>	
             </div>
                            
@@ -242,5 +242,5 @@ echo $timezone = date_default_timezone_get() . " / " . date('m/d/Y h:i:s a', tim
             </div>	
         </div>       
     </body>
-</html>
+</html>-->
 <?php exit;?>
