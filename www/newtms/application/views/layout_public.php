@@ -26,8 +26,8 @@
 
             .header-ttl{color:#446cb3;
                     font-size: 34px;
-    font-weight: 600;
-    text-shadow: 0px 1px 0px #161163;
+                    font-weight: 600;
+                    text-shadow: 0px 1px 0px #161163;
                 font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
 
             }
