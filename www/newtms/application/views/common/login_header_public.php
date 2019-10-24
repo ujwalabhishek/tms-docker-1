@@ -8,8 +8,8 @@
                 <img class="logo" src="<?php echo base_url()?>logos/t01.png" border="0">
                 </a>
             </div>
-            <div class="col-sm-8 header-ttl"><p>TRAINING MANAGEMENT SYSYTEM</p></div>
-            <div class="col-sm-2 header-ttl">
+            <div class="col-sm-7 header-ttl"><p>TRAINING MANAGEMENT SYSYTEM</p></div>
+            <div class="col-sm-3 header-ttl">
                 <a title="Join Now" href="<?php echo site_url(); ?>login/administrator" class="btn btn-sm btn-info"><strong style='color:white'>Admin Login<span class="glyphicon glyphicon-chevron-right"></span></strong> </a>
                 <a title="Join Now" href="<?php echo site_url(); ?>course_public/class_member_check" class="btn btn-sm btn-info"><strong style='color:white'>Trainee LogIn<span class="glyphicon glyphicon-chevron-right"></span></strong> </a>
             </div>
