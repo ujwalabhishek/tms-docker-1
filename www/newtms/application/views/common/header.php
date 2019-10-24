@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-2">
-               <a href="<?php echo base_url(); ?>">
+               <a href="<?php echo base_url(); ?>" class='pull-left'>
                 <img class="logo" src="<?php echo base_url(); ?>logos/<?php echo $this->data['tenant_details']->logo; ?>" border="0"/>
             </a>
             </div>
@@ -16,7 +16,13 @@
                     <table class="pull-right">
                         <tbody>
                             <tr>
-                                <td><div class="welcome">Welcome <?php echo $this->session->userdata('userDetails')->first_name . ' ' . $this->session->userdata('userDetails')->last_name; ?></div></td>
+                                <td>
+                                    <div class="welcome">Welcome <?php 
+                                 $string = $this->session->userdata('userDetails')->first_name . ' ' . $this->session->userdata('userDetails')->last_name; 
+                                 $fullname =(strlen($string) > 13) ? substr($string,0,17).'..' : $string;
+                                 echo $fullname;
+                                ?></div>
+                                </td>
                                 <td ><a href="<?php echo site_url(); ?>user/logout"><img src="<?php echo base_url(); ?>assets/images/logout1.png" border="0" /></a></td>
                                 <a href="error.php"></a>
                             </tr>
