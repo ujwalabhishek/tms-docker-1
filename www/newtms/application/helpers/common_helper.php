@@ -216,7 +216,7 @@ function parse_date($date_str, $format) {
     if(!empty($date_str)){
        $date = DateTime::createFromFormat($format, $date_str); /// added by shubhranshu
         //echo $date.'dd'.$date_str;exit;
-        $date = $date->format($format);/// added by shubhranshu
+        //$date = $date->format($format);/// added by shubhranshu
         //echo $date;exit;
         return $date; 
     }
