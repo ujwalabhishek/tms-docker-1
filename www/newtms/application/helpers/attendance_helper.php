@@ -68,9 +68,9 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
 
     }
 
-    $class_start = date_parse($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);
+    $class_start = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);
 
-    $class_end = date_parse($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT);
+    $class_end = parse_date($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT);
 
     $data['class_start'] = date_format_singapore($class_details->class_start_datetime);
 
