@@ -52,7 +52,9 @@
                 color: #fff;
                 margin-top: 30px;	
             }
-		
+            .welcome{
+                    padding-bottom: 10px;
+            }
         </style>
     </head>
     <body>
