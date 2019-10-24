@@ -69,7 +69,12 @@ echo $timezone = date_default_timezone_get() . " / " . date('m/d/Y h:i:s a', tim
                 <div class="container">
                     <div class="row">
 
-                        <div class="col-sm-2"><img src="t01.png" width="64" height="67" alt=""/></div>
+                        <div class="col-sm-2">
+                           <a href="<?php echo base_url()?>">
+                            <img class="logo" src="<?php echo base_url()?>logos/t01.png" border="0">
+                            </a>
+                   
+                        </div>
                         <div class="col-sm-10 header-ttl"><p>TRAINING MANAGEMENT SYSYTEM</p></div>
 
 
@@ -97,25 +102,6 @@ echo $timezone = date_default_timezone_get() . " / " . date('m/d/Y h:i:s a', tim
                 
                 <br>
 
-<!--                <div class="container-fluid bg-4 text-center">  
-                    <div class="container bg-3 text-center">
-                        <div class="row">
-                            <div class="col-sm-4 col-desg">
-                                <p class="col-desg-tlt"> XPRIENZ PTE LTD</p>
-                                <img src="XpRienzLogo.png"  alt="Image">
-                            </div>
-                            <div class="col-sm-4 col-desg"> 
-                                <p class="col-desg-tlt">BAKERZATWORK ACADEMY</p>
-                                <img src="XpRienzLogo.png"  alt="Image">
-                            </div>
-                            <div class="col-sm-4 col-desg">
-                                <p class="col-desg-tlt"> XPRIENZ PTE LTD</p>
-                                <img src="XpRienzLogo.png"   alt="Image">
-                            </div>
-
-                        </div>
-                    </div>
-                </div>-->
             </div>
             <p></p>
             <div id="footer" style="padding: 10px;margin: auto;box-shadow: 0px -2px 4px  rgba(0, 0, 255, .2);">
@@ -126,8 +112,10 @@ echo $timezone = date_default_timezone_get() . " / " . date('m/d/Y h:i:s a', tim
                             <div class="col-sm-8"><h5  style="text-align: right;">Copyright © BIIPMI 2015-2019, All Rights Reserved.</h5></div>
                             <div class="col-sm-4"><h6 style="text-align: right;">powered by biipmi Pte Ltd</h6></div>
 
-                        </div></div>
-                </div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     </body>
 </html>
