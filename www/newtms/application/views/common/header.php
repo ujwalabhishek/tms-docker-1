@@ -12,7 +12,7 @@
             </div>
             <div class="col-sm-7 header-ttl"><p>TRAINING MANAGEMENT SYSTEM</p></div>
             <div class="col-sm-3">
-                <div class="right_date">
+                <div class="right_dates">
                     <table class="pull-right">
                         <tbody>
                             <tr>
@@ -25,7 +25,7 @@
                                   <script type="text/javascript">window.onload = date_time('date_time');</script>
                                 </td>
                             </tr>
-                            <tr><td colspan="2"><a href="<?php echo site_url(); ?>" style="float:right;"> <img src="<?php echo base_url(); ?>assets/images/home.png" title="Home"></a></td></tr>
+                            <!--<tr><td colspan="2"><a href="<?php echo site_url(); ?>" style="float:right;"> <img src="<?php echo base_url(); ?>assets/images/home.png" title="Home"></a></td></tr>-->
                         </tbody>
                     </table>
                 </div>
