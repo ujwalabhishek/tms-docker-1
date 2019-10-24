@@ -211,8 +211,9 @@ function compare_dates_without_time(DateTime $date1, DateTime $date2) {
  * @param $format - date format for parsing
  * @return DateTime parsed date on success or false on failure.
  */
-function parse_date($date_str, $format) {echo $date_str;exit;
+function parse_date($date_str, $format) {
     $date = date_create_from_format($format, $date_str);
+    echo $date.'f';exit;
     return $date;
 }
 
