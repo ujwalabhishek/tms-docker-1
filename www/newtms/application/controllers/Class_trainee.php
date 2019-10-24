@@ -1582,9 +1582,9 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $sort_order = $this->input->get('o');
         $class_details = $this->class->get_class_by_id($tenant_id, $course_id, $class_id);
         
-        $from_date = date_parse($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);///added by shubhranshu
-        $to_date = date_parse($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT);//added by shubhranshu
-        $week_start_date = parse_date($this->input->post('week_start'), CLIENT_DATE_FORMAT);//added by shubhranshu
+        $from_date = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);///added by shubhranshu
+        $to_date = parse_date($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT);//added by shubhranshu
+        $week_start_date = date_parse($this->input->post('week_start'), CLIENT_DATE_FORMAT);//added by shubhranshu
        // echo $from_date.' ,'.$to_date.','.$week_start_date;exit;
         $week = $this->input->post('week');
         $export = $this->input->post('export');
