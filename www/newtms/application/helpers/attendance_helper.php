@@ -306,7 +306,7 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
 
  //echo print_r($class_start);exit;
  //echo $class_start->format('Y-m-d');
-echo $class_start->format('Y-m-d H:i:s') - gmdate('Y-m-d H:i:s', strtotime($class_start->format('Y-m-d H:i:s')));exit;
+echo (gmdate('Y-m-d H:i:s', strtotime($class_start->format('Y-m-d H:i:s'))) - $class_start->format('Y-m-d H:i:s'));exit;
 //$date = new DateTime($class_start->format('Y-m-d H:i:s'), new DateTimeZone($timezone));
 //echo strtotime($class_start->format('Y-m-d H:i:s'));exit;
 $timestamp = $date->format('U');echo $timestamp;exit;
