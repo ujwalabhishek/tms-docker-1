@@ -290,6 +290,7 @@ function calculate_start_end_date_range_for_month(DateTime $from_date) {
 
 function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_start, $class_end, $week_start_date = null, $week = null) {
 //echo date('D',$week_start_date->getTimestamp());print_r($week_start_date);exit;
+     print_r($week_start_date);exit;
     if (empty($week_start_date) || (strtotime($class_start->format('Y-m-d')) == strtotime($class_end->format('Y-m-d'))) ) {        
 
         $week_start_time = strtotime('Monday this week 12:00:00', $from_date->getTimestamp());
