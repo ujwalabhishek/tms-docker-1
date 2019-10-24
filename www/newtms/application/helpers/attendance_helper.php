@@ -288,7 +288,7 @@ function calculate_start_end_date_range_for_month(DateTime $from_date) {
 }
 
 function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_start, $class_end, $week_start_date = null, $week = null) {
-echo date('D',$week_start_date->getTimestamp());print_r($week_start_date);exit;
+//echo date('D',$week_start_date->getTimestamp());print_r($week_start_date);exit;
     if (empty($week_start_date) || (strtotime($class_start->format('Y-m-d')) == strtotime($class_end->format('Y-m-d'))) ) {        
 
         $week_start_time = strtotime('Monday this week 12:00:00', $from_date->getTimestamp());
@@ -302,15 +302,15 @@ echo date('D',$week_start_date->getTimestamp());print_r($week_start_date);exit;
         }else if(strtotime('Monday this week 12:00:00', $week_start_date->getTimestamp()) == strtotime('Monday this week 12:00:00') && strtotime($class_end->format('Y-m-d')) < strtotime($week_start_date->format('Y-m-d'))) {
 
             $week_start_time = strtotime('Monday this week 12:00:00', $class_start->getTimestamp());
-echo 'b';exit;
+
         }else{
 
             $week_start_time = strtotime('Monday this week 12:00:00', $week_start_date->getTimestamp());
-echo 'c';exit;
+
         }
 
     }
-print_r($week_start_time);exit;
+
     if ($week == 1) {
 
         $week_start_time = strtotime("-7 days", $week_start_time);
@@ -332,7 +332,7 @@ print_r($week_start_time);exit;
     $first_sunday = strtotime("next Sunday 12:00:00", $week_start_time);
 
     $first_sunday_datetime = DateTime::createFromFormat('U', $first_sunday);
-print_r($week_start_time);exit;print_r($first_sunday);exit;print_r($first_sunday_datetime);exit;
+
     if (!empty($to_date) && $to_date < $first_sunday_datetime && $to_date > $start_datetime) {
 
         $first_sunday_datetime = $to_date;
@@ -344,7 +344,7 @@ print_r($week_start_time);exit;print_r($first_sunday);exit;print_r($first_sunday
         $first_sunday_datetime = $class_end;
 
     }    
-echo print_r($start_datetime);print_r($first_sunday_datetime);exit;////
+//echo print_r($start_datetime);print_r($first_sunday_datetime);exit;////
     return array($start_datetime, $first_sunday_datetime);
 
 }
