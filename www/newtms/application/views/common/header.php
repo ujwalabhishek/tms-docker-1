@@ -21,7 +21,7 @@
                                  $string = $this->session->userdata('userDetails')->first_name . ' ' . $this->session->userdata('userDetails')->last_name; 
                                 // added by shubhranshu
                                  $fullname =(strlen($string) > 21) ? substr($string,0,17).'..' : $string;
-                                 echo $fullname;
+                                 echo strlen($string);
                                 ?></div>
                                 </td>
                                 <td ><a href="<?php echo site_url(); ?>user/logout"><img src="<?php echo base_url(); ?>assets/images/logout1.png" border="0" /></a></td>
