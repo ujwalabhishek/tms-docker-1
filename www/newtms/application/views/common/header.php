@@ -19,7 +19,7 @@
                                 <td>
                                     <div class="welcome">Welcome <?php 
                                  $string = $this->session->userdata('userDetails')->first_name . ' ' . $this->session->userdata('userDetails')->last_name; 
-                                 $fullname =(strlen($string) > 13) ? substr($string,0,17).'..' : $string;
+                                $fullname =(strlen($string) > 21) ? substr($string,0,17).'..' : $string;
                                  echo $fullname;
                                 ?></div>
                                 </td>
