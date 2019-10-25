@@ -19,6 +19,15 @@ if(count($course_list) == 0) {
     .ui-datepicker{
         width:auto !important;
     }
+    .td_style{
+        height: 33px;
+    padding: 7px;
+    }
+    #course_name{
+            width: 100%;
+    padding: 4px;
+    border-radius: 3px;
+    }
 </style>
 <div class="col-md-2 col_2_style">
     <ul class="ad">
@@ -55,7 +64,7 @@ if(count($course_list) == 0) {
 </div>
 
 <div class="col-md-10">    
-    <div class="table-responsive">
+    <div class="table-responsive" style="padding: 10px 0px;padding-top: 0px;">
         <?php
         $attr = 'onsubmit = "return validate_search()" method="GET"';
         echo form_open('course_public', $attr);
@@ -63,7 +72,7 @@ if(count($course_list) == 0) {
         <table class="table table-striped" <?php echo $form_style; ?> >
             <tbody>
                 <tr>
-                    <td width="30%" class="td_heading">Search on Course Name:</td>
+                    <td width="30%" class="td_heading td_style">Search on Course Name:</td>
                     <td colspan="3" width="35%"><input class="inputsearchbox_course" type="text" name="search_value" id="course_name" value="<?php echo ($this->input->get('search_value')) ? $this->input->get('search_value') : $search_value; ?>" placeholder="Course Name"><span id="crse_id"></span>
                     </td>
                     <td width="35%" align="center">                        
