@@ -5,6 +5,14 @@ if (empty($details['invoice_id'])) {
     $invoice_data = ' (Inv. Id: ' . $details['invoice_id'] . ')';
 }
 ?>
+<style>
+    #course{
+        width:470px;
+    }
+    #class{
+        width:200px;
+    }
+</style>
 <script>
     $role_id = "<?php echo $this->session->userdata('userDetails')->role_id;?>";//added by shubhranshu
     $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
@@ -69,7 +77,7 @@ if (empty($details['invoice_id'])) {
                         foreach ($courses as $k => $v) {
                             $options[$k] = $v;
                         }
-                        echo form_dropdown('course', $options, $this->input->post('course'), 'id="course" width="500px"')
+                        echo form_dropdown('course', $options, $this->input->post('course'), 'id="course"')
                         ?>
                         <span id="course_err"></span>
                     </td>
