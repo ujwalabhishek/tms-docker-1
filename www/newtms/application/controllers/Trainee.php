@@ -587,7 +587,11 @@ class Trainee extends CI_Controller {
             $trainee[$i][rowstatus] = 'fail';
             $trainee[$i]['failure_reason'] = 'Mandatory Check Fail.';
         }
-        if($trainee[$i][nrictype] == 'FIN' || $trainee[$i][nrictype] == 'NRIC' && $trainee[$i][nrictypeOthers] != ''){
+        if($trainee[$i][nrictype] == 'NRIC' && $trainee[$i][nrictypeOthers] != ''){
+            $trainee[$i][rowstatus] = 'fail';
+            $trainee[$i]['failure_reason'] = 'if others should be blank.';
+        }
+        if($trainee[$i][nrictype] == 'FIN' && $trainee[$i][nrictypeOthers] != ''){
             $trainee[$i][rowstatus] = 'fail';
             $trainee[$i]['failure_reason'] = 'if others should be blank.';
         }
