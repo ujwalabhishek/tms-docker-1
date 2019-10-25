@@ -146,11 +146,12 @@ th a:hover{text-decoration:none;color:#403D5A;}
         color-stop(0, #E7F9F3),
         color-stop(0.64, #CFDFDA)
         );
-    background-image: -o-linear-gradient(bottom, #E7F9F3 0%, #CFDFDA 64%);
-    background-image: -moz-linear-gradient(bottom, #E7F9F3 0%, #CFDFDA 64%);
-    background-image: -webkit-linear-gradient(bottom, #E7F9F3 0%, #CFDFDA 64%);
-    background-image: -ms-linear-gradient(bottom, #E7F9F3 0%, #CFDFDA 64%);
-    background-image: linear-gradient(to bottom, #E7F9F3 0%, #CFDFDA 64%);
+    background-image: -o-linear-gradient(bottom, #77c0a8 0%, #CFDFDA 64%);
+    background-image: -moz-linear-gradient(bottom, #77c0a8 0%, #CFDFDA 64%);
+    background-image: -webkit-linear-gradient(bottom, #77c0a8 0%, #CFDFDA 64%);
+    background-image: -ms-linear-gradient(bottom, #77c0a8 0%, #CFDFDA 64%);
+    /*background-image: linear-gradient(to bottom, #E7F9F3 0%, #CFDFDA 64%);*/
+    background-image: linear-gradient(to bottom, #77c0a8 0%, #CFDFDA 64%);
     /*dummy 09-09-14 border-bottom:solid 3px #6E6855;*/
     border-bottom:solid 3px #403D5A;	
 }
