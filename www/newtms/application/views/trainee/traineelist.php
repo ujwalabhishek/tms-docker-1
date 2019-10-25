@@ -161,6 +161,7 @@ $this->load->model('meta_values');
                     <?php
                     if (count($tabledata) > 0) {
                         foreach ($tabledata as $data) {
+                            /////added by shubhrashu for nric split to field1 and field 2
                             $nric_taxcode=$data['tax_code'];
                             $field[] = substr($nric_taxcode, 0, 5);
                             $field[] = substr($nric_taxcode, 5);
