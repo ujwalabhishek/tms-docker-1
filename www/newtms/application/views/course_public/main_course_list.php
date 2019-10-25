@@ -21,7 +21,7 @@ if(count($course_list) == 0) {
     }
     .td_style{
         height: 33px;
-    padding: 7px;
+    padding: 7px !important;
     }
     #course_name{
             width: 100%;
@@ -73,7 +73,7 @@ if(count($course_list) == 0) {
             <tbody>
                 <tr>
                     <td width="30%" class="td_heading td_style">Search on Course Name:</td>
-                    <td colspan="3" width="35%"><input class="inputsearchbox_course" type="text" name="search_value" id="course_name" value="<?php echo ($this->input->get('search_value')) ? $this->input->get('search_value') : $search_value; ?>" placeholder="Course Name"><span id="crse_id"></span>
+                    <td colspan="3" width="35%"><input class="inputsearchbox_course" type="text" name="search_value" id="course_name" value="<?php echo ($this->input->get('search_value')) ? $this->input->get('search_value') : $search_value; ?>" placeholder="Enter Course Name to Search"><span id="crse_id"></span>
                     </td>
                     <td width="35%" align="center">                        
                         <button title="Search" value="Search" type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-search"></span> <strong>Search</strong></button>
