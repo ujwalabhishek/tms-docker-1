@@ -30,7 +30,7 @@ if(count($course_list) == 0) {
     }
     .min-pad > .min-pad:first-child{
             margin-top: 10px;
-    border-top: 1px solid grey;
+    border-top: 1px solid #ddd;
     }
 </style>
 <div class="col-md-2 col_2_style">
