@@ -1006,12 +1006,12 @@ class Trainee extends CI_Controller {
     /*
       function for bulk registration : uploading the bulk data excel file
      */
-    public function bulk_registration() {echo "ss";exit;
+    public function bulk_registration() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Bulk Registration';
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
-        if ($this->input->post("upload")) {
+        if ($this->input->post("upload")) {echo "ss";exit;
             $config['upload_path'] = './uploads/';
             $config['allowed_types'] = '*';
             $config['max_size'] = '2048';
