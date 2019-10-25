@@ -142,9 +142,15 @@ $this->load->model('meta_values');
                     <?php
                     $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
                     $pageurl = $controllerurl;
+                    $nric_taxcode=$data['tax_code'];
+
+                    $field[] = substr($nric_taxcode, 0, 5);
+                    $field[] = substr($nric_taxcode, 5);
                     ?>
+                    
                     <tr>
-                        <th width="15%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.tax_code&o=" . $ancher; ?>" >NRIC/FIN No.</a></th>
+                        <th width="15%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.tax_code&o=" . $ancher; ?>" >FIELD ONE.</a></th>
+                         <th width="15%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.tax_code&o=" . $ancher; ?>" >FIELD TWO.</a></th>
                         <th width="15%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.country_of_residence&o=" . $ancher; ?>" >Country</a></th>
                         <th width="20%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.registration_date&o=" . $ancher; ?>" >Registration Date</a></th>
                         <th width="20%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=traineename&o=" . $ancher; ?>" >Trainee Name</a></th>
@@ -160,7 +166,8 @@ $this->load->model('meta_values');
                         foreach ($tabledata as $data) {
                             ?>
                             <tr <?php if ($data['account_status'] == 'INACTIV') echo "class='danger'"; ?> >
-                                <td><a href="<?php echo base_url() . $controllerurl . 'view_trainee/' . $data['user_id']; ?>"><?php echo $data['tax_code']; ?></a></td>
+                                <td><a href="<?php echo base_url() . $controllerurl . 'view_trainee/' . $data['user_id']; ?>"><?php echo $field[0]; ?></a></td>
+                                <td><a href="<?php echo base_url() . $controllerurl . 'view_trainee/' . $data['user_id']; ?>"><?php echo $field[1]; ?></a></td>
                                 <td><?php echo ($data['country_of_residence']) ? get_catname_by_parm($data['country_of_residence']) : ''; ?></td>
                                 <td>
                                     <?php
