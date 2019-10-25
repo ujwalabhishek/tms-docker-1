@@ -1011,7 +1011,7 @@ class Trainee extends CI_Controller {
         $data['page_title'] = 'Bulk Registration';
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
-        if ($this->input->post("upload")) {echo "ss";exit;
+        if ($this->input->post("upload")) {
             $config['upload_path'] = './uploads/';
             $config['allowed_types'] = '*';
             $config['max_size'] = '2048';
@@ -1049,7 +1049,7 @@ class Trainee extends CI_Controller {
         $data['controllerurl'] = '/trainee/';
         $data['privilage'] = $this->manage_tenant->get_privilage();//added by shubhranshu
         $data['main_content'] = 'trainee/bulkregistration';
-        $this->load->view('layout', $data);
+        $this->load->view('layout', $data);exit;
     }
    /**
     * download smaple excel file.
