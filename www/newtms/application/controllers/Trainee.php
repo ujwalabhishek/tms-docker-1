@@ -1040,7 +1040,7 @@ class Trainee extends CI_Controller {
                     $this->load->helper('export');
                     $files = write_import_status($trainee, $this->user->user_id);
                     unlink('./uploads/' . $data['file_name']);
-                    echo "sagggg";exit;
+                    
                 }
             }
         } 
