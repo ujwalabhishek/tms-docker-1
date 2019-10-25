@@ -1629,7 +1629,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 if ($export == 'pdf') {
                     //return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data, $mark_count);
                     //print_r($results);exit;
-                    return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data); // removed mark count by shubhranshu
+                    return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data,$mark_count); // removed mark count by shubhranshu
                     
                 } else if ($export == 'pdf_week') {
                     return generate_class_attendance_sheet_pdf($results, $class_details, $tenant_details, $class_schedule_data);
