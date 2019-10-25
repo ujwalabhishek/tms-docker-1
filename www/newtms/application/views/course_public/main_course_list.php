@@ -32,7 +32,7 @@ if(count($course_list) == 0) {
             margin-top: 10px;
     border-top: 1px solid #ddd;
     }
-    .min-pad > .content:last-child{  
+    .content:last-child{  
         border-bottom:none;
     }
 </style>
