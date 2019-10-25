@@ -142,10 +142,7 @@ $this->load->model('meta_values');
                     <?php
                     $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
                     $pageurl = $controllerurl;
-                    $nric_taxcode=$data['tax_code'];
-
-                    $field[] = substr($nric_taxcode, 0, 5);
-                    $field[] = substr($nric_taxcode, 5);
+                    
                     ?>
                     
                     <tr>
@@ -164,6 +161,9 @@ $this->load->model('meta_values');
                     <?php
                     if (count($tabledata) > 0) {
                         foreach ($tabledata as $data) {
+                            $nric_taxcode=$data['tax_code'];
+                            $field[] = substr($nric_taxcode, 0, 5);
+                            $field[] = substr($nric_taxcode, 5);
                             ?>
                             <tr <?php if ($data['account_status'] == 'INACTIV') echo "class='danger'"; ?> >
                                 <td><a href="<?php echo base_url() . $controllerurl . 'view_trainee/' . $data['user_id']; ?>"><?php echo $field[0]; ?></a></td>
