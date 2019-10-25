@@ -1006,7 +1006,7 @@ class Trainee extends CI_Controller {
     /*
       function for bulk registration : uploading the bulk data excel file
      */
-    public function bulk_registration() {
+    public function bulk_registration() {echo "ss";exit;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Bulk Registration';
         $this->load->helper(array('form', 'url'));
