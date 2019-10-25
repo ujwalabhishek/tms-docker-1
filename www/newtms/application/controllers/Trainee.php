@@ -1029,7 +1029,7 @@ class Trainee extends CI_Controller {
                     $data['error'] = 'File is not readable.';
                 } else {
                     $excel_data = $this->excel_reader->sheets[0][cells];
-                    $trainee = $this->validate_bulk_trainee($excel_data);
+                    $trainee = $this->validate_bulk_trainee($excel_data);echo "sa";exit;
 
 		if ($trainee[1]['db_error'] == 'db_error') {
                         $this->session->set_flashdata('error_message', 'Oops! Sorry, it looks like something went wrong with some record.Please check!');
