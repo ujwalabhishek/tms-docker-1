@@ -146,8 +146,8 @@ $this->load->model('meta_values');
                     ?>
                     
                     <tr>
-                        <th width="8%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.tax_code&o=" . $ancher; ?>" >Field One.</a></th>
-                         <th width="8%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.tax_code&o=" . $ancher; ?>" >Field Two.</a></th>
+                        <th width="8%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.tax_code&o=" . $ancher; ?>" >Field 1.</a></th>
+                         <th width="8%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.tax_code&o=" . $ancher; ?>" >Field 2.</a></th>
                         <th width="15%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.country_of_residence&o=" . $ancher; ?>" >Country</a></th>
                         <th width="20%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.registration_date&o=" . $ancher; ?>" >Registration Date</a></th>
                         <th width="20%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=traineename&o=" . $ancher; ?>" >Trainee Name</a></th>
