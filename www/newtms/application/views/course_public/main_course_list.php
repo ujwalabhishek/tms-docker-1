@@ -32,9 +32,7 @@ if(count($course_list) == 0) {
             margin-top: 10px;
     border-top: 1px solid #ddd;
     }
-    .content:last-child{  
-        border-bottom:none;
-    }
+    
 </style>
 <div class="col-md-2 col_2_style">
     <ul class="ad">
