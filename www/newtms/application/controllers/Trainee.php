@@ -1049,7 +1049,7 @@ class Trainee extends CI_Controller {
         $data['controllerurl'] = '/trainee/';
         $data['privilage'] = $this->manage_tenant->get_privilage();//added by shubhranshu
         $data['main_content'] = 'trainee/bulkregistration';
-        $this->load->view('layout', $data);exit;
+        $this->load->view('layout', $data);
     }
    /**
     * download smaple excel file.
