@@ -71,7 +71,7 @@
                 $this->load->view('common/login_header_public'); 
             }
             ?>
-            <style>
+<style>
     .ui-datepicker{
         width:auto !important;
     }

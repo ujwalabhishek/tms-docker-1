@@ -1,15 +1,3 @@
-<style>
-    .ui-datepicker{
-        width:auto !important;
-    }
-</style>
-<div class="col-md-2 col_2_style">
-    <ul class="ad">
-        <li><div id="datepicker" class="date_top"></div></li>
-        <li><a href="#" class="thumbnail"><img src="<?php echo base_url(); ?>assets/images/ad1.jpg" style="display: block;" data-src="holder.js/100%x180" alt="100%x180"></a></li>
-        <li><a href="#" class="thumbnail"><img src="<?php echo base_url(); ?>assets/images/ad2.jpg" style="display: block;" data-src="holder.js/100%x180" alt="100%x180"></a></li>
-    </ul>
-</div>
 <?php  
 if(count($notifications) > 0) {
     $style = "";
@@ -26,7 +14,47 @@ if(count($course_list) == 0) {
 }
 
 ?>
-<div class="<?php echo $class; ?>"  <?php echo $class_style; ?>>    
+
+<style>
+    .ui-datepicker{
+        width:auto !important;
+    }
+</style>
+<div class="col-md-2 col_2_style">
+    <ul class="ad">
+        <li><div id="datepicker" class="date_top"></div></li>
+        <li <?php echo $style;?>>
+            <h2 class="panel_heading_style"><span class="glyphicon glyphicon-bullhorn"></span> Announcements</h2>
+            <div class=" col-right">
+            <?php foreach ($notifications as $notify): ?>
+                    <ul class="notifi">
+                        <li>
+                            <div class="p_padding">                        
+                                <?php
+                                if (strlen($notify->noti_msg_txt) > 250) {
+                                    echo '<span class="notify_desc">' . substr($notify->noti_msg_txt, 0, 250) . "..." . '</span><span><a class="small_text" rel="modal:open" href="#notify' . $notify->notification_id . '">View More</a></span>';
+                                } else {
+                                    echo '<span class="notify_desc">' . $notify->noti_msg_txt . '</span>';
+                                }
+                                ?>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="modalnew modal12" id="notify<?php echo $notify->notification_id; ?>" style="display:none;" >
+                        <h2 class="panel_heading_style">Notification</h2>
+                        <div class="class_desc"><?php echo nl2br($notify->noti_msg_txt); ?></div>
+                        <div class="popup_cancel11">
+                            <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Close</button></a>
+                        </div>
+                    </div>
+            <?php endforeach; ?>
+            </div>
+        </li>
+        <li><a href="#" class="thumbnail"><img src="<?php echo base_url(); ?>assets/images/ad2.jpg" style="display: block;" data-src="holder.js/100%x180" alt="100%x180"></a></li>
+    </ul>
+</div>
+
+<div class="col-md-10">    
     <div class="table-responsive">
         <?php
         $attr = 'onsubmit = "return validate_search()" method="GET"';
@@ -112,33 +140,9 @@ if(count($course_list) == 0) {
     
 </div>
 
-<div class="col-md-2 col_2_style" <?php echo $style; ?>>
-    <h2 class="panel_heading_style"><span class="glyphicon glyphicon-bullhorn"></span> Announcements</h2>
-    <div class=" col-right">
-    <?php foreach ($notifications as $notify): ?>
-            <ul class="notifi">
-                <li>
-                    <div class="p_padding">                        
-                        <?php
-                        if (strlen($notify->noti_msg_txt) > 250) {
-                            echo '<span class="notify_desc">' . substr($notify->noti_msg_txt, 0, 250) . "..." . '</span><span><a class="small_text" rel="modal:open" href="#notify' . $notify->notification_id . '">View More</a></span>';
-                        } else {
-                            echo '<span class="notify_desc">' . $notify->noti_msg_txt . '</span>';
-                        }
-                        ?>
-                    </div>
-                </li>
-            </ul>
-            <div class="modalnew modal12" id="notify<?php echo $notify->notification_id; ?>" style="display:none;" >
-                <h2 class="panel_heading_style">Notification</h2>
-                <div class="class_desc"><?php echo nl2br($notify->noti_msg_txt); ?></div>
-                <div class="popup_cancel11">
-                    <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Close</button></a>
-                </div>
-            </div>
-    <?php endforeach; ?>
-    </div>
-</div>
+<!--<div class="col-md-2 col_2_style" <?php echo $style; ?>>
+    
+</div>-->
 
 
 
