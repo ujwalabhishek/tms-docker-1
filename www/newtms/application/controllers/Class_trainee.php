@@ -1626,12 +1626,12 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     return generate_class_attendance_sheet_xls($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
                 }
                 $this->load->helper('pdf_reports_helper');
-                if ($export == 'pdf') {
+                if ($export == 'pdf') {echo "d";exit;
                     //return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data, $mark_count);
                     //print_r($results);exit;
                     return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data,$mark_count); // removed mark count by shubhranshu
                     
-                } else if ($export == 'pdf_week') {
+                } else if ($export == 'pdf_week') {echo "sd";exit;
                     return generate_class_attendance_sheet_pdf($results, $class_details, $tenant_details, $class_schedule_data);
                 }
             }
