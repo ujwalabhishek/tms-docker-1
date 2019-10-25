@@ -28,6 +28,10 @@ if(count($course_list) == 0) {
     padding: 4px;
     border-radius: 3px;
     }
+    .min-pad > .min-pad:first-child{
+            margin-top: 10px;
+    border-top: 1px solid grey;
+    }
 </style>
 <div class="col-md-2 col_2_style">
     <ul class="ad">
