@@ -216,7 +216,7 @@ $(document).ready(function() {
 
     });
     
-    // shubhranshu
+    // added by shubhranshu
 
         $( "#displayText" ).click(function() {
           $( "#alertmsg" ).show();

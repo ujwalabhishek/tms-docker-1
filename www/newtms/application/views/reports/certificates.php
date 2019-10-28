@@ -6,7 +6,7 @@
     $get_enddate = $max_date = '<?php echo $end_date; ?>';
     $check_startdate = '<?php echo $check_startdate; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/reportcertificates.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/reportcertificates.js?version=1"></script>
 <div class="col-md-10">
     <h2 class="panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> Reports - Certificates Report</h2>
     <h5 class="sub_panel_heading_style"><span class="glyphicon glyphicon-search"></span> Search By</h5>
