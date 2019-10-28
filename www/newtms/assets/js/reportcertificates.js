@@ -215,6 +215,16 @@ $(document).ready(function() {
         ///////added by shubhranshu to prevent multiple clicks////////////////
 
     });
+    
+    // shubhranshu
+
+        $( "#displayText" ).click(function() {
+          $( "#alertmsg" ).show();
+        });
+         $( "#displayText1" ).click(function() {
+          $( "#alertmsg" ).show();
+        });
+    
     $('#wda_report_form input').change(function() {
         if (search_check == 1) {
             return validate(false);

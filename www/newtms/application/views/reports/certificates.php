@@ -106,6 +106,16 @@
         ?>
         <div class = "panel-heading panel_headingstyle" style = "width:100%;"><strong>Certificates Report <?php echo $period ?></strong></div>
         <br>
+        <?php 
+        // added by shubhranshu
+        $course = $this->input->get("courseId");
+              $class = $this->input->get("classId");
+              $trainee = $this->input->get("trainee");
+              $start = $this->input->get("start_date");
+              $end = $this->input->get("end_date");
+         if(($course!="") || ($class!="") || ($trainee!="") || ($start!="" && $end!=''))
+         {
+         ?>
         <div>
             <span style="float: left;color: blue;">**Coll. Dt.: Certificate Available From</span>
             <span class="pull-right">
@@ -113,8 +123,21 @@
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
                 <a href="<?php echo site_url('/reports/report_certificates_pdf') . '?' . $_SERVER['QUERY_STRING']; ?>" class="small_text1">
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>
+                     <div id="alertmsg" style="display: none;color:#ff0000;padding:5px">Please Select One of the above filter to export PDF/XLS.</div>
             </span>
         </div>
+         <?php }else{ ?>
+            <div>
+                <span style="float: left;color: blue;">**Coll. Dt.: Certificate Available From</span>
+                <span class="pull-right">
+                    <a href="<?php echo site_url('/reports/certificates_export_xls') . '?' . $_SERVER['QUERY_STRING']; ?>" class="small_text1" id='displayText'>
+                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
+                    <a href="<?php echo site_url('/reports/report_certificates_pdf') . '?' . $_SERVER['QUERY_STRING']; ?>" class="small_text1" id='displayText1'>
+                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>
+                         <div id="alertmsg" style="display: none;color:#ff0000;padding:5px">Please Select One of the above filter to export PDF/XLS.</div>
+                </span>
+            </div>
+        <?php } // added by shubhranshu?>
         <br><br>
         <table class="table table-striped">
             <thead>
