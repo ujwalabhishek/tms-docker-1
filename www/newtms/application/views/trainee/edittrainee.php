@@ -1,3 +1,4 @@
+
 <?php
 $this->load->helper('form');
 $this->load->helper('metavalues_helper');
@@ -12,7 +13,11 @@ if (!empty($tax_error)) {
     echo '<div class="error1">' . $tax_error . '</div>';
 }
 ?>
-
+<style>
+    .edu_level{
+        width:210px;
+    }
+</style>
 <div class="col-md-10">
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/trainee.png"/> Trainee - Edit/ Deactivate</h2>
     <div class="table-responsive">
