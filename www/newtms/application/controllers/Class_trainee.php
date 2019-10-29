@@ -1369,7 +1369,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
 
     public function re_schedule() 
     {
-        $this->output->enable_profiler(true);
+        //$this->output->enable_profiler(true);
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $data['courses'] = $this->classtraineemodel->get_active_course_classenroll_list_by_tenant($tenant_id);
