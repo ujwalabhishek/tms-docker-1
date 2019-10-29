@@ -1522,6 +1522,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 $this->form_validation->set_rules('reschedule_reason', 'Reschedule reason', 'required');
                 if ($this->form_validation->run() == TRUE) {echo "b";
                     $result = $this->classtraineemodel->create_reschedule();echo "c";exit;
+                    if ($result == TRUE) {
                         $type = $this->input->post('type');
                         if ($type == 1 || $type == 4) { 
                             $reschedule_class = $this->input->post('reschedule_class');
@@ -1542,7 +1543,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                         $username = rtrim($username, ', ');
                         $class = $this->class->get_class_details($tenant_id, $reschedule_class)->class_name;
                         $this->session->set_flashdata("success", "'$username' rescheduled successfully to class-'$class'.");
-                    } else {echo "x";exit;
+                    } else {echo "f";exit;
                         $this->session->set_flashdata("error", "Unable to reschedule '$username' to class-'$class'. Please try again later.");
                     }
                     redirect('class_trainee');
