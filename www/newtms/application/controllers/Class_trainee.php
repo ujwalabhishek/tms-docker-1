@@ -1455,7 +1455,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     }
                 } 
                 else 
-                {
+                {echo "ssss";exit;
                     $course_id = $this->input->post('course_id');
                     if (!empty($course_id)) 
                     {
