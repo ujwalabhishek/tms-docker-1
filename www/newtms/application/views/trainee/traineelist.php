@@ -167,8 +167,8 @@ $this->load->model('meta_values');
                             $field[] = substr($nric_taxcode, 5);
                             ?>
                             <tr <?php if ($data['account_status'] == 'INACTIV') echo "class='danger'"; ?> >
-                                <td><a href="<?php echo base_url() . $controllerurl . 'view_trainee/' . $data['user_id']; ?>"><?php echo $field[0]; ?></a></td>
-                                <td><a href="<?php echo base_url() . $controllerurl . 'view_trainee/' . $data['user_id']; ?>"><?php echo $field[1]; ?></a></td>
+                                <!--<td><a href="<?php echo base_url() . $controllerurl . 'view_trainee/' . $data['user_id']; ?>"><?php echo $field[0]; ?></a></td>-->
+                                <td><a href="<?php echo base_url() . $controllerurl . 'view_trainee/' . $data['user_id']; ?>"><?php echo $data['tax_code']; ?></a></td>
                                 <td><?php echo ($data['country_of_residence']) ? get_catname_by_parm($data['country_of_residence']) : ''; ?></td>
                                 <td>
                                     <?php
