@@ -1455,7 +1455,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     }
                 } 
                 else 
-                {echo "ssss";exit;
+                {
                     $course_id = $this->input->post('course_id');
                     if (!empty($course_id)) 
                     {
@@ -1497,7 +1497,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     $this->form_validation->set_rules('course_reschedule_class', 'Reschedule Enrollment Class', 'required');
                     $this->form_validation->set_rules('control_6[]', 'Trainee', 'required');
                 }
-                echo $this->form_validation->run().'here';exit;
+               
                 if ($this->form_validation->run() == TRUE && !empty($reschedule_class)) 
                 {
                     $data['reschedule_classes'] = $class = $this->class->get_class_details($tenant_id, $reschedule_class);

@@ -66,7 +66,8 @@
                             <button class="search_button pull-right btn btn-xs btn-primary no-mar" name="submit" type="submit" value="Search" title="Search">
                                 <span class="glyphicon glyphicon-search"></span>
                                 Search
-                            </button></td>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
