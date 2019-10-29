@@ -1495,7 +1495,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     $this->form_validation->set_rules('course_id', 'Course', 'required');
                     $this->form_validation->set_rules('course_active_class', 'Active Enrollment Class', 'required');
                     $this->form_validation->set_rules('course_reschedule_class', 'Reschedule Enrollment Class', 'required');
-                    $this->form_validation->set_rules('control_6', 'Trainee', 'required');
+                    $this->form_validation->set_rules('control_6[]', 'Trainee', 'required');
                 }
                 if ($this->form_validation->run() == TRUE && !empty($reschedule_class)) 
                 {
@@ -1518,10 +1518,10 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 }
             } 
             elseif ($submit == 'save') 
-            {echo "a";
+            {
                 $this->form_validation->set_rules('reschedule_reason', 'Reschedule reason', 'required');
-                if ($this->form_validation->run() == TRUE) {echo "b";
-                    $result = $this->classtraineemodel->create_reschedule();echo "c";exit;
+                if ($this->form_validation->run() == TRUE) {
+                    $result = $this->classtraineemodel->create_reschedule();
                     if ($result == TRUE) {
                         $type = $this->input->post('type');
                         if ($type == 1 || $type == 4) { 
@@ -1543,7 +1543,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                         $username = rtrim($username, ', ');
                         $class = $this->class->get_class_details($tenant_id, $reschedule_class)->class_name;
                         $this->session->set_flashdata("success", "'$username' rescheduled successfully to class-'$class'.");
-                    } else {echo "f";exit;
+                    } else {
                         $this->session->set_flashdata("error", "Unable to reschedule '$username' to class-'$class'. Please try again later.");
                     }
                     redirect('class_trainee');
