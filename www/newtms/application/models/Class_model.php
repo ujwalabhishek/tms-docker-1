@@ -1678,7 +1678,7 @@ class Class_Model extends CI_Model {
         $this->db->where($array);
 
         $query = $this->db->get();
-
+echo $this->db->last_query();exit;
         $results = $query->result();
         $details = count($results) > 0 ? $results[0] : null;
         if ($details != null) {
