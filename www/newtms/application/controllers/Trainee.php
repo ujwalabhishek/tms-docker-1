@@ -1007,7 +1007,7 @@ class Trainee extends CI_Controller {
                     $trainee[$i][password] = $status['password'];
                     $trainee[$i][username] = $status['username'];
                     //////below code added by shubhranshu for displaying the userid if its notax code
-                    if($trainee[$i][nrictypeOthers] == 'NO TAX CODE'){
+                    if($trainee[$i][nrictypeOthers] == 'NO TAX CODE'){echo "notax";exit;
                         $trainee[$i][taxcode] = $status['userid_for_notax'];
                     }//////////////end of code by shubhranshu
                     $trainee[1]['db_error'] = '';
