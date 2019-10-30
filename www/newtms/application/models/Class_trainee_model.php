@@ -364,13 +364,13 @@ class Class_Trainee_Model extends CI_Model {
                 $this->db->where('epd.att_status',1);
             } else {
 
-                $this->db->get();echo $this->db->last_query().'d';exit;
+                
                 return;
             }
         }
 
         $query = $this->db->get();
-        echo $this->db->last_query();exit;
+      
         $result = $query->result_array();
 
         $grouped_by_trainee = array();
