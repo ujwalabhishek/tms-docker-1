@@ -65,8 +65,8 @@
           <?php         
           foreach($trainee_data as $k=>$data){       
         ?>
-             <?php if($k != 'flag'){?>  <!--added by shubhranshu-->
-              <tr>
+             <?php if($k != 'flag'){ print_r($data);?>  <!--added by shubhranshu-->
+<!--              <tr>
                 <td><?php echo ($data['taxcode'] ?? $data['userid']) ;?> </td>
                 <td> <?php echo ($data['CompanyCode'])?'Company':'Individual';?></td>
                 <td> <?php echo ($data['CompanyName'])?$data['CompanyName'].'('.$data['CompanyCode'].')':$data['CompanyCode'];?></td>
@@ -75,7 +75,7 @@
                 <td> <?php echo $data['firstname'];?></td>                
                 <td> <?php if($data['rowstatus'] == 'fail') echo '<font color="red" > Failed. </font>'; else echo '<font color="green"> Success. </font>';?></td>
                 <td> <?php if($data['rowstatus'] == 'fail') echo $data['failure_reason']; ?></td>
-              </tr>
+              </tr>-->
           <?php  } }?>
         </tbody>
         </table>
