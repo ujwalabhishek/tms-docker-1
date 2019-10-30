@@ -1014,7 +1014,7 @@ class Trainee extends CI_Controller {
             }
             $i++;
         }
-        //print_r($trainee);exit;
+        print_r($trainee);exit;
         return $trainee;
     }
     /*
