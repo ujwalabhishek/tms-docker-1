@@ -583,10 +583,15 @@ class Trainee extends CI_Controller {
             $trainee[$i][rowstatus] = 'fail';
             $trainee[$i]['failure_reason'] = 'Mandatory Check Fail.';
         }//// added by shubhranshu for notax code problem on 03/12/2018/////////////////
+        if($trainee[$i][taxcode] !=''){
+            if (preg_match('/\s/',$trainee[$i][taxcode])){
+                $trainee[$i]['failure_reason'] = 'White Space does not allowed in NRIC.';
+            }
+        }
         if($trainee[$i][taxcode] == '' && $trainee[$i][nrictypeOthers] != 'NO TAX CODE'){
             $trainee[$i][rowstatus] = 'fail';
             $trainee[$i]['failure_reason'] = 'Mandatory Check Fail.';
-        }
+        }//// added by shubhranshu
         if($trainee[$i][nrictype] == 'NRIC' && $trainee[$i][nrictypeOthers] != ''){
             $trainee[$i][rowstatus] = 'fail';
             $trainee[$i]['failure_reason'] = 'if others should be blank.';
