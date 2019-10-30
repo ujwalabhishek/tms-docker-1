@@ -3331,6 +3331,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             redirect("accounting/generate_invoice/");
         }
         $result = $this->get_payid_details($id, 1);
+        print_r($result);exit;
         $this->load->helper('pdf_reports_helper');
         generate_pdf_invoice($result);
     }
