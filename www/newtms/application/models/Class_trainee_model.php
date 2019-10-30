@@ -352,21 +352,21 @@ class Class_Trainee_Model extends CI_Model {
         }
 
         if ($attendance_status == 'ab') {
-            if (!empty($user_present)) {
+            //if (!empty($user_present)) {
 
                // $this->db->where_not_in('ce.user_id', $user_present);
                 $this->db->where('epd.att_status',0);
-            }
+           // }
         } else if ($attendance_status == 'pr') {
-            if (!empty($user_present)) {
+           // if (!empty($user_present)) {
 
               //  $this->db->where_in('ce.user_id', $user_present);
                 $this->db->where('epd.att_status',1);
-            } else {
+           // } else {
 
-                 $this->db->get();
-                return;
-            }
+                // $this->db->get();
+                //return;
+            //}
         }
 
         $query = $this->db->get();
@@ -524,7 +524,7 @@ class Class_Trainee_Model extends CI_Model {
         
         $result = $query->result_array();
 
-        echo $this->db->last_query();exit;
+        //echo $this->db->last_query();exit;
 
         if ($attendance_status == "ab" || $attendance_status == 'pr') {
 
