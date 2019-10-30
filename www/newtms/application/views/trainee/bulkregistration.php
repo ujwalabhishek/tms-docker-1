@@ -69,10 +69,10 @@
               <tr>
                 <td><?php 
                 if(empty($data['taxcode'])){
-                    echo $data['taxcode'];
+                    echo $data['userid'];
                     
                 }else{
-                    echo $data['userid'];} ;?> 
+                    echo $data['taxcode'];} ;?> 
                 </td>
                 <td> <?php echo ($data['CompanyCode'])?'Company':'Individual';?></td>
                 <td> <?php echo ($data['CompanyName'])?$data['CompanyName'].'('.$data['CompanyCode'].')':$data['CompanyCode'];?></td>
