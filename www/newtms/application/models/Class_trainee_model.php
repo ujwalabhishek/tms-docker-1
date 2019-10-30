@@ -352,21 +352,21 @@ class Class_Trainee_Model extends CI_Model {
         }
 
         if ($attendance_status == 'ab') {
-            //if (!empty($user_present)) {
+            //if (!empty($user_present)) {//commented by shubhranshu since its not needed
 
                // $this->db->where_not_in('ce.user_id', $user_present);
                 $this->db->where('epd.att_status',0);
-           // }
+           // }//commented by shubhranshu since its not needed
         } else if ($attendance_status == 'pr') {
-           // if (!empty($user_present)) {
+           // if (!empty($user_present)) {//commented by shubhranshu since its not needed
 
               //  $this->db->where_in('ce.user_id', $user_present);
                 $this->db->where('epd.att_status',1);
-           // } else {
+           // } else {//commented by shubhranshu since its not needed
 
-                // $this->db->get();
-                //return;
-            //}
+                // $this->db->get();//commented by shubhranshu since its not needed
+                //return;//commented by shubhranshu since its not needed
+            //} ///commented by shubhranshu since its not needed
         }
 
         $query = $this->db->get();
