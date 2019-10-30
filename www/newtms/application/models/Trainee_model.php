@@ -1166,7 +1166,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $user_name = substr($user_name,0,8);
         }
         
-        $check_username_unique = is_username_unique($user_name);
+        $check_username_unique = $this->is_username_unique($user_name);
         
         if($check_username_unique >0){
             $user_name = $user_name.'1';
