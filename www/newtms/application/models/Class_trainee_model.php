@@ -4872,6 +4872,54 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         return $result;
     }
+    
+    ///// added by shubhranshu if rec on date given backdate issue
+    public function get_invoice_paid_details_new($invoice_id, $user_id = 0) {
+
+        $mode_of_pymnt = $this->db->select('mode_of_pymnt')->from('enrol_paymnt_recd')->where('invoice_id', $invoice_id)
+                ->order_by('recd_on','DESC')
+                ->get()->row()->mode_of_pymnt;
+         $mode_of_pymnt;
+       
+        if($mode_of_pymnt=="SFC_ATO" || $mode_of_pymnt=="SFC_SELF")
+        {
+            $order='ASC';
+            //$mop=array('SFC_ATO','SFC_SELF');
+            $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE');
+        }
+        else
+        {
+              $order='DESC';
+              $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE');
+        }
+        $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
+
+                epr.mode_of_pymnt,epr.othr_mode_of_payment, epr.cheque_number,epr.sfc_claimed,epr.other_amount_recd,epr.cheque_date,
+
+                tup.first_name, tup.last_name, tup.gender');
+
+        $this->db->from('enrol_pymnt_brkup_dt epbd');
+
+        $this->db->join('enrol_paymnt_recd epr', 'epr.invoice_id=epbd.invoice_id and epr.recd_on=epbd.recd_on', 'left');
+
+        $this->db->join('tms_users_pers tup', 'tup.user_id = epbd.user_id', 'left');
+
+        $this->db->where('epbd.invoice_id', $invoice_id);
+        $this->db->where_in('epr.mode_of_pymnt',$mop);
+
+        //$this->db->order_by('epbd.recd_on',$order);
+        $this->db->order_by('epbd.trigger_date',$order);
+        if (!empty($user_id)) {
+
+            $this->db->where('epbd.user_id', $user_id);
+        }
+
+        $result = $this->db->get()->result_object();
+
+        return $result;
+    }
+    ////////////////////////
+    
 
     /*
 

@@ -2449,7 +2449,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $result->after_discount = $result->total_unit_fees - $result->total_inv_discnt - $result->total_inv_subsdy;
         }
         
-        $paid_details = $this->classtraineemodel->get_invoice_paid_details($result->invoice_id);
+        $paid_details = $this->classtraineemodel->get_invoice_paid_details_new($result->invoice_id);///modified by shubhranshu to fix the backdate issue while update payment
        //print_r($paid_details);exit;
         $paid_arr = array();
         $paid_rcd_till_date = 0;
