@@ -226,7 +226,6 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
 
             $data['tabledata'] = $CI->classtraineemodel->present_absent_attendance_list($tenant_id, $course_id, $class_id, $subsidy, $week_start_date, $week_end_date, $sort_by, $sort_order, $attendance_status, $user_present);
 
-print_r($data['tabledata']);exit;
 
         }
 
@@ -249,7 +248,7 @@ print_r($data['tabledata']);exit;
 
     $data['class_end_date'] = date('Y-m-d',strtotime($class_details->class_end_datetime));
 
-//print_r($data);exit;
+print_r($data);exit;
 
     return $data;
 
