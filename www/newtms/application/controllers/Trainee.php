@@ -582,7 +582,8 @@ class Trainee extends CI_Controller {
         if (($trainee[$i][countryofresidence] == '') || ($trainee[$i][nrictype] == '') || ($trainee[$i][nationality] == '') || ($trainee[$i][education] == '') || ($trainee[$i][firstname] == '') || ($trainee[$i][gender] == '') || ($trainee[$i][ContactNumber] == '')) {
             $trainee[$i][rowstatus] = 'fail';
             $trainee[$i]['failure_reason'] = 'Mandatory Check Fail.';
-        }//// added by shubhranshu for notax code problem on 03/12/2018/////////////////
+        }//// added by shubhranshu for notax code problem on 03/12/2018////////////////
+        print_r($trainee);exit;
         if($trainee[$i][taxcode] !=''){
             if (preg_match('/\s/',$trainee[$i][taxcode])){
                 $trainee[$i]['failure_reason'] = 'White Space does not allowed in NRIC.';
