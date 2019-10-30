@@ -5832,8 +5832,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     'othr_mode_of_payment' => $payment_type1,
                     'amount_recd' => round($net_amount, 2),
                     'sfc_claimed'  => round($sfcato_amount, 2),
-                    //'amount_recd_other'=>round($giro_amount1,2),
-                    'other_amount_recd'=>round($giro_amount1,2),
+                    //'amount_recd_other'=>round($giro_amount1,2),/// commented by shubhranshu
+                    'other_amount_recd'=>round($giro_amount1,2), 
                     'cheque_number' => NULL,
                     'cheque_date' => NULL,
                     'bank_name' => $gbank_name1,
