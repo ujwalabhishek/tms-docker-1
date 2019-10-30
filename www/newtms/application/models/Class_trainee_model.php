@@ -521,8 +521,9 @@ class Class_Trainee_Model extends CI_Model {
         }
         $query = $this->db->get(); 
 echo "AAAA";
-        $this->db->last_query(); exit;
+        
         $result = $query->result_array();
+        echo $this->db->last_query(); exit;
         
 
         if ($attendance_status == "ab" || $attendance_status == 'pr') {
