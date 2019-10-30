@@ -2407,10 +2407,10 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $tenant_details = $this->classtraineemodel->get_tenant_masters($tenant_id);
         //$result = $this->classtraineemodel->get_enroll_invoice($payid);
         $result = $this->classtraineemodel->get_enroll_individual_invoice($payid);//sk1
-        print_r($result);exit;
+        
         //added by pritam to generate previous invoice number
          $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_indvoice($payid);
-        //
+        print_r($result->previous_inv_id);exit;
         $result->invoiced_on = ($result->invoiced_on == NULL || $result->invoiced_on == '0000-00-00 00:00:00') ? '' : date('d-m-Y', strtotime($result->invoiced_on));
         
         $result->personal_address_state = rtrim($this->course->get_metadata_on_parameter_id($result->personal_address_state), ', ');
