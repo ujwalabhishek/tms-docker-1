@@ -65,7 +65,7 @@
           <?php         
           foreach($trainee_data as $k=>$data){       
         ?>
-             <?php if($k != 'flag'){ print_r($data);?>  <!--added by shubhranshu-->
+             <?php if($k != 'flag'){?>  <!--added by shubhranshu-->
               <tr>
                 <td><?php 
                 if(empty($data['taxcode'])){
