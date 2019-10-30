@@ -569,7 +569,7 @@ class Trainee extends CI_Controller {
         $is_taxcode_unique = $this->is_taxcode_unique($trainee[$i][taxcode]);
         $is_emailid_unique = $this->is_emailid_unique($trainee[$i][EmailId]);
         /////added by shubhranshu to check the restriction
-        //$is_nric_restriction = $this->traineemodel->check_nric_restriction($trainee[$i][taxcode]); // added by shubhranshu for client requirement 22/03/2019 for prevent restriction
+        $is_nric_restriction = $this->traineemodel->check_nric_restriction($trainee[$i][taxcode]); // added by shubhranshu for client requirement 22/03/2019 for prevent restriction
         ///////////////////////////////////////////////////
         if ($trainee[$i][countryofresidence] == 'IND') {
             $trainee[$i][taxcodetype] = 'PAN';
@@ -747,12 +747,12 @@ class Trainee extends CI_Controller {
             }
         } 
         /* added by shubhranshu to prevent restriction list nric on 22/03/2019*/
-//        if($is_nric_restriction > 0){
-//            $flag = 'true';
-//            $trainee['flag'] = $flag;
-//            ///$trainee[$i][rowstatus] = 'fail';
-//            //$trainee[$i]['failure_reason'] = 'NRIC Restricted.'; 
-//        }/*-------------------------------------------------------------------*/
+        if($is_nric_restriction > 0){
+            $flag = 'true';
+            $trainee['flag'] = $flag;
+            ///$trainee[$i][rowstatus] = 'fail';
+            //$trainee[$i]['failure_reason'] = 'NRIC Restricted.'; 
+        }/*-------------------------------------------------------------------*/
         return $trainee[$i];
     }
     

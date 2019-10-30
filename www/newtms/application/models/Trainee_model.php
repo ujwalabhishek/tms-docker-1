@@ -1151,6 +1151,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
              $taxcode = strtoupper($taxcode);
         }
        // /////////////////////////////////////////////////////////////
+        
         if($this->user->tenant_id == 'T02') {
             $user_name = "XPR".$taxcode;
         } else if($this->user->tenant_id == 'T03'){
@@ -1159,7 +1160,17 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $user_name = "FL".$taxcode;
         } else {
             $user_name = $taxcode;
-        }        
+        }
+        /////////below code added by shubhranshu to check & unique NRIC/////
+        if(strlen($user_name) > 13){
+            $user_name = substr($user_name,0,8);
+        }
+        
+        $check_username_unique = is_username_unique($user_name);
+        
+        if($check_username_unique >0){
+            $user_name = $user_name.'1';
+        }////////////////////////////////////ssp end///////////////////////////////////
         $tms_users_data = array(
             'tenant_id' => $this->user->tenant_id,
             'account_type' => 'TRAINE',
@@ -1271,6 +1282,10 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         $status['password'] = $password;
         $status['username'] = $user_name;
         return $status;
+    }
+    
+    public function is_username_unique($username) {
+        return $this->db->select('user_name')->get_where('tms_users', array('user_name' => $username), 1)->num_rows();
     }
     /**
      * function to deactivate trainee
