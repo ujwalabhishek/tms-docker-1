@@ -586,9 +586,10 @@ class Trainee extends CI_Controller {
         
         if($trainee[$i][taxcode] !=''){
             if (preg_match('/\s/',$trainee[$i][taxcode])){
+                $trainee[$i][rowstatus] = 'fail';
                 $trainee[$i]['failure_reason'] = 'White Space does not allowed in NRIC.';
             }
-        }print_r($trainee);exit;
+        }
         if($trainee[$i][taxcode] == '' && $trainee[$i][nrictypeOthers] != 'NO TAX CODE'){
             $trainee[$i][rowstatus] = 'fail';
             $trainee[$i]['failure_reason'] = 'Mandatory Check Fail.';
