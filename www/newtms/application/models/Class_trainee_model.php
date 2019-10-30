@@ -520,7 +520,8 @@ class Class_Trainee_Model extends CI_Model {
         $this->db->order_by('name',asc); // show all trainee in asc order
         }
         $query = $this->db->get(); 
-
+echo "AAAA";
+        $this->db->last_query(); exit;
         $result = $query->result_array();
         
 
