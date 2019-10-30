@@ -520,10 +520,10 @@ class Class_Trainee_Model extends CI_Model {
         $this->db->order_by('name',asc); // show all trainee in asc order
         }
         $query = $this->db->get(); 
-echo "AAAA";
+
         
         $result = $query->result_array();
-        echo $this->db->last_query(); exit;
+
         
 
         if ($attendance_status == "ab" || $attendance_status == 'pr') {

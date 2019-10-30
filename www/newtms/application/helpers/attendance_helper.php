@@ -226,9 +226,9 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
 
             $data['tabledata'] = $CI->classtraineemodel->present_absent_attendance_list($tenant_id, $course_id, $class_id, $subsidy, $week_start_date, $week_end_date, $sort_by, $sort_order, $attendance_status, $user_present);
 
+print_r($data['tabledata']);exit;
 
-
-                }
+        }
 
     }
 
