@@ -1007,15 +1007,13 @@ class Trainee extends CI_Controller {
                     $trainee[$i][password] = $status['password'];
                     $trainee[$i][username] = $status['username'];
                     //////below code added by shubhranshu for displaying the userid if its notax code
-                   // if($trainee[$i][nrictypeOthers] == 'NOTAXCODE'){
-                        $trainee[$i]['userid'] = $status['userid_for_notax'];
-                    //}//////////////end of code by shubhranshu
+                    $trainee[$i]['userid'] = $status['userid_for_notax'];//below code added by shubhranshu for displaying the userid if its notax code
                     $trainee[1]['db_error'] = '';
                 }
             }
             $i++;
         }
-        print_r($trainee);exit;
+        //print_r($trainee);exit;
         return $trainee;
     }
     /*
