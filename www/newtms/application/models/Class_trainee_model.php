@@ -4822,6 +4822,26 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 $result = $this->db->get()->result_object();
                 return $result;
     }
+    //// below function was added by shubhranshu to fix the sfc issue while giving the backdate
+    public function get_invoice_paid_details_indv_new($invoice_id, $user_id = 0) {
+                $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE');
+                $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
+                epr.mode_of_pymnt,epr.othr_mode_of_payment, epr.cheque_number,epr.sfc_claimed,epr.other_amount_recd,epr.cheque_date,
+                tup.first_name, tup.last_name, tup.gender');
+                $this->db->from('enrol_pymnt_brkup_dt epbd');
+                $this->db->join('enrol_paymnt_recd epr', 'epr.invoice_id=epbd.invoice_id and epr.recd_on=epbd.recd_on', 'left');
+                $this->db->join('tms_users_pers tup', 'tup.user_id = epbd.user_id', 'left');
+                $this->db->where('epbd.invoice_id', $invoice_id);
+                $this->db->where_in('epr.mode_of_pymnt',$mop);
+                $this->db->order_by('epbd.trigger_date','DESC');
+                $this->db->limit(1);
+                if (!empty($user_id)) {
+                    $this->db->where('epbd.user_id', $user_id);
+                }
+                $result = $this->db->get()->result_object();
+                return $result;
+    }
+    
     /*
 
      * function to get trainee paid details
@@ -4908,7 +4928,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $this->db->where_in('epr.mode_of_pymnt',$mop);
 
         //$this->db->order_by('epbd.recd_on',$order);
-        $this->db->order_by('epbd.trigger_date',$order);
+        $this->db->order_by('epbd.trigger_date',$order); // added by shubhranshu to fetch the latest record
         if (!empty($user_id)) {
 
             $this->db->where('epbd.user_id', $user_id);

@@ -2622,7 +2622,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $result->after_discount = $result->total_unit_fees - $result->total_inv_discnt - $result->total_inv_subsdy;
         }
         
-        $paid_details = $this->classtraineemodel->get_invoice_paid_details_indv($result->invoice_id);
+        $paid_details = $this->classtraineemodel->get_invoice_paid_details_indv_new($result->invoice_id);//// mmodified by shubhranshu to fix the sfc issue while giving backdate
        
         $paid_arr = array();
         $paid_rcd_till_date = 0;
