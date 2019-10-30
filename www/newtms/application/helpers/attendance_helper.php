@@ -178,7 +178,7 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
         $week_end_date = clone $week_start_date;
 
     $data['tabledata'] = $tabledata = $CI->classtraineemodel->get_class_trainee_list_for_attendance($tenant_id, $course_id, $class_id, $subsidy, $week_start_date, $week_end_date, $sort_by, $sort_order, $attendance_status);
-
+print_r($tabledata);exit;
 
     if ($attendance_status == 'ab' || $attendance_status == 'pr') {
 
