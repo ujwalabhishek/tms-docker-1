@@ -1667,8 +1667,8 @@ class Class_Model extends CI_Model {
      * @param $class_id
      */
     public function get_class_details_for_report($tenant_id, $course_id, $class_id) {
-        $query1 = $this->db->get();
-        echo $this->db->last_query();exit;
+        $query1 = $this->db->get();;
+        echo $this->db->last_query();exit;;
         $this->db->select('cc.tenant_id,cc.class_id, cc.class_session_day, cc.course_id, cc.class_name, cc.classroom_trainer, cc.assessor, cc.lab_trainer, c.crse_name, tm.tenant_name as company_name, cc.class_start_datetime, cc.class_end_datetime, c.crse_manager, c.competency_code, cc.total_seats');
         $this->db->select('cc.total_classroom_duration, cc.total_lab_duration, cc.assmnt_duration');
         $this->db->from('course_class cc');
