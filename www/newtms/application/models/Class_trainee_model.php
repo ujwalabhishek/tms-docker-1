@@ -364,7 +364,7 @@ class Class_Trainee_Model extends CI_Model {
                 $this->db->where('epd.att_status',1);
             } else {
 
-                
+                 $this->db->get();
                 return;
             }
         }
