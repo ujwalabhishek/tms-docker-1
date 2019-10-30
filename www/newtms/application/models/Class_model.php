@@ -1676,7 +1676,7 @@ class Class_Model extends CI_Model {
 
         $array = array('cc.tenant_id' => $tenant_id, 'cc.course_id' => $course_id, 'cc.class_id' => $class_id);
         $this->db->where($array);
-echo "aa";exit;
+
         $query = $this->db->get();
 echo $this->db->last_query();exit;
         $results = $query->result();
