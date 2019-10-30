@@ -2407,7 +2407,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $tenant_details = $this->classtraineemodel->get_tenant_masters($tenant_id);
         //$result = $this->classtraineemodel->get_enroll_invoice($payid);
         $result = $this->classtraineemodel->get_enroll_individual_invoice($payid);//sk1
-        
+        print_r($result);exit;
         //added by pritam to generate previous invoice number
          $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_indvoice($payid);
         //
