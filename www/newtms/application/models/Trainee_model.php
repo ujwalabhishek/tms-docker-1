@@ -1258,6 +1258,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $status['status'] = FALSE;
             return $status;
         }
+        
          $user_details = array('username' => $user_name,
             'email' => $EmailId, 'password' => $password,
             'firstname' => strtoupper($firstname), 'lastname' => strtoupper($lastname),
@@ -1265,9 +1266,10 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
          if(!empty($EmailId)) {
             $this->send_trainy_email($user_details, $bypassemail);
         }
+        $status['userid_for_notax'] = $user_id;// added userid by shubhranshu to fetch the user_id if notaxcode
         $status['status'] = TRUE;
         $status['password'] = $password;
-         $status['username'] = $user_name;
+        $status['username'] = $user_name;
         return $status;
     }
     /**
