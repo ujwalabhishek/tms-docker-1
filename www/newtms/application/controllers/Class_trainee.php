@@ -2450,7 +2450,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         }
         
         $paid_details = $this->classtraineemodel->get_invoice_paid_details($result->invoice_id);
-       print_r($paid_details);exit;
+       //print_r($paid_details);exit;
         $paid_arr = array();
         $paid_rcd_till_date = 0;
         //sfc_start
