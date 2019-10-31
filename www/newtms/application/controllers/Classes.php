@@ -14,7 +14,7 @@ class Classes extends CI_Controller {
         $this->load->model('class_model', 'classmodel');
         $this->load->model('course_model', 'coursemodel');
         $this->load->model('meta_values');
-        $this->data['user'] = $this->session->userdata('userDetails'); // added by shubhranshu to het the user data
+       
     }
 
     /**
