@@ -38,20 +38,20 @@
   <div class="main_container_new_top">
       <div class="container container_style">
 <div class="masthead">
-<h3 class="text-muted h3_logo"><img class="logo" src="<?php echo base_url(); ?>assets/images/biipmi.png" alt=""></h3>
-<div class="training"><img src="<?php echo base_url(); ?>assets/images/tms1.png" alt="" title="Training Management System"></div>
+<h3 class="text-muted h3_logo"><img class="logo" src="<?php //echo base_url(); ?>assets/images/biipmi.png" alt=""></h3>
+<div class="training"><img src="<?php //echo base_url(); ?>assets/images/tms1.png" alt="" title="Training Management System"></div>
 </div>
 </div>  
 <div class="container_nav_style">
     <div class="container container_row">
         <div class="row row_pushdown">
             <div class="col-md-12 cent">
-                <img src="<?php echo base_url(); ?>assets/images/access-denied.png"><br/><br/>
+                <img src="<?php //echo base_url(); ?>assets/images/access-denied.png"><br/><br/>
                 <p class="error-p">You do not have access to the page you requested.<br/>
-                    <?php if ($login_link) { ?>
-                        <a href="<?php echo base_url() . 'login'; ?>">Please login</a></p>
-                <?php } else { ?>
-                    <a href="<?php echo base_url(); ?>">Home</a></p>
+                    <?php //if ($login_link) { ?>
+                        <a href="<?php //echo base_url() . 'login'; ?>">Please login</a></p>
+                <?php //} else { ?>
+                    <a href="<?php //echo base_url(); ?>">Home</a></p>
                 <?php } ?>
             </div>
         </div>
@@ -60,7 +60,7 @@
       <hr>
 <footer>
 <p><span>powered by biipmi</span></p>
-    <?php $this->load->view('common/login_footer'); ?>
+    <?php ///$this->load->view('common/login_footer'); ?>
 </footer>
     </div>
 </div>-->
