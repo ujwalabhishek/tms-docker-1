@@ -801,7 +801,7 @@ class Class_Model extends CI_Model {
      * this function get classes in a course
      */
     public function get_course_class($tenantId, $courseId, $mark_attendance = NULL, $is_allclass = 0,$classTrainee=0) {
-        echo 'a';print_r($this->sess_user);exit;
+        
         $this->db->select('class_id,class_name');
         $this->db->from('course_class');
         $this->db->where('tenant_id', $tenantId);
@@ -809,11 +809,11 @@ class Class_Model extends CI_Model {
         if (empty($is_allclass)) {
              $this->db->where('class_status !=', 'INACTIV');
         }
-        if ($this->data['user']->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
+        if ($this->sess_user->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
             $this->traineelist_querychange();
         }
-         if ($this->data['user']->role_id == 'TRAINER') {
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",classroom_trainer) !=", 0);
+         if ($this->sess_user->role_id == 'TRAINER') {
+            $this->db->where("FIND_IN_SET(" . $this->sess_user->user_id . ",classroom_trainer) !=", 0);
         }
         $this->db->order_by("DATE(class_start_datetime)", "DESC"); // added for class start date based sorting on Nov 24 2014.
         $query = $this->db->get();   
