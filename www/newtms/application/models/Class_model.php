@@ -801,7 +801,7 @@ class Class_Model extends CI_Model {
      * this function get classes in a course
      */
     public function get_course_class($tenantId, $courseId, $mark_attendance = NULL, $is_allclass = 0,$classTrainee=0) {
-        print_r($this->data['user']);exit;
+        echo 'a';print_r($this->data);exit;
         $this->db->select('class_id,class_name');
         $this->db->from('course_class');
         $this->db->where('tenant_id', $tenantId);
