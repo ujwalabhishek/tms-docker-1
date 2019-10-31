@@ -52,7 +52,7 @@
                         <a href="<?php //echo base_url() . 'login'; ?>">Please login</a></p>
                 <?php //} else { ?>
                     <a href="<?php //echo base_url(); ?>">Home</a></p>
-                <?php } ?>
+                <?php //} ?>
             </div>
         </div>
     </div>
