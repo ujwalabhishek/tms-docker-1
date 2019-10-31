@@ -9,7 +9,6 @@ class Class_Model extends CI_Model {
     public function __construct() {
         parent::__construct();
         $this->load->helper('common');
-         $this->data['user'] = $this->session->userdata('userDetails'); // added by shubhranshu to het the user data
     }
 
     /**
@@ -801,7 +800,6 @@ class Class_Model extends CI_Model {
      * this function get classes in a course
      */
     public function get_course_class($tenantId, $courseId, $mark_attendance = NULL, $is_allclass = 0,$classTrainee=0) {
-        echo $this->data['user']->role_id.'-e';exit;
         $this->db->select('class_id,class_name');
         $this->db->from('course_class');
         $this->db->where('tenant_id', $tenantId);

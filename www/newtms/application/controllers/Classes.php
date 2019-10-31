@@ -739,7 +739,7 @@ class Classes extends CI_Controller {
      * this function to get course classes on change json
      */
     public function get_course_classes_json() {
-        
+        $data['sideMenuData'] = fetch_non_main_page_content();
         $tenantId = $this->tenant_id;
         $courseId = $this->input->post('course_id');
         $mark_attendance = $this->input->post('mark_attendance');
