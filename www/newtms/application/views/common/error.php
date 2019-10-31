@@ -167,7 +167,7 @@ span.psw {
             <div class="container_nav_style">
                 <div class="container container_row">
                     <div class="row row_pushdown">
-                        <div class="col-md-12 col_10_height_other" style='height: 520px;'>
+                        <div class="col-md-12 col_10_height_other">
                             <div class="makecenter" style="margin: 0px auto 0;">
                                 <div class="bs-example">
                                     <!--<h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>-->
