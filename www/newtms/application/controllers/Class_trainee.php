@@ -1362,11 +1362,30 @@ if (!empty($tenant_details->tenant_contact_num)) {
         }
     }
 
-
+    ////// below function added by shubhranshu to speed up the re-schedule form
+    public function reschedule_company_json(){
+        $tenant_id = $this->tenant_id;
+        $companies = $this->company->get_activeuser_companies_for_tenant($tenant_id, 1);
+        if ($companies) {
+            foreach ($companies as $row) {
+                $comp['company'][] = array(
+                    'key' => $row->company_id,
+                    'label' => $row->company_name,
+                );
+            }
+        }
+        
+        echo json_encode($comp);
+        exit();
+    }
+    
+    
     /*
      * This function loads the Re-Schedule form.
      */
-
+    
+    
+    
     public function re_schedule() 
     {
         //$this->output->enable_profiler(true);
