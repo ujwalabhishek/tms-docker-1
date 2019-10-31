@@ -18,10 +18,10 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
 
     $data['subsidy'] = $subsidy;
 
-    if (!empty($course_id)) {echo $course_id;
+    if (!empty($course_id)) {
 
         $data['classes'] = $CI->class->get_course_class($tenant_id, $course_id, 'mark_attendance',1,'classTrainee');
-print_r($data['classes']);exit;
+
         if (!empty($class_id)) {
 
             $class_details = $CI->class->get_class_by_id($tenant_id, $course_id, $class_id);
