@@ -10,6 +10,31 @@
     <link href="<?php echo base_url(); ?>assets/css/glyphicons.css" rel="stylesheet">      
   </head>
   <body>
+  <div class="container-fluid bg-3 text-center header-box">
+    <div class="containers">
+        <div class="row">
+            <div class="col-sm-2">
+               <a href="<?php echo base_url()?>" class='pull-left'>
+                <img class="logo" src="<?php echo base_url()?>logos/t01.png" border="0">
+                </a>
+            </div>
+            <div class="col-sm-7 header-ttl"><p>TRAINING MANAGEMENT SYSTEM</p></div>
+            <div class="col-sm-3" style='font-size:34px'>
+                <a title="Join Now" href="<?php echo site_url(); ?>login/administrator" class="btn btn-sm btn-primary"><span style='color:white'>Admin Login<span class="glyphicon glyphicon-chevron-right"></span></span> </a>
+                <a title="Join Now" href="<?php echo site_url(); ?>course_public/class_member_check" class="btn btn-sm btn-primary"><span style='color:white'>Trainee LogIn<span class="glyphicon glyphicon-chevron-right"></span></span> </a>
+            </div>
+        </div>
+    </div>
+    <div style="clear:both;"></div>
+    <hr>
+    <footer>
+    <!--<p><span>powered by biipmi</span></p>-->
+        <?php $this->load->view('common/login_footer'); ?>
+    </footer>
+</div>
+      
+      
+<!--      
   <div class="main_container_new_top">
       <div class="container container_style">
 <div class="masthead">
@@ -17,27 +42,28 @@
 <div class="training"><img src="<?php echo base_url(); ?>assets/images/tms1.png" alt="" title="Training Management System"></div>
 </div>
 </div>  
-	  <div class="container_nav_style">
-<div class="container container_row">
-      <div class="row row_pushdown">
-      <div class="col-md-12 cent">
-       <img src="<?php echo base_url(); ?>assets/images/access-denied.png"><br/><br/>
-      <p class="error-p">You do not have access to the page you requested.<br/>
-          <?php if ($login_link) {?>
-        <a href="<?php echo base_url() . 'login'; ?>">Please login</a></p>
-          <?php } else { ?>
-        <a href="<?php echo base_url(); ?>">Home</a></p>
-          <?php } ?>
-       </div>
-       </div>
-      </div>
+<div class="container_nav_style">
+    <div class="container container_row">
+        <div class="row row_pushdown">
+            <div class="col-md-12 cent">
+                <img src="<?php echo base_url(); ?>assets/images/access-denied.png"><br/><br/>
+                <p class="error-p">You do not have access to the page you requested.<br/>
+                    <?php if ($login_link) { ?>
+                        <a href="<?php echo base_url() . 'login'; ?>">Please login</a></p>
+                <?php } else { ?>
+                    <a href="<?php echo base_url(); ?>">Home</a></p>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
 <div style="clear:both;"></div>
       <hr>
 <footer>
-<p><span>powered by dummy</span></p>
+<p><span>powered by biipmi</span></p>
+    <?php $this->load->view('common/login_footer'); ?>
 </footer>
     </div>
-</div>
+</div>-->
 <div class="modal" id="ex1" style="display:none;">
   <h2 class="panel_heading_style">Heading Goes Here...</h2>
   Detail Goes here.  <br>
