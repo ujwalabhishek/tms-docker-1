@@ -819,6 +819,7 @@ class Class_Model extends CI_Model {
         foreach ($query->result() as $row) {
             $result[$row->class_id] = $row->class_name;
         }
+        echo $this->db->last_query();exit;
         return $result;
     }
 
