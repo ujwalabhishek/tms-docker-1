@@ -175,7 +175,7 @@ $pageurl = 'TMSAdmin/'. $controllerurl;
                     <a href="javascript:void(0)" class="small_text1" id='displayText1'>
                         <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>                
                         <div id="alertmsg" style="display: none;color:#ff0000;padding:5px">Please Select One of the above filter to export PDF/XLS.</div>
-                        <br/> 
+                       
                     <br/>
                 </div>
             <?php }?>
