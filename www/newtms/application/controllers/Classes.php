@@ -738,6 +738,7 @@ class Classes extends CI_Controller {
      * this function to get course classes on change json
      */
     public function get_course_classes_json() {
+        $data['user'] = $this->session->userdata('userDetails'); // added by shubhranshu to het the user data
         $tenantId = $this->tenant_id;
         $courseId = $this->input->post('course_id');
         $mark_attendance = $this->input->post('mark_attendance');
