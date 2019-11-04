@@ -1140,44 +1140,48 @@ if (!empty($tenant_details->tenant_contact_num)) {
         if ($this->input->post('upload')) {
             
             $check_invoice = $this->classtraineemodel->check_if_invoice_paid($company,$course,$class);
-            
-            $config['upload_path'] = './uploads/';
-            $config['allowed_types'] = '*';
-            $config['max_size'] = '2048';
-            $config['max_width'] = '1024';
-            $config['max_height'] = '768';
+            if(!empty($check_invoice)){
+                $this->session->set_flashdata('error', 'You can not enroll to this class since the invoice is paid/partpaid.');
+            }else{
+                $config['upload_path'] = './uploads/';
+                $config['allowed_types'] = '*';
+                $config['max_size'] = '2048';
+                $config['max_width'] = '1024';
+                $config['max_height'] = '768';
 
-            $this->load->library('upload', $config);
+                $this->load->library('upload', $config);
 
-            if (!$this->upload->do_upload()) {
-                $data['error'] = $this->upload->display_errors();
-            } else {
-                $data = $this->upload->data();
-                $this->load->library('excel_reader');
-                $this->excel_reader->setOutputEncoding('CP1251');
-                $read_perm = $this->excel_reader->read($data['full_path']);
-                if ($read_perm == 'FALSE') {
-                    $data['error'] = 'File is not readable.';
+                if (!$this->upload->do_upload()) {
+                    $data['error'] = $this->upload->display_errors();
                 } else {
-                    $excel_data = $this->excel_reader->sheets[0][cells];
-                    $class_detail = $this->class->get_class_details($tenant_id, $class);
-                    $trainee = $this->validate_bulk_enroll($excel_data, $class, $course, $company, $salesexec, $class_detail);
-                    
-                    if (!empty($trainee)) {
-                        $data['details'] = $trainee;
-                        //print_r($data);exit;
-                        $this->load->helper('export');
-                        $files = write_import_enroll_status($trainee, $company);
-                        $filesa = write_import_enroll_statussuccess($trainee, $company);
-                        $filesb = write_import_enroll_statusfailure($trainee, $company);
+                    $data = $this->upload->data();
+                    $this->load->library('excel_reader');
+                    $this->excel_reader->setOutputEncoding('CP1251');
+                    $read_perm = $this->excel_reader->read($data['full_path']);
+                    if ($read_perm == 'FALSE') {
+                        $data['error'] = 'File is not readable.';
                     } else {
-                        $data['error'] = $this->class_error_msg;
-                    }
-                    
-                    unlink('./uploads/' . $data['file_name']);
+                        $excel_data = $this->excel_reader->sheets[0][cells];
+                        $class_detail = $this->class->get_class_details($tenant_id, $class);
+                        $trainee = $this->validate_bulk_enroll($excel_data, $class, $course, $company, $salesexec, $class_detail);
 
+                        if (!empty($trainee)) {
+                            $data['details'] = $trainee;
+                            //print_r($data);exit;
+                            $this->load->helper('export');
+                            $files = write_import_enroll_status($trainee, $company);
+                            $filesa = write_import_enroll_statussuccess($trainee, $company);
+                            $filesb = write_import_enroll_statusfailure($trainee, $company);
+                        } else {
+                            $data['error'] = $this->class_error_msg;
+                        }
+
+                        unlink('./uploads/' . $data['file_name']);
+
+                    }
                 }
             }
+            
         }
        
         $data['courses'] = $disp_courses;
