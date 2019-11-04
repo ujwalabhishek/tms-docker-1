@@ -1492,7 +1492,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                                 $data['course_active_enroll_class'][$k] = $v;
                             }
                         }
-                        print_r($active_enroll_class);print_r($data['course_active_enroll_class']);exit;
+                       
                         $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $course_id, '');
                         foreach ($reschedule_enroll_class as $k => $row) {
                             if ($row->class_pymnt_enrol == 'PDENROL') {
