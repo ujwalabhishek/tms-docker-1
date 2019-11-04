@@ -2018,7 +2018,7 @@ class Class_Trainee_Model extends CI_Model {
 
      */
     public function get_active_course_classenroll_list_by_tenant($tenantId) {
-
+        $this->db->cache_on();
         $cur_date = date('Y-m-d');
 
         $this->db->select('c.course_id, c.crse_name');

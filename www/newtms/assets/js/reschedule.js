@@ -31,24 +31,7 @@ $(document).ready(function() {
             } else if ($val == 2) {
                 $('#row_dim').show();
             } else if ($val == 3) {
-                
                 $('#row_dim3').show();
-//                $company = $('#company');
-//                $.ajax({
-//                        type: 'post',
-//                        url: $siteurl + '/class_trainee/reschedule_company_json',
-//                        dataType: "json",
-//                        beforeSend: function() {
-//                            $company.html('<option value="">Select</option>');
-//                        },
-//                        success: function(res) {
-//                            $.each(res.company, function(i, item) {
-//                                
-//                                $company.append('<option value="' + item.key + '">' + item.label + '</option>');
-//                            });
-//                        }
-//                    });
-
             }else if ($val == 4) { 
                 $('#row_dim4').show();
             }
