@@ -1141,7 +1141,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             ////////below added by shubhranshu to prevent enrol for invoice paid/partpaid company///////start////
             $check_invoice = $this->classtraineemodel->check_if_invoice_paid($company,$course,$class);
             if(!empty($check_invoice)){
-                $this->session->set_flashdata('error', 'You can not enroll to this class since the invoice is paid/partpaid.');
+                $this->session->set_flashdata('error', 'You can not enroll to this class since the invoice is Already paid/partpaid.');
             }else{//////////shubhranshu code end////////////////////////////////////
                 $config['upload_path'] = './uploads/';
                 $config['allowed_types'] = '*';

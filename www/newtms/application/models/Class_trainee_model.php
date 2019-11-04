@@ -12760,6 +12760,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
       * 
       * 
       */
+        ////below code added by shubhranshu to check if the invoice is  paid/partpaid
      public function check_if_invoice_paid($company,$course,$class){
         
         $this->db->select('pymnt_due_id');
@@ -13986,20 +13987,25 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
             $payment_id_arr[] = $payment['pymnt_due_id'];
         }
-
-        $paid_array = $this->db->select('pymnt_due_id')->from('class_enrol')
+        if(!empty($payment_id_arr)){////added by shubhranshu tp prvent query error while payment_due_id not exist///
+            $paid_array = $this->db->select('pymnt_due_id')->from('class_enrol')
                 ->where('class_id', $class_id)
                 ->where_in('payment_status', array("PARTPAID", "PAID"))
                 ->where_in('pymnt_due_id', $payment_id_arr)
                 ->get();
+            if ($paid_array->num_rows() > 0) {
 
-        if ($paid_array->num_rows() > 0) {
+                return array('status' => 'PAID');
+            } else {
 
-            return array('status' => 'PAID');
-        } else {
-
-            return array('status' => 'NOTPAID');
+                return array('status' => 'NOTPAID');
+            }
+        }else{
+            return FALSE;
         }
+        
+
+        
     }
 
     /**
