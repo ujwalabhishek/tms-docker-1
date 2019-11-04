@@ -1138,11 +1138,11 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $salesexec = $this->input->post('salesexec');
 
         if ($this->input->post('upload')) {
-            
+            ////////below added by shubhranshu to prevent enrol for invoice paid/partpaid company///////start////
             $check_invoice = $this->classtraineemodel->check_if_invoice_paid($company,$course,$class);
             if(!empty($check_invoice)){
                 $this->session->set_flashdata('error', 'You can not enroll to this class since the invoice is paid/partpaid.');
-            }else{
+            }else{//////////shubhranshu code end////////////////////////////////////
                 $config['upload_path'] = './uploads/';
                 $config['allowed_types'] = '*';
                 $config['max_size'] = '2048';
