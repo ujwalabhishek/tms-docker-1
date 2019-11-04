@@ -12757,6 +12757,21 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         }
       
      /* ends * /
+      * 
+      * 
+      */
+     public function check_if_invoice_paid($company,$course,$class){
+        
+        $this->db->select('pymnt_due_id');
+        $this->db->from('class_enrol');        
+        $this->db->where('tenant_id', $this->tenant_id);        
+        $this->db->where('company_id', $company);  
+        $this->db->where('course_id', $course);  
+        $this->db->where('class_id', $class);    
+        $this->db->where('payment_status', 'PAID'); 
+        $this->db->where("(payment_status='PAID' OR payment_status='PARTPAID')", NULL,FALSE);
+        print_r($this->db->get()->row());exit;
+     }
     /**
 
      * This method returns the payment not required data.

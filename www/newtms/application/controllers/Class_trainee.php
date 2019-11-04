@@ -1138,7 +1138,9 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $salesexec = $this->input->post('salesexec');
 
         if ($this->input->post('upload')) {
-
+            
+            $check_invoice = $this->classtraineemodel->check_if_invoice_paid($company,$course,$class);
+            
             $config['upload_path'] = './uploads/';
             $config['allowed_types'] = '*';
             $config['max_size'] = '2048';
