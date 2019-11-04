@@ -323,7 +323,7 @@
                             foreach ($course_active_enroll_class as $k => $v) {
                                 $active_options[$k] = $v;
                             }
-                            $default = explode(',',$this->input->post('course_active_class'))[0];///added by shubhranshu since zero is coming
+                            $default = $this->input->post('course_active_class').',0';///added by shubhranshu since zero is coming
                             echo form_dropdown('course_active_class', $active_options, $default, $aactive_js);
                             ?>
                             <span id="course_active_class_err"></span>
@@ -339,7 +339,7 @@
                             foreach ($course_reschedule_enroll_class as $k => $v) {
                                 $reschedule_options[$k] = $v;
                             }
-                            $default = explode(',',$this->input->post('course_reschedule_class'))[0];////added by shubhranshu since zero is coming
+                            $default = $this->input->post('course_reschedule_class').',0';////added by shubhranshu since zero is coming
                             echo form_dropdown('course_reschedule_class', $reschedule_options, $default, $reschedule_js);
                             ?>
                             <span id="course_reschedule_class_err"></span>
