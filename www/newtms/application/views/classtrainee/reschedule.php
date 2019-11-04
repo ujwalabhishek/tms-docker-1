@@ -186,7 +186,7 @@
                     <div class="border_div">
                         <?php
                         if ($active_enroll_class) 
-                        {
+                        {print_r($active_enroll_class);exit;
                             foreach ($active_enroll_class as $k => $v) 
                             {
                                 if($active_enroll_lock_att_status[$k]==1)
