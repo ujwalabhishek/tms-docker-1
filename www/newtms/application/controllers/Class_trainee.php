@@ -1419,7 +1419,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                         $data['active_enroll_course_id'] = get_course_id($active_enroll_class);
                         $data['active_enroll_lock_att_status'] = get_active_class_att_status($active_enroll_class);
                         $active_enroll_class_id = get_class_id($active_enroll_class);
-                        $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $active_enroll_course_id, $active_enroll_class_id);
+                        $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $data['active_enroll_course_id'], $active_enroll_class_id);
                         foreach ($reschedule_enroll_class as $k => $row) {
                             if ($row->class_pymnt_enrol == 'PDENROL') {
                                 $totalbooked = $this->class->get_class_booked($row->course_id, $row->class_id, $this->tenant_id);
