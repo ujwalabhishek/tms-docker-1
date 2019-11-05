@@ -3132,7 +3132,7 @@ end for payment period*/
 
         $this->db->group_by('ce.user_id');
 
-        $this->db->limit(200);
+        //$this->db->limit(200);
 
         $results = $this->db->get()->result();
 
