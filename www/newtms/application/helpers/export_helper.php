@@ -3774,7 +3774,7 @@ function generate_soa_report_csv($tabledata, $metadata) {
         fputcsv($output, $data);
     }
    exit;
-    //return;
+    //return; commented by shubhranshu since html are coming in csv file
 }
 
 /**

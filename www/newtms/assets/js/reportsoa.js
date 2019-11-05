@@ -48,6 +48,13 @@ $(document).ready(function() {
             $('.search_but').show();
         }
     });
+    
+    $('#classId').change(function() {
+         $('.print_soa_report').html("Print");
+         $('.submit_but').prop("disabled", false);
+         $('.submit_but').html("<span class='btn btn-xs btn-primary no-mar submit_but'></span>Export");
+    });
+    
     $('#courseId').change(function() {
         $('#classId').attr('disabled', 'disabled');
         $('#status').val('');
