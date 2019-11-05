@@ -3773,8 +3773,8 @@ function generate_soa_report_csv($tabledata, $metadata) {
         }
         fputcsv($output, $data);
     }
-    print_r($data);exit;
-    return;
+   exit;
+    //return;
 }
 
 /**
