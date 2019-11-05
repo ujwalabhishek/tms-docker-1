@@ -3099,7 +3099,7 @@ end for payment period*/
         return $this->db->get()->row();
     }
      //add by pritam
-    public function trainee_getAutoCompleteTrainee_List($taxcode, $tenantID, $courseID = 0, $classID = 0,$comp_id) 
+    public function trainee_getAutoCompleteTrainee_List($trainee, $tenantID, $courseID = 0, $classID = 0,$comp_id) 
    {
       //  $this->output->enable_profiler(TRUE);
         $taxcode = trim($taxcode);
@@ -3128,15 +3128,17 @@ end for payment period*/
             $this->db->where("ce.class_id", $classID);
         }
 
-        $this->db->like('usr.tax_code', $taxcode, 'both');
+        //$this->db->like('usr.tax_code', $taxcode, 'both'); commented by shubhranshu
+        
+        $this->db->like('pers.first_name', $trainee, 'both');/////added by shubhranshu since we are searching for trainee name
 
         $this->db->group_by('ce.user_id');
 
-        //$this->db->limit(200);
+        $this->db->limit(200);
 
         $results = $this->db->get()->result();
 
-echo $this->db->last_query();exit;
+
 
         return $results;
     }
