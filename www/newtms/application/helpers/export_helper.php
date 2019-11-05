@@ -3767,11 +3767,13 @@ function generate_soa_report_csv($tabledata, $metadata) {
     fputcsv($output, $column_title);
     foreach ($data_arr as $data) {
         foreach ($data as $key => $value) {
-            if (!empty($value))
+            if (!empty($value)){
                 $data[$key] = '"' . $value . '"';
+            }
         }
         fputcsv($output, $data);
     }
+    print_r($data);exit;
     return;
 }
 
