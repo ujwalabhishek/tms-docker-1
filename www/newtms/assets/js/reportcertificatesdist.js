@@ -326,6 +326,7 @@ $(document).ready(function() {
         var taxcode = $('#taxcode').val().trim();
         var courseid = $('#courseId').val().trim();
         var trainee_id = $('#trainee_id').val();
+        var company = $('#company_name').val();
         if (trainee.length > 0 && trainee_id.length == 0) {
             disp_err('#trainee', 'Select from auto-help');
             retval = false;
@@ -333,7 +334,7 @@ $(document).ready(function() {
             remove_err('#trainee');
         }
         ///////added by shubhranshu to vaildate search operation////////////////
-        if(trainee == '' && courseid == '' && taxcode == ''){
+        if(trainee == '' && courseid == '' && taxcode == '' && company == ''){
                 $('#company_name_err').addClass('error').text('Oops!..Please select atleast one filter to perform search operation');
                 retval = false;
             }else{

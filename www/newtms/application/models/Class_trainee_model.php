@@ -2076,7 +2076,8 @@ class Class_Trainee_Model extends CI_Model {
 
         if (!empty($course_ids)) {
 
-            $this->db->where_in('cc.course_id', $course_ids);
+            ///$this->db->where('cc.course_id', $course_ids);commented by shubhranshu
+            $this->db->where_in('cc.course_id', $course_ids);/////added by shubhranshu to show only the enrolled course id list
         }
 
         $this->db->order_by("date(cc.class_start_datetime)");
