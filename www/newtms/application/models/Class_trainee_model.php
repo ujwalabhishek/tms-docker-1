@@ -2056,7 +2056,7 @@ class Class_Trainee_Model extends CI_Model {
      * function to get reschedule class details
 
      */
-    public function get_reschedule_class_enrol($tenant_id, $course_id, $active_ids) {
+    public function get_reschedule_class_enrol($tenant_id, $course_ids, $active_ids) {
 
         $cur_date = date('Y-m-d');
 
@@ -2074,9 +2074,9 @@ class Class_Trainee_Model extends CI_Model {
             $this->db->where_not_in('cc.class_id', $active_ids);
         }
 
-        if (!empty($course_id)) {
+        if (!empty($course_ids)) {
 
-            $this->db->where('cc.course_id', $course_id);
+            $this->db->where_in('cc.course_id', $course_ids);
         }
 
         $this->db->order_by("date(cc.class_start_datetime)");

@@ -323,7 +323,7 @@
                             foreach ($course_active_enroll_class as $k => $v) {
                                 $active_options[$k] = $v;
                             }
-                            $default = $this->input->post('course_active_class').',0';///added by shubhranshu since zero is coming
+                            $default = $this->input->post('course_active_class').',0';///added by shubhranshu since zero is coming for default
                             echo form_dropdown('course_active_class', $active_options, $default, $aactive_js);
                             ?>
                             <span id="course_active_class_err"></span>
