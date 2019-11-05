@@ -52,7 +52,7 @@ $(document).ready(function() {
     $('#classId').change(function() {
          $('.print_soa_report').html("Print");
          $('.submit_but').prop("disabled", false);
-         $('.submit_but').html("<span class='btn btn-xs btn-primary no-mar submit_but'></span>Export");
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span>Export");
     });
     
     $('#courseId').change(function() {
