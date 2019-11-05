@@ -3136,7 +3136,7 @@ end for payment period*/
 
         $results = $this->db->get()->result();
 
-
+echo $this->db->last_query();exit;
 
         return $results;
     }
