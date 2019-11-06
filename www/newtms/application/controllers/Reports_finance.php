@@ -196,6 +196,7 @@ class Reports_finance extends CI_Controller {
         $field = ($this->input->get('f')) ? $this->input->get('f') : 'ei.invoice_id';
         $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
         $query = $this->reportsModel->get_all_invoice_data($tenant_id, NULL, NULL, $field, $order_by, NULL, NULL, NULL, NULL, -1);
+        print_r($query);exit;
         $this->load->helper('pdf_reports_helper');
         return invoice_report_PDF($query, $tenant_details);
     }
