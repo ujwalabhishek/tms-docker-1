@@ -2,6 +2,7 @@
  * This js file includes in reports Certificates page
  */
 $(document).ready(function() {
+    $('#invoice').attr('disabled', 'disabled');
     $("#start_date").datepicker({
         dateFormat: 'dd-mm-yy',
         changeMonth: true,

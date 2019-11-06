@@ -1,6 +1,6 @@
 <?php $check_startdate = $this->input->get('start_date'); ?>
 <script>
-    $('#invoice').attr('disabled', 'disabled');
+    
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
     $get_startdate = '<?php echo $start_date; ?>';
