@@ -247,8 +247,10 @@ class accounting extends CI_Controller {
             $sales_exec = $this->input->get('salesexec');
             if (!empty($sales_exec)) {
                 $comm_due = $this->classModel->get_commission_payment_due($tenant_id, $sales_exec);
+                
                 $data['comm_due'] = $comm_due;
                 $data['paid_details'] = $this->classModel->get_commission_payment($tenant_id, $sales_exec);
+                print_r($comm_due);print_r($data['paid_details']);exit;
             }
         }
         $data['page_title'] = 'Accounting';
