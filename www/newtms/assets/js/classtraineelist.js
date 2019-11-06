@@ -143,7 +143,22 @@ $(document).ready(function() {
             }else{
                 $('#company_name_err').removeClass('error').text('');
         }
+        check_remove_id();
         return $retval;
+    }
+    function check_remove_id(){
+        $comp = $('#company_name').val();
+        $taxcode = $('#taxcode').val();
+        $trainee_name = $('#trainee').val();
+        if($comp == ''){
+           $('#company_id').val(''); 
+        }
+        if($taxcode == ''){
+           $('#taxcode_id').val(''); 
+        }
+        if($trainee_name == ''){
+           $('#trainee_id').val(''); 
+        }
     }
     function trigger_ajax() {
         $subsidy_amount = $('#subsidy_amount').val();

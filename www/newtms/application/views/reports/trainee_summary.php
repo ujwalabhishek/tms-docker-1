@@ -1,18 +1,19 @@
 <?php $check_startdate = $this->input->get('start_date'); 
 ?>
 <script>
+    //////below code added by shubhranshu
     $(document).ready(function() {
         $train = '<?php echo $this->input->get('trainee');?>';
         $invoice11 = '<?php echo $this->input->get('invoice');?>';
-        if($train !=''){alert('t');
+        if($train !=''){
             $('#invoice').attr('disabled', 'disabled');
-        }else if($invoice11 !=''){alert('j');
+        }else if($invoice11 !=''){
             $('#trainee').attr('disabled', 'disabled');
-        }else{alert('d');
+        }else{
             $('#invoice').attr('disabled', 'disabled');
         }  
     });
-    
+    /////////////////////////////end////////////////
     
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
