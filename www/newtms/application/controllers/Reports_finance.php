@@ -189,6 +189,7 @@ class Reports_finance extends CI_Controller {
      * @return type
      */
     public function invoice_export_PDF() {
+        ini_set('memory_limit','-1');
         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
         $tenant_details = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $tenant_details->tenant_state = rtrim($this->courseModel->get_metadata_on_parameter_id($tenant_details->tenant_state), ', ');
