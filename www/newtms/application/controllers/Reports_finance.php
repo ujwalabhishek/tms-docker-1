@@ -190,6 +190,7 @@ class Reports_finance extends CI_Controller {
      */
     public function invoice_export_PDF() {
         ini_set('memory_limit','-1');
+        ini_set('max_execution_time', 300);
         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
         $tenant_details = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $tenant_details->tenant_state = rtrim($this->courseModel->get_metadata_on_parameter_id($tenant_details->tenant_state), ', ');
@@ -199,7 +200,7 @@ class Reports_finance extends CI_Controller {
         $query = $this->reportsModel->get_all_invoice_data($tenant_id, NULL, NULL, $field, $order_by, NULL, NULL, NULL, NULL, -1);
         
         $this->load->helper('pdf_reports_helper');
-         invoice_report_PDF($query, $tenant_details);exit;
+         return invoice_report_PDF($query, $tenant_details);
     }
 
     /**
