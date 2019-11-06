@@ -65,6 +65,7 @@
                         echo form_input($data);
                         ?>
                         <span id="trainee_err"></span>
+                        <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                     </td>                
                        <td class="td_heading">&nbsp;&nbsp;
                       <?php
@@ -96,7 +97,7 @@
                         echo form_input($data1);
                         ?>
                         <span id="invoice_err"></span>
-                        <div style='color:blue; font-size:10px;'>Enter minimum of 5 characters to search</div>
+                        <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                     </td>   
                     <td class="td_heading">
                     <input type="hidden"  name="start_date" id="start_date" placeholder="dd/mm/yyyy" value="<?php echo $this->input->get('start_date'); ?>">
