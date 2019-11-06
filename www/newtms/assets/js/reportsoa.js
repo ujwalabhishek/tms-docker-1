@@ -48,18 +48,20 @@ $(document).ready(function() {
             $('.search_but').show();
         }
     });
-    
+    ///////below code added by shubhranshu to prevent disable of button
     $('#classId').change(function() {
          $('.print_soa_report').html("Print");
          $('.submit_but').prop("disabled", false);
          $('.submit_but').html("<span class='glyphicon glyphicon-search'></span>Export");
     });
-    
+    ////////code end//////////////////////////
     $('#courseId').change(function() {
         $('#classId').attr('disabled', 'disabled');
         $('#status').val('');
         $('#trainee').val('');
         $('#trainee_id').val('');
+         $('.submit_but').prop("disabled", false);///added by shubhranshu to prevent disable of button
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span>Export");///added by shubhranshu to prevent disable of button
         $courseId = $('#courseId').val();
         if ($courseId.length > 0) {
             $.ajax({
