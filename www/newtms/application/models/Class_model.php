@@ -73,7 +73,7 @@ class Class_Model extends CI_Model {
                         ->order_by('scd.comm_period_mth', 'ASC')
                         ->group_by('scd.pymnt_due_id')
                         ->get()->result_object();
-        echo $this->db->last_query();exit;
+        //echo $this->db->last_query();exit;
         return $result;
     }
 
