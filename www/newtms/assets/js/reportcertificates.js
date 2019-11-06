@@ -97,7 +97,8 @@ $(document).ready(function() {
             $div = $('#trainee');
         } else if ($val == 2) {
             $div = $('#invoice');
-	   //$div = $('#status'); commented by shubhranshu since invoice disabled
+	   $div1 = $('#status');
+           $div1.removeAttr('disabled');
         }
         $div.removeAttr('disabled');
     });
