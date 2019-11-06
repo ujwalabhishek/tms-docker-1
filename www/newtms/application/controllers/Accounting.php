@@ -250,7 +250,7 @@ class accounting extends CI_Controller {
                 
                 $data['comm_due'] = $comm_due;
                 $data['paid_details'] = $this->classModel->get_commission_payment($tenant_id, $sales_exec);
-                print_r($comm_due);print_r($data['paid_details']);exit;
+                
             }
         }
         $data['page_title'] = 'Accounting';
