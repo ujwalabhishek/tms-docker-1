@@ -2,8 +2,8 @@
 ?>
 <script>
     $(document).ready(function() {
-        $train = <?php $this->input->get_post("trainee_id");?>
-        $invoice11 = <?php $this->input->get_post("invoice_id");?>
+        $train = '<?php $this->input->get_post("trainee_id");?>';
+        $invoice11 = '<?php $this->input->get_post("invoice_id");?>';
         if($train ==''){
             $('#trainee').attr('disabled', 'disabled');
         }else if($invoice11 ==''){
