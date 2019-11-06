@@ -2,8 +2,8 @@
 ?>
 <script>
     $(document).ready(function() {
-        $train = '<?php $this->input->get("trainee_id");?>';
-        $invoice11 = '<?php $this->input->get("invoice_id");?>';
+        $train = '<?php $this->input->get("trainee");?>';
+        $invoice11 = '<?php $this->input->get("invoice");?>';
         if($train !=''){alert('t');
             $('#invoice').attr('disabled', 'disabled');
         }else if($invoice11 !=''){alert('j');
