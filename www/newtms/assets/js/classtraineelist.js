@@ -143,9 +143,10 @@ $(document).ready(function() {
             }else{
                 $('#company_name_err').removeClass('error').text('');
         }
-        check_remove_id();
+        check_remove_id();////added by shubhranshu to removed the ids if field remove
         return $retval;
     }
+    /////////////added by shubhranshu///////////////////////
     function check_remove_id(){
         $comp = $('#company_name').val();
         $taxcode = $('#taxcode').val();
@@ -159,7 +160,7 @@ $(document).ready(function() {
         if($trainee_name == ''){
            $('#trainee_id').val(''); 
         }
-    }
+    }/////////////////////////////////////////////////////////////////////////////////////
     function trigger_ajax() {
         $subsidy_amount = $('#subsidy_amount').val();
         $subsidy_date = $('#subsidy_date').val();

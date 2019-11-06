@@ -1,4 +1,9 @@
 <?php $check_startdate = $this->input->get('start_date'); ?>
+<style>
+    #courseId{
+        width:91%;
+    }
+</style>
 <script>
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
