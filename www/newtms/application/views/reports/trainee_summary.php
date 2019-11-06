@@ -1,5 +1,18 @@
-<?php $check_startdate = $this->input->get('start_date'); ?>
+<?php $check_startdate = $this->input->get('start_date'); 
+?>
 <script>
+    $(document).ready(function() {
+        $train = <?php $this->input->get_post("trainee_id");?>
+        $invoice11 = <?php $this->input->get_post("invoice_id");?>
+        if($train ==''){
+            $('#trainee').attr('disabled', 'disabled');
+        }else if($invoice11 ==''){
+            $('#invoice').attr('disabled', 'disabled');
+        }else{
+            $('#invoice').attr('disabled', 'disabled');
+        }  
+    });
+    
     
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
