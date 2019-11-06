@@ -51,6 +51,7 @@ $(document).ready(function() {
     ///////below code added by shubhranshu to prevent disable of button
     $('#classId').change(function() {
          $('.print_soa_report').html("Print");
+         $('.print_soa_report').prop("disabled", false);
          $('.submit_but').prop("disabled", false);
          $('.submit_but').html("<span class='glyphicon glyphicon-search'></span>Export");
     });
@@ -60,6 +61,8 @@ $(document).ready(function() {
         $('#status').val('');
         $('#trainee').val('');
         $('#trainee_id').val('');
+        $('.print_soa_report').prop("disabled", false);//added by shubhranshu to prevent disable of button
+        $('.print_soa_report').html("Print");//added by shubhranshu to prevent disable of button
          $('.submit_but').prop("disabled", false);///added by shubhranshu to prevent disable of button
          $('.submit_but').html("<span class='glyphicon glyphicon-search'></span>Export");///added by shubhranshu to prevent disable of button
         $courseId = $('#courseId').val();
