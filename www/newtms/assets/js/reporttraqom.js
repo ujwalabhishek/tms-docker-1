@@ -46,9 +46,25 @@ $(document).ready(function() {
             $(this).trigger("change");
         }
     });
+    $("#start_date2").click(function(){
+        $('.print_soa_report').prop("disabled", false);/////added by shubhranshu
+         $('.print_soa_report').html("Print");///added by shubhranshu
+         $('.submit_but').prop("disabled", false);///added by shubhranshu
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span> Export");///added by shubhranshu
+    });
+    $("#start_date1").click(function(){
+        $('.print_soa_report').prop("disabled", false);/////added by shubhranshu
+         $('.print_soa_report').html("Print");///added by shubhranshu
+         $('.submit_but').prop("disabled", false);///added by shubhranshu
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span> Export");///added by shubhranshu
+    });
     $('#generateby').change(function() {
         $val = $(this).val();
         $('.error1').empty();
+        $('.print_soa_report').prop("disabled", false);/////added by shubhranshu
+         $('.print_soa_report').html("Print");///added by shubhranshu
+         $('.submit_but').prop("disabled", false);///added by shubhranshu
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span> Export");///added by shubhranshu
         remove_all();
         $('.generate1').hide();
         $('.generate2').hide();
