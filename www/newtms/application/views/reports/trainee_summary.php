@@ -4,11 +4,11 @@
     $(document).ready(function() {
         $train = '<?php $this->input->get_post("trainee_id");?>';
         $invoice11 = '<?php $this->input->get_post("invoice_id");?>';
-        if($train ==''){
+        if($train ==''){alert('t');
             $('#trainee').attr('disabled', 'disabled');
-        }else if($invoice11 ==''){
+        }else if($invoice11 ==''){alert('j');
             $('#invoice').attr('disabled', 'disabled');
-        }else{
+        }else{alert('d');
             $('#invoice').attr('disabled', 'disabled');
         }  
     });
