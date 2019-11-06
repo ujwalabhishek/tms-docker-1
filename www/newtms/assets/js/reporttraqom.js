@@ -50,12 +50,16 @@ $(document).ready(function() {
         $('.print_soa_report').prop("disabled", false);/////added by shubhranshu
          $('.print_soa_report').html("Print");///added by shubhranshu
          $('.submit_but').prop("disabled", false);///added by shubhranshu
+         $('#okbtn').prop("disabled", false);///added by shubhranshu
+           $('#okbtn').html('Ok');///added by shubhranshu
          $('.submit_but').html("<span class='glyphicon glyphicon-search'></span> Export");///added by shubhranshu
     });
     $("#start_date1").click(function(){
         $('.print_soa_report').prop("disabled", false);/////added by shubhranshu
          $('.print_soa_report').html("Print");///added by shubhranshu
          $('.submit_but').prop("disabled", false);///added by shubhranshu
+         $('#okbtn').prop("disabled", false);///added by shubhranshu
+           $('#okbtn').html('Ok');///added by shubhranshu
          $('.submit_but').html("<span class='glyphicon glyphicon-search'></span> Export");///added by shubhranshu
     });
     $('#generateby').change(function() {
@@ -65,6 +69,7 @@ $(document).ready(function() {
          $('.print_soa_report').html("Print");///added by shubhranshu
          $('.submit_but').prop("disabled", false);///added by shubhranshu
           $('#okbtn').prop("disabled", false);///added by shubhranshu
+           $('#okbtn').html('Ok');///added by shubhranshu
          $('.submit_but').html("<span class='glyphicon glyphicon-search'></span> Export");///added by shubhranshu
         remove_all();
         $('.generate1').hide();
@@ -214,7 +219,9 @@ function form_validation($retval) {
     }
     if ($retval == true) {
         ///////added by shubhranshu to prevent multiple clicks////////////////
-        $('.submit_but').attr('disabled','disabled').html('Please Wait..');
+        var self = $('.submit_but'),
+            button = self.find('input[type="submit"],button');
+            button.attr('disabled','disabled').html('Please Wait..');
             ///////added by shubhranshu to prevent multiple clicks////////////////
         $('#ex13').modal();
         return false;

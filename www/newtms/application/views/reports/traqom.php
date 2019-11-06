@@ -99,7 +99,7 @@
     <h2 class="panel_heading_style">Alert Message</h2>
     There are no data in the given date .<br>
         <div class="popup_cancel popup_cancel001">
-            <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Ok</button></a>
+            <a href="#" rel="modal:close"><button class="btn btn-primary" type="button" id='okbtn'>Ok</button></a>
         </div>
     </p>
 </div>
