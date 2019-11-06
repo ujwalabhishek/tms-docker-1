@@ -158,7 +158,7 @@
                 $pageurl = $controllerurl;
                 ?>
                 <tr>
-                    <th width="10%" class="th_header"><a style="color:#000000;" href="<?php  echo base_url().$pageurl. "?" . $sort_link."&f=crse.crse_name&o=" .$ancher; ?>" >NRCI</a></th>
+                    <th width="10%" class="th_header"><a style="color:#000000;" href="<?php  echo base_url().$pageurl. "?" . $sort_link."&f=crse.crse_name&o=" .$ancher; ?>" >NRIC</a></th>
                     <th width="15%" class="th_header"><a style="color:#000000;" href="<?php  echo base_url().$pageurl. "?" . $sort_link."&f=pers.first_name&o=" .$ancher; ?>" >Name</a></th>
                     <th width="15%" class="th_header"><a style="color:#000000;" href="<?php  echo base_url().$pageurl. "?" . $sort_link."&f=cls.class_name&o=" .$ancher; ?>" >Company</a></th>
                     <th width="10%" class="th_header"><a style="color:#000000;" href="<?php  echo base_url().$pageurl. "?" . $sort_link."&f=usrs.tax_code&o=" .$ancher; ?>" >Class</a></th>
