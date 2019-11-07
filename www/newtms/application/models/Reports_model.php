@@ -1961,8 +1961,9 @@ SELECT  {$calc_rows} c.crse_name,
                 $limitvalue = $offset - $limit;
                 $this->db->limit($limit, $limitvalue);
             }
-        }$this->db->get(); $this->db->last_query();exit;
-        return $this->db->get()->result();
+        }
+        $this->db->get(); echo $this->db->last_query();exit;
+        //return $this->db->get()->result();
     }
 
     /**
