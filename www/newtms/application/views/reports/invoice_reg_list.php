@@ -76,7 +76,7 @@
 
                             ?>
                     <span id="invoice_id_err"></span>
-                    <div style='color:blue; font-size:10px;'>Enter minimum of 5 characters to search</div>
+                    <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                     </td>
                     
                       <td width="15%" class="td_heading">
@@ -118,7 +118,7 @@
 
                             ?>
                             <span id="prev_invoice_id_err"></span>
-                            <div style='color:blue; font-size:10px;'>Enter minimum of 5 characters to search</div>
+                            <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                     </td>
                     
  

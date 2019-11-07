@@ -236,9 +236,29 @@ var search_check = 0;
         } else {
             remove_err('#company_name');
         }
+        check_remove_id();/////added by shubhranshu
         return retval;
     }
-	 $('.search_select').change(function() {
+    /////////////added by shubhranshu///////////////////////
+    function check_remove_id(){
+        
+        $invoice = $('#invoice_name').val();
+        $prev_invoice= $('#prev_invoice_name').val();
+        $company= $('#company_name').val();
+        
+        if($invoice == ''){
+           $('#invoice_id').val(''); 
+        }
+        if($prev_invoice == ''){
+           $('#prev_invoice_id').val(''); 
+        }
+        if($company == ''){
+           $('#company_id').val(''); 
+        }
+    }/////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    $('.search_select').change(function() {
         $('#invoice_name').val('');
         $('#invoice_id').val('');
         $('#prev_invoice_name').val('');
