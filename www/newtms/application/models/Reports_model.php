@@ -1871,7 +1871,7 @@ SELECT  {$calc_rows} c.crse_name,
         $this->db->group_by('ei.invoice_id');
         //return $this->db->get()->result_object();
         $this->db->get();
-        echo $this->db_last_query();
+        echo $this->db->last_query();
         echo memory_get_usage().'dd';exit;
     }
 
