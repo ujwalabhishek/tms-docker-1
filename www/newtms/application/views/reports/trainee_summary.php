@@ -259,6 +259,7 @@
                 $('#search_error').removeClass('error').text('');
         }
         if(retval){
+            check_remove_id();
            var self = $(this),
             button = self.find('input[type="submit"],button');
             button.attr('disabled','disabled').html('Please Wait..');
@@ -269,5 +270,18 @@
         ///////added by shubhranshu to prevent multiple clicks////////////////
 
     });
+    /////////////added by shubhranshu///////////////////////
+    function check_remove_id(){
+        
+        $invoice = $('#invoice').val();
+        $trainee_name = $('#trainee').val();
+        
+        if($invoice == ''){
+           $('#invoice_id').val(''); 
+        }
+        if($trainee_name == ''){
+           $('#trainee_id').val(''); 
+        }
+    }/////////////////////////////////////////////////////////////////////////////////////
 </script>
 
