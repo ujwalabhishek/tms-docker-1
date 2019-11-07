@@ -207,9 +207,10 @@
                     <a href="javascript:void(0)" class="small_text1" id='displayText1'>
 
                         <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>
-                        <div id="alertmsg" style="display: none;color:#ff0000;padding:5px">Company name/Start & End Date Required.</div>
+                        
 
                 </span>
+            <div id="alertmsg" style="padding:5px" class='alert alert-danger'>Company name/Start & End Date Required to Download PDF/XLS.</div>
              <?php } ?>
         </div>
 
