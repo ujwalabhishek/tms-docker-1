@@ -132,20 +132,10 @@ var search_check = 0;
         } else {
             remove_err('#company_name');
         }
-        check_remove_id();//////////added by shubhranshu/
         return retval;
     }
     
 });
-/////////////added by shubhranshu///////////////////////
-    function check_remove_id(){
-        
-        $trainee = $('#trainee').val();
-        if($trainee == ''){
-           $('#trainee_id').val(''); 
-        }
-        
-    }/////////////////////////////////////////////////////////////////////////////////////
 
 function disp_err($id, $text) {
     $text = typeof $text !== 'undefined' ? $text : '[required]';
