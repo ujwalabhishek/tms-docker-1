@@ -130,6 +130,7 @@ class Reports_finance extends CI_Controller {
         $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
         $company_id = $this->input->get('company_id');
         $tabledata = $this->reportsModel->get_all_invoice($tenant_id, $records_per_page, $offset, $field, $order_by, $payment_status, $start_date, $end_date, $company_id);
+        echo memory_get_usage().'dd';exit;
         $tabledata_count = count($tabledata);
         for ($i = 0; $i < $tabledata_count; $i++) {
             if ($tabledata[$i]->enrolment_mode === 'COMPSPON') {
@@ -181,7 +182,7 @@ class Reports_finance extends CI_Controller {
         $excel_filename = 'invlice_list.xls';
         $excel_sheetname = 'Invoice List';
         $excel_main_heading = 'Accounting Reports - Invoice List & Search' . $period;
-        echo memory_get_usage().'dd';exit;
+        
         export_page_fields($excel_titles, $excel_data, $excel_filename, $excel_sheetname, $excel_main_heading);
     }
 
