@@ -2498,7 +2498,7 @@ end for payment period*/
  * @return int
  */
     private function tenant_pymnt_due_id() {
-        $tenant_id = $this->data['user']->tenant_id;
+        $tenant_id = $this->session->userdata('userDetails')->tenant_id;
         $pymnt = $this->db->select('pymnt_due_id')->from('class_enrol')->where('enrol_status !=', 'RESHLD')->where('tenant_id', $tenant_id)->get()->result_array();
         $pymnt_arr = array();
         foreach ($pymnt as $row) {
