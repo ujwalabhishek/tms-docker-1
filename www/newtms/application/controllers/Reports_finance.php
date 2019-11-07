@@ -122,6 +122,7 @@ class Reports_finance extends CI_Controller {
      */
 
     public function invoice_list_export_xls() {
+        ini_set('memory_limit', '-1');
         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
         $payment_status = $this->input->get('payment_status');
         $start_date = $this->input->get('start_date');
