@@ -211,7 +211,7 @@
 
                 </span>
             <div id="alertmsg" style="padding:5px;clear:both;display:none" class='alert alert-danger'>Company name/Start & End Date Required to Download PDF/XLS.</div>
-             <?php } ?>
+             <?php } // added by shubhranshu end code?>
         </div>
 
         <br><br>

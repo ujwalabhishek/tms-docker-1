@@ -643,7 +643,7 @@ class Reports_finance extends CI_Controller {
      */
 
     public function payments_export_xls() {
-        ini_set('memory_limit','256M');
+        ini_set('memory_limit','-1');
         $tenant_id = $this->tenant_id;
         $company = $this->input->get('company');
         $companies = $this->classTraineeModel->get_company_for_paidinvoice($tenant_id);
@@ -715,6 +715,7 @@ class Reports_finance extends CI_Controller {
         $excel_filename = 'payments_received.xls';
         $excel_sheetname = 'Payments Received';
         $excel_main_heading = 'Accounting Reports - Payments Received' . $period;
+        print_r($excel_data);exit;
         export_page_fields($excel_titles, $excel_data, $excel_filename, $excel_sheetname, $excel_main_heading);
     }
 
