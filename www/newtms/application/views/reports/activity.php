@@ -67,7 +67,7 @@ $ci->load->model('Activity_Log_Model', 'activitylog');
                                             echo form_input($internal_staff);
                         
                         ?>
-                       
+                       <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                         <span id="internal_staff_list_err"></span>
                     </td>
                 </tr>

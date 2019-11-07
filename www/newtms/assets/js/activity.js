@@ -343,7 +343,7 @@ $(document).ready(function() {
             var id = ui.item.key;
             $('#user_id').val(id);
         },
-        minLength: 0,
+        minLength: 4,
         });
         
         jQuery("#company").autocomplete({
