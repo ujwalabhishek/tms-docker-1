@@ -158,7 +158,7 @@ $pageurl = 'TMSAdmin/'. $controllerurl;
              if(($salesid!="") || ($nonsalesid!="") || ($start!="" && $end!=''))
              {
              ?>
-            <div class="pull-right">
+            <div class="pull-right" style='margin: 10px;'>
                 <br />
                 <a href="<?php echo site_url('/reports/enrolment_report_export_xls') . '?' . $_SERVER['QUERY_STRING']; ?>"  class="small_text1">
 
@@ -168,16 +168,17 @@ $pageurl = 'TMSAdmin/'. $controllerurl;
                 <br /><br />
             </div>
              <?php }else{?>
-                <div class="pull-right">
+                <div class="pull-right" style='margin: 10px;'>
                     <br />
                     <a href="javascript:void(0)" class="small_text1" id='displayText'>
                         <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
                     <a href="javascript:void(0)" class="small_text1" id='displayText1'>
                         <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>                
-                        <div id="alertmsg" style="display: none;color:#ff0000;padding:5px">Please Select One of the above filter to export PDF/XLS.</div>
+                       
                        
                     <br/>
                 </div>
+             <div id="alertmsg" style="padding:5px;clear:both;display:none" class='alert alert-danger'>Please Select One of the above filter to export PDF/XLS.</div>
             <?php }?>
         </div>
         <div style="clear:both;"></div>
