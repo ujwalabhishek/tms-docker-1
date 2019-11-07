@@ -340,8 +340,26 @@ $(document).ready(function() {
             }else{
                 $('#company_name_err').removeClass('error').text('');
         }///////added by shubhranshu to vaildate search operation////////////////
+        check_remove_id();/////////added by shubhranshu//
         return retval;
     }
+    /////////////added by shubhranshu///////////////////////
+    function check_remove_id(){
+        
+        $taxcode = $('#taxcode').val();
+        $trainee= $('#trainee').val();
+        $company= $('#company_name').val();
+        
+        if($taxcode == ''){
+           $('#taxcode_id').val(''); 
+        }
+        if($trainee == ''){
+           $('#trainee_id').val(''); 
+        }
+        if($company == ''){
+           $('#company_id').val(''); 
+        }
+    }/////////////////////////////////////////////////////////////////////////////////////
     function disp_err($id, $text) {
         $text = typeof $text !== 'undefined' ? $text : '[required]';
         $($id).addClass('error');
