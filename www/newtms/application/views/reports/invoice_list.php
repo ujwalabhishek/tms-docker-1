@@ -197,6 +197,9 @@
 
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>
             </span>
+             </div>
+
+             <br><br>
              <?php }else{ ?>
                 <span class="pull-right" style='margin: 10px;'>
 
@@ -211,8 +214,9 @@
 
                 </span>
             <div id="alertmsg" style="padding:5px;clear:both;display:none" class='alert alert-danger'>Company name/Start & End Date Required to Download PDF/XLS.</div>
-             <?php } // added by shubhranshu end code?>
-        </div>
+             </div>
+            <?php } // added by shubhranshu end code?>
+        
 
         <br><br>
 
