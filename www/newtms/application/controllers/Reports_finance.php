@@ -657,6 +657,7 @@ class Reports_finance extends CI_Controller {
         $field = ($this->input->get('f')) ? $this->input->get('f') : 'ei.invoice_id';
         $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
         $tabledata = $this->reportsModel->get_payment_recd($records_per_page, $offset, $field, $order_by, $company, $invoice_id, $start_date, $end_date);
+         print_r($tabledata);exit;
         $tabledata_count = count($tabledata);
         $pids = array();
         for ($i = 0; $i < $tabledata_count; $i++) {
