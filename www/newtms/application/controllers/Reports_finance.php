@@ -181,6 +181,7 @@ class Reports_finance extends CI_Controller {
         $excel_filename = 'invlice_list.xls';
         $excel_sheetname = 'Invoice List';
         $excel_main_heading = 'Accounting Reports - Invoice List & Search' . $period;
+        echo memory_get_usage();exit;
         export_page_fields($excel_titles, $excel_data, $excel_filename, $excel_sheetname, $excel_main_heading);
     }
 
