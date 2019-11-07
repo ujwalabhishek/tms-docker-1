@@ -218,7 +218,7 @@
             <?php } // added by shubhranshu end code?>
         
 
-        <br><br>
+        
 
         <div class="table-responsive">
 
