@@ -198,9 +198,9 @@
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>
             </span>
              <?php }else{ ?>
-                <span class="pull-right" style='margin: 10px;>
+                <span class="pull-right" style='margin: 10px;'>
 
-                    <a  href="javascript:void(0)"  class="small_text1" id='displayText'>
+                    <a href="javascript:void(0)" class="small_text1" id='displayText'>
 
                         <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
 
