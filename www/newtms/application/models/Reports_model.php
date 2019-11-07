@@ -1869,11 +1869,11 @@ SELECT  {$calc_rows} c.crse_name,
             }
         }
         $this->db->group_by('ei.invoice_id');
-        //return $this->db->get()->result_object();
+        return $this->db->get()->result_object();
         
-        $this->db->get();var_dump(realpath_cache_size());
+        //$this->db->get();var_dump(realpath_cache_size());
         //echo $this->db->last_query();
-        echo memory_get_usage().'dd';exit;
+        //echo memory_get_usage().'dd';exit;
     }
 
    /**
