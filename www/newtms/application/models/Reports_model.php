@@ -1962,8 +1962,8 @@ SELECT  {$calc_rows} c.crse_name,
                 $this->db->limit($limit, $limitvalue);
             }
         }
-        $this->db->get(); echo $this->db->last_query();exit;
-        //return $this->db->get()->result();
+        //$this->db->get(); echo $this->db->last_query();exit;
+        return $this->db->get()->result();
     }
 
     /**
@@ -2498,7 +2498,7 @@ end for payment period*/
  * @return int
  */
     private function tenant_pymnt_due_id() {
-        $tenant_id = $this->session->userdata('userDetails')->tenant_id;
+        $tenant_id = $this->session->userdata('userDetails')->tenant_id;///////modofied by shubhranshu
         $pymnt = $this->db->select('pymnt_due_id')->from('class_enrol')->where('enrol_status !=', 'RESHLD')->where('tenant_id', $tenant_id)->get()->result_array();
         $pymnt_arr = array();
         foreach ($pymnt as $row) {
