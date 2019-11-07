@@ -726,6 +726,7 @@ function export_page_fields($titles, $data, $filename, $sheetname = "", $main_he
         $rn++;
     }
     ob_end_clean();
+    echo memory_get_usage();exit;
     header('Content-Type: application/vnd.ms-excel');
     header('Content-Disposition: attachment;filename="' . $filename . '"');
     header('Cache-Control: max-age=0');
