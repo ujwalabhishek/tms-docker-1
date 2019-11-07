@@ -187,7 +187,7 @@
              if(($start!="" && $end!='') || $company !='')
              {
              ?>
-            <span class="pull-right">
+            <span class="pull-right" style='margin: 10px;'>
 
                 <a href="<?php echo site_url('/reports_finance/invoice_list_export_xls') . '?' . $_SERVER['QUERY_STRING']; ?>"  class="small_text1">
 
@@ -210,7 +210,7 @@
                         
 
                 </span>
-            <div id="alertmsg" style="padding:5px" class='alert alert-danger'>Company name/Start & End Date Required to Download PDF/XLS.</div>
+            <div id="alertmsg" style="padding:5px;clear:both" class='alert alert-danger'>Company name/Start & End Date Required to Download PDF/XLS.</div>
              <?php } ?>
         </div>
 
