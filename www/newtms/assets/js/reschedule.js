@@ -44,14 +44,15 @@ $(document).ready(function() {
         $active_lock_status = $('.active_class_lock_status').val();
         $i=0;
         $('.reschedule_class').each(function() 
-        {alert($active_course);
-            $re_class = $('.reschedule_class_lock_status_'+$i).val();
+        {
+            $re_class = $('.reschedule_class_lock_status_'+$i).val();alert($re_class);
             $reschedule_lock_status = $('.reschedule_class_lock_status_'+$active_course).val();
             if ($(this).hasClass('course_' + $active_course)) 
             {
                 $reschedule_lock_status = $('reschedule_class').val();
                 if($re_class==0){
-                $(this).removeAttr('disabled');}
+                    $(this).removeAttr('disabled');
+                }
             } 
             else 
             {alert($active_course+'t');
