@@ -37,6 +37,7 @@ class Manage_Subsidy extends CI_Controller {
      * This Function add tenant subsidy.
      */
     public function new_subsidy() {
+        $data['sideMenuData'] = fetch_non_main_page_content();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {            
             $subsidy_type = $this->input->post('subsidy_type');
             $subsidy_amount = $this->input->post('subsidy_amount');           
