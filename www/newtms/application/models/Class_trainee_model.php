@@ -6298,19 +6298,21 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         if ($data['enrolment_mode'] == 'COMPSPON') {
 
-            $status = $this->remove_company_enrollment($tenant_id, $this->data['user']->user_id, $course_id, $prev_class_id, $data['company_id']
-                    , $inv_id = 0, $data['pymnt_due_id'], array($trainee_id));
+//            $status = $this->remove_company_enrollment($tenant_id, $this->data['user']->user_id, $course_id, $prev_class_id, $data['company_id']
+//                    , $inv_id = 0, $data['pymnt_due_id'], array($trainee_id));
 
-            if ($status) {
+//            if ($status) {
+//
+//                $status = $this->update_rescheduled_reason($tenant_id, $data['pymnt_due_id'], $trainee_id, $course_id, $prev_class_id, $reschedule_reason, $other_reason, $new_class_id);
+//            }
 
-                $status = $this->update_rescheduled_reason($tenant_id, $data['pymnt_due_id'], $trainee_id, $course_id, $prev_class_id, $reschedule_reason, $other_reason, $new_class_id);
-            }
-
-            if (count($temp_array) == 0 && $status) 
+           // if (count($temp_array) == 0 && $status) 
+            if (count($temp_array) == 0) 
             {
 
                 $res = $this->reschedule_create_new_comp_enroll($tenant_id, $data, $course_id, $new_class_id, $trainee_id);
-
+      print_r($this->db->last_query());//
+print_r($res);exit;
                 $new_invoice_id = $res['invoice'];
 
                 $new_pymnt_due_id = $res['pymnt_due_id'];
@@ -6586,7 +6588,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
  
         foreach ($user as $trainee_id) {
 
-            $status = $this->reschedule_trainee($tenant_id, $trainee_id, $reschedule_class, $active_class, $course_id, $reschedule_reason, $other_reason='');
+            $status = $this->reschedule_trainee($tenant_id, $trainee_id, $reschedule_class, $active_class, $course_id, $reschedule_reason, $other_reason);
        print_r($this->db->last_query());//
 print_r($status);exit;
             if ($status) {

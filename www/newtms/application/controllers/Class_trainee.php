@@ -1407,7 +1407,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             {
                 $type = $this->input->post('type');
                 if ($type == 1 || $type == 4) 
-                {echo "a";
+                {
                     $taxcode_id = ($type == 1)?$this->input->post('taxcode_id'):$this->input->post('taxcode_user_id');                    
                     if (!empty($taxcode_id)) 
                     {
@@ -1446,7 +1446,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     }
                 } 
                 else if ($type == 3) 
-                {echo "b";
+                {
                     $taxcode_id = $this->input->post('trainee_id');
                     if (!empty($taxcode_id)) 
                     {
@@ -1482,7 +1482,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     }
                 } 
                 else 
-                {echo "c";
+                {
                     $course_id = $this->input->post('course_id');
                     if (!empty($course_id)) 
                     {
