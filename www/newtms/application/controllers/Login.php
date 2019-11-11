@@ -36,7 +36,9 @@ class Login extends CI_Controller {
 //            $userid = $this->session->userdata('userDetails')->user_id;
 //            $tenant_id = $this->session->userdata('userDetails')->tenant_id;
 //            $data['user_details'] = $this->login->get_user_details($userid,$tenant_id);
-
+                if($this->session->userdata('userDetails')->role_id == 'SADMN') {
+                    redirect('manage_tenant/');
+                }
             $data['role_id'] = 'ADMN';
             $this->load->view('layout', $data);
             } else {
