@@ -3502,7 +3502,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
         if ($this->db->trans_status() === FALSE) 
         {
             $status = FALSE;
-        }echo "aaa";exit;
+        }
         return array('err' => $err_arr, 'invoice' => $invoice_id, 'status' => $status, 'pymnt_due_id' => $payment_due_id);
     }    
     
