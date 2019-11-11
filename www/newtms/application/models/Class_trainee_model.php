@@ -11448,7 +11448,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 'enrol_status' => 'ENRLBKD'
             );
             $this->db->insert('class_enrol', $data);
-             print_r($this->db->last_query());echo '7777';exit;
+            
             $data = array(
                 'user_id' => $user_id,
                 'pymnt_due_id' => $payment_due_id,
@@ -11526,9 +11526,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         }
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) 
-        {
+        {echo "ex";exit;
             $status = FALSE;
-        }
+        }echo "exrrrrrrrrrrrrrrrrr";exit;
         return $status;
     }     
     
