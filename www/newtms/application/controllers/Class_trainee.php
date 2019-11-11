@@ -1551,7 +1551,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 $this->form_validation->set_rules('reschedule_reason', 'Reschedule reason', 'required');
                 if ($this->form_validation->run() == TRUE) {
                     $result = $this->classtraineemodel->create_reschedule();
-                    echo "final";exit;
+                    //echo "final";exit;
                     if ($result == TRUE) {
                         $type = $this->input->post('type');
                         if ($type == 1 || $type == 4) { 
