@@ -1398,7 +1398,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $data['courses'] = $this->classtraineemodel->get_active_course_classenroll_list_by_tenant($tenant_id);
-        $data['companies'] = $this->company->get_activeuser_companies_for_tenant($tenant_id, 1);
+        $data['companies'] = $this->company->get_activeuser_companies_for_tenant($tenant_id, 0);
         if ($this->input->server('REQUEST_METHOD') === 'POST') 
         {
             $this->load->library('form_validation');
