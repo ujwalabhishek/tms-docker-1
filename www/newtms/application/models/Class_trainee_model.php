@@ -6583,7 +6583,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
             $course_id = $this->db->select('course_id')->from('course_class')->where('class_id', $reschedule_class)->get()->row()->course_id;
         }
-
+        print_r($this->db->last_query());
+print_r($course_id);exit;
         foreach ($user as $trainee_id) {
 
             $status = $this->reschedule_trainee($tenant_id, $trainee_id, $reschedule_class, $active_class, $course_id, $reschedule_reason, $other_reason);
