@@ -6308,8 +6308,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 $status = $this->update_rescheduled_reason($tenant_id, $data['pymnt_due_id'], $trainee_id, $course_id, $prev_class_id, $reschedule_reason, $other_reason, $new_class_id);
             }
 
-            //if (count($temp_array) == 0 && $status) 
-            if (count($temp_array) == 0)
+            if (count($temp_array) == 0 && $status) 
+            //if (count($temp_array) == 0)
             {
 
                 $res = $this->reschedule_create_new_comp_enroll($tenant_id, $data, $course_id, $new_class_id, $trainee_id);
