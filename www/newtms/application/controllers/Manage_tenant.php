@@ -374,7 +374,7 @@ class Manage_tenant extends CI_Controller {
      * monthly enrollment count
      */
     public function enrollment_count() {
-        
+        $data['sideMenuData'] = fetch_non_main_page_content();
         $data = array();
 
         $data['year_arr'] = array(''=>'Select year',2015 => 2015, 2016 => 2016, 2017 => 2017, 2018 => 2018, 2019 => 2019, 2020 => 2020);        
