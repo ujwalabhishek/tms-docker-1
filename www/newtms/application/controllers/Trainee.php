@@ -1319,12 +1319,13 @@ class Trainee extends CI_Controller {
     public function check_nric_restriction(){
         extract($_POST);
         $tax_code = trim(($tax_code));
-        $operation = trim(($operation));
+	$operation = trim(($operation));
         $exists = $this->traineemodel->check_nric_restriction($tax_code,$operation);
         if ($exists) {
             echo 1;
         } else { echo 0;}
     }/*  added by shubhranshu for client requirement on 21/03/2019 */
+
     /**
      * This method validate the NRIC/FIN number     
      * @return type

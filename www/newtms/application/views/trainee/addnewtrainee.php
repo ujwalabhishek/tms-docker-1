@@ -1441,13 +1441,12 @@ if (!empty($tax_error)) {
                     data: {tax_code: $nric,operation:'ADDNEWTRAINEE'},
                     success: function(res) {
                         if (res == 1) {
-                            ///added by shubhranshu
-                            if($privilage == '0'){
-                                if($role_id == 'ADMN'){
+                            if($privilage == '0'){///added by shubhranshu
+                                if($role_id == 'ADMN'){///added by shubhranshu
                                     if(res > 0){
                                         $('#ex111').modal();
                                     }
-                                }
+                                }///added by shubhranshu
                             }else if($privilage == '1'){
                                 if(res > 0){
                                         $('#ex111').modal();
@@ -1460,9 +1459,9 @@ if (!empty($tax_error)) {
         /*--------------------------------------------------------------*/
         function isunique_taxcode(e, id) {
             e = $.trim(e);
-            var NRIC = $("#NRIC").val();
-            
-            check_nric_restriction();  ///added by shubhranshu
+            var NRIC = $("#NRIC").val(); 
+           check_nric_restriction();  ///added by shubhranshu
+
             
             var NRIC_OTHER = $("#NRIC_OTHER").val();
             var country_of_residence = $("#country_of_residence").val(); 

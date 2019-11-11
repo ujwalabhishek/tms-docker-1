@@ -2750,7 +2750,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             'tenant_id' => $this->user->tenant_id,
             'enrolled_by_user_id' => $this->user->user_id,
             'role_id' => $this->user->role_id,
-            'operation' => $operation,
+	    'operation' => $operation,
             'enrolled_by_user_name' => $this->user->user_name,
             'first_name' => $this->user->first_name,
             'last_name' => $this->user->last_name ? $this->user->last_name : '',
@@ -2762,7 +2762,4 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         }
         return $row;
     }/*  added by shubhranshu for client requirement on 21/03/2019 */
-
 }
-
-
