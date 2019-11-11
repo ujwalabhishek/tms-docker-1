@@ -3362,7 +3362,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 {
                     $res = $this->company_invoice_exists($classes->course_id,$class,$company);
                     $total_val = count($res);
-                   print_r($total_val);echo 'dfddf';exit;
+                
                     if($total_val == 0){
     //                    echo "no invoice found--".$payment_due_id;
                     }else
@@ -11389,7 +11389,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      public function add_to_company_enrollment($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
     , $invoice_id, $payment_due_id, $seleced_trainee_list) {
         
-        
+           print_r($seleced_trainee_list);echo 'kkkkkk';exit;
         $status = TRUE;
         if (empty($seleced_trainee_list)) {
             return FALSE;
