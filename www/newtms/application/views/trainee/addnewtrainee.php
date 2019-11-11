@@ -1433,6 +1433,7 @@ if (!empty($tax_error)) {
         function check_nric_restriction(){
             var $nric = $("#NRIC_ID").val(); 
             //alert($nric);
+            if($nric !=''){
             $.ajax({
                     url: "check_nric_restriction",
                     type: "post",
@@ -1455,6 +1456,7 @@ if (!empty($tax_error)) {
                         } 
                     }
                 });
+            }
         }
         /*--------------------------------------------------------------*/
         function isunique_taxcode(e, id) {
