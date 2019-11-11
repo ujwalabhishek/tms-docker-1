@@ -11389,7 +11389,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      public function add_to_company_enrollment($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
     , $invoice_id, $payment_due_id, $seleced_trainee_list) {
         
-           print_r($seleced_trainee_list);echo 'kkkkkk';exit;
+          
         $status = TRUE;
         if (empty($seleced_trainee_list)) {
             return FALSE;
@@ -11448,6 +11448,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 'enrol_status' => 'ENRLBKD'
             );
             $this->db->insert('class_enrol', $data);
+             print_r($this->db->last_query());echo '7777';exit;
             $data = array(
                 'user_id' => $user_id,
                 'pymnt_due_id' => $payment_due_id,
