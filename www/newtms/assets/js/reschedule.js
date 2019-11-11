@@ -45,7 +45,7 @@ $(document).ready(function() {
         $i=0;
         $('.reschedule_class').each(function() 
         {
-            $re_class = $('.reschedule_class_lock_status_'+$i).val();alert($re_class);
+            $re_class = $('.reschedule_class_lock_status_'+$i).val();
             $reschedule_lock_status = $('.reschedule_class_lock_status_'+$active_course).val();
             if ($(this).hasClass('course_' + $active_course)) 
             {
