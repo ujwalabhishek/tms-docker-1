@@ -3357,6 +3357,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     }
                 }else { $att_status=1;}
                 // this code run on reschedule start   
+                echo $reschedule.'dfddf';exit;
                 if($reschedule == 1)
                 {
                     $res = $this->company_invoice_exists($classes->course_id,$class,$company);
