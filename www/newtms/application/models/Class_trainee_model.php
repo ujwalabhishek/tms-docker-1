@@ -6309,7 +6309,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             }
 
             //if (count($temp_array) == 0 && $status) 
-            if (count($temp_array) == 0 
+            if (count($temp_array) == 0)
             {
 
                 $res = $this->reschedule_create_new_comp_enroll($tenant_id, $data, $course_id, $new_class_id, $trainee_id);
