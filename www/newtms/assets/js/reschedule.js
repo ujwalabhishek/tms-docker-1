@@ -55,7 +55,7 @@ $(document).ready(function() {
                 }
             } 
             else 
-            {alert($active_course+'t');
+            {
                 $(this).attr('disabled', 'disabled');
             }
             $i++;
