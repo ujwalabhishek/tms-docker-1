@@ -3295,7 +3295,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
         $indv_fees_due = round(($classes->class_fees - $indv_discount_amt), 4);
         $gst_rate = $this->get_gst_current();
          $i=0;
-         $this->db->trans_start();
+         //$this->db->trans_start();
         foreach ($data as $row) 
         {
             $user_id = $row['user_id'];
@@ -3456,25 +3456,6 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
         if (!empty($payment_due_id)) 
         {
             $gst_rule = (empty($courses->gst_on_off)) ? '' : $courses->subsidy_after_before;
-//            if($check_attendance>0)
-//            {
-//                $data = array(
-//                    'invoice_id' => $invoice_id,
-//                    'pymnt_due_id' => $payment_due_id,
-//                    'inv_date' => $cur_date,
-//                    'inv_type' => 'INVCOMALL',
-//                    'company_id' => $company,
-//                    'total_inv_amount' => 0.0000,
-//                    'total_unit_fees' => 0,
-//                    'total_inv_discnt' => 0,
-//                    'total_inv_subsdy' => 0,
-//                    'total_gst' => 0,
-//                    'gst_rate' => round($gst_rate, 4),
-//                    'gst_rule' => $gst_rule,
-//                );
-//            }
-//            else
-//            {
                 $data = array(
                     'invoice_id' => $invoice_id,
                     'pymnt_due_id' => $payment_due_id,
@@ -3490,7 +3471,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                     'gst_rule' => $gst_rule,
                 );
            // }
-            $this->db->insert('enrol_invoice', $data);
+            $ins_sta = $this->db->insert('enrol_invoice', $data);
 //            echo $this->db->last_query();exit;
 
         } 
@@ -3498,8 +3479,8 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
         {
             $invoice_id = '';
         }
-        $this->db->trans_complete();
-        if ($this->db->trans_status() === FALSE) 
+        //$this->db->trans_complete();
+        if (!$ins_sta) 
         {
             $status = FALSE;
         }
@@ -9231,7 +9212,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->insert('enrol_invoice', $enrol_invoice_data);
 
         $new_invoice_id = $invoice_id;
-print_r($this->db->last_query());exit;
+
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {
