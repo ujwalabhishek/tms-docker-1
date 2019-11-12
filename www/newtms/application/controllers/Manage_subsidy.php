@@ -63,6 +63,7 @@ class Manage_Subsidy extends CI_Controller {
      * @param type $subsidy_id
      */
     public function edit_subsidy($subsidy_id) {
+        $data['sideMenuData'] = fetch_non_main_page_content();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {            
             $subsidy_type = $this->input->post('subsidy_type');
             $subsidy_id = $this->input->post('subsidy_id');
