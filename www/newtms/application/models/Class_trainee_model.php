@@ -3481,6 +3481,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
             $invoice_id = '';
         }
         //$this->db->trans_complete();
+//        if ($this->db->trans_status() === FALSE) 
         if (!$ins_sta) 
         {
             $status = FALSE;
