@@ -6300,16 +6300,15 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         if ($data['enrolment_mode'] == 'COMPSPON') {
 
-//            $status = $this->remove_company_enrollment($tenant_id, $this->data['user']->user_id, $course_id, $prev_class_id, $data['company_id']
-//                    , $inv_id = 0, $data['pymnt_due_id'], array($trainee_id));
-//
-//            if ($status) {
-//
-//                $status = $this->update_rescheduled_reason($tenant_id, $data['pymnt_due_id'], $trainee_id, $course_id, $prev_class_id, $reschedule_reason, $other_reason, $new_class_id);
-//            }
+            $status = $this->remove_company_enrollment($tenant_id, $this->data['user']->user_id, $course_id, $prev_class_id, $data['company_id']
+                    , $inv_id = 0, $data['pymnt_due_id'], array($trainee_id));
 
-//            if (count($temp_array) == 0 && $status) 
-            if (true)
+            if ($status) {
+
+                $status = $this->update_rescheduled_reason($tenant_id, $data['pymnt_due_id'], $trainee_id, $course_id, $prev_class_id, $reschedule_reason, $other_reason, $new_class_id);
+            }
+
+            if (count($temp_array) == 0 && $status) 
             {
 
                 $res = $this->reschedule_create_new_comp_enroll($tenant_id, $data, $course_id, $new_class_id, $trainee_id);
@@ -6358,20 +6357,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     $temp_array[$data['company_id']] = array('company_id' => $data['company_id'],
                         'invoice_id' => $new_invoice_id,
                         'paymnt_due_id' => $new_pymnt_due_id);
-                     /*skm start */
-
-//                $update_data = array(
-//                                        "enrolled_by" => $data['enrolled_by'],
-//                                        "sales_executive_id" => $data['sales_executive_id'],
-//                                    ); 
-////                print_r($update_data);
-//                $this->db->where("course_id", $course_id);
-//                $this->db->where("class_id", $new_class_id);
-//                $this->db->where("user_id", $data['user_id']);
-//                $this->db->where("tenant_id", $tenant_id);
-//                $this->db->update('class_enrol', $update_data);
-//                echo $this->db->last_query();
-                /* skm end */
+                    
                 }
                 
                 
@@ -10723,14 +10709,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $status = $this->update_classenrol_audittrail($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
 
             $this->remove_enrollment($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
-            
-            //$status = $this->check_paid_refund_invoice($curr_invoice_details->invoice_id,$user_id);
-            
-//            if($status>0){
-//                $this->remove_paid_user($curr_invoice_details->invoice_id,$user_id);
-//                $this->remove_refund_user($curr_invoice_details->invoice_id,$user_id);
-//            }
-
+           
             $payments_result = $this->get_payment_due($payment_due_id, $user_id);
 
             $discount_rate = $payments_result->discount_rate;
@@ -10751,7 +10730,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $status = $this->update_invoice_audit_trail($curr_invoice_details->pymnt_due_id);
         $due_to='Remove Enrollment From Company Invoice';
         $status=$this->enrol_invoice_view($curr_invoice_details->pymnt_due_id,$data,$logged_in_user_id,$due_to);
-
+print_r($status);echo "dddddddddddddddddd";print_r($this->db->last_query());exit;
         if ($status) {
 
             $status = $this->remove_invoice($payment_due_id);
@@ -10764,37 +10743,6 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                     
                     /* update invoice id into invoice related table if invoice is paid and refund start */
                         $total_amount = (round($curr_invoice_details->total_inv_amount,2) - round($total_net_fees_due,2));
-// commented by skm 02-01-17 because of refunded status remark in invoice st
-//                        $previous_inv_id =  $curr_invoice_details->invoice_id;
-//                        
-//                        $query1="select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'";
-//			$query =  mysqli_query($query1);		   
-//			if($query)
-//			{ 
-//				
-//				$sql="update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-////				$sql="update enrol_paymnt_recd set invoice_id='$new_invoice_id',amount_recd='$total_amount' where invoice_id='$previous_inv_id'";
-//				$fi = mysqli_query($sql); 
-//				$sql1="update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//				$fi2 = mysqli_query($sql1); 
-//				
-//			}
-//
-//			$query2="select * from enrol_refund where invoice_id='$previous_inv_id'";
-//			$query = mysqli_query($query2);
-//			if($query)
-//			{ 
-//				$previous_inv_id= $curr_invoice_details->invoice_id;
-//                                
-//                                $sql="update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-////				$sql="update enrol_refund set invoice_id='$new_invoice_id',amount_refund ='$total_amount' where invoice_id='$previous_inv_id'";
-//				$si = mysqli_query($sql);
-//				$sql1="update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//				$sifi = mysqli_query($sql1);
-//				
-//			}
-                    /* end */
-
                     $invoice_id = $new_invoice_id;
 
                     $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
