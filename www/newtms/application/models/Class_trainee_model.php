@@ -3302,6 +3302,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
             $check = $this->db->select('*')
             ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $classes->course_id)
             ->where('class_id', $class)->where('user_id', $user_id)->get();
+            //echo $this->db->last_query();
             $err_arr = array();
             if ($check->num_rows() == 0) 
             {
@@ -3394,7 +3395,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 );
 
                 $this->db->insert('class_enrol', $data);
-//                echo $this->db->last_query();
+                //echo $this->db->last_query();
                
                 if (!empty($payment_due_id)) 
                 {
@@ -3413,7 +3414,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                         'att_status' => $att_status
                     );
                     $this->db->insert('enrol_pymnt_due', $data);
-//                    echo $this->db->last_query();
+                    //echo $this->db->last_query();
                   
                 }
             } 
@@ -3447,7 +3448,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 ->where('tenant_id', $tenant_id)
                 ->get()->row(0);
                 $start= $data->start;
-                $this->db->last_query();
+                //$this->db->last_query();
                 $cur_date = date('Y-m-d H:i:s');
                 if($start)
                 {
@@ -3472,7 +3473,7 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 );
            // }
             $ins_sta = $this->db->insert('enrol_invoice', $data);
-//            echo $this->db->last_query();exit;
+            //echo $this->db->last_query();exit;
 
         } 
         else 
@@ -11327,7 +11328,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $total_net_fees_due = 0;
         $total_discount_due = 0;
         $total_subsidy_amount_due = 0;
-        $due_to='Add E$curr_invoice_detailsnrollment To Company Invoice'; 
+        $due_to='Add Enrollment To Company Invoice'; 
         $data1 = $this->get_current_invoice_data($payment_due_id);
         $this->db->trans_start();
         $status = $this->enrol_invoice_view($payment_due_id,$data1,$logged_in_user_id,$due_to);
@@ -11417,34 +11418,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 //sk4
                 list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, (round($curr_invoice_details->total_inv_amount,2) + round($total_net_fees_due,2)), ($curr_invoice_details->total_unit_fees + $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt + $total_discount_due), ($curr_invoice_details->total_inv_subsdy + $total_subsidy_amount_due), (round($curr_invoice_details->total_gst,2) + round($total_gst_due,2)), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
                 if ($status) 
-                {
-// commented by skm 02-01-17 because of refunded status remark in invoice st
-//                            $query1="select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'";
-//                            $query =  mysqli_query($query1);
-//                           
-//                            if($query)
-//                            { 
-//                                
-//                                $sql="update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//                                $fi = mysqli_query($sql); 
-//                                $sql1="update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//                                $fi2 = mysqli_query($sql1); 
-//                                
-//                            }
-//                            $query2="select * from enrol_refund where invoice_id='$previous_inv_id'";
-//                            $query = mysqli_query($query2);
-//
-//                            if($query)
-//                            { 
-//                              
-//                                $sql="update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//                                $si = mysqli_query($sql);
-//                                $sql1="update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'";
-//                                $sifi = mysqli_query($sql1);
-//                                
-//                            }
-//ed
-                    
+                {  
                     $invoice_id = $new_invoice_id;
                     $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
                     $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);//s4
