@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-sm-8"><h5  style="text-align: right;color: #999393;">Copyright © 
                     <?php 
-                    if($this->data['tenant_details']->copyrighttext){
+                    if(!empty($this->data['tenant_details']->copyrighttext)){
                        echo $this->data['tenant_details']->copyrighttext;
                     }else{
                     echo "BIIPMI 2015-2019";
