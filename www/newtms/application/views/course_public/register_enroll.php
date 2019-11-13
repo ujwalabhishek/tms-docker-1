@@ -17,7 +17,11 @@ echo $this->load->view('common/refer_left_wrapper');
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/public_js/enrol_some_one.js"></script>
 
-
+<style>
+    .table > tbody > tr > td{
+        padding:2px 15px 2px 15px !important;
+    }
+</style>
 
 <div class="ref_col ref_col_tax_code">  
     <h2 class="panel_heading_style">
