@@ -158,7 +158,12 @@ class course_public extends CI_Controller {
 
 
     public function course_class_schedule($course_id = NULL) {
-
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
         $data['page_title'] = 'Course Schedule';
         $tenant_id = TENANT_ID;
         $field = $this->input->get('f');
