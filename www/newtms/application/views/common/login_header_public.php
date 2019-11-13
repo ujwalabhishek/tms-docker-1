@@ -10,17 +10,9 @@
             </div>
             <div class="col-sm-7 header-ttl"><p>TRAINING MANAGEMENT SYSTEM</p></div>
             <div class="col-sm-3" style='font-size:34px'>
-                <div class='row'>
-                    <div class="col-sm-8">
-                        <a title="Join Now" href="<?php echo site_url(); ?>login/administrator" class="btn btn-sm btn-primary"><span style='color:white'>Admin Login<span class="glyphicon glyphicon-chevron-right"></span></span> </a>
-                          <a title="Join Now" href="<?php echo site_url(); ?>course_public/class_member_check" class="btn btn-sm btn-primary"><span style='color:white'>Trainee LogIn<span class="glyphicon glyphicon-chevron-right"></span></span> </a>
-                    </div> 
-                    <div class='col-sm-4'>
-                        <a href="http://test.xprienzhr.com/" title="Home"><img src="http://test.xprienzhr.com/assets/images/home.png" border="0" style="margin-top:4px;"></a>
-                    </div>
-                
-                </div>
-                
+                <a title="Join Now" href="<?php echo site_url(); ?>login/administrator" class="btn btn-sm btn-primary"><span style='color:white'>Admin Login<span class="glyphicon glyphicon-chevron-right"></span></span> </a>
+                <a title="Join Now" href="<?php echo site_url(); ?>course_public/class_member_check" class="btn btn-sm btn-primary"><span style='color:white'>Trainee LogIn<span class="glyphicon glyphicon-chevron-right"></span></span> </a>
+                <a href="http://test.xprienzhr.com/" title="Home" style="width: 50px;"><img src="http://test.xprienzhr.com/assets/images/home.png" border="0" style="margin-top:4px;"></a>
             </div>
         </div>
     </div>
