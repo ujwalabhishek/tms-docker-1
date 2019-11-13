@@ -13,7 +13,7 @@
                        echo $this->data['tenant_details']->copyrighttext;
                     }else{
                     echo "BIIPMI 2015-2019";
-                    }?>, All Rights Reserved.</h5></div>, All Rights Reserved.</h5></div>
+                    }?>, All Rights Reserved.</h5></div>
                 <div class="col-sm-4"><h6 style="text-align: right;color: #999393;">powered by biipmi Pte Ltd</h6></div>
 
             </div>
