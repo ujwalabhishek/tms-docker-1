@@ -411,7 +411,7 @@ $("#NRIC").change(function() {
                         window.username = 'exists';
 //                        $("#" + id + "_err").text("[code exists!]").addClass('error');
 //                        $("#" + id).addClass('error');
-                        $("#NRIC_err").text("[code exists!]").addClass('error');
+                        $("#NRIC_err").text("[Already exists!]").addClass('error');
                         $("#NRIC").addClass('error');
                         $("#NRIC_msg").hide();
                         return false;

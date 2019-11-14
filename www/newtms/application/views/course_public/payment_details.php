@@ -136,8 +136,9 @@
 
             <?php if ($class_details->class_pymnt_enrol == PAY_A_ENROL) { ?>
                 <button type="submit" name="submit" value="book_now" class="btn btn-sm btn-info" style="float: right;margin-left: 10px;"><strong>Book Now</strong></button>
+            <?php }else{ ?>
+                <center style='color:red'> Kindly Contact admin, If you wants to Book this class</center>
             <?php } ?>
-
 
 <!--                <button type="submit" name="submit" value="pay_now" class="btn btn-sm btn-info" style="float: right;"><strong>Pay Now</strong></button>-->
 
