@@ -19,7 +19,7 @@ define('LOG_FILE', '.ipn_results.log');
 define('SSL_P_URL', 'https://www.paypal.com/cgi-bin/webscr');
 define('SSL_SAND_URL','https://www.sandbox.paypal.com/cgi-bin/webscr');
 
-class paypal_class {
+class Paypal_class {
 	
 	private $ipn_status;                // holds the last status
 	public $admin_mail; 				// receive the ipn status report pre transaction
