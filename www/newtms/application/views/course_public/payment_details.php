@@ -115,7 +115,7 @@
         <br/>
         <span style="float:right;">
             <?php $query_string = (SANDBOX ? '?sandbox=1' : ''); ?>
-            <?php echo form_open("course/create_classenroll$query_string", "id='enroll_now'"); ?>
+            <?php echo form_open("course_public/create_classenroll$query_string", "id='enroll_now'"); ?>
             <?php echo form_hidden('user_id', $user_id) ?>
             <?php echo form_hidden('additional_remarks', $additional_remarks) ?>
             <?php echo form_hidden('class_id', $class_details->class_id) ?>
