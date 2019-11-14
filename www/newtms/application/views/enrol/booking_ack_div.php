@@ -24,7 +24,7 @@
             <br><strong>Contact Details:</strong> <?php echo $contact; ?>
               <br> <?php echo $message3; ?>
             <span class="pull-right" style="margin-right: 10px;">
-                <a href="<?php echo base_url() . 'course/booking_acknowledge_pdf/' . $trainee_id . '/' . $class_id ?>">
+                <a href="<?php echo base_url() . 'course_public/booking_acknowledge_pdf/' . $trainee_id . '/' . $class_id ?>">
                     <button type="button" class="btn btn-sm btn-info" style="float: right;"><strong>Print</strong></button>
                 </a>
             </span>
