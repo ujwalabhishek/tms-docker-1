@@ -15,7 +15,7 @@ echo $this->load->view('common/refer_left_wrapper');
 
 </script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/public_js/enrol_some_one.js"></script>
+
 
 
 
