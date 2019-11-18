@@ -539,7 +539,7 @@ class User extends CI_Controller {
                             }
                             
                            
-                             $message = 'You have successfully booked a seat. Click <a href="' . base_url() . 'course/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
+                             $message = 'You have successfully booked a seat. Click <a href="' . base_url() . 'course_public/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
                              $data['success_message'] = $message;
                             
                             // skm start fetch user details when register with course aand class
