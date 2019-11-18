@@ -426,7 +426,7 @@ class User extends CI_Controller {
             }else{
                 $error = 'We are not able to complete the enrollment in the class. Please try again later or contact your Administrator.';                             
                 $this->session->set_flashdata('error', $error);
-                return redirect('course/register_enroll/'.$course_id.'/'.$class_id); 
+                return redirect('course_public/register_enroll/'.$course_id.'/'.$class_id); 
             }
               
             }
@@ -533,7 +533,7 @@ class User extends CI_Controller {
 //                                Click <a href="' . base_url() . 'course/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
                             $this->session->set_flashdata('error', $error);
                             //return redirect('course/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
-                            return redirect('course/course_class_schedule/' . $class_details->course_id);
+                            return redirect('course_public/course_class_schedule/' . $class_details->course_id);
                             
                         } else {
 //                            echo "else part"; echo "<br/>";
