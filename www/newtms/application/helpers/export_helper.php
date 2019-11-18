@@ -4598,6 +4598,7 @@ function mask_format($nric) {
 }
 /* skm end */
 
+
 function export_archive_trainee($data,$course_name,$class_name) {
     $CI = & get_instance();
     $CI->load->model('Meta_Values', 'meta');

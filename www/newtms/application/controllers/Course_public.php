@@ -128,7 +128,14 @@ class course_public extends CI_Controller {
     // skm code start for iframe
 
     public function com_page() {
-
+        ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
         $data['course_list'] = $this->course_model->get_course_list1();
 
         foreach ($data['course_list'] as $cl) {
@@ -158,12 +165,14 @@ class course_public extends CI_Controller {
 
 
     public function course_class_schedule($course_id = NULL) {
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
         $user_role = $this->session->userdata('userDetails')->role_id ?? '';
         if($user_role != ''){
             if($user_role != 'TRAINE'){
                 redirect('login/administrator/'); ///// added by shubhranshu
             }
         }
+        ////////////////////////////////////////////////////////////////////////////////////////
         $data['page_title'] = 'Course Schedule';
         $tenant_id = TENANT_ID;
         $field = $this->input->get('f');
@@ -207,7 +216,14 @@ class course_public extends CI_Controller {
     /* This function show the total booking in a specifc corse and class */
 
     public function course_class_booked_seat($course_id = NULL) {
-
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
         $data['page_title'] = ' Course Booking';
         $tenant_id = TENANT_ID;
         $field = $this->input->get('f');
@@ -258,7 +274,14 @@ class course_public extends CI_Controller {
      */
 
     public function classes_list_by_date($class_date = NULL) {
-
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
         $tenant_id = TENANT_ID;
 
         $data['page_title'] = 'Course Schedule';
@@ -356,7 +379,7 @@ class course_public extends CI_Controller {
      */
 
     public function check_course_class_schedule() {
-
+        
         extract($_POST);
 
         $date = trim(($date));
@@ -399,6 +422,14 @@ class course_public extends CI_Controller {
 
      */
     public function course_list() {
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
         $data['page_title'] = 'Course List';
         $search_value = $this->input->get('search_value');
         $arg3 = $this->uri->segment(3);
@@ -475,6 +506,14 @@ class course_public extends CI_Controller {
 //  skm start
 
     public function enrol_for_someone() {
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
 
         $data['page_title'] = 'Enroll For Someone';
 
@@ -487,6 +526,15 @@ class course_public extends CI_Controller {
 //  skm code for registration form when user comes from home page start
 
     public function register_enroll($course_id = null, $class_id = null) {
+        
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
 
         $data['page_title'] = 'Enrollment';
 
@@ -562,6 +610,14 @@ class course_public extends CI_Controller {
      */
 
     public function referral_credentials1($course_id, $class_id) {
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
         unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file'));// added by shubhranshu to delete the captcha file
         $session_user_id = $this->session->userdata('userDetails')->user_id;
         if (!empty($session_user_id)) {
@@ -647,7 +703,14 @@ class course_public extends CI_Controller {
     }
 
     public function create_classenroll2($uid, $user_password = null, $course_id, $class_id, $tax_code, $registration = null, $friend_id = null, $friend_password = null, $relation = null) {
-
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
         $action = $this->input->get('action');
         $error = '';
         $checkbox = $this->input->post('checkbox');
@@ -885,7 +948,14 @@ class course_public extends CI_Controller {
 
     public function reg($course_id, $class_id, $tax_code, $registration = null) {
 
-
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
 
         $this->load->helper('metavalues_helper', 'common');
 
@@ -1070,6 +1140,14 @@ class course_public extends CI_Controller {
      */
 
     public function referral_credentials() {
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
 
         $data['page_title'] = 'Refer a Friend';
 
@@ -1219,6 +1297,14 @@ class course_public extends CI_Controller {
 
      */
     public function refer() {
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
 
         $data['page_title'] = 'Refer a Friend';
 
@@ -1308,6 +1394,14 @@ class course_public extends CI_Controller {
 //    public function get_course_class_list() {
 
     public function get_course_class_list($uid = null, $friend_id = null, $relation = null) {
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
 
         $data['page_title'] = 'Available Classlist';
 
@@ -1406,7 +1500,14 @@ class course_public extends CI_Controller {
      */
     public function enrol_friend($class_id = NULL, $data = array()) {
 
-
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
 
         if ($this->input->server('REQUEST_METHOD') === 'POST' || $class_id) {
 
@@ -1541,6 +1642,14 @@ class course_public extends CI_Controller {
 
      */
     public function create_enroll() {
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
 
         $this->load->helper('common');
 
@@ -2048,11 +2157,14 @@ class course_public extends CI_Controller {
     }
 
     public function create_enroll_self_loggedin($course_id, $class_id) {
-//        $this->load->helper('common');
-//        $this->load->library('paypal_class');
-//        $p = new paypal_class();
-//        $action = $this->input->get('action');
-        //if ($this->input->server('REQUEST_METHOD') === 'POST') {
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
         $this->load->model('user_model');
         $user_id = $this->session->userdata('userDetails')->user_id;
         $user_result = $this->user_model->r_userDetails($user_id);
@@ -2084,8 +2196,6 @@ class course_public extends CI_Controller {
         //$is_enrollerd = $this->course_model->is_user_enrolled1($param['user_id'], $param['class_id'], $class_details->course_id);
         $data['class_details'] = $class_details = $this->course_model->get_class_details($param['class_id']);
         $is_enrolled = $this->course_model->is_user_enrolled1($taxcode_details->user_id, $class_id, $course_id);
-//print_r($param);
-//exit();
         if ($is_enrolled == 0) {
             //if ($submit == 'book_now') {
 
@@ -2149,66 +2259,7 @@ class course_public extends CI_Controller {
                 $this->load->view('layout_public', $data);
             }
 
-            //}
-//                if ($submit == 'pay_now') {
-//                    //Update additional information- Added for CR03
-//                    $result1 = $this->course_model->update_additional_information($param);
-//
-//                    $tenant_details = $this->course_model->get_tenant_masters(TENANT_ID);
-//                    $paypal_email = $tenant_details->paypal_email_id;
-//                    $p->admin_mail = $tenant_details->tenant_email_id;
-//
-//                    $this_script = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-//
-//                    
-//
-//if (!empty($_SERVER['HTTPS'])) {
-//
-//                        $this_script = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-//
-//                    }
-//                    $p->add_field('business', $paypal_email);
-//
-//                    $p->add_field('cmd', $this->input->post('cmd')); 
-//
-//                    $p->add_field('upload', '1');
-//                    $p->add_field('return', $this_script . '?action=success');
-//                    $p->add_field('cancel_return', $this_script . '?action=cancel');
-//
-//                    $p->add_field('notify_url', $this_script . '?action=ipn'); 
-//
-//                    $p->add_field('currency_code', $tenant_details->Currency);
-//                    $p->add_field('country', $tenant_details->Country);
-//                    $p->add_field('item_name', $this->input->post('class_name'));
-//                    $p->add_field('quantity', 1);
-//                    $p->add_field('amount', $this->input->post('net_due'));
-//
-//                    $p->add_field('no_shipping', 1); 
-//
-//                    $enroll_data = $param;
-//                    $enroll_data['enrol_status'] = 'ENRLBKD';
-//                    $enroll_data['pay_status'] = 'NOTPAID';
-//                    $enrol_result = $this->course_model->create_new_enroll($enroll_data);
-//                    $param['invoice_id']=$enrol_result['invoice_id'];
-//
-//                    $param['payment_due_id']=$enrol_result['payment_due_id'];                    
-//
-//                    $pid = $this->course_model->store_paypal_enrol_details($param,$param['invoice_id']);
-//                    $p->add_field('invoice', $param['invoice_id']);
-//
-//                    $this->session->set_userdata('paypal_data', $param);
-//
-//                    $this->session->set_userdata('classId', $this->input->post('class_id'));
-//
-//                    if ($enrol_result["status"]){
-//                     return $p->submit_paypal_post();   
-//                    } else{
-//                        $error = 'We have not been able to enrol you to the class. Please try again or get in touch with your administrator.';
-//                        $this->session->set_flashdata('error', $error);
-//                        return redirect('course_public/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
-//                    }
-//
-//                }
+        
         } else {
 
             $course_details = $this->course_model->course_basic_details($class_details->course_id);
@@ -2222,148 +2273,7 @@ class course_public extends CI_Controller {
             }
         }
 
-        //} if statment close submit post
-//        if ($action == 'cancel') {
-//
-//            $message = 'The payment has been cancelled, no enrollment has been done.';
-//            if ($this->session->userdata('submit_status') == 'save_and_continue') {
-//                $message .= ' Please  click <a href="javascript:;" id="back_to_refer">here</a> to  register a new friend OR click <a href="' . base_url() . '">here</a> to go back to the home page.';
-//            } else {
-//                $message .= ' Please click <a href="' . base_url() . '">here</a> to go back to home page.';
-//            }
-//            $class_id = $this->session->userdata('classId');
-//            $data['error_message'] = $message;
-//            $this->enrol_friend($class_id, $data);
-//            return;
-//        }
-//        if ($action == 'success') {
-//            $tran_id = $this->input->post('txn_id');
-//
-//            $invoice_id = $this->input->post('invoice');
-//            $param = $this->session->userdata('paypal_data');
-//            $this->session->unset_userdata('paypal_data');
-//            $param['enrol_status'] = 'ENRLACT';
-//            $param['pay_status'] = 'PAID';
-//
-//            if ($tran_id) { 
-//
-//                $exists = $this->course_model->check_paypal_payment_details_exists($tran_id);
-//
-//                if ($exists) {                    
-//
-//                    $is_enrolled = $this->course_model->is_user_paid($param['invoice_id']);
-//
-//                    if ($is_enrolled->num_rows() == 0){
-//
-//                        $result = $this->course_model->update_enroll_payment($param);
-//
-//                        if (!$result["status"]){
-//
-//                            $error_message = 'We have not been able to update your payment status.'
-//                                    . ' You have however been enrolled for the class. Please contact your Administrator with the transction Id shown here, for your payment update. Paypal Transcation Id: <label style="font-weight:bold;color:red;">'.$tran_id.'</label>';
-//                            $data['error_message'] = $error_message;
-//                        }else{
-//
-//                            $message = 'The payment was successful and enrollment has been done in the class.';
-//                            if ($this->session->userdata('submit_status') == 'save_and_continue') {
-//                                $message .= ' Please  click <a href="javascript:;" id="back_to_refer">here</a> to  register a new friend OR click <a href="' . base_url() . '">here</a> to go back to the home page.';
-//                            } else {
-//                                $message .= ' Please click <a href="' . base_url() . '">here</a> to go back to home page.';
-//                            }
-//                            $data['success_message'] = $message;
-//                            $data['payment_receipt'] = $this->_get_payment_receipt($param['user_id'], $param['class_id']);
-//                        }
-//                    }else{
-//
-//                        $message = 'The payment was successful and enrollment has been done in the class.';
-//                        if ($this->session->userdata('submit_status') == 'save_and_continue') {
-//                           $message .= ' Please  click <a href="javascript:;" id="back_to_refer">here</a> to  register a new friend OR click <a href="' . base_url() . '">here</a> to go back to the home page.';
-//                        } else {
-//                           $message .= ' Please click <a href="' . base_url() . '">here</a> to go back to home page.';
-//                        }
-//                        $data['success_message'] = $message;
-//                        $data['payment_receipt'] = $this->_get_payment_receipt($param['user_id'], $param['class_id']);
-//                    }
-//                }else{
-//
-//                        $result = $this->course_model->update_enroll_payment($param);
-//
-//                        $paypal_details = array(
-//                            'payer_id' => $this->input->post('payer_id'),
-//                            'payer_email' => $this->input->post('payer_email'),
-//                            'txn_id' => $this->input->post('txn_id'),
-//                            'mc_gross' => $this->input->post('mc_gross'),
-//                            'tenant_id' => TENANT_ID,
-//                            'invoice_id' => $result['invoice_id'],
-//                            'enrol_details' => NULL
-//                        );
-//
-//                        $this->course_model->update_paypal_enrol_details($invoice_id, $paypal_details);
-//
-//                        if (!$result["status"]){
-//
-//                            $error_message = 'We were not able to complete enrollment in the class. We have however received the payment for the class. Please contact your Administrator with the transction Id shown here, for your enrollment. Paypal Transcation Id: <label style="font-weight:bold;color:red;">'.$tran_id.'</label>';
-//                            $data['error_message'] = $error_message;
-//                        }else{
-//
-//                            $message = 'The payment was successful and enrollment has been done in the class..';
-//                            if ($this->session->userdata('submit_status') == 'save_and_continue') {
-//                                $message .= ' Please  click <a href="javascript:;" id="back_to_refer">here</a> to  register a new friend OR click <a href="' . base_url() . '">here</a> to go back to the home page.';
-//                            } else {
-//                                $message .= ' Please click <a href="' . base_url() . '">here</a> to go back to home page.';
-//                            }
-//                            $data['success_message'] = $message;
-//                            $data['payment_receipt'] = $this->_get_payment_receipt($param['user_id'], $param['class_id']);
-//                        }
-//                }
-//
-//            } else {
-//
-//                $is_enrolled = $this->course_model->is_user_enrolled($param['user_id'], $param['class_id'], $param['course_id']);
-//                if ($is_enrolled->num_rows() == 0){
-//
-//                    $error_message = 'We havenot received the Paypal transaction ID, as a result, we have not been able to update your payment status. But you have been enrolled to the class. Please get in touch with your Administrator with your Paypal Transaction details to complete your payment status update.';
-//                    $data['error_message'] = $error_message; 
-//                }else{
-//                    $message = 'The payment was successful and enrollment has been done in the class.';
-//                    if ($this->session->userdata('submit_status') == 'save_and_continue') {
-//                        $message .= ' Please  click <a href="javascript:;" id="back_to_refer">here</a> to  register a new friend OR click <a href="' . base_url() . '">here</a> to go back to the home page.';
-//                    } else {
-//                        $message .= ' Please click <a href="' . base_url() . '">here</a> to go back to home page.';
-//                    }
-//                    $data['success_message'] = $message;
-//                    $data['payment_receipt'] = $this->_get_payment_receipt($param['user_id'], $param['class_id']);
-//                }
-//            }
-//        }
-//        if ($action == 'ipn') {
-//            if ($p->validate_ipn()) {
-//
-//                $invoice_id = $this->input->post('invoice');
-//                $param = $this->course_model->get_paypal_enrol_details($pid);
-//                $param['enrol_status'] = 'ENRLACT';
-//                $param['pay_status'] = 'PAID';
-//
-//                $result = $this->course_model->update_enroll_payment($param);
-//
-//
-//
-//                $paypal_details = array(
-//                    'payer_id' => $this->input->post('payer_id'),
-//                    'payer_email' => $this->input->post('payer_email'),
-//                    'txn_id' => $this->input->post('txn_id'),
-//                    'mc_gross' => $this->input->post('mc_gross'),
-//                    'tenant_id' => TENANT_ID,
-//                    'invoice_id' => $result['invoice_id'],
-//                    'enrol_details' => NULL
-//                );
-//
-//                $this->course_model->update_paypal_enrol_details($invoice_id, $paypal_details);
-//            }
-//        }
-//             $data['page_title'] = 'Enrol';
-//             $data['main_content'] = 'enrol/message_status';
-//             $this->load->view('layout_public', $data);
+       
     }
 
     /**
@@ -2378,6 +2288,14 @@ class course_public extends CI_Controller {
 
      */
     public function create_classenroll() {
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
 
         $this->load->library('paypal_class');
 
@@ -2558,120 +2476,6 @@ class course_public extends CI_Controller {
                         $data['booking_ack'] = $this->_get_booking_ack_data();
                     }
                 }
-
-//                if ($submit == 'pay_now') {
-//
-//                    
-//
-//                    //Update additional information-Added for CR03
-//
-//                    $result1 = $this->course_model->update_additional_information($param);
-//
-//                        
-//
-//                    $tenant_details = $this->course_model->get_tenant_masters(TENANT_ID);
-//
-//                    $paypal_email = $tenant_details->paypal_email_id;
-//
-//                    $p->admin_mail = $tenant_details->tenant_email_id;
-//
-//
-//
-//                    $this_script = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-//
-//
-//
-//                    if (!empty($_SERVER['HTTPS'])) {
-//
-//
-//
-//                        $this_script = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-//
-//
-//
-//                    }
-//
-//                    $p->add_field('business', $paypal_email);
-//
-//
-//
-//                    $p->add_field('cmd', $this->input->post('cmd')); 
-//
-//
-//
-//                    $p->add_field('upload', '1');
-//
-//                    $p->add_field('return', $this_script . '?action=success');
-//
-//                    $p->add_field('cancel_return', $this_script . '?action=cancel');
-//
-//
-//
-//                    $p->add_field('notify_url', $this_script . '?action=ipn'); 
-//
-//
-//
-//                    $p->add_field('currency_code', $tenant_details->Currency);
-//
-//                    $p->add_field('country', $tenant_details->Country);
-//
-//                    $p->add_field('item_name', $this->input->post('class_name'));
-//
-//                    $p->add_field('quantity', 1);
-//
-//                    $p->add_field('amount', $this->input->post('net_due'));
-//
-//
-//
-//                    $p->add_field('no_shipping', 1); 
-//
-//
-//
-//                    $enroll_data = $param;
-//
-//                    $enroll_data['enrol_status'] = 'ENRLBKD';
-//
-//                    $enroll_data['pay_status'] = 'NOTPAID';
-//
-//                    $enrol_result = $this->course_model->create_new_enroll($enroll_data);
-//
-//                    $param['invoice_id']=$enrol_result['invoice_id'];
-//
-//                    $param['payment_due_id']=$enrol_result['payment_due_id'];
-//
-//
-//
-//                    $pid = $this->course_model->store_paypal_enrol_details($param, $param['invoice_id']);
-//
-//                    $p->add_field('invoice', $param['invoice_id']);
-//
-//
-//
-//                    $this->session->set_userdata('paypal_data', $param); 
-//
-//
-//
-//                    $this->session->set_userdata('classId', $this->input->post('class_id'));
-//
-//
-//
-//                    if ($enrol_result["status"]){
-//
-//                     return $p->submit_paypal_post();   
-//
-//                    } else{
-//
-//                        $error = 'We have not been able to enrol you to the class. Please try again or get in touch with your administrator.';
-//
-//                        $this->session->set_flashdata('error', $error);
-//
-//                        return redirect('course_public/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
-//
-//                    }
-//
-//
-//
-//                }
             } else {
 
 
@@ -2761,6 +2565,7 @@ class course_public extends CI_Controller {
 
      */
     private function _get_booking_ack_data() {
+        
 
         $tenant_id = TENANT_ID;
 
@@ -3382,14 +3187,6 @@ class course_public extends CI_Controller {
 
         $data['page_title'] = 'Class Enrollment';
 
-//        echo $course_id='94';
-//        echo $class_id='1602';
-//        echo $course_id;
-//        echo $data;
-//        print_r($data);
-
-
-
         $this->load->library('form_validation');
 
         if (empty($course_id) || !is_numeric($course_id) || empty($class_id) || !is_numeric($class_id)) {
@@ -3401,8 +3198,14 @@ class course_public extends CI_Controller {
 
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
 
-//            echo $skm;
-//            exit;
+        ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+               $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+               if($user_role != ''){
+                   if($user_role != 'TRAINE'){
+                       redirect('login/administrator/'); ///// added by shubhranshu
+                   }
+               }
+               ////////////////////////////////////////////////////////////////////////////////////////
 
             $submit = $this->input->post('submit');
 
@@ -3568,6 +3371,14 @@ class course_public extends CI_Controller {
     }
 
     public function class_enroll1($course_id, $class_id, $data = NULL) {
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
 
         $data['page_title'] = 'Class Enrollment';
 
@@ -3702,6 +3513,14 @@ class course_public extends CI_Controller {
 
      */
     public function class_enroll_payment($class_id, $course_id, $data) {
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
 
         $paypal_data = $this->session->userdata('paypal_data');
 
