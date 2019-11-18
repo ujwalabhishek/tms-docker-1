@@ -508,25 +508,13 @@ class User extends CI_Controller {
             $data['classloc'] = ($class_details->classroom_location == 'OTH') ? 'Others (' . $class_details->classroom_venue_oth . ')' : $meta_result[$class_details->classroom_location];
             $data['gst_onoff'] = $course_details->gst_on_off;
             $data['gst_rule'] =  $course_details->subsidy_after_before;
-          
-//
-            
-         
 
             if ($is_enrolled == 0) { 
-
-               
-                    
-                        //Update additional information- Added for CR03
-                        //echo $result1 = $this->course_public_model->update_additional_information($data);
 
                         $data['enrol_status'] = 'ENRLBKD';
                         $data['pay_status'] = 'NOTPAID';
 //                        echo "<br/>"; print_r($data);
                         $result = $this->course_public_model->create_new_enroll($data);
-                        
-                       
-                        
 //                        exit();
                         if ($result["status"] == FALSE) {
                             $error = 'We were not able to complete the enrollment in the class. Please try again later or contact your Administrator.';
@@ -558,9 +546,7 @@ class User extends CI_Controller {
                             
                             $course_name = $this->user_model->course_name($data['course_id']);
                             $user_result = $this->user_model->r_userDetails($data['user_id']);
-                            
-                            
-                            
+
                             $user_mailer_details = array('username' => $this->input->post('user_name'),
                                                 'email' => $this->input->post('frnd_registered_email'), 
                                                 'password' => $user_password,
@@ -651,7 +637,7 @@ class User extends CI_Controller {
                 $error = 'You are already enrolled in this class \'' . $course_details->crse_name . ' - ' . $class_details->class_name . '\'.';
                 $this->session->set_flashdata('error', $error);
                 //return redirect('course/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
-                return redirect('course/course_class_schedule/' . $class_details->course_id);
+                return redirect('course_public/course_class_schedule/' . $class_details->course_id);
                 
             }
   }
