@@ -2898,7 +2898,7 @@ class course_public extends CI_Controller {
 
 
      */
-    public function captcha_match1($captcha) {
+    public function captcha_match1($captcha=0) {
 
         $captcha = $this->input->post('captcha');
 
