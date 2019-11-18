@@ -609,7 +609,7 @@ class course_public extends CI_Controller {
 
      */
 
-    public function referral_credentials1($course_id, $class_id) {
+    public function referral_credentials1($course_id=0, $class_id=0) {
          ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
         $user_role = $this->session->userdata('userDetails')->role_id ?? '';
         if($user_role != ''){
