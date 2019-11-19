@@ -2763,11 +2763,12 @@ class Course_Public_Model extends CI_Model {
         }//end
         //$this->db->trans_start();
 
-
+         ////Added by shubhranshu if the first NRIC not exist then only need to insert data
         if(empty($taxcode_found)){
             $this->db->insert('tms_users', $tms_users_data);
             $user_id = $this->db->insert_id();
         }
+        //////////////////////shubhranshu code end
         
 
         
@@ -2838,8 +2839,12 @@ class Course_Public_Model extends CI_Model {
         );
 
 
-
-        $this->db->insert('tms_users_pers', $tms_users_pers_data);
+       ////Added by shubhranshu if the first NRIC not exist then only need to insert data
+        if(empty($taxcode_found)){
+             $this->db->insert('tms_users_pers', $tms_users_pers_data);
+        }
+        //////////////////////shubhranshu code end
+       
 
 
 
