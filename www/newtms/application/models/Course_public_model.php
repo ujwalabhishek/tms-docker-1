@@ -2661,7 +2661,7 @@ class Course_Public_Model extends CI_Model {
             'registration_mode' => 'TRAINE',
             'friend_id' => NULL,
             'registration_date' => $dateTime,
-            'user_name' => $user_name,
+            'user_name' => $user_name ?? $tax_code,
             'password' => $encrypted_password,
             'acc_activation_type' => 'BPEMAC',
             'activation_key' => $activation_key,
