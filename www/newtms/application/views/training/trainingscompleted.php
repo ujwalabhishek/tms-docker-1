@@ -9,7 +9,7 @@
         color: white !important;
 
     }
-    #ex6{
+    .modal1_5551{
         overflow:scroll !important;
     }
 </style>
