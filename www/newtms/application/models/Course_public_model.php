@@ -2765,7 +2765,7 @@ class Course_Public_Model extends CI_Model {
 
 
 
-        $this->db->insert('tms_users', $tms_users_data);
+        //$this->db->insert('tms_users', $tms_users_data);
 
         $user_id = $this->db->insert_id();
 
