@@ -9,7 +9,9 @@
         color: white !important;
 
     }
-
+    #ex6{
+        overflow:scroll !important;
+    }
 </style>
 
 <div class="col-md-12"  style="min-height: 390px;">
