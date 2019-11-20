@@ -755,7 +755,6 @@ class Company extends CI_Controller {
      */
     public function export_company_trainee_page($company_id) {
         $user = $this->session->userdata('userDetails');
-        $this->load->helper('pdf_reports_helper');
         $tenant_id = $user->tenant_id;
         $this->db->select('tu.user_id, DATE(tu.acct_acti_date_time) AS acct_acti_date_time, DATE(tu.registration_date) AS registration_date, tu.acc_activation_type, tup.first_name, tup.last_name, tu.country_of_residence, tu.tax_code, tu.tax_code_type, tu.other_identi_type, tu.other_identi_code, tup.dob, tu.registered_email_id, tup.contact_number, tup.personal_address_bldg, tup.personal_address_city, tup.personal_address_state, tup.personal_address_country, tup.personal_address_zip');
         $this->db->from('tenant_company_users tcu');
