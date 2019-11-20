@@ -796,13 +796,13 @@ class Company extends CI_Controller {
             if ($data[$i]->tax_code_type && $data[$i]->tax_code) {
                 if ($data[$i]->tax_code_type != 'OTHERS') {
                     $type = get_param_value($data[$i]->tax_code_type);
-                    $tax_code_nric = $type->category_name . ' - ' . mask_format($data[$i]->tax_code);
+                    $tax_code_nric = $type->category_name . ' - ' . $this->mask_format($data[$i]->tax_code);
                 }
             }
             if ($data[$i]->other_identi_type && $data[$i]->other_identi_code) {
                 $tax_code_type = get_param_value($data[$i]->tax_code_type);
                 $type = get_param_value($data[$i]->other_identi_type);
-                $tax_code_nric = $tax_code_type->category_name . ' - ' . $type->category_name . ' - ' . mask_format($data[$i]->other_identi_code);
+                $tax_code_nric = $tax_code_type->category_name . ' - ' . $type->category_name . ' - ' . $this->mask_format($data[$i]->other_identi_code);
             }
             $excel_data[$i][] = $tax_code_nric;
             if ($data[$i]->acc_activation_type == 'BPEMAC') {
