@@ -41,7 +41,7 @@ function export_users_page($query) {
         if ($row->other_identi_type && $row->other_identi_code) {
             $tax_code_type = get_param_value($row->tax_code_type);
             $type = get_param_value($row->other_identi_type);
-            $taxcode = $tax_code_type->category_name . ' - ' . $type->category_name . ' - ' . $row->other_identi_code;
+            $taxcode = $tax_code_type->category_name . ' - ' . $type->category_name . ' - ' . mask_format($row->other_identi_code);
         }
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, $taxcode);
