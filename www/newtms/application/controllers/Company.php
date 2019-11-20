@@ -855,6 +855,17 @@ class Company extends CI_Controller {
      * method to reactivate company
      */
     
+    /*shubhranshu  start: replace nric first 5 character with mask */
+    function mask_format($nric) {  
+        if(is_numeric($nric) == 1){
+            return $nric;
+        }else{
+            $new_nric = substr_replace($nric,'XXXXX',0,5);   
+            //$new_nric = substr_replace($nric,'XXXX',5);        
+            return $new_nric;
+        }   
+    }
+    /* shubhranshu end */
     public function reactivate_company() {
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $reason_for_reactivation = $this->input->post('reason_for_reactivation');
