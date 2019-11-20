@@ -4592,7 +4592,7 @@ function export__total_tenant_page_fields($titles, $data, $filename, $sheetname 
 
 /*shubhranshu  start: replace nric last 4 digit with mask */
 function mask_format($nric) {  
-    $new_nric = substr_replace($nric,'XXXX',0,4);       
+    $new_nric = substr_replace($nric,'XXXXX',0,5);       
      //$new_nric = substr_replace($nric,'XXXX',5);        
     return $new_nric;
 }
