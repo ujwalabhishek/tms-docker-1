@@ -35,7 +35,7 @@ function export_users_page($query) {
         if ($row->tax_code_type && $row->tax_code) {
             if ($row->tax_code_type != 'SNG_3') {
                 $type = get_param_value($row->tax_code_type);
-                $taxcode = $type->category_name . ' - ' . $row->tax_code;
+                $taxcode = $type->category_name . ' - ' . mask_format($row->tax_code);
             }
         }
         if ($row->other_identi_type && $row->other_identi_code) {
@@ -4590,13 +4590,13 @@ function export__total_tenant_page_fields($titles, $data, $filename, $sheetname 
 }
 /* skm end */
 
-/*skm  start: replace nric last 4 digit with mask */
+/*shubhranshu  start: replace nric last 4 digit with mask */
 function mask_format($nric) {  
-    $new_nric = substr_replace($nric,'XXXX',1,4);       
-     //$new_nric = substr_replace($nric,'XXXX',5);        
+    //$new_nric = substr_replace($nric,'XXXX',1,4);       
+     $new_nric = substr_replace($nric,'XXXX',5);        
     return $new_nric;
 }
-/* skm end */
+/* shubhranshu end */
 
 
 function export_archive_trainee($data,$course_name,$class_name) {
