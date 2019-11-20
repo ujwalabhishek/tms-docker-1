@@ -106,13 +106,13 @@ function export_users_full($query) {
         if ($row->tax_code_type && $row->tax_code) {
             if ($row->tax_code_type != 'SNG_3') {
                 $type = get_param_value($row->tax_code_type);
-                $taxcode = $type->category_name . ' - ' . $row->tax_code;
+                $taxcode = $type->category_name . ' - ' . mask_format($row->tax_code);
             }
         }
         if ($row->other_identi_type && $row->other_identi_code) {
             $tax_code_type = get_param_value($row->tax_code_type);
             $type = get_param_value($row->other_identi_type);
-            $taxcode = $tax_code_type->category_name . ' - ' . $type->category_name . ' - ' . $row->other_identi_code;
+            $taxcode = $tax_code_type->category_name . ' - ' . $type->category_name . ' - ' . mask_format($row->other_identi_code);
         }
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, $taxcode);
