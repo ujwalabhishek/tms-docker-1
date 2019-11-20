@@ -723,11 +723,15 @@ function generate_loc_pdf($data) {
  * modified by: Sankar (27/11/2014)
  * @param type $data
  */
-/*shubhranshu start : it replace the last 4 digit of nric */
+/*shubhranshu  start: replace nric first 5 character with mask */
 function mask_format($nric) {  
-    $new_nric = substr_replace($nric,'XXXXX',0,5);       
-     //$new_nric = substr_replace($nric,'XXXX',5);        
-    return $new_nric;
+    if(is_numeric($nric) == 1){
+        return $new_nric;
+    }else{
+        $new_nric = substr_replace($nric,'XXXXX',0,5);   
+        //$new_nric = substr_replace($nric,'XXXX',5);        
+        return $new_nric;
+    }   
 }
 /* shubhranshu end */
 function generate_acknowledgment($data) {
