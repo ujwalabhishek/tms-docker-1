@@ -682,7 +682,7 @@ function export_trainee_full($query) {
 /*
  * Excel Export (Can be reused)
  */
-function export_page_fields($titles, $data, $filename, $sheetname = "", $main_heading = "") {print_r($data);exit;
+function export_page_fields($titles, $data, $filename, $sheetname = "", $main_heading = "") {
     $CI = & get_instance();
     $CI->load->library('excel');
     $CI->excel->setActiveSheetIndex(0);
