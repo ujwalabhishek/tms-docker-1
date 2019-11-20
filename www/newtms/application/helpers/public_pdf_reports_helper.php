@@ -711,7 +711,7 @@ function generate_loc_pdf($data) {
             <p>To Whom it May Concern: </p>
             <p><b>LETTER OF CERTIFICATION FOR ATTAINMENT OF SOA FOR THE \'' . $data->crse_name . ' - ' . $data->class_name . '\'</b></p>
                 <p>This letter serves to certify that <b><u>' . $name . '
-                (' . $data->tax_code . ')</u></b>, has successfully completed the course
+                (' . mask_format($data->tax_code) . ')</u></b>, has successfully completed the course
              of study and certified competent in the<b> ' .
             $data->crse_name . ' - ' . $data->class_name . '</b> on 
             <b><u>' . $test_date . '</u></b> [TEST DATE].</p>
