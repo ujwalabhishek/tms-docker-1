@@ -726,7 +726,7 @@ function generate_loc_pdf($data) {
 /*shubhranshu  start: replace nric first 5 character with mask */
 function mask_format($nric) {  
     if(is_numeric($nric) == 1){
-        return $new_nric;
+        return $nric;
     }else{
         $new_nric = substr_replace($nric,'XXXXX',0,5);   
         //$new_nric = substr_replace($nric,'XXXX',5);        
