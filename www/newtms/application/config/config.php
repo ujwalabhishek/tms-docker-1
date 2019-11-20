@@ -521,3 +521,12 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+$config['protocol'] = 'smtp';
+$config['smtp_host'] = 'mail.biipmi.co';
+$config['smtp_port'] = '25';
+$config['smtp_user'] = 'enquiries@biipmi.co';
+$config['smtp_pass'] = 'biipmisg2014';
+$config['mailtype'] = 'html';
+$config['charset'] = 'utf-8';
+$config['newline'] = "\r\n";
+$config['smtp_timeout'] = 30;

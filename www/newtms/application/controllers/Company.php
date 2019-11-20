@@ -931,6 +931,21 @@ class Company extends CI_Controller {
             redirect('company/view_company/'.$company_id);
         }
     }
+    
+    public function sendnewmail(){
+        $this->load->library('email');
+
+        $this->email->from('enquiries@biipmi.co', 'Divya');
+        $this->email->to('vinod@mailinator.com');
+        //$this->email->cc('another@another-example.com');
+        //$this->email->bcc('them@their-example.com');
+
+        $this->email->subject('Email Test');
+        $this->email->message('Testing the email class.');
+
+        $this->email->send();
+        echo "mail sent";exit;
+    }
 
 }
 
