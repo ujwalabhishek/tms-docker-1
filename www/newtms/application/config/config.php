@@ -522,11 +522,17 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 $config['protocol'] = 'smtp';
-$config['smtp_host'] = 'mail.biipmi.co';
-$config['smtp_port'] = '25';
-$config['smtp_user'] = 'enquiries@biipmi.co';
-$config['smtp_pass'] = 'biipmisg2014';
+$config['smtp_host'] = 'ssl://smtp.gmail.com';
+$config['smtp_port'] = '465';
+$config['smtp_user'] = 'cleaningsolute@gmail.com';
+$config['smtp_pass'] = 'cleaningsolut';
 $config['mailtype'] = 'html';
 $config['charset'] = 'utf-8';
-$config['newline'] = "\r\n";
-$config['smtp_timeout'] = 30;
+
+
+//$config['protocol'] = 'sendmail';
+//$config['mailpath'] = '/usr/sbin/sendmail';
+//$config['charset'] = 'iso-8859-1';
+$config['wordwrap'] = TRUE;
+
+//$this->email->initialize($config);
