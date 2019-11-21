@@ -945,6 +945,8 @@ class Company extends CI_Controller {
     'mailtype' => 'html', //plaintext 'text' mails or 'html'
     'smtp_timeout' => '4', //in seconds
     'charset' => 'utf-8',
+   'newline' => '\r\n',
+    'crlf' => '\r\n',
     'wordwrap' => TRUE
 );
         $this->load->library('email', $config);
@@ -955,7 +957,7 @@ class Company extends CI_Controller {
 //print_r($this->email);exit;
         $this->email->subject('Email Test');
         $this->email->message('Testing the email class.');
-$this->email->set_newline("\r\n");
+
         if ($this->email->send()) {
             echo 'Your Email has successfully been sent.';
         } else {
