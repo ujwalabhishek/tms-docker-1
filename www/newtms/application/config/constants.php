@@ -93,7 +93,7 @@ define('RECORDS_PER_PAGE', 50);
 define('ACTIVE', 'ACTIVE'); //Added for DMS
 define('ARCHIVED', 'INACTIVE'); //Added for DMS
 
-define('FROM_EMAIL_ID', 'enquiries@xprienz.net');
+define('FROM_EMAIL_ID', 'biipmisg@gmail.com');
 define('INBOX_MAIL_NAME', 'TMS'); 
 define('NOTIFICATION_MAIL_SUBJECT', 'Notification from TMS Administrator');
 
