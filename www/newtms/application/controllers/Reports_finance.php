@@ -146,7 +146,7 @@ class Reports_finance extends CI_Controller {
             $paid_arr = array('PAID' => 'Paid', 'PARTPAID' => 'Part Paid', 'NOTPAID' => 'Not Paid');
             $paid_sty_arr = array('PAID' => 'color:green;', 'PARTPAID' => 'color:red;', 'NOTPAID' => 'color:red;');
             if ($tabledata[$i]->enrolment_mode == 'SELF') {
-                $taxcode = $tabledata[$i]->tax_code;
+                $taxcode = $this->mask_format($tabledata[$i]->tax_code);
                 $name = $tabledata[$i]->first_name . ' ' . $tabledata[$i]->last_name;
                 $status = $paid_arr[$tabledata[$i]->payment_status];
             } else {
@@ -303,7 +303,7 @@ class Reports_finance extends CI_Controller {
             $excel_data[$i][] = '$ ' . number_format($tabledatarefund[$tabledata[$i]->invoice_id], 2, '.', '');
             $excel_data[$i][] = $tabledata[$i]->crse_name . ' - ' . $tabledata[$i]->class_name;
             if ($tabledata[$i]->inv_type == 'INVINDV') {
-                $taxcode = $tabledata[$i]->tax_code;
+                $taxcode = $this->mask_format($tabledata[$i]->tax_code);
                 $name = $tabledata[$i]->first_name . ' ' . $tabledata[$i]->last_name;
             } else {
                 if ($tabledata[$i]->company_id[0] == 'T') {
@@ -461,7 +461,7 @@ class Reports_finance extends CI_Controller {
         $tableuser = array();
         foreach ($tb_user as $row) {
             $tableuser[$row->invoice_id]['name'] = $row->first_name . ' ' . $row->last_name;
-            $tableuser[$row->invoice_id]['taxcode'] = $row->tax_code;
+            $tableuser[$row->invoice_id]['taxcode'] = $this->mask_format($row->tax_code);
         }
         $this->load->helper('export_helper');
         $count_tabledata = count($tabledata);
@@ -545,7 +545,7 @@ class Reports_finance extends CI_Controller {
         $tableuser = array();
         foreach ($tb_user as $row) {
             $tableuser[$row->invoice_id]['name'] = $row->first_name . ' ' . $row->last_name;
-            $tableuser[$row->invoice_id]['taxcode'] = $row->tax_code;
+            $tableuser[$row->invoice_id]['taxcode'] = $this->mask_format($row->tax_code);
         }
         $tenant_details = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $tenant_details->tenant_state = rtrim($this->courseModel->get_metadata_on_parameter_id($tenant_details->tenant_state), ', ');
@@ -675,7 +675,7 @@ class Reports_finance extends CI_Controller {
         for ($i = 0; $i < $count_tabledata; $i++) {
             $k = $tabledata[$i]->pymnt_due_id;
             if ($tabledata[$i]->inv_type == 'INVINDV') {
-                $taxcode = $tabledataextra[$k]->tax_code;
+                $taxcode = $this->mask_format($tabledataextra[$k]->tax_code);
                 $name = $tabledataextra[$k]->first_name . ' ' . $tabledataextra[$k]->last_name;
             } else {
                 if ($tabledata[$i]->company_id[0] == 'T') {
@@ -993,7 +993,17 @@ class Reports_finance extends CI_Controller {
          echo json_encode($invoice_arr);
         exit();
     }
-
+     /*shubhranshu  start: replace nric first 5 character with mas*/
+    function mask_format($nric) {  
+        if(is_numeric($nric) == 1){
+            return $nric;
+        }else{
+            $new_nric = substr_replace($nric,'XXXXX',0,5);   
+            //$new_nric = substr_replace($nric,'XXXX',5);        
+            return $new_nric;
+        }   
+    }
+    /* shubhranshu end */
     /*
      * Invoice audit trail - Export to XLS
      * Author   : CR03
@@ -1022,7 +1032,7 @@ class Reports_finance extends CI_Controller {
             $paid_arr = array('PAID' => 'Paid', 'PARTPAID' => 'Part Paid', 'NOTPAID' => 'Not Paid');
             $paid_sty_arr = array('PAID' => 'color:green;', 'PARTPAID' => 'color:red;', 'NOTPAID' => 'color:red;');
             if ($tabledata[$i]->enrolment_mode == 'SELF') {
-                $taxcode = $tabledata[$i]->tax_code;
+                $taxcode = $this->mask_format($tabledata[$i]->tax_code);
                 $name = $tabledata[$i]->first_name . ' ' . $tabledata[$i]->last_name;
                 $status = $paid_arr[$tabledata[$i]->payment_status];
             } else {
