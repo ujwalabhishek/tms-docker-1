@@ -521,18 +521,3 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
-$config['protocol'] = 'smtp';
-$config['smtp_host'] = 'ssl://smtp.gmail.com';
-$config['smtp_port'] = '465';
-$config['smtp_user'] = 'cleaningsolute@gmail.com';
-$config['smtp_pass'] = 'cleaningsolut';
-$config['mailtype'] = 'html';
-$config['charset'] = 'utf-8';
-
-
-//$config['protocol'] = 'sendmail';
-//$config['mailpath'] = '/usr/sbin/sendmail';
-//$config['charset'] = 'iso-8859-1';
-$config['wordwrap'] = TRUE;
-
-//$this->email->initialize($config);

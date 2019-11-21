@@ -934,16 +934,20 @@ class Company extends CI_Controller {
     
     public function sendnewmail(){
         $this->load->library('email');
-
-        $this->email->from('cleaningsolute@gmail.com');
-        $this->email->to('vinod@mailinator.com');
+        $this->load->config('email');
+        $this->email->from($this->config->item('smtp_user'));
+        $this->email->to('divya@mailinator.com');
         //$this->email->cc('another@another-example.com');
         //$this->email->bcc('them@their-example.com');
 
         $this->email->subject('Email Test');
         $this->email->message('Testing the email class.');
 
-        $this->email->send();
+        if ($this->email->send()) {
+            echo 'Your Email has successfully been sent.';
+        } else {
+            show_error($this->email->print_debugger());
+        }
         echo "mail sent";exit;
     }
 
