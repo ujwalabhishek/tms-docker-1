@@ -938,10 +938,10 @@ class Company extends CI_Controller {
         $config = array(
     'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
     'smtp_host' => 'ssl://smtp.gmail.com', 
-    'smtp_port' => 465,
+    'smtp_port' => 587,
     'smtp_user' => 'cleaningsolute@gmail.com',
     'smtp_pass' => 'cleaningsolut',
-    'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
+    'smtp_crypto' => 'tls', //can be 'ssl' or 'tls' for example
     'mailtype' => 'html', //plaintext 'text' mails or 'html'
     'smtp_timeout' => '4', //in seconds
     'charset' => 'utf-8',
