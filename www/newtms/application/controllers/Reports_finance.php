@@ -1032,7 +1032,7 @@ class Reports_finance extends CI_Controller {
             $paid_arr = array('PAID' => 'Paid', 'PARTPAID' => 'Part Paid', 'NOTPAID' => 'Not Paid');
             $paid_sty_arr = array('PAID' => 'color:green;', 'PARTPAID' => 'color:red;', 'NOTPAID' => 'color:red;');
             if ($tabledata[$i]->enrolment_mode == 'SELF') {
-                $taxcode = $this->mask_format($tabledata[$i]->tax_code);
+                $taxcode = $tabledata[$i]->tax_code;
                 $name = $tabledata[$i]->first_name . ' ' . $tabledata[$i]->last_name;
                 $status = $paid_arr[$tabledata[$i]->payment_status];
             } else {
@@ -1051,7 +1051,7 @@ class Reports_finance extends CI_Controller {
             $excel_data[$i][] = $tabledata[$i]->invoice_id;
             $excel_data[$i][] = date('d/m/Y', strtotime($tabledata[$i]->inv_date));
             $excel_data[$i][] = $inv_type1;
-            $excel_data[$i][] = $taxcode;
+            $excel_data[$i][] = $this->mask_format($taxcode);
             $excel_data[$i][] = '$ ' . number_format($tabledata[$i]->total_inv_discnt, 2, '.', '') . ' SGD';
             $excel_data[$i][] = '$ ' . number_format($tabledata[$i]->total_inv_subsdy, 2, '.', '') . ' SGD';
             $excel_data[$i][] = '$ ' . number_format($tabledata[$i]->total_gst, 2, '.', '') . ' SGD';
