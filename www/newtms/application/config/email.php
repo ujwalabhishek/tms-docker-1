@@ -25,11 +25,11 @@
 
 $config = array(
     'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
-    'smtp_host' => 'mail.biipmi.co', 
-    'smtp_port' => 587,
-    'smtp_user' => 'enquiries@biipmi.co',
-    'smtp_pass' => 'biipmisg2014',
-    'smtp_crypto' => 'tls', //can be 'ssl' or 'tls' for example
+    'smtp_host' => 'smtp.gmail.com', 
+    'smtp_port' => 465,
+    'smtp_user' => 'cleaningsolute@gmail.com',
+    'smtp_pass' => 'cleaningsolut',
+    'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
     'mailtype' => 'text', //plaintext 'text' mails or 'html'
     'smtp_timeout' => '4', //in seconds
     'charset' => 'utf-8',
