@@ -394,7 +394,6 @@ class CI_Email {
 	public function __construct(array $config = array())
 	{
 		$this->charset = config_item('charset');
-                                print_r($config);exit;
 		$this->initialize($config);
 		$this->_safe_mode = ( ! is_php('5.4') && ini_get('safe_mode'));
 
