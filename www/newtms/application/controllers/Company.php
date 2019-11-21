@@ -942,20 +942,20 @@ class Company extends CI_Controller {
     'smtp_user' => 'cleaningsolute@gmail.com',
     'smtp_pass' => 'cleaningsolut',
     'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
-    'mailtype' => 'text', //plaintext 'text' mails or 'html'
+    'mailtype' => 'html', //plaintext 'text' mails or 'html'
     'smtp_timeout' => '4', //in seconds
-    'charset' => 'utf-8',
+    'charset' => 'iso-8859-1',
     'wordwrap' => TRUE
 );
         $this->load->library('email', $config);
-        $this->email->from($config['smtp_user']);
+        $this->email->from('cleaningsolute@gmail.com');
         $this->email->to('divya@mailinator.com');
         //$this->email->cc('another@another-example.com');
         //$this->email->bcc('them@their-example.com');
 //print_r($this->email);exit;
         $this->email->subject('Email Test');
         $this->email->message('Testing the email class.');
-
+$this->email->set_newline("\r\n");
         if ($this->email->send()) {
             echo 'Your Email has successfully been sent.';
         } else {
