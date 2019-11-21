@@ -935,7 +935,7 @@ class Company extends CI_Controller {
     public function sendnewmail(){
         $cc_email_to_admin =  'divya@mailinator.com';  // User email pass here
         $subject = 'Welcome To TMS';
-
+        $cc_email_to ='';
         //$from = 'cleaningsolute@gmail.com';              // Pass here your mail id
         $mail_body_admin = "Thanks for contacting Divya";
         send_mail($cc_email_to_admin, $cc_email_to, $subject, $mail_body_admin);
