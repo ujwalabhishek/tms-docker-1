@@ -10,28 +10,22 @@
 |	http://codeigniter.com/user_guide/libraries/email.html
 |*/
 
-//$config['protocol'] = 'smtp';
-//$config['smtp_host'] = 'mail.biipmi.co';
+$config['protocol'] = 'smtp';
+//$config['smtp_host'] = 'server.biipmi.net';
 //$config['smtp_port'] = '25';
 //$config['smtp_user'] = 'enquiries@biipmi.co';
 //$config['smtp_pass'] = 'biipmisg2014';
-//$config['mailtype'] = 'html';
-//$config['charset'] = 'utf-8';
-//$config['newline'] = "\r\n";
-//$config['smtp_timeout'] = 30;
+
+
+$config['smtp_host'] = 'ssl://smtp.gmail.com';
+$config['smtp_port'] = '465';
+$config['smtp_user'] = 'biipmisg@gmail.com';
+$config['smtp_pass'] = 'biipmiSG2015';
+
+$config['mailtype'] = 'html';
+$config['charset'] = 'utf-8';
+$config['newline'] = "\r\n";
+$config['smtp_timeout'] = 30;
 
 /* End of file email.php */
 /* Location: ./application/config/email.php */
-
-$config = array(
-    'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
-    'smtp_host' => 'ssl://smtp.gmail.com', 
-    'smtp_port' => 465,
-    'smtp_user' => 'cleaningsolute@gmail.com',
-    'smtp_pass' => 'cleaningsolut',
-    'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
-    'mailtype' => 'text', //plaintext 'text' mails or 'html'
-    'smtp_timeout' => '4', //in seconds
-    'charset' => 'utf-8',
-    'wordwrap' => TRUE
-);
