@@ -937,7 +937,7 @@ class Company extends CI_Controller {
         //$this->load->config('email');
         $config = array(
     'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
-    'smtp_host' => 'ssl://smtp.googlemail.com', 
+    'smtp_host' => 'ssl://smtp.gmail.com', 
     'smtp_port' => 465,
     'smtp_user' => 'cleaningsolute@gmail.com',
     'smtp_pass' => 'cleaningsolut',
