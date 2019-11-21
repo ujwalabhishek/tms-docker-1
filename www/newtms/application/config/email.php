@@ -18,14 +18,10 @@ $config['protocol'] = 'smtp';
 
 
 $config['smtp_host'] = 'ssl://smtp.gmail.com';
-$config['smtp_port'] = '465';
+//$config['smtp_port'] = '465';
 $config['smtp_user'] = 'biipmisg@gmail.com';
 $config['smtp_pass'] = 'biipmiSG2015';
 
-$config['mailtype'] = 'html';
-$config['charset'] = 'utf-8';
-$config['newline'] = "\r\n";
-$config['smtp_timeout'] = 30;
 //$this->email->initialize($config);
 /* End of file email.php */
 /* Location: ./application/config/email.php */
