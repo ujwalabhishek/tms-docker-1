@@ -933,6 +933,26 @@ class Company extends CI_Controller {
     }
     
     public function sendnewmail(){
+        $this->load->library('email');
+
+        $this->email->from('your@example.com', 'Your Name');
+        $this->email->to('someone@example.com');
+        $this->email->cc('another@another-example.com');
+        $this->email->bcc('them@their-example.com');
+
+        $this->email->subject('Email Test');
+        $this->email->message('Testing the email class.');
+
+        $this->email->send();
+        
+        
+        $config['protocol'] = 'sendmail';
+        $config['mailpath'] = '/usr/sbin/sendmail';
+        $config['charset'] = 'iso-8859-1';
+        $config['wordwrap'] = TRUE;
+
+        $this->email->initialize($config);
+        
         $cc_email_to_admin =  'divya@mailinator.com';  // User email pass here
         $subject = 'Welcome To TMS';
         $cc_email_to ='';

@@ -521,3 +521,5 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['wsq_courses'] = array('95','115','67','66','65','98','100','97','101','102','103');// wsq courses added by shubhranshu
