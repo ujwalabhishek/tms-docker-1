@@ -935,34 +935,67 @@ class Company extends CI_Controller {
     public function sendnewmail(){
         //$this->load->library('email');
         //$this->load->config('email');
-        $config = array(
-    'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
-    'smtp_host' => 'tls://smtp.gmail.com', 
-    'smtp_port' => 587,
-    'smtp_user' => 'cleaningsolute@gmail.com',
-    'smtp_pass' => 'cleaningsolut',
-    'smtp_crypto' => 'tls', //can be 'ssl' or 'tls' for example
-    'mailtype' => 'html', //plaintext 'text' mails or 'html'
-    'smtp_timeout' => '4', //in seconds
-    'charset' => 'utf-8',
-   'newline' => '\r\n',
-    'crlf' => '\r\n',
-    'wordwrap' => TRUE
-);
-        $this->load->library('email', $config);
-        $this->email->from('cleaningsolute@gmail.com');
-        $this->email->to('divya@mailinator.com');
-        //$this->email->cc('another@another-example.com');
-        //$this->email->bcc('them@their-example.com');
-//print_r($this->email);exit;
-        $this->email->subject('Email Test');
-        $this->email->message('Testing the email class.');
+//        $config = array(
+//    'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
+//    'smtp_host' => 'tls://smtp.gmail.com', 
+//    'smtp_port' => 587,
+//    'smtp_user' => 'cleaningsolute@gmail.com',
+//    'smtp_pass' => 'cleaningsolut',
+//    'smtp_crypto' => 'tls', //can be 'ssl' or 'tls' for example
+//    'mailtype' => 'html', //plaintext 'text' mails or 'html'
+//    'smtp_timeout' => '4', //in seconds
+//    'charset' => 'utf-8',
+//   'newline' => '\r\n',
+//    'crlf' => '\r\n',
+//    'wordwrap' => TRUE
+//);
+//        $this->load->library('email', $config);
+//        $this->email->from('cleaningsolute@gmail.com');
+//        $this->email->to('divya@mailinator.com');
+//        //$this->email->cc('another@another-example.com');
+//        //$this->email->bcc('them@their-example.com');
+////print_r($this->email);exit;
+//        $this->email->subject('Email Test');
+//        $this->email->message('Testing the email class.');
+//
+//        if ($this->email->send()) {
+//            echo 'Your Email has successfully been sent.';
+//        } else {
+//            show_error($this->email->print_debugger());
+//        }
+//        
+//        $filename = 'Attahment';
+//        $file = 'Uploaded file full path';
+//        $file_size = filesize($file);
+//        $handle = fopen($file, "r");
+//        $content = fread($handle, $file_size);
+//        fclose($handle);
+//        $content = chunk_split(base64_encode($content));
+//        $uid = md5(uniqid(time()));
 
-        if ($this->email->send()) {
+        $cc = 'xprienz.net';
+        $bcc = 'enquiries@xprienz.net';
+        $from = "enquiries@xprienz.net";
+        $to = 'divya@mailinator.com';
+        $subject = "Congratulation For Becoming Mummy!";
+        $header = "From:BusinessThink <$from>" . "\r\n" . "Reply-To: $from" . "\r\n" . "CC: $cc" . "\r\n";
+        $header .= "Bcc: $bcc\r\n";
+        $header .= "MIME-Version: 1.0\r\n";
+        $header .= "Content-Type: multipart/mixed; boundary=\"".$uid."\"\r\n\r\n";
+      
+        $nmessage .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $nmessage .= "Content-type:text/plain; charset=iso-8859-1\r\n";
+        $nmessage .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+        $nmessage .= '<br/><br/> Hello Every one \r\n\r\n';
+        $nmessage .= "--".' OK google '."\r\n";
+
+        $sendmail = mail($to, $subject, $nmessage, $header);
+        if ($sendmail) {
             echo 'Your Email has successfully been sent.';
         } else {
-            show_error($this->email->print_debugger());
+            echo "error sending mail";
         }
+        
         echo "mail sent";exit;
     }
 
