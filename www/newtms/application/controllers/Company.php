@@ -933,13 +933,26 @@ class Company extends CI_Controller {
     }
     
     public function sendnewmail(){
-        $this->load->library('email');
-        $this->load->config('email');
-        $this->email->from($this->config->item('smtp_user'));
+        //$this->load->library('email');
+        //$this->load->config('email');
+        $config = array(
+    'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
+    'smtp_host' => 'ssl://smtp.googlemail.com', 
+    'smtp_port' => 465,
+    'smtp_user' => 'cleaningsolute@gmail.com',
+    'smtp_pass' => 'cleaningsolut',
+    'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
+    'mailtype' => 'text', //plaintext 'text' mails or 'html'
+    'smtp_timeout' => '4', //in seconds
+    'charset' => 'utf-8',
+    'wordwrap' => TRUE
+);
+        $this->load->library('email', $config);
+        $this->email->from($config['smtp_user']);
         $this->email->to('divya@mailinator.com');
         //$this->email->cc('another@another-example.com');
         //$this->email->bcc('them@their-example.com');
-print_r($this->email);exit;
+//print_r($this->email);exit;
         $this->email->subject('Email Test');
         $this->email->message('Testing the email class.');
 
