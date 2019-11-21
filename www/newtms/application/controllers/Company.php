@@ -939,7 +939,7 @@ class Company extends CI_Controller {
         $this->email->to('divya@mailinator.com');
         //$this->email->cc('another@another-example.com');
         //$this->email->bcc('them@their-example.com');
-
+print_r($this->email);exit;
         $this->email->subject('Email Test');
         $this->email->message('Testing the email class.');
 
