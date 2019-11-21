@@ -1276,7 +1276,7 @@ function export_trainee_feedback($results, $class_details) {
 
     $rn = 3;
     foreach ($results as $row) {
-        $sheet->setCellValue('A' . $rn, $row['tax_code']);
+        $sheet->setCellValue('A' . $rn, mask_format($row['tax_code']));
         $sheet->setCellValue('B' . $rn, $row['first_name']. ' ' .$row['last_name']);
         $sheet->setCellValue('C' . $rn, ($row['trainer_fdbck_on']) ? date('d/m/Y',strtotime($row['trainer_fdbck_on'])) : '');
         if($row['training_score']!="ABS")
