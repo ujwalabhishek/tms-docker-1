@@ -25,7 +25,7 @@
 
 $config = array(
     'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
-    'smtp_host' => 'smtp.gmail.com', 
+    'smtp_host' => 'ssl://smtp.gmail.com', 
     'smtp_port' => 465,
     'smtp_user' => 'cleaningsolute@gmail.com',
     'smtp_pass' => 'cleaningsolut',
