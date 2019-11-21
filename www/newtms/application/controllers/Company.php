@@ -971,11 +971,15 @@ class Company extends CI_Controller {
         $this->email->to($to);
         $this->email->subject($subject);
         $this->email->message($emailContent);
-        $this->email->send();
+        //$this->email->send();
 
-        $this->session->set_flashdata('msg',"Mail has been sent successfully");
-        $this->session->set_flashdata('msg_class','alert-success');
-        exit;
+        //$this->session->set_flashdata('msg',"Mail has been sent successfully");
+        //$this->session->set_flashdata('msg_class','alert-success');
+        if (!$this->email->send()){
+            show_error($this->email->print_debugger());
+        }else{
+            echo 'Your e-mail has been sent!';
+        }
     }
 
 }
