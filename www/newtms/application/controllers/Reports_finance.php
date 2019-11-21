@@ -675,7 +675,7 @@ class Reports_finance extends CI_Controller {
         for ($i = 0; $i < $count_tabledata; $i++) {
             $k = $tabledata[$i]->pymnt_due_id;
             if ($tabledata[$i]->inv_type == 'INVINDV') {
-                $taxcode = $this->mask_format($tabledataextra[$k]->tax_code);
+                $taxcode = $tabledataextra[$k]->tax_code;
                 $name = $tabledataextra[$k]->first_name . ' ' . $tabledataextra[$k]->last_name;
             } else {
                 if ($tabledata[$i]->company_id[0] == 'T') {
@@ -694,7 +694,7 @@ class Reports_finance extends CI_Controller {
             $excel_data[$i][] = '$ ' . number_format($tabledata[$i]->amount_recd, 2, '.', '');
             $excel_data[$i][] = $tabledataextra[$k]->crse_name . ' - ' . $tabledataextra[$k]->class_name;
             $excel_data[$i][] = $name;
-            $excel_data[$i][] = $taxcode;
+            $excel_data[$i][] = $this->mask_format($taxcode);
         }
         if (!empty($tabledata)) {
             if (empty($start_date) && empty($end_date)) {
