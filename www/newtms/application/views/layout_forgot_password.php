@@ -62,28 +62,36 @@
                                       <input id="username" type="text" class="form-control" name="username" value='<?php echo $user_name;?>'placeholder="Enter User Name">
                                     </div>
                                     <br>
-                                     <div class="input-group">
-                                      <span class="input-group-addon">Captcha<span class="required required_i">*</span></span>
+                                    <div class='row'>
+                                        <div class='com-sm-8'>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Captcha<span class="required required_i">*</span></span>
+
+                                                <span class='form-control'> <?php echo $captcha;?>
+                                                      <a href="administrator" title="Refresh">
+                                                      &nbsp;<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
+                                                      </a>
+                                                   
+                                                </span>     
+
+
+                                                  <!--<label for="psw"><b>Enter Captcha Code</b></label>-->
+
+                                                   <div><span id="captcha_err"></span>
+                                                       <?php
+                                                       if ($this->session->flashdata('invalid_captcha')) {
+                                                           echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
+                                                       }
+                                                       ?>	
+                                                   </div>
+
+                                               </div>
+                                        </div>
+                                        <div class='com-sm-4'>
+                                             <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php echo $this->session->userdata('captcha_key')?>" required>
+                                        </div>
+                                    </div>
                                      
-                                      <span class='form-control'> <?php echo $captcha;?>
-                                            <a href="administrator" title="Refresh">
-                                            &nbsp;<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
-                                            </a>
-                                          <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php echo $this->session->userdata('captcha_key')?>" required>
-                                      </span>     
-                                        
-                                      
-                                        <!--<label for="psw"><b>Enter Captcha Code</b></label>-->
-                                       
-                                         <div><span id="captcha_err"></span>
-                                             <?php
-                                             if ($this->session->flashdata('invalid_captcha')) {
-                                                 echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
-                                             }
-                                             ?>	
-                                         </div>
-                                                
-                                     </div>
                                     <div><span id="username_err"></span></div>
                                     <br>
                                     <div><span class="required required_i">* Required Fields</span></div>
