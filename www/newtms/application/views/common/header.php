@@ -1,5 +1,5 @@
 <?php 
- $website_url = ($this->data['tenant_details']->website_url) ? $this->data['tenant_details']->website_url : base_url();
+ $website_url = ($this->data['tenant_details']->website_url) ? $this->data['tenant_details']->website_url : 'http://xprienz.com/';
 ?>
 
 <div class="container-fluid bg-3 text-center header-box">
