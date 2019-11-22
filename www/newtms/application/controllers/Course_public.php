@@ -3083,7 +3083,7 @@ class course_public extends CI_Controller {
             'word' => $this->_get_random_code(),
             'img_path' => FCPATH .'captcha/',
             'img_url' => base_url() . 'captcha/',
-            'img_width' => '120',
+            'img_width' => '114',
             'img_height' => '40',
             'font_path' => FCPATH .'assets/fonts/ATBramley-Medium.ttf',
             'expiration' => 7200
