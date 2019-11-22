@@ -78,6 +78,7 @@
                                         </tr>
                                         <tr>
                                             <td>
+                                                <span>Captcha:</span>
                                                 <?php echo $captcha;?>
                                                  <a href="forgot_password" title="Refresh">
                                                  &nbsp;<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
@@ -86,6 +87,17 @@
                                             <td>
                                                 <span>Enter Captcha:</span>
                                                 <span> <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php //echo $this->session->userdata('captcha_key')?>" required></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                     <?php
+                                                        if ($this->session->flashdata('invalid_captcha')) {
+                                                            echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
+                                                        }
+                                                        ?>	
+                                                </div>
                                             </td>
                                         </tr>
 <!--                                        <tr>

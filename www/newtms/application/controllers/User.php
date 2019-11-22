@@ -1469,6 +1469,8 @@ class User extends CI_Controller {
      */
 
     public function forgot_password() {
+        $this->session->unset_userdata('public_captcha_key');///added by shubhranshu
+        unlink(FCPATH .'captcha/'.$this->session->userdata('public_captcha_file')); // added by shubhranshu to delete the captcha file
         $data['captcha']=$this->generateCaptcha(); // added by shubhranshu for capctha entry
         $data['page_title'] = 'Forgot Password';
         $this->load->view('forgot_password', $data);
@@ -1511,6 +1513,11 @@ class User extends CI_Controller {
     public function get_forgot_password() {
         // get the email id and DOB from the form and the forgot param i.e. username or password
         extract($_POST);
+        if(strtolower($captcha) != strtolower($this->session->userdata('public_captcha_key'))){//added by shubhranshu
+            $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
+            redirect('user/forgot_password');//added by shubhranshu
+             
+        }//added by shubhranshu
         $password = random_key_generation();
         $encrypted_password = $this->bcrypt->hash_password($password);
         $result = $this->user_model->validate_forgot_pwd($forgot, $email, $dob, $encrypted_password, $password);
