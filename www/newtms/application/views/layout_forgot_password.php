@@ -66,7 +66,7 @@
                                     </div>
                                     <br>
                                     <div class='row'>
-                                        <div class='col-sm-6'>
+                                        <div class='col-sm-4'>
                                             <label for="psw"><b>Captcha Code</b></label>
                                              <div><?php echo $captcha;?>
                                                  <a href="administrator" title="Refresh">
@@ -74,7 +74,7 @@
                                                  </a>
                                              </div>
                                         </div>
-                                        <div class='col-sm-6'>
+                                        <div class='col-sm-8'>
                                             <label for="psw"><b>Enter Captcha Code</b></label>
                                             <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php echo $this->session->userdata('captcha_key')?>" required>
                                              <div><span id="captcha_err"></span>

@@ -192,6 +192,13 @@ class Login extends CI_Controller {
      */
     public function get_forgot_password() {
         extract($_POST);
+        if(strtolower($captcha) != strtolower($this->session->userdata('captcha_key'))){//added by shubhranshu
+            $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
+            redirect('login/forgot_password');//added by shubhranshu
+             
+        }//added by shubhranshu
+         $this->session->unset_userdata('captcha_key');///added by shubhranshu
+         unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file')); // added by shubhranshu to delete the captcha file
         $password = random_key_generation();
         $encrypted_password = $this->bcrypt->hash_password($password);
         $result = $this->login->validate_forgot_pwd($email, $username, $encrypted_password, $password);
@@ -213,6 +220,8 @@ class Login extends CI_Controller {
      * This Method load the forgot password form.
      */
     public function forgot_password() {
+        $this->session->unset_userdata('captcha_key');///added by shubhranshu
+        unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file')); // added by shubhranshu to delete the captcha file
         $data['captcha']=$this->generateCaptcha();
         $data['page_title'] = 'Forgot Password';
         $this->load->view('layout_forgot_password', $data);
