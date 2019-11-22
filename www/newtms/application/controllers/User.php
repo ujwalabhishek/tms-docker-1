@@ -361,7 +361,7 @@ class User extends CI_Controller {
     
     /* This Method is Use to Register the Trainee skm*/
     public function reg_trainee() { 
-        
+        extract($_POST);
         $data['page_title'] = 'Trainee Register';
         $registration = '';
         if ($this->input->server('REQUEST_METHOD') === 'POST')
