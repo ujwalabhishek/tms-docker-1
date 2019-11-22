@@ -3163,6 +3163,12 @@ class course_public extends CI_Controller {
     
     //public function register($class_id, $course_id, $data) {
     public function register() {
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
         $data['page_title'] = 'Add Trainee';
         $data['main_content'] = 'addtrainee';
         $this->load->view('layout_public', $data);
