@@ -686,9 +686,9 @@ var refer_friend = 0;
                                     <td>
                                         <?php echo $captcha;?>
                                     </td>
-                                    <td>
-                                        <td class="td_heading" width="20%">Enter Captcha Code:</td>
-                                    </td>
+                                    
+                                    <td class="td_heading" width="20%">Enter Captcha Code:</td>
+                                    
                                     <td>
                                         <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php //echo $this->session->userdata('captcha_key')?>" required>
                                     </td>
