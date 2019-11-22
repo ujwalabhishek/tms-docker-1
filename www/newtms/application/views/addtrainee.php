@@ -685,12 +685,15 @@ var refer_friend = 0;
                                      <td class="td_heading" width="20%">Captcha Code:</td>
                                     <td>
                                         <?php echo $captcha;?>
+                                        <a href="register" title="Refresh">
+                                        &nbsp;<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
+                                        </a>
                                     </td>
                                     
                                     <td class="td_heading" width="20%">Enter Captcha Code:</td>
                                     
                                     <td>
-                                        <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php //echo $this->session->userdata('captcha_key')?>" required>
+                                        <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' style='width:162px' value="<?php //echo $this->session->userdata('captcha_key')?>" required>
                                     </td>
                                 </tr>
 
