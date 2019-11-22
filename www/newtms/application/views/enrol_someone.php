@@ -1478,7 +1478,7 @@ if($course_id!='' && $class_id!=''){
 
                         <td class="td_heading">
 
-                            <span id="capS"><?php echo $captcha; ?> <a href='<?php echo $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];?>'><span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span></a></span>
+                            <span id="capS"><?php echo $captcha; ?> <a href=''><span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span></a></span>
                             
                             <span id="capH"> </span>
 
