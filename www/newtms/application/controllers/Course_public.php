@@ -3169,7 +3169,9 @@ class course_public extends CI_Controller {
                 redirect('login/administrator/'); ///// added by shubhranshu
             }
         }
-        $data['captcha'] = $this->_create_captcha();
+        this->session->unset_userdata('public_captcha_key');
+        unlink(FCPATH .'captcha/'.$this->session->userdata('public_captcha_file')); // added by shubhranshu to delete the captcha file 
+        $data['captcha'] = $this->generateCaptcha();
         $data['page_title'] = 'Add Trainee';
         $data['main_content'] = 'addtrainee';
         $this->load->view('layout_public', $data);
