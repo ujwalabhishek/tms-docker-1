@@ -223,15 +223,15 @@ if (isset($_COOKIE['remember_me'])) {
 
                     <div class="container-footer">
                         <!--<button type="button" class="cancelbtn">Cancel</button>-->
-                        <center>Dont Have an Account Click On 
+                        <center>
                         <?php 
                         if($class_id!='' && $course_id!='')
                         {
                         ?> 
-                        <a href="<?php echo site_url();?>course_public/register_enroll/<?php echo $course_id; ?>/<?php echo $class_id; ?>"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Register Now</button></a>
+                        <a href="<?php echo site_url();?>course_public/register_enroll/<?php echo $course_id; ?>/<?php echo $class_id; ?>"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>Dont Have an Account? Click On </button></a>
                         <?php
                         }else{?>
-                         <a href="<?php echo site_url();?>course_public/register"><span class="btn btn-primary" style='border-radius: inherit;'><span class="glyphicon glyphicon-pencil"></span>&nbsp;Register Now</span></a>
+                         <a href="<?php echo site_url();?>course_public/register"><span class="btn btn-primary" style='border-radius: inherit;'><span class="glyphicon glyphicon-pencil"></span>Dont Have an Account? Click On </span></a>
                         <?php }?>
                         </center>
                         <br>
