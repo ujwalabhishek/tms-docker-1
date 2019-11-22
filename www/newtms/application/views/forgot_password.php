@@ -68,6 +68,7 @@
                                                 $attr = array(
                                                     'name' => 'email',
                                                     'type' => 'email',
+                                                    'class'=> 'form-control',
                                                     'maxlength' => '150',
                                                     'id' => 'email'
                                                 );
