@@ -693,7 +693,7 @@ var refer_friend = 0;
                                     <td class="td_heading" width="20%">Enter Captcha Code:</td>
                                     
                                     <td>
-                                        <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' style='width:162px' value="<?php echo $this->session->userdata('public_captcha_key')?>" required>
+                                        <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' style='width:162px' value="<?php //echo $this->session->userdata('public_captcha_key')?>" required>
                                     </td>
                                 </tr>
 
