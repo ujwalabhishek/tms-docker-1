@@ -63,8 +63,7 @@
                                     </div>
                                      <div class="input-group">
                                       <span class="input-group-addon">Captcha<span class="required required_i">*</span></span>
-                                      <input id="username" type="text" class="form-control" name="username" value='<?php echo $user_name;?>'placeholder="Enter User Name">
-                                        
+                                     
                                         <div><?php echo $captcha;?>
                                             <a href="administrator" title="Refresh">
                                             &nbsp;<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
