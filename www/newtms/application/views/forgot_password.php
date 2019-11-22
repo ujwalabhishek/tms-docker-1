@@ -78,7 +78,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <span>Captcha:</span>
+                                                <div>Captcha:</div>
                                                 <?php echo $captcha;?>
                                                  <a href="forgot_password" title="Refresh">
                                                  &nbsp;<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
