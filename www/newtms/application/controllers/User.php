@@ -1469,6 +1469,7 @@ class User extends CI_Controller {
      */
 
     public function forgot_password() {
+        $data['captcha']=$this->generateCaptcha(); // added by shubhranshu for capctha entry
         $data['page_title'] = 'Forgot Password';
         $this->load->view('forgot_password', $data);
     }
