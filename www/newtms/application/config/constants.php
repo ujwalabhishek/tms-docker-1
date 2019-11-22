@@ -134,7 +134,7 @@ define('SERVER_DATE_TIME_FORMAT','Y-m-d H:i:s');
 
 //define('APP_ADMN_LOGIN_LINK', "https://tms.xxxx.com/tmsadmin"); 
 define('ENROL_PYMNT_DUE', "enrol_pymnt_due"); 
-define('TENANT_ID', "T02"); 
+//define('TENANT_ID', "T02"); 
 define('METADATA', "metadata_id"); 
 define('RESETPWD', "1234"); 
 define('RECORDS_IN_MAIN_PAGE',10);
