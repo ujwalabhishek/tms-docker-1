@@ -1,4 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+///// This File & The code inside Was Added by Shubhranshu to Connect Multiple DB.
 function switch_db_dynamic($name_db)
 {
     $config_app['dsn'] = '';
