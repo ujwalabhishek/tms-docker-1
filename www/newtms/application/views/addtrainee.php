@@ -124,7 +124,10 @@ var refer_friend = 0;
             
                         
             }
-
+            if ($this->session->flashdata('invalid_captcha')) {
+                    echo '<center><div class="error">' . $this->session->flashdata('invalid_captcha') . '</div></center>';
+                    
+                }
             ?>
 
             <br>
@@ -677,6 +680,18 @@ var refer_friend = 0;
 
                                     </td>                                                                        
 
+                                </tr>
+                                <tr>
+                                     <td class="td_heading" width="20%">Captcha Code:</td>
+                                    <td>
+                                        <?php echo $captcha;?>
+                                    </td>
+                                    <td>
+                                        <td class="td_heading" width="20%">Enter Captcha Code:</td>
+                                    </td>
+                                    <td>
+                                        <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php //echo $this->session->userdata('captcha_key')?>" required>
+                                    </td>
                                 </tr>
 
                             </table> <br />

@@ -3169,6 +3169,7 @@ class course_public extends CI_Controller {
                 redirect('login/administrator/'); ///// added by shubhranshu
             }
         }
+        $data['captcha'] = $this->_create_captcha();
         $data['page_title'] = 'Add Trainee';
         $data['main_content'] = 'addtrainee';
         $this->load->view('layout_public', $data);

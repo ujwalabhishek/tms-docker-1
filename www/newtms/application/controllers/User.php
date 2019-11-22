@@ -361,12 +361,16 @@ class User extends CI_Controller {
     
     /* This Method is Use to Register the Trainee skm*/
     public function reg_trainee() { 
-   
+        
         $data['page_title'] = 'Trainee Register';
         $registration = '';
         if ($this->input->server('REQUEST_METHOD') === 'POST')
         {
-            
+            if(strtolower($captcha) != strtolower($this->session->userdata('captcha_key'))){//added by shubhranshu
+                $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
+                redirect('course_public/register');//added by shubhranshu
+
+            }//added by shubhranshu
             $res = $this->course_public_model->save_reg_trainee();
         
            $user_id = $res;
