@@ -69,14 +69,14 @@
                                         <div class='col-sm-4'>
                                             <label for="psw"><b>Captcha Code</b></label>
                                              <div><?php echo $captcha;?>
-                                                 <a href="administrator" title="Refresh">
+                                                 <a href="forgot_password" title="Refresh">
                                                  &nbsp;<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
                                                  </a>
                                              </div>
                                         </div>
                                         <div class='col-sm-8'>
                                             <label for="psw"><b>Enter Captcha Code</b></label>
-                                            <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php echo $this->session->userdata('captcha_key')?>" required>
+                                            <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php //echo $this->session->userdata('captcha_key')?>" required>
                                              <div><span id="captcha_err"></span>
                                                  <?php
                                                  if ($this->session->flashdata('invalid_captcha')) {
