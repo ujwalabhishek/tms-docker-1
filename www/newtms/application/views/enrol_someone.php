@@ -1479,7 +1479,7 @@ if($course_id!='' && $class_id!=''){
                         <td class="td_heading">
 
                             <span id="capS"><?php echo $captcha; ?> </span>
-
+                            <a href='/'><span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span></a>
                             <span id="capH"> </span>
 
                         </td>
@@ -1509,7 +1509,7 @@ if($course_id!='' && $class_id!=''){
                             echo form_input($captcha_tag);
                             
                             ?>
-                            <span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
+                            
                             <span id="captcha2_err">
 
                                 <?php echo form_error('captcha2', '<span class="error">', '</span>'); ?>
