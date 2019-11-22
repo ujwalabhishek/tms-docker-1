@@ -37,15 +37,15 @@ function fetch_dynamic_db_details(){
     }
     $config_app = switch_db_dynamic('biipmico_tms_masterdata');
     $CI =& get_instance();
-    $CI->load->library('session');
+    //$CI->load->library('session');
     $CI->dbs = $CI->load->database($config_app,TRUE);
     //print_r($CI->dbs);exit;
     $CI->dbs->select('*');
         $CI->dbs->from('tenant_master');
         $CI->dbs->where('tenant_url',$host);
         $res = $CI->dbs->get()->row();
-        $CI->session->set_userdata('master_tenant_id', $res->tenant_id);
-        define('TENANT_ID',  $res->tenant_id); 
+        //$CI->session->set_userdata('master_tenant_id', $res->tenant_id);
+        define('TENANT_ID',  $res->tenant_id); //////very very imporatant line by shubhranshu
         return $res;
         //print_r( $CI->dbs->get()->row());exit;
 }

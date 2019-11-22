@@ -5719,7 +5719,7 @@ class Course_Public_Model extends CI_Model {
     public function get_course_list_home($limit=NULL, $offset=NULL, $search_value = NULL) {
 
         $tenant_id = TENANT_ID;
-        //$tenant_id = $this->session->userdata('master_tenant_id'); /// added by shubhranshu to connect the tenant if from tms master data
+      
         $date = date('Y-m-d h:i A');
         $time = date("H:i:s", strtotime($date));
         $today = date('Y-m-d') . ' ' . $time;
