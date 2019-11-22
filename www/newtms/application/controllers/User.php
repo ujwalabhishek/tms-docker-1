@@ -1477,7 +1477,37 @@ class User extends CI_Controller {
      * This method for generating mail in forgot password.
    
      */
+    /// below function was added by shubhranshu for captcha validation
+    public function generateCaptcha(){
+        $this->load->helper('captcha');
+        $vals = array(
+                'word'          => '',
+                'img_path'      => FCPATH.'captcha/',
+                'img_url'       => base_url().'captcha/',
+                'font_path'     => FCPATH .'assets/fonts/ATBramley-Medium.ttf',
+                'img_width'     => '131',
+                'img_height'    => 30,
+                'expiration'    => 7200,
+                'word_length'   => 6,
+                'font_size'     => 16,
+                'img_id'        => 'Imageid',
+                'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
+                // White background and border, black text and red grid
+                'colors'        => array(
+                        'background' => array(255, 255, 255),
+                        'border' => array(255, 255, 255),
+                        'text' => array(0, 0, 0),
+                        'grid' => array(255, 40, 40)
+                )
+        );
+        
+        $cap = create_captcha($vals);
+        $this->session->set_userdata('public_captcha_file', $cap['filename']);
+        $this->session->set_userdata('public_captcha_key', $cap['word']);
+        
+        return $cap['image'];
+    }/////////////////////////end ssp///////////////////////
     public function get_forgot_password() {
         // get the email id and DOB from the form and the forgot param i.e. username or password
         extract($_POST);
