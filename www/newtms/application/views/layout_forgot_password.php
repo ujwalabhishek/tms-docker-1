@@ -61,10 +61,32 @@
                                       <span class="input-group-addon">User Name<span class="required required_i">*</span></span>
                                       <input id="username" type="text" class="form-control" name="username" value='<?php echo $user_name;?>'placeholder="Enter User Name">
                                     </div>
+                                     <div class="input-group">
+                                      <span class="input-group-addon">Captcha<span class="required required_i">*</span></span>
+                                      <input id="username" type="text" class="form-control" name="username" value='<?php echo $user_name;?>'placeholder="Enter User Name">
+                                        
+                                        <div><?php echo $captcha;?>
+                                            <a href="administrator" title="Refresh">
+                                            &nbsp;<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
+                                            </a>
+                                             <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php echo $this->session->userdata('captcha_key')?>" required>
+                                        </div>
+                                        <!--<label for="psw"><b>Enter Captcha Code</b></label>-->
+                                       
+                                         <div><span id="captcha_err"></span>
+                                             <?php
+                                             if ($this->session->flashdata('invalid_captcha')) {
+                                                 echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
+                                             }
+                                             ?>	
+                                         </div>
+                                                
+                                     </div>
                                     <div><span id="username_err"></span></div>
                                     <br>
                                     <div><span class="required required_i">* Required Fields</span></div>
                                     <br>
+                                    
                                     <center>
                                       <div class="btn-group btn-group-justified">
                                         <a href="javascript:void(0)" class="btn btn-primary submit_btn" onclick="validate_form()" style='padding:12px !important'><span class="glyphicon glyphicon-save"></span>Submit</a>

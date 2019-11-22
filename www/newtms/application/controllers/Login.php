@@ -213,6 +213,7 @@ class Login extends CI_Controller {
      * This Method load the forgot password form.
      */
     public function forgot_password() {
+        $data['captcha']=$this->generateCaptcha();
         $data['page_title'] = 'Forgot Password';
         $this->load->view('layout_forgot_password', $data);
     }
