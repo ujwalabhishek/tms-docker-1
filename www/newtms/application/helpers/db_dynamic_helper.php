@@ -45,6 +45,7 @@ function fetch_dynamic_db_details(){
         $CI->dbs->where('tenant_url',$host);
         $res = $CI->dbs->get()->row();
         $CI->session->set_userdata('master_tenant_id', $res->tenant_id);
+        define('TENANT_ID',  $res->tenant_id); 
         return $res;
         //print_r( $CI->dbs->get()->row());exit;
 }
