@@ -457,9 +457,9 @@ class Internal_user extends CI_Controller {
             $exists = $this->internaluser->check_duplicate_user_email_company($emp_email);
             if ($exists) {
                 
-                return '0';
+                echo '0';
             }
-            return '1';
+            echo '1';
         }
     }
     /*
