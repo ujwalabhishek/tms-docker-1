@@ -452,17 +452,6 @@ class Internal_user extends CI_Controller {
         }
     }
     
-    function check_unique_useremail() {
-        if ($user_email = $this->input->post('user_registered_email')) {
-            $exists = $this->internaluser->check_duplicate_user_email($user_email);
-            if ($exists) {
-                $this->form_validation->set_message('check_unique_useremail', "Email ID exists.");
-                return FALSE;
-            }
-            return TRUE;
-        }
-    }
-    
     function check_unique_useremail_client() {
         if ($emp_email = $this->input->post('emp_email')) {
             $exists = $this->internaluser->check_duplicate_user_email_company($emp_email);
