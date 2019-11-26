@@ -11,21 +11,21 @@
 |*/
 
 $config['protocol'] = 'smtp';
-$config['smtp_host'] = 'mail.xprienz.net';
-$config['smtp_port'] = '465';
-$config['smtp_user'] = 'noreply@xprienz.net';
-$config['smtp_pass'] = 'noreplySG@2019';
-
-
-//$config['smtp_host'] = 'ssl://smtp.gmail.com';
+//$config['smtp_host'] = 'mail.xprienz.net';
 //$config['smtp_port'] = '465';
-//$config['smtp_user'] = 'biipmisg2020@gmail.com';
-//$config['smtp_pass'] = 'biipmisupport@123';
+//$config['smtp_user'] = 'noreply@xprienz.net';
+//$config['smtp_pass'] = 'noreplySG@2019';
 
-//$config['mailtype'] = 'html';
-//$config['charset'] = 'utf-8';
-//$config['newline'] = "\r\n";
-//$config['smtp_timeout'] = 30;
+
+$config['smtp_host'] = 'ssl://smtp.gmail.com';
+$config['smtp_port'] = '465';
+$config['smtp_user'] = 'biipmisg2020@gmail.com';
+$config['smtp_pass'] = 'biipmisupport@123';
+
+$config['mailtype'] = 'html';
+$config['charset'] = 'utf-8';
+$config['newline'] = "\r\n";
+$config['smtp_timeout'] = 30;
 
 
 //$this->email->initialize($config);
