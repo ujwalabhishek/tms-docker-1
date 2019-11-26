@@ -133,7 +133,7 @@ class Internal_user extends CI_Controller {
                 $tax_code = $this->input->post("SSN");
                 $this->form_validation->set_rules('SSN', 'SSNNumber', 'required|max_length[15]|callback_check_unique_usertaxcode');
             }
-            $this->form_validation->set_rules('user_registered_email', 'UserEmail', 'max_length[50]|callback_check_unique_useremail');
+            //$this->form_validation->set_rules('user_registered_email', 'UserEmail', 'max_length[50]|callback_check_unique_useremail');
             $this->form_validation->set_rules('user_name', 'Username', 'required|max_length[15]|callback_check_unique_username');
             $this->form_validation->set_rules('emp_email', 'Employee Email', 'required|callback_check_unique_useremail_emp');
             if ($this->form_validation->run() == TRUE) {

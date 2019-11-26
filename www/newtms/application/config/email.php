@@ -10,29 +10,17 @@
 |	http://codeigniter.com/user_guide/libraries/email.html
 |*/
 
-//$config['protocol'] = 'smtp';
-//$config['smtp_host'] = 'server.biipmi.net';
-//$config['smtp_port'] = '25';
-//$config['smtp_user'] = 'enquiries@biipmi.co';
-//$config['smtp_pass'] = 'biipmisg2014';
-
-
-//$config['smtp_host'] = 'mail.bid4jeet.in';
-//$config['smtp_port'] = '587';
-//$config['smtp_user'] = 'test@bid4jeet.in';
-//$config['smtp_pass'] = 'dipu1234@@';
-
 $config['protocol'] = 'smtp';
-//$config['smtp_host'] = 'server.biipmi.net';
-//$config['smtp_port'] = '25';
-//$config['smtp_user'] = 'enquiries@biipmi.co';
-//$config['smtp_pass'] = 'biipmisg2014';
-
-
-$config['smtp_host'] = 'ssl://smtp.gmail.com';
+$config['smtp_host'] = 'mail.xprienz.net';
 $config['smtp_port'] = '465';
-$config['smtp_user'] = 'biipmisg2020@gmail.com';
-$config['smtp_pass'] = 'biipmisupport@123';
+$config['smtp_user'] = 'noreply@xprienz.net';
+$config['smtp_pass'] = 'noreplySG@2019';
+
+
+//$config['smtp_host'] = 'ssl://smtp.gmail.com';
+//$config['smtp_port'] = '465';
+//$config['smtp_user'] = 'biipmisg2020@gmail.com';
+//$config['smtp_pass'] = 'biipmisupport@123';
 
 $config['mailtype'] = 'html';
 $config['charset'] = 'utf-8';
