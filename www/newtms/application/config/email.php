@@ -11,16 +11,16 @@
 |*/
 
 $config['protocol'] = 'smtp';
-//$config['smtp_host'] = 'server.biipmi.net';
-//$config['smtp_port'] = '25';
-//$config['smtp_user'] = 'enquiries@biipmi.co';
-//$config['smtp_pass'] = 'biipmisg2014';
+$config['smtp_host'] = 'server.biipmi.net';
+$config['smtp_port'] = '25';
+$config['smtp_user'] = 'enquiries@biipmi.co';
+$config['smtp_pass'] = 'biipmisg2014';
 
 
-$config['smtp_host'] = 'ssl://smtp.gmail.com';
-$config['smtp_port'] = '465';
-$config['smtp_user'] = 'cleaningsolute@gmail.com';
-$config['smtp_pass'] = 'cleaningsolut';
+//$config['smtp_host'] = 'ssl://smtp.gmail.com';
+//$config['smtp_port'] = '465';
+//$config['smtp_user'] = 'cleaningsolute@gmail.com';
+//$config['smtp_pass'] = 'cleaningsolut';
 
 //$this->email->initialize($config);
 /* End of file email.php */
