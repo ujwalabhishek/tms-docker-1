@@ -931,7 +931,7 @@ class Company extends CI_Controller {
             redirect('company/view_company/'.$company_id);
         }
     }
-    
+    ///////function created by shubhranshu to test email
     public function sendnewmail(){
         $this->load->library('email');
 
