@@ -1544,6 +1544,9 @@ echo form_close();
             });
         }
     }
+    
+
+     
     $(document).ready(function() {
         var check = 0;
         $('#signupForm').submit(function() {
@@ -1555,6 +1558,34 @@ echo form_close();
                 return validate(false);
             }
         });
+        
+        
+        $('#emp_email').blur(function(){
+            $emp_email= $('#emp_email').val();
+            var id ='emp_email';
+            $.ajax({
+                    url: baseurl + "internal_user/check_unique_useremail_client",
+                    type: "post",
+                    data: 'emp_email=' + $emp_email,
+                    success: function(res) {
+                        if (res == 1) {
+                           
+                            $("#" + id + "_err").text("[Exists!]").addClass('error');
+                            $("#" + id).addClass('error');
+                            return false;
+                        } else {
+                            
+                            $("#" + id + "_err").text("").removeClass('error');
+                            $("#" + id).removeClass('error');
+                            return true;
+                        }
+                    },
+                    error: function() {
+                        return false;
+                    }
+                });
+
+        }) 
     });
     $(".alphabets").keydown(function(e) {
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 32]) !== -1 ||

@@ -105,7 +105,7 @@ class Internal_user extends CI_Controller {
             $this->load->library('form_validation');            
             $country_of_residence = $this->input->post('country_of_residence'); 
             $this->form_validation->set_rules('country_of_residence', 'Country of Residence', 'required');
-            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|min_length[8]|max_length[12]');
+            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|max_length[12]');
             if ($country_of_residence == 'IND') {
                 $this->form_validation->set_rules('PAN', 'PANNumber', 'required|max_length[15]|callback_check_unique_usertaxcode');
                 $tax_code = $this->input->post("PAN");
@@ -213,7 +213,7 @@ class Internal_user extends CI_Controller {
                 $this->session->set_userdata('user_name_edit', $user_list_values->user_name);
                 $this->session->set_userdata('tax_code_edit', $user_list_values->tax_code);
                 $this->form_validation->set_rules('country_of_residence', 'Country of Residence', 'required');
-                $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|min_length[8]|max_length[12]');
+                $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|max_length[12]');
                 $country_of_residence = $this->input->post('country_of_residence');
                 $valid = TRUE; //Added By dummy for Edit issue (Nov 10 2014)
                 if ($country_of_residence == 'IND') {
@@ -452,14 +452,25 @@ class Internal_user extends CI_Controller {
         }
     }
     
-    function check_unique_useremail_emp() {
-        if ($emp_email = $this->input->post('emp_email')) {
-            $exists = $this->internaluser->check_duplicate_user_email_company($emp_email);
+    function check_unique_useremail() {
+        if ($user_email = $this->input->post('user_registered_email')) {
+            $exists = $this->internaluser->check_duplicate_user_email($user_email);
             if ($exists) {
-                $this->form_validation->set_message('check_unique_useremail_emp', "Employee Email ID Already exists!!.");
+                $this->form_validation->set_message('check_unique_useremail', "Email ID exists.");
                 return FALSE;
             }
             return TRUE;
+        }
+    }
+    
+    function check_unique_useremail_client() {
+        if ($emp_email = $this->input->post('emp_email')) {
+            $exists = $this->internaluser->check_duplicate_user_email_company($emp_email);
+            if ($exists) {
+                
+                return '0';
+            }
+            return '1';
         }
     }
     /*
