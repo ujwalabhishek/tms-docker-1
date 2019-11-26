@@ -451,7 +451,7 @@ class Internal_user extends CI_Controller {
             return TRUE;
         }
     }
-    
+    ///// below function was added by shubhranshu to check client side duplicates email
     function check_unique_useremail_client() {
         if ($emp_email = $this->input->post('emp_email')) {
             $exists = $this->internaluser->check_duplicate_user_email_company($emp_email);

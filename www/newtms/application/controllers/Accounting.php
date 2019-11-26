@@ -456,7 +456,10 @@ class accounting extends CI_Controller {
         $this->form_validation->set_rules('credit_note_amount', 'Credit Note Amount', 'trim|required');
         $this->form_validation->set_rules('credit_note_date', 'Credit Note Date', 'trim|required');
         $this->form_validation->set_rules('ori_invoice_date', 'Original Invoice Date', 'trim|required');
-        $credit_note_no = clean($this->input->post('credit_note_number'));
+        
+        
+        //$credit_note_no = clean($this->input->post('credit_note_number'));
+        $credit_note_no = $this->input->post('credit_note_number');
         if ($this->form_validation->run() == TRUE) {
             $data = array(
                 'credit_note_number' => strtoupper($credit_note_no),

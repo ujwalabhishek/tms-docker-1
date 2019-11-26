@@ -499,7 +499,7 @@ function internal_staff_reset_password($user_id, $pass = '') {
         $mail_body = get_mail_body($data, $qry1->row('first_name'), $qry1->row('gender'));
         $mail_body_admin = get_mail_body_admin_pwreset($data, $qry1->row('first_name'), $qry1->row('gender'));
 
-        $to_email_id = $CI->db->select('registered_email_id')->from('tms_users')->where('user_id', $user_id)->get()->row('registered_email_id');
+        //$to_email_id = $CI->db->select('registered_email_id')->from('tms_users')->where('user_id', $user_id)->get()->row('registered_email_id');
         
         $offcial_internalstaff_email = $CI->db->select('off_email_id')->from('internal_user_emp_detail')->where('user_id', $user_id)->get()->row('off_email_id');
         
@@ -507,7 +507,7 @@ function internal_staff_reset_password($user_id, $pass = '') {
         if ($user_role == "ADMN") {
             $cc_email_to_admin = $CI->session->userdata('userDetails')->registered_email_id;
         }
-        if(!empty($to_email_id)){
+        if(!empty($offcial_internalstaff_email)){
 //        send_mail($to_email_id, $cc_email_to, $mail_subject, $mail_body);
         send_mail($offcial_internalstaff_email, $cc_email_to, $mail_subject, $mail_body);
         }
