@@ -47,7 +47,7 @@ function fetch_dynamic_db_details(){
         //$CI->session->set_userdata('master_tenant_id', $res->tenant_id);
         define('TENANT_ID',  $res->tenant_id); //////very very imporatant line by shubhranshu
         if(empty($res)){
-            redirect('xprienz.net');
+            redirect('http://xprienz.net/');
         }
         return $res;
         //print_r( $CI->dbs->get()->row());exit;
