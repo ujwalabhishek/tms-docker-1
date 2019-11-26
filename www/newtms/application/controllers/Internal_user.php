@@ -456,10 +456,11 @@ class Internal_user extends CI_Controller {
         if ($emp_email = $this->input->post('emp_email')) {
             $exists = $this->internaluser->check_duplicate_user_email_company($emp_email);
             if ($exists) {
-                
+                echo '1';
+            }else{
                 echo '0';
             }
-            echo '1';
+            
         }
     }
     /*
