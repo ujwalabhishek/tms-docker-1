@@ -463,6 +463,17 @@ class Internal_user extends CI_Controller {
             
         }
     }
+    
+    function check_unique_useremail_emp() {
+        if ($emp_email = $this->input->post('emp_email')) {
+            $exists = $this->internaluser->check_duplicate_user_email_company($emp_email);
+            if ($exists) {
+                $this->form_validation->set_message('check_unique_useremail_emp', "Employee Email ID Already exists!!.");
+                return FALSE;
+            }
+            return TRUE;
+        }
+    }
     /*
      * Checks if user email already exists (Edit user)
      */

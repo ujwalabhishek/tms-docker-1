@@ -1559,7 +1559,7 @@ echo form_close();
             }
         });
         
-        
+        ///////below ajax code was added by shubhranshu to checkif the company mail id exis?
         $('#emp_email').blur(function(){
             $emp_email= $('#emp_email').val();
             var id ='emp_email';
