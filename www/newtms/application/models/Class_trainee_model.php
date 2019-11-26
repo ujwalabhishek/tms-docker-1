@@ -12146,7 +12146,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->where("credit_note_number", $credit_note_number);
 
         $result_set = $this->db->get();
-
+echo $this->db->last_query();exit;
         return $result_set->row();
     }
 
