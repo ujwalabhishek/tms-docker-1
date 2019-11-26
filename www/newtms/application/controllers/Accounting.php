@@ -495,8 +495,6 @@ class accounting extends CI_Controller {
      * This Method for adding New credit notes.
      */
     public function view_credit_note($credit_note_number=0) {
-        $credit_note_number = $this->input->get('q');///added by shubhranshu to prevent 500 eroor for special character
-        echo $credit_note_number;exit;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Credit Notes';
         $data['tabledata'] = $this->classTraineeModel->get_credit_note($credit_note_number);

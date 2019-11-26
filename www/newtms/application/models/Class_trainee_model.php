@@ -12137,16 +12137,16 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * @return type
 
      */
-    public function get_credit_note($credit_note_number) {
+    public function get_credit_note($credit_id) {
 
         $this->db->select("*");
 
         $this->db->from("credit_notes");
 
-        $this->db->where("credit_note_number", $credit_note_number);
+        $this->db->where("credit_id", $credit_id);
 
         $result_set = $this->db->get();
-echo $this->db->last_query();exit;
+        
         return $result_set->row();
     }
 
