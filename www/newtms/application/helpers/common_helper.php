@@ -5,8 +5,12 @@ if (!defined('BASEPATH'))
 /*
  * This is the helper class for all common functions used in the applications. 
  */
+//// below function added by shubhranshu for sleaning of special characracters from a string
+function clean($string) {
+   //$string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
 
-    
+   return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+}
 
 function generateEncryptedPwd() {
     $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";

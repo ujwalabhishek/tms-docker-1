@@ -456,9 +456,10 @@ class accounting extends CI_Controller {
         $this->form_validation->set_rules('credit_note_amount', 'Credit Note Amount', 'trim|required');
         $this->form_validation->set_rules('credit_note_date', 'Credit Note Date', 'trim|required');
         $this->form_validation->set_rules('ori_invoice_date', 'Original Invoice Date', 'trim|required');
+        $credit_note_no = clean($this->input->post('credit_note_number'));
         if ($this->form_validation->run() == TRUE) {
             $data = array(
-                'credit_note_number' => strtoupper($this->input->post('credit_note_number')),
+                'credit_note_number' => strtoupper($credit_note_no),
                 'credit_note_date' => date('Y-m-d',strtotime($this->input->post('credit_note_date'))),
                 'ori_invoice_number' => strtoupper($this->input->post('ori_invoice_number')),
                 'ori_invoice_date' => date('Y-m-d',strtotime($this->input->post('ori_invoice_date'))),
@@ -467,7 +468,10 @@ class accounting extends CI_Controller {
                 'credit_note_issue_reason' => strtoupper($this->input->post('credit_note_issue_reason')),
                 'tg_ref_number' => strtoupper($this->input->post('tg_ref_number')),
             ); 
-            $unique_check = $this->classTraineeModel->unique_check_credit_number($this->input->post('credit_note_number'));
+            
+            
+            
+            $unique_check = $this->classTraineeModel->unique_check_credit_number($credit_note_no);
             if($unique_check == 0) {
                 $status = $this->classTraineeModel->insert_credit_notes($data);
             } else {
