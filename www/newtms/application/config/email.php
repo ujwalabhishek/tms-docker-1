@@ -17,10 +17,10 @@ $config['protocol'] = 'smtp';
 //$config['smtp_pass'] = 'biipmisg2014';
 
 
-$config['smtp_host'] = 'ssl://smtp.gmail.com';
-$config['smtp_port'] = '465';
-$config['smtp_user'] = 'cleaningsolute@gmail.com';
-$config['smtp_pass'] = 'cleaningsolut';
+$config['smtp_host'] = 'mail.bid4jeet.in';
+$config['smtp_port'] = '587';
+$config['smtp_user'] = 'test@bid4jeet.in';
+$config['smtp_pass'] = 'dipu1234@@';
 
 //$this->email->initialize($config);
 /* End of file email.php */
