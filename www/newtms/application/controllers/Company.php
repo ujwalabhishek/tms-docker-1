@@ -935,7 +935,7 @@ class Company extends CI_Controller {
     public function sendnewmail(){
         $this->load->library('email');
 
-        $this->email->from('care@xprienz.net', 'Divya');
+        $this->email->from('biipmisg@gmail.com');
         $this->email->to('sspklo@mailinator.com');
         //$this->email->cc('another@another-example.com');
         //$this->email->bcc('them@their-example.com');
@@ -943,10 +943,11 @@ class Company extends CI_Controller {
         $this->email->subject('Email Test');
         $this->email->message('Testing the email class.');
 
-        $this->email->send();
-        
-       
-        echo "mail sent";exit;
+        if($this->email->send()){
+            echo "mail sent";exit;
+        }else{
+           echo $this->email->print_debugger(); 
+        }
     }
 
 }
