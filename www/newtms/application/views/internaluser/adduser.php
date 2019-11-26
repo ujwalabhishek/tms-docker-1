@@ -1566,7 +1566,7 @@ echo form_close();
             $.ajax({
                     url: baseurl + "internal_user/check_unique_useremail_client",
                     type: "post",
-                    data: 'emp_email=' + $emp_email,
+                    data: {'emp_email': $emp_email},
                     success: function(res) {
                         if (res == 1) {
                            
