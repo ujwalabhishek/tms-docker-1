@@ -19,8 +19,8 @@ $config['protocol'] = 'smtp';
 
 $config['smtp_host'] = 'ssl://smtp.gmail.com';
 $config['smtp_port'] = '465';
-$config['smtp_user'] = 'biipmisg@gmail.com';
-$config['smtp_pass'] = 'biipmiSG2015';
+$config['smtp_user'] = 'cleaningsolute@gmail.com';
+$config['smtp_pass'] = 'cleaningsolut';
 
 //$this->email->initialize($config);
 /* End of file email.php */
