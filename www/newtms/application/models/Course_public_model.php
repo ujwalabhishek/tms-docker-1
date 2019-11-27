@@ -787,7 +787,7 @@ class Course_Public_Model extends CI_Model {
         }
 
         $query = $this->db->get();
-echo $this->db->last_query();exit;
+
         return $query->result_array();
     }
 
