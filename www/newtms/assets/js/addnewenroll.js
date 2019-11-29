@@ -339,7 +339,7 @@ $(document).ready(function() {
 				$.ajax({
                 url: $baseurl + 'class_trainee/get_class_date',
                 type: 'post',
-                async: false,
+                async: true,
                 data:{"class_id":$class},
                 success: function(data)
                 {
@@ -351,7 +351,7 @@ $(document).ready(function() {
                 $.ajax({
                     url: $siteurl + "class_trainee/get_enroll_invoice_details",
                     type: "post",
-                    async: false,
+                    async: true,
                     dataType: "json",
                     data: {
                         'payid': $payid, 'course': $course, 'class': $class, 'company_id': $company_id,
