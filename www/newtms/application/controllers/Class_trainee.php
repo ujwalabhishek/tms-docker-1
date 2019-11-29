@@ -508,6 +508,7 @@ class Class_Trainee extends CI_Controller {
         $this->db->cache_off();
        
         $total_trainee_enrolled = $this->classtraineemodel->get_total_enrolled_trainee($tenant_id);
+        echo $total_trainee_enrolled.'divya';exit;
      }
         $data['tabledata'] = $new_tabledata;
         $data['sort_order'] = $order_by;
