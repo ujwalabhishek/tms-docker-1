@@ -26,8 +26,8 @@ $(document).ready(function() {
     $('#search_enrolment').click(function()     
     {
         ///////added by shubhranshu to prevent multiple clicks////////////////
-        $('#search_enrolment').attr('disabled','disabled');
-        $('#search_enrolment').text('Please Wait..');
+//        $('#search_enrolment').attr('disabled','disabled');
+//        $('#search_enrolment').text('Please Wait..');
          ///////added by shubhranshu to prevent multiple clicks////////////////
         $val = $('.enrollment_type:checked').val();
         $change_taxcode = '';
@@ -313,29 +313,19 @@ $(document).ready(function() {
         else 
         {
             remove_err($id);alert('divya1');
-            //$('#company_name_1').text($($id).find('option:selected').attr("company_name"));
-            //$('#company_name_2').text($($id).find('option:selected').attr("company_name"));
-            //$couse_class_name = $($id).find('option:selected').attr("course_name") + " - " + $($id).find('option:selected').attr("class_name");
-            //$('#couse_class_name').text($couse_class_name);
-//            $payid = $($id).find('option:selected').attr("pymnt_due_id");alert('divya2');
-//            $class = $($id).find('option:selected').attr("class_id");
-//            $course = $($id).find('option:selected').attr("course_id");
-//            $company_id = $($id).find('option:selected').attr("company_id");
-//            $subsidy_amount = $($id).find('option:selected').attr("subsidy_amount");
-//            $unit_fees = $($id).find('option:selected').attr("unit_fees");
-//            $individual_user_id = $($id).val();alert('divya3');
+            $('#company_name_1').text($($id).find('option:selected').attr("company_name"));
+            $('#company_name_2').text($($id).find('option:selected').attr("company_name"));
+            $couse_class_name = $($id).find('option:selected').attr("course_name") + " - " + $($id).find('option:selected').attr("class_name");
+            $('#couse_class_name').text($couse_class_name);
+            $payid = $($id).find('option:selected').attr("pymnt_due_id");alert('divya2');
+            $class = $($id).find('option:selected').attr("class_id");
+            $course = $($id).find('option:selected').attr("course_id");
+            $company_id = $($id).find('option:selected').attr("company_id");
+            $subsidy_amount = $($id).find('option:selected').attr("subsidy_amount");
+            $unit_fees = $($id).find('option:selected').attr("unit_fees");
+            $individual_user_id = $($id).val();alert('divya3');
             
-           // $('#company_name_1').text($($id).find('option:selected').attr("company_name"));
-            //$('#company_name_2').text($($id).find('option:selected').attr("company_name"));
-              $('#couse_class_name').text('');
-            $payid = $("#pymnt_due_id").val();
-            $class = $("#class_id").val();
-            $course = $("#course_id").val();
-            $company_id = $("#company_id").val();
-            $subsidy_amount = $("subsidy_amount").val();
-            $unit_fees = $("#unit_fees").val();
-            
-            
+              
             if ($payid.length > 0) 
             {
                 $('#pymnt_due_id').val($payid);
