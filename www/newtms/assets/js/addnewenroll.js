@@ -312,18 +312,18 @@ $(document).ready(function() {
         } 
         else 
         {
-            remove_err($id);alert('divya1');
+            remove_err($id);
             $('#company_name_1').text($($id).find('option:selected').attr("company_name"));
             $('#company_name_2').text($($id).find('option:selected').attr("company_name"));
             $couse_class_name = $($id).find('option:selected').attr("course_name") + " - " + $($id).find('option:selected').attr("class_name");
             $('#couse_class_name').text($couse_class_name);
-            $payid = $($id).find('option:selected').attr("pymnt_due_id");alert('divya2');
+            $payid = $($id).find('option:selected').attr("pymnt_due_id");
             $class = $($id).find('option:selected').attr("class_id");
             $course = $($id).find('option:selected').attr("course_id");
             $company_id = $($id).find('option:selected').attr("company_id");
             $subsidy_amount = $($id).find('option:selected').attr("subsidy_amount");
             $unit_fees = $($id).find('option:selected').attr("unit_fees");
-            $individual_user_id = $($id).val();alert('divya3');
+            $individual_user_id = $($id).val();
             
               
             if ($payid.length > 0) 
