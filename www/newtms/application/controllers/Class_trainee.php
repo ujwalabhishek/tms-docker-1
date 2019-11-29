@@ -507,8 +507,8 @@ class Class_Trainee extends CI_Controller {
         }
         $this->db->cache_off();
        
-        $total_trainee_enrolled = $this->classtraineemodel->get_total_enrolled_trainee($tenant_id);
-        echo $total_trainee_enrolled.'divya';exit;
+        
+      
      }
         $data['tabledata'] = $new_tabledata;
         $data['sort_order'] = $order_by;
@@ -524,7 +524,7 @@ class Class_Trainee extends CI_Controller {
         }
         
 //        $data['trainee_count'] = $totalrows;
-        
+        $total_trainee_enrolled = $this->classtraineemodel->get_total_enrolled_trainee($tenant_id);
         $data['trainee_count'] = $total_trainee_enrolled ? $total_trainee_enrolled : 00;
         $data['pagination'] = get_pagination($records_per_page, $pageno, $baseurl, $totalrows, $field, $pag_sort);
         $data['page_title'] = 'Online Class Trainee';
