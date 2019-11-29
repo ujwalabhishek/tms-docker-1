@@ -230,7 +230,7 @@
                 </thead>
                  <tbody>
                     <?php
-                    $err_msg = 'Kindly Apply Filter To Fetch The Trainee.';
+                    $err_msg = 'Kindly Apply Filter To Fetch The Trainees.';
                     if (!empty($_GET)) {
                         $err_msg = 'No data available for the search criteria entered.';
                     }

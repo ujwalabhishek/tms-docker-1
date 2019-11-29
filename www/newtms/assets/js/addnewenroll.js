@@ -323,7 +323,7 @@ $(document).ready(function() {
             $company_id = $($id).find('option:selected').attr("company_id");
             $subsidy_amount = $($id).find('option:selected').attr("subsidy_amount");
             $unit_fees = $($id).find('option:selected').attr("unit_fees");
-            $individual_user_id = $($id).val();
+            $individual_user_id = $($id).val();alert();
             if ($payid.length > 0) 
             {
                 $('#pymnt_due_id').val($payid);
