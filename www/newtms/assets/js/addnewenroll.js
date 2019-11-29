@@ -327,7 +327,7 @@ $(document).ready(function() {
             
            // $('#company_name_1').text($($id).find('option:selected').attr("company_name"));
             //$('#company_name_2').text($($id).find('option:selected').attr("company_name"));
-              $('#couse_class_name').text($couse_class_name);
+              $('#couse_class_name').text('');
             $payid = $("#pymnt_due_id").val();
             $class = $("#class_id").val();
             $course = $("#course_id").val();
