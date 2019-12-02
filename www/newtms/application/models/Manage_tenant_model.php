@@ -14,6 +14,7 @@ class Manage_Tenant_Model extends CI_Model {
         //$this->dbs = $this->load->database($config_app,TRUE);
         $this->db->select('*');
         $this->db->from('tenant_master');
+        $this->db->where('tenant_id !=','T01');
         return $this->db->get()->result_array();
     }
 

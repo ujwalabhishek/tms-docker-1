@@ -43,7 +43,6 @@ function fetch_dynamic_db_details(){
     $CI->dbs->select('*');
         $CI->dbs->from('tenant_master');
         $CI->dbs->where('tenant_url',$host);
-        $CI->dbs->where('tenant_id!=','T01');
         $res = $CI->dbs->get()->row();
         //$CI->session->set_userdata('master_tenant_id', $res->tenant_id);
         define('TENANT_ID',  $res->tenant_id); //////very very imporatant line by shubhranshu
