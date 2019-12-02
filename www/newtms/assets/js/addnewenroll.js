@@ -378,8 +378,8 @@ $(document).ready(function() {
                         var error = res.error;
                         var lock= res.lock;
                         ///////added by shubhranshu to prevent multiple clicks////////////////
-                        $('#search_enrolment').removeAttr('disabled');
-                        $('#search_enrolment').html('<span class="glyphicon glyphicon-retweet"></span>&nbsp;Search');
+                        //$('#search_enrolment').removeAttr('disabled');
+                        //$('#search_enrolment').html('<span class="glyphicon glyphicon-retweet"></span>&nbsp;Search');
                         ///////added by shubhranshu to prevent multiple clicks////////////////
                         if(lock == 1){
                             $('.attendance_lock').show();
