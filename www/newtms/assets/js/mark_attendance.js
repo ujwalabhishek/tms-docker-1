@@ -23,7 +23,25 @@ $( document ).ready(function() {
             }
         });
     });
-
+    
+    $('#checkall1').click(function(){
+        if( this.checked = true){
+            $('input[type=checkbox]').each(function() { this.checked = false; }); 
+        }else{
+             $('input[type=checkbox]').each(function() { this.checked = true; }); 
+        }
+       
+    });
+    $('#checkall').click(function(){
+        if( this.checked = true){
+            $('input[type=checkbox]').each(function() { this.checked = false; }); 
+        }else{
+             $('input[type=checkbox]').each(function() { this.checked = true; }); 
+        }
+       
+    });
+    
+    
     $('#prev_week_but').click(function(){
         $('input[name=week]').val("1");
         $('#search_form').submit();
