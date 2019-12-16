@@ -761,10 +761,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
      public function save_user_data() 
     {
         $tenant_id = $this->user->tenant_id;
-         if ($NRIC == "SNG_4") /////added by shubhranshu for client requirement on 16/12/2019
-            {
-                $NRIC = 'SNG_3';
-            }
+        
         foreach ($this->input->post() as $key => $value)
         {
             if(!is_array($value)) 
@@ -775,6 +772,10 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             {
                 $$key = $value;
             }
+        }
+        if($NRIC == "SNG_4") /////added by shubhranshu for client requirement on 16/12/2019
+        {
+            $NRIC = 'SNG_3';
         }
         if($this->user->role_id == 'COMPACT') 
         {
