@@ -761,6 +761,10 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
      public function save_user_data() 
     {
         $tenant_id = $this->user->tenant_id;
+         if ($NRIC == "SNG_4") /////added by shubhranshu for client requirement on 16/12/2019
+            {
+                $NRIC = 'SNG_3';
+            }
         foreach ($this->input->post() as $key => $value)
         {
             if(!is_array($value)) 
@@ -796,12 +800,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                 $other_identi_type = $NRIC_OTHER;
                 $other_identi_code = $tax_code;
             }
-            if ($NRIC == "SNG_4") /////added by shubhranshu for client requirement on 16/12/2019
-            {
-                $other_identi_type = $NRIC_OTHER;
-                $other_identi_code = $tax_code;
-                $NRIC = 'SNG_3';
-            }
+           
             if( $this->user->tenant_id=='T02')
             {
                     $taxcode_prefix = 'XPR';
