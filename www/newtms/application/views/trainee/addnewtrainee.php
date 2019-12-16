@@ -1269,7 +1269,7 @@ if (!empty($tax_error)) {
                 $('#SGP_OTHERS_label').text('OTHERS :');
                 $('#SGP_ID_label').text('');
                 $('#SGP_ID_label').text('OTHERS :');
-            }  else if (this.value == "SNG_4") {
+            }  else if (this.value == "SNG_4") {alert();
                 $("#SGP_OTHERS").show();
                 $('#SGP_OTHERS option:third-child').attr("selected", "selected");
                 $('#SGP_OTHERS_label').text('');
