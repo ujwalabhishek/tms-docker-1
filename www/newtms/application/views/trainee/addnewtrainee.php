@@ -1269,7 +1269,14 @@ if (!empty($tax_error)) {
                 $('#SGP_OTHERS_label').text('OTHERS :');
                 $('#SGP_ID_label').text('');
                 $('#SGP_ID_label').text('OTHERS :');
-            } else {
+            }  else if (this.value == "SNG_4") {
+                $("#SGP_OTHERS").show();
+                $('#SGP_OTHERS option:third-child').attr("selected", "selected");
+                $('#SGP_OTHERS_label').text('');
+                $('#SGP_OTHERS_label').text('OTHERS :');
+                $('#SGP_ID_label').text('');
+                $('#SGP_ID_label').text('OTHERS :');
+            }else {
                 $('#SGP_OTHERS_label').text('');
                 $('#SGP_OTHERS_label').text('NRIC :');
                 $('#SGP_ID_label').text('');
