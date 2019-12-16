@@ -1269,15 +1269,14 @@ if (!empty($tax_error)) {
                 $('#SGP_OTHERS_label').text('OTHERS :');
                 $('#SGP_ID_label').text('');
                 $('#SGP_ID_label').text('OTHERS :');
-            }  else if (this.value == "SNG_4") {alert();
+            }  else if (this.value == "SNG_4") { ////added by shubhranshu due to client requirement on 16/12/2019
                 $("#SGP_OTHERS").show();
                 $('#SGP_OTHERS option:first-child').attr("selected", "selected");
                 $('#SGP_OTHERS_label').text('');
                 $('#SGP_OTHERS_label').text('OTHERS :');
                 $('#SGP_ID_label').text('');
                 $('#SGP_ID_label').text('OTHERS :');
-                
-                $('#NRIC_OTHER option[value=NOTAXCODE]').attr('selected','selected');
+                $('#NRIC_OTHER option[value=NOTAXCODE]').attr('selected','selected');////added by shubhranshu for client requirement
             }else {
                 $('#SGP_OTHERS_label').text('');
                 $('#SGP_OTHERS_label').text('NRIC :');
