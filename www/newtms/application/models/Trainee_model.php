@@ -796,6 +796,12 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                 $other_identi_type = $NRIC_OTHER;
                 $other_identi_code = $tax_code;
             }
+            if ($NRIC == "SNG_4") /////added by shubhranshu for client requirement on 16/12/2019
+            {
+                $other_identi_type = $NRIC_OTHER;
+                $other_identi_code = $tax_code;
+                $NRIC = 'SNG_3';
+            }
             if( $this->user->tenant_id=='T02')
             {
                     $taxcode_prefix = 'XPR';
