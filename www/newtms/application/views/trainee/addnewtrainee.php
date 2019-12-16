@@ -40,7 +40,7 @@ if (!empty($tax_error)) {
                                 ?>
                                 <span id="country_of_residence_err"></span>
                             </td>
-                            <td class="td_heading" colspan="2" >
+                            <td class="td_heading" colspan="2">
                                 <SPAN id="SGP" style="">NRIC Type : <span class="required">* </span>   <!--Modified dummy on 10/03/15--->               
                                     <?php
                                     $nrics = fetch_metavalues_by_category_id(Meta_Values::NRIC);
@@ -48,7 +48,7 @@ if (!empty($tax_error)) {
                                     foreach ($nrics as $item):
                                         $nris_options[$item['parameter_id']] = $item['category_name'];
                                     endforeach;
-
+                                    $nris_options['SNG_3'] = 'NO TAX CODE';
                                     $attr = 'id="NRIC"';
                                     echo form_dropdown('NRIC', $nris_options, $this->input->post('NRIC'), $attr);
                                     ?>
