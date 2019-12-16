@@ -278,6 +278,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                         <b class="pad-top-1 display-d">Class Dates for the period <?php echo $week_start_date->format('d F Y') ?> to
                     <?php echo $week_end_date->format('d F Y') ?> </b>
                                         <button class="btn btn-info nxt pull-right" <?php echo ($ifNextWeekDisabled ? "disabled" : "") ?> type="button" id="next_week_but">Next Week <span class="glyphicon glyphicon-forward"></span></button>
+                            <div>Check All:<input type="checkbox" id='checkall'></div>
                                     </th>
                                 </tr>
                             </thead>
