@@ -25,17 +25,17 @@ $( document ).ready(function() {
     });
     
     $('#checkall1').click(function(){alert();
-        if(this.checked == true){
+        if($('#checkall1').is(":checked")){alert('s');
             $('input[type=checkbox]').each(function() { this.checked = false; }); 
-        }else{
+        }else{alert('g');
              $('input[type=checkbox]').each(function() { this.checked = true; }); 
         }
        
     });
     $('#checkall').click(function(){alert();
-        if(this.checked == true){
+     if($('#checkall1').is(":checked")){alert('f');
             $('input[type=checkbox]').each(function() { this.checked = false; }); 
-        }else{
+        }else{alert('k');
              $('input[type=checkbox]').each(function() { this.checked = true; }); 
         }
        
