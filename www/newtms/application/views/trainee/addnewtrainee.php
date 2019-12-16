@@ -1800,7 +1800,7 @@ if (!empty($tax_error)) {
                     $("#NRIC_err").text("[required]").addClass('error');
                     $("#NRIC").addClass('error');
                     retVal = false;
-                } else if (NRIC == "SNG_3") {
+                } else if (NRIC == "SNG_3" || NRIC == "SNG_4") {
                     if (NRIC_OTHER == "") {
                         $("#NRIC_OTHER_err").text("[required]").addClass('error');
                         $("#NRIC_OTHER").addClass('error');
