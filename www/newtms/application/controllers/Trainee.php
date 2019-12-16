@@ -107,7 +107,10 @@ class Trainee extends CI_Controller {
             }
             if ($country_of_residence == 'SGP') 
             {                
-                $nric = $this->input->post("NRIC");                
+                $nric = $this->input->post("NRIC"); 
+                if($nric == "SNG_4"){
+                   $nric = "SNG_3"; 
+                }
                 $nric_other = $this->input->post("NRIC_OTHER");
                 $nric_id = $this->input->post('NRIC_ID');
                 $tax_code = $nric_id;
