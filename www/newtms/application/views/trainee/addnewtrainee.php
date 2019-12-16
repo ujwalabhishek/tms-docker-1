@@ -48,7 +48,7 @@ if (!empty($tax_error)) {
                                     foreach ($nrics as $item):
                                         $nris_options[$item['parameter_id']] = $item['category_name'];
                                     endforeach;
-                                    $nris_options['SNG_3'] = 'NO TAX CODE';
+                                    $nris_options['SNG_4'] = 'NO TAX CODE';
                                     $attr = 'id="NRIC"';
                                     echo form_dropdown('NRIC', $nris_options, $this->input->post('NRIC'), $attr);
                                     ?>
