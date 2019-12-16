@@ -1277,6 +1277,7 @@ if (!empty($tax_error)) {
                 $('#SGP_ID_label').text('');
                 $('#SGP_ID_label').text('OTHERS :');
                 $('#NRIC_OTHER option[value=NOTAXCODE]').attr('selected','selected');////added by shubhranshu for client requirement
+                $("#SGP_ID").hide();
             }else {
                 $('#SGP_OTHERS_label').text('');
                 $('#SGP_OTHERS_label').text('NRIC :');
