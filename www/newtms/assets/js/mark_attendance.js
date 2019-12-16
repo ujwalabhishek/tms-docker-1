@@ -24,7 +24,7 @@ $( document ).ready(function() {
         });
     });
     
-    $('#checkall1').click(function(){
+    $('#checkall1').click(function(){alert();
         if(this.checked == true){
             $('input[type=checkbox]').each(function() { this.checked = false; }); 
         }else{
@@ -32,7 +32,7 @@ $( document ).ready(function() {
         }
        
     });
-    $('#checkall').click(function(){
+    $('#checkall').click(function(){alert();
         if(this.checked == true){
             $('input[type=checkbox]').each(function() { this.checked = false; }); 
         }else{
