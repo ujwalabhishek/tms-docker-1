@@ -23,8 +23,8 @@ $( document ).ready(function() {
             }
         });
     });
-    
-    $('#checkall1').click(function(){alert();
+    /////added by shubhranshu to mark all the attendance
+    $('#checkall1').click(function(){
         if($('#checkall1').is(":checked")){alert('s');
             $('input[type=checkbox]').each(function() { this.checked = true; }); 
         }else{alert('g');
@@ -32,7 +32,7 @@ $( document ).ready(function() {
         }
        
     });
-    $('#checkall').click(function(){alert();
+    $('#checkall').click(function(){
      if($('#checkall1').is(":checked")){alert('f');
             $('input[type=checkbox]').each(function() { this.checked = true; }); 
         }else{alert('k');
@@ -40,7 +40,7 @@ $( document ).ready(function() {
         }
        
     });
-    
+     /////added by shubhranshu to mark all the attendance
     
     $('#prev_week_but').click(function(){
         $('input[name=week]').val("1");
