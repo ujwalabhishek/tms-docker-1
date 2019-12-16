@@ -26,17 +26,17 @@ $( document ).ready(function() {
     
     $('#checkall1').click(function(){alert();
         if($('#checkall1').is(":checked")){alert('s');
-            $('input[type=checkbox]').each(function() { this.checked = false; }); 
+            $('input[type=checkbox]').each(function() { this.checked = true; }); 
         }else{alert('g');
-             $('input[type=checkbox]').each(function() { this.checked = true; }); 
+             $('input[type=checkbox]').each(function() { this.checked = false; }); 
         }
        
     });
     $('#checkall').click(function(){alert();
      if($('#checkall1').is(":checked")){alert('f');
-            $('input[type=checkbox]').each(function() { this.checked = false; }); 
+            $('input[type=checkbox]').each(function() { this.checked = true; }); 
         }else{alert('k');
-             $('input[type=checkbox]').each(function() { this.checked = true; }); 
+             $('input[type=checkbox]').each(function() { this.checked = false; }); 
         }
        
     });
