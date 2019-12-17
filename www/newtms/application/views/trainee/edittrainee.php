@@ -1781,6 +1781,8 @@ endif;
                 $('#SGP_OTHERS_label').text('OTHERS :');
                 $('#SGP_ID_label').text('');
                 $('#SGP_ID_label').text('OTHERS :');
+                $("#SGP_OTHERS").value('NOTAXCODE');
+                $("#SGP_ID").hide();
             } else {
                 $('#NRIC_OTHER_err').text('').removeClass('error');
                 $('#NRIC_OTHER').removeClass('error');
