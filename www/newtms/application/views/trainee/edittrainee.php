@@ -1781,7 +1781,7 @@ endif;
                 $('#SGP_OTHERS_label').text('OTHERS :');
                 $('#SGP_ID_label').text('');
                 $('#SGP_ID_label').text('OTHERS :');
-                $("#SGP_OTHER").val('NOTAXCODE');
+                $('#NRIC_OTHER option[value=NOTAXCODE]').attr('selected','selected');////added by shubhranshu
                 $("#SGP_ID").hide();
             } else {
                 $('#NRIC_OTHER_err').text('').removeClass('error');
