@@ -26,17 +26,25 @@ $( document ).ready(function() {
     /////added by shubhranshu to mark all the attendance
     $('#checkall1').click(function(){
         if($('#checkall1').is(":checked")){
-            $('input[type=checkbox]').each(function() { this.checked = true; }); 
+            $('input[type=checkbox]').each(function() { this.checked = true; 
+                this.attr('checked','checked');
+            }); 
         }else{
-             $('input[type=checkbox]').each(function() { this.checked = false; }); 
+             $('input[type=checkbox]').each(function() { this.checked = false; 
+             this.attr('checked','');
+         }); 
         }
        
     });
     $('#checkall').click(function(){
      if($('#checkall1').is(":checked")){
-            $('input[type=checkbox]').each(function() { this.checked = true; }); 
+            $('input[type=checkbox]').each(function() { this.checked = true; 
+            this.attr('checked','checked');
+        }); 
         }else{
-             $('input[type=checkbox]').each(function() { this.checked = false; }); 
+             $('input[type=checkbox]').each(function() { this.checked = false; 
+             this.attr('checked','');
+         }); 
         }
        
     });
