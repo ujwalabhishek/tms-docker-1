@@ -1035,11 +1035,11 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
 ?>
 <script>
 /////added by shubhranshu to mark all the attendance
-    function toggle(source) {
-        checkboxes = document.getElementsByName('mark_attendance');
+    function toggle(source){
+        checkboxes = document.getElementsByName('mark_attendance[]');
         for(var checkbox in checkboxes)
           checkbox.checked = source.checked;
-      }
+    }
      /////added by shubhranshu to mark all the attendance
 
 </script>
