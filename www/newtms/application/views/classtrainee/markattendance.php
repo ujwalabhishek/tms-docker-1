@@ -278,7 +278,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                         <b class="pad-top-1 display-d">Class Dates for the period <?php echo $week_start_date->format('d F Y') ?> to
                     <?php echo $week_end_date->format('d F Y') ?> </b>
                                         <button class="btn btn-info nxt pull-right" <?php echo ($ifNextWeekDisabled ? "disabled" : "") ?> type="button" id="next_week_but">Next Week <span class="glyphicon glyphicon-forward"></span></button>
-                            <div>Check All:<input type="checkbox" id='checkall'></div>  <!--added by shubhranshu--->
+                           <div><input type="checkbox" onClick="toggle(this)"/> Select All<br/></div> <!--added by shubhranshu--->
                                     </th>
                                 </tr>
                             </thead>
@@ -784,7 +784,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                             <b class="pad-top-1 display-d">Class Dates for the period <?php echo $week_start_date->format('d F Y') ?> to
                         <?php echo $week_end_date->format('d F Y') ?> </b>
                                             <button class="btn btn-info nxt pull-right" <?php echo ($ifNextWeekDisabled ? "disabled" : "") ?> type="button" id="next_week_but">Next Week <span class="glyphicon glyphicon-forward"></span></button>
-                                        <div>Check All:<input type="checkbox" id='checkall1'></div>
+                                        <div><input type="checkbox" onClick="toggle(this)"/> Select All<br/></div>
                                         </th>
                                     </tr>
                                 </thead>
@@ -1031,3 +1031,15 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
         <?php
     }
 } // previous code ends
+
+?>
+<script>
+/////added by shubhranshu to mark all the attendance
+    function toggle(source) {
+        checkboxes = document.getElementsByName('mark_attendance');
+        for(var checkbox in checkboxes)
+          checkbox.checked = source.checked;
+      }
+     /////added by shubhranshu to mark all the attendance
+
+</script>
