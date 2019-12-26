@@ -9,7 +9,7 @@ $( document ).ready(function() {
 
     var postData = [];
     var form = $('#update_form');
-    $('.scroll table input[type=checkbox]').each(function(key, item){
+    $('.scroll table input[type=checkbox]').each(function(key, item){alert();
         $(item).click(function (){
             var isChecked = $(item).is(':checked');
             var paramName = $(this).attr('name');
