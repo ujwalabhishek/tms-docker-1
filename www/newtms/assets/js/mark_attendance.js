@@ -23,7 +23,24 @@ $( document ).ready(function() {
             }
         });
     });
-    
+    /////added by shubhranshu to mark all the attendance
+    $('#checkall1').click(function(){
+        if($('#checkall1').is(":checked")){
+            $('input[type=checkbox]').each(function() { this.checked = true; }); 
+        }else{
+             $('input[type=checkbox]').each(function() { this.checked = false; }); 
+        }
+       
+    });
+    $('#checkall').click(function(){
+     if($('#checkall1').is(":checked")){
+            $('input[type=checkbox]').each(function() { this.checked = true; }); 
+        }else{
+             $('input[type=checkbox]').each(function() { this.checked = false; }); 
+        }
+       
+    });
+     /////added by shubhranshu to mark all the attendance
     
     $('#prev_week_but').click(function(){
         $('input[name=week]').val("1");
