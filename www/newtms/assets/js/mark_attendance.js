@@ -9,7 +9,7 @@ $( document ).ready(function() {
 
     var postData = [];
     var form = $('#update_form');
-    $('.scroll table input[type=checkbox]').each(function(key, item){alert();
+    $('.scroll table input[type=checkbox]').each(function(key, item){
         $(item).click(function (){
             var isChecked = $(item).is(':checked');
             var paramName = $(this).attr('name');
@@ -24,30 +24,31 @@ $( document ).ready(function() {
         });
     });
     /////added by shubhranshu to mark all the attendance
-    $('#checkall1').click(function(){
-        if($('#checkall1').is(":checked")){
-            $('input[type=checkbox]').each(function() { this.checked = true; 
-                //this.attr('checked','checked');
-            }); 
-        }else{
-             $('input[type=checkbox]').each(function() { this.checked = false; 
-             //this.attr('checked','');
-         }); 
-        }
-       
-    });
-    $('#checkall').click(function(){
-     if($('#checkall1').is(":checked")){
-            $('input[type=checkbox]').each(function() { this.checked = true; 
-            //this.attr('checked','checked');
-        }); 
-        }else{
-             $('input[type=checkbox]').each(function() { this.checked = false; 
-             //this.attr('checked','');
-         }); 
-        }
-       
-    });
+//    $('#checkall1').click(function(){
+//        if($('#checkall1').is(":checked")){
+//            $('input[type=checkbox]').each(function() { this.checked = true; 
+//                //this.attr('checked','checked');
+//                //$("input:checkbox").attr('checked', true).change();
+//            }); 
+//        }else{
+//             $('input[type=checkbox]').each(function() { this.checked = false; 
+//             //this.attr('checked','');
+//         }); 
+//        }
+//       
+//    });
+//    $('#checkall').click(function(){
+//     if($('#checkall1').is(":checked")){
+//            $('input[type=checkbox]').each(function() { this.checked = true; 
+//            //this.attr('checked','checked');
+//        }); 
+//        }else{
+//             $('input[type=checkbox]').each(function() { this.checked = false; 
+//             //this.attr('checked','');
+//         }); 
+//        }
+//       
+//    });
      /////added by shubhranshu to mark all the attendance
     
     $('#prev_week_but').click(function(){
