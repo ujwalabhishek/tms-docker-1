@@ -1768,7 +1768,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
     // skm code end
     
      /* this function get the activity log of mark attendance skm start*/ 
-    public function mark_att_log($course_id,$class_id)
+    public function mark_att_log($course_id=0,$class_id=0)
     {
         $this->load->model('Activity_Log_Model', 'activitylog');
         $course_id = $this->input->post('course_id');
