@@ -562,9 +562,9 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
         if (isset($session_data[$format_date])) {
             $session_by_date_data = $session_data[$format_date];
             if ($is_first) {
-                return $session_by_date_data['session_01'] == 'TRUE';
+                return $session_by_date_data['session_01'] == '1';
             } else {
-                return $session_by_date_data['session_02'] == 'TRUE';
+                return $session_by_date_data['session_02'] == '1';
             }
         }
         return false;
