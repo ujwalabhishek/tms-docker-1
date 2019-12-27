@@ -69,10 +69,9 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
         var ancher = '<?php echo $ancher; ?>';
     </script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/mark_attendance.js"></script>
-    <div class="overlay">
+    
+    <div class="col-md-10 overlay">
         <div id="loading-img"></div>
-    </div>
-    <div class="col-md-10">
         <h2 class="panel_heading_style"><span class="glyphicon glyphicon-pencil"></span> <?php echo $page_title; ?></h2>
         <?php
         if (!empty($message)) {
