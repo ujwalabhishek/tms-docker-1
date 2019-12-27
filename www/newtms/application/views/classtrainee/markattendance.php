@@ -6,7 +6,7 @@ background: #959191;
     top: 0;
     right: 0;
     bottom: 0;
-    height: 1500px;
+    height: 900px;
     left: 0;
     opacity: 0.8;
     z-index: 9999999999;
@@ -14,7 +14,7 @@ background: #959191;
 #loading-img {
     background: url(https://www.bid4jeet.in/images/cricket_logo/loading.gif) center center no-repeat;
     height: 100%;
-    background-size:185px;
+    background-size:123px;
 
 }
 </style> 
