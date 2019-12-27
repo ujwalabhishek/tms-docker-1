@@ -189,7 +189,7 @@ $( document ).ready(function() {
         form.find("[name='class_id']").val($('#select_class_id').val());
         form.find("[name='subsidy']").val($('#subsidy').val());
         $("input[name*=mark_attendance][type=checkbox]").each(function () {
-                $(this).trigger('click').change();$(this).trigger('click');});
+                $(this).trigger('click').change();});
          /////added by shubhranshu to prevent multiple clicks/////////////////////////
         var self = $('#update_form'),
         button = self.find('input[type="submit"],button');
