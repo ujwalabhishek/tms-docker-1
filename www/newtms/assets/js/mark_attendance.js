@@ -29,6 +29,11 @@ $( document ).ready(function() {
 //            $('input[type=checkbox]').each(function() { this.checked = true; 
 //                //this.attr('checked','checked');
 //                //$("input:checkbox").attr('checked', true).change();
+//                //$("input:checkbox").trigger("click").change();
+//                $('input[type=checkbox]').each(function() { this.checked = true; 
+              
+               //$("input:checkbox").trigger("click").change();
+            //});
 //            }); 
 //        }else{
 //             $('input[type=checkbox]').each(function() { this.checked = false; 
