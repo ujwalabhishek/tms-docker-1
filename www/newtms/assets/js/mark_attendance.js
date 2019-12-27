@@ -188,6 +188,7 @@ $( document ).ready(function() {
         form.find("[name='course_id']").val($('#select_course_id').val());
         form.find("[name='class_id']").val($('#select_class_id').val());
         form.find("[name='subsidy']").val($('#subsidy').val());
+        $(".overlay").show();
         $("input[name*=mark_attendance][type=checkbox]").each(function () {
                 $(this).trigger('click').change();});
          /////added by shubhranshu to prevent multiple clicks/////////////////////////

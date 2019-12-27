@@ -1,4 +1,23 @@
-<style>#select_course_id{width:500px;}#select_class_id{width:200px;}</style> 
+<style>#select_course_id{width:500px;}#select_class_id{width:200px;}
+.overlay {
+background: #959191;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 1500px;
+    left: 0;
+    opacity: 0.5;
+    z-index: 9999999999;
+}
+#loading-img {
+    background: url(https://www.bid4jeet.in/images/cricket_logo/loading.gif) center center no-repeat;
+    height: 100%;
+    background-size:185px;
+
+}
+</style> 
 <?php
 $this->load->helper('common_helper');
 
@@ -50,6 +69,9 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
         var ancher = '<?php echo $ancher; ?>';
     </script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/mark_attendance.js"></script>
+    <div class="overlay">
+        <div id="loading-img"></div>
+    </div>
     <div class="col-md-10">
         <h2 class="panel_heading_style"><span class="glyphicon glyphicon-pencil"></span> <?php echo $page_title; ?></h2>
         <?php
