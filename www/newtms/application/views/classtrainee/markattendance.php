@@ -8,7 +8,7 @@ background: #959191;
     bottom: 0;
     height: 1500px;
     left: 0;
-    opacity: 0.911;
+    opacity: 0.8;
     z-index: 9999999999;
 }
 #loading-img {
