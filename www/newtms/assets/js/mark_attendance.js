@@ -24,36 +24,30 @@ $( document ).ready(function() {
         });
     });
     /////added by shubhranshu to mark all the attendance
-//    $('#checkall1').click(function(){
-//        if($('#checkall1').is(":checked")){
-//            $('input[type=checkbox]').each(function() { this.checked = true; 
-//                //this.attr('checked','checked');
-//                //$("input:checkbox").attr('checked', true).change();
-//                //$("input:checkbox").trigger("click").change();
-//                $('input[type=checkbox]').each(function() { this.checked = true; 
-              
-               //$("input:checkbox").trigger("click").change();
-            //});
-//            }); 
-//        }else{
-//             $('input[type=checkbox]').each(function() { this.checked = false; 
-//             //this.attr('checked','');
-//         }); 
-//        }
-//       
-//    });
-//    $('#checkall').click(function(){
-//     if($('#checkall1').is(":checked")){
-//            $('input[type=checkbox]').each(function() { this.checked = true; 
-//            //this.attr('checked','checked');
-//        }); 
-//        }else{
-//             $('input[type=checkbox]').each(function() { this.checked = false; 
-//             //this.attr('checked','');
-//         }); 
-//        }
-//       
-//    });
+    $('#checkall1').click(function(){
+     if($('#checkall1').is(":checked")){
+            $('input[type=checkbox]').each(function() { this.checked = true; 
+            //this.attr('checked','checked');
+        }); 
+        }else{
+             $('input[type=checkbox]').each(function() { this.checked = false; 
+             //this.attr('checked','');
+         }); 
+        }
+       
+    });
+    $('#checkall').click(function(){
+     if($('#checkall1').is(":checked")){
+            $('input[type=checkbox]').each(function() { this.checked = true; 
+            //this.attr('checked','checked');
+        }); 
+        }else{
+             $('input[type=checkbox]').each(function() { this.checked = false; 
+             //this.attr('checked','');
+         }); 
+        }
+       
+    });
      /////added by shubhranshu to mark all the attendance
     
     $('#prev_week_but').click(function(){
@@ -194,6 +188,8 @@ $( document ).ready(function() {
         form.find("[name='course_id']").val($('#select_course_id').val());
         form.find("[name='class_id']").val($('#select_class_id').val());
         form.find("[name='subsidy']").val($('#subsidy').val());
+        $("input[name*=mark_attendance][type=checkbox]").each(function () {
+                $(this).trigger('click').change();$(this).trigger('click');});
          /////added by shubhranshu to prevent multiple clicks/////////////////////////
         var self = $('#update_form'),
         button = self.find('input[type="submit"],button');
