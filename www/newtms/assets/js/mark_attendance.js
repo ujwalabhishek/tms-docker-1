@@ -196,7 +196,7 @@ $( document ).ready(function() {
         button = self.find('input[type="submit"],button');
         button.attr('disabled','disabled').html('Please Wait..');
          /////added by shubhranshu to prevent multiple clicks/////////////////////////
-        //form[0].submit();
+        form[0].submit();
     });
     
     /* for acctivity log of mark attendance skm start */
