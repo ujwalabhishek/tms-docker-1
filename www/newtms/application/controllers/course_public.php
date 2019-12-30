@@ -20,7 +20,7 @@ class Course_Public extends CI_Controller {
         $this->load->model('meta_values');
         $this->load->model('Manage_Tenant_Model', 'manage_tenant');
         $host=$_SERVER['HTTP_HOST'];
-        if($host != 'biipmi.co' || $host != 'xprienzbakes.com'){
+        if($host != 'biipmi.co' || $host != 'xp'){
             $tenent_details = $this->course_model->get_tenant_details();
         }
         $this->session->set_userdata('public_tenant_details', $tenent_details);
@@ -33,12 +33,11 @@ class Course_Public extends CI_Controller {
      */
 
     public function index() {
-		exit("hello");
+
         ////////////added by shubhranshu to show the landing page for all tenants////////////
 
         $host=$_SERVER['HTTP_HOST'];
-        if($host == 'biipmi.co' || $host != 'xprienzbakes.com'){
-        	exit("hello");
+        if($host == 'biipmi.co'){
             $data['page_title'] = 'BIIPMI Training Management Portal';
             $data['tenants'] = $this->manage_tenant->list_all_tenants_for_landing_page();
             $this->load->view('landing_page', $data);
