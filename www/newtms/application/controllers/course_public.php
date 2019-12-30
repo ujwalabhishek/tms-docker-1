@@ -38,6 +38,7 @@ class Course_Public extends CI_Controller {
 
         $host=$_SERVER['HTTP_HOST'];
         if($host == 'biipmi.co' || $host != 'xprienzbakes.com'){
+        	exit("hello");
             $data['page_title'] = 'BIIPMI Training Management Portal';
             $data['tenants'] = $this->manage_tenant->list_all_tenants_for_landing_page();
             $this->load->view('landing_page', $data);
