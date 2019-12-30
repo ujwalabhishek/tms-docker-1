@@ -33,7 +33,7 @@ class Course_Public extends CI_Controller {
      */
 
     public function index() {
-        
+		exit("hello");
         ////////////added by shubhranshu to show the landing page for all tenants////////////
 
         $host=$_SERVER['HTTP_HOST'];
