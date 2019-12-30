@@ -12,7 +12,7 @@ background: #959191;
     z-index: 9999999999;
 }
 #loading-img {
-    //background: url(https://www.bid4jeet.in/images/cricket_logo/loading.gif) center center no-repeat;
+    background: url(assets/images/loading_1.gif) center center no-repeat;
     height: 100%;
     background-size:123px;
 
