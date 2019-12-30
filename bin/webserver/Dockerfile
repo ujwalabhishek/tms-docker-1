@@ -49,3 +49,6 @@ RUN pecl install mcrypt-1.0.1
 
 # Enable apache modules
 RUN a2enmod rewrite headers
+
+#enable mysqldump
+RUN apt install mysql-client-core-5.7
