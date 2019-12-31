@@ -12,7 +12,7 @@ class course_public extends CI_Controller {
     public function __construct() {
 
         parent::__construct();
-         
+         echo 'ss';exit;
         $this->load->model('course_public_model','course_model');
 
         $this->load->helper('metavalues_helper', 'common');
@@ -20,13 +20,10 @@ class course_public extends CI_Controller {
         $this->load->model('meta_values');
         $this->load->model('manage_tenant_model', 'manage_tenant');
         $host=$_SERVER['HTTP_HOST'];
-<<<<<<< HEAD:www/newtms/application/controllers/course_public.php
         if($host != 'biipmi.co'){
-=======
-        if($host != 'xprienz.net'){
->>>>>>> testing:www/newtms/application/controllers/Course_public.php
-            $tenent_details = $this->course_model->get_tenant_details();
-        }
+            if($host != 'xprienz.net'){
+                $tenent_details = $this->course_model->get_tenant_details();
+            }
         $this->session->set_userdata('public_tenant_details', $tenent_details);
 
         $data = $this->session->userdata('userDetails');    
@@ -41,11 +38,8 @@ class course_public extends CI_Controller {
         ////////////added by shubhranshu to show the landing page for all tenants////////////
 
         $host=$_SERVER['HTTP_HOST'];
-<<<<<<< HEAD:www/newtms/application/controllers/course_public.php
         if($host == 'biipmi.co'){
-=======
         if($host == 'xprienz.net'){
->>>>>>> testing:www/newtms/application/controllers/Course_public.php
             $data['page_title'] = 'BIIPMI Training Management Portal';
             $data['tenants'] = $this->manage_tenant->list_all_tenants_for_landing_page();
             $this->load->view('landing_page', $data);
