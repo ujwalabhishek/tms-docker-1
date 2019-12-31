@@ -14,7 +14,7 @@ if ($mysqli->connect_errno) {
 }
 echo $mysqli->host_info . "\n";
 
-$mysqli = new mysqli("127.0.0.1", "biipmico_tms", "ksj784382*879#prod!@2020", "biipmico_tms_masterdata", 3306);
+$mysqli = new mysqli("172.18.0.2", "biipmico_tms", "ksj784382*879#prod!@2020", "biipmico_tms_masterdata", 3306);
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
