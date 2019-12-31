@@ -9,14 +9,16 @@ $username = "biipmico_tms";
 $password = "ksj784382*879#prod!@2020";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password,'biipmico_tms_masterdata');
+//$conn = new mysqli($servername, $username, $password,'biipmico_tms_masterdata');
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password);
 
 // Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 echo "Connected successfully";
-exit;
 /**
  * CodeIgniter
  *
@@ -86,7 +88,7 @@ switch (ENVIRONMENT)
 	case 'development':
 		//error_reporting(-1);
                 error_reporting(E_ALL);
-		ini_set('display_errors',1);
+		ini_set('display_errors',0);
 	break;
 
 	case 'testing':
