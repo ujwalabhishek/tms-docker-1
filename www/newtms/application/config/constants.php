@@ -147,6 +147,6 @@ define('ASSMNT_TEMAPLTE_ID', "assmnt_template_id");
 //paypal
 define('SANDBOX', 0);
 define('ONLINE', 'ONLINE');//11/12/14-MODE OF PAYMENT
-define('ENROL_PYMNT_DUE', "enrol_pymnt_due"); 
+//define('ENROL_PYMNT_DUE', "enrol_pymnt_due"); 
 
 ////added by shubhranshu ////////////////
