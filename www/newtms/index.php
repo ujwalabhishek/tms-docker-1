@@ -1,5 +1,5 @@
 <?php
-echo phpinfo();exit;
+//echo phpinfo();exit;
 /**
  * CodeIgniter
  *
