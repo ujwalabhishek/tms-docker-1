@@ -8,7 +8,7 @@
 //$username = "biipmico_tms";
 //$password = "ksj784382*879#prod!@2020";
 
-$link = mysqli_connect("111.223.110.42:8080", "biipmico_tms", "ksj784382*879#prod!@2020", "biipmico_tms_masterdata");
+$link = mysqli_connect("localhost", "biipmico_tms", "ksj784382*879#prod!@2020", "biipmico_tms_masterdata");
 
 if (!$link) {
     echo "Error: Unable to connect to MySQL." . PHP_EOL;
