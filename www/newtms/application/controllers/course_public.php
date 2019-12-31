@@ -32,7 +32,7 @@ class course_public extends CI_Controller {
      * This function loads the initial list view page for courses.
      */
 
-    public function index() {
+    public function index() {echo "sss";exit;
        
         ////////////added by shubhranshu to show the landing page for all tenants////////////
 
