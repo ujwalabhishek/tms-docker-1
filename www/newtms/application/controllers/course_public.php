@@ -20,7 +20,7 @@ class course_public extends CI_Controller {
         $this->load->model('meta_values');
         $this->load->model('manage_tenant_model', 'manage_tenant');
         $host=$_SERVER['HTTP_HOST'];
-        if($host != 'xprienz.net'){
+        if($host != 'xprienzbakes.com'){
             $tenent_details = $this->course_model->get_tenant_details();
         }
         $this->session->set_userdata('public_tenant_details', $tenent_details);
