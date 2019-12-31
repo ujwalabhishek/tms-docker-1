@@ -30,8 +30,8 @@ function fetch_dynamic_db_details(){
     if($host == 'xprienzbakes.com'){
         $object = new stdClass();
         $object->tenant_db_name = 'biipmico_tms_masterdata';
-        $object->tenant_db_user = 'biipmico_tms_master';
-        $object->tenant_db_password = 'ksj784382*879#';
+        $object->tenant_db_user = 'root';
+        $object->tenant_db_password = 'tms#8938480*prod!@2020';
         
         return $object;
     }
