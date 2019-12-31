@@ -73,10 +73,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 $dynamic_db_data = fetch_dynamic_db_details();
-//print_r($dynamic_db_data);exit;
+print_r($dynamic_db_data);exit;
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => '127.0.0.1',
 	'username' => $dynamic_db_data->tenant_db_user,
 	'password' => $dynamic_db_data->tenant_db_password,
 //	'username' => 'biipmico_tms_master',
