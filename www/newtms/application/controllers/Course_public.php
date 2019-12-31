@@ -12,7 +12,7 @@ class Course_public extends CI_Controller {
     public function __construct() {
 
         parent::__construct();
-          echo "ss";exit;
+         
         $this->load->model('course_public_model','course_model');
 
         $this->load->helper('metavalues_helper', 'common');
@@ -33,7 +33,7 @@ class Course_public extends CI_Controller {
      */
 
     public function index() {
-       echo "ss";exit;
+       
         ////////////added by shubhranshu to show the landing page for all tenants////////////
 
         $host=$_SERVER['HTTP_HOST'];
