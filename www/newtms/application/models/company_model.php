@@ -1057,6 +1057,7 @@ class Company_Model extends CI_Model {
      * @return type
      */
     public function get_activeuser_companies_for_tenant($tenant_id, $active_enrollment = 0) {
+        $this->db->cache_on();
         $this->db->select('cm.company_id');
         $this->db->select('cm.company_name');
         $this->db->from('tenant_company_users tcu');

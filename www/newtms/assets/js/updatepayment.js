@@ -602,6 +602,18 @@ $(document).ready(function() {
             e.preventDefault();
         }
     });
+    ///////added by shubhranshu to prevent multiple clicks////////////////
+    $(document).ajaxStart(function () {
+         var self = $(".btn_srch"),
+            button = self.find('input[type="submit"],button');
+            button.attr('disabled','disabled').html('Please Wait..');
+            //$("#btnSubmit").attr("disabled", true);
+        });
+        $(document).ajaxComplete(function () {
+             $(".search_button").removeAttr("Disabled");
+                $(".search_button").html("<span class='glyphicon glyphicon-search'></span> Search");
+            //$("#btnSubmit").attr("disabled", false);
+        });
     function trigger_ajax($invoice_id, $taxcode_id, $trainee_id) {
          ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
         var self = $(".btn_srch"),
@@ -611,7 +623,7 @@ $(document).ready(function() {
         $.ajax({
             url: $siteurl + "class_trainee/search_trainee_updatepayment",
             type: "post",
-            //async: false,
+            async: false,
             dataType: "json",
             data: {
                 'invoice_id': $invoice_id,

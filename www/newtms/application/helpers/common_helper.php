@@ -5,8 +5,12 @@ if (!defined('BASEPATH'))
 /*
  * This is the helper class for all common functions used in the applications. 
  */
+//// below function added by shubhranshu for sleaning of special characracters from a string
+function clean($string) {
+   //$string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
 
-    
+   return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+}
 
 function generateEncryptedPwd() {
     $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
@@ -213,7 +217,7 @@ function compare_dates_without_time(DateTime $date1, DateTime $date2) {
  */
 function parse_date($date_str, $format) {
     $date = date_create_from_format($format, $date_str);
-    return $date;
+    return $date; 
 }
 
 /**
@@ -422,7 +426,7 @@ function common_reset_password($user_id, $pass = '') {
         $pwd=  random_key_generation();
     }
     //$pwd ='Pangchoon@#1956';
-    //$encrypted_password = $CI->bcrypt->hash_password($pwd);echo $encrypted_password;exit;
+    $encrypted_password = $CI->bcrypt->hash_password($pwd);
     $password_data = array('password' => $encrypted_password);
     $CI->db->trans_start();
     $CI->db->where('user_id', $user_id);
@@ -495,7 +499,7 @@ function internal_staff_reset_password($user_id, $pass = '') {
         $mail_body = get_mail_body($data, $qry1->row('first_name'), $qry1->row('gender'));
         $mail_body_admin = get_mail_body_admin_pwreset($data, $qry1->row('first_name'), $qry1->row('gender'));
 
-        $to_email_id = $CI->db->select('registered_email_id')->from('tms_users')->where('user_id', $user_id)->get()->row('registered_email_id');
+        //$to_email_id = $CI->db->select('registered_email_id')->from('tms_users')->where('user_id', $user_id)->get()->row('registered_email_id');
         
         $offcial_internalstaff_email = $CI->db->select('off_email_id')->from('internal_user_emp_detail')->where('user_id', $user_id)->get()->row('off_email_id');
         
@@ -503,7 +507,7 @@ function internal_staff_reset_password($user_id, $pass = '') {
         if ($user_role == "ADMN") {
             $cc_email_to_admin = $CI->session->userdata('userDetails')->registered_email_id;
         }
-        if(!empty($to_email_id)){
+        if(!empty($offcial_internalstaff_email)){
 //        send_mail($to_email_id, $cc_email_to, $mail_subject, $mail_body);
         send_mail($offcial_internalstaff_email, $cc_email_to, $mail_subject, $mail_body);
         }

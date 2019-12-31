@@ -3,9 +3,23 @@
  */
 $(document).ready(function() {
     var check = 0
-    $('#enroll_pay_now_form').submit(function() {        
-        check = 1;
-        return form_validate(true);
+    $('#enroll_pay_now_form').submit(function() {   
+        //check = 1;
+        // added by shubhranshu to prevent multiple click////////////////
+        $account_type = $('#account_type').val();
+        if ($account_type == 'company') {
+            $check= form_validates(true);
+        }else{
+           $check= form_validate(true); 
+        }
+        
+        if($check){
+            $(".book_now").attr('disabled','disabled').html('Please Wait..');
+            $(".pay_now").attr('disabled','disabled').html('Please Wait..');
+            return true;
+        }else{
+            return false;
+        }// added by shubhranshu to prevent multiple click////////////////
     })
     $('button[type="reset"]').click(function() {
         $('.error_text').text('');
@@ -39,7 +53,7 @@ $('#payment_type').change(function() {
         $('#giro_div').hide();
         $('#sfc_div').hide();
         $('#sfcato_div').hide();
-        $val = $(this).val();alert($val);
+        $val = $(this).val();
         if ($val.length > 0) {
             if ($val == 'CASH' || $val == 'NETS') {
                 $('#row_dim3').show();
@@ -81,7 +95,7 @@ $('#payment_type').change(function() {
                     $('.sfc_clm').show();
                 }
                 else
-                {alert('else');
+                {
                     remove_err('#sfc_claim');
                     $('#sfc_div').show();
                     $('#row_dim31').hide();
@@ -150,16 +164,28 @@ $('#payment_type').change(function() {
         if($enrolment_mode == 'COMPSPON'){
             $.post(baseurl + "trainee/check_company_invoice_status", {comp_id: $company,crs_id: $course_id,cls_id: $class_id}, function(data) {
                 json_data = $.parseJSON(data);
-                if(json_data.payment_status == 'NOTPAID' || json_data.payment_status === undefined){
-                     $('.book_now').show();
+                if(json_data.payment_status == 'NOTPAID' || json_data.payment_status === undefined || json_data.payment_status === 'NULL'){
+                     if($class_pymnt_enrol == 'PDENROL') {
+                         $('.pay_now').show();
+                     }else{
+                         $('.book_now').show();
+                     }
                      $('#paiddiv').hide();
                 }else{
+                    if($class_pymnt_enrol == 'PDENROL') {
+                         $('.pay_now').hide();
+                     }else{
+                         $('.book_now').hide();
+                     }
                     $('#paiddiv').show();
-                    $('.book_now').hide();
                 }
             });
         }else{
-             $('.book_now').show();
+             if($class_pymnt_enrol == 'PDENROL') {
+                $('.pay_now').show();
+            }else{
+                $('.book_now').show();
+            }
              $('#paiddiv').hide();
         }/////////////////////////////////////////////ssp//////////////////////////////////////////////////////////
         if($class_pymnt_enrol == 'PDENROL') {
@@ -414,7 +440,7 @@ function form_validate($retVal) {
     return $retVal;
 }
 
-function form_validate($retVal) {
+function form_validates($retVal) {
     $payment_type = $('#payment_type').val();
     $payment_type1 = $('#payment_type1').val();
     $account_type = $('#account_type').val();

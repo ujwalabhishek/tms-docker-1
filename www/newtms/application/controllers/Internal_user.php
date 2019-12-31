@@ -8,7 +8,7 @@ if (!defined('BASEPATH'))
 class Internal_user extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $this->load->model('meta_values');
         $this->load->model('common_model', 'commonmodel');
         $this->load->helper('common');
@@ -105,7 +105,7 @@ class Internal_user extends CI_Controller {
             $this->load->library('form_validation');            
             $country_of_residence = $this->input->post('country_of_residence'); 
             $this->form_validation->set_rules('country_of_residence', 'Country of Residence', 'required');
-            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|min_length[8]|max_length[12]');
+            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|max_length[12]');
             if ($country_of_residence == 'IND') {
                 $this->form_validation->set_rules('PAN', 'PANNumber', 'required|max_length[15]|callback_check_unique_usertaxcode');
                 $tax_code = $this->input->post("PAN");
@@ -213,7 +213,7 @@ class Internal_user extends CI_Controller {
                 $this->session->set_userdata('user_name_edit', $user_list_values->user_name);
                 $this->session->set_userdata('tax_code_edit', $user_list_values->tax_code);
                 $this->form_validation->set_rules('country_of_residence', 'Country of Residence', 'required');
-                $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|min_length[8]|max_length[12]');
+                $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|max_length[12]');
                 $country_of_residence = $this->input->post('country_of_residence');
                 $valid = TRUE; //Added By dummy for Edit issue (Nov 10 2014)
                 if ($country_of_residence == 'IND') {
@@ -451,6 +451,18 @@ class Internal_user extends CI_Controller {
             return TRUE;
         }
     }
+    ///// below function was added by shubhranshu to check client side duplicates email
+    function check_unique_useremail_client() {
+        if ($emp_email = $this->input->post('emp_email')) {
+            $exists = $this->internaluser->check_duplicate_user_email_company($emp_email);
+            if ($exists) {
+                echo '1';
+            }else{
+                echo '0';
+            }
+            
+        }
+    }
     
     function check_unique_useremail_emp() {
         if ($emp_email = $this->input->post('emp_email')) {
@@ -524,7 +536,7 @@ class Internal_user extends CI_Controller {
     /*
      * Method for checking if email id is already exists in add Interanl user.
      */
-    public function check_email_id($email) {
+    public function check_email_id($email='') {
         extract($_POST);
         $email_id = trim($email);
         $exists = $this->internaluser->check_email($email_id);

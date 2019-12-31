@@ -80,7 +80,7 @@ $this->load->model('meta_values');
                         foreach ($tabledata as $data) {
                             ?>
                             <tr>
-                                <td class="td_center_align"><a href="<?php echo base_url()."accounting/view_credit_note/".$data->credit_note_number ?>" ><?php echo $data->credit_note_number; ?></a></td>
+                                <td class="td_center_align"><a href="<?php echo base_url()."accounting/view_credit_note/?q=".$data->credit_id ?>" ><?php echo $data->credit_note_number; ?></a></td>
                                 <td class="td_center_align"><?php echo date('d-m-Y', strtotime($data->credit_note_date)); ?></td>
                                 <td class="td_center_align"><?php echo $data->ori_invoice_number; ?></td>
                                 <td class="td_center_align"><?php echo date('d-m-Y', strtotime($data->ori_invoice_date)); ?></td>

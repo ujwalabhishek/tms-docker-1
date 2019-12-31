@@ -343,7 +343,7 @@ $(document).ready(function() {
             var id = ui.item.key;
             $('#user_id').val(id);
         },
-        minLength: 0,
+        minLength: 4,
         });
         
         jQuery("#company").autocomplete({
@@ -361,7 +361,7 @@ $(document).ready(function() {
             var id = ui.item.key;
             $('#com_id').val(id);
         },
-        minLength: 0,
+        minLength: 4,
         });
         
         jQuery("#course").autocomplete({
@@ -379,7 +379,7 @@ $(document).ready(function() {
             var id = ui.item.key;
             $('#crse_id').val(id);
         },
-        minLength: 0,
+        minLength: 4,
         });
         
         jQuery("#inv_taxcode").autocomplete({
@@ -397,7 +397,7 @@ $(document).ready(function() {
             var id = ui.item.key;
             $('#invid').val(id);
         },
-        minLength: 0,
+        minLength: 4,
         });
         
         jQuery("#inv").autocomplete({
@@ -415,7 +415,7 @@ $(document).ready(function() {
             var id = ui.item.key;
             $('#inv').val(id);
         },
-        minLength: 0,
+        minLength: 4,
         });
         
         jQuery("#pass").autocomplete({
@@ -433,7 +433,7 @@ $(document).ready(function() {
             var id = ui.item.key;
             $('#pass').val(id);
         },
-        minLength: 0,
+        minLength: 4,
         });
         
         

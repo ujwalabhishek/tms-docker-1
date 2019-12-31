@@ -67,7 +67,7 @@ $this->load->model('meta_values');
                                 </td>
                                 <td>
                                     <?php  
-                                    $this->load->model('Class_Trainee_Model', 'classtraineemodel');
+                                    $this->load->model('class_trainee_model', 'classtraineemodel');
                                     $res = $this->classtraineemodel->schedule_chck($data->class_id);
                                     if($res == 1)
                                     {
@@ -155,7 +155,7 @@ $this->load->model('meta_values');
         var self = $(this),
         button = self.find('input[type="submit"],button'),
         submitValue = button.data('submit-value');
-        button.attr('disabled','disabled').val('Please Wait..');
+        button.attr('disabled','disabled').html('Please Wait..');
         return true;
     }); //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM///////////////////////
 </script>

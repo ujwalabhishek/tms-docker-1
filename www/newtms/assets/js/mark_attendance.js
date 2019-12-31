@@ -23,7 +23,33 @@ $( document ).ready(function() {
             }
         });
     });
-
+    /////added by shubhranshu to mark all the attendance
+    $('#checkall1').click(function(){
+     if($('#checkall1').is(":checked")){
+            $('input[type=checkbox]').each(function() { this.checked = true; 
+            //this.attr('checked','checked');
+        }); 
+        }else{
+             $('input[type=checkbox]').each(function() { this.checked = false; 
+             //this.attr('checked','');
+         }); 
+        }
+       
+    });
+    $('#checkall').click(function(){
+     if($('#checkall1').is(":checked")){
+            $('input[type=checkbox]').each(function() { this.checked = true; 
+            //this.attr('checked','checked');
+        }); 
+        }else{
+             $('input[type=checkbox]').each(function() { this.checked = false; 
+             //this.attr('checked','');
+         }); 
+        }
+       
+    });
+     /////added by shubhranshu to mark all the attendance
+    
     $('#prev_week_but').click(function(){
         $('input[name=week]').val("1");
         $('#search_form').submit();
@@ -162,6 +188,9 @@ $( document ).ready(function() {
         form.find("[name='course_id']").val($('#select_course_id').val());
         form.find("[name='class_id']").val($('#select_class_id').val());
         form.find("[name='subsidy']").val($('#subsidy').val());
+//        $(".overlay").show();
+//        $("input[name*=mark_attendance][type=checkbox]").each(function () {
+//                $(this).trigger('click').change();});
          /////added by shubhranshu to prevent multiple clicks/////////////////////////
         var self = $('#update_form'),
         button = self.find('input[type="submit"],button');

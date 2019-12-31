@@ -90,7 +90,11 @@ echo validation_errors('<div class="error1">', '</div>');
 
 //            echo form_open_multipart("user/add_trainee1", $atr);
 
+<<<<<<< HEAD
              echo form_open_multipart("course/referral_credentials1", $atr);
+=======
+             echo form_open_multipart("course_public/referral_credentials1", $atr);
+>>>>>>> testing
 
             echo form_hidden('country_of_residence', 'SGP');
 
@@ -1478,8 +1482,13 @@ if($course_id!='' && $class_id!=''){
 
                         <td class="td_heading">
 
+<<<<<<< HEAD
                             <span id="capS"><?php echo $captcha; ?> </span>
 
+=======
+                            <span id="capS"><?php echo $captcha; ?> <a href=''><span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span></a></span>
+                            
+>>>>>>> testing
                             <span id="capH"> </span>
 
                         </td>
@@ -1507,9 +1516,15 @@ if($course_id!='' && $class_id!=''){
                             );
 
                             echo form_input($captcha_tag);
+<<<<<<< HEAD
 
                             ?>
 
+=======
+                            
+                            ?>
+                            
+>>>>>>> testing
                             <span id="captcha2_err">
 
                                 <?php echo form_error('captcha2', '<span class="error">', '</span>'); ?>
@@ -1608,7 +1623,11 @@ if($course_id!='' && $class_id!=''){
 
 <br/><br/>
 
+<<<<<<< HEAD
 <script src="<?php echo base_url(); ?>assets/js/validation_old.js" type="text/javascript"></script>
+=======
+<script src="<?php echo base_url(); ?>assets/public_js/validation_old.js" type="text/javascript"></script>
+>>>>>>> testing
 
 <!--<script src="<?php echo base_url(); ?>assets/js/validation.js" type="text/javascript"></script>-->
 

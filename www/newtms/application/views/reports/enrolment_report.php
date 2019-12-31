@@ -148,7 +148,17 @@ $pageurl = 'TMSAdmin/'. $controllerurl;
                 echo $strMsg.$period;
                 ?>
             </strong><span id="search_error"></span>
-            <div class="pull-right">
+            <?php 
+            // added by shubhranshu
+            $salesid = $this->input->get("sales_id");
+                  $nonsalesid = $this->input->get("non_sales_id");
+                
+                  $start = $this->input->get("from_date");
+                  $end = $this->input->get("to_date");
+             if(($salesid!="") || ($nonsalesid!="") || ($start!="" && $end!=''))
+             {
+             ?>
+            <div class="pull-right" style='margin: 10px;'>
                 <br />
                 <a href="<?php echo site_url('/reports/enrolment_report_export_xls') . '?' . $_SERVER['QUERY_STRING']; ?>"  class="small_text1">
 
@@ -157,7 +167,19 @@ $pageurl = 'TMSAdmin/'. $controllerurl;
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>                
                 <br /><br />
             </div>
-           
+             <?php }else{?>
+                <div class="pull-right" style='margin: 10px;'>
+                    <br />
+                    <a href="javascript:void(0)" class="small_text1" id='displayText'>
+                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
+                    <a href="javascript:void(0)" class="small_text1" id='displayText1'>
+                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>                
+                       
+                       
+                    <br/>
+                </div>
+             <div id="alertmsg" style="padding:5px;clear:both;display:none" class='alert alert-danger'>Please Select One of the above filter to export PDF/XLS.</div>
+            <?php }?>
         </div>
         <div style="clear:both;"></div>
         <div class="table-responsive">
@@ -203,3 +225,15 @@ $pageurl = 'TMSAdmin/'. $controllerurl;
         </ul>
     <?php } ?>
 </div>
+<script>
+    // added by shubhranshu
+$(document).ready(function() {
+        $( "#displayText" ).click(function() {
+          $( "#alertmsg" ).show();
+        });
+         $( "#displayText1" ).click(function() {
+          $( "#alertmsg" ).show();
+        });
+        
+    });
+    </script>

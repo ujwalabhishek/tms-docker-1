@@ -115,6 +115,14 @@ var search_check = 0;
             return validate(false);
         }
     });
+    // added by shubhranshu
+
+        $( "#displayText" ).click(function() {
+          $( "#alertmsg" ).show();
+        });
+         $( "#displayText1" ).click(function() {
+          $( "#alertmsg" ).show();
+        });
     function validate(retval) {
         var company_name = $('#company_name').val().trim();
         var company_id = $('#company_id').val();
@@ -126,7 +134,9 @@ var search_check = 0;
         }
         return retval;
     }
+    
 });
+
 function disp_err($id, $text) {
     $text = typeof $text !== 'undefined' ? $text : '[required]';
     $($id).addClass('error');

@@ -29,8 +29,10 @@ class Common_Model extends CI_Model{
         }
         
     }  
-    public function is_registration_number_exist($reg_num,$tenant_id) {
-      echo  $sql = 'SELECT * FROM company_master cm join tenant_company tc on tc.company_id=cm.company_id WHERE cm.comp_regist_num="'.$reg_num.'" and tc.tenant_id="'.$tenant_id.'"';
+    public function is_registration_number_exist($reg_num,$tenant_id='') {
+         $user = $this->session->userdata('userDetails');
+        $tenant_id = $user->tenant_id;
+        $sql = 'SELECT * FROM company_master cm join tenant_company tc on tc.company_id=cm.company_id WHERE cm.comp_regist_num="'.$reg_num.'" and tc.tenant_id="'.$tenant_id.'"';
         $result = $this->db->query($sql);
         if ($result->num_rows == 0) {
             return FALSE; 

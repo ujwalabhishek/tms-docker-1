@@ -1870,6 +1870,10 @@ SELECT  {$calc_rows} c.crse_name,
         }
         $this->db->group_by('ei.invoice_id');
         return $this->db->get()->result_object();
+        
+        //$this->db->get();var_dump(realpath_cache_size());
+        //echo $this->db->last_query();
+        //echo memory_get_usage().'dd';exit;
     }
 
    /**
@@ -1957,7 +1961,8 @@ SELECT  {$calc_rows} c.crse_name,
                 $limitvalue = $offset - $limit;
                 $this->db->limit($limit, $limitvalue);
             }
-        }//$this->db->get(); $this->db->last_query();exit;
+        }
+        //$this->db->get(); echo $this->db->last_query();exit;
         return $this->db->get()->result();
     }
 
@@ -2493,7 +2498,7 @@ end for payment period*/
  * @return int
  */
     private function tenant_pymnt_due_id() {
-        $tenant_id = $this->data['user']->tenant_id;
+        $tenant_id = $this->session->userdata('userDetails')->tenant_id;///////modofied by shubhranshu
         $pymnt = $this->db->select('pymnt_due_id')->from('class_enrol')->where('enrol_status !=', 'RESHLD')->where('tenant_id', $tenant_id)->get()->result_array();
         $pymnt_arr = array();
         foreach ($pymnt as $row) {
@@ -3099,7 +3104,7 @@ end for payment period*/
         return $this->db->get()->row();
     }
      //add by pritam
-    public function trainee_getAutoCompleteTrainee_List($taxcode, $tenantID, $courseID = 0, $classID = 0,$comp_id) 
+    public function trainee_getAutoCompleteTrainee_List($trainee, $tenantID, $courseID = 0, $classID = 0,$comp_id) 
    {
       //  $this->output->enable_profiler(TRUE);
         $taxcode = trim($taxcode);
@@ -3128,7 +3133,9 @@ end for payment period*/
             $this->db->where("ce.class_id", $classID);
         }
 
-        $this->db->like('usr.tax_code', $taxcode, 'both');
+        //$this->db->like('usr.tax_code', $taxcode, 'both'); commented by shubhranshu
+        
+        $this->db->like('pers.first_name', $trainee, 'both');/////added by shubhranshu since we are searching for trainee name
 
         $this->db->group_by('ce.user_id');
 

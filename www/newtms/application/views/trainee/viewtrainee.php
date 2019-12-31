@@ -1419,7 +1419,7 @@ function get_links($attn_status,$enrolment_mode, $payment_status, $invoice_id, $
                 }
             }
             
-            $tempLinkStr .= '<a href="#" onClick="launch_form_dialog(\'' . $link_data . '\');return false;">Assessment</a> &nbsp;&nbsp;';
+            $tempLinkStr .= '<a href="#" onClick="launch_form_dialog(\'' . $link_data . '\');return false;"> Assessment</a> &nbsp;&nbsp;';
         }
     
     }

@@ -7,17 +7,17 @@ class Reports_finance extends CI_Controller {
      */
     public function __construct() {
         parent::__construct();
-        $this->load->model('Reports_Model', 'reportsModel');
-        $this->load->model('Course_Model', 'courseModel');
-        $this->load->model('Class_Model', 'classModel');
-        $this->load->model('Tenant_Model', 'tenantModel');
-        $this->load->model('Class_Trainee_Model', 'classTraineeModel');
-        $this->load->model('Internal_User_Model', 'usersModel');
+        $this->load->model('reports_model', 'reportsModel');
+        $this->load->model('course_model', 'courseModel');
+        $this->load->model('class_model', 'classModel');
+        $this->load->model('tenant_model', 'tenantModel');
+        $this->load->model('class_trainee_model', 'classTraineeModel');
+        $this->load->model('internal_user_model', 'usersModel');
         $this->load->helper('common');
         $this->load->helper('metavalues_helper');
         $this->load->model('meta_values', 'meta');
         
-        $this->load->model('Activity_Log_Model', 'activitylog');
+        $this->load->model('activity_log_model', 'activitylog');
 
         $this->load->model('common_model', 'commonmodel');
 
@@ -122,6 +122,7 @@ class Reports_finance extends CI_Controller {
      */
 
     public function invoice_list_export_xls() {
+        ini_set('memory_limit', '-1');
         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
         $payment_status = $this->input->get('payment_status');
         $start_date = $this->input->get('start_date');
@@ -130,6 +131,7 @@ class Reports_finance extends CI_Controller {
         $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
         $company_id = $this->input->get('company_id');
         $tabledata = $this->reportsModel->get_all_invoice($tenant_id, $records_per_page, $offset, $field, $order_by, $payment_status, $start_date, $end_date, $company_id);
+        
         $tabledata_count = count($tabledata);
         for ($i = 0; $i < $tabledata_count; $i++) {
             if ($tabledata[$i]->enrolment_mode === 'COMPSPON') {
@@ -144,7 +146,7 @@ class Reports_finance extends CI_Controller {
             $paid_arr = array('PAID' => 'Paid', 'PARTPAID' => 'Part Paid', 'NOTPAID' => 'Not Paid');
             $paid_sty_arr = array('PAID' => 'color:green;', 'PARTPAID' => 'color:red;', 'NOTPAID' => 'color:red;');
             if ($tabledata[$i]->enrolment_mode == 'SELF') {
-                $taxcode = $tabledata[$i]->tax_code;
+                $taxcode = $this->mask_format($tabledata[$i]->tax_code);
                 $name = $tabledata[$i]->first_name . ' ' . $tabledata[$i]->last_name;
                 $status = $paid_arr[$tabledata[$i]->payment_status];
             } else {
@@ -181,6 +183,7 @@ class Reports_finance extends CI_Controller {
         $excel_filename = 'invlice_list.xls';
         $excel_sheetname = 'Invoice List';
         $excel_main_heading = 'Accounting Reports - Invoice List & Search' . $period;
+        
         export_page_fields($excel_titles, $excel_data, $excel_filename, $excel_sheetname, $excel_main_heading);
     }
 
@@ -189,6 +192,8 @@ class Reports_finance extends CI_Controller {
      * @return type
      */
     public function invoice_export_PDF() {
+        ini_set('memory_limit','-1');
+        ini_set('max_execution_time', 300);
         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
         $tenant_details = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $tenant_details->tenant_state = rtrim($this->courseModel->get_metadata_on_parameter_id($tenant_details->tenant_state), ', ');
@@ -196,8 +201,9 @@ class Reports_finance extends CI_Controller {
         $field = ($this->input->get('f')) ? $this->input->get('f') : 'ei.invoice_id';
         $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
         $query = $this->reportsModel->get_all_invoice_data($tenant_id, NULL, NULL, $field, $order_by, NULL, NULL, NULL, NULL, -1);
+        
         $this->load->helper('pdf_reports_helper');
-        return invoice_report_PDF($query, $tenant_details);
+         return invoice_report_PDF($query, $tenant_details);
     }
 
     /**
@@ -297,7 +303,7 @@ class Reports_finance extends CI_Controller {
             $excel_data[$i][] = '$ ' . number_format($tabledatarefund[$tabledata[$i]->invoice_id], 2, '.', '');
             $excel_data[$i][] = $tabledata[$i]->crse_name . ' - ' . $tabledata[$i]->class_name;
             if ($tabledata[$i]->inv_type == 'INVINDV') {
-                $taxcode = $tabledata[$i]->tax_code;
+                $taxcode = $this->mask_format($tabledata[$i]->tax_code);
                 $name = $tabledata[$i]->first_name . ' ' . $tabledata[$i]->last_name;
             } else {
                 if ($tabledata[$i]->company_id[0] == 'T') {
@@ -373,7 +379,7 @@ class Reports_finance extends CI_Controller {
      * Refunds Report
      */
     public function refunds() {
-        $this->output->enable_profiler(TRUE);
+        //$this->output->enable_profiler(TRUE);
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $data['companies'] = $this->classTraineeModel->get_company_for_paidinvoice($tenant_id);
@@ -455,7 +461,7 @@ class Reports_finance extends CI_Controller {
         $tableuser = array();
         foreach ($tb_user as $row) {
             $tableuser[$row->invoice_id]['name'] = $row->first_name . ' ' . $row->last_name;
-            $tableuser[$row->invoice_id]['taxcode'] = $row->tax_code;
+            $tableuser[$row->invoice_id]['taxcode'] = $this->mask_format($row->tax_code);
         }
         $this->load->helper('export_helper');
         $count_tabledata = count($tabledata);
@@ -539,7 +545,7 @@ class Reports_finance extends CI_Controller {
         $tableuser = array();
         foreach ($tb_user as $row) {
             $tableuser[$row->invoice_id]['name'] = $row->first_name . ' ' . $row->last_name;
-            $tableuser[$row->invoice_id]['taxcode'] = $row->tax_code;
+            $tableuser[$row->invoice_id]['taxcode'] = $this->mask_format($row->tax_code);
         }
         $tenant_details = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $tenant_details->tenant_state = rtrim($this->courseModel->get_metadata_on_parameter_id($tenant_details->tenant_state), ', ');
@@ -601,6 +607,7 @@ class Reports_finance extends CI_Controller {
      * Payments Received Report - Export to PDF
      */
     public function payments_received_reports_pdf() {
+        ini_set('memory_limit','256M');
         $tenant_id = $this->tenant_id;
         $company = $this->classTraineeModel->get_company_for_paidinvoice($tenant_id);
         $companies = array();
@@ -636,6 +643,7 @@ class Reports_finance extends CI_Controller {
      */
 
     public function payments_export_xls() {
+        ini_set('memory_limit','-1');
         $tenant_id = $this->tenant_id;
         $company = $this->input->get('company');
         $companies = $this->classTraineeModel->get_company_for_paidinvoice($tenant_id);
@@ -649,6 +657,7 @@ class Reports_finance extends CI_Controller {
         $field = ($this->input->get('f')) ? $this->input->get('f') : 'ei.invoice_id';
         $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
         $tabledata = $this->reportsModel->get_payment_recd($records_per_page, $offset, $field, $order_by, $company, $invoice_id, $start_date, $end_date);
+         
         $tabledata_count = count($tabledata);
         $pids = array();
         for ($i = 0; $i < $tabledata_count; $i++) {
@@ -685,7 +694,7 @@ class Reports_finance extends CI_Controller {
             $excel_data[$i][] = '$ ' . number_format($tabledata[$i]->amount_recd, 2, '.', '');
             $excel_data[$i][] = $tabledataextra[$k]->crse_name . ' - ' . $tabledataextra[$k]->class_name;
             $excel_data[$i][] = $name;
-            $excel_data[$i][] = $taxcode;
+            $excel_data[$i][] = $this->mask_format($taxcode);
         }
         if (!empty($tabledata)) {
             if (empty($start_date) && empty($end_date)) {
@@ -707,6 +716,7 @@ class Reports_finance extends CI_Controller {
         $excel_filename = 'payments_received.xls';
         $excel_sheetname = 'Payments Received';
         $excel_main_heading = 'Accounting Reports - Payments Received' . $period;
+      
         export_page_fields($excel_titles, $excel_data, $excel_filename, $excel_sheetname, $excel_main_heading);
     }
 
@@ -983,7 +993,17 @@ class Reports_finance extends CI_Controller {
          echo json_encode($invoice_arr);
         exit();
     }
-
+     /*shubhranshu  start: replace nric first 5 character with mas*/
+    function mask_format($nric) {  
+        if(is_numeric($nric) == 1){
+            return $nric;
+        }else{
+            $new_nric = substr_replace($nric,'XXXXX',0,5);   
+            //$new_nric = substr_replace($nric,'XXXX',5);        
+            return $new_nric;
+        }   
+    }
+    /* shubhranshu end */
     /*
      * Invoice audit trail - Export to XLS
      * Author   : CR03
@@ -1031,7 +1051,7 @@ class Reports_finance extends CI_Controller {
             $excel_data[$i][] = $tabledata[$i]->invoice_id;
             $excel_data[$i][] = date('d/m/Y', strtotime($tabledata[$i]->inv_date));
             $excel_data[$i][] = $inv_type1;
-            $excel_data[$i][] = $taxcode;
+            $excel_data[$i][] = $this->mask_format($taxcode);
             $excel_data[$i][] = '$ ' . number_format($tabledata[$i]->total_inv_discnt, 2, '.', '') . ' SGD';
             $excel_data[$i][] = '$ ' . number_format($tabledata[$i]->total_inv_subsdy, 2, '.', '') . ' SGD';
             $excel_data[$i][] = '$ ' . number_format($tabledata[$i]->total_gst, 2, '.', '') . ' SGD';
@@ -1082,7 +1102,8 @@ class Reports_finance extends CI_Controller {
      /*  activity log code start */
     
     public function activity_log(){
-        $this->output->enable_profiler(true);
+        //$this->output->enable_profiler(true);
+        ini_set('memory_limit','256M');
         $data['sideMenuData'] = fetch_non_main_page_content();
       
      
@@ -1351,7 +1372,7 @@ class Reports_finance extends CI_Controller {
 
     }
 
-    public function get_course_class_name_json($course_id){
+    public function get_course_class_name_json($course_id=''){
 
         $user = $this->session->userdata('userDetails');
 

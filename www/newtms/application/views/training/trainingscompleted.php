@@ -9,7 +9,9 @@
         color: white !important;
 
     }
-
+    .modal1_5551{
+        overflow:scroll !important;
+    }
 </style>
 
 <div class="col-md-12"  style="min-height: 390px;">
@@ -453,7 +455,7 @@
 
         <?php foreach ($class_list as $class): ?>
 
-            <div class="modalnew modal13" id="ex<?php echo $class['class_id']; ?>" style="display:none;height:280px !important; min-height: 280px !important;">
+            <div class="modalnew modal13" id="ex<?php echo $class['class_id']; ?>" style="display:none;height:333px !important; min-height: 333px !important;">
 
                 <h2 class="panel_heading_style">Class Details for '<?php echo $class['class_name']; ?>' </h2>
 

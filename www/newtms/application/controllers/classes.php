@@ -11,9 +11,10 @@ class Classes extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;
-        $this->load->model('Class_Model', 'classmodel');
-        $this->load->model('Course_Model', 'coursemodel');
+        $this->load->model('class_model', 'classmodel');
+        $this->load->model('course_model', 'coursemodel');
         $this->load->model('meta_values');
+       
     }
 
     /**
@@ -75,7 +76,7 @@ class Classes extends CI_Controller {
             $export_url = rtrim($export_url, '&');
             $data['export_url'] = $export_url;
             $data['sort_link'] = $sort_link = "course_id=" . $this->input->get('course_id') . "&class_id=" . $this->input->get('class_id') . "&class_status=" . $this->input->get('class_status');
-            $this->load->model('Settings_Model', 'settingsmodel');
+            $this->load->model('settings_model', 'settingsmodel');
             $data['classes'] = $this->classmodel->get_course_class($tenantId, $courseId, '', 1);
             $data['courseDetails'] = $coursedetails = $this->coursemodel->get_course_detailse($courseId);
             $data['coursePreReq'] = $this->coursemodel->get_pre_requisite($coursedetails->pre_requisite);
@@ -377,9 +378,11 @@ class Classes extends CI_Controller {
     /**
      * this function to update the edited class
      */
-    public function update_class() {
+    public function update_class() { 
+        $data['sideMenuData'] = fetch_non_main_page_content();// added by shubhranshu
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
+        $role_id = $this->session->userdata('userDetails')->role_id;// added by shubhranshu for fetching role id
         $this->load->library('form_validation');
         $this->form_validation->set_rules('class_name', 'Class Name', 'max_length[50]');
         $this->form_validation->set_rules('start_date', 'Start Date', 'required');
@@ -393,15 +396,16 @@ class Classes extends CI_Controller {
         $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
         $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
         $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
-        $this->form_validation->set_rules('control_5', 'Class Room Trainer', 'required');
+        $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'required');
         if ($this->form_validation->run() == FALSE) {
             $data['page_title'] = 'Class';
             $data['main_content'] = 'class/editclass';
             //$data['sideMenuData'] = $this->sideMenu;
             $data['sideMenuData'] = fetch_non_main_page_content();
             $this->load->view('layout', $data);
+            
         } else {
-            if($this->data['user']->role_id != 'ADMN'){
+            if($role_id != 'ADMN'){ // changed by shubhranshu for userdata issue
                 $start_date_timestamp = strtotime($this->input->post('start_date'));        
                 $start_date_timestamp_hidden = strtotime($this->input->post('start_date_hidden'));        
                 $today_date = strtotime(date('Y-m-d'));                                            
@@ -424,6 +428,7 @@ class Classes extends CI_Controller {
                 $this->session->set_flashdata("error", "Unable to update class. Please try again later.");
             }
         }
+        
         redirect("classes?course_id=" . $this->input->post('course_id'));
     }
 
@@ -492,7 +497,7 @@ class Classes extends CI_Controller {
         $user_id = $this->session->userdata('userDetails')->user_id;
         $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_id);
         $data['course_name'] = $this->coursemodel->get_course_detailse($class->course_id);
-        $this->load->model('Class_Trainee_Model', 'classtraineemodel');
+        $this->load->model('class_trainee_model', 'classtraineemodel');
         $data['tenant_details'] = $this->classtraineemodel->get_tenant_masters($tenant_id);
         $data['tenant_details']->tenant_state = rtrim($this->coursemodel->get_metadata_on_parameter_id($data['tenant_details']->tenant_state), ', ');
         $data['tenant_details']->tenant_country = rtrim($this->coursemodel->get_metadata_on_parameter_id($data['tenant_details']->tenant_country), ', ');
@@ -734,6 +739,7 @@ class Classes extends CI_Controller {
      * this function to get course classes on change json
      */
     public function get_course_classes_json() {
+        
         $tenantId = $this->tenant_id;
         $courseId = $this->input->post('course_id');
         $mark_attendance = $this->input->post('mark_attendance');

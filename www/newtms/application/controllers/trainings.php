@@ -210,7 +210,7 @@ class Trainings extends CI_Controller {
      */
 
     public function print_feedback_form() {
-        $this->load->helper('pdf_reports_helper');
+        $this->load->helper('public_pdf_reports_helper');
         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
         $course_id = $this->input->post('course_id');

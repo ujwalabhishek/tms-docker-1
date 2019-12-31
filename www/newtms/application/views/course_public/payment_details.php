@@ -115,7 +115,7 @@
         <br/>
         <span style="float:right;">
             <?php $query_string = (SANDBOX ? '?sandbox=1' : ''); ?>
-            <?php echo form_open("course/create_classenroll$query_string", "id='enroll_now'"); ?>
+            <?php echo form_open("course_public/create_classenroll$query_string", "id='enroll_now'"); ?>
             <?php echo form_hidden('user_id', $user_id) ?>
             <?php echo form_hidden('additional_remarks', $additional_remarks) ?>
             <?php echo form_hidden('class_id', $class_details->class_id) ?>
@@ -136,8 +136,9 @@
 
             <?php if ($class_details->class_pymnt_enrol == PAY_A_ENROL) { ?>
                 <button type="submit" name="submit" value="book_now" class="btn btn-sm btn-info" style="float: right;margin-left: 10px;"><strong>Book Now</strong></button>
+            <?php }else{ ?>
+                <center style='color:red'> Kindly Contact admin, If you wants to Book this class</center>
             <?php } ?>
-
 
 <!--                <button type="submit" name="submit" value="pay_now" class="btn btn-sm btn-info" style="float: right;"><strong>Pay Now</strong></button>-->
 

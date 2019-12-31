@@ -13,17 +13,17 @@ class Class_Trainee extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Class_Trainee_Model', 'classtraineemodel');
-        $this->load->model('Manage_Tenant_Model', 'manage_tenant');
-        $this->load->model('Course_Model', 'course');
-        $this->load->model('Class_Model', 'class');
-        $this->load->model('Company_Model', 'company');
+        $this->load->model('class_trainee_model', 'classtraineemodel');
+        $this->load->model('manage_tenant_model', 'manage_tenant');
+        $this->load->model('course_model', 'course');
+        $this->load->model('class_model', 'class');
+        $this->load->model('company_model', 'company');
         $this->load->model('reports_model', 'reportsModel'); 
         $this->load->helper('common');
         $this->load->helper('metavalues_helper');
         $this->load->model('meta_values', 'meta');
         $this->load->model('trainee_model', 'traineemodel'); 
-        $this->load->model('Activity_Log_Model', 'activitylog');
+        $this->load->model('activity_log_model', 'activitylog');
         $this->user = $this->session->userdata('userDetails');
         $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;        
     }
@@ -507,7 +507,12 @@ class Class_Trainee extends CI_Controller {
         }
         $this->db->cache_off();
        
+<<<<<<< HEAD:www/newtms/application/controllers/class_trainee.php
         $total_trainee_enrolled = $this->classtraineemodel->get_total_enrolled_trainee($tenant_id);
+=======
+        
+      
+>>>>>>> testing:www/newtms/application/controllers/Class_trainee.php
      }
         $data['tabledata'] = $new_tabledata;
         $data['sort_order'] = $order_by;
@@ -523,7 +528,7 @@ class Class_Trainee extends CI_Controller {
         }
         
 //        $data['trainee_count'] = $totalrows;
-        
+        $total_trainee_enrolled = $this->classtraineemodel->get_total_enrolled_trainee($tenant_id);
         $data['trainee_count'] = $total_trainee_enrolled ? $total_trainee_enrolled : 00;
         $data['pagination'] = get_pagination($records_per_page, $pageno, $baseurl, $totalrows, $field, $pag_sort);
         $data['page_title'] = 'Online Class Trainee';
@@ -840,10 +845,11 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $reporting_time = date("H:i A", strtotime('-30 minutes', $time));
         if($classes->course_id == 67 || $classes->course_id == 121)
         {
-            echo $li = "Report at center at $reporting_time to register for class";
+            $li = "Report at center at $reporting_time to register for class";
         }else{
-            echo $li = "Report at center at 8:30 AM to register for class";
+            $li = "Report at center at 8:30 AM to register for class";
         }
+        //   echo removed by shubhranshu to [revent TCPDF header sent issue.
         /* end */
         
         $data = '<br><br>
@@ -1137,43 +1143,52 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $salesexec = $this->input->post('salesexec');
 
         if ($this->input->post('upload')) {
+            ////////below added by shubhranshu to prevent enrol for invoice paid/partpaid company///////start////
+            $check_invoice = $this->classtraineemodel->check_if_invoice_paid($company,$course,$class);
+            if(!empty($check_invoice)){
+                $this->session->set_flashdata('error', 'You can not enroll to this class since the invoice is Already paid/partpaid.');
+            }else{//////////shubhranshu code end////////////////////////////////////
+                $config['upload_path'] = './uploads/';
+                $config['allowed_types'] = '*';
+                $config['max_size'] = '2048';
+                $config['max_width'] = '1024';
+                $config['max_height'] = '768';
 
-            $config['upload_path'] = './uploads/';
-            $config['allowed_types'] = '*';
-            $config['max_size'] = '2048';
-            $config['max_width'] = '1024';
-            $config['max_height'] = '768';
+                $this->load->library('upload', $config);
 
-            $this->load->library('upload', $config);
-
-            if (!$this->upload->do_upload()) {
-                $data['error'] = $this->upload->display_errors();
-            } else {
-                $data = $this->upload->data();
-                $this->load->library('excel_reader');
-                $this->excel_reader->setOutputEncoding('CP1251');
-                $read_perm = $this->excel_reader->read($data['full_path']);
-                if ($read_perm == 'FALSE') {
-                    $data['error'] = 'File is not readable.';
+                if (!$this->upload->do_upload()) {
+                    $data['error'] = $this->upload->display_errors();
                 } else {
-                    $excel_data = $this->excel_reader->sheets[0][cells];
-                    $class_detail = $this->class->get_class_details($tenant_id, $class);
-                    $trainee = $this->validate_bulk_enroll($excel_data, $class, $course, $company, $salesexec, $class_detail);
-                    if (!empty($trainee)) {
-                        $data['details'] = $trainee;
-                        //print_r($data);exit;
-                        $this->load->helper('export');
-                        $files = write_import_enroll_status($trainee, $company);
-                        $filesa = write_import_enroll_statussuccess($trainee, $company);
-                        $filesb = write_import_enroll_statusfailure($trainee, $company);
+                    $data = $this->upload->data();
+                    $this->load->library('excel_reader');
+                    $this->excel_reader->setOutputEncoding('CP1251');
+                    $read_perm = $this->excel_reader->read($data['full_path']);
+                    if ($read_perm == 'FALSE') {
+                        $data['error'] = 'File is not readable.';
                     } else {
-                        $data['error'] = $this->class_error_msg;
-                    }
-                    unlink('./uploads/' . $data['file_name']);
+                        $excel_data = $this->excel_reader->sheets[0][cells];
+                        $class_detail = $this->class->get_class_details($tenant_id, $class);
+                        $trainee = $this->validate_bulk_enroll($excel_data, $class, $course, $company, $salesexec, $class_detail);
 
+                        if (!empty($trainee)) {
+                            $data['details'] = $trainee;
+                            //print_r($data);exit;
+                            $this->load->helper('export');
+                            $files = write_import_enroll_status($trainee, $company);
+                            $filesa = write_import_enroll_statussuccess($trainee, $company);
+                            $filesb = write_import_enroll_statusfailure($trainee, $company);
+                        } else {
+                            $data['error'] = $this->class_error_msg;
+                        }
+
+                        unlink('./uploads/' . $data['file_name']);
+
+                    }
                 }
             }
+            
         }
+       
         $data['courses'] = $disp_courses;
         $data['companies'] = $companies;
         if (!empty($course)) {
@@ -1185,6 +1200,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         if ($this->data['user']->role_id == 'SLEXEC') {
             $data['salesexec_check'] = 1;
         }
+        
         $data['files'] = $files;
         $data['filesa'] = $filesa;
         $data['filesb'] = $filesb;
@@ -1357,17 +1373,37 @@ if (!empty($tenant_details->tenant_contact_num)) {
         }
     }
 
-
+    ////// below function added by shubhranshu to speed up the re-schedule form
+    public function reschedule_company_json(){
+        $tenant_id = $this->tenant_id;
+        $companies = $this->company->get_activeuser_companies_for_tenant($tenant_id, 1);
+        if ($companies) {
+            foreach ($companies as $row) {
+                $comp['company'][] = array(
+                    'key' => $row->company_id,
+                    'label' => $row->company_name,
+                );
+            }
+        }
+        
+        echo json_encode($comp);
+        exit();
+    }
+    
+    
     /*
      * This function loads the Re-Schedule form.
      */
-
+    
+    
+    
     public function re_schedule() 
     {
+        //$this->output->enable_profiler(true);
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $data['courses'] = $this->classtraineemodel->get_active_course_classenroll_list_by_tenant($tenant_id);
-        $data['companies'] = $this->company->get_activeuser_companies_for_tenant($tenant_id, 1);
+        $data['companies'] = $this->company->get_activeuser_companies_for_tenant($tenant_id, 0);
         if ($this->input->server('REQUEST_METHOD') === 'POST') 
         {
             $this->load->library('form_validation');
@@ -1388,7 +1424,8 @@ if (!empty($tenant_details->tenant_contact_num)) {
                         $data['active_enroll_course_id'] = get_course_id($active_enroll_class);
                         $data['active_enroll_lock_att_status'] = get_active_class_att_status($active_enroll_class);
                         $active_enroll_class_id = get_class_id($active_enroll_class);
-                        $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, '', $active_enroll_class_id);
+                        //$reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, '', $active_enroll_class_id);////commented by shubhranshu
+                        $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $data['active_enroll_course_id'], $active_enroll_class_id);////added by shubhranshu to show only the enrolled course id list
                         foreach ($reschedule_enroll_class as $k => $row) {
                             if ($row->class_pymnt_enrol == 'PDENROL') {
                                 $totalbooked = $this->class->get_class_booked($row->course_id, $row->class_id, $this->tenant_id);
@@ -1426,7 +1463,8 @@ if (!empty($tenant_details->tenant_contact_num)) {
                         $data['active_enroll_course_id'] = get_course_id($active_enroll_class);
                         $data['active_enroll_lock_att_status'] = get_active_class_att_status($active_enroll_class);
                         $active_enroll_class_id = get_class_id($active_enroll_class);
-                        $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, '', $active_enroll_class_id);
+                        //$reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, '', $active_enroll_class_id);
+                        $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $data['active_enroll_course_id'], $active_enroll_class_id);////added by shubhranshu to show only the enrolled course id list
                         foreach ($reschedule_enroll_class as $k => $row) 
                         {
                             if ($row->class_pymnt_enrol == 'PDENROL') 
@@ -1461,6 +1499,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                                 $data['course_active_enroll_class'][$k] = $v;
                             }
                         }
+                       
                         $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $course_id, '');
                         foreach ($reschedule_enroll_class as $k => $row) {
                             if ($row->class_pymnt_enrol == 'PDENROL') {
@@ -1490,8 +1529,9 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     $this->form_validation->set_rules('course_id', 'Course', 'required');
                     $this->form_validation->set_rules('course_active_class', 'Active Enrollment Class', 'required');
                     $this->form_validation->set_rules('course_reschedule_class', 'Reschedule Enrollment Class', 'required');
-                    $this->form_validation->set_rules('control_6', 'Trainee', 'required');
+                    $this->form_validation->set_rules('control_6[]', 'Trainee', 'required');
                 }
+               
                 if ($this->form_validation->run() == TRUE && !empty($reschedule_class)) 
                 {
                     $data['reschedule_classes'] = $class = $this->class->get_class_details($tenant_id, $reschedule_class);
@@ -1517,6 +1557,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 $this->form_validation->set_rules('reschedule_reason', 'Reschedule reason', 'required');
                 if ($this->form_validation->run() == TRUE) {
                     $result = $this->classtraineemodel->create_reschedule();
+                    //echo "final";exit;
                     if ($result == TRUE) {
                         $type = $this->input->post('type');
                         if ($type == 1 || $type == 4) { 
@@ -1576,9 +1617,12 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $sort_by = $this->input->get('b');
         $sort_order = $this->input->get('o');
         $class_details = $this->class->get_class_by_id($tenant_id, $course_id, $class_id);
-        $from_date = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);
-        $to_date = parse_date($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT);
-        $week_start_date = parse_date($this->input->post('week_start'), CLIENT_DATE_FORMAT);
+        
+        $from_date = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);///added by shubhranshu
+        $to_date = parse_date($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT);//added by shubhranshu
+        $week_start_date = parse_date($this->input->post('week_start'), CLIENT_DATE_FORMAT);//added by shubhranshu
+        //echo print_r($from_date);print_r($to_date);print_r($week_start_date);exit;
+       
         $week = $this->input->post('week');
         $export = $this->input->post('export');
         $export1 = $this->input->post('export1');
@@ -1598,6 +1642,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 $session_arr = array('S1' => '1', 'BRK' => '3', 'S2' => '2');
                 $class_schedule_data[date('d/m/y', strtotime($row['class_date']))][$session_arr[$row['session_type_id']]] = date('h:i A', strtotime($row['session_start_time']));
             }
+        
             if ($export == 'xls') 
             {
                 $results = $this->classtraineemodel->get_class_trainee_list_for_attendance($tenant_id, $course_id, $class_id, $subsidy, $class_start, $class_end, $sort_by, $sort_order);
@@ -1619,7 +1664,12 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 $this->load->helper('pdf_reports_helper');
                 if ($export == 'pdf') {
                     //return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data, $mark_count);
+<<<<<<< HEAD:www/newtms/application/controllers/class_trainee.php
                     return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data); // removed mark count by shubhranshu
+=======
+                    //print_r($results);exit;
+                    return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data,$mark_count); // removed mark count by shubhranshu
+>>>>>>> testing:www/newtms/application/controllers/Class_trainee.php
                     
                 } else if ($export == 'pdf_week') {
                     return generate_class_attendance_sheet_pdf($results, $class_details, $tenant_details, $class_schedule_data);
@@ -1646,7 +1696,10 @@ if (!empty($tenant_details->tenant_contact_num)) {
                      
                 }
             }
+            
+            
             $data = get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order,'');
+           
             $data['class_schedule'] = $this->class->get_all_class_schedule($tenant_id, $class_id);
             $att = $this->classtraineemodel->get_attendance_lock_status($tenant_id,$course_id, $class_id);
             $data['lock_status']=$att->lock_status;
@@ -1655,6 +1708,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
 			$data['controllerurl'] = 'class_trainee/mark_attendance';
             $data['page_title'] = 'Class Trainee Enrollment - Mark Attendance';
             $data['main_content'] = 'classtrainee/markattendance';
+            //$data['week_start'] = $from_date;
             //$data['sideMenuData'] = $this->sideMenu;
             if (!empty($message))
                 $data['message'] = $message;
@@ -1722,7 +1776,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
     // skm code end
     
      /* this function get the activity log of mark attendance skm start*/ 
-    public function mark_att_log($course_id,$class_id)
+    public function mark_att_log($course_id=0,$class_id=0)
     {
         $this->load->model('Activity_Log_Model', 'activitylog');
         $course_id = $this->input->post('course_id');
@@ -1759,6 +1813,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
     public function mark_attendance_update() 
     {
        //$this->output->enable_profiler(TRUE);
+        $data['sideMenuData'] = fetch_non_main_page_content();/////added by shubhranshu
         $tenant_id = $this->tenant_id;
         $course_id = $this->input->post('course_id');
         $class_id = $this->input->post('class_id');
@@ -2394,7 +2449,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         
         //added by pritam to generate previous invoice number
          $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_indvoice($payid);
-        //
+        
         $result->invoiced_on = ($result->invoiced_on == NULL || $result->invoiced_on == '0000-00-00 00:00:00') ? '' : date('d-m-Y', strtotime($result->invoiced_on));
         
         $result->personal_address_state = rtrim($this->course->get_metadata_on_parameter_id($result->personal_address_state), ', ');
@@ -2432,9 +2487,9 @@ if (!empty($tenant_details->tenant_contact_num)) {
         } else {
             $result->after_discount = $result->total_unit_fees - $result->total_inv_discnt - $result->total_inv_subsdy;
         }
-        
-        $paid_details = $this->classtraineemodel->get_invoice_paid_details($result->invoice_id);
-       
+        //$paid_details = $this->classtraineemodel->get_invoice_paid_details($result->invoice_id);
+        $paid_details = $this->classtraineemodel->get_invoice_paid_details_new($result->invoice_id);///modified by shubhranshu to fix the backdate issue while update payment
+       //print_r($paid_details);exit;
         $paid_arr = array();
         $paid_rcd_till_date = 0;
         //sfc_start
@@ -2605,8 +2660,8 @@ if (!empty($tenant_details->tenant_contact_num)) {
         } else {
             $result->after_discount = $result->total_unit_fees - $result->total_inv_discnt - $result->total_inv_subsdy;
         }
-        
-        $paid_details = $this->classtraineemodel->get_invoice_paid_details_indv($result->invoice_id);
+        //$paid_details = $this->classtraineemodel->get_invoice_paid_details_indv($result->invoice_id);
+        $paid_details = $this->classtraineemodel->get_invoice_paid_details_indv_new($result->invoice_id);//// mmodified by shubhranshu to fix the sfc issue while giving backdate
        
         $paid_arr = array();
         $paid_rcd_till_date = 0;
@@ -3309,9 +3364,13 @@ if (!empty($tenant_details->tenant_contact_num)) {
      */
     public function export_generate_invoice($id) {
         if (empty($id)) {
-            return show_404();
+            //return show_404();
+            // above is commented & below code is added by shubhranshu for 404 issue while payment not required
+            $this->session->set_flashdata('error', 'Oops! Invoice is not available since payment is not required!');
+            redirect("accounting/generate_invoice/");
         }
         $result = $this->get_payid_details($id, 1);
+        //print_r($result);exit;
         $this->load->helper('pdf_reports_helper');
         generate_pdf_invoice($result);
     }
@@ -3905,6 +3964,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      */
     public function company_enrollment() 
     {
+        $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $curuser_id = $this->session->userdata('userDetails')->user_id;
         extract($_POST);
@@ -4037,6 +4097,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      *  This method gets the invoice drop down values based on the enrollment type selected.
      */
     public function get_select_box() {
+        ini_set('memory_limit','256M');// added by shubhranshu since 500 error due to huge data
         $type = $this->input->post('type');
         $tenant_id = $this->tenant_id;
         $data = array();
@@ -4130,6 +4191,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      * This methos used for confirme the enrollment in trainee registration.
      */
    public function enroll_pay_now() {
+       $data['sideMenuData'] = fetch_non_main_page_content();// added by shubhranshu
         $trainee_id = $this->session->userdata('new_trainee_user_id');
         $trainee_name = $this->input->post('trainee_name');
         $course_id = $this->input->post('course_id');
@@ -4730,6 +4792,43 @@ if (!empty($tenant_details->tenant_contact_num)) {
         }
         return $error_msg;
     }
+    
+    public function get_invoice(){
+        $matches = array();
+        $paid = $this->input->post('paid');
+        $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
+        $result = $this->classtraineemodel->get_invoice($this->tenant_id, $query_string,$paid);
+        if ($result) {
+            foreach ($result as $row) {
+                $matches[] = array(
+                    'key' => $row->invoice_id,
+                    'label' => $row->invoice_id . ' (Name: ' . $row->first_name . ' ' . $row->last_name . ')'.$row->tax_code,
+                    'value' => $row->invoice_id
+                );
+            }
+        }
+        echo json_encode($matches);
+        exit();
+    }
+    
+    /*  added by shubhranshu for client requirement on 21/03/2019 */
+    public function chk_nric_restriction($nric='',$operation){
+        $exists = $this->traineemodel->check_nric_restriction($nric,$operation);
+        if ($exists) {
+            return 1;
+        } else { return 0;}
+    }
+    public function check_nric_restriction(){
+        extract($_POST);
+        $tax_code = trim(($tax_code));
+        $operation = trim(($operation));
+        $exists = $this->traineemodel->check_nric_restriction($tax_code,$operation);
+        if ($exists) {
+            echo 1;
+        } else { echo 0;}
+    }/*  added by shubhranshu for client requirement on 21/03/2019 */
+    
+    
     /**
      * This function will check trainee enrolment status before reschedule.
      */
@@ -4742,7 +4841,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         exit();
     }
 
-
+}
 /**
  * function to get course_class_starttime list
  * @param type $data_arr
@@ -4856,44 +4955,6 @@ function get_reschedule_class_att_status($data_arr){
      * @return string
      */
     
-
-    /*  added by shubhranshu for client requirement on 21/03/2019 */
-    public function chk_nric_restriction($nric='',$operation){
-        $exists = $this->traineemodel->check_nric_restriction($nric,$operation);
-        if ($exists) {
-            return 1;
-        } else { return 0;}
-    }
-    public function check_nric_restriction(){
-        extract($_POST);
-        $tax_code = trim(($tax_code));
-        $operation = trim(($operation));
-        $exists = $this->traineemodel->check_nric_restriction($tax_code,$operation);
-        if ($exists) {
-            echo 1;
-        } else { echo 0;}
-    }/*  added by shubhranshu for client requirement on 21/03/2019 */
-    
-    public function get_invoice(){
-        $matches = array();
-        $paid = $this->input->post('paid');
-        $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
-        $result = $this->classtraineemodel->get_invoice($this->tenant_id, $query_string,$paid);
-        if ($result) {
-            foreach ($result as $row) {
-                $matches[] = array(
-                    'key' => $row->invoice_id,
-                    'label' => $row->invoice_id . ' (Name: ' . $row->first_name . ' ' . $row->last_name . ')'.$row->tax_code,
-                    'value' => $row->invoice_id
-                );
-            }
-        }
-        echo json_encode($matches);
-        exit();
-    }
-
-}
-
 function get_links($enrolment_mode, $payment_status, $invoice_id, $user_id, $pymnt_due_id, $class_id, $view_trainee_data, $trainee_Status,$classStatus,$company_id, $att_status=NULL) {
         if ($payment_status == 'PYNOTREQD') { 
             $tempLinkStr .= '<span style="color:red">Payment Not Required</span>  <br>';

@@ -173,9 +173,11 @@
                                 <?php
 //                                $type_options = array('' => 'Select', 'CASH' => 'Cash', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO');
                                  if($tenant_id == 'T02' || $tenant_id == 'T12' || $tenant_id == 'T01'){
-                                      $type_options = array('' => 'Select', 'CASH' => 'Cash', 'NETS'=>'NETS', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
+                                      //$type_options = array('' => 'Select', 'CASH' => 'Cash', 'NETS'=>'NETS', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
+                                     $type_options = array('' => 'Select', 'CASH' => 'Cash', 'NETS'=>'NETS', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO');
                                  }  else {
-                                       $type_options = array('' => 'Select', 'CASH' => 'Cash', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
+                                        $type_options = array('' => 'Select', 'CASH' => 'Cash', 'NETS'=>'NETS', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO');
+                                       //$type_options = array('' => 'Select', 'CASH' => 'Cash', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
                                  }
                               
                                 $type_js = 'id="payment_type"';
@@ -666,7 +668,9 @@
             echo form_close();
             ?>
                 <!--added by shubhranshu to prevent trainee enrollment for paid company invoice-->
-            <div id="paiddiv" style="display:none;padding: 10px;font-weight: bold;" class="text-center bg-danger">Invoice is already paid for this company, If you wants to enroll kindly refund the invoice</div>
+            <div id="paiddiv" style="display:none;padding: 10px;font-weight: bold;" class="text-center bg-danger">Invoice is already paid for this company, If you wants to enroll kindly refund the invoice
+                <center><a href='<?php echo base_url(); ?>accounting/refund_payment' class='btn btn-sm btn-info'>Refund Now</a></center>
+            </div>
 
            
             

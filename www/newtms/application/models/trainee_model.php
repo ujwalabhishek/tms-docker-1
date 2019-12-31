@@ -761,6 +761,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
      public function save_user_data() 
     {
         $tenant_id = $this->user->tenant_id;
+        
         foreach ($this->input->post() as $key => $value)
         {
             if(!is_array($value)) 
@@ -771,6 +772,10 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             {
                 $$key = $value;
             }
+        }
+        if($NRIC == "SNG_4") /////added by shubhranshu for client requirement on 16/12/2019
+        {
+            $NRIC = 'SNG_3';
         }
         if($this->user->role_id == 'COMPACT') 
         {
@@ -796,6 +801,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                 $other_identi_type = $NRIC_OTHER;
                 $other_identi_code = $tax_code;
             }
+           
             if( $this->user->tenant_id=='T02')
             {
                     $taxcode_prefix = 'XPR';
@@ -886,6 +892,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         {
             
             $assign_company1 =explode("/",$assign_company);
+//            print_r($assign_company1);exit;
             $assign_company=$assign_company1[0];
             $assign_company2=$assign_company1[1];
             $company_data = array(
@@ -903,6 +910,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                 'last_modified_by' => $this->user->user_id,
                 'last_modified_on' => $dateTime
             );
+//            print_r($company_data);exit;
             $this->db->insert('tenant_company_users', $company_data);
         }
        
@@ -1083,7 +1091,13 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
        $this->db->where('enrolment_mode','COMPSPON');
        $res=$this->db->get()->row();
        //echo $this->db->last_query();exit;
-       return $res;
+       if(!empty($res)){
+           return $res;
+       }else{
+            $res['payment_status']='NULL';
+           return $res;
+       }
+       
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
    /**
@@ -1143,6 +1157,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
              $taxcode = strtoupper($taxcode);
         }
        // /////////////////////////////////////////////////////////////
+        
         if($this->user->tenant_id == 'T02') {
             $user_name = "XPR".$taxcode;
         } else if($this->user->tenant_id == 'T03'){
@@ -1151,7 +1166,17 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $user_name = "FL".$taxcode;
         } else {
             $user_name = $taxcode;
-        }        
+        }
+        /////////below code added by shubhranshu to check & unique NRIC/////
+        if(strlen($user_name) > 13){
+            $user_name = substr($user_name,0,8);
+        }
+        
+        $check_username_unique = $this->is_username_unique($user_name);
+        
+        if($check_username_unique >0){
+            $user_name = $user_name.'1';
+        }////////////////////////////////////ssp end///////////////////////////////////
         $tms_users_data = array(
             'tenant_id' => $this->user->tenant_id,
             'account_type' => 'TRAINE',
@@ -1250,6 +1275,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $status['status'] = FALSE;
             return $status;
         }
+        
          $user_details = array('username' => $user_name,
             'email' => $EmailId, 'password' => $password,
             'firstname' => strtoupper($firstname), 'lastname' => strtoupper($lastname),
@@ -1257,10 +1283,15 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
          if(!empty($EmailId)) {
             $this->send_trainy_email($user_details, $bypassemail);
         }
+        $status['userid_for_notax'] = $user_id;// added userid by shubhranshu to fetch the user_id if notaxcode
         $status['status'] = TRUE;
         $status['password'] = $password;
-         $status['username'] = $user_name;
+        $status['username'] = $user_name;
         return $status;
+    }
+    
+    public function is_username_unique($username) {
+        return $this->db->select('user_name')->get_where('tms_users', array('user_name' => $username), 1)->num_rows();
     }
     /**
      * function to deactivate trainee
@@ -2725,7 +2756,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             'tenant_id' => $this->user->tenant_id,
             'enrolled_by_user_id' => $this->user->user_id,
             'role_id' => $this->user->role_id,
-            'operation' => $operation,
+	    'operation' => $operation,
             'enrolled_by_user_name' => $this->user->user_name,
             'first_name' => $this->user->first_name,
             'last_name' => $this->user->last_name ? $this->user->last_name : '',
@@ -2737,7 +2768,4 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         }
         return $row;
     }/*  added by shubhranshu for client requirement on 21/03/2019 */
-
 }
-
-

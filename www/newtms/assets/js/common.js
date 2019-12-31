@@ -146,7 +146,12 @@ $(document).ready(function() {
             }, function(data) {
                 var d = jQuery.parseJSON(data);
                 response(d);
+                
             });
+        },select: function(event, ui) {
+            $('#course_code_id').val(ui.item.value);
+            $('#course_code').val(ui.item.value);
+            return false;
         },
         minLength: 1
     });
@@ -262,6 +267,7 @@ $(document).ready(function() {
         select: function(event, ui) {
             var id = ui.item.key;
             $('#user_id').val(id);
+            $('#tax_id').val(id);
         },
         minLength: 4
     });

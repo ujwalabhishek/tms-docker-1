@@ -9,7 +9,7 @@ class Payments extends CI_Controller {
             $this->load->model('meta_values_model');
         $this->load->helper('metavalues_helper');
         $this->load->model('meta_values');
-        $this->load->helper('pdf_reports_helper');
+        $this->load->helper('public_pdf_reports_helper');
         //getting all metadata values
         $this->meta_data = $this->meta_values_model->get_param_map();
     }

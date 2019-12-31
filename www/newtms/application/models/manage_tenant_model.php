@@ -14,6 +14,7 @@ class Manage_Tenant_Model extends CI_Model {
         //$this->dbs = $this->load->database($config_app,TRUE);
         $this->db->select('*');
         $this->db->from('tenant_master');
+        $this->db->where('tenant_id !=','T01');
         return $this->db->get()->result_array();
     }
 
@@ -108,7 +109,7 @@ class Manage_Tenant_Model extends CI_Model {
             'account_status' => 'ACTIVE',
             'Logo' => $this->input->post('logo'),
             'CopyRightText' => $this->input->post('copyright'),
-            'ApplicationName' => 'TMS1.png',
+            'ApplicationName' => 'tms1.png',
             'Currency' => $this->input->post('currency'),
             'Country' => $this->input->post('country_use'),
             'paypal_email_id' => $this->input->post('paypal_email'),

@@ -7,11 +7,11 @@ if (!defined('BASEPATH'))
 class Manage_tenant extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Manage_Tenant_Model', 'manage_tenant');
-        $this->load->model('Meta_Values', 'meta');
+        $this->load->model('manage_tenant_model', 'manage_tenant');
+        $this->load->model('meta_values', 'meta');
         
-        $this->load->model('Tenant_Model', 'tenantModel');
-        $this->load->model('Course_Model', 'courseModel');
+        $this->load->model('tenant_model', 'tenantModel');
+        $this->load->model('course_model', 'courseModel');
         
         $this->meta_map = $this->meta->get_param_map();
         $this->view_folder = 'tenant/';
@@ -374,7 +374,7 @@ class Manage_tenant extends CI_Controller {
      * monthly enrollment count
      */
     public function enrollment_count() {
-        
+        $data['sideMenuData'] = fetch_non_main_page_content();
         $data = array();
 
         $data['year_arr'] = array(''=>'Select year',2015 => 2015, 2016 => 2016, 2017 => 2017, 2018 => 2018, 2019 => 2019, 2020 => 2020);        

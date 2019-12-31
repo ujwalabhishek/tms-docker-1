@@ -1228,7 +1228,7 @@ class Course_Public_Model extends CI_Model {
 
         $this->db->where('user_id', $user_id);
 
-        $this->db->where('tenant_id', TENANT_ID);
+        $this->db->where('tenant_id', $this->session->userdata('userDetails')->tenant_id);///modified by shubhranshu
 
         $sql = $this->db->get()->row();
 
@@ -2763,11 +2763,15 @@ class Course_Public_Model extends CI_Model {
         }//end
         //$this->db->trans_start();
 
+         ////Added by shubhranshu if the first NRIC not exist then only need to insert data
+        if(empty($taxcode_found)){
+            $this->db->insert('tms_users', $tms_users_data);
+            $user_id = $this->db->insert_id();
+        }
+        //////////////////////shubhranshu code end
+        
 
-
-        $this->db->insert('tms_users', $tms_users_data);
-
-        $user_id = $this->db->insert_id();
+        
 
 
 
@@ -2835,8 +2839,12 @@ class Course_Public_Model extends CI_Model {
         );
 
 
-
-        $this->db->insert('tms_users_pers', $tms_users_pers_data);
+       ////Added by shubhranshu if the first NRIC not exist then only need to insert data
+        if(empty($taxcode_found)){
+             $this->db->insert('tms_users_pers', $tms_users_pers_data);
+        }
+        //////////////////////shubhranshu code end
+       
 
 
 
@@ -5711,7 +5719,7 @@ class Course_Public_Model extends CI_Model {
     public function get_course_list_home($limit=NULL, $offset=NULL, $search_value = NULL) {
 
         $tenant_id = TENANT_ID;
-
+      
         $date = date('Y-m-d h:i A');
         $time = date("H:i:s", strtotime($date));
         $today = date('Y-m-d') . ' ' . $time;

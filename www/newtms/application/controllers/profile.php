@@ -7,7 +7,7 @@ if (!defined('BASEPATH'))
 class Profile extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $this->load->helper('common');
         $this->load->helper('metavalues');
         $this->load->helper(array('form', 'url'));
@@ -106,6 +106,8 @@ class Profile extends CI_Controller {
             }
             $this->form_validation->set_rules('user_registered_email', 'UserEmail', 'required|max_length[50]|callback_check_unique_useremail_edit');
             $this->form_validation->set_rules('pers_first_name', 'First Name', 'required');
+            
+          
             if ($this->form_validation->run() == TRUE && $valid==TRUE) {
                 $delete_image = $this->input->post('deleteimage') ? $this->input->post('deleteimage') : 'no';
                 $uid = $this->internaluser->update_user_data();
@@ -133,6 +135,7 @@ class Profile extends CI_Controller {
                 }
                 redirect('profile');
             }else {
+                
                 redirect("profile");
             }
         }
@@ -140,7 +143,7 @@ class Profile extends CI_Controller {
     /*
      * Method for checking if pan id is already exists in add Interanl user.
      */
-    public function check_pan($pan) { 
+    public function check_pan($pan='') { 
         extract($_POST);        
         if($country_of_residence == "SGP" && $this->data['user']->role_id != 'ADMN') {
             $valid = validate_nric_code($nric, $pan_id);            
@@ -175,6 +178,36 @@ class Profile extends CI_Controller {
             $exists = $this->internaluser->check_duplicate_user_taxcode_edit($tax_code, $this->session->userdata('tax_code_edit'));
             if (!$exists) {
                 $this->form_validation->set_message('check_unique_usertaxcode_edit', "Taxcode exists.");
+                return FALSE;
+            }
+            return TRUE;
+        }
+    }
+    function check_unique_useremail_emp() {
+        if ($emp_email = $this->input->post('emp_email')) {
+            $exists = $this->internaluser->check_duplicate_user_email_company($emp_email);
+            if ($exists) {
+                $this->form_validation->set_message('check_unique_useremail_emp', "Employee Email ID Already exists!!.");
+                return FALSE;
+            }
+            return TRUE;
+        }
+    }
+    function check_unique_usertaxcode() {
+        $country_of_residence = $this->input->post('country_of_residence');
+        if ($country_of_residence == "IND") {
+            $tax_code = $this->input->post('PAN');
+        }
+        if ($country_of_residence == "SGP") {
+            $tax_code = $this->input->post('NRIC');
+        }
+        if ($country_of_residence == "USA") {
+            $tax_code = $this->input->post('SSN');
+        }        
+        if ($tax_code) {
+            $exists = $this->internaluser->check_duplicate_user_taxcode($tax_code);            
+            if (!$exists) {
+                $this->form_validation->set_message('check_unique_usertaxcode', "Duplicate Tax Code. Please change the tax code.");
                 return FALSE;
             }
             return TRUE;

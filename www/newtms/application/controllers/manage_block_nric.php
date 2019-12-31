@@ -5,14 +5,15 @@ if (!defined('BASEPATH'))
  * This is the controller class for Manage blocked nric 
  * created by shubhranshu
  */
-class Manage_block_nric extends CI_Controller {
+class Manage_Block_Nric extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Manage_Tenant_Model', 'manage_tenant');
-        $this->load->model('Meta_Values', 'meta');
-        $this->load->model('Trainee_Model', 'traineemodel');
-        $this->load->model('Tenant_Model', 'tenantModel');
-        $this->load->model('Course_Model', 'courseModel');
+        
+        $this->load->model('manage_tenant_model', 'manage_tenant');
+        $this->load->model('meta_values', 'meta');
+        $this->load->model('trainee_model', 'traineemodel');
+        $this->load->model('tenant_model', 'tenantModel');
+        $this->load->model('course_model', 'courseModel');
         
         $this->meta_map = $this->meta->get_param_map();
         $this->view_folder = 'tenant/';
@@ -22,7 +23,12 @@ class Manage_block_nric extends CI_Controller {
      * /*  to show the blocked nric list //added by shubhranshu for client requirement on 21/03/2019 for restriction nric*/
     
     public function index() {
-        $data['sideMenuData'] = fetch_non_main_page_content();
+        // added by shubhranshu prevent controller access for other tenant accept ISV admin////
+        if($this->session->userdata('userDetails')->tenant_id != 'ISV01'){
+            $this->session->sess_destroy();exit;
+        }// end..........////
+        $data['sideMenuData'] = fetch_non_main_page_content(); // added by shubhranshu
+        
         $records_per_page = RECORDS_PER_PAGE;
         $pageno = ($this->uri->segment(2)) ? $this->uri->segment(2) : 1;
         $offset = ($pageno * $records_per_page);
@@ -40,6 +46,7 @@ class Manage_block_nric extends CI_Controller {
         $data['privilage_for_all'] = $this->manage_tenant->get_privilage();
         $data['main_content'] = $this->view_folder . 'block_nric_list';
         $this->load->view('layout', $data);
+        
     }
     
     

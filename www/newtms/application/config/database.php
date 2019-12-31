@@ -72,16 +72,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'default';
 $query_builder = TRUE;
+<<<<<<< HEAD
 
+=======
+>>>>>>> testing
 $dynamic_db_data = fetch_dynamic_db_details();
 //print_r($dynamic_db_data);exit;
 $db['default'] = array(
 	'dsn'	=> '',
+<<<<<<< HEAD
 	'hostname' => 'localhost',
 	'username' => $dynamic_db_data->tenant_db_user,
 	'password' => $dynamic_db_data->tenant_db_password,
 //	'username' => 'root',
 //	'password' => '',
+=======
+	'hostname' => '172.18.0.2',
+	'username' => $dynamic_db_data->tenant_db_user,
+	'password' => $dynamic_db_data->tenant_db_password,
+//	'username' => 'biipmico_tms_master',
+//	'password' => 'ksj784382*879#',
+>>>>>>> testing
 //        'database' => 'biipmico_tms',
         'database' => $dynamic_db_data->tenant_db_name,
 	'dbdriver' => 'mysqli',

@@ -9,6 +9,7 @@ class Class_Model extends CI_Model {
     public function __construct() {
         parent::__construct();
         $this->load->helper('common');
+        $this->sess_user = $this->session->userdata('userDetails'); // added by shubhranshu to het the user data
     }
 
     /**
@@ -72,6 +73,7 @@ class Class_Model extends CI_Model {
                         ->order_by('scd.comm_period_mth', 'ASC')
                         ->group_by('scd.pymnt_due_id')
                         ->get()->result_object();
+        //echo $this->db->last_query();exit;
         return $result;
     }
 
@@ -609,7 +611,7 @@ class Class_Model extends CI_Model {
     /**
      * this function gets the default assessment schedule for class id
      */
-    public function get_def_assessment($tenant_id, $class_id, $assmnt_type) {
+    public function get_def_assessment($tenant_id, $class_id, $assmnt_type='') {
         if ($assmnt_type == 'DEFAULT') {
             $result = $this->db->select('*')->from('class_assmnt_schld')->where('tenant_id', $tenant_id)
                             ->where('class_id', $class_id)->get()->row();
@@ -800,6 +802,7 @@ class Class_Model extends CI_Model {
      * this function get classes in a course
      */
     public function get_course_class($tenantId, $courseId, $mark_attendance = NULL, $is_allclass = 0,$classTrainee=0) {
+        
         $this->db->select('class_id,class_name');
         $this->db->from('course_class');
         $this->db->where('tenant_id', $tenantId);
@@ -807,18 +810,20 @@ class Class_Model extends CI_Model {
         if (empty($is_allclass)) {
              $this->db->where('class_status !=', 'INACTIV');
         }
-        if ($this->data['user']->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
+        if ($this->sess_user->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
             $this->traineelist_querychange();
         }
-         if ($this->data['user']->role_id == 'TRAINER') {
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",classroom_trainer) !=", 0);
+         if ($this->sess_user->role_id == 'TRAINER') {
+            $this->db->where("FIND_IN_SET(" . $this->sess_user->user_id . ",classroom_trainer) !=", 0);
         }
         $this->db->order_by("DATE(class_start_datetime)", "DESC"); // added for class start date based sorting on Nov 24 2014.
         $query = $this->db->get();   
+        
         $result = array();
         foreach ($query->result() as $row) {
             $result[$row->class_id] = $row->class_name;
         }
+      
         return $result;
     }
 
@@ -1667,6 +1672,7 @@ class Class_Model extends CI_Model {
      * @param $class_id
      */
     public function get_class_details_for_report($tenant_id, $course_id, $class_id) {
+    
         $this->db->select('cc.tenant_id,cc.class_id, cc.class_session_day, cc.course_id, cc.class_name, cc.classroom_trainer, cc.assessor, cc.lab_trainer, c.crse_name, tm.tenant_name as company_name, cc.class_start_datetime, cc.class_end_datetime, c.crse_manager, c.competency_code, cc.total_seats');
         $this->db->select('cc.total_classroom_duration, cc.total_lab_duration, cc.assmnt_duration');
         $this->db->from('course_class cc');
@@ -1679,6 +1685,7 @@ class Class_Model extends CI_Model {
 
         $query = $this->db->get();
 
+//echo $this->db->last_query();exit;
         $results = $query->result();
         $details = count($results) > 0 ? $results[0] : null;
         if ($details != null) {

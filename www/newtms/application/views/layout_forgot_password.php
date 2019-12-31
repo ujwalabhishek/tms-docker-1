@@ -15,6 +15,14 @@
   ga('send', 'pageview');
 
 </script> 
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+    .btn{
+        padding:12px !important;
+    }
+</style>
 </head>
 <body>
     <div class="main_container_new_top"> 
@@ -24,14 +32,15 @@
                     <div class="row row_pushdown">
                         <div class="col-md-12 col_10_height_other">
                             <div class="makecenter">
-                                <?php
+                                
+                                 <?php
                                     $atr = 'id="forgot_password_form" name="forgot_password_form"';
                                     echo form_open("login/get_forgot_password", $atr);
                                 ?>
-                                <div class="table-responsive">    
-                                    <h2 class="panel_heading_style"><span class="glyphicon glyphicon-question-sign"></span> Forgot Password</h2>
-                                    <table class="table table-striped" width="100%" border="0" cellspacing="0" cellpadding="5">
-                                        <?php   if($this->session->flashdata('success')){ 
+                                
+                                <h2 class="panel_heading_style"><center> Forgot Password ?</center></h2>
+                                    
+                                <?php   if($this->session->flashdata('success')){ 
                                                     echo '<div class="success">' . $this->session->flashdata('success') . '</div>';                                                               
                                                 }else if($this->session->flashdata('error')){
                                                     echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';                                                    
@@ -44,46 +53,64 @@
                                                     $email = $this->input->post('email');
                                                 }
                                         ?>        
-                                        <tr>
-                                            <td class="td_heading">Username:<span class="required">*</span></td>
-                                            <td>        
-                                                <?php
-                                                $attr = array(
-                                                    'name' => 'username',
-                                                    'id'   =>'username',
-                                                    'value' => "$user_name",
-                                                    'type' => 'text'                                                                
-                                                );
-                                                echo form_input($attr);
-                                                ?>
-                                                <span id="username_err"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td_heading">Email Id:<span class="required">*</span> </td>
-                                            <td>        
-                                                <?php
-                                                $attr = array(
-                                                    'name' => 'email',
-                                                    'type' => 'email',
-                                                    'maxlength' => '150',
-                                                    'value' => "$email",
-                                                    'id' => 'email'
-                                                );
-                                                echo form_input($attr);
-                                                ?>
-                                                <span id="email_err"></span>
-                                            </td>
-                                        </tr>
-                                    </table>        
-                                    <span class="required required_i">* Required Fields</span>
-                                    <div class="popup_cance89">
+                                
+                                <div class="input-group">
+                                      <span class="input-group-addon">Email ID<span class="required required_i">*</span></span>
+                                      <input id="email" type="text" class="form-control" name="email" placeholder="Enter Email" value='<?php echo $email;?>'>
+                                    </div>
+                                    <div><span id="email_err"></span></div>
+                                    <br>
+                                    <div class="input-group">
+                                      <span class="input-group-addon">User Name<span class="required required_i">*</span></span>
+                                      <input id="username" type="text" class="form-control" name="username" value='<?php echo $user_name;?>'placeholder="Enter User Name">
+                                    </div>
+                                    <br>
+                                    <div class='row'>
+                                        <div class='col-sm-4'>
+                                            <label for="psw"><b>Captcha Code</b></label>
+                                             <div><?php echo $captcha;?>
+                                                 <a href="forgot_password" title="Refresh">
+                                                 &nbsp;<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
+                                                 </a>
+                                             </div>
+                                        </div>
+                                        <div class='col-sm-8'>
+                                            <label for="psw"><b>Enter Captcha Code</b></label>
+                                            <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php //echo $this->session->userdata('captcha_key')?>" required>
+                                             <div><span id="captcha_err"></span>
+                                                 <?php
+                                                 if ($this->session->flashdata('invalid_captcha')) {
+                                                     echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
+                                                 }
+                                                 ?>	
+                                             </div>
+                                        </div>
+                                    </div>
+                                     
+                                    <div><span id="username_err"></span></div>
+                                    <br>
+                                    <div><span class="required required_i">* Required Fields</span></div>
+                                    <br>
+                                    
+                                    <center>
+                                      <div class="btn-group btn-group-justified">
+                                        <a href="javascript:void(0)" class="btn btn-primary submit_btn" onclick="validate_form()" style='padding:12px !important'><span class="glyphicon glyphicon-save"></span>Submit</a>
+                                        <a href="<?php echo site_url()."login/"; ?>" class="btn btn-danger" style='padding:12px !important'><span class="glyphicon glyphicon-remove"></span>Cancel</a>
+                                        <button style="display:none" class="btn btn-primary processing_btn" type="button"><span class="glyphicon glyphicon-save"></span> Processing...</button>
+                                      </div>
+                                    </center>
+                                     
+<!--                                    <center>
                                         <button class="btn btn-primary submit_btn" type="button" onclick="validate_form()" ><span class="glyphicon glyphicon-save"></span> Submit</button>&nbsp;&nbsp;
                                         <button style="display:none" class="btn btn-primary processing_btn" type="button"><span class="glyphicon glyphicon-save"></span> Processing...</button>&nbsp;&nbsp;
                                         <a href="<?php echo site_url()."login/"; ?>" class="btn btn-primary">
                                       <span class="glyphicon glyphicon-remove"></span> Cancel</a>
-                                    </div>
-                                    <?php echo form_close(); ?>
+                                    </center>-->
+                                 <?php echo form_close(); ?>
+                                
+                                
+                                
+                                
                             </div>
                         </div>
                     </div>

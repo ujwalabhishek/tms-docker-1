@@ -21,7 +21,7 @@ if (in_array($role_check, $role_array))
                 </a>
             <?php } ?>
         </span>
-        <a href="<?php echo base_url();?>login/dashboard" style="float:right; color:#446cb3;margin-top:5px;margin-right:35px;">Dashboard Details</a>
+        <a href="<?php echo base_url();?>login/dashboard" style="float:right; color:#ffffff;margin-top:5px;margin-right:35px;">Dashboard Details</a>
         
     </h2>       
     

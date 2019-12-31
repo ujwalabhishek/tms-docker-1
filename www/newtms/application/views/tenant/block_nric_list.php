@@ -2,64 +2,51 @@
     .form_content{display: none;}
 
 
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 16px;
-}
 
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
+.onoffswitch {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
 }
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+.onoffswitch-checkbox {
+    display: none;
 }
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 13px;
-  width: 13px;
-  left: 4px;
-  bottom: 2px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
 }
-
-input:checked + .slider {
-  background-color: #2196F3;
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
 }
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
 }
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+.onoffswitch-inner:before {
+    content: "ON";
+    padding-left: 10px;
+    background-color: #34A7C1; color: #FFFFFF;
 }
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
+.onoffswitch-inner:after {
+    content: "OFF";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
 }
-
-.slider.round:before {
-  border-radius: 50%;
+.onoffswitch-switch {
+    display: block; width: 18px; margin: 6px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 56px;
+    border: 2px solid #999999; border-radius: 20px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
 }
 
 
@@ -95,9 +82,9 @@ if (!empty($sub_cat)) {
     var sub_cat = '<?php echo $sub_cat; ?>';
     var add_text = '<?php echo $add_text; ?>';
     $(document).ready(function(){
-        $("#privilage").click(function(){
+        $("#myonoffswitch").click(function(){
             $status = '';
-            if($('#privilage').prop("checked") == true){  
+            if($('#myonoffswitch').prop("checked") == true){  
                $status = '1';
             }else{
                $status = '0';
@@ -127,10 +114,18 @@ if (!empty($sub_cat)) {
         <span style="float: right;cursor: pointer;" id="add_new"><span class="glyphicon glyphicon-plus glyphicon1"></span> <span><?php echo $add_text; ?></span></span>
     </h2>
     <div style='font-weight:bold;'>Restriction NRIC Popup (ON/OFF):
-        <label class="switch">
+       <!-- <label class="switch">
             <input id="privilage" type="checkbox" <?php if($privilage_for_all == 1){echo "checked";} ?>>
             <span class="slider round"></span>
-      </label>
+      </label>-->
+	<div class="onoffswitch">
+    		<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" <?php if($privilage_for_all == 1){echo "checked";} ?>>
+    		<label class="onoffswitch-label" for="myonoffswitch">
+        	<span class="onoffswitch-inner"></span>
+        	<span class="onoffswitch-switch"></span>
+    	</label>
+	</div>
+
     </div>
 	<div style='font-size:10px;color: #4d9be0;'>On = Display pop-up for Admin, Sales Executive, Course Manager and Trainer.</div>
 	<div style='font-size:10px;color: #4d9be0;'>Off = Display pop-up only to Admin. </div>

@@ -1,6 +1,8 @@
 function date_time(id)
 {
-        date = new Date;
+        //Singapore_date = new Date.toLocaleString("en-US", {timeZone: "Asia/Singapore"});
+        date = new Date();
+        //date = new Date(Singapore_date);
         year = date.getFullYear();
         month = date.getMonth();
         months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'Jully', 'August', 'September', 'October', 'November', 'December');

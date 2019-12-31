@@ -1,10 +1,4 @@
-<?php  
-if (!defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * fetch the logged in user side menu
- * @return array
- */
- 
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
  function fetch_non_main_page_content() {
         $CI =& get_instance();
         $user = $CI->session->userdata('userDetails');
@@ -29,7 +23,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
                 'copyrighttext' => 'Copyright 2015',
                 'currency' => '',
                 'country' => '',
-                'applicationname' => 'TMS1.png',
+                'applicationname' => 'tms1.png',
                 'tenant_name' => $CI->session->userdata('userDetails')->user_name,
                 'website_url' => '',
                 'tenant_email_id' => $CI->session->userdata('userDetails')->registered_email_id

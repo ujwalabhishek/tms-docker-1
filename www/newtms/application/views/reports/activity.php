@@ -67,7 +67,7 @@ $ci->load->model('Activity_Log_Model', 'activitylog');
                                             echo form_input($internal_staff);
                         
                         ?>
-                       
+                       <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                         <span id="internal_staff_list_err"></span>
                     </td>
                 </tr>
@@ -344,9 +344,17 @@ $ci->load->model('Activity_Log_Model', 'activitylog');
 <script>
 $("#search_form").submit(function(){
     ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
+    check_remove_id();
         var self = $(".btn_srch"),
             button = self.find('input[type="submit"],button');
             button.attr('disabled','disabled').html('Please Wait..');
         ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
 });
+function check_remove_id(){
+        $staff = $('#internal_staff').val();
+        if($staff == ''){
+           $('#user_id').val(''); 
+        }
+       
+    }
 </script>

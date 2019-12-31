@@ -40,7 +40,7 @@ if (!empty($tax_error)) {
                                 ?>
                                 <span id="country_of_residence_err"></span>
                             </td>
-                            <td class="td_heading" colspan="2" >
+                            <td class="td_heading" colspan="2">
                                 <SPAN id="SGP" style="">NRIC Type : <span class="required">* </span>   <!--Modified dummy on 10/03/15--->               
                                     <?php
                                     $nrics = fetch_metavalues_by_category_id(Meta_Values::NRIC);
@@ -48,7 +48,7 @@ if (!empty($tax_error)) {
                                     foreach ($nrics as $item):
                                         $nris_options[$item['parameter_id']] = $item['category_name'];
                                     endforeach;
-
+                                    $nris_options['SNG_4'] = 'NO TAX CODE';
                                     $attr = 'id="NRIC"';
                                     echo form_dropdown('NRIC', $nris_options, $this->input->post('NRIC'), $attr);
                                     ?>
@@ -353,7 +353,7 @@ if (!empty($tax_error)) {
                             'name' => 'user_registered_email',
                             'id' => 'user_registered_email',
                             'maxlength' => '50',
-                            'value' => set_value('pers_email'),
+                            'value' => set_value('user_registered_email'),
                             'onblur' => 'javascript:isunique_email(this.value,this.id);',
                             'style' => 'width:250px',
                         );
@@ -1269,7 +1269,16 @@ if (!empty($tax_error)) {
                 $('#SGP_OTHERS_label').text('OTHERS :');
                 $('#SGP_ID_label').text('');
                 $('#SGP_ID_label').text('OTHERS :');
-            } else {
+            }  else if (this.value == "SNG_4") { ////added by shubhranshu due to client requirement on 16/12/2019
+                $("#SGP_OTHERS").show();
+                $('#SGP_OTHERS option:first-child').attr("selected", "selected");
+                $('#SGP_OTHERS_label').text('');
+                $('#SGP_OTHERS_label').text('OTHERS :');
+                $('#SGP_ID_label').text('');
+                $('#SGP_ID_label').text('OTHERS :');
+                $('#NRIC_OTHER option[value=NOTAXCODE]').attr('selected','selected');////added by shubhranshu for client requirement
+                $("#SGP_ID").hide();
+            }else {
                 $('#SGP_OTHERS_label').text('');
                 $('#SGP_OTHERS_label').text('NRIC :');
                 $('#SGP_ID_label').text('');
@@ -1433,6 +1442,7 @@ if (!empty($tax_error)) {
         function check_nric_restriction(){
             var $nric = $("#NRIC_ID").val(); 
             //alert($nric);
+            if($nric !=''){
             $.ajax({
                     url: "check_nric_restriction",
                     type: "post",
@@ -1441,13 +1451,12 @@ if (!empty($tax_error)) {
                     data: {tax_code: $nric,operation:'ADDNEWTRAINEE'},
                     success: function(res) {
                         if (res == 1) {
-                            ///added by shubhranshu
-                            if($privilage == '0'){
-                                if($role_id == 'ADMN'){
+                            if($privilage == '0'){///added by shubhranshu
+                                if($role_id == 'ADMN'){///added by shubhranshu
                                     if(res > 0){
                                         $('#ex111').modal();
                                     }
-                                }
+                                }///added by shubhranshu
                             }else if($privilage == '1'){
                                 if(res > 0){
                                         $('#ex111').modal();
@@ -1456,13 +1465,14 @@ if (!empty($tax_error)) {
                         } 
                     }
                 });
+            }
         }
         /*--------------------------------------------------------------*/
         function isunique_taxcode(e, id) {
             e = $.trim(e);
-            var NRIC = $("#NRIC").val();
-            
-            check_nric_restriction();  ///added by shubhranshu
+            var NRIC = $("#NRIC").val(); 
+           check_nric_restriction();  ///added by shubhranshu
+
             
             var NRIC_OTHER = $("#NRIC_OTHER").val();
             var country_of_residence = $("#country_of_residence").val(); 
@@ -1708,7 +1718,7 @@ if (!empty($tax_error)) {
                     type: "post",
                     data: 'email=' + e,
                     success: function(res) {
-                        if (res == 1) {
+                        if (res) {
                             window.email_id = 'exists';
                             $("#" + id + "_err").text("[Email Id exists!]").addClass('error');
                             $("#" + id).addClass('error');
@@ -1790,7 +1800,7 @@ if (!empty($tax_error)) {
                     $("#NRIC_err").text("[required]").addClass('error');
                     $("#NRIC").addClass('error');
                     retVal = false;
-                } else if (NRIC == "SNG_3") {
+                } else if (NRIC == "SNG_3" || NRIC == "SNG_4") {
                     if (NRIC_OTHER == "") {
                         $("#NRIC_OTHER_err").text("[required]").addClass('error');
                         $("#NRIC_OTHER").addClass('error');
@@ -2067,6 +2077,7 @@ if (!empty($tax_error)) {
             if ($('#trainee_validation_div span').hasClass('error')) {
                 retVal = false;
             }
+        
         if(retVal == true){
             $('.button_class99 button[type=submit]').css('display','none');
         }

@@ -35,13 +35,13 @@ function export_users_page($query) {
         if ($row->tax_code_type && $row->tax_code) {
             if ($row->tax_code_type != 'SNG_3') {
                 $type = get_param_value($row->tax_code_type);
-                $taxcode = $type->category_name . ' - ' . $row->tax_code;
+                $taxcode = $type->category_name . ' - ' . mask_format($row->tax_code);
             }
         }
         if ($row->other_identi_type && $row->other_identi_code) {
             $tax_code_type = get_param_value($row->tax_code_type);
             $type = get_param_value($row->other_identi_type);
-            $taxcode = $tax_code_type->category_name . ' - ' . $type->category_name . ' - ' . $row->other_identi_code;
+            $taxcode = $tax_code_type->category_name . ' - ' . $type->category_name . ' - ' . mask_format($row->other_identi_code);
         }
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, $taxcode);
@@ -106,13 +106,13 @@ function export_users_full($query) {
         if ($row->tax_code_type && $row->tax_code) {
             if ($row->tax_code_type != 'SNG_3') {
                 $type = get_param_value($row->tax_code_type);
-                $taxcode = $type->category_name . ' - ' . $row->tax_code;
+                $taxcode = $type->category_name . ' - ' . mask_format($row->tax_code);
             }
         }
         if ($row->other_identi_type && $row->other_identi_code) {
             $tax_code_type = get_param_value($row->tax_code_type);
             $type = get_param_value($row->other_identi_type);
-            $taxcode = $tax_code_type->category_name . ' - ' . $type->category_name . ' - ' . $row->other_identi_code;
+            $taxcode = $tax_code_type->category_name . ' - ' . $type->category_name . ' - ' . mask_format($row->other_identi_code);
         }
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, $taxcode);
@@ -433,7 +433,7 @@ function export_trainee_page($result) {
             $ACCOUNTTYPE = 'Individual';
         }
         $sheet->setCellValue('A' . $rn, $rn - 2);
-        $sheet->setCellValue('B' . $rn, $meta_map[$row->tax_code_type] . '-' . $row->tax_code);
+        $sheet->setCellValue('B' . $rn, $meta_map[$row->tax_code_type] . '-' . mask_format($row->tax_code));
         $sheet->setCellValue('C' . $rn, $meta_map[$row->country_of_residence]);
         $sheet->setCellValue('D' . $rn, date('d/m/Y H:i:s', strtotime($row->registration_date)));
         $sheet->setCellValue('E' . $rn, $row->first_name . ' ' . $row->last_name);
@@ -559,7 +559,7 @@ function export_trainee_full($query) {
     }   
     foreach ($tabledata as $row) {
         $sheet->setCellValue('A' . $rn, $rown);
-        $sheet->setCellValue('B' . $rn, $meta_map[$row->tax_code_type] . '-' . $row->tax_code);
+        $sheet->setCellValue('B' . $rn, $meta_map[$row->tax_code_type] . '-' . mask_format($row->tax_code));
         $sheet->setCellValue('C' . $rn, $meta_map[$row->country_of_residence]);
         $sheet->setCellValue('D' . $rn, date('d/m/Y H:i:s', strtotime($row->registration_date)));
         $sheet->setCellValue('E' . $rn, $row->first_name . ' ' . $row->last_name);
@@ -950,7 +950,7 @@ function export_attendance($results, $class_details, $start, $end, $class_schedu
                         $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
                     }
                     $sheet->setCellValue('A' . $row, $index);
-                    $sheet->setCellValue('B' . $row, $res['record']['tax_code']);
+                    $sheet->setCellValue('B' . $row, mask_format($res['record']['tax_code']));
                     $sheet->setCellValue('C' . $row, $res['record']['name']);
 
                     $sheet->setCellValue('D' . $row, 'Session1:');
@@ -1142,7 +1142,7 @@ function export_attendance($results, $class_details, $start, $end, $class_schedu
                         $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
                     }
                     $sheet->setCellValue('A' . $row, $index);
-                    $sheet->setCellValue('B' . $row, $res['record']['tax_code']);
+                    $sheet->setCellValue('B' . $row, mask_format($res['record']['tax_code']));
                     $sheet->setCellValue('C' . $row, $res['record']['name']);
 
                     $sheet->setCellValue('D' . $row, 'Session1:');
@@ -1276,7 +1276,7 @@ function export_trainee_feedback($results, $class_details) {
 
     $rn = 3;
     foreach ($results as $row) {
-        $sheet->setCellValue('A' . $rn, $row['tax_code']);
+        $sheet->setCellValue('A' . $rn, mask_format($row['tax_code']));
         $sheet->setCellValue('B' . $rn, $row['first_name']. ' ' .$row['last_name']);
         $sheet->setCellValue('C' . $rn, ($row['trainer_fdbck_on']) ? date('d/m/Y',strtotime($row['trainer_fdbck_on'])) : '');
         if($row['training_score']!="ABS")
@@ -2224,7 +2224,7 @@ function export_booked_seats($result, $class, $course, $totalbooked, $tenant_id)
 
         $sheet->setCellValue('A' . $rn, $rn - 3);
         $sheet->setCellValue('B' . $rn, rtrim($CI->course->get_metadata_on_parameter_id($row->country_of_residence), ', '));
-        $sheet->setCellValue('C' . $rn, $row->tax_code);
+        $sheet->setCellValue('C' . $rn, mask_format($row->tax_code));
         $sheet->setCellValue('D' . $rn, $row->first_name . ' ' . $row->last_name);
         $sheet->setCellValue('E' . $rn, $enrol_mode);
         $sheet->setCellValue('F' . $rn, date('M d Y', strtotime($row->enrolled_on)));
@@ -2296,7 +2296,7 @@ function export_classtrainee_page($result, $tenant_id) {
             }
         }
         $sheet->setCellValue('A' . $rn, $rn - 3);
-        $sheet->setCellValue('B' . $rn, $row['tax_code']);
+        $sheet->setCellValue('B' . $rn, mask_format($row['tax_code']));
         $sheet->setCellValue('C' . $rn, $row['first_name'] . ' ' . $row['last_name']);
         $sheet->setCellValue('D' . $rn, $row['crse_name'] . ' - ' . $row['class_name']);
         $sheet->setCellValue('E' . $rn, date('d/m/Y', strtotime($row['class_start_datetime'])) . ' - ' . date('d/m/Y', strtotime($row['class_end_datetime'])));
@@ -2436,7 +2436,7 @@ function export_classtrainee_full($result, $tenant_id) {
         $sheet->setCellValue('O' . $rn, !empty($row['certificate_coll_on']) ? date('d/m/Y',  strtotime($row['certificate_coll_on'])):'');
         $result_text = !empty($row['feedback_answer']) ? ' (Result: ' . $row['feedback_answer'].')' : '';
         $sheet->setCellValue('P' . $rn, $CI->class->get_class_status($row['class_id'], '').$result_text);
-        $sheet->setCellValue('Q' . $rn, $row['tax_code']);
+        $sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
         $sheet->setCellValue('R' . $rn, $row['first_name'] . ' ' . $row['last_name']);
         $sheet->setCellValue('S' . $rn, $enr_mod);
         $sheet->setCellValue('T' . $rn, empty($row['enrolled_on']) ? '' : date('d/m/Y', strtotime($row['enrolled_on'])));
@@ -2550,7 +2550,7 @@ function export_payments_due_report($query) {
         $sheet->setCellValue('A' . $rn, $row->crse_name);
         $sheet->setCellValue('B' . $rn, $row->class_name);
         $sheet->setCellValue('C' . $rn, $row->exec_name);
-        $sheet->setCellValue('D' . $rn, $row->tax_code);
+        $sheet->setCellValue('D' . $rn, mask_format($row->tax_code));
         $sheet->setCellValue('E' . $rn, $row->user_name);
         $sheet->setCellValue('F' . $rn, date_format_singapore($row->enrolled_on));
         $sheet->setCellValue('G' . $rn, $row->total_inv_discnt);
@@ -2611,7 +2611,7 @@ function write_import_status($data, $uid) {
     $rn = 3;
     foreach ($data as $row) {
         $sheet->setCellValue('A' . $rn, $rn - 2);
-        $sheet->setCellValue('B' . $rn, $row['taxcode']);
+        $sheet->setCellValue('B' . $rn, mask_format($row['taxcode']));
         $sheet->setCellValue('C' . $rn, ($row['CompanyCode']) ? 'Company' : 'Individual');
         $sheet->setCellValue('D' . $rn, ($row['CompanyName']) ? $row['CompanyName'] . '(' . $row['CompanyCode'] . ')' : $row ['CompanyCode'] );
         $sheet->setCellValue('E' . $rn, $row['username']);
@@ -2666,7 +2666,7 @@ function write_import_enroll_status($data, $company_id) {
     $rn = 3;
     foreach ($data as $key => $row) {
         $sheet->setCellValue('A' . $rn, $rn - 2);
-        $sheet->setCellValue('B' . $rn, $row['taxcode']);
+        $sheet->setCellValue('B' . $rn, mask_format($row['taxcode']));
         $sheet->setCellValue('C' . $rn, $row['enrollment_type']);
         $sheet->setCellValue('D' . $rn, $row['tg_number']);
         $sheet->setCellValue('E' . $rn, ($row['status'] == 'FAILED') ? 'Fail.' : 'Success');
@@ -2712,7 +2712,7 @@ function write_import_enroll_statussuccess($data, $company_id) {
     foreach ($data as $key => $row) {
         if ($row['status'] != 'FAILED') {
             $sheet->setCellValue('A' . $rn, $rn - 2);
-            $sheet->setCellValue('B' . $rn, $row['taxcode']);
+            $sheet->setCellValue('B' . $rn, mask_format($row['taxcode']));
             $sheet->setCellValue('C' . $rn, $row['enrollment_type']);
             $sheet->setCellValue('D' . $rn, $row['tg_number']);
             $sheet->setCellValue('E' . $rn, ($row['status'] == 'FAILED') ? 'Fail.' : 'Success');
@@ -2759,7 +2759,7 @@ function write_import_enroll_statusfailure($data, $company_id) {
     foreach ($data as $key => $row) {
         if ($row['status'] == 'FAILED') {
             $sheet->setCellValue('A' . $rn, $rn - 2);
-            $sheet->setCellValue('B' . $rn, $row['taxcode']);
+            $sheet->setCellValue('B' . $rn, mask_format($row['taxcode']));
             $sheet->setCellValue('C' . $rn, $row['enrollment_type']);
             $sheet->setCellValue('D' . $rn, $row['tg_number']);
             $sheet->setCellValue('E' . $rn, ($row['status'] == 'FAILED') ? 'Fail.' : 'Success');
@@ -3767,12 +3767,14 @@ function generate_soa_report_csv($tabledata, $metadata) {
     fputcsv($output, $column_title);
     foreach ($data_arr as $data) {
         foreach ($data as $key => $value) {
-            if (!empty($value))
+            if (!empty($value)){
                 $data[$key] = '"' . $value . '"';
+            }
         }
         fputcsv($output, $data);
     }
-    return;
+   exit;
+    //return; commented by shubhranshu since html are coming in csv file
 }
 
 /**
@@ -4034,7 +4036,7 @@ function generate_class_attendance_sheet_xls($results, $class_details,$start, $e
                     }
                     $sheet->setCellValue('A' . $row, $index);
                     $sheet->setCellValue('B' . $row, $res['record']['name']);
-                    $sheet->setCellValue('C' . $row, $res['record']['tax_code']);
+                    $sheet->setCellValue('C' . $row, mask_format($res['record']['tax_code']));
                     $res['record']['company_id'] = ($res['record']['company_id'] == 0)? '': $res['record']['company_id'];
                     $sheet->setCellValue('D' . $row, $res['record']['company_id']);
                     if(!empty($res['record']['company_id']))
@@ -4293,7 +4295,7 @@ function generate_class_attendance_sheet_xls($results, $class_details,$start, $e
                     }
                     $sheet->setCellValue('A' . $row, $index);
                     $sheet->setCellValue('B' . $row, $res['record']['name']);
-                    $sheet->setCellValue('C' . $row, $res['record']['tax_code']);
+                    $sheet->setCellValue('C' . $row, mask_format($res['record']['tax_code']));
                     $res['record']['company_id'] = ($res['record']['company_id'] == 0)? '': $res['record']['company_id'];
                     $sheet->setCellValue('D' . $row, $res['record']['company_id']);
                     if(!empty($res['record']['company_id'])){
@@ -4446,7 +4448,7 @@ function write_trainer_feedback_status($data, $trainer, $status='') {
         foreach ($data as $key => $row) {
             if ($row['status'] != 'FAILED') {
                 $sheet->setCellValue('A' . $rn, $rn - 2);
-                $sheet->setCellValue('B' . $rn, $row['taxcode']);
+                $sheet->setCellValue('B' . $rn, mask_format($row['taxcode']));
                 $sheet->setCellValue('C' . $rn, $row['fullname']);
                 $sheet->setCellValue('D' . $rn, $row['rating']);
                 $sheet->setCellValue('E' . $rn, ($row['status'] == 'FAILED') ? 'Fail.' : 'Success');
@@ -4458,7 +4460,7 @@ function write_trainer_feedback_status($data, $trainer, $status='') {
         foreach ($data as $key => $row) {
             if ($row['status'] == 'FAILED') {
                 $sheet->setCellValue('A' . $rn, $rn - 2);
-                $sheet->setCellValue('B' . $rn, $row['taxcode']);
+                $sheet->setCellValue('B' . $rn, mask_format($row['taxcode']));
                 $sheet->setCellValue('C' . $rn, $row['fullname']);
                 $sheet->setCellValue('D' . $rn, $row['rating']);
                 $sheet->setCellValue('E' . $rn, ($row['status'] == 'FAILED') ? 'Fail.' : 'Success');
@@ -4469,7 +4471,7 @@ function write_trainer_feedback_status($data, $trainer, $status='') {
     } else {
         foreach ($data as $key => $row) {
             $sheet->setCellValue('A' . $rn, $rn - 2);
-            $sheet->setCellValue('B' . $rn, $row['taxcode']);
+            $sheet->setCellValue('B' . $rn, mask_format($row['taxcode']));
             $sheet->setCellValue('C' . $rn, $row['fullname']);
             $sheet->setCellValue('D' . $rn, $row['rating']);
             $sheet->setCellValue('E' . $rn, ($row['status'] == 'FAILED') ? 'Fail.' : 'Success');
@@ -4588,13 +4590,18 @@ function export__total_tenant_page_fields($titles, $data, $filename, $sheetname 
 }
 /* skm end */
 
-/*skm  start: replace nric last 4 digit with mask */
+/*shubhranshu  start: replace nric first 5 character with mas */
 function mask_format($nric) {  
-    //$new_nric = substr_replace($nric,'xxxx',1,4);       
-     $new_nric = substr_replace($nric,'XXXX',5);        
-    return $new_nric;
+    if(is_numeric($nric) == 1){
+        return $nric;
+    }else{
+        $new_nric = substr_replace($nric,'XXXXX',0,5);   
+        //$new_nric = substr_replace($nric,'XXXX',5);        
+        return $new_nric;
+    }   
 }
-/* skm end */
+/* shubhranshu end */
+
 
 function export_archive_trainee($data,$course_name,$class_name) {
     $CI = & get_instance();
@@ -4630,7 +4637,7 @@ function export_archive_trainee($data,$course_name,$class_name) {
     foreach ($data as $row) {
        
          $sheet->setCellValue('A' . $rn, $rn - 2);
-         $sheet->setCellValue('B' . $rn, $row['taxcode']);
+         $sheet->setCellValue('B' . $rn, mask_format($row['taxcode']));
          $sheet->setCellValue('C' . $rn, $row['first_name']); 
         $rn++;
     }

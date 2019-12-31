@@ -60,6 +60,10 @@
                         echo form_hidden('user_id', $this->input->get('user_id'), 'user_id');
                         ?>
                         <input  id="first_last_name" name="first_last_name" type="text" value="<?php echo $this->input->get('first_last_name'); ?>">
+<<<<<<< HEAD
+=======
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
+>>>>>>> testing
                         <div id="first_last_name_err"></div>
                     </td>
                     <td align="center">
@@ -195,21 +199,50 @@
             }
             return retval;
         }
+<<<<<<< HEAD
         function form_validates() {
         $user_role = $('#user_role').find(":selected").text();
         $filter_status = $('#filter_status').find(":selected").text();
         $first_last_name = $('#first_last_name').val();
         
        if($first_last_name !='' || $filter_status !='All' || $user_role !='All'){
+=======
+        // added by shubhranshu for dynamic prevention of search form
+    $('#first_last_name').on("blur", function() {
+        $first_last_name = $('#first_last_name').val();
+            if($first_last_name ==''){
+                $("#user_id").val("");
+            }  
+       });
+    function form_validates() {
+        $user_role = $('#user_role').find(":selected").text();
+        $filter_status = $('#filter_status').find(":selected").text();
+        $first_last_name = $('#first_last_name').val();
+        var user_id = $('#user_id').val();
+       if(user_id !='' || $filter_status !='All' || $user_role !='All'){
+>>>>>>> testing
             remove_err('#user_role');
             remove_err('#filter_status');
             remove_err('#first_last_name');
             return true;
-        } 
-        else {
-            disp_err('#user_role', '[Select User role from auto-complete]');
-            disp_err('#filter_status', '[select filter status from auto-complete]');
+        }else if($first_last_name != ''){
+            if(user_id !=''){
+                remove_err('#user_role');
+                remove_err('#filter_status');
+                remove_err('#first_last_name');
+                return true;
+            }else{
+                disp_err('#first_last_name', '[Select Trainee from auto-complete]');
+                remove_err('#user_role');
+                remove_err('#filter_status');
+                return false;
+            }
+            
+        }else{
             disp_err('#first_last_name', '[Select Trainee from auto-complete]');
+            disp_err('#user_role', '[Select User role from dropdown]');
+            disp_err('#filter_status', '[select filter status from auto-complete]');
+
             return false;
         }
     }

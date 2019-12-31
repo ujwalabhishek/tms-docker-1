@@ -230,7 +230,7 @@
                 </thead>
                  <tbody>
                     <?php
-                    $err_msg = 'There are no trainees enrolled to any class currently.';
+                    $err_msg = 'Kindly Apply Filter To Fetch The Trainees.';
                     if (!empty($_GET)) {
                         $err_msg = 'No data available for the search criteria entered.';
                     }

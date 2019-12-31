@@ -67,7 +67,13 @@
         ?>
              <?php if($k != 'flag'){?>  <!--added by shubhranshu-->
               <tr>
-                <td><?php echo $data['taxcode'];?> </td>
+                <td><?php 
+                if(empty($data['taxcode'])){
+                    echo $data['userid'];
+                    
+                }else{
+                    echo $data['taxcode'];} ;?> 
+                </td>
                 <td> <?php echo ($data['CompanyCode'])?'Company':'Individual';?></td>
                 <td> <?php echo ($data['CompanyName'])?$data['CompanyName'].'('.$data['CompanyCode'].')':$data['CompanyCode'];?></td>
                 <td> <?php echo $data['username'];?></td>

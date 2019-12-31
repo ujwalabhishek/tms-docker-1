@@ -2,7 +2,12 @@
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/reportsoa.js"></script>
+<style>
+    #courseId{
+        width:91%;
+    }
+</style>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/reportsoa.js?v=1.0.0"></script>
 <div class="col-md-10">
     <?php
     if ($this->session->flashdata('error')) {

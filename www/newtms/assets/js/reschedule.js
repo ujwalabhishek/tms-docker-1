@@ -51,7 +51,8 @@ $(document).ready(function() {
             {
                 $reschedule_lock_status = $('reschedule_class').val();
                 if($re_class==0){
-                $(this).removeAttr('disabled');}
+                    $(this).removeAttr('disabled');
+                }
             } 
             else 
             {
@@ -575,8 +576,8 @@ function check_selected_trainee_status(trainee_id, class_id) {
 }
 ///////added by shubhranshu to prevent multiple clicks////////////////
 function disable_button(){
-   var self = $('#search_form'),
-    button = self.find('input[type="submit"],button');
-    button.attr('disabled','disabled').html('Please Wait..');
+//   var self = $('#search_form'),
+//    button = self.find('input[type="submit"],button');
+//    button.attr('disabled','disabled').html('Please Wait..');
     return true;
 }///////added by shubhranshu to prevent multiple clicks////////////////

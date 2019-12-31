@@ -48,11 +48,23 @@ $(document).ready(function() {
             $('.search_but').show();
         }
     });
+    ///////below code added by shubhranshu to prevent disable of button
+    $('#classId').change(function() {
+         $('.print_soa_report').html("Print");
+         $('.print_soa_report').prop("disabled", false);
+         $('.submit_but').prop("disabled", false);
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span>Export");
+    });
+    ////////code end//////////////////////////
     $('#courseId').change(function() {
         $('#classId').attr('disabled', 'disabled');
         $('#status').val('');
         $('#trainee').val('');
         $('#trainee_id').val('');
+        $('.print_soa_report').prop("disabled", false);//added by shubhranshu to prevent disable of button
+        $('.print_soa_report').html("Print");//added by shubhranshu to prevent disable of button
+         $('.submit_but').prop("disabled", false);///added by shubhranshu to prevent disable of button
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span>Export");///added by shubhranshu to prevent disable of button
         $courseId = $('#courseId').val();
         if ($courseId.length > 0) {
             $.ajax({
@@ -100,7 +112,7 @@ $(document).ready(function() {
     });
     $('#soa_report_form').submit(function() {
         $check_search = 1;
-        return form_validation(true);
+        return form_validation(true); // added by shubhranshu for multiple request
 
     });
     $('.print_soa_report').click(function() {
@@ -115,6 +127,13 @@ $(document).ready(function() {
             $('#soa_report_form')[0].submit();
         }
     });
+    // below code added by shubhranshu for dynamic button search request
+    $('.select_soa_print').click(function(){
+        $('.print_soa_report').prop("disabled", false);
+         $('.print_soa_report').html("Print");
+         $('.submit_but').prop("disabled", false);
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span>Export");
+    });// below code added by shubhranshu for dynamic button search request
 });
 function form_validation($retval) {
     $course = $('#courseId').val();

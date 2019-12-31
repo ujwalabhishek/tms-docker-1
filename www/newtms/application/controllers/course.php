@@ -28,9 +28,9 @@ class Course extends CI_Controller {
 
         $this->load->model('meta_values');
 
-        $this->load->model('Course_Model', 'course');
+        $this->load->model('course_model', 'course');
 
-        $this->load->model('Class_Model', 'classmodel');
+        $this->load->model('class_model', 'classmodel');
 
         $this->load->library('form_validation');
 
@@ -1045,7 +1045,7 @@ class Course extends CI_Controller {
         }
 
         $file_name = str_ireplace(' ', '_', $this->input->get('file_name'));
-
+        $file_name = $file_name.'.zip'; // added by shubhranshu to append zip file extension while download the file
         header("Content-Type: application/octet-stream");
 
         header("Content-Disposition: attachment;filename=" . $file_name);

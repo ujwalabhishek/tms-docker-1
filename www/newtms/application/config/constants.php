@@ -48,6 +48,8 @@ defined('FOPEN_WRITE_CREATE')                   OR define('FOPEN_WRITE_CREATE', 
 defined('FOPEN_READ_WRITE_CREATE')              OR define('FOPEN_READ_WRITE_CREATE', 'a+b');
 defined('FOPEN_WRITE_CREATE_STRICT')            OR define('FOPEN_WRITE_CREATE_STRICT', 'xb');
 defined('FOPEN_READ_WRITE_CREATE_STRICT')       OR define('FOPEN_READ_WRITE_CREATE_STRICT', 'x+b');
+define('PAY_D_ENROL','PDENROL');
+define('PAY_A_ENROL', 'PAENROL');
 
 /*
 |--------------------------------------------------------------------------
@@ -91,7 +93,7 @@ define('RECORDS_PER_PAGE', 50);
 define('ACTIVE', 'ACTIVE'); //Added for DMS
 define('ARCHIVED', 'INACTIVE'); //Added for DMS
 
-define('FROM_EMAIL_ID', 'enquiries@xprienz.com');
+define('FROM_EMAIL_ID', 'biipmisg@gmail.com');
 define('INBOX_MAIL_NAME', 'TMS'); 
 define('NOTIFICATION_MAIL_SUBJECT', 'Notification from TMS Administrator');
 
@@ -132,7 +134,7 @@ define('SERVER_DATE_TIME_FORMAT','Y-m-d H:i:s');
 
 //define('APP_ADMN_LOGIN_LINK', "https://tms.xxxx.com/tmsadmin"); 
 define('ENROL_PYMNT_DUE', "enrol_pymnt_due"); 
-define('TENANT_ID', "T02"); 
+//define('TENANT_ID', $this->session->userdata('master_tenant_id')); 
 define('METADATA', "metadata_id"); 
 define('RESETPWD', "1234"); 
 define('RECORDS_IN_MAIN_PAGE',10);
@@ -142,5 +144,9 @@ define('RECORDS_IN_MAIN_PAGE',10);
 
 /* For DMS */
 define('ASSMNT_TEMAPLTE_ID', "assmnt_template_id");
+//paypal
+define('SANDBOX', 0);
+define('ONLINE', 'ONLINE');//11/12/14-MODE OF PAYMENT
+define('ENROL_PYMNT_DUE', "enrol_pymnt_due"); 
 
 ////added by shubhranshu ////////////////

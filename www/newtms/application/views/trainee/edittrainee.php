@@ -1,3 +1,4 @@
+
 <?php
 $this->load->helper('form');
 $this->load->helper('metavalues_helper');
@@ -12,7 +13,11 @@ if (!empty($tax_error)) {
     echo '<div class="error1">' . $tax_error . '</div>';
 }
 ?>
-
+<style>
+    .edu_level{
+        width:210px;
+    }
+</style>
 <div class="col-md-10">
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/trainee.png"/> Trainee - Edit/ Deactivate</h2>
     <div class="table-responsive">
@@ -60,6 +65,7 @@ if (!empty($tax_error)) {
                         $user_id = ($this->input->post('user_id'))? $this->input->post('user_id') :$this->input->post('userid');
                         echo form_hidden('user_id',$user_id,'user_id');
                         ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="search_by_name_autocomplete_err"></span>
                     </td>                    
                 </tr>
@@ -92,6 +98,7 @@ if (!empty($tax_error)) {
                         );
                         echo form_input($un);
                         ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="search_by_taxcode_autocomplete_err"></span>
                     </td> 
                      <td width="18%" align="center"><button type="submit" title="Search" value="Search" class="btn btn-xs btn-primary no-mar"><span class="glyphicon glyphicon-search"></span> Search</button></td>
@@ -172,7 +179,9 @@ if (!empty($tax_error)) {
                                     <SPAN id="SGP_ID" style="display:none;">
                                         <br /><br />
                                         <label id="SGP_ID_label"> NRIC Code : </label><span class="required">* </span>
+                                        
                                         <?php
+                                        form_hidden('NRIC_ID_MATCH', $trainee[userdetails]['tax_code']);
                                         $attr = array('name' => 'NRIC_ID', 'class' => 'upper_case alphanumeric', 'id' => 'NRIC_ID', 'onblur' => 'javascript:isunique_taxcode(this.value,this.id);', 'maxlength' => '50');
                                         echo form_input($attr, $trainee[userdetails]['tax_code']);
                                         ?>
@@ -1772,6 +1781,8 @@ endif;
                 $('#SGP_OTHERS_label').text('OTHERS :');
                 $('#SGP_ID_label').text('');
                 $('#SGP_ID_label').text('OTHERS :');
+                $('#NRIC_OTHER option[value=NOTAXCODE]').attr('selected','selected');////added by shubhranshu
+                $("#SGP_ID").hide();
             } else {
                 $('#NRIC_OTHER_err').text('').removeClass('error');
                 $('#NRIC_OTHER').removeClass('error');
