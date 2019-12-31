@@ -8,7 +8,7 @@
 //$username = "biipmico_tms";
 //$password = "ksj784382*879#prod!@2020";
 
-$mysqli = new mysqli("localhost", "biipmico_tms", "ksj784382*879#prod!@2020", "biipmico_tms_masterdata");
+$mysqli = new mysql("localhost", "biipmico_tms", "ksj784382*879#prod!@2020", "biipmico_tms_masterdata");
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
