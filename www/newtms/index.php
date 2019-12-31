@@ -1,5 +1,22 @@
 <?php
 //echo phpinfo();exit;
+
+
+
+
+$servername = "localhost";
+$username = "biipmico_tms";
+$password = "ksj784382*879#prod!@2020";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password,'biipmico_tms_masterdata');
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+echo "Connected successfully";
+exit;
 /**
  * CodeIgniter
  *
