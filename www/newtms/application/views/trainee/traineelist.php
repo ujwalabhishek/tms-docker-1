@@ -286,25 +286,6 @@ echo $pagination;
                 return validate(false);
             }
         });
-<<<<<<< HEAD
-        function form_validates() {
-        $trainee_name_list = $('#trainee_name_list').val();
-        $tax_codev = $('#tax_code').val();
-        $off_company_name = $('#off_company_name').find(":selected").text();
-        
-        
-            if($trainee_name_list != '' || $tax_codev != '' || $off_company_name !=''){
-                 remove_err('#trainee_name_list');
-                 remove_err('#tax_code');
-                 return true;
-             } 
-             else {
-                 disp_err('#trainee_name_list', '[Select trainee name from auto-complete]');
-                 disp_err('#tax_code', '[select NRIC from auto-complete]');
-                 return false;
-             }
-        }
-=======
          // added by shubhranshu for dynamic prevention of search form
         $('#trainee_name_list').on("blur", function() {
         $trainee_name_list = $('#trainee_name_list').val().trim();
@@ -318,7 +299,6 @@ echo $pagination;
                 $("#tax_id").val("");
             }  
        });
->>>>>>> testing
         function validate(retval) {
             var trainee_name_list = $('#trainee_name_list').val().trim();
             var tax_code = $('#tax_code').val().trim();

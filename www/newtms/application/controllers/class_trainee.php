@@ -507,12 +507,8 @@ class Class_Trainee extends CI_Controller {
         }
         $this->db->cache_off();
        
-<<<<<<< HEAD:www/newtms/application/controllers/class_trainee.php
-        $total_trainee_enrolled = $this->classtraineemodel->get_total_enrolled_trainee($tenant_id);
-=======
         
       
->>>>>>> testing:www/newtms/application/controllers/Class_trainee.php
      }
         $data['tabledata'] = $new_tabledata;
         $data['sort_order'] = $order_by;
@@ -1664,12 +1660,8 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 $this->load->helper('pdf_reports_helper');
                 if ($export == 'pdf') {
                     //return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data, $mark_count);
-<<<<<<< HEAD:www/newtms/application/controllers/class_trainee.php
-                    return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data); // removed mark count by shubhranshu
-=======
                     //print_r($results);exit;
                     return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data,$mark_count); // removed mark count by shubhranshu
->>>>>>> testing:www/newtms/application/controllers/Class_trainee.php
                     
                 } else if ($export == 'pdf_week') {
                     return generate_class_attendance_sheet_pdf($results, $class_details, $tenant_details, $class_schedule_data);

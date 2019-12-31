@@ -81,13 +81,8 @@ if(count($course_list) == 0) {
                     <td colspan="3" width="35%"><input class="inputsearchbox_course" type="text" name="search_value" id="course_name" value="<?php echo ($this->input->get('search_value')) ? $this->input->get('search_value') : $search_value; ?>" placeholder="Enter Course Name to Search"><span id="crse_id"></span>
                     </td>
                     <td width="35%" align="center">                        
-<<<<<<< HEAD
-                        <button title="Search" value="Search" type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-search"></span> <strong>Search</strong></button>
-                        <a href="<?php echo site_url(); ?>course_public" style="text-decoration:none !important; color:#000;" title="All" id="srch_all" class="btn btn-sm btn-info">
-=======
                         <button title="Search" value="Search" type="submit" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-search"></span> <strong>Search</strong></button>
                         <a href="<?php echo site_url(); ?>course_public" style="text-decoration:none !important;" title="All" id="srch_all" class="btn btn-sm btn-primary">
->>>>>>> testing
                             <span class="glyphicon glyphicon-refresh"></span> <strong>All</strong>
                         </a>
                      </td>

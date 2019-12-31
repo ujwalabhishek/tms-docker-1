@@ -366,15 +366,11 @@ class User extends CI_Controller {
         $registration = '';
         if ($this->input->server('REQUEST_METHOD') === 'POST')
         {
-<<<<<<< HEAD:www/newtms/application/controllers/user.php
-            
-=======
             if(strtolower($captcha) != strtolower($this->session->userdata('public_captcha_key'))){//added by shubhranshu
                 $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
                 redirect('course_public/register');//added by shubhranshu
 
             }//added by shubhranshu
->>>>>>> testing:www/newtms/application/controllers/User.php
             $res = $this->course_public_model->save_reg_trainee();
         
            $user_id = $res;

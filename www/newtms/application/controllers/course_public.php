@@ -12,7 +12,7 @@ class course_public extends CI_Controller {
     public function __construct() {
 
         parent::__construct();
-         echo 'ss';exit;
+         
         $this->load->model('course_public_model','course_model');
 
         $this->load->helper('metavalues_helper', 'common');
@@ -20,10 +20,9 @@ class course_public extends CI_Controller {
         $this->load->model('meta_values');
         $this->load->model('manage_tenant_model', 'manage_tenant');
         $host=$_SERVER['HTTP_HOST'];
-        if($host != 'biipmi.co'){
-            if($host != 'xprienz.net'){
-                $tenent_details = $this->course_model->get_tenant_details();
-            }
+        if($host != 'xprienz.net'){
+            $tenent_details = $this->course_model->get_tenant_details();
+        }
         $this->session->set_userdata('public_tenant_details', $tenent_details);
 
         $data = $this->session->userdata('userDetails');    
@@ -38,7 +37,6 @@ class course_public extends CI_Controller {
         ////////////added by shubhranshu to show the landing page for all tenants////////////
 
         $host=$_SERVER['HTTP_HOST'];
-        if($host == 'biipmi.co'){
         if($host == 'xprienz.net'){
             $data['page_title'] = 'BIIPMI Training Management Portal';
             $data['tenants'] = $this->manage_tenant->list_all_tenants_for_landing_page();
@@ -3100,15 +3098,10 @@ class course_public extends CI_Controller {
     }
 
     public function class_member_check($course_id=0, $class_id=0) {
-<<<<<<< HEAD:www/newtms/application/controllers/course_public.php
-
-        $this->session->sess_destroy();
-=======
         
         unlink(FCPATH .'captcha/'.$this->session->userdata('public_captcha_file')); // added by shubhranshu to delete the captcha file 
         //$this->session->sess_destroy();
         $this->session->unset_userdata('userDetails');
->>>>>>> testing:www/newtms/application/controllers/Course_public.php
         $data['page_title'] = 'Sign In';
 
         $data['course_id'] = $course_id;
@@ -3119,17 +3112,6 @@ class course_public extends CI_Controller {
 
             //$data['main_content'] = 'course_public/payment_details';
 
-<<<<<<< HEAD:www/newtms/application/controllers/course_public.php
-            redirect(base_url() . 'course_public/enrol_friend');
-
-//            redirect(base_url().'course/class_enroll');
-        } else {
-
-            $data['main_content'] = 'course_public/class_member';
-
-            // redirect(base_url().'course/enrol_friend');
-        }
-=======
           //  redirect(base_url() . 'course_public/enrol_friend');
 
 //            redirect(base_url().'course_public/class_enroll');
@@ -3139,17 +3121,11 @@ class course_public extends CI_Controller {
 
             // redirect(base_url().'course_public/enrol_friend');
        // }
->>>>>>> testing:www/newtms/application/controllers/Course_public.php
 
 
 
         $this->load->view('layout_public', $data);
     }
-<<<<<<< HEAD:www/newtms/application/controllers/course_public.php
-
-    //public function register($class_id, $course_id, $data) {
-    public function register() {
-=======
     
     /// below function was added by shubhranshu for captcha validation
     public function generateCaptcha(){
@@ -3196,7 +3172,6 @@ class course_public extends CI_Controller {
         $this->session->unset_userdata('public_captcha_key');
         unlink(FCPATH .'captcha/'.$this->session->userdata('public_captcha_file')); // added by shubhranshu to delete the captcha file 
         $data['captcha'] = $this->generateCaptcha();
->>>>>>> testing:www/newtms/application/controllers/Course_public.php
         $data['page_title'] = 'Add Trainee';
         $data['main_content'] = 'addtrainee';
         $this->load->view('layout_public', $data);

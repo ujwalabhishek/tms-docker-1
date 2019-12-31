@@ -18,13 +18,10 @@
                         <div class="col-md-12 col_10_height_other">
                             <br><br><br>
                             <div class="makecenter">
-<<<<<<< HEAD
-=======
                                 
                                
                                 
                                 
->>>>>>> testing
                                 <?php
                                     $atr = 'id="forgot_password_form" name="forgot_password_form"';
                                     echo form_open("user/get_forgot_password", $atr);
@@ -71,10 +68,7 @@
                                                 $attr = array(
                                                     'name' => 'email',
                                                     'type' => 'email',
-<<<<<<< HEAD
-=======
                                                     'class'=> 'form-control',
->>>>>>> testing
                                                     'maxlength' => '150',
                                                     'id' => 'email'
                                                 );
@@ -83,8 +77,6 @@
                                                 <span id="email_err"></span>
                                             </td>
                                         </tr>
-<<<<<<< HEAD
-=======
                                         <tr>
                                             <td>
                                                 <div>Captcha:</div>
@@ -109,7 +101,6 @@
                                                 </div>
                                             </td>
                                         </tr>
->>>>>>> testing
 <!--                                        <tr>
                                             <td class="td_heading">Date of Birth:<span class="required">*</span></td>
                                             <td>        
@@ -129,11 +120,7 @@
                                     <span class="required required_i">* Required Fields</span>
                                     <div class="popup_cance89">
                                         <button class="btn btn-primary" type="button" onclick="validate_form()" >Submit</button>&nbsp;&nbsp;
-<<<<<<< HEAD
-                                        <a href="<?php echo site_url()."user/login"; ?>"><button class="btn btn-primary" type="button" >Cancel</button></a>
-=======
                                         <a href="<?php echo base_url(); ?>"><button class="btn btn-primary" type="button" >Cancel</button></a>
->>>>>>> testing
                                     </div>
                                     <?php echo form_close(); ?>
                             </div>
