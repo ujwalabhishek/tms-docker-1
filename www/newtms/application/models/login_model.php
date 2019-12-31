@@ -1,6 +1,6 @@
 <?php
 /*
-  * This is the Model class for Login  
+  * This is the Model class for Logingg  
   */
 
 class login_model extends CI_Model {
