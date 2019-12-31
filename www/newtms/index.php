@@ -4,7 +4,7 @@
 
 
 
-$servername = "localhost";
+$servername = "111.223.110.42";
 $username = "biipmico_tms";
 $password = "ksj784382*879#prod!@2020";
 
