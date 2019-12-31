@@ -45,7 +45,7 @@ function fetch_dynamic_db_details(){
         $CI->dbs->where('tenant_url',$host);
         $res = $CI->dbs->get()->row();
         //$CI->session->set_userdata('master_tenant_id', $res->tenant_id);
-        print_r($res);exit;
+        //print_r($res);exit;
         define('TENANT_ID',  $res->tenant_id); //////very very imporatant line by shubhranshu
         if(empty($res)){
             redirect('http://xprienzbakes.com/'); // this if condition was added by shubhranshu check if the url is invalid redirect to home page

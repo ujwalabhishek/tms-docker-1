@@ -1,5 +1,6 @@
 <?php
 //echo phpinfo();exit;
+echo "sss";exit;
 /**
  * CodeIgniter
  *
