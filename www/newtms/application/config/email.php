@@ -3,7 +3,7 @@
 /*
 | -------------------------------------------------------------------------
 | Email
-| --------------------------------------------------------------------------
+| -------------------------------------------------------------------------
 | This file lets you define parameters for sending emails.
 | Please see the user guide for info:
 |
@@ -17,10 +17,10 @@ $config['protocol'] = 'smtp';
 //$config['smtp_pass'] = 'noreplySG@2019';
 
 
-$config['smtp_host'] = 'mail.biipmi.co';
+$config['smtp_host'] = 'ssl://smtp.gmail.com';
 $config['smtp_port'] = '465';
-$config['smtp_user'] = 'support@biipmi.co';
-$config['smtp_pass'] = 'BiipmiSG@2020';
+$config['smtp_user'] = 'creationstark208@gmail.com';
+$config['smtp_pass'] = 'jaisrihanuman';
 
 $config['mailtype'] = 'html';
 $config['charset'] = 'utf-8';
