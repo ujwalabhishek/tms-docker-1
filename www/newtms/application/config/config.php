@@ -522,4 +522,4 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
-$config['wsq_courses'] = array('95','115','67','66','65','98','100','97','101','102','103');// wsq courses added by shubhranshu
+$config['wsq_courses'] = array('95', '115', '67', '66', '65', '98', '100', '97', '101', '102', '103', '127','129', '128', '132','133','134', '135', '136', '137', '130', '131','158','159');// wsq courses added by shubhranshu
