@@ -5,7 +5,7 @@ function switch_db_dynamic($name_db)
     $config_app['dsn'] = '';
     $config_app['hostname'] = '172.19.0.2';
     $config_app['username'] = 'biipmico_tms';
-    $config_app['password'] = 'ksj784382*879#prod!@2020';
+    $config_app['password'] = base64_decode('a3NqNzg0MzgyKjg3OSNwcm9kIUAyMDIw');
     $config_app['database'] = $name_db;
     $config_app['dbdriver'] = 'mysqli';
     $config_app['dbprefix'] = '';
@@ -31,7 +31,7 @@ function fetch_dynamic_db_details(){
         $object = new stdClass();
         $object->tenant_db_name = 'biipmico_tms_masterdata';
         $object->tenant_db_user = 'biipmico_tms';
-        $object->tenant_db_password = 'ksj784382*879#prod!@2020';
+        $object->tenant_db_password = base64_decode('a3NqNzg0MzgyKjg3OSNwcm9kIUAyMDIw');
         
         return $object;
     }
