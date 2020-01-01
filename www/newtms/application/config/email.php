@@ -18,7 +18,7 @@ $config['protocol'] = 'smtp';
 
 
 $config['smtp_host'] = 'mail.bid4jeet.in';
-$config['smtp_port'] = '465';
+$config['smtp_port'] = '587';
 $config['smtp_user'] = 'care@bid4jeet.in';
 $config['smtp_pass'] = 'Dipu@9861057382';
 
