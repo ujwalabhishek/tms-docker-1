@@ -1,3 +1,8 @@
+<style>
+    .modal1_555{
+        overflow:scroll !important;
+    }
+</style>
 <div class="modal1_555" id="ex6">
     <?php  
         $atr = 'id="feedbackForm" name="validate_form"';
