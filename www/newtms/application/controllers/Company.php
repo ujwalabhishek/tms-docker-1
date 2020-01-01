@@ -935,7 +935,7 @@ class Company extends CI_Controller {
     public function sendnewmail(){
         $this->load->library('email');
 
-        $this->email->from('creationstark208@gmail.com');
+        $this->email->from('biipbytedns@gmail.com');
         $this->email->to('dipus@mailinator.com');
         //$this->email->cc('another@another-example.com');
         //$this->email->bcc('them@their-example.com');
