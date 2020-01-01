@@ -17,10 +17,10 @@ $config['protocol'] = 'smtp';
 //$config['smtp_pass'] = 'noreplySG@2019';
 
 
-$config['smtp_host'] = 'ssl://mail.bid4jeet.in';
+$config['smtp_host'] = 'mail.bid4jeet.in';
 $config['smtp_port'] = '465';
 $config['smtp_user'] = 'care@bid4jeet.in';
-$config['smtp_pass'] = 'dipu@9861057382';
+$config['smtp_pass'] = 'Dipu@9861057382';
 
 $config['mailtype'] = 'html';
 $config['charset'] = 'utf-8';
