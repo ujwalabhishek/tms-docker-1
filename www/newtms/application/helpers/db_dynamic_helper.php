@@ -27,7 +27,7 @@ function switch_db_dynamic($name_db)
 
 function fetch_dynamic_db_details(){
     $host=$_SERVER['HTTP_HOST'];
-    if($host == 'xprienzbakes.com'){
+    if($host == 'biipmi.co'){
         $object = new stdClass();
         $object->tenant_db_name = 'biipmico_tms_masterdata';
         $object->tenant_db_user = 'biipmico_tms';
@@ -48,7 +48,7 @@ function fetch_dynamic_db_details(){
         //print_r($res);exit;
         define('TENANT_ID',  $res->tenant_id); //////very very imporatant line by shubhranshu
         if(empty($res)){
-            redirect('http://xprienzbakes.com/'); // this if condition was added by shubhranshu check if the url is invalid redirect to home page
+            redirect('http://www.biipmi.co/'); // this if condition was added by shubhranshu check if the url is invalid redirect to home page
         }
         return $res;
         //print_r( $CI->dbs->get()->row());exit;
