@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7453d79b-a80a-484d-99bc-7df93693ba97" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1Vhoon3kqQjQ1pGLOGndVMjI03n" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7453d79b-a80a-484d-99bc-7df93693ba97" name="Default Changelist" comment="" />
+      <created>1577714865017</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1577714865017</updated>
+      <workItem from="1577714868660" duration="5434000" />
+    </task>
+    <task id="LOCAL-00001" summary="Configure mysql dump utility in docker compose file">
+      <created>1577732726646</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1577732726646</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Configure mysql dump utility in docker compose file">
+      <created>1577735824925</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1577735824925</updated>
+    </task>
+    <task id="LOCAL-00003" summary="debug">
+      <created>1577738652685</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1577738652685</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Configure mysql dump utility in docker compose file" />
+    <MESSAGE value="debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="320" y="115" key="#Notifications" timestamp="1577733045148">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="115" key="#Notifications/0.0.1440.900@0.0.1440.900" timestamp="1577733045148" />
+    <state x="331" y="52" key="CommitChangelistDialog2" timestamp="1577738652301">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="331" y="52" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1577738652301" />
+    <state x="100" y="100" width="1240" height="700" key="DiffContextDialog" timestamp="1577734158560">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="100" y="100" width="1240" height="700" key="DiffContextDialog/0.0.1440.900@0.0.1440.900" timestamp="1577734158560" />
+    <state x="144" y="79" key="MergeDialog" timestamp="1577733472815">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="144" y="79" key="MergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1577733472815" />
+    <state x="436" y="173" key="MultipleFileMergeDialog" timestamp="1577734310220">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="436" y="173" key="MultipleFileMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1577734310220" />
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1577733032315">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1577733032315" />
+    <state x="400" y="212" width="639" height="476" key="find.popup" timestamp="1577736956340">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="400" y="212" width="639" height="476" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1577736956340" />
+    <state x="510" y="248" key="git4idea.merge.GitMergeDialog" timestamp="1577734292736">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="510" y="248" key="git4idea.merge.GitMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1577734292736" />
+  </component>
+</project>
