@@ -17,7 +17,7 @@ $config['protocol'] = 'smtp';
 //$config['smtp_pass'] = 'noreplySG@2019';
 
 
-$config['smtp_host'] = 'webmail.biipmi.co';
+$config['smtp_host'] = 'mail.biipmi.co';
 $config['smtp_port'] = '465';
 $config['smtp_user'] = 'support@biipmi.co';
 $config['smtp_pass'] = 'BiipmiSG@2020';
