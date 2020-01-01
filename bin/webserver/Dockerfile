@@ -52,3 +52,7 @@ RUN a2enmod rewrite headers
 
 #enable mysqldump
 RUN apt install mysql-client-core-5.7
+
+#enable sendmail
+RUN apt install sendmail 
+RUN yes 'y' | sendmailconfig
