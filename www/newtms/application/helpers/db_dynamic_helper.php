@@ -31,7 +31,7 @@ function fetch_dynamic_db_details(){
         $object = new stdClass();
         $object->tenant_db_name = 'biipmico_tms_masterdata';
         $object->tenant_db_user = 'biipmico_tms';
-        $object->tenant_db_password = base64_decode('a3NqNzg0MzgyKjg3OSNwcm9kIUAyMDIw');
+        $object->tenant_db_password = 'a3NqNzg0MzgyKjg3OSNwcm9kIUAyMDIw';
         
         return $object;
     }
