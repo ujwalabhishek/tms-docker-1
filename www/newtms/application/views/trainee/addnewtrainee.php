@@ -1264,6 +1264,7 @@ if (!empty($tax_error)) {
                 $("#SGP_OTHERS").hide();
             } else if (this.value == "SNG_3") {
                 $("#SGP_OTHERS").show();
+                $('#SGP_OTHERS').css('visibility','visible');
                 $('#SGP_OTHERS option:first-child').attr("selected", "selected");
                 $('#SGP_OTHERS_label').text('');
                 $('#SGP_OTHERS_label').text('OTHERS :');
