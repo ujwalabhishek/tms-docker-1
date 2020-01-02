@@ -47,9 +47,9 @@ function fetch_dynamic_db_details(){
         //$CI->session->set_userdata('master_tenant_id', $res->tenant_id);
         //print_r($res);exit;
         define('TENANT_ID',  $res->tenant_id); //////very very imporatant line by shubhranshu
-        if(empty($res)){
-            redirect('https://www.biipmi.co/'); // this if condition was added by shubhranshu check if the url is invalid redirect to home page
-        }
+//        if(empty($res)){
+//            redirect('https://www.biipmi.co/'); // this if condition was added by shubhranshu check if the url is invalid redirect to home page
+//        }
         return $res;
         //print_r( $CI->dbs->get()->row());exit;
 }
