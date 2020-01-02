@@ -1264,6 +1264,7 @@ if (!empty($tax_error)) {
                 $("#SGP_OTHERS").hide();
             } else if (this.value == "SNG_3") {
                 $("#SGP_OTHERS").show();
+                $('#SGP_OTHERS').css('visibility','visible');
                 $('#SGP_OTHERS option:first-child').attr("selected", "selected");
                 $('#SGP_OTHERS_label').text('');
                 $('#SGP_OTHERS_label').text('OTHERS :');
@@ -1277,7 +1278,8 @@ if (!empty($tax_error)) {
                 $('#SGP_ID_label').text('');
                 $('#SGP_ID_label').text('OTHERS :');
                 $('#NRIC_OTHER option[value=NOTAXCODE]').attr('selected','selected');////added by shubhranshu for client requirement
-                $("#SGP_ID").hide();
+                $('#SGP_OTHERS').css('visibility','hidden');
+            $("#SGP_ID").hide();
             }else {
                 $('#SGP_OTHERS_label').text('');
                 $('#SGP_OTHERS_label').text('NRIC :');
