@@ -48,7 +48,7 @@ function fetch_dynamic_db_details(){
         //print_r($res);exit;
         define('TENANT_ID',  $res->tenant_id); //////very very imporatant line by shubhranshu
         if(empty($res)){
-            redirect('biipmi.co'); // this if condition was added by shubhranshu check if the url is invalid redirect to home page
+            redirect('https://biipmi.co/'); // this if condition was added by shubhranshu check if the url is invalid redirect to home page
         }
         return $res;
         //print_r( $CI->dbs->get()->row());exit;
