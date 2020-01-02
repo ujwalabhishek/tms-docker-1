@@ -2596,6 +2596,7 @@ class Class_Trainee_Model extends CI_Model {
         $this->db->group_by('enrol.pymnt_due_id');
 
         $result = $this->db->get()->result_object();
+        echo $this->db->last_query();exit;
 
         return $result;
     }
