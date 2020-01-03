@@ -3070,7 +3070,7 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
         $sheet->setCellValue('W' . $r, $score);
         $sheet->setCellValue('X' . $r, $trainer_text);
         $sheet->setCellValue('Y' . $r, $assessor_text);
-        $sheet->setCellValue('Z' . $r, 'No');
+        $sheet->setCellValue('Z' . $r, 'Yes');
         $r++;
     }
 
@@ -3758,7 +3758,7 @@ function generate_soa_report_csv($tabledata, $metadata) {
             date('dmY', strtotime($row->class_start_datetime)), $row->reference_num, $row->competency_code,
             $course_code, 'N',
             (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)),
-            $row->training_score, $trainer_text, $assessor_text, 'No'
+            $row->training_score, $trainer_text, $assessor_text, 'Yes'
         );
     }
    header('Content-Type: text/csv; charset=utf-8');
