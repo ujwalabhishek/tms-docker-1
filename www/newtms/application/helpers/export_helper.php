@@ -2319,8 +2319,8 @@ function export_classtrainee_page($result, $tenant_id) {
 /**
  * for class trainee full
  */
-function export_classtrainee_full($result, $tenant_id) {
-    $userid=$this->session->userdata('userDetails')->user_id;
+function export_classtrainee_full($result, $tenant_id,$userid) {
+    
     $CI = & get_instance();
     $CI->load->model('course_model', 'course');
     $CI->load->model('class_model', 'class');

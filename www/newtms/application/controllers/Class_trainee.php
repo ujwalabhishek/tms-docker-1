@@ -2788,7 +2788,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      */
     public function export_classtrainee_full() {
          $tenant_id = $this->tenant_id;
-      
+        $userid=$this->session->userdata('userDetails')->user_id;
         $course = ($this->input->get('course')) ? $this->input->get('course') : '';
         $class = ($this->input->get('class')) ? $this->input->get('class') : '';
         $class_status = ($this->input->get('class_status')) ? $this->input->get('class_status') : '';
@@ -2800,7 +2800,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $company_id = $this->input->get('company_id');
         $result = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, '', '1', $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
         $this->load->helper('export_helper');
-        export_classtrainee_full($result, $tenant_id);
+        export_classtrainee_full($result, $tenant_id,$userid);
     }
 
     /**
