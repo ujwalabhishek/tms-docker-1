@@ -2788,7 +2788,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      */
     public function export_classtrainee_full() {
          $tenant_id = $this->tenant_id;
-        $userid=$this->session->userdata('userDetails')->user_id;echo $userid;exit;
+        $userid=$this->session->userdata('userDetails')->user_id;
         $course = ($this->input->get('course')) ? $this->input->get('course') : '';
         $class = ($this->input->get('class')) ? $this->input->get('class') : '';
         $class_status = ($this->input->get('class_status')) ? $this->input->get('class_status') : '';

@@ -2438,7 +2438,7 @@ function export_classtrainee_full($result, $tenant_id,$userid) {
         $result_text = !empty($row['feedback_answer']) ? ' (Result: ' . $row['feedback_answer'].')' : '';
         $sheet->setCellValue('P' . $rn, $CI->class->get_class_status($row['class_id'], '').$result_text);
         ////////COT TEAM REQUIREMENT CHANGED BY SHUBHRANSHU ON 06-01-2020 ////
-        if($tenant_id =='T02' && $userid == '94679'){
+        if($tenant_id =='T02' && $userid == '140490'){
            $sheet->setCellValue('Q' . $rn, $row['tax_code']); 
         }else{
             $sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
