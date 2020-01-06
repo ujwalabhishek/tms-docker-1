@@ -2444,7 +2444,7 @@ function export_classtrainee_full($result, $tenant_id,$userid) {
             $sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
         }
         ///////////////////////////////////////////////////////////
-        $sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
+        //$sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
         $sheet->setCellValue('R' . $rn, $row['first_name'] . ' ' . $row['last_name']);
         $sheet->setCellValue('S' . $rn, $enr_mod);
         $sheet->setCellValue('T' . $rn, empty($row['enrolled_on']) ? '' : date('d/m/Y', strtotime($row['enrolled_on'])));
