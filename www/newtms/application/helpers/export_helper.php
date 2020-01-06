@@ -2320,7 +2320,7 @@ function export_classtrainee_page($result, $tenant_id) {
  * for class trainee full
  */
 function export_classtrainee_full($result, $tenant_id) {
-    //echo print_r($this->session->userdata('userDetails')); exit;
+    echo print_r($this->session->userdata('userDetails')); exit;
     $CI = & get_instance();
     $CI->load->model('course_model', 'course');
     $CI->load->model('class_model', 'class');
@@ -2438,9 +2438,9 @@ function export_classtrainee_full($result, $tenant_id) {
         $result_text = !empty($row['feedback_answer']) ? ' (Result: ' . $row['feedback_answer'].')' : '';
         $sheet->setCellValue('P' . $rn, $CI->class->get_class_status($row['class_id'], '').$result_text);
         ////////COT TEAM REQUIREMENT CHANGED ON 06-01-2020 ////
-        if($tenant_id =='T02' && ){
-            
-        }
+//        if($tenant_id =='T02' && ){
+//            
+//        }
         $sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
         $sheet->setCellValue('R' . $rn, $row['first_name'] . ' ' . $row['last_name']);
         $sheet->setCellValue('S' . $rn, $enr_mod);
