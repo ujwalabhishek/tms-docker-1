@@ -2320,7 +2320,7 @@ function export_classtrainee_page($result, $tenant_id) {
  * for class trainee full
  */
 function export_classtrainee_full($result, $tenant_id) {
-    //echo print_r($this->session->userdata('userDetails')); exit;
+    $userid=$this->session->userdata('userDetails')->user_id;
     $CI = & get_instance();
     $CI->load->model('course_model', 'course');
     $CI->load->model('class_model', 'class');
@@ -2437,10 +2437,13 @@ function export_classtrainee_full($result, $tenant_id) {
         $sheet->setCellValue('O' . $rn, !empty($row['certificate_coll_on']) ? date('d/m/Y',  strtotime($row['certificate_coll_on'])):'');
         $result_text = !empty($row['feedback_answer']) ? ' (Result: ' . $row['feedback_answer'].')' : '';
         $sheet->setCellValue('P' . $rn, $CI->class->get_class_status($row['class_id'], '').$result_text);
-        ////////COT TEAM REQUIREMENT CHANGED ON 06-01-2020 ////
-//        if($tenant_id =='T02' && ){
-//            
-//        }
+        ////////COT TEAM REQUIREMENT CHANGED BY SHUBHRANSHU ON 06-01-2020 ////
+        if($tenant_id =='T02' && $userid == '94679'){
+           $sheet->setCellValue('Q' . $rn, $row['tax_code']); 
+        }else{
+            $sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
+        }
+        ///////////////////////////////////////////////////////////
         $sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
         $sheet->setCellValue('R' . $rn, $row['first_name'] . ' ' . $row['last_name']);
         $sheet->setCellValue('S' . $rn, $enr_mod);
