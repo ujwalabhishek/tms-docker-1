@@ -875,7 +875,6 @@ if (!empty($tenant_details->tenant_contact_num)) {
                         <strong style="font-size:13px">Remark *: </strong>
                         <ol style="font-size:13px;color:#4f4b4b">
                             <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
-//                            <li>Your NRIC, work permit or will be photocopied on the class date</li>
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
                             <li>'.$li2.'</li>
