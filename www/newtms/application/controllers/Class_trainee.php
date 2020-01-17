@@ -779,8 +779,11 @@ if (!empty($tenant_details->tenant_contact_num)) {
             
             /* skm end */
             
-            $data = $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: 
-                    ' . $trainee . ' for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
+            $data = '<br><br>
+            <table style="font-size:15px">
+                <tr>
+                    <td>'.$tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: 
+                    ' . $trainee . ' for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'<br><br>
             <strong>Class start date:</strong>
             ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
             <br>
@@ -795,7 +798,9 @@ if (!empty($tenant_details->tenant_contact_num)) {
             <strong>Contact Details: </strong>
             ' . $contact_details. '<br><br>
             <strong>Remark: </strong>
-            ' . $message3;
+            ' . $message3.'</td>
+                </tr>
+            </table>';
         }
         $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
         if ($booking_details) {
