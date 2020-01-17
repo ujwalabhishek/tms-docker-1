@@ -762,12 +762,19 @@ if (!empty($tenant_details->tenant_contact_num)) {
                      $li = "Report at center at 8:30 AM to register for class";
                 }
             /* end */
+                if($tenant_details->tenant_id == 'T02')
+                {
+                    $li2 = "In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.";
+                } else {
+                    $li2 = '';
+                } 
               $message3 = '
              <ol>
                             <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                             <li>Your NRIC, work permit or will be photocopied on the class date</li>
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
+                            <li>'.$li2.'</li>
                         </ol>';
             
             /* skm end */
@@ -847,12 +854,18 @@ if (!empty($tenant_details->tenant_contact_num)) {
         }
         //   echo removed by shubhranshu to [revent TCPDF header sent issue.
         /* end */
+        if($tenant_details->tenant_id == 'T02')
+        {
+            $li2 = "In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.";
+        } else {
+            $li2 = '';
+        } 
         
         $data = '<br><br>
-            <table>
+            <table style="font-size:15px">
                 <tr>
                     <td>Your seat has been booked. Please pay the class fees on or before the class start date.
-                        Booking for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'.<br><br>
+                        Booking for <strong>' . $trainee . '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
                         <strong>Class start date:</strong>
                         ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
                         <br><br>
@@ -866,12 +879,12 @@ if (!empty($tenant_details->tenant_contact_num)) {
                         <strong>Contact Details: </strong>
                         ' .$contact_details. '
                             <br><br>
-                        <strong>Remark *: </strong>
-                        <ol>
+                        <strong style="font-size:13px">Remark *: </strong>
+                        <ol style="font-size:13px;color:#4f4b4b">
                             <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
-                            <li>Your NRIC, work permit or will be photocopied on the class date</li>
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
+                            <li>'.$li2.'</li>
                         </ol>
                             
                     </td>
