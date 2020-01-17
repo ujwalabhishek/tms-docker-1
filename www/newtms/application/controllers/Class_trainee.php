@@ -761,34 +761,47 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 }else{
                      $li = "Report at center at 8:30 AM to register for class";
                 }
+                
+                if($tenant_details->tenant_id == 'T02')
+                {
+                    $li2 = "In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.";
+                } else {
+                    $li2 = '';
+                } 
             /* end */
               $message3 = '
-             <ol>
+             <ol style="font-size:13px;color:#4f4b4b">
                             <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
-                            <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                           
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
+                            <li>'.$li2.'</li>
                         </ol>';
             
             /* skm end */
             
-            $data = $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: 
-                    ' . $trainee . ' for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
-            <strong>Class start date:</strong>
-            ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
-            <br>
-            <br>
-             <strong>Class end date:</strong>
-            ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
-            <br>
-            <br>
-           
-            <strong>Location: </strong>
-            ' . $ClassLoc . '<br><br>
-            <strong>Contact Details: </strong>
-            ' . $contact_details. '<br><br>
-            <strong>Remark: </strong>
-            ' . $message3;
+            $data = '<br><br>
+            <table style="font-size:15px">
+                <tr>
+                    <td>'.$tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: 
+                    ' . $trainee . ' for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'<br><br>
+                    <strong>Class start date:</strong>
+                    ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
+                    <br>
+                    <br>
+                     <strong>Class end date:</strong>
+                    ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
+                    <br>
+                    <br>
+
+                    <strong>Location: </strong>
+                    ' . $ClassLoc . '<br><br>
+                    <strong>Contact Details: </strong>
+                    ' . $contact_details. '<br><br>
+                    <strong>Remark: </strong>
+                    ' . $message3.'</td>
+                </tr>
+            </table>';
         }
         $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
         if ($booking_details) {
