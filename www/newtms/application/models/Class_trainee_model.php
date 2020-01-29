@@ -65,7 +65,6 @@ class Class_Trainee_Model extends CI_Model {
                                         'dec_trainee_email' => $email,
                                         'dec_trainee_mobile' => $mobile,
                                         'dec_condition' => $condition,
-                                        'class_id' => $class_id,
                                         'dec_lesson_timing' => $lesson_timing,
                                         'dec_overseas' => $overseas,
                                         'dec_enrol_by' => $this->user->tenant_id
