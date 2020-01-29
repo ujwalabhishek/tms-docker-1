@@ -290,7 +290,7 @@ class Class_Trainee extends CI_Controller {
         $condition=$this->input->post('res');
         $lesson_timing=$this->input->post('lesson_timing');
         $overseas=$this->input->post('overseas');
-       $this->classtraineemodel->classtraineemodel($tenant_id,$tax_code,$name,$type,$email,$mobile,$condition,$lesson_timing,$overseas);
+       $this->classtraineemodel->save_declaration_data($tenant_id,$tax_code,$name,$type,$email,$mobile,$condition,$lesson_timing,$overseas);
 
     }
     
