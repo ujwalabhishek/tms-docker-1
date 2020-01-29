@@ -778,7 +778,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                 </div>
                 <!--Grid row-->
                  <div class="text-center">
-                    <button type='button' class="btn btn-primary" id='declaration'>Submit & Continue</button></div>
+                    <a class="btn btn-primary" id='declaration'>Submit & Continue</a></div>
 
             </form>
 
