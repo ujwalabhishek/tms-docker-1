@@ -697,7 +697,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
     <!--Section heading-->
     <h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>
     <!--Section description-->
-    <p class="text-center w-responsive mx-auto mb-5">You must fill this form to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of and in accordance with Xprienz' privacy policy.</p>
+    <p class="text-center w-responsive mx-auto mb-5">You must fill this form to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of the company policy.</p>
 
     <div class="row">
 
@@ -762,8 +762,16 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
                         <div class="md-form">
                             <label for="message">Does your child have any relatives who returned from China on 15 Jan or later and is staying together? *</label>
-                            <input type="radio" name="message" class="form-control md-textarea">Yes
-                            <input type="radio" name="message" class="form-control md-textarea">No
+                            <input type="radio" class="form-control md-textarea">Yes
+                            <input type="radio" class="form-control md-textarea">No   
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+
+                        <div class="md-form">
+                            <label for="message">Have you travelled overseas in the past 14 days? *</label>
+                             <input type="text" id="subject" name="subject" placeholder='Please State' class="form-control">
                         </div>
 
                     </div>
