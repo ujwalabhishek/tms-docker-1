@@ -777,7 +777,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     </div>
                 </div>
                 <!--Grid row-->
-                 <div class="popup_cancel popup_cancel001 text-center">
+                 <div class="text-center">
                     <a href="javascript:;" id="excess_ok"><button class="btn btn-primary" type="button">Submit & Continue</button></a></div>
 
             </form>
