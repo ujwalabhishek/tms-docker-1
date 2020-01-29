@@ -688,11 +688,18 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
      </div>
 </div>
 <!----------------modal by ssp start----------------------->
-<div class="modal0000" id="ex1011">
+<div class="modal0000" id="ex1011" style="display:block;margin:auto;margin-top:20px;">
 <p>
     <h2 class="panel_heading_style">Declaration</h2>
     You must fill the form before continue for the enrollment <span class="excess_amount"></span>.<br>
-  
+    <div>I consent for Xprienz to collect and use my personal data for the purposes of and in accordance with Xprienz' privacy policy.</div>
+    <form>
+        <div>Trainee Name: <input type="text" name='fname'></div>
+        <div>Mobile Number: <input type="text" name='mobile'></div>
+        <div>Trainee Email ID: <input type="email" name='email'></div>
+        <div>Lesson Timing: <input type="text" name='timing'></div>
+        <div>Does your child have any relatives who returned from China on 15 Jan or later and is staying together? * <input type='radio'> Yes<input type='radio'> No</div>
+    </form>
     <div class="popup_cancel popup_cancel001" style="margin-left: 10px;">
         <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">No</button></a></div>
     <div class="popup_cancel popup_cancel001">
