@@ -688,7 +688,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
      </div>
 </div>
 <!----------------modal by ssp start----------------------->
-<div class="modal" id="ex1011" style="display:block;margin:auto;margin-top:20px;">
+<div class="modal" id="ex1011" style="display:block;margin:auto;margin-top:20px;margin-bottom:20px;">
 <p>
   <h2 class="panel_heading_style">Declaration</h2>
     <!--Section: Contact v.2-->
