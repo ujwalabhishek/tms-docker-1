@@ -1005,7 +1005,7 @@ alert('Alert this pages');
             type: "post",
             dataType: "json",
             data: {
-                tax_code: <?php echo $trainee_name->tax_code;?>,
+                tax_code: '<?php echo $trainee_name->tax_code;?>',
                 type:'INDIVIDUAL',
                 name: $('#dec_name').val(),  
                 email: $('#dec_email').val(),
