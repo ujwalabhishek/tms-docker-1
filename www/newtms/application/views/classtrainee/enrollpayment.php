@@ -695,9 +695,9 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 <section class="mb-4">
 
     <!--Section heading-->
-    <h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>
+    <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
     <!--Section description-->
-    <p class="text-center w-responsive mx-auto mb-5">You must fill this form to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of the company policy.</p>
+    <p class="text-center w-responsive mx-auto mb-5 alert alert-danger">You must fill this form to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of the company policy.</p>
 
     <div class="row">
 
@@ -711,7 +711,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <!--Grid column-->
                     <div class="col-md-12">
                         <div class="md-form mb-0">
-                            <label for="name" class="">Your Name</label>
+                            <label for="name" class="">Your Name<span style='color:red'>*</span></label>
                             <input type="text" id="name" name="name" class="form-control">
                             
                         </div>
@@ -723,7 +723,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <!--Grid column-->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                             <label for="email" class="">Your Email</label>
+                             <label for="email" class="">Your Email<span style='color:red'>*</span></label>
                             <input type="text" id="email" name="email" class="form-control">
                            
                         </div>
@@ -732,7 +732,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <!--Grid column-->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                             <label for="email" class="">Your Mobile</label>
+                             <label for="email" class="">Your Mobile<span style='color:red'>*</span></label>
                             <input type="text" id="email" name="email" class="form-control">
                            
                         </div>
@@ -746,7 +746,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                 <div class="row">
                     <div class="col-md-12">
                         <div class="md-form mb-0">
-                            <label for="subject" class="">Lesson Timing</label>
+                            <label for="subject" class="">Lesson Timing<span style='color:red'>*</span></label>
                             <input type="text" id="subject" name="subject" class="form-control">
                             
                         </div>
@@ -761,16 +761,16 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <div class="col-md-12">
 
                         <div class="md-form">
-                            <label for="message">Does your child have any relatives who returned from China on 15 Jan or later and is staying together? *</label>
-                            <input type="radio" class="" name='res'>Yes
-                            <input type="radio" class="" name='res'>No   
+                            <label for="message">Does your child have any relatives who returned from China on 15 Jan or later and is staying together? <span style='color:red'>*</span></label>
+                            <div><input type="radio" class="" name='res'>Yes</div>
+                            <div><input type="radio" class="" name='res'>No  </div> 
                         </div>
 
                     </div>
                     <div class="col-md-12">
 
                         <div class="md-form">
-                            <label for="message">Have you travelled overseas in the past 14 days? *</label>
+                            <label for="message">Have you travelled overseas in the past 14 days? <span style='color:red'>*</span></label>
                              <input type="text" id="subject" name="subject" placeholder='Please State' class="form-control">
                         </div>
 
