@@ -280,6 +280,10 @@ class Class_Trainee extends CI_Controller {
         $this->load->view('layout', $data);
     }
     
+    public function save_declaration_trainee_data(){
+        
+    }
+    
       /* This function loads the trainee list of public portal skm start */
     public function online_trainee()
     {
