@@ -777,12 +777,12 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     </div>
                 </div>
                 <!--Grid row-->
+                 <div class="popup_cancel popup_cancel001">
+                    <a href="javascript:;" id="excess_ok"><button class="btn btn-primary" type="button">Yes</button></a></div>
 
             </form>
 
-            <div class="text-center text-md-left">
-                <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">Send</a>
-            </div>
+           
             <div class="status"></div>
         </div>
         <!--Grid column-->
@@ -790,10 +790,6 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 </section>
 <!--Section: Contact v.2-->
 
-    <div class="popup_cancel popup_cancel001" style="margin-left: 10px;">
-        <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">No</button></a></div>
-    <div class="popup_cancel popup_cancel001">
-       <a href="javascript:;" id="excess_ok"><button class="btn btn-primary" type="button">Yes</button></a></div>
 </p>
 </div>
 <!----------------modal by ssp end----------------------->
