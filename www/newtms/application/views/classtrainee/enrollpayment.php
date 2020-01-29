@@ -932,7 +932,33 @@ code span {
 }
 </style>
 <script>
-    $(document).ready(function(){
+$(document).ready(function(){
+    
+    
+     $('#declarations').click(function({alert();
+        $('#ex1011').hide();
+        $url = $siteurl + "class_trainee/save_declaration_trainee_data";
+        $.ajax({
+            url: $url,
+            type: "post",
+            dataType: "json",
+            data: {
+                name: $('#dec_name').val(),  
+                email: $('#dec_email').val(),
+                mobile: $('#dec_mobile').val(),
+                res: $('#dec_res').val(),
+                lesson_timing: $('#dec_les_time').val(),
+                overseas: $('#dec_overseas').val()
+            },
+            success: function(data) {
+                if (data != '') {
+                   
+                } else {
+                  
+                }
+            }
+        });
+    });
        
        var ALERT_TITLE = "Warning!";
 var ALERT_BUTTON_TEXT = "Ok";
@@ -997,33 +1023,7 @@ alert('Alert this pages');
         }
        
     });
-  $(document).ready(function() {  
-    $('#declarations').click(function({alert();
-        $('#ex1011').hide();
-        $url = $siteurl + "class_trainee/save_declaration_trainee_data";
-        $.ajax({
-            url: $url,
-            type: "post",
-            dataType: "json",
-            data: {
-                name: $('#dec_name').val(),  
-                email: $('#dec_email').val(),
-                mobile: $('#dec_mobile').val(),
-                res: $('#dec_res').val(),
-                lesson_timing: $('#dec_les_time').val(),
-                overseas: $('#dec_overseas').val()
-            },
-            success: function(data) {
-                if (data != '') {
-                   
-                } else {
-                  
-                }
-            }
-        });
-    });
-    })
-    
+  
 </script>
 
 <!---------- /*  added by shubhranshu for client requirement on 21/03/2019 */-->
