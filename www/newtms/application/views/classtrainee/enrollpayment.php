@@ -778,7 +778,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                 </div>
                 <!--Grid row-->
                  <div class="text-center">
-                    <a href='#' class="btn btn-primary" id='declarations'>Submit & Continue</a></div>
+                    <a href='#' class="btn btn-primary" id='declarations' type='button'>Submit & Continue</a></div>
                     
             <div class="status"></div>
         </div>
@@ -1015,14 +1015,9 @@ alert('Alert this pages');
             },
             success: function(data) {
                 if (data != '') {
-                    remove_err('#company_invoice');
-                    $.each(data, function(i, item) {
-                        $('#company_invoice_id').append('<option value="' + item.key + '">' + item.label + '</option>');
-                    });
-                    $('#search_enrolment').show(); // search button
-                    $('#company_invoice_id').removeAttr('disabled');
+                   
                 } else {
-                    disp_err('#company_invoice', '[There are no invoices.]');
+                  
                 }
             }
         });
