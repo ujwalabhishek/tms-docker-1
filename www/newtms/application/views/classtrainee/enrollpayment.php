@@ -742,7 +742,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                 </div>
                 <!--Grid row-->
 
-                <!--Grid row-->
+                <!--Grid row-->1
                 <div class="row">
                     <div class="col-md-12">
                         <div class="md-form mb-0">
@@ -1005,6 +1005,8 @@ alert('Alert this pages');
             type: "post",
             dataType: "json",
             data: {
+                tax_code: <?php echo $trainee_name->tax_code;?>,
+                type:'INDIVIDUAL',
                 name: $('#dec_name').val(),  
                 email: $('#dec_email').val(),
                 mobile: $('#dec_mobile').val(),
