@@ -935,7 +935,7 @@ code span {
 $(document).ready(function(){
     
     
-     $('#declarations').click(function({alert();
+     $('#declarations').click(function(){alert();
         $('#ex1011').hide();
         $url = $siteurl + "class_trainee/save_declaration_trainee_data";
         $.ajax({
