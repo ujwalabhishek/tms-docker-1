@@ -687,7 +687,19 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
             <a href="#" class="book_ackn_print btn btn-primary">Print</a>
      </div>
 </div>
-
+<!----------------modal by ssp start----------------------->
+<div class="modal0000" id="ex1011">
+<p>
+    <h2 class="panel_heading_style">Declaration</h2>
+    You must fill the form before continue for the enrollment <span class="excess_amount"></span>.<br>
+  
+    <div class="popup_cancel popup_cancel001" style="margin-left: 10px;">
+        <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">No</button></a></div>
+    <div class="popup_cancel popup_cancel001">
+       <a href="javascript:;" id="excess_ok"><button class="btn btn-primary" type="button">Yes</button></a></div>
+</p>
+</div>
+<!----------------modal by ssp end----------------------->
 <?php
 function array_to_input($array, $prefix = '') {
     if ((bool) count(array_filter(array_keys($array), 'is_string'))) {
