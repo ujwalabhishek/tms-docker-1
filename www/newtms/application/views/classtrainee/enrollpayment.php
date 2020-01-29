@@ -762,8 +762,8 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
                         <div class="md-form">
                             <label for="message">Do you have any relatives who returned from China on 15th January or later and is staying together? <span style='color:red'>*</span></label>
-                            <div><input type="radio" value="1" class="" id='dec_res' style='height: 1.7em;width: 20px;'><b style='padding:2px'>Yes</b></div>
-                            <div><input type="radio" value="0" class="" id='dec_res' style='height: 1.7em;width: 20px;'><b style='padding:2px'>No</b> </div> 
+                            <div><input type="radio" value="1" class="" name='dec_res' id='dec_res' style='height: 1.7em;width: 20px;'><b style='padding:2px'>Yes</b></div>
+                            <div><input type="radio" value="0" class="" name='dec_res' id='dec_res1' style='height: 1.7em;width: 20px;'><b style='padding:2px'>No</b> </div> 
                         </div>
 
                     </div>
@@ -1008,7 +1008,7 @@ alert('Alert this pages');
                 name: $('#dec_name').val(),  
                 email: $('#dec_email').val(),
                 mobile: $('#dec_mobile').val(),
-                res: $('#dec_res').val(),
+                res: $('input[name="dec_res"]:checked').val(),
                 lesson_timing: $('#dec_les_time').val(),
                 overseas: $('#dec_overseas').val()
             },
