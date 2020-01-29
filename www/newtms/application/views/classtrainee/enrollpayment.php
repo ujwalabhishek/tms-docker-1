@@ -690,23 +690,14 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 <!----------------modal by ssp start----------------------->
 <div class="modal" id="ex1011" style="display:block;margin:auto;margin-top:20px;">
 <p>
-    <h2 class="panel_heading_style">Declaration</h2>
-    You must fill the form before continue for the enrollment <span class="excess_amount"></span>.<br>
-    <div>I consent for Xprienz to collect and use my personal data for the purposes of and in accordance with Xprienz' privacy policy.</div>
-    <form>
-        <div>Trainee Name: <input type="text" name='fname'></div>
-        <div>Mobile Number: <input type="text" name='mobile'></div>
-        <div>Trainee Email ID: <input type="email" name='email'></div>
-        <div>Lesson Timing: <input type="text" name='timing'></div>
-        <div>Does your child have any relatives who returned from China on 15 Jan or later and is staying together? * <input type='radio'> Yes<input type='radio'> No</div>
-    </form>
+  
     <!--Section: Contact v.2-->
 <section class="mb-4">
 
     <!--Section heading-->
     <h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>
     <!--Section description-->
-    <p class="text-center w-responsive mx-auto mb-5">You must fill the form before to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of and in accordance with Xprienz' privacy policy.</p>
+    <p class="text-center w-responsive mx-auto mb-5">You must fill this form to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of and in accordance with Xprienz' privacy policy.</p>
 
     <div class="row">
 
@@ -787,13 +778,10 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
             <div class="status"></div>
         </div>
         <!--Grid column-->
-
-       
-
     </div>
-
 </section>
 <!--Section: Contact v.2-->
+
     <div class="popup_cancel popup_cancel001" style="margin-left: 10px;">
         <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">No</button></a></div>
     <div class="popup_cancel popup_cancel001">
