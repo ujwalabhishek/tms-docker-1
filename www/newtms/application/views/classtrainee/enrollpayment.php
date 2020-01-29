@@ -703,7 +703,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
         <!--Grid column-->
         <div class="col-md-12 mb-md-0 mb-5">
-            <form id="contact-form" name="contact-form" method="POST">
+          
 
                 <!--Grid row-->
                 <div class="row">
@@ -761,7 +761,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <div class="col-md-12">
 
                         <div class="md-form">
-                            <label for="message">Does your child have any relatives who returned from China on 15 Jan or later and is staying together? <span style='color:red'>*</span></label>
+                            <label for="message">Do you have any relatives who return from china on 15th jan? <span style='color:red'>*</span></label>
                             <div><input type="radio" value="1" class="" name='dec_res' style='height: 1.7em;width: 20px;'><b style='padding:2px'>Yes</b></div>
                             <div><input type="radio" value="0" class="" name='dec_res' style='height: 1.7em;width: 20px;'><b style='padding:2px'>No</b> </div> 
                         </div>
@@ -779,10 +779,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                 <!--Grid row-->
                  <div class="text-center">
                     <a class="btn btn-primary" id='declaration'>Submit & Continue</a></div>
-
-            </form>
-
-           
+                    
             <div class="status"></div>
         </div>
         <!--Grid column-->
