@@ -70,7 +70,7 @@ class Class_Trainee_Model extends CI_Model {
                                         'dec_enrol_by' => $this->user->tenant_id
                                       );
         
-        echo print_r($data_array);exit;
+    
            
                 $this->db->insert('tms_declaration_data', $data_array);
     }
