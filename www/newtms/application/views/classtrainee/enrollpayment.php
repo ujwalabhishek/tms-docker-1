@@ -762,8 +762,8 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
                         <div class="md-form">
                             <label for="message">Does your child have any relatives who returned from China on 15 Jan or later and is staying together? *</label>
-                            <input type="radio" class="form-control">Yes
-                            <input type="radio" class="form-control">No   
+                            <input type="radio" class="" name='res'>Yes
+                            <input type="radio" class="" name='res'>No   
                         </div>
 
                     </div>
