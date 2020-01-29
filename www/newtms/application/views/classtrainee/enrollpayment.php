@@ -1000,8 +1000,8 @@ alert('Alert this pages');
         }
        
     });
-    
-    $('#declaration').click(function({
+  $(document).ready(function() {  
+    $('#declaration').click(function({alert();
         $('#ex1011').hide();
         $url = $siteurl + "class_trainee/save_declaration_trainee_data";
         $.ajax({
@@ -1030,6 +1030,7 @@ alert('Alert this pages');
             }
         });
     });
+    })
     
 </script>
 
