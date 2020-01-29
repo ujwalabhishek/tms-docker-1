@@ -712,7 +712,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <div class="col-md-12">
                         <div class="md-form mb-0">
                             <label for="name" class="">Your Name<span style='color:red'>*</span></label>
-                            <input type="text" id="name" name="name" class="form-control">
+                            <input type="text" id="name" name="dec_name" class="form-control">
                             
                         </div>
                     </div>
@@ -724,7 +724,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <div class="col-md-6">
                         <div class="md-form mb-0">
                              <label for="email" class="">Your Email<span style='color:red'>*</span></label>
-                            <input type="text" id="email" name="email" class="form-control">
+                            <input type="text" id="email" name="dec_email" class="form-control">
                            
                         </div>
                     </div>
@@ -733,7 +733,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <div class="col-md-6">
                         <div class="md-form mb-0">
                              <label for="email" class="">Your Mobile<span style='color:red'>*</span></label>
-                            <input type="text" id="email" name="email" class="form-control">
+                            <input type="text" id="email" name="dec_mobile" class="form-control">
                            
                         </div>
                     </div>
@@ -747,7 +747,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <div class="col-md-12">
                         <div class="md-form mb-0">
                             <label for="subject" class="">Lesson Timing<span style='color:red'>*</span></label>
-                            <input type="text" id="subject" name="subject" class="form-control">
+                            <input type="text" id="subject" name="des_les_time" class="form-control">
                             
                         </div>
                     </div>
@@ -762,8 +762,8 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
                         <div class="md-form">
                             <label for="message">Does your child have any relatives who returned from China on 15 Jan or later and is staying together? <span style='color:red'>*</span></label>
-                            <div><input type="radio" class="" name='res' style='height: 1.7em;width: 20px;'><b style='padding:2px'>Yes</b></div>
-                            <div><input type="radio" class="" name='res' style='height: 1.7em;width: 20px;'><b style='padding:2px'>No</b> </div> 
+                            <div><input type="radio" value="1" class="" name='dec_res' style='height: 1.7em;width: 20px;'><b style='padding:2px'>Yes</b></div>
+                            <div><input type="radio" value="0" class="" name='dec_res' style='height: 1.7em;width: 20px;'><b style='padding:2px'>No</b> </div> 
                         </div>
 
                     </div>
@@ -771,14 +771,14 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
                         <div class="md-form">
                             <label for="message">Have you travelled overseas in the past 14 days? <span style='color:red'>*</span></label>
-                             <input type="text" id="subject" name="subject" placeholder='Please State' class="form-control">
+                             <input type="text" id="subject" name="dec_overseas" placeholder='Please State' class="form-control">
                         </div>
 
                     </div>
                 </div>
                 <!--Grid row-->
                  <div class="text-center">
-                    <a href="javascript:;" id="excess_ok"><button class="btn btn-primary" type="button">Submit & Continue</button></a></div>
+                    <button class="btn btn-primary" id='declaration'>Submit & Continue</button></div>
 
             </form>
 
@@ -999,6 +999,36 @@ alert('Alert this pages');
             }///added by shubhranshu
         }
        
+    });
+    
+    $('#declaration').click(function({
+        $('#ex1011').hide();
+        $url = $siteurl + "class_trainee/save_declaration_trainee_data";
+        $.ajax({
+            url: $url,
+            type: "post",
+            dataType: "json",
+            data: {
+                name: $('#dec_name').val(),  
+                email: $('#dec_email').val(),
+                mobile: $('#dec_mobile').val(),
+                res: $('#dec_res').val(),
+                lesson_timing: $('#dec_les_time').val(),
+                overseas: $('#dec_overseas').val()
+            },
+            success: function(data) {
+                if (data != '') {
+                    remove_err('#company_invoice');
+                    $.each(data, function(i, item) {
+                        $('#company_invoice_id').append('<option value="' + item.key + '">' + item.label + '</option>');
+                    });
+                    $('#search_enrolment').show(); // search button
+                    $('#company_invoice_id').removeAttr('disabled');
+                } else {
+                    disp_err('#company_invoice', '[There are no invoices.]');
+                }
+            }
+        });
     });
     
 </script>
