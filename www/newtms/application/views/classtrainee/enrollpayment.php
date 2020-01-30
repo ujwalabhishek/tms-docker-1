@@ -712,7 +712,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <div class="col-md-12">
                         <div class="md-form mb-0">
                             <label for="name" class="">Your Name<span style='color:red'>*</span></label>
-                            <input type="text" id="dec_name" class="form-control">
+                            <input type="text" id="dec_name" class="form-control" value="<?php echo $trainee_name->first;?>">
                             
                         </div>
                     </div>
