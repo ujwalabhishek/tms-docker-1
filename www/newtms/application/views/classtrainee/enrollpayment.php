@@ -1000,7 +1000,7 @@ alert('Alert this pages');
         
     $('#declarations').click(function(){
         $('#declaration-form').submit();
-        $('#ex1011').hide();
+        //$('#ex1011').hide();
         $url = $siteurl + "class_trainee/save_declaration_trainee_data";
         $.ajax({
             url: $url,
