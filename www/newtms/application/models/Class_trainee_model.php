@@ -57,6 +57,28 @@ class Class_Trainee_Model extends CI_Model {
             $this->db->where('tup.first_name', $trainee_name);
         }
     }
+    
+    ///by shubhranshu for client requirement for declaration data to save
+    public function save_declaration_data($tenant_id,$trainee_id,$tax_code,$name,$type,$email,$mobile,$condition,$lesson_timing,$overseas){
+        $data_array = array('dec_tenant_id' => $tenant_id,
+                                        'dec_tax_code' => $tax_code,
+                                        'dec_trainee_name' => $name,
+                                        'dec_trainee_email' => $email,
+                                        'dec_trainee_id' => $trainee_id,
+                                        'dec_trainee_mobile' => $mobile,
+                                        'dec_condition' => $condition,
+                                        'dec_lesson_timing' => $lesson_timing,
+                                        'dec_overseas' => $overseas,
+                                        'dec_type' => $type,
+                                        'dec_enrol_by' => $this->session->userdata('userDetails')->user_id ?? '0',
+                                        'dec_trigger_datetime' => date('Y-m-d H:i:s')
+                                      );
+        
+    
+           
+                $status=$this->db->insert('tms_declaration_data', $data_array);
+                return $status;
+    }
     /**
      This method gets the start date of class by class id 
     **/

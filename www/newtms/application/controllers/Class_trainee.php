@@ -280,6 +280,23 @@ class Class_Trainee extends CI_Controller {
         $this->load->view('layout', $data);
     }
     
+    ///by shubhranshu for client requirement for declaration data to save
+    public function save_declaration_trainee_data(){
+        $tenant_id = $this->tenant_id ?? TENANT_ID;
+        $tax_code=$this->input->post('tax_code');
+        $name=$this->input->post('name');
+        $type=$this->input->post('type');
+        $email=$this->input->post('email');
+        $mobile=$this->input->post('mobile');
+        $trainee_id=$this->input->post('user_id');
+        $condition=$this->input->post('res');
+        $lesson_timing=$this->input->post('lesson_timing');
+        $overseas=$this->input->post('overseas');
+       $status=$this->classtraineemodel->save_declaration_data($tenant_id,$trainee_id,$tax_code,$name,$type,$email,$mobile,$condition,$lesson_timing,$overseas);
+       echo $status;
+    }
+    
+    
       /* This function loads the trainee list of public portal skm start */
     public function online_trainee()
     {
