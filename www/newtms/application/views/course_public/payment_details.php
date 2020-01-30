@@ -290,6 +290,7 @@
         if($status == 1){
             $('#ex1011').hide();
             $('.statuserr').html('');
+            $siteurl = '<?php echo site_url(); ?>';
             $url = $siteurl + "class_trainee/save_declaration_trainee_data";
             $.ajax({
                 url: $url,

@@ -732,6 +732,7 @@ if($course_id!='' && $class_id!=''){
         if($status == 1){
             $('#ex1011').hide();
             $('.statuserr').html('');
+            
             $url = $siteurl + "class_trainee/save_declaration_trainee_data";
             $.ajax({
                 url: $url,
