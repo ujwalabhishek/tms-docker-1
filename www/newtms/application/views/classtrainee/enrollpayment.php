@@ -1021,7 +1021,7 @@ alert('Alert this pages');
         
         if($status == 1){
             $('#ex1011').hide();
-            $('#statuserr').html('');
+            $('.statuserr').html('');
             $url = $siteurl + "class_trainee/save_declaration_trainee_data";
             $.ajax({
                 url: $url,
@@ -1046,7 +1046,7 @@ alert('Alert this pages');
                 }
             });
         }else{
-            $('#statuserr').html('Please fill all the fields to Continue!');
+            $('.statuserr').html('Please fill all the fields to Continue!');
         }
     }); 
        
