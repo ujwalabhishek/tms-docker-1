@@ -712,7 +712,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <div class="col-md-12">
                         <div class="md-form mb-0">
                             <label for="name" class="">Your Name<span style='color:red'>*</span></label>
-                            <input type="text" id="dec_name" class="form-control" value="<?php echo $trainee_name->first;?>">
+                            <input type="text" id="dec_name" class="form-control" value="<?php echo $trainee_name->first;?>" required>
                             
                         </div>
                     </div>
@@ -724,7 +724,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <div class="col-md-6">
                         <div class="md-form mb-0">
                              <label for="email" class="">Your Email<span style='color:red'>*</span></label>
-                            <input type="text" id="dec_email" class="form-control">
+                             <input type="email" id="dec_email" class="form-control" pattern=".+@gmail.com" size="30" required>
                            
                         </div>
                     </div>
@@ -733,7 +733,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <div class="col-md-6">
                         <div class="md-form mb-0">
                              <label for="email" class="">Your Mobile<span style='color:red'>*</span></label>
-                            <input type="text"  id="dec_mobile" class="form-control">
+                            <input type="tel" id="dec_mobile" class="form-control" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
                            
                         </div>
                     </div>
@@ -747,7 +747,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <div class="col-md-6">
                         <div class="md-form mb-0">
                             <label for="subject" class="">Lesson Date:<span style='color:red'>*</span></label>
-                            <input type="date" id="dec_les_time" class="form-control">
+                            <input type="date" id="dec_les_time" class="form-control" required>
                             
                         </div>
                     </div>
@@ -772,7 +772,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
                         <div class="md-form">
                             <label for="message">Have you travelled overseas in the past 14 days? <span style='color:red'>*</span></label>
-                             <input type="text" id="dec_overseas" placeholder='Please State' class="form-control">
+                            <input type="text" id="dec_overseas" placeholder='Please State' class="form-control" required>
                         </div>
 
                     </div>
