@@ -1042,6 +1042,7 @@ alert('Alert this pages');
                     email: $('#dec_email').val(),
                     mobile: $('#dec_mobile').val(),
                     user_id:'<?php echo ($this->input->post('taxcode_id') ?? $this->input->post('trainee_id'));?>',
+                    class_id:'<?php echo ($this->input->post('class');?>',
                     res: $('input[name="dec_res"]:checked').val(),
                     lesson_timing: $('#dec_les_time').val(),
                     overseas: $('#dec_overseas').val()

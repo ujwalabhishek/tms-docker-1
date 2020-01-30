@@ -833,6 +833,7 @@
                     email: $('#dec_email').val(),
                     mobile: $('#dec_mobile').val(),
                     user_id:'<?php echo $this->session->userdata('new_trainee_user_id');?>',
+                    class_id:'<?php echo $class_id;?>',
                     res: $('input[name="dec_res"]:checked').val(),
                     lesson_timing: $('#dec_les_time').val(),
                     overseas: $('#dec_overseas').val()
