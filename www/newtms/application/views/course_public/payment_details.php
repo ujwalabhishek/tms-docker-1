@@ -147,6 +147,7 @@
         </span>
     </div>
 </div>
+<br><br><br>
 <script type="text/javascript">
     $("#enroll_now").submit(function (event) {
         var addlRemark = $('#pers_additional_remarks').val();
