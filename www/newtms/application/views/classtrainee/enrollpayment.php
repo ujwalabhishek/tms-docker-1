@@ -704,7 +704,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
         <!--Grid column-->
         <div class="col-md-12 mb-md-0 mb-5">
           
-            <form action="#" method="post">
+            <form action="#" method="post" id='declaration-form'>
                 <!--Grid row-->
                 <div class="row">
 
@@ -998,7 +998,7 @@ alert('Alert this pages');
         }
         
         
-    $('#declarations').click(function(){
+    $('#declaration-form').submit(function(){
         $('#ex1011').hide();
         $url = $siteurl + "class_trainee/save_declaration_trainee_data";
         $.ajax({
