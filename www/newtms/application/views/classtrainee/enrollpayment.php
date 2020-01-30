@@ -744,13 +744,14 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
                 <!--Grid row-->1
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="md-form mb-0">
                             <label for="subject" class="">Lesson Date:<span style='color:red'>*</span></label>
                             <input type="date" id="dec_les_time" class="form-control">
                             
                         </div>
                     </div>
+                    <div class="col-md-6"></div>
                 </div>
                 <!--Grid row-->
 
