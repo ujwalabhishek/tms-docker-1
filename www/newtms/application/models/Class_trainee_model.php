@@ -69,7 +69,7 @@ class Class_Trainee_Model extends CI_Model {
                                         'dec_lesson_timing' => $lesson_timing,
                                         'dec_overseas' => $overseas,
                                         'dec_type' => $type,
-                                        'dec_enrol_by' => $this->session->userdata('userDetails')->user_id
+                                        'dec_enrol_by' => $this->session->userdata('userDetails')->user_id ?? '0'
                                       );
         
     
