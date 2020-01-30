@@ -742,7 +742,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                 </div>
                 <!--Grid row-->
 
-                <!--Grid row-->1
+                <!--Grid row-->
                 <div class="row">
                     <div class="col-md-6">
                         <div class="md-form mb-0">
@@ -777,12 +777,13 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
                     </div>
                 </div>
-              
+                
+                 <div class="statuserr"></div>
                 <!--Grid row-->
                  <div class="text-center">
                     <a href='#' class="btn btn-primary" id='declarations' type='button'>Submit & Continue</a></div>
                   
-            <div class="status"></div>
+           
         </div>
         <!--Grid column-->
     </div>
@@ -1020,6 +1021,7 @@ alert('Alert this pages');
         
         if($status == 1){
             $('#ex1011').hide();
+            $('#statuserr').html('');
             $url = $siteurl + "class_trainee/save_declaration_trainee_data";
             $.ajax({
                 url: $url,
@@ -1043,7 +1045,9 @@ alert('Alert this pages');
                     }
                 }
             });
-        }   
+        }else{
+            $('#statuserr').html('Please fill all the fields to Continue!');
+        }
     }); 
        
        
