@@ -698,12 +698,12 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
     <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
     <!--Section description-->
     <p class="text-center alert alert-danger">You must fill this form to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of the company policy.</p>
-    <form id='declaration-form' method='post' action='#'>
+  
     <div class="row">
 
         <!--Grid column-->
         <div class="col-md-12 mb-md-0 mb-5">
-          
+            <form id='declaration-form' method='post' action='#'>
         
                 <!--Grid row-->
                 <div class="row">
@@ -777,6 +777,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
                     </div>
                 </div>
+                </form> 
                 <!--Grid row-->
                  <div class="text-center">
                     <a href='#' class="btn btn-primary" id='declarations' type='button'>Submit & Continue</a></div>
@@ -785,7 +786,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
         </div>
         <!--Grid column-->
     </div>
-         </form> 
+         
 </section>
 <!--Section: Contact v.2-->
 
