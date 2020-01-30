@@ -281,7 +281,7 @@ class Class_Trainee extends CI_Controller {
     }
     ///by shubhranshu for client requirement for declaration data to save
     public function save_declaration_trainee_data(){
-        $tenant_id = $this->tenant_id;
+        $tenant_id = $this->tenant_id ?? TENANT_ID;
         $tax_code=$this->input->post('tax_code');
         $name=$this->input->post('name');
         $type=$this->input->post('type');
