@@ -703,7 +703,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
         <!--Grid column-->
         <div class="col-md-12 mb-md-0 mb-5">
-            <form id='declaration-form' method='post' action='#'>
+           
         
                 <!--Grid row-->
                 <div class="row">
@@ -763,7 +763,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
                         <div class="md-form">
                             <label for="message">Do you have any relatives who returned from China on 15th January or later and is staying together? <span style='color:red'>*</span></label>
-                            <div><input type="radio" value="1" class="" name='dec_res' id='dec_res' style='height: 1.7em;width: 20px;'><b style='padding:2px'>Yes</b></div>
+                            <div><input type="radio" value="1" class="" name='dec_res' id='dec_res' style='height: 1.7em;width: 20px;' checked><b style='padding:2px'>Yes</b></div>
                             <div><input type="radio" value="0" class="" name='dec_res' id='dec_res1' style='height: 1.7em;width: 20px;'><b style='padding:2px'>No</b> </div> 
                         </div>
 
@@ -777,7 +777,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 
                     </div>
                 </div>
-                </form> 
+              
                 <!--Grid row-->
                  <div class="text-center">
                     <a href='#' class="btn btn-primary" id='declarations' type='button'>Submit & Continue</a></div>
@@ -1001,32 +1001,50 @@ alert('Alert this pages');
         
         
     $('#declarations').click(function(){
-        $('#declaration-form').submit();
-        //$('#ex1011').hide();
-        $url = $siteurl + "class_trainee/save_declaration_trainee_data";
-        $.ajax({
-            url: $url,
-            type: "post",
-            dataType: "json",
-            data: {
-                tax_code: '<?php echo $trainee_name->tax_code;?>',
-                type:'INDIVIDUAL',
-                name: $('#dec_name').val(),  
-                email: $('#dec_email').val(),
-                mobile: $('#dec_mobile').val(),
-                res: $('input[name="dec_res"]:checked').val(),
-                lesson_timing: $('#dec_les_time').val(),
-                overseas: $('#dec_overseas').val()
-            },
-            success: function(data) {
-                if (data != '') {
-                   
-                } else {
-                  
+        $status = 1;
+        if($('#dec_name').val()==''){
+            $status=0;
+        }
+        if($('#dec_email').val()==''){
+            $status=0;
+        }
+        if($('#dec_mobile').val()==''){
+            $status=0;
+        }
+        if($('#dec_overseas').val()==''){
+            $status=0;
+        }
+        if($('#dec_les_time').val()==''){
+            $status=0;
+        }
+        
+        if($status == 1){
+            $('#ex1011').hide();
+            $url = $siteurl + "class_trainee/save_declaration_trainee_data";
+            $.ajax({
+                url: $url,
+                type: "post",
+                dataType: "json",
+                data: {
+                    tax_code: '<?php echo $trainee_name->tax_code;?>',
+                    type:'INDIVIDUAL',
+                    name: $('#dec_name').val(),  
+                    email: $('#dec_email').val(),
+                    mobile: $('#dec_mobile').val(),
+                    res: $('input[name="dec_res"]:checked').val(),
+                    lesson_timing: $('#dec_les_time').val(),
+                    overseas: $('#dec_overseas').val()
+                },
+                success: function(data) {
+                    if (data != '') {
+
+                    } else {
+
+                    }
                 }
-            }
-        });
-    });
+            });
+        }   
+    }); 
        
        
     });
