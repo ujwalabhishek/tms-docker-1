@@ -688,7 +688,8 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
      </div>
 </div>
 <!----------------modal by ssp start----------------------->
-<div class="modal" id="ex1011" style="display:block;margin:auto;margin-top:20px;margin-bottom:20px;">
+<?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){$show='display:block';}else{$show='display:none';}?>
+<div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;">
 <p>
   <h2 class="panel_heading_style">Declaration</h2>
     <!--Section: Contact v.2-->
@@ -1004,7 +1005,8 @@ alert('Alert this pages');
             }///added by shubhranshu
         }
         
-     //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol   
+     //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
+     <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){?>
     $('#declarations').click(function(){
         $status = 1;
         if($('#dec_name').val()==''){
@@ -1052,7 +1054,7 @@ alert('Alert this pages');
             $('.statuserr').html('<span style="color:red">Please fill all the fields to Continue!</span>');
         }
     }); 
-       
+     <?php } ?>
        
     });
   

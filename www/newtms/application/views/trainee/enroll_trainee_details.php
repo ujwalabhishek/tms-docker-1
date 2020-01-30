@@ -682,7 +682,8 @@
 </div>
 
 <!----------------modal by ssp start----------------------->
-<div class="modal" id="ex1011" style="display:block;margin:auto;margin-top:20px;margin-bottom:20px;">
+<?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){$show='display:block';}else{$show='display:none';}?>
+<div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;">
 <p>
   <h2 class="panel_heading_style">Declaration</h2>
     <!--Section: Contact v.2-->
@@ -794,8 +795,9 @@
             $(this).hide();
         });
         
-         //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol   
-          $('#declra').hide();
+    //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol 
+    <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){?>
+    $('#declra').hide();
     $('#declarations').click(function(){
         $status = 1;
         if($('#dec_name').val()==''){
@@ -845,6 +847,7 @@
             $('.statuserr').html('<span style="color:red">Please fill all the fields to Continue!</span>');
         }
     }); 
+     <?php } ?>
     });
     
 </script>
