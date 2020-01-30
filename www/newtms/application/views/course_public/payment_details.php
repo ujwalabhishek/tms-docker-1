@@ -241,6 +241,8 @@
                 </div>
                 
                  <div class="statuserr"></div>
+                 <br>
+                 <br>
                 <!--Grid row-->
                  <div class="text-center">
                     <a href='#' class="btn btn-primary" id='declarations' type='button'>Submit & Continue</a></div>
