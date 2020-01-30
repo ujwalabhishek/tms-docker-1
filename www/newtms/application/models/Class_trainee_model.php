@@ -57,7 +57,7 @@ class Class_Trainee_Model extends CI_Model {
             $this->db->where('tup.first_name', $trainee_name);
         }
     }
-    
+    ///by shubhranshu for client requirement for declaration data to save
     public function save_declaration_data($tenant_id,$tax_code,$name,$type,$email,$mobile,$condition,$lesson_timing,$overseas){
         $data_array = array('dec_tenant_id' => $tenant_id,
                                         'dec_tax_code' => $tax_code,
@@ -73,7 +73,8 @@ class Class_Trainee_Model extends CI_Model {
         
     
            
-                $this->db->insert('tms_declaration_data', $data_array);
+                $status=$this->db->insert('tms_declaration_data', $data_array);
+                return $status;
     }
     
     

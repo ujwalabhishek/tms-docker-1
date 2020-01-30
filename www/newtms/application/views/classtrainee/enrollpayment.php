@@ -1004,7 +1004,7 @@ alert('Alert this pages');
             }///added by shubhranshu
         }
         
-        
+     //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol   
     $('#declarations').click(function(){
         $status = 1;
         if($('#dec_name').val()==''){
@@ -1042,11 +1042,7 @@ alert('Alert this pages');
                     overseas: $('#dec_overseas').val()
                 },
                 success: function(data) {
-                    if (data != '') {
-
-                    } else {
-
-                    }
+                   alert(data);
                 }
             });
         }else{
