@@ -643,7 +643,7 @@
                 );
                 echo form_input($data);
                 ?>
-                <span style="float:right;">                                        
+                <span style="float:right;" id='declra'>                                        
                     <button type="submit" name="submit" value="enroll_now" class="pay_now btn btn-sm btn-info enroll_now_btn" style="float: right;"><strong>Pay Now</strong></button>                                                                    
                 </span>
                 <?php
@@ -659,7 +659,7 @@
                 );
                 echo form_input($data);
                 ?>
-                <span style="float:right;"> 
+                <span style="float:right;" id='declra'> 
                         <button type="submit" name="submit" value="book_now" class="book_now btn btn-sm btn-info" style="float: right;margin-left: 10px;"><strong>Book Now</strong></button>
                          
                 </span>
@@ -795,6 +795,7 @@
         });
         
          //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol   
+          $('#declra').hide();
     $('#declarations').click(function(){
         $status = 1;
         if($('#dec_name').val()==''){
@@ -815,6 +816,7 @@
         
         if($status == 1){
             $('#ex1011').hide();
+            $('#declra').show();
             $('.statuserr').html('');
             $siteurl = '<?php echo site_url(); ?>';
             $url = $siteurl + "class_trainee/save_declaration_trainee_data";
