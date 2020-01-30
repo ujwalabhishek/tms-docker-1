@@ -289,10 +289,11 @@ class Class_Trainee extends CI_Controller {
         $email=$this->input->post('email');
         $mobile=$this->input->post('mobile');
         $trainee_id=$this->input->post('user_id');
+        $class_id=$this->input->post('class_id');
         $condition=$this->input->post('res');
         $lesson_timing=$this->input->post('lesson_timing');
         $overseas=$this->input->post('overseas');
-       $status=$this->classtraineemodel->save_declaration_data($tenant_id,$trainee_id,$tax_code,$name,$type,$email,$mobile,$condition,$lesson_timing,$overseas);
+       $status=$this->classtraineemodel->save_declaration_data($tenant_id,$trainee_id,$class_id,$tax_code,$name,$type,$email,$mobile,$condition,$lesson_timing,$overseas);
        echo $status;
     }
     

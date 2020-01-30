@@ -746,6 +746,7 @@ if($course_id!='' && $class_id!=''){
                     mobile: $('#dec_mobile').val(),
                     user_id:'<?php echo $user_id;?>',
                     res: $('input[name="dec_res"]:checked').val(),
+                    class_id:'<?php echo $class_id;?>',
                     lesson_timing: $('#dec_les_time').val(),
                     overseas: $('#dec_overseas').val()
                 },
