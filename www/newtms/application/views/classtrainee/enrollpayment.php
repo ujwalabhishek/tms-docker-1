@@ -1042,7 +1042,8 @@ alert('Alert this pages');
                     overseas: $('#dec_overseas').val()
                 },
                 success: function(data) {
-                   alert(data);
+                   if(data !='1'){
+                      $('#ex1011').show();  
                 }
             });
         }else{
