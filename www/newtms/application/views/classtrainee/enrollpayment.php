@@ -1046,7 +1046,7 @@ alert('Alert this pages');
                 }
             });
         }else{
-            $('.statuserr').html('Please fill all the fields to Continue!');
+            $('.statuserr').html('<span style="color:red">Please fill all the fields to Continue!</span>');
         }
     }); 
        
