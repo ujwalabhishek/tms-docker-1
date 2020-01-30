@@ -147,7 +147,7 @@
         </span>
     </div><br><br><br>
 </div>
-
+</div>
 <!----------------modal by ssp start----------------------->
 <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){$show='display:block';}else{$show='display:none';}?>
 <div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;">
@@ -256,7 +256,7 @@
 </p>
 </div>
 <!----------------modal by ssp end----------------------->
-
+<div>
 <script type="text/javascript">
     $("#enroll_now").submit(function (event) {
         var addlRemark = $('#pers_additional_remarks').val();
