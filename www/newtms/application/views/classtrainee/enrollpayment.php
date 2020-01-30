@@ -1044,6 +1044,7 @@ alert('Alert this pages');
                 success: function(data) {
                    if(data !='1'){
                       $('#ex1011').show();  
+                  }
                 }
             });
         }else{
