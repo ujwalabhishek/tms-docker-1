@@ -999,7 +999,7 @@ alert('Alert this pages');
         
         
     $('#declaration-form').submit(function(){
-        $('#ex1011').hide();
+        $('#ex1011').hide();alert();
         $url = $siteurl + "class_trainee/save_declaration_trainee_data";
         $.ajax({
             url: $url,
