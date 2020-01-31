@@ -644,7 +644,7 @@
                 echo form_input($data);
                 ?>
                 <span style="float:right;" id='declra'>                                        
-                    <button type="submit" name="submit" value="enroll_now" class="pay_now btn btn-sm btn-info enroll_now_btn" style="float: right;"><strong>Pay Now</strong></button>                                                                    
+                    <button type="button" name="submit" value="enroll_now" class="pay_now btn btn-sm btn-info enroll_now_btn" style="float: right;"><strong>Pay Now</strong></button>                                                                    
                 </span>
                 <?php
             } else {
@@ -660,7 +660,7 @@
                 echo form_input($data);
                 ?>
                 <span style="float:right;" id='declra'> 
-                    <button type="submit" name="submit" value="book_now" class="book_now btn btn-sm btn-info" style="float: right;margin-left: 10px;"><strong>Book Now</strong></button>
+                    <button type="button" name="submit" value="book_now" class="book_now btn btn-sm btn-info" style="float: right;margin-left: 10px;"><strong>Book Now</strong></button>
                          
                 </span>
                 <?php
