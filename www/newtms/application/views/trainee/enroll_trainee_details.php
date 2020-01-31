@@ -791,7 +791,7 @@
 <!----------------modal by ssp end----------------------->
 <script>
     $(document).ready(function(){
-        $('.book_now,.pay_now').click(function(){alert();
+        $('.book_now,.pay_now').click(function(){
             $sho = '<?php echo $show; ?>';
             $compid='<?php echo $trainee_data->company_id;?>';
             if($sho == '1' && $compid != '0' && $('#enrolment_mode').val() == 'SELF'){
