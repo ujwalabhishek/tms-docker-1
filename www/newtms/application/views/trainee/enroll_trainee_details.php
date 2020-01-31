@@ -791,7 +791,7 @@
 <!----------------modal by ssp end----------------------->
 <script>
     $(document).ready(function(){
-        $('.book_now').click(function(){
+        $('.book_now,.pay_now').click(function(){
             $sho = '<?php echo $show; ?>';
             if($sho == '1' && $('#enrolment_mode').val() == 'SELF'){
                 $('#ex1011').show();  
@@ -802,7 +802,7 @@
         
          //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol 
     <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){?>
-    $('#declra').hide();
+    //$('#declra').hide();
     $('#declarations').click(function(){
         $status = 1;
         if($('#dec_name').val()==''){
@@ -823,7 +823,7 @@
         
         if($status == 1){
             $('#ex1011').hide();
-            $('#declra').show();
+            //$('#declra').show();
             $('.statuserr').html('');
             $siteurl = '<?php echo site_url(); ?>';
             $url = $siteurl + "class_trainee/save_declaration_trainee_data";
