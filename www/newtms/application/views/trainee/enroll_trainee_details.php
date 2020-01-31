@@ -791,7 +791,7 @@
 <!----------------modal by ssp end----------------------->
 <script>
     $(document).ready(function(){
-        $('.book_now,.pay_now').click(function(){
+        $('.book_now,.pay_now').click(function(){alert();
             $sho = '<?php echo $show; ?>';
             if($sho == '1' && $('#enrolment_mode').val() == 'SELF'){
                 $('#ex1011').show();  
