@@ -660,7 +660,7 @@
                 echo form_input($data);
                 ?>
                 <span style="float:right;" id='declra'> 
-                        <button type="submit" name="submit" value="book_now" class="book_now btn btn-sm btn-info" style="float: right;margin-left: 10px;"><strong>Book Now</strong></button>
+                    <button type="submit" name="submit" value="book_now" class="book_now btn btn-sm btn-info" style="float: right;margin-left: 10px;"><strong>Book Now</strong></button>
                          
                 </span>
                 <?php
@@ -682,8 +682,8 @@
 </div>
 
 <!----------------modal by ssp start----------------------->
-<?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){$show='display:block';}else{$show='display:none';}?>
-<div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;">
+<?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){$show=1;}else{$show=0;}?>
+<div class="modal" id="ex1011" style="margin:auto;margin-top:20px;margin-bottom:20px;">
 <p>
   <h2 class="panel_heading_style">Declaration</h2>
     <!--Section: Contact v.2-->
@@ -791,11 +791,16 @@
 <!----------------modal by ssp end----------------------->
 <script>
     $(document).ready(function(){
-        $('.book_now').click(function(){
+        $('.book_now,.pay_now').click(function(){
+            $sho = '<?php echo $show; ?>';
+            if($sho == '1' && $('#enrolment_mode').val() == 'SELF'){
+                $('#ex1011').show();  
+            }
             $(this).hide();
         });
         
-    //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol 
+        
+         //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol 
     <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){?>
     $('#declra').hide();
     $('#declarations').click(function(){
@@ -841,7 +846,9 @@
                 success: function(data) {
                    if(data !='1'){
                       $('#ex1011').show();  
-                  }
+                    }else{
+                        $('#enroll_pay_now_form').submit();
+                    }
                 }
             });
         }else{
