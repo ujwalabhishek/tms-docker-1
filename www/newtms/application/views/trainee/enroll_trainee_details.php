@@ -644,7 +644,7 @@
                 echo form_input($data);
                 ?>
                 <span style="float:right;" id='declra'>                                        
-                    <button type="button" name="submit" value="enroll_now" class="pay_now btn btn-sm btn-info enroll_now_btn" style="float: right;"><strong>Pay Now</strong></button>                                                                    
+                    <button type="submit" name="submit" value="enroll_now" class="pay_now btn btn-sm btn-info enroll_now_btn" style="float: right;"><strong>Pay Now</strong></button>                                                                    
                 </span>
                 <?php
             } else {
@@ -660,7 +660,7 @@
                 echo form_input($data);
                 ?>
                 <span style="float:right;" id='declra'> 
-                    <button type="button" name="submit" value="book_now" class="book_now btn btn-sm btn-info" style="float: right;margin-left: 10px;"><strong>Book Now</strong></button>
+                        <button type="submit" name="submit" value="book_now" class="book_now btn btn-sm btn-info" style="float: right;margin-left: 10px;"><strong>Book Now</strong></button>
                          
                 </span>
                 <?php
@@ -682,8 +682,8 @@
 </div>
 
 <!----------------modal by ssp start----------------------->
-<?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){$show=1;}else{$show=0;}?>
-<div class="modal" id="ex1011" style="margin:auto;margin-top:20px;margin-bottom:20px;">
+<?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){$show='display:block';}else{$show='display:none';}?>
+<div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;">
 <p>
   <h2 class="panel_heading_style">Declaration</h2>
     <!--Section: Contact v.2-->
@@ -791,21 +791,13 @@
 <!----------------modal by ssp end----------------------->
 <script>
     $(document).ready(function(){
-        $('.book_now,.pay_now').click(function(){
-            $sho = '<?php echo $show; ?>';
-            $compid='<?php echo $trainee_data->company_id;?>';
-            if($sho == '1' && $compid != '0' && $('#enrolment_mode').val() == 'SELF'){
-                $('#ex1011').show();  
-            }else if($sho == '1' && $compid == '0'){
-                $('#ex1011').show(); 
-            }
+        $('.book_now').click(function(){
             $(this).hide();
         });
         
-        
-         //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol 
+    //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol 
     <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){?>
-    //$('#declra').hide();
+    $('#declra').hide();
     $('#declarations').click(function(){
         $status = 1;
         if($('#dec_name').val()==''){
@@ -826,8 +818,7 @@
         
         if($status == 1){
             $('#ex1011').hide();
-            //$('#declra').show();
-            $('#enroll_pay_now_form').submit();
+            $('#declra').show();
             $('.statuserr').html('');
             $siteurl = '<?php echo site_url(); ?>';
             $url = $siteurl + "class_trainee/save_declaration_trainee_data";
@@ -850,7 +841,7 @@
                 success: function(data) {
                    if(data !='1'){
                       $('#ex1011').show();  
-                    }
+                  }
                 }
             });
         }else{
