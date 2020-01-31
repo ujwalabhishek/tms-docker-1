@@ -793,8 +793,11 @@
     $(document).ready(function(){
         $('.book_now,.pay_now').click(function(){alert();
             $sho = '<?php echo $show; ?>';
-            if($sho == '1' && $('#enrolment_mode').val() == 'SELF'){
+            $compid='<?php echo $trainee_data->company_id;?>';
+            if($sho == '1' && $compid != '0' && $('#enrolment_mode').val() == 'SELF'){
                 $('#ex1011').show();  
+            }else if($sho == '1' && $compid == '0'){
+                $('#ex1011').show(); 
             }
             $(this).hide();
         });
