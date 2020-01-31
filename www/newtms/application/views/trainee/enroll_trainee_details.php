@@ -827,6 +827,7 @@
         if($status == 1){
             $('#ex1011').hide();
             //$('#declra').show();
+            $('#enroll_pay_now_form').submit();
             $('.statuserr').html('');
             $siteurl = '<?php echo site_url(); ?>';
             $url = $siteurl + "class_trainee/save_declaration_trainee_data";
@@ -849,8 +850,6 @@
                 success: function(data) {
                    if(data !='1'){
                       $('#ex1011').show();  
-                    }else{
-                        $('#enroll_pay_now_form').submit();
                     }
                 }
             });
