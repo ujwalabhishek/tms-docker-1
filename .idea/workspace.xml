@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7453d79b-a80a-484d-99bc-7df93693ba97" name="Default Changelist" comment="" />
+    <list default="true" id="7453d79b-a80a-484d-99bc-7df93693ba97" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,6 +23,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1Vhoon3kqQjQ1pGLOGndVMjI03n" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -52,7 +55,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1577714865017</updated>
-      <workItem from="1577714868660" duration="5434000" />
+      <workItem from="1577714868660" duration="5612000" />
+      <workItem from="1580383021008" duration="9000" />
     </task>
     <task id="LOCAL-00001" summary="Configure mysql dump utility in docker compose file">
       <created>1577732726646</created>
@@ -111,6 +115,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1577733032315" />
+    <state x="413" y="282" key="com.intellij.ide.util.TipDialog" timestamp="1580383023024">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="413" y="282" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1580383023024" />
     <state x="400" y="212" width="639" height="476" key="find.popup" timestamp="1577736956340">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
