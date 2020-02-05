@@ -746,8 +746,8 @@ class Class_Trainee_Model extends CI_Model {
                              $this->db->last_query();
                             $payment_due_id = $query->pymnt_due_id;
                             $invoice_id = $query->invoice_id;
-                            $queryy = $this->db->query("select * from enrol_pymnt_due where pymnt_due_id='$payment_due_id' and user_id='$trainee_id' and att_status='1'");
-                            if ($queryy->num_rows() > 0)
+                            $query = $this->db->query("select * from enrol_pymnt_due where pymnt_due_id='$payment_due_id' and user_id='$trainee_id' and att_status='1'");
+                            if ($query->num_rows() > 0)
                             {
                              
                               $status= $this->remove_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id,$invoice_id, $payment_due_id, $trainee_id);
