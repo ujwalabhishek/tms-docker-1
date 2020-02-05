@@ -6,3 +6,4 @@
 .env
 /nbproject/private/
 /www/nbproject/private/
+/.idea/*
