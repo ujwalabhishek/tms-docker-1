@@ -825,7 +825,7 @@ class Class_Trainee_Model extends CI_Model {
                 $this->db->where('ce.user_id',$trainee_id);
                  $this->db->where('epd.user_id',$trainee_id);
                 $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
-                 $this->db->last_query();
+                 //$this->db->last_query();
                
                 $this->db->set('ce.training_score','ABS');
                 $this->db->where('ce.pymnt_due_id',$payment_due_id);
@@ -835,7 +835,7 @@ class Class_Trainee_Model extends CI_Model {
                   $this->db->where('epd.user_id',$trainee_id);
                 $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
               
-                 $this->db->last_query();
+                 //$this->db->last_query();
             }
             return $query->result(); // commented by shubhranshu since waste due to some condition does not show msg
         }
