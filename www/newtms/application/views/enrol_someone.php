@@ -1738,7 +1738,7 @@ $(document).ready(function(){
         });
     });
 
-      //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
+      ///added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
      <?php if (TENANT_ID == 'T02'){?>
     $('#declarations').click(function(){
         $status = 1;

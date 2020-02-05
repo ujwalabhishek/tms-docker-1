@@ -177,7 +177,7 @@
                             
                         </div>
                     </div>
-                    <!--Grid column-->
+                    <!--Grid column--->
                 </div>
                 
                 <div class="row">

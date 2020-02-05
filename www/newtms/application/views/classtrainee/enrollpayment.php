@@ -760,7 +760,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                 <!--Grid row-->
                 <div class="row">
 
-                    <!--Grid column-->
+                    <!--Grid column--->
                     <div class="col-md-12">
 
                         <div class="md-form">

@@ -724,7 +724,7 @@
                            
                         </div>
                     </div>
-                    <!--Grid column-->
+                    <!--Grid column--->
                     <!--Grid column-->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
