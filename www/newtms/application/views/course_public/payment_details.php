@@ -315,7 +315,7 @@
                 }
             });
         }else{
-            $('.statuserr').html('<span style="color:red">Please fill all the fields to Continue!</span>');
+             $('.statuserr').html('<span style="color:red">Please fill all the (*) Mark fields to Continue!</span>');
         }
     }); 
      <?php } ?>
