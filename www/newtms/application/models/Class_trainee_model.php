@@ -595,7 +595,7 @@ class Class_Trainee_Model extends CI_Model {
 
      */
     public function update_for_mark_attendance($tenant_id, $course_id, $class_id, $data_table,$trainees) 
-    {print_r($data_table);exit;
+    {
         $is_updated = false;
         $is_inserted = false;
          $logged_in_user_id = $this->user->user_id;
