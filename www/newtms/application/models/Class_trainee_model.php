@@ -1130,7 +1130,7 @@ class Class_Trainee_Model extends CI_Model {
                 }
             }
         }
-        //$this->db->trans_complete();
+        $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) {
             $status = FALSE;
         }
