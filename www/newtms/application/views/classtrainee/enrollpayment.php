@@ -724,7 +724,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                     <!--Grid column-->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                             <label for="email" class="">Your Email<span style='color:red'>*</span></label>
+                             <label for="email" class="">Your Email</label>
                              <input type="email" id="dec_email" class="form-control" pattern=".+@gmail.com" size="30" required>
                            
                         </div>
@@ -1014,9 +1014,9 @@ alert('Alert this pages');
         if($('#dec_name').val()==''){
             $status=0;
         }
-        if($('#dec_email').val()==''){
-            $status=0;
-        }
+//        if($('#dec_email').val()==''){
+//            $status=0;
+//        }
         if($('#dec_mobile').val()==''){
             $status=0;
         }
