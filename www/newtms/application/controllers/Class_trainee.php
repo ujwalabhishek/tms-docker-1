@@ -1838,7 +1838,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      */
     public function mark_attendance_update() 
     {
-       //$this->output->enable_profiler(TRUE);
+       $this->output->enable_profiler(TRUE);
         $data['sideMenuData'] = fetch_non_main_page_content();/////added by shubhranshu
         $tenant_id = $this->tenant_id;
         $course_id = $this->input->post('course_id');
