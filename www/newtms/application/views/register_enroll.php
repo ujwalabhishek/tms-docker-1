@@ -595,7 +595,7 @@ if($course_id!='' && $class_id!=''){
                     <!--Grid column-->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                             <label for="email" class="">Your Email<span style='color:red'>*</span></label>
+                             <label for="email" class="">Your Email</label>
                              <input type="email" id="dec_email" class="form-control" pattern=".+@gmail.com" size="30" required>
                            
                         </div>
@@ -716,9 +716,9 @@ if($course_id!='' && $class_id!=''){
         if($('#dec_name').val()==''){
             $status=0;
         }
-        if($('#dec_email').val()==''){
-            $status=0;
-        }
+//        if($('#dec_email').val()==''){
+//            $status=0;
+//        }
         if($('#dec_mobile').val()==''){
             $status=0;
         }
@@ -757,7 +757,7 @@ if($course_id!='' && $class_id!=''){
                 }
             });
         }else{
-            $('.statuserr').html('<span style="color:red">Please fill all the fields to Continue!</span>');
+            $('.statuserr').html('<span style="color:red">Please fill all the (*) Mark fields to Continue!</span>');
         }
     }); 
      <?php } ?>
