@@ -682,7 +682,7 @@
 </div>
 
 <!----------------modal by ssp start----------------------->
-<?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){$show='display:block';}else{$show='display:none';}?>
+<?php if ($this->session->userdata('userDetails')->tenant_id == 'T02' && $trainee_data->company_id ==''){$show='display:block';}else{$show='display:none';}?>
 <div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;">
 <p>
   <h2 class="panel_heading_style">Declaration</h2>
@@ -796,7 +796,7 @@
         });
         
     //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol 
-    <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02'){?>
+    <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02' && $trainee_data->company_id ==''){?>
     $('#declra').hide();
     $('#declarations').click(function(){
         $status = 1;
