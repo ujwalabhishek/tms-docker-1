@@ -796,6 +796,7 @@
         });
         
     //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol 
+    $ssss='<?php echo $trainee_data->company_id;?>';
     <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02' && $trainee_data->company_id ==''){?>
     $('#declra').hide();
     $('#declarations').click(function(){
