@@ -456,7 +456,7 @@ class Company_Model extends CI_Model {
         $this->db->where('company.company_id', $company_id);
         
         $qry = $this->db->get();
-echo $this->db->last_query();exit;
+
         if ($qry->num_rows() > 0) {
             $comp_details = array();
             foreach ($qry->result() as $row) {
@@ -475,7 +475,6 @@ echo $this->db->last_query();exit;
         $this->db->where('company.tenant_id', $tenant_id);
         $this->db->where('company.company_id', $company_id);
         $qry = $this->db->get();
-echo $this->db->last_query();exit;
         if ($qry->num_rows() > 0) {
             $comp_details = array();
             foreach ($qry->result() as $row) {
