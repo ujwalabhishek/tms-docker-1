@@ -449,8 +449,8 @@ class Company_Model extends CI_Model {
         $this->db->from('tenant_company company');
         $this->db->join('company_master companymaster', 'company.company_id = companymaster.company_id');
         if($course > 0 && $course !=''){
-             $this->db->join('company_discount cd', 'company.company_id = cd.company_id AND Course_ID='.$course.'');
-            $this->db->where('company.company_id', $company_id);
+             $this->db->join('company_discount cd', 'company.company_id = cd.company_id');
+            $this->db->where('cd.Course_ID', $course);
         }
         $this->db->where('company.tenant_id', $tenant_id);
         $this->db->where('company.company_id', $company_id);
