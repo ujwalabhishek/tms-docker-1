@@ -1311,7 +1311,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $restrict_data['flag'] = $restrict_arr ? 'true' : 'false';
         $restrict_data['restrict_arr'] = $restrict_arr;
          ////////////////        
-        $company_details = $this->company->get_company_details($tenant_id, $company_id);
+        $company_details = $this->company->get_company_details_discount($tenant_id, $company_id,$course);
         print_r($company_details);exit;
         $insert_status = $this->classtraineemodel->create_bulk_enrol($tenant_id, $insert_data, $company_id, $course, $salesexec, $class, $class_detail, $curuser_id, $company_details);
         $insert_status['flag'] = $restrict_data['flag'];//added by shubhranshu 0n 26/03/2019
