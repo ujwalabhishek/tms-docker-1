@@ -719,6 +719,7 @@ class Class_Trainee_Model extends CI_Model {
                     $this->db->where('ce.enrolment_mode','COMPSPON');
                     $query = $this->db->get();
                     $query->num_rows();
+                
                     if($query->num_rows()>0)
                     {
                         foreach($query->result() as $rows)
@@ -729,7 +730,7 @@ class Class_Trainee_Model extends CI_Model {
                             $company_id = $rows->company_id;
                         }
                         $query = $this->db->query("select * from enrol_pymnt_due where pymnt_due_id='$payment_due_id' and user_id='$trainee_id' and att_status='1'");
-                        echo "sss".$query->num_rows();exit;
+                        //echo "sss".$query->num_rows();exit;
                         if ($query->num_rows() > 0)
                         {
                             //sk1
