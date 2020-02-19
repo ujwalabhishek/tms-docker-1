@@ -4815,8 +4815,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         $result = $this->db->select('epr.invoice_id, epr.recd_on, epr.mode_of_pymnt,epr.amount_recd, epr.cheque_number, epr.cheque_date')
                         ->from('enrol_paymnt_recd epr')
-                        ->where('epr.invoice_id', $invoice_id)->get()->row();
-                        ->order_by('epr.trigger_date','DESC')
+                        ->where('epr.invoice_id', $invoice_id)
+                        ->order_by('epr.trigger_date','DESC')->get()->row();
 
         return $result;
     }
