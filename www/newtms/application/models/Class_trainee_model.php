@@ -1397,7 +1397,7 @@ class Class_Trainee_Model extends CI_Model {
                                                 ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), 
                                                 (round($curr_invoice_details->total_gst,2) - round($total_gst_due,2)), 
                                                  $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
-echo $status.'divya';exit;
+
                 if ($status) 
                 {
                     //paid status
