@@ -1403,7 +1403,13 @@ class Class_Trainee_Model extends CI_Model {
                     //paid status
                     $qry="select * from enrol_paymnt_recd where invoice_id='$invoice_id'"; 
                     $query = mysqli_query($qry);//modified by shubhranshu
-            echo $query.'divya';exit;
+                    
+                    $this->db->select('*');
+                    $this->db->from('enrol_paymnt_recd');
+                    $this->db->where('invoice_id',$invoice_id);
+                    $query = $this->db->get()->num_rows();
+                    
+        echo $query.'divya';exit;
                    if($query)
                     {
                         $invoice_id1=$invoice_id;
