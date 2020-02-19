@@ -1443,7 +1443,7 @@ class Class_Trainee_Model extends CI_Model {
                         $this->db->where('invoice_id',$previous_inv_id)
                         $this->db->update('enrol_refund', $updata);
                     
-                        $this->db->where('invoice_id',$previous_inv_id)
+                        $this->db->where('invoice_id',$previous_inv_id);
                         $this->db->update('enrol_refund_brkup_dt', $updata);
                         
                          //$sql=mysqli_query("update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
