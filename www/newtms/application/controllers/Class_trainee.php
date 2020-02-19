@@ -3440,12 +3440,13 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $total_paid = 0;
         foreach ($paid_details as $row) {
             $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
+            $other_mode = $row->othr_mode_of_payment ? '+'.$row->othr_mode_of_payment : '';
             $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ');
             $gender = ($row->gender == 'MALE') ? 'Mr. ' : 'Ms. ';
             $name = $gender . $row->first_name . ' ' . $row->last_name;
             $paid_arr[] = array(
                 'recd_on' => date('d/m/Y', strtotime($row->recd_on)),
-                'mode' => $mode . $mode_ext,
+                'mode' => $mode . $mode_ext.$other_mode,
                 'name' => $name,
                 'amount' => '$ ' . number_format($row->amount_recd, 2, '.', '') . ' SGD',
             );
