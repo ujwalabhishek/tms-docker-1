@@ -1415,11 +1415,11 @@ class Class_Trainee_Model extends CI_Model {
                         $invoice_id1=$invoice_id;
                         $invoice_id = $new_invoice_id;
                         
-                        $updata = array('invoice_id'  =>$new_invoice_id );
-                        $this->db->where('invoice_id',$invoice_id1)
+                        $updata = array('invoice_id' => $new_invoice_id);
+                        $this->db->where('invoice_id',$invoice_id1);
                         $this->db->update('enrol_paymnt_recd', $updata);
                     
-                        $this->db->where('invoice_id',$invoice_id1)
+                        $this->db->where('invoice_id',$invoice_id1);
                         $this->db->update('enrol_pymnt_brkup_dt', $updata);
                         
                         //$sql=mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
@@ -1439,7 +1439,7 @@ class Class_Trainee_Model extends CI_Model {
                         $previous_inv_id=$previous_inv_id;
                         $invoice_id = $new_invoice_id;   
                         
-                        $updata = array('invoice_id'  =>$new_invoice_id );
+                        $updata = array('invoice_id'  =>$new_invoice_id);
                         $this->db->where('invoice_id',$previous_inv_id)
                         $this->db->update('enrol_refund', $updata);
                     
