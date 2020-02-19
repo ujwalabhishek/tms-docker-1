@@ -1401,22 +1401,30 @@ class Class_Trainee_Model extends CI_Model {
                 if ($status) 
                 {
                     //paid status
-                    $qry="select * from enrol_paymnt_recd where invoice_id='$invoice_id'"; 
-                    $query = mysqli_query($qry);//modified by shubhranshu
+                    //$qry="select * from enrol_paymnt_recd where invoice_id='$invoice_id'"; 
+                    //$query = mysqli_query($qry);//modified by shubhranshu
                     
                     $this->db->select('*');
                     $this->db->from('enrol_paymnt_recd');
                     $this->db->where('invoice_id',$invoice_id);
                     $query = $this->db->get()->num_rows();
                     
-        echo $query.'divya';exit;
+        
                    if($query)
                     {
                         $invoice_id1=$invoice_id;
                         $invoice_id = $new_invoice_id;
-                        $sql=mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
                         
-                         $sql1=mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
+                        $updata = array('invoice_id'  =>$new_invoice_id );
+                        $this->db->where('invoice_id',$invoice_id1)
+                        $this->db->update('enrol_paymnt_recd', $updata);
+                    
+                        $this->db->where('invoice_id',$invoice_id1)
+                        $this->db->update('enrol_pymnt_brkup_dt', $updata);
+                        
+                        //$sql=mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
+                        
+                         //$sql1=mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
              
                         
                     }
@@ -1429,11 +1437,18 @@ class Class_Trainee_Model extends CI_Model {
                     if($query1->num_rows()>0){
                         
                         $previous_inv_id=$previous_inv_id;
-                        $invoice_id = $new_invoice_id;                  
+                        $invoice_id = $new_invoice_id;   
                         
-                         $sql=mysqli_query("update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
+                        $updata = array('invoice_id'  =>$new_invoice_id );
+                        $this->db->where('invoice_id',$previous_inv_id)
+                        $this->db->update('enrol_refund', $updata);
+                    
+                        $this->db->where('invoice_id',$previous_inv_id)
+                        $this->db->update('enrol_refund_brkup_dt', $updata);
+                        
+                         //$sql=mysqli_query("update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
 
-                         $sql1=mysqli_query("update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
+                         //$sql1=mysqli_query("update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
                                               
                     }
 //                     $previous_inv_id = $invoice_id;
