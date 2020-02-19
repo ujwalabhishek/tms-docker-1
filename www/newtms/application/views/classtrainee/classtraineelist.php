@@ -393,6 +393,10 @@
                 <td><span class="r_mode"></span></td>
             </tr>
             <tr>
+                <td class="td_heading">Other Mode of Payment:</td>
+                <td><span class="othr_mode"></span></td>
+            </tr>
+            <tr>
                 <td class="td_heading">Unit Class Fees:</td>
                 <td><span class="r_class_fees"></span> SGD</td>
             </tr>
