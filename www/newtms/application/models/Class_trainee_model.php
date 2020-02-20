@@ -5451,10 +5451,10 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
           
             $this->db->insert('enrol_refund_brkup_dt', $brk_data);
             
-          // $this->db->set('sfc_claimed',0);
-           // $this->db->set('othr_mode_of_payment',0);
-            //$this->db->where('invoice_id',$invoice_id);
-            //$this->db->update('enrol_paymnt_recd');
+           $this->db->set('sfc_claimed',0);
+            $this->db->set('othr_mode_of_payment',0);
+            $this->db->where('invoice_id',$invoice_id);
+            $this->db->update('enrol_paymnt_recd');
             if ($refundable_total == $refunding_amt) {
                 
                 $ce_data = array(
