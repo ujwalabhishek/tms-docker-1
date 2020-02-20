@@ -2596,6 +2596,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $trainee = ($trainee_name->gender == 'MALE') ? 'Mr.' . $name : 'Ms.' . $name;
             $invoice->recd_on_year = date('Y', strtotime($invoice->recd_on));
             $invoice->recd_on = date('d/m/Y', strtotime($invoice->recd_on));
+             $invoice->mode_of_pymnt = ($invoice->othr_mode_of_payment) ? ($invoice->mode_of_pymnt.' + '.$invoice->othr_mode_of_payment) : $result->mode_of_pymnt;//// added by shubhranshu for payment update
             $invoice->mode_of_pymnt = rtrim($this->course->get_metadata_on_parameter_id($invoice->mode_of_pymnt), ', ');
         } 
         else {
