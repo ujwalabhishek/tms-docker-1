@@ -5386,7 +5386,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                      $net_amount=$sfcato_amount+$cheque_amount1;
                 $data = array(
                     'invoice_id' => $invoice_id,
-                    'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date1)),
+                    'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
                     'refund_type' => 'INDV',
                     'mode_of_refund' => $payment_type,
                     'othr_mode_of_refund' => $payment_type1,
