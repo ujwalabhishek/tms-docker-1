@@ -2515,7 +2515,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         }
         //$paid_details = $this->classtraineemodel->get_invoice_paid_details($result->invoice_id);
         $paid_details = $this->classtraineemodel->get_invoice_paid_details_new($result->invoice_id);///modified by shubhranshu to fix the backdate issue while update payment
-       print_r($paid_details);exit;
+       //print_r($paid_details);exit;
         $paid_arr = array();
         $paid_rcd_till_date = 0;
         //sfc_start
@@ -2552,7 +2552,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             {
                 $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
                 $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ');
-                 $other_mode = ($row->othr_mode_of_payment=='') ? '+'.$row->othr_mode_of_payment : '';// added by shubhranshu to display the other mode if exist 0n 19feb
+                 $other_mode = ($row->othr_mode_of_payment) ? '+'.$row->othr_mode_of_payment : '';// added by shubhranshu to display the other mode if exist 0n 19feb
                 $paid_arr[] = array(
                     'recd_on' => date('d/m/Y', strtotime($row->recd_on)),
                     'mode' => $mode . $mode_ext.$other_mode,
@@ -2561,7 +2561,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 $paid_rcd_till_date = $row->amount_recd + $paid_rcd_till_date;
             }
              $total_paid = $paid_rcd_till_date;
-
+print_r($paid_arr);exit;
             $result->refund_details = $refund_details = $this->classtraineemodel->get_refund_paid_details($result->invoice_id);
             $refund_amount = 0;
             foreach ($refund_details as $k => $row) 
