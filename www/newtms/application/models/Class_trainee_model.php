@@ -5298,7 +5298,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                      $net_amount=$sfc_amount+$cheque_amount1;
                 $data = array(
                     'invoice_id' => $invoice_id,
-                    'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date1)),
+                    'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
                     'refund_type' => 'INDV',
                     'mode_of_refund' => $payment_type,
                     'othr_mode_of_refund' => $payment_type1,
@@ -5315,7 +5315,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                 $brk_data = array(
                     'invoice_id' => $invoice_id,
-                    'refund_date' => date('Y-m-d H:i:S', strtotime($refund_date1)),
+                    'refund_date' => date('Y-m-d H:i:S', strtotime($refund_date)),
                     'user_id' => $trainee_id,
                     'refund_amount' => round($net_amount, 2),
                     'refund_by' => $user_id,
