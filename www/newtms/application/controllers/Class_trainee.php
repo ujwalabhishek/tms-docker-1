@@ -2627,7 +2627,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $subsidy_type = $this->classtraineemodel->get_subsidy_type($this->tenant_id);
         $subsidy_type_label = $this->classtraineemodel->get_subsidy_type_label($this->tenant_id, $result->subsidy_type_id);
         $subsidy_type_label = empty($subsidy_type_label)? 'NA':$subsidy_type_label;
-        print_r($paid_arr);exit;
+       
         $res = array('data' => $result, 'recd' => $paid_arr, 'label' => $label, 'tenant' => $tenant_details,
             'invoice' => $invoice, 'trainee' => $trainee, 'subsidy_type' => $subsidy_type,'subsidy_type_label' => $subsidy_type_label);        
         if ($json_check == 0) {
