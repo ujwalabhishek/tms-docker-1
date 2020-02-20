@@ -3440,7 +3440,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $total_paid = 0;
         foreach ($paid_details as $row) {
             $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
-            $other_mode = $row->othr_mode_of_payment ? '+'.$row->othr_mode_of_payment : '';
+            $other_mode = $row->othr_mode_of_payment ? '+'.$row->othr_mode_of_payment : '';// added by shubhranshu to display the other mode if exist 0n 19feb
             $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ');
             $gender = ($row->gender == 'MALE') ? 'Mr. ' : 'Ms. ';
             $name = $gender . $row->first_name . ' ' . $row->last_name;

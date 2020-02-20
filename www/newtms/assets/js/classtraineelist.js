@@ -286,8 +286,8 @@ $(document).ready(function() {
             data: {class: $class, user: $user},
             success: function(res) {
                 $('.r_recd_on').html(res.invoice.recd_on);
-                $('.r_mode').html(res.invoice.mode_of_pymnt);// added by shubhranshu for other payment mode
-                $('.othr_mode').html(res.invoice.othr_mode_of_payment);
+                $('.r_mode').html(res.invoice.mode_of_pymnt);
+                $('.othr_mode').html(res.invoice.othr_mode_of_payment);// added by shubhranshu for other payment mode
                 $('.r_class_fees').html(parseFloat(res.data.class_fees).toFixed(2))
                 $('.r_net_due').html(parseFloat(res.invoice.amount_recd).toFixed(2));
                 $('.r_dis_label').html(res.data.discount_label);
