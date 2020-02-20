@@ -2733,7 +2733,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             {
                 $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
                 $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', '); 
-                 $other_mode = $row->othr_mode_of_payment ? '+'.$row->othr_mode_of_payment : '';// added by shubhranshu to display the other mode if exist 0n 19feb
+                $other_mode = ($row->othr_mode_of_payment=='') ? '+'.$row->othr_mode_of_payment : '';// added by shubhranshu to display the other mode if exist 0n 19feb
                 $paid_arr[] = array(
                     'recd_on' => date('d/m/Y', strtotime($row->recd_on)),
                     'mode' => $mode . $mode_ext.$other_mode,
