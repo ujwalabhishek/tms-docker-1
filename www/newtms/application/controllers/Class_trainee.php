@@ -2575,7 +2575,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 }
 
                 $result->refund_details[$k]->refund_on = date('d/m/Y', strtotime($row->refund_on));
-                $result->refund_details[$k]->mode_of_refund = $this->course->get_metadata_on_parameter_id($row->mode_of_refund);
+                $result->refund_details[$k]->mode_of_refund = $this->course->get_metadata_on_parameter_id($row->mode_of_refund).(($row->othr_mode_of_refund) ? ('+'.$this->course->get_metadata_on_parameter_id($row->othr_mode_of_refund)):'');/// part added by shubhranshu
                 $refund_amount = $refund_amount + $row->amount_refund;
             }
         
