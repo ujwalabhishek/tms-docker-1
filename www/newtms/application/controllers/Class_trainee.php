@@ -2561,7 +2561,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 $paid_rcd_till_date = $row->amount_recd + $paid_rcd_till_date;
             }
              $total_paid = $paid_rcd_till_date;
-print_r($paid_arr);exit;
+
             $result->refund_details = $refund_details = $this->classtraineemodel->get_refund_paid_details($result->invoice_id);
             $refund_amount = 0;
             foreach ($refund_details as $k => $row) 
@@ -2627,6 +2627,7 @@ print_r($paid_arr);exit;
         $subsidy_type = $this->classtraineemodel->get_subsidy_type($this->tenant_id);
         $subsidy_type_label = $this->classtraineemodel->get_subsidy_type_label($this->tenant_id, $result->subsidy_type_id);
         $subsidy_type_label = empty($subsidy_type_label)? 'NA':$subsidy_type_label;
+        print_r($paid_arr);exit;
         $res = array('data' => $result, 'recd' => $paid_arr, 'label' => $label, 'tenant' => $tenant_details,
             'invoice' => $invoice, 'trainee' => $trainee, 'subsidy_type' => $subsidy_type,'subsidy_type_label' => $subsidy_type_label);        
         if ($json_check == 0) {
