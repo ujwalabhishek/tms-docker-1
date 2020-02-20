@@ -4532,7 +4532,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         $result->cheque_date = ($result->cheque_date) ? date('d-m-Y', strtotime($result->cheque_date)) : '';
         
-        $result->mode_of_pymnt = $result->othr_mode_of_payment ? $result->mode_of_pymnt.'+'.$result->othr_mode_of_payment : $result->mode_of_pymnt;
+        $result->mode_of_pymnt = ($result->othr_mode_of_payment) ? ($result->mode_of_pymnt.' + '.$result->othr_mode_of_payment) : $result->mode_of_pymnt;//// added by shubhranshu for payment update
                                
         $result->pymnt_due_id = $data->pymnt_due_id;
 
