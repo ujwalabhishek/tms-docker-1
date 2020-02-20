@@ -2729,6 +2729,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         if (!empty($paid_details)) 
         {
             $label = 'active';
+            print_r($paid_details);exit;
             foreach ($paid_details as $row) 
             {
                 $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
