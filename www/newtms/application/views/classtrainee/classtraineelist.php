@@ -3,7 +3,7 @@
     $baseurl = '<?php echo base_url(); ?>';
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?v=1"></script>
 <style>
     table td{
         font-size: 11px;
@@ -391,6 +391,10 @@
             <tr>
                 <td class="td_heading">Mode of Payment:</td>
                 <td><span class="r_mode"></span></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Other Mode of Payment:</td>
+                <td><span class="othr_mode"></span></td>
             </tr>
             <tr>
                 <td class="td_heading">Unit Class Fees:</td>

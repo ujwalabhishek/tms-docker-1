@@ -2555,9 +2555,10 @@ if (!empty($tenant_details->tenant_contact_num)) {
             {
                 $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
                 $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ');
+                $other_mode = ($row->othr_mode_of_payment) ? '+'.$row->othr_mode_of_payment : '';// added by shubhranshu to display the other mode if exist 0n 19feb
                 $paid_arr[] = array(
                     'recd_on' => date('d/m/Y', strtotime($row->recd_on)),
-                    'mode' => $mode . $mode_ext,
+                    'mode' => $mode . $mode_ext.$other_mode,
                     'amount' => '$ ' . number_format($row->amount_recd, 2, '.', '') . ' SGD',
                 );
                 $paid_rcd_till_date = $row->amount_recd + $paid_rcd_till_date;
@@ -2577,7 +2578,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 }
 
                 $result->refund_details[$k]->refund_on = date('d/m/Y', strtotime($row->refund_on));
-                $result->refund_details[$k]->mode_of_refund = $this->course->get_metadata_on_parameter_id($row->mode_of_refund);
+                $result->refund_details[$k]->mode_of_refund = $this->course->get_metadata_on_parameter_id($row->mode_of_refund).(($row->othr_mode_of_refund) ? ('+'.$row->othr_mode_of_refund):'');/// part added by shubhranshu
                 $refund_amount = $refund_amount + $row->amount_refund;
             }
         
@@ -3443,12 +3444,13 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $total_paid = 0;
         foreach ($paid_details as $row) {
             $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
+            $other_mode = $row->othr_mode_of_payment ? '+'.$row->othr_mode_of_payment : '';// added by shubhranshu to display the other mode if exist 0n 19feb
             $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ');
             $gender = ($row->gender == 'MALE') ? 'Mr. ' : 'Ms. ';
             $name = $gender . $row->first_name . ' ' . $row->last_name;
             $paid_arr[] = array(
                 'recd_on' => date('d/m/Y', strtotime($row->recd_on)),
-                'mode' => $mode . $mode_ext,
+                'mode' => $mode . $mode_ext.$other_mode,
                 'name' => $name,
                 'amount' => '$ ' . number_format($row->amount_recd, 2, '.', '') . ' SGD',
             );

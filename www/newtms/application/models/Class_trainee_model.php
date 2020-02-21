@@ -4848,9 +4848,10 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
      */
     public function get_invoice_paid_detail($invoice_id) {
 
-        $result = $this->db->select('epr.invoice_id, epr.recd_on, epr.mode_of_pymnt,epr.amount_recd, epr.cheque_number, epr.cheque_date')
+        $result = $this->db->select('epr.invoice_id, epr.recd_on, epr.mode_of_pymnt,epr.amount_recd, epr.cheque_number, epr.cheque_date,epr.othr_mode_of_payment')
                         ->from('enrol_paymnt_recd epr')
-                        ->where('epr.invoice_id', $invoice_id)->get()->row();
+                        ->where('epr.invoice_id', $invoice_id)
+                        ->order_by('epr.trigger_date','DESC')->get()->row();//added by shubhranshu
 
         return $result;
     }
@@ -5019,11 +5020,12 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
      */
     public function get_refund_paid_details($invoice_id) {
 
-        $result = $this->db->select('er.refund_on, er.mode_of_refund, er.amount_refund, er.cheque_number,
+        $result = $this->db->select('er.refund_on, er.mode_of_refund,er.othr_mode_of_refund, er.amount_refund, er.cheque_number,
 
                 er.cheque_date, er.refund_by, er.refnd_reason, er.refnd_reason_ot')
                         ->from('enrol_refund er')
-                        ->where('er.invoice_id', $invoice_id)->get()->result_object();
+                        ->where('er.invoice_id', $invoice_id)
+                        ->order_by('er.trigger_date','DESC')->get()->result_object();/////addded by shubhranshu order by desc to fetch the latest record
 
         return $result;
     }
@@ -5287,7 +5289,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                      $net_amount=$sfc_amount+$cheque_amount1;
                 $data = array(
                     'invoice_id' => $invoice_id,
-                    'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date1)),
+                    'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
                     'refund_type' => 'INDV',
                     'mode_of_refund' => $payment_type,
                     'othr_mode_of_refund' => $payment_type1,
@@ -5304,7 +5306,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                 $brk_data = array(
                     'invoice_id' => $invoice_id,
-                    'refund_date' => date('Y-m-d H:i:S', strtotime($refund_date1)),
+                    'refund_date' => date('Y-m-d H:i:S', strtotime($refund_date)),
                     'user_id' => $trainee_id,
                     'refund_amount' => round($net_amount, 2),
                     'refund_by' => $user_id,
@@ -5375,7 +5377,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                      $net_amount=$sfcato_amount+$cheque_amount1;
                 $data = array(
                     'invoice_id' => $invoice_id,
-                    'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date1)),
+                    'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
                     'refund_type' => 'INDV',
                     'mode_of_refund' => $payment_type,
                     'othr_mode_of_refund' => $payment_type1,
@@ -5392,7 +5394,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                 $brk_data = array(
                     'invoice_id' => $invoice_id,
-                    'refund_date' => date('Y-m-d H:i:S', strtotime($refund_date1)),
+                    'refund_date' => date('Y-m-d H:i:S', strtotime($refund_date)),
                     'user_id' => $trainee_id,
                     'refund_amount' => round($net_amount, 2),
                     'refund_by' => $user_id,
