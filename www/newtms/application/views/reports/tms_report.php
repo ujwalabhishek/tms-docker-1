@@ -5,6 +5,8 @@
 </script>
 <div class="col-md-10">
     <?php
+    $CI = & get_instance();
+    $CI->load->model('reports_model');
     if ($this->session->flashdata('success_message')) {
         echo '<div class="success">' . $this->session->flashdata('success_message') . '!</div>';
     }
@@ -144,9 +146,19 @@
                                 <td>$ <?php echo $data->subsidy_amount ?? "N/A"; ?></td>
                                 <td>$ <?php echo $data->gst_amount ?? "N/A"; ?></td>
                                 <td>$ <?php 
+                                if($data->payment_status == "NOTPAID") {
+                                    echo $data->total_amount_due; 
+                                    $unpaidVal = $unpaidVal + $data->total_amount_due;
+                                } else {
+                                    if($data->enrolment_mode =='SELF'){
+                                        echo $CI->reports_model->get_invoice_data_for_individual($data->invoice_id, $data->user_id);
+                                        
+                                    }else{
+                                        echo $CI->reports_model->get_invoice_data_for_comp($data->invoice_id, $data->user_id);
+                                    }
+                                    
+                                }
                                 
-                                echo $data->total_amount_due; 
-                                $unpaidVal = $unpaidVal + $data->total_amount_due;
                                 ?></td>
                                 <td> <?php echo $data->mode_of_pymnt ?? "N/A"; ?></td>
                                 <td><?php echo $data->tg_number ?? "N/A"; ?></td>
