@@ -20,8 +20,7 @@
        $atr = 'id="search_form" name="search_form" method="POST"';
 //        echo form_open("internal_user/activity_log", $atr);
         echo form_open("reports_finance/tms_report", $atr);
-        ?>   
-
+        ?>
         <table class="table table-striped">
             <tbody>
                 <tr>
@@ -58,9 +57,18 @@
                             <option value='12'>December</option>
                         </select> 
                     </td>
-                    
+                     <td class="td_heading">                               
+                        Payment Status
+                    </td>
+                    <td>
+                        <select id='payStatus' name='payStatus'>
+                            <option value=''>--Select Payment Status--</option>
+                            <option value='1'>Paid</option>
+                            <option value='2'>Not - Paid</option>
+                            <option value='3'>Part - Paid</option>
+                        </select> 
+                    </td>
                 </tr>
-  
             </tbody>
         </table>
                <div class="push_right btn_srch">
