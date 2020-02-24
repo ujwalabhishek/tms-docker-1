@@ -110,15 +110,15 @@
                         $pageurl = $controllerurl;
                         ?>
                         <tr>
-                            <th width="5%" class="th_header"> Tax Code</th>
-                            <th width="10%" class="th_header text_move">Invoice ID.</th>
-                            <th width="10%" class="th_header text_move">Trainee Name</th>
-                            <th width="15%" class="th_header text_move">Company Name</th>
-                            <th width="20%" class="th_header text_move">Class Fees</th>
-                            <th width="10%" class="th_header text_move">Discount</th>
-                            <th width="10%" class="th_header text_move">Subsidy<th>
-                            <th width="10%" class="th_header text_move">GST</th>
-                            <th width="10%" class="th_header text_move">Net Amt.</th>
+                            <th width="5%">Tax Code</th>
+                            <th width="10%">Invoice ID.</th>
+                            <th width="10%" class="th_header">Trainee Name</th>
+                            <th width="15%" class="th_header">Company Name</th>
+                            <th width="20%" class="th_header">Class Fees</th>
+                            <th width="10%" class="th_header">Discount</th>
+                            <th width="10%" class="th_header">Subsidy<th>
+                            <th width="10%" class="th_header">GST</th>
+                            <th width="10%" class="th_header">Net Amt.</th>
                             <th width="9%" class="th_header">Mode</th>
                             <th width="9%" class="th_header">TG No.</th>
                             <th width="9%" class="th_header">Class Start Date</th>
