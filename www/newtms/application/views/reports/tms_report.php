@@ -97,10 +97,10 @@
         <div class="bs-example">
             <div class="table-responsive">
                 <!--            <div class="add_button space_style">
-                <?php if (count($tabledata) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['INTUSR'])) { ?>
-                                            <a href="<?php echo site_url('/internal_user/export_users_page' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export Page Fields</span></a> &nbsp;&nbsp;
-                                            <a href="<?php echo site_url('/internal_user/export_users_full' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export All Fields</span></a>
-                <?php } ?>
+                <?php //if (count($tabledata) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['INTUSR'])) { ?>
+                                            <a href="<?php //echo site_url('/internal_user/export_users_page' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export Page Fields</span></a> &nbsp;&nbsp;
+                                            <a href="<?php //echo site_url('/internal_user/export_users_full' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export All Fields</span></a>
+                <?php //} ?>
                             </div>-->
                 <div style="clear:both;"></div>
                 <table id="listview" class="table table-striped">
@@ -112,7 +112,7 @@
                             <th width="15%">Company Name</th>
                             <th width="20%">Class Fees</th>
                             <th width="10%">Discount</th>
-                            <th width="10%">Subsidy<th>
+                            <th width="10%">Subsidy</th>
                             <th width="10%">GST</th>
                             <th width="10%">Net Amt.</th>
                             <th width="9%">Mode</th>
