@@ -3251,11 +3251,11 @@ SELECT  {$calc_rows} c.crse_name,
         return $query->result_array();
     }
 
-    public function tms_unpaid_report($tenant_id, $payment_status, $year, $month,$training_score) {
-        $start_date= $year.'-'.$month.'-01';
-        $end_date= $year.'-'.$month.'-31';
-        
-   
+    public function tms_unpaid_report($tenant_id, $payment_status, $year, $month, $training_score) {
+        $start_date = $year . '-' . $month . '-01';
+        $end_date = $year . '-' . $month . '-31';
+
+
         $query = "SELECT 
             tu.tax_code,
             ei.invoice_id,
@@ -3283,16 +3283,16 @@ SELECT  {$calc_rows} c.crse_name,
                     JOIN tms_users tu ON tu.user_id = ce.user_id 
                     left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
                     left join company_master cm on cm.company_id=ce.company_id
-                    WHERE cc . tenant_id = '".$tenant_id."' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
-                    AND ce.training_score in ('".$training_score."')
-                    AND ce.payment_status in ('".$payment_status."')
-                    AND date(cc.class_start_datetime)>= '".$start_date."' and date(cc.class_end_datetime) <= '".$end_date."'";
-       
-        $result= $this->db->query($query)->result();
-       
+                    WHERE cc . tenant_id = '" . $tenant_id . "' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
+                    AND ce.training_score in ('" . $training_score . "')
+                    AND ce.payment_status in ('" . $payment_status . "')
+                    AND date(cc.class_start_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
+
+        $result = $this->db->query($query)->result();
+
         return $result;
     }
-    
+
     public function tms_paid_report($tenant_id, $payment_status, $year, $month, $training_score) {
         $start_date = $year . '-' . $month . '-01';
         $end_date = $year . '-' . $month . '-31';
@@ -3310,7 +3310,7 @@ SELECT  {$calc_rows} c.crse_name,
             epr.amount_recd as total_amount_due,
             ce.payment_status,
             ce.enrolment_mode,
-            epr.trigger_date as class_start_datetime,
+            cc.class_start_datetime,
             cc.class_end_datetime,
             cc.class_name,
             ce.training_score,
@@ -3321,12 +3321,10 @@ SELECT  {$calc_rows} c.crse_name,
                     JOIN enrol_pymnt_due due ON ce.pymnt_due_id = due.pymnt_due_id and ce.user_id = due.user_id 
                     join enrol_invoice ei on ei.pymnt_due_id and due.pymnt_due_id and ei.pymnt_due_id=ce.pymnt_due_id
                     JOIN tms_users tu ON tu.user_id = ce.user_id 
-                    
-                   
                     left join (SELECT tt.*
-FROM enrol_pymnt_brkup_dt tt
-JOIN
-    (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id AND tt.trigger_date = gtt.Maxdate) epr on epr.invoice_id=ei.invoice_id and epr.user_id = ce.user_id 
+                                FROM enrol_pymnt_brkup_dt tt
+                                JOIN
+                                    (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id) epr on epr.invoice_id=ei.invoice_id and epr.user_id = ce.user_id 
                     left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
                     left join company_master cm on cm.company_id=ce.company_id
                     WHERE cc . tenant_id = '" . $tenant_id . "' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
@@ -3339,9 +3337,8 @@ JOIN
 
         return $result;
     }
-    
-    
-    public function get_alltrainee_invoices($invoice,$user_id){
+
+    public function get_alltrainee_invoices($invoice, $user_id) {
         $this->db->select('*');
         $this->db->from('enrol_pymnt_brkup_dt');
         $this->db->where('invoice_id', $invoice);
