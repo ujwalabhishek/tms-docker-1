@@ -56,7 +56,6 @@ function logged_in_user_side_menu() {
         $tms_routes = (!isset($tms_route) OR ! is_array($tms_route)) ? array() : $tms_route;
         //print_r($tms_routes);exit;
         unset($tms_route);
-        print_r($categories);exit;
         foreach ($menu_links as $category_machine_name => $category_user_name) {
             $links = get_menu_links_by_category($category_user_name, $category_machine_name, $side_menu[$category_machine_name], $tms_routes);
             if ($links) {
