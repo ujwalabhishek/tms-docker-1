@@ -3366,7 +3366,7 @@ SELECT  {$calc_rows} c.crse_name,
                     WHERE cc . tenant_id = '" . $tenant_id . "' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
                     AND ce.training_score in ('" . $training_score . "')
                     AND ce.payment_status in ('" . $payment_status . "')
-                    AND ei.invoice_id = 'XPR163035'
+                  
                     AND date(cc.class_start_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
 
         $result = $this->db->query($query)->result();
@@ -3409,7 +3409,7 @@ SELECT  {$calc_rows} c.crse_name,
                     WHERE cc . tenant_id = '" . $tenant_id . "' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
                     AND ce.training_score in ('" . $training_score . "')
                     AND ce.payment_status in ('" . $payment_status . "')
-                    AND ei.invoice_id = 'XPR163035'
+                   
                     AND date(cc.class_start_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
 
         $result = $this->db->query($query)->result();
