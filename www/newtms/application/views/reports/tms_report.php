@@ -57,7 +57,7 @@
                             <option value='12'>December</option>
                         </select> 
                     </td>
-                     <td class="td_heading">                               
+                    <td class="td_heading">                               
                         Payment Status
                     </td>
                     <td>
@@ -65,7 +65,20 @@
                             <option value=''>--Select Payment Status--</option>
                             <option value='1'>Paid</option>
                             <option value='2'>Not - Paid</option>
-                            <option value='3'>Part - Paid</option>
+                        </select> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_heading">                               
+                        Result Status
+                    </td>
+                    <td>
+                        <select id='tStatus' name='trainingStatus'>
+                            <option value=''>--Select Training Score--</option>
+                            <option value='1'>Competant</option>
+                            <option value='2'>Not Yet Competant</option>
+                            <option value='3'>Absentees</option>
+                            <option value='4'>Competant / Not Yet Competant</option>
                         </select> 
                     </td>
                 </tr>

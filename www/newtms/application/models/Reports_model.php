@@ -3251,7 +3251,7 @@ SELECT  {$calc_rows} c.crse_name,
         return $query->result_array();
     }
 
-    public function tms_report($tenant_id, $payment_status, $year, $month) {
+    public function tms_report($tenant_id, $payment_status, $year, $month,$training_score) {
         $start_date= $year.'-'.$month.'-01';
         $end_date= $year.'-'.$month.'-31';
         $query = "SELECT ei.invoice_id,ce.payment_status,
@@ -3262,9 +3262,12 @@ SELECT  {$calc_rows} c.crse_name,
                     join enrol_invoice ei on ei.pymnt_due_id and due.pymnt_due_id and ei.pymnt_due_id=ce.pymnt_due_id
                     JOIN tms_users tu ON tu.user_id = ce.user_id JOIN tms_users_pers tup ON tup.user_id = tu.user_id 
                     WHERE cc . tenant_id = '".$tenant_id."' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
-                    AND ce.training_score in ('C','NYC')
+                    AND ce.training_score in ('".$training_score."')
                     AND ce.payment_status in ('".$payment_status."')
                     AND date(cc.class_start_datetime)>= '".$start_date."' and date(cc.class_end_datetime) <= '".$end_date."'";
+        
+        $result= $this->db->query($query);
+        print_r($result);exit;
     }
 
 }
