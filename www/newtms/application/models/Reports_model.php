@@ -3342,7 +3342,7 @@ SELECT  {$calc_rows} c.crse_name,
 
         $result = $this->db->query($query)->result();
        
-        return $result->amount_recd;
+        return $result['amount_recd'];
     }
 
     public function get_invoice_data_for_comp($invoice_id, $user_id) {
