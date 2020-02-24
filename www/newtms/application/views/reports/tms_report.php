@@ -134,6 +134,7 @@
                         </tr>
                         <?php
                         $unpaidVal = 0;
+                        $paidVal = 0;
                         foreach ($result as $data) {
                             ?>
                             <tr>
@@ -151,10 +152,13 @@
                                     $unpaidVal = $unpaidVal + $data->total_amount_due;
                                 } else {
                                     if($data->enrolment_mode =='SELF'){
-                                        echo $CI->reports_model->get_invoice_data_for_individual($data->invoice_id, $data->user_id);
-                                        
+                                        $amount = $CI->reports_model->get_invoice_data_for_individual($data->invoice_id, $data->user_id);
+                                        $unpaidVal = $unpaidVal + $amount;
+                                        echo $amount;
                                     }else{
-                                        echo $CI->reports_model->get_invoice_data_for_comp($data->invoice_id, $data->user_id);
+                                        $amount1= $CI->reports_model->get_invoice_data_for_comp($data->invoice_id, $data->user_id);
+                                        $unpaidVal = $unpaidVal + $amount1;
+                                        echo $amount1;
                                     }
                                     
                                 }
