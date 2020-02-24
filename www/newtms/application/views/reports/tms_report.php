@@ -153,7 +153,7 @@
                                 <td><?php echo date('d/m/Y', strtotime($data->class_start_datetime)); ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($data->class_end_datetime)); ?></td>
                                 <td><?php echo $data->class_name; ?></td>
-                                <td><?php echo $data->trainig_score; ?></td>
+                                <td><?php echo $data->training_score; ?></td>
                                 <td><?php echo $data->class_name; ?></td>
                                  <td><?php echo $data->payment_status; ?></td>
                             </tr>
