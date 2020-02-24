@@ -3269,7 +3269,7 @@ SELECT  {$calc_rows} c.crse_name,
                     AND ce.payment_status in ('".$payment_status."')
                     AND date(cc.class_start_datetime)>= '".$start_date."' and date(cc.class_end_datetime) <= '".$end_date."'";
        
-        $result= $this->db->query($query);
+        $result= $this->db->query($query)->result();
         print_r($result);exit;
     }
 
