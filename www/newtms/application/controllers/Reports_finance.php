@@ -44,7 +44,7 @@ class Reports_finance extends CI_Controller {
     //// desined to pull the PAID /NOTPAID report
     public function tms_report(){
         $data['sideMenuData'] = fetch_non_main_page_content();
-        $data['main_content'] = 'reports_finance';
+        $data['main_content'] = 'reports';
         $this->load->view('layout', $data);
     }
 
