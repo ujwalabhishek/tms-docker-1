@@ -3323,7 +3323,7 @@ SELECT  {$calc_rows} c.crse_name,
                     left join (SELECT tt.*
                                 FROM enrol_pymnt_brkup_dt tt
                                 JOIN
-                                    (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id AND tt.trigger_date = gtt.Maxdate) epr on epr.invoice_id=ei.invoice_id and epr.user_id = ce.user_id 
+                                    (SELECT `invoice_id`, MAX(`id`) AS Maxid FROM enrol_pymnt_brkup_dt GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id AND tt.id= gtt.Maxid) epr on epr.invoice_id=ei.invoice_id and epr.user_id = ce.user_id 
                     left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
                     left join company_master cm on cm.company_id=ce.company_id
                     WHERE cc . tenant_id = '" . $tenant_id . "' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
