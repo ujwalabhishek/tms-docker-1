@@ -3280,7 +3280,7 @@ SELECT  {$calc_rows} c.crse_name,
                     JOIN enrol_pymnt_due due ON ce.pymnt_due_id = due.pymnt_due_id and ce.user_id = due.user_id 
                     join enrol_invoice ei on ei.pymnt_due_id and due.pymnt_due_id and ei.pymnt_due_id=ce.pymnt_due_id
                     JOIN tms_users tu ON tu.user_id = ce.user_id 
-                    left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= epd.user_id
+                    left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
                     left join company_master cm on cm.company_id=ce.company_id
                     WHERE cc . tenant_id = '".$tenant_id."' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
                     AND ce.training_score in ('".$training_score."')
