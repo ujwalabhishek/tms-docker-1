@@ -112,20 +112,20 @@
                         <tr>
                             <th width="5%">Tax Code</th>
                             <th width="10%">Invoice ID.</th>
-                            <th width="10%" class="th_header">Trainee Name</th>
-                            <th width="15%" class="th_header">Company Name</th>
-                            <th width="20%" class="th_header">Class Fees</th>
-                            <th width="10%" class="th_header">Discount</th>
-                            <th width="10%" class="th_header">Subsidy<th>
-                            <th width="10%" class="th_header">GST</th>
-                            <th width="10%" class="th_header">Net Amt.</th>
-                            <th width="9%" class="th_header">Mode</th>
-                            <th width="9%" class="th_header">TG No.</th>
-                            <th width="9%" class="th_header">Class Start Date</th>
-                            <th width="9%" class="th_header">Class End Date</th>
-                            <th width="9%" class="th_header">Class Name</th>
-                            <th width="9%" class="th_header">Training Score</th>
-                            <th width="9%" class="th_header">Att Status</th>
+                            <th width="10%">Trainee Name</th>
+                            <th width="15%">Company Name</th>
+                            <th width="20%">Class Fees</th>
+                            <th width="10%">Discount</th>
+                            <th width="10%">Subsidy<th>
+                            <th width="10%">GST</th>
+                            <th width="10%">Net Amt.</th>
+                            <th width="9%">Mode</th>
+                            <th width="9%">TG No.</th>
+                            <th width="9%">Class Start Date</th>
+                            <th width="9%">Class End Date</th>
+                            <th width="9%">Class Name</th>
+                            <th width="9%">Training Score</th>
+                            <th width="9%">Att Status</th>
                         </tr>
                     </thead>
                     <tbody>
