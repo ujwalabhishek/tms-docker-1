@@ -70,6 +70,7 @@ class Reports_finance extends CI_Controller {
         
         
         $this->reportsModel->tms_report($tenant_id, $payment_status, $year, $month,$training_score);
+        
         }
         
         $data['main_content'] = 'reports/tms_report';
