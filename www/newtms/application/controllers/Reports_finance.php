@@ -69,12 +69,44 @@ class Reports_finance extends CI_Controller {
             } 
         
         
-        $this->reportsModel->tms_report($tenant_id, $payment_status, $year, $month,$training_score);
+            //$invoices = $this->reportsModel->tms_report($tenant_id, $payment_status, $year, $month,$training_score);
+            
+            $temp_date = array();
+            $this->reportsModel->tms_unpaid_report($tenant_id, $payment_status, $year, $month,$training_score);
+            foreach($invoices as $row){
+
+                if($row->payment_status == 'PARTPAID'){
+                    echo 'error';exit;
+                }else if($row->payment_status == 'PAID'){
+                    $temp_date[] = $row->invoice_id;
+                    if($row->enrolment_mode =='COMPSPON'){
+                         $this->get_all_trainee_company_invoice($row->invoice_id,$row->user_id);
+                    }else{
+                        $this->get_individual_invoice();
+                    }
+
+                }else if($row->payment_status ='NOTPAID'){
+                    $temp_date[] = $row->invoice_id;
+                    if($row->enrolment_mode =='COMPSPON'){
+                        $this->get_all_trainee_company_invoice($row->invoice_id,$row->user_id);
+                    }else{
+                        $this->get_individual_invoice();
+                    }
+                    
+                }
+
+            }
+        
         
         }
         
         $data['main_content'] = 'reports/tms_report';
         $this->load->view('layout', $data);
+    }
+    
+    public function get_all_trainee_company_invoice($invoice,$user_id){
+        $res = $this->reportsModel->get_alltrainee_invoices($invoice,$user_id);
+        
     }
 
     /**
