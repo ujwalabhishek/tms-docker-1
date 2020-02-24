@@ -45,32 +45,32 @@ class Reports_finance extends CI_Controller {
     public function tms_report() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         if (!empty($_POST)) {
-            echo $_POST['monthVal'];
-            exit;
-        }
-        $tenant_id = $this->session->userdata('userDetails')->tenant_id;
-        if ($_POST['payStatus'] == '1') {
-            $payment_status = array('PAID');
-        } else if($_POST['payStatus'] == '2') {
-            $payment_status = array('NOTPAID');
-        }
-        
-         $year = $_POST['yearVal'];
-        $month = $_POST['monthVal'];
-        $training_score= $_POST['trainingStatus'];
-       
-        if ($training_score == '1') {
-            $training_score = array('C');
-        } else if($training_score == '2') {
-            $training_score = array('NYC', '2NYC');
-        } else if($training_score == '3') {
-            $training_score = array('ABS');
-        } else if($training_score == '4') {
-            $training_score = array('C','NYC', '2NYC');
-        } 
+            
+         
+            $tenant_id = $this->session->userdata('userDetails')->tenant_id;
+            if ($_POST['payStatus'] == '1') {
+                $payment_status = array('PAID');
+            } else if($_POST['payStatus'] == '2') {
+                $payment_status = array('NOTPAID');
+            }
+
+             $year = $_POST['yearVal'];
+            $month = $_POST['monthVal'];
+            $training_score= $_POST['trainingStatus'];
+
+            if ($training_score == '1') {
+                $training_score = array('C');
+            } else if($training_score == '2') {
+                $training_score = array('NYC', '2NYC');
+            } else if($training_score == '3') {
+                $training_score = array('ABS');
+            } else if($training_score == '4') {
+                $training_score = array('C','NYC', '2NYC');
+            } 
         
         
         $this->reportsModel->tms_report($tenant_id, $payment_status, $year, $month,$training_score);
+        }
         
         $data['main_content'] = 'reports/tms_report';
         $this->load->view('layout', $data);
