@@ -17,7 +17,7 @@
     <div class="table-responsive">
         <?php
 //            print_r($tabledata);
-       $atr = 'id="search_form" name="search_form" method="GET"';
+       $atr = 'id="search_form" name="search_form" method="POST"';
 //        echo form_open("internal_user/activity_log", $atr);
         echo form_open("reports_finance/tms_report", $atr);
         ?>   
