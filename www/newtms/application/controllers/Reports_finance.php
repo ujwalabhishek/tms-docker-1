@@ -72,10 +72,12 @@ class Reports_finance extends CI_Controller {
             //$invoices = $this->reportsModel->tms_report($tenant_id, $payment_status, $year, $month,$training_score);
             
             $temp_date = array();
-            $data['result'] = $this->reportsModel->tms_unpaid_report($tenant_id, $payment_status, $year, $month,$training_score);
-           
-        
-        
+            if ($_POST['payStatus'] == '1') {
+                $data['result'] = $this->reportsModel->tms_paid_report($tenant_id, $payment_status, $year, $month,$training_score);
+            } else if($_POST['payStatus'] == '2') {
+                $data['result'] = $this->reportsModel->tms_unpaid_report($tenant_id, $payment_status, $year, $month,$training_score);
+            }
+            
         }
         
         $data['main_content'] = 'reports/tms_report';
