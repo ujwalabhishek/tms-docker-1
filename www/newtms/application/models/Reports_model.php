@@ -3341,8 +3341,8 @@ SELECT  {$calc_rows} c.crse_name,
                                     (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id ."' and user_id='".$user_id."' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id AND tt.trigger_date = gtt.Maxdate";
 
         $result = $this->db->query($query)->result();
-       
-        return $result['amount_recd'];
+       echo print_r($result,true);exit;
+        //return $result['amount_recd'];
     }
 
     public function get_invoice_data_for_comp($invoice_id, $user_id) {
@@ -3353,7 +3353,8 @@ SELECT  {$calc_rows} c.crse_name,
                                     (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id ."' and user_id='".$user_id."' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id";
 
         $result = $this->db->query($query)->result();
-        return $result->amount_recd;
+        echo print_r($result,true);exit;
+        //return $result->amount_recd;
     }
 
 }
