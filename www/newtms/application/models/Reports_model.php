@@ -3268,7 +3268,7 @@ SELECT  {$calc_rows} c.crse_name,
                     AND ce.training_score in ('".$training_score."')
                     AND ce.payment_status in ('".$payment_status."')
                     AND date(cc.class_start_datetime)>= '".$start_date."' and date(cc.class_end_datetime) <= '".$end_date."'";
-       echo $query;exit;
+       
         $result= $this->db->query($query);
         print_r($result);exit;
     }
