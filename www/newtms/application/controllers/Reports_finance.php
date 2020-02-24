@@ -40,7 +40,47 @@ class Reports_finance extends CI_Controller {
         $data['main_content'] = 'reports/reports_finance';
         $this->load->view('layout', $data);
     }
+    
+    //// desgined by shubhranshu to pull the PAID /NOTPAID report
+    public function tms_report() {
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        if (!empty($_POST)) {
+            
+         
+            $tenant_id = $this->session->userdata('userDetails')->tenant_id;
+            if ($_POST['payStatus'] == '1') {
+                $payment_status = "PAID','PARTPAID";
+            } else if($_POST['payStatus'] == '2') {
+                $payment_status = "NOTPAID','PARTPAID";
+            }
 
+             $year = $_POST['yearVal'];
+            $month = $_POST['monthVal'];
+            $training_score= $_POST['trainingStatus'];
+
+            if ($training_score == '1') {
+                $training_score = 'C';
+            } else if($training_score == '2') {
+                $training_score = "NYC,2NYC";
+            } else if($training_score == '3') {
+                $training_score = 'ABS';
+            } else if($training_score == '4') {
+                $training_score = "C,NYC,2NYC";
+            } 
+        
+        
+            //$invoices = $this->reportsModel->tms_report($tenant_id, $payment_status, $year, $month,$training_score);
+            
+            $temp_date = array();
+            $data['result'] = $this->reportsModel->tms_unpaid_report($tenant_id, $payment_status, $year, $month,$training_score);
+           
+        
+        
+        }
+        
+        $data['main_content'] = 'reports/tms_report';
+        $this->load->view('layout', $data);
+    }
     /**
      * List and Search Invoice Reports
      */
