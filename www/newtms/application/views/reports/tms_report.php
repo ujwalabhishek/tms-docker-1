@@ -105,10 +105,6 @@
                 <div style="clear:both;"></div>
                 <table id="listview" class="table table-striped">
                     <thead>
-                        <?php
-                        $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
-                        $pageurl = $controllerurl;
-                        ?>
                         <tr>
                             <th width="5%">Tax Code</th>
                             <th width="10%">Invoice ID.</th>
@@ -138,7 +134,7 @@
                         foreach ($result as $data) {
                             ?>
                             <tr>
-                                <td><?php echo $data->tax_code; ?></a></td>
+                                <td><?php echo $data->tax_code; ?></td>
                                 <td><?php echo $data->invoice_id; ?></td>
                                 <td><?php echo $data->name; ?></td>
                                 <td><?php echo $data->company_name ?? "N/A"; ?></td>
