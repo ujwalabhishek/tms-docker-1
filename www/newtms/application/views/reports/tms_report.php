@@ -106,7 +106,7 @@
                 <table id="listview" class="table table-striped">
                     <thead>
                         <tr>
-                            <th width="5%">Tax Code</th>
+                            <th width="10%">Tax Code</th>
                             <th width="10%">Invoice ID.</th>
                             <th width="10%">Trainee Name</th>
                             <th width="15%">Company Name</th>
@@ -131,6 +131,7 @@
                             ?>
                         </tr>
                         <?php
+                        $unpaidVal = 0;
                         foreach ($result as $data) {
                             ?>
                             <tr>
@@ -142,7 +143,11 @@
                                 <td>$ <?php echo $data->discount_rate ?? "N/A"; ?></td>
                                 <td>$ <?php echo $data->subsidy_amount ?? "N/A"; ?></td>
                                 <td>$ <?php echo $data->gst_amount ?? "N/A"; ?></td>
-                                <td>$ <?php echo $data->total_amount_due; ?></td>
+                                <td>$ <?php 
+                                
+                                echo $data->total_amount_due; 
+                                $unpaidVal = $unpaidVal + $data->total_amount_due;
+                                ?></td>
                                 <td> <?php echo $data->payment_status ?? "N/A"; ?></td>
                                 <td><?php echo $data->tg_number ?? "N/A"; ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($data->class_start_datetime)); ?></td>
@@ -152,7 +157,11 @@
                                 <td><?php echo $data->class_name; ?></td>
                                 <td><?php echo $data->att_status; ?></td>
                             </tr>
-                        <?php } ?>
+                        <?php } 
+                        
+                        echo "Total Amount Due for unpaid invoices :".$unpaidVal;
+                        
+                        ?>
                     </tbody>      
                 </table>
             </div>
