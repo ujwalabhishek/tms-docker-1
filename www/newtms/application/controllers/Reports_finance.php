@@ -49,9 +49,9 @@ class Reports_finance extends CI_Controller {
          
             $tenant_id = $this->session->userdata('userDetails')->tenant_id;
             if ($_POST['payStatus'] == '1') {
-                $payment_status = 'PAID'.','.'PARTPAID';
+                $payment_status = "PAID','PARTPAID";
             } else if($_POST['payStatus'] == '2') {
-                $payment_status = 'NOTPAID'.','.'PARTPAID';
+                $payment_status = "NOTPAID','PARTPAID";
             }
 
              $year = $_POST['yearVal'];
