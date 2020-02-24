@@ -3293,33 +3293,46 @@ SELECT  {$calc_rows} c.crse_name,
         return $result;
     }
     
-    public function tms_paid_report($tenant_id, $payment_status, $year, $month,$training_score) {
-        $start_date= $year.'-'.$month.'-01';
-        $end_date= $year.'-'.$month.'-31';
-        
-        $this->db->select('ei.invoice_id,ce.payment_status');
-        
+    public function tms_paid_report($tenant_id, $payment_status, $year, $month, $training_score) {
+        $start_date = $year . '-' . $month . '-01';
+        $end_date = $year . '-' . $month . '-31';
+
         $query = "SELECT 
+            tu.tax_code,
             ei.invoice_id,
+            tup.first_name as name,
+            cm.company_name,
+            due.class_fees,
+            ceil((due.class_fees * due.discount_rate)) DIV 100 as discount_rate,
+            due.gst_amount,
+            ce.tg_number,
+            due.subsidy_amount,
+            epdt.amount_recd as total_amount_due,
             ce.payment_status,
             ce.enrolment_mode,
-            ce.user_id
+            cc.class_start_datetime,
+            cc.class_end_datetime,
+            cc.class_name,
+            ce.training_score,
+            due.att_status
                     FROM ( course_class cc) 
                     JOIN course c ON c.course_id = cc.course_id 
                     JOIN class_enrol ce ON ce.class_id = cc.class_id 
                     JOIN enrol_pymnt_due due ON ce.pymnt_due_id = due.pymnt_due_id and ce.user_id = due.user_id 
                     join enrol_invoice ei on ei.pymnt_due_id and due.pymnt_due_id and ei.pymnt_due_id=ce.pymnt_due_id
-                    JOIN tms_users tu ON tu.user_id = ce.user_id JOIN tms_users_pers tup ON tup.user_id = tu.user_id 
-                    WHERE cc . tenant_id = '".$tenant_id."' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
-                    AND ce.training_score in ('".$training_score."')
-                    AND ce.payment_status in ('".$payment_status."')
-                    AND date(cc.class_start_datetime)>= '".$start_date."' and date(cc.class_end_datetime) <= '".$end_date."'";
-       
-        $result= $this->db->query($query)->result();
-        
+                    JOIN tms_users tu ON tu.user_id = ce.user_id 
+                    JOIN enrol_pymnt_brkup_dt epdt ON epdt.invoice_id = ei.invoice_id and epdt.user_id = ce.user_id 
+                    left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
+                    left join company_master cm on cm.company_id=ce.company_id
+                    WHERE cc . tenant_id = '" . $tenant_id . "' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
+                    AND ce.training_score in ('" . $training_score . "')
+                    AND ce.payment_status in ('" . $payment_status . "')
+                    AND ei.invoice_id = 'XPR163035'
+                    AND date(cc.class_start_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
+
+        $result = $this->db->query($query)->result();
+
         return $result;
-        
-        
     }
     
     
