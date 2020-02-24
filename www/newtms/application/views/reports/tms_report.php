@@ -150,7 +150,7 @@
                                 ?></td>
                                 <td> <?php echo $data->mode_of_pymnt ?? "N/A"; ?></td>
                                 <td><?php echo $data->tg_number ?? "N/A"; ?></td>
-                                <td><?php echo date('d/m/Y', strtotime($data->class_start_datetime)); ?></td>
+                                <td><?php echo date('d/m/Y H:i:s', strtotime($data->class_start_datetime)); ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($data->class_end_datetime)); ?></td>
                                 <td><?php echo $data->class_name; ?></td>
                                 <td><?php echo $data->training_score; ?></td>
