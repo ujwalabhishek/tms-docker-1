@@ -3262,7 +3262,7 @@ SELECT  {$calc_rows} c.crse_name,
             tup.first_name as name,
             cm.company_name,
             due.class_fees,
-            ceil((due.class_fees * due.discount_rate)) DIV 100 as Discount_Rate,
+            ceil((due.class_fees * due.discount_rate)) DIV 100 as discount_rate,
             due.gst_amount,
             ce.tg_number,
             due.subsidy_amount,
@@ -3272,7 +3272,8 @@ SELECT  {$calc_rows} c.crse_name,
             cc.class_start_datetime,
             cc.class_end_datetime,
             cc.class_name,
-            ce.training_score
+            ce.training_score,
+            due.att_status
            
                     FROM ( course_class cc) 
                     JOIN course c ON c.course_id = cc.course_id 
@@ -3288,7 +3289,7 @@ SELECT  {$calc_rows} c.crse_name,
                     AND date(cc.class_start_datetime)>= '".$start_date."' and date(cc.class_end_datetime) <= '".$end_date."'";
        
         $result= $this->db->query($query)->result();
-        print_r($result);exit;
+       
         return $result;
     }
     

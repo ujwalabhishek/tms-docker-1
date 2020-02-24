@@ -12,12 +12,12 @@
         echo '<div class="error1">' . $this->session->flashdata('error_message') . '!</div>';
     }
     ?>
-  
+
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/internal_user.png"/>  TMS REPORT - PAID/NOTPAID</h2>
     <div class="table-responsive">
         <?php
 //            print_r($tabledata);
-       $atr = 'id="search_form" name="search_form" method="POST"';
+        $atr = 'id="search_form" name="search_form" method="POST"';
 //        echo form_open("internal_user/activity_log", $atr);
         echo form_open("reports_finance/tms_report", $atr);
         ?>
@@ -84,67 +84,105 @@
                 </tr>
             </tbody>
         </table>
-               <div class="push_right btn_srch">
-                            <button type="submit" class="search_button btn btn-xs btn-primary no-mar">
-                                <span class="glyphicon glyphicon-search"></span>
-                                Search
-                            </button>
-                   
-                        </div>
-        <?php echo form_close(); ?>
-   
-    
-    <div class="bs-example">
-        <div class="table-responsive">
-<!--            <div class="add_button space_style">
-                <?php if (count($tabledata) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['INTUSR'])) { ?>
-                    <a href="<?php echo site_url('/internal_user/export_users_page' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export Page Fields</span></a> &nbsp;&nbsp;
-                    <a href="<?php echo site_url('/internal_user/export_users_full' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export All Fields</span></a>
-                <?php } ?>
-            </div>-->
-            <div style="clear:both;"></div>
-            <table id="listview" class="table table-striped">
-                <thead>
-                    <?php
-                    $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
-                    $pageurl = $controllerurl;
-                    ?>
-                    <tr>
-                        <th class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.tax_code&o=" . $ancher; ?>" >Module</a></th> 
-                        <th class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.account_status&o=" . $ancher; ?>" >Activity On</a></th>
-                        <th class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=role.role_name&o=" . $ancher; ?>" >Updated BY</a></th>
-                        
-                         <th class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.account_status&o=" . $ancher; ?>" >Date </a></th>
-                            <th class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.account_status&o=" . $ancher; ?>" >Action </a></th>
-                    </tr>
-                </thead>
-                <tbody>
-                        
-                </tbody>      
-            </table>
+        <div class="push_right btn_srch">
+            <button type="submit" class="search_button btn btn-xs btn-primary no-mar">
+                <span class="glyphicon glyphicon-search"></span>
+                Search
+            </button>
+
         </div>
-        <div style="clear:both;"></div><br>
-        <ul class="pagination pagination_style">
-            <?php echo $pagination; 
+        <?php echo form_close(); ?>
+
+
+        <div class="bs-example">
+            <div class="table-responsive">
+                <!--            <div class="add_button space_style">
+                <?php if (count($tabledata) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['INTUSR'])) { ?>
+                                            <a href="<?php echo site_url('/internal_user/export_users_page' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export Page Fields</span></a> &nbsp;&nbsp;
+                                            <a href="<?php echo site_url('/internal_user/export_users_full' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export All Fields</span></a>
+                <?php } ?>
+                            </div>-->
+                <div style="clear:both;"></div>
+                <table id="listview" class="table table-striped">
+                    <thead>
+                        <?php
+                        $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
+                        $pageurl = $controllerurl;
+                        ?>
+                        <tr>
+                            <th width="5%" class="th_header"> Tax Code</th>
+                            <th width="10%" class="th_header text_move">Invoice ID.</th>
+                            <th width="10%" class="th_header text_move">Trainee Name</th>
+                            <th width="15%" class="th_header text_move">Company Name</th>
+                            <th width="20%" class="th_header text_move">Class Fees</th>
+                            <th width="10%" class="th_header text_move">Discount</th>
+                            <th width="10%" class="th_header text_move">Subsidy<th>
+                            <th width="10%" class="th_header text_move">GST</th>
+                            <th width="10%" class="th_header text_move">Net Amt.</th>
+                            <th width="9%" class="th_header">Mode</th>
+                            <th width="9%" class="th_header">TG No.</th>
+                            <th width="9%" class="th_header">Class Start Date</th>
+                            <th width="9%" class="th_header">Class End Date</th>
+                            <th width="9%" class="th_header">Class Name</th>
+                            <th width="9%" class="th_header">Training Score</th>
+                            <th width="9%" class="th_header">Att Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <?php
+                            echo "Total Count : ".count($result);
+                            ?>
+                        </tr>
+                        <?php
+                        foreach ($result as $data) {
+                            ?>
+                            <tr>
+                                <td><?php echo $data->tax_code; ?></a></td>
+                                <td><?php echo $data->invoice_id; ?></td>
+                                <td><?php echo $data->name; ?></td>
+                                <td><?php echo $data->company_name ?? "N/A"; ?></td>
+                                <td>$ <?php echo $data->class_fees; ?></td>
+                                <td>$ <?php echo $data->discount_rate ?? "N/A"; ?></td>
+                                <td>$ <?php echo $data->subsidy_amount ?? "N/A"; ?></td>
+                                <td>$ <?php echo $data->gst_amount ?? "N/A"; ?></td>
+                                <td>$ <?php echo $data->total_amount_due; ?></td>
+                                <td> <?php echo $data->payment_status ?? "N/A"; ?></td>
+                                <td><?php echo $data->tg_number ?? "N/A"; ?></td>
+                                <td><?php echo date('d/m/Y', strtotime($data->class_start_datetime)); ?></td>
+                                <td><?php echo date('d/m/Y', strtotime($data->class_end_datetime)); ?></td>
+                                <td><?php echo $data->class_name; ?></td>
+                                <td><?php echo $data->trainig_score; ?></td>
+                                <td><?php echo $data->class_name; ?></td>
+                                <td><?php echo $data->att_status; ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>      
+                </table>
+            </div>
+            <div style="clear:both;"></div><br>
+            <ul class="pagination pagination_style">
+                <?php
+                echo $pagination;
 //            echo $this->input->get('cls_name');
-           ?>
-        </ul>
+                ?>
+            </ul>
+        </div>
     </div>
-</div>
-<script>
-$("#search_form").submit(function(){
-    ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
-    check_remove_id();
-        var self = $(".btn_srch"),
-            button = self.find('input[type="submit"],button');
-            button.attr('disabled','disabled').html('Please Wait..');
-        ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
-});
-function check_remove_id(){
-        $staff = $('#internal_staff').val();
-        if($staff == ''){
-           $('#user_id').val(''); 
+    <script>
+        $("#search_form").submit(function () {
+            ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
+            check_remove_id();
+            var self = $(".btn_srch"),
+                    button = self.find('input[type="submit"],button');
+            button.attr('disabled', 'disabled').html('Please Wait..');
+            ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
+        });
+        function check_remove_id() {
+            $staff = $('#internal_staff').val();
+            if ($staff == '') {
+                $('#user_id').val('');
+            }
+
         }
-       
-    }
-</script>
+    </script>
