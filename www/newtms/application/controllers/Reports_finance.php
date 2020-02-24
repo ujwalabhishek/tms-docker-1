@@ -61,11 +61,11 @@ class Reports_finance extends CI_Controller {
             if ($training_score == '1') {
                 $training_score = 'C';
             } else if($training_score == '2') {
-                $training_score = "NYC,2NYC";
+                $training_score = "NYC','2NYC";
             } else if($training_score == '3') {
                 $training_score = 'ABS';
             } else if($training_score == '4') {
-                $training_score = "C,NYC,2NYC";
+                $training_score = "C','NYC','2NYC";
             } 
         
         
