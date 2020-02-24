@@ -3338,7 +3338,7 @@ SELECT  {$calc_rows} c.crse_name,
             SELECT tt.*
                                 FROM enrol_pymnt_brkup_dt tt
                                 JOIN
-                                    (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id . "' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id AND tt.trigger_date = gtt.Maxdate) epr on epr.invoice_id=ei.invoice_id and epr.user_id = ce.user_id";
+                                    (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id . "' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id AND tt.trigger_date = gtt.Maxdate";
 
         $result = $this->db->query($query)->result();
         return $result->amount_recd;
@@ -3349,7 +3349,7 @@ SELECT  {$calc_rows} c.crse_name,
         $query = "SELECT tt.*
                                 FROM enrol_pymnt_brkup_dt tt
                                 JOIN
-                                    (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id . "' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id) epr on epr.invoice_id=ei.invoice_id and epr.user_id = ce.user_id";
+                                    (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id . "' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id";
 
         $result = $this->db->query($query)->result();
         return $result->amount_recd;
