@@ -3331,7 +3331,7 @@ SELECT  {$calc_rows} c.crse_name,
         return $result;
     }
     
-    public function get_invoice_data_for_individual($invoice_id, $user_id) {
+    public function get_invoice_data_for_individual($tenant_id, $payment_status, $year, $month, $training_score) {
         
         $query = "SELECT 
             tu.tax_code,
@@ -3374,7 +3374,7 @@ SELECT  {$calc_rows} c.crse_name,
         
     }
     
-    public function get_invoice_data_for_comp($invoice_id, $user_id) {
+    public function get_invoice_data_for_comp($tenant_id, $payment_status, $year, $month, $training_score) {
         
         $query = "SELECT 
             tu.tax_code,
