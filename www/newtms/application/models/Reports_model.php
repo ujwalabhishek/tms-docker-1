@@ -3254,7 +3254,10 @@ SELECT  {$calc_rows} c.crse_name,
     public function tms_report($tenant_id, $payment_status, $year, $month,$training_score) {
         $start_date= $year.'-'.$month.'-01';
         $end_date= $year.'-'.$month.'-31';
-        $query = "SELECT ei.invoice_id,ce.payment_status,
+        
+        $this->db->select('ei.invoice_id,ce.payment_status');
+        
+        $query = "SELECT ei.invoice_id,ce.payment_status
                     FROM ( course_class cc) 
                     JOIN course c ON c.course_id = cc.course_id 
                     JOIN class_enrol ce ON ce.class_id = cc.class_id 

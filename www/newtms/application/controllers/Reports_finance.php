@@ -49,9 +49,9 @@ class Reports_finance extends CI_Controller {
          
             $tenant_id = $this->session->userdata('userDetails')->tenant_id;
             if ($_POST['payStatus'] == '1') {
-                $payment_status = array('PAID');
+                $payment_status = 'PAID'.','.'PARTPAID';
             } else if($_POST['payStatus'] == '2') {
-                $payment_status = array('NOTPAID');
+                $payment_status = 'NOTPAID'.','.'PARTPAID';
             }
 
              $year = $_POST['yearVal'];
@@ -59,13 +59,13 @@ class Reports_finance extends CI_Controller {
             $training_score= $_POST['trainingStatus'];
 
             if ($training_score == '1') {
-                $training_score = array('C');
+                $training_score = 'C';
             } else if($training_score == '2') {
-                $training_score = array('NYC', '2NYC');
+                $training_score = 'NYC'.','.'2NYC';
             } else if($training_score == '3') {
-                $training_score = array('ABS');
+                $training_score = 'ABS';
             } else if($training_score == '4') {
-                $training_score = array('C','NYC', '2NYC');
+                $training_score = 'C'.','.'NYC'.','.'2NYC';
             } 
         
         
