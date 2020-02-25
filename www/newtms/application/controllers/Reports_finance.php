@@ -51,17 +51,17 @@ class Reports_finance extends CI_Controller {
             if ($_POST['payStatus'] == '1') {
                 $payment_status = "PAID','PARTPAID";
                 $displayText = "Total Amount Received for Paid invoices :";
-                $export_url= '?payStatus=1';
+                $export_url = '?payStatus=1';
             } else if ($_POST['payStatus'] == '2') {
                 $payment_status = "NOTPAID','PARTPAID";
                 $displayText = "Total Amount Due for unpaid invoices :";
-                $export_url= '?payStatus=2';
+                $export_url = '?payStatus=2';
             }
             $data['text'] = $displayText;
             $year = $_POST['yearVal'];
             $month = $_POST['monthVal'];
             $training_score1 = $_POST['trainingStatus'];
-            $export_url .='&yearVal='.$year.'&monthVal='.$month;
+            $export_url .='&yearVal=' . $year . '&monthVal=' . $month;
             if ($training_score1 == '1') {
                 $training_score = 'C';
             } else if ($training_score1 == '2') {
@@ -71,12 +71,11 @@ class Reports_finance extends CI_Controller {
             } else if ($training_score1 == '4') {
                 $training_score = "C','NYC','2NYC";
             }
-            
-            $export_url .= '&trainingStatus='.$training_score1;
+
+            $export_url .= '&trainingStatus=' . $training_score1;
             $temp_data = array();
             if ($_POST['payStatus'] == '1') {
                 $data['result'] = $this->reportsModel->tms_paid_report($tenant_id, $payment_status, $year, $month, $training_score);
-                
             } else if ($_POST['payStatus'] == '2') {
                 $data['result'] = $this->reportsModel->tms_unpaid_report($tenant_id, $payment_status, $year, $month, $training_score);
             }
@@ -85,13 +84,42 @@ class Reports_finance extends CI_Controller {
         $data['main_content'] = 'reports/tms_report';
         $this->load->view('layout', $data);
     }
-    
+
     public function export_tms_report() {
         set_time_limit(0);
-        ini_set("memory_limit","-1");
-        $result = $this->traineemodel->get_trainee_list_export();
+        ini_set("memory_limit", "-1");
+        if (!empty($_GET)) {
+            $tenant_id = $this->session->userdata('userDetails')->tenant_id;
+            if ($_GET['payStatus'] == '1') {
+                $payment_status = "PAID','PARTPAID";
+            } else if ($_GET['payStatus'] == '2') {
+                $payment_status = "NOTPAID','PARTPAID";
+            }
+            $data['text'] = $displayText;
+            $year = $_GET['yearVal'];
+            $month = $_GET['monthVal'];
+            $training_score1 = $_GET['trainingStatus'];
+
+            if ($training_score1 == '1') {
+                $training_score = 'C';
+            } else if ($training_score1 == '2') {
+                $training_score = "NYC','2NYC";
+            } else if ($training_score1 == '3') {
+                $training_score = 'ABS';
+            } else if ($training_score1 == '4') {
+                $training_score = "C','NYC','2NYC";
+            }
+
+
+            if ($_GET['payStatus'] == '1') {
+                $result = $this->reportsModel->tms_paid_report($tenant_id, $payment_status, $year, $month, $training_score);
+            } else if ($_GET['payStatus'] == '2') {
+                $result = $this->reportsModel->tms_unpaid_report($tenant_id, $payment_status, $year, $month, $training_score);
+            }
+        }
+
         $this->load->helper('export_helper');
-        export_trainee_page($result);
+        export_tms_report_page($result);
     }
 
     /**
