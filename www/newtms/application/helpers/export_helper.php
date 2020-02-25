@@ -11,9 +11,9 @@ function export_tms_report_page($result) {
         $CI->excel->getActiveSheet()->getColumnDimension($columnID)
                 ->setAutoSize(true);
     }
-    $sheet->mergeCells('A1:S1');
+    $sheet->mergeCells('A1:G1');
     $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-    $sheet->setCellValue('A1', 'TMS '.$result[0]->payment_status.'Report List as on ' . date('M j Y, l'));
+    $sheet->setCellValue('A1', 'TMS '.ucfirst(strtolower($result[0]->payment_status)).' Report List as on ' . date('M j Y, l'));
     $sheet->getStyle('A1:G1')->getFont()->setBold(true);
     $sheet->setCellValue('A2', 'SL #');
     $sheet->setCellValue('B2', 'NRIC/FIN No.');
@@ -73,9 +73,10 @@ function export_tms_report_page($result) {
         $sheet->setCellValue('S' . $rn, $row->att_status);
         $rn++;
     }
+    $filename = 'Tms_Report_'.ucfirst(strtolower($result[0]->payment_status)).'.xls';
     ob_end_clean();
     header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment;filename="Tms_report.xls"');
+    header('Content-Disposition: attachment;filename="'.$filename.'"');
     header('Cache-Control: max-age=0');
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
