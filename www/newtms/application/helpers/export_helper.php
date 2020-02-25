@@ -38,7 +38,7 @@ function export_tms_report_page($result) {
     $sheet->getStyle('A2:S2')->applyFromArray(
             array('fill' => array(
                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                    'color' => array('argb' => 'FFCCCCCC')
+                    'color' => array('argb' => '2551920')
                 )
             )
     );
