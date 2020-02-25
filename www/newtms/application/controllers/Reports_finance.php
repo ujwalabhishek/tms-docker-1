@@ -80,6 +80,7 @@ class Reports_finance extends CI_Controller {
                 $data['result'] = $this->reportsModel->tms_unpaid_report($tenant_id, $payment_status, $year, $month, $training_score);
             }
         }
+        $data['page_title'] = 'TMS Reports';
         $data['export_url'] = $export_url;
         $data['main_content'] = 'reports/tms_report';
         $this->load->view('layout', $data);
