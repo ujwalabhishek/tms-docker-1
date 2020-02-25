@@ -95,14 +95,14 @@ class Reports_finance extends CI_Controller {
             $tenant_id = $this->session->userdata('userDetails')->tenant_id;
             if ($_POST['pStatus'] == '1') {
                 $payment_status = "PAID','PARTPAID";
-                $displayText = "Total Amount Received for Paid invoices :";
+                $displayTextCount = "Total Paid Trainees : ";
                 $export_url = '?pStatus=1';
             } else if ($_POST['pStatus'] == '2') {
                 $payment_status = "NOTPAID','PARTPAID";
-                $displayText = "Total Amount Due for unpaid invoices :";
+                $displayTextCount = "Total Unpaid Trainees : ";
                 $export_url = '?payStatus=2';
             }
-            $data['text'] = $displayText;
+            
             $year = $_POST['yVal'];
             $month = $_POST['mVal'];
             
@@ -124,8 +124,15 @@ class Reports_finance extends CI_Controller {
                 $data['count'] = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
             } else if ($_POST['pStatus'] == '2') {
                 $data['count'] = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
+            } else if ($_POST['pStatus'] == '3'){
+                $data['count1'] = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
+                $data['count2'] = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
+                $data['count'] = $data['count1']+$data['count2'];
+                $displayTextCount = "Total Paid+Unpaid Trainees : ";
             }
         }
+        
+        $data['text'] = $displayTextCount.$data['count'];
         $data['page_title'] = 'TMS Reports';
         $data['export_url'] = $export_url;
         $data['main_content'] = 'reports/tms_report';
