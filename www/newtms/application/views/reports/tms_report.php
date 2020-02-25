@@ -5,6 +5,8 @@
 </script>
 <div class="col-md-10">
     <?php
+    $CI = & get_instance();
+    $CI->load->model('reports_model');
     if ($this->session->flashdata('success_message')) {
         echo '<div class="success">' . $this->session->flashdata('success_message') . '!</div>';
     }
@@ -30,8 +32,7 @@
                     <td>
                         <select id='gYear' name='yearVal'>
                             <option value=''>--Select Year--</option>
-                            <option value='2015'>2016</option>
-                            <option value='2017'>2017</option>
+                           
                             <option value='2018'>2018</option>
                             <option value='2019'>2019</option>
                             <option value='2020'>2020</option>
@@ -85,7 +86,7 @@
             </tbody>
         </table>
         <div class="push_right btn_srch">
-            <button type="submit" class="search_button btn btn-xs btn-primary no-mar">
+            <button type="button" class="search_button btn btn-xs btn-primary no-mar">
                 <span class="glyphicon glyphicon-search"></span>
                 Search
             </button>
@@ -132,6 +133,7 @@
                         </tr>
                         <?php
                         $unpaidVal = 0;
+                        $paidVal = 0;
                         foreach ($result as $data) {
                             ?>
                             <tr>
@@ -144,18 +146,31 @@
                                 <td>$ <?php echo $data->subsidy_amount ?? "N/A"; ?></td>
                                 <td>$ <?php echo $data->gst_amount ?? "N/A"; ?></td>
                                 <td>$ <?php 
+                                if($data->payment_status == "NOTPAID") {
+                                    echo $data->total_amount_due; 
+                                    $unpaidVal = $unpaidVal + $data->total_amount_due;
+                                } else {
+                                    if($data->enrolment_mode =='SELF'){
+                                        $amount = $CI->reports_model->get_invoice_data_for_individual($data->invoice_id, $data->user_id);
+                                        $unpaidVal = $unpaidVal + $amount;
+                                        echo $amount;
+                                    }else{
+                                        $amount1= $CI->reports_model->get_invoice_data_for_comp($data->invoice_id, $data->user_id);
+                                        $unpaidVal = $unpaidVal + $amount1;
+                                        echo $amount1;
+                                    }
+                                    
+                                }
                                 
-                                echo $data->total_amount_due; 
-                                $unpaidVal = $unpaidVal + $data->total_amount_due;
                                 ?></td>
                                 <td> <?php echo $data->mode_of_pymnt ?? "N/A"; ?></td>
                                 <td><?php echo $data->tg_number ?? "N/A"; ?></td>
-                                <td><?php echo date('d/m/Y H:i:s', strtotime($data->class_start_datetime)); ?></td>
+                                <td><?php echo date('d/m/Y', strtotime($data->class_start_datetime)); ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($data->class_end_datetime)); ?></td>
                                 <td><?php echo $data->class_name; ?></td>
                                 <td><?php echo $data->training_score; ?></td>
-                                <td><?php echo $data->class_name; ?></td>
-                                 <td><?php echo $data->payment_status; ?></td>
+                                <td><?php echo $data->payment_status; ?></td>
+                                
                             </tr>
                         <?php } 
                         
@@ -175,19 +190,43 @@
         </div>
     </div>
     <script>
-        $("#search_form").submit(function () {
+        $(".search_button").click(function () {
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
-            check_remove_id();
-            var self = $(".btn_srch"),
+            $status = true;
+            if($('#gYear').val() ==''){
+                $status=false;
+                $('#gYear').css('color','red');
+            }else{
+                $('#gYear').css('color','black');
+            }
+            if($('#gMonth').val() ==''){
+                $status=false;
+                $('#gMonth').css('color','red');
+            }else{
+                $('#gMonth').css('color','black');
+            }
+            if($('#payStatus').val() ==''){
+                $status=false;
+                $('#payStatus').css('color','red');
+            }else{
+                $('#payStatus').css('color','black');
+            }
+            if($('#tStatus').val() ==''){
+                $status=false;
+                $('#tStatus').css('color','red');
+            }else{
+                $('#tStatus').css('color','black');
+            }    
+            
+            
+            if($status){
+                $('#search_form').submit();
+                var self = $(".btn_srch"),
                     button = self.find('input[type="submit"],button');
             button.attr('disabled', 'disabled').html('Please Wait..');
+            }
+            
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
         });
-        function check_remove_id() {
-            $staff = $('#internal_staff').val();
-            if ($staff == '') {
-                $('#user_id').val('');
-            }
-
-        }
+        
     </script>

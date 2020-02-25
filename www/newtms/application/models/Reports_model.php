@@ -3255,7 +3255,6 @@ SELECT  {$calc_rows} c.crse_name,
         $start_date = $year . '-' . $month . '-01';
         $end_date = $year . '-' . $month . '-31';
 
-
         $query = "SELECT 
             tu.tax_code,
             ei.invoice_id,
@@ -3286,7 +3285,7 @@ SELECT  {$calc_rows} c.crse_name,
                     WHERE cc . tenant_id = '" . $tenant_id . "' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
                     AND ce.training_score in ('" . $training_score . "')
                     AND ce.payment_status in ('" . $payment_status . "')
-                    AND date(cc.class_start_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
+                    AND date(cc.class_end_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
 
         $result = $this->db->query($query)->result();
 
@@ -3299,6 +3298,7 @@ SELECT  {$calc_rows} c.crse_name,
 
         $query = "SELECT 
             tu.tax_code,
+            tu.user_id,
             ei.invoice_id,
             tup.first_name as name,
             cm.company_name,
@@ -3307,9 +3307,9 @@ SELECT  {$calc_rows} c.crse_name,
             due.gst_amount,
             ce.tg_number,
             due.subsidy_amount,
-            epr.amount_recd as total_amount_due,
             ce.payment_status,
             ce.enrolment_mode,
+            epr.mode_of_pymnt,
             cc.class_start_datetime,
             cc.class_end_datetime,
             cc.class_name,
@@ -3321,30 +3321,45 @@ SELECT  {$calc_rows} c.crse_name,
                     JOIN enrol_pymnt_due due ON ce.pymnt_due_id = due.pymnt_due_id and ce.user_id = due.user_id 
                     join enrol_invoice ei on ei.pymnt_due_id and due.pymnt_due_id and ei.pymnt_due_id=ce.pymnt_due_id
                     JOIN tms_users tu ON tu.user_id = ce.user_id 
-                    left join (SELECT tt.*
-                                FROM enrol_pymnt_brkup_dt tt
-                                JOIN
-                                    (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id) epr on epr.invoice_id=ei.invoice_id and epr.user_id = ce.user_id 
                     left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
                     left join company_master cm on cm.company_id=ce.company_id
+                    JOIN(SELECT ttt.*
+                        FROM enrol_paymnt_recd ttt
+                        JOIN
+                        (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_paymnt_recd GROUP BY invoice_id) gttt ON ttt.invoice_id = gttt.invoice_id AND ttt.trigger_date = gttt.Maxdate) epr on epr.invoice_id=ei.invoice_id 
                     WHERE cc . tenant_id = '" . $tenant_id . "' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
                     AND ce.training_score in ('" . $training_score . "')
                     AND ce.payment_status in ('" . $payment_status . "')
-                    AND ei.invoice_id = 'XPR163035'
-                    AND date(cc.class_start_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
+                    AND date(cc.class_end_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
 
         $result = $this->db->query($query)->result();
 
         return $result;
     }
 
-    public function get_alltrainee_invoices($invoice, $user_id) {
-        $this->db->select('*');
-        $this->db->from('enrol_pymnt_brkup_dt');
-        $this->db->where('invoice_id', $invoice);
-        $this->db->where('user_id', $user_id);
-        $result = $this->db->get()->result();
-        return $result;
+    public function get_invoice_data_for_individual($invoice_id, $user_id) {
+
+        $query = "
+            SELECT tt.*
+                                FROM enrol_pymnt_brkup_dt tt
+                                JOIN
+                                    (SELECT `invoice_id`,user_id, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id . "' and user_id='" . $user_id . "' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id AND tt.trigger_date = gtt.Maxdate and tt.user_id=gtt.user_id";
+
+        $result = $this->db->query($query)->result();
+
+        return $result[0]->amount_recd;
+    }
+
+    public function get_invoice_data_for_comp($invoice_id, $user_id) {
+
+        $query = "SELECT tt.*
+                                FROM enrol_pymnt_brkup_dt tt
+                                JOIN
+                                    (SELECT `invoice_id`, user_id,MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id . "' and user_id='" . $user_id . "' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id and tt.user_id=gtt.user_id";
+
+        $result = $this->db->query($query)->result();
+        //echo print_r($result,true);exit;
+        return $result[0]->amount_recd;
     }
 
 }
