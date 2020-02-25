@@ -1,4 +1,85 @@
 <?php
+/////added by shubhranshu to print the TMS Report
+function export_tms_report_page($result) {
+    $CI = & get_instance();
+    $tabledata = $result;
+    $CI->load->library('excel');
+    $CI->excel->setActiveSheetIndex(0);
+    $CI->excel->getActiveSheet()->setTitle('TMS Report');
+    $sheet = $CI->excel->getActiveSheet();
+    foreach (range('A', 'S') as $columnID) {
+        $CI->excel->getActiveSheet()->getColumnDimension($columnID)
+                ->setAutoSize(true);
+    }
+    $sheet->mergeCells('A1:S1');
+    $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->setCellValue('A1', 'TMS '.$result->payment_status.'Report List as on ' . date('M j Y, l'));
+    $sheet->getStyle('A1:G1')->getFont()->setBold(true);
+    $sheet->setCellValue('A2', 'SL #');
+    $sheet->setCellValue('B2', 'NRIC/FIN No.');
+    $sheet->setCellValue('C2', 'User ID');
+    $sheet->setCellValue('D2', 'Invoice ID');
+    $sheet->setCellValue('E2', 'Trainee Name');
+    $sheet->setCellValue('F2', 'Company Name');
+    $sheet->setCellValue('G2', 'Class Fees');
+    $sheet->setCellValue('H2', 'Discount Rate');
+    $sheet->setCellValue('I2', 'GST Amount');
+    $sheet->setCellValue('J2', 'Net Amount');
+    $sheet->setCellValue('K2', 'TG Number');
+    $sheet->setCellValue('L2', 'Subsidy Amount');
+    $sheet->setCellValue('M2', 'Payment Status');
+    $sheet->setCellValue('N2', 'Mode Of Payment');
+    $sheet->setCellValue('O2', 'Class Start Date');
+    $sheet->setCellValue('P2', 'Class End Date');
+    $sheet->setCellValue('Q2', 'Class Name');
+    $sheet->setCellValue('R2', 'Training Score');
+    $sheet->setCellValue('S2', 'Att Status');
+
+    $sheet->getStyle('A2:S2')->applyFromArray(
+            array('fill' => array(
+                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array('argb' => '2551920')
+                )
+            )
+    );
+    $sheet->getStyle('A2:S2')->getFont()->setBold(true);
+    $rn = 3;
+    $CI->load->model('Reports_Model', 'reports');
+    foreach ($tabledata as $row) {
+        if ($row->enrolment_mode == 'SELF') {
+           $inv_amt = $CI->reports->get_invoice_data_for_individual($row->invoice_id,$row->user_id);
+        } else {
+           $inv_amt = $CI->reports->get_invoice_data_for_comp($row->invoice_id,$row->user_id);
+           
+        }
+        $sheet->setCellValue('A' . $rn, $rn - 2);
+        $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
+        $sheet->setCellValue('C' . $rn, $row->user_id);
+        $sheet->setCellValue('D' . $rn, $row->invoice_id);
+        $sheet->setCellValue('E' . $rn, $row->name);
+        $sheet->setCellValue('F' . $rn, $row->company_name);
+        $sheet->setCellValue('G' . $rn, $row->class_fees);
+        $sheet->setCellValue('H' . $rn, $row->discount_rate);
+        $sheet->setCellValue('I' . $rn, $row->gst_amount);
+        $sheet->setCellValue('J' . $rn, ($row->payment_status == 'NOTPAID') ? $row->total_amount_due : $inv_amt);
+        $sheet->setCellValue('K' . $rn, $row->tg_number);
+        $sheet->setCellValue('L' . $rn, $row->subsidy_amount);
+        $sheet->setCellValue('M' . $rn, $row->payment_status);
+        $sheet->setCellValue('N' . $rn, $row->mode_of_pymnt);
+        $sheet->setCellValue('O' . $rn, $row->class_start_datetime);
+        $sheet->setCellValue('P' . $rn, $row->class_end_datetime);
+        $sheet->setCellValue('Q' . $rn, $row->class_name);
+        $sheet->setCellValue('R' . $rn, $row->training_score);
+        $sheet->setCellValue('S' . $rn, $row->att_status);
+        $rn++;
+    }
+    ob_end_clean();
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment;filename="Tms_report.xls"');
+    header('Cache-Control: max-age=0');
+    $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+    $objWriter->save('php://output');
+}
 function export_users_page($query) {
     $CI = & get_instance();
     $CI->load->model('Meta_Values', 'meta');

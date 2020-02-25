@@ -71,7 +71,6 @@ class Reports_finance extends CI_Controller {
             $temp_data = array();
             if ($_POST['payStatus'] == '1') {
                 $data['result'] = $this->reportsModel->tms_paid_report($tenant_id, $payment_status, $year, $month, $training_score);
-                
             } else if ($_POST['payStatus'] == '2') {
                 $data['result'] = $this->reportsModel->tms_unpaid_report($tenant_id, $payment_status, $year, $month, $training_score);
             }
@@ -79,6 +78,44 @@ class Reports_finance extends CI_Controller {
 
         $data['main_content'] = 'reports/tms_report';
         $this->load->view('layout', $data);
+    }
+
+    //// desgined by shubhranshu to pull the PAID /NOTPAID report by xls
+    public function export_tms_report() {
+        set_time_limit(0);
+        ini_set("memory_limit", "-1");
+        if (!empty($_GET)) {
+            $tenant_id = $this->session->userdata('userDetails')->tenant_id;
+            if ($_GET['payStatus'] == '1') {
+                $payment_status = "PAID','PARTPAID";
+            } else if ($_GET['payStatus'] == '2') {
+                $payment_status = "NOTPAID','PARTPAID";
+            }
+            $data['text'] = $displayText;
+            $year = $_GET['yearVal'];
+            $month = $_GET['monthVal'];
+            $training_score1 = $_GET['trainingStatus'];
+
+            if ($training_score1 == '1') {
+                $training_score = 'C';
+            } else if ($training_score1 == '2') {
+                $training_score = "NYC','2NYC";
+            } else if ($training_score1 == '3') {
+                $training_score = 'ABS';
+            } else if ($training_score1 == '4') {
+                $training_score = "C','NYC','2NYC";
+            }
+
+
+            if ($_GET['payStatus'] == '1') {
+                $result = $this->reportsModel->tms_paid_report($tenant_id, $payment_status, $year, $month, $training_score);
+            } else if ($_GET['payStatus'] == '2') {
+                $result = $this->reportsModel->tms_unpaid_report($tenant_id, $payment_status, $year, $month, $training_score);
+            }
+        }
+
+        $this->load->helper('export_helper');
+        export_tms_report_page($result);
     }
 
     /**
