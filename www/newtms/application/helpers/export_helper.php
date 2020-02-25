@@ -1,9 +1,7 @@
 <?php
 
-function export_tms_report_page($result) {print_r($result);exit;
+function export_tms_report_page($result) {
     $CI = & get_instance();
-    $CI->load->model('Meta_Values', 'meta');
-    $meta_map = $CI->meta->get_param_map();
     $tabledata = $result;
     $CI->load->library('excel');
     $CI->excel->setActiveSheetIndex(0);
@@ -55,23 +53,23 @@ function export_tms_report_page($result) {print_r($result);exit;
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
         $sheet->setCellValue('C' . $rn, $row->user_id);
-        $sheet->setCellValue('C' . $rn, $row->invoice_id);
-        $sheet->setCellValue('C' . $rn, $row->name);
-        $sheet->setCellValue('C' . $rn, $row->company_name);
-        $sheet->setCellValue('C' . $rn, $row->class_fees);
-        $sheet->setCellValue('C' . $rn, $row->discount_rate);
-        $sheet->setCellValue('C' . $rn, $row->gst_amount);
-        $sheet->setCellValue('C' . $rn, $inv_amt);
-        $sheet->setCellValue('C' . $rn, $row->tg_number);
-        $sheet->setCellValue('C' . $rn, $row->subsidy_amount);
-        $sheet->setCellValue('C' . $rn, $row->user_id);
-        $sheet->setCellValue('C' . $rn, $row->payment_status);
-        $sheet->setCellValue('C' . $rn, $row->mode_of_pymnt);
-        $sheet->setCellValue('C' . $rn, $row->class_start_datetime);
-        $sheet->setCellValue('C' . $rn, $row->class_end_datetime);
-        $sheet->setCellValue('C' . $rn, $row->class_name);
-        $sheet->setCellValue('C' . $rn, $row->training_score);
-        $sheet->setCellValue('C' . $rn, $row->att_status);
+        $sheet->setCellValue('D' . $rn, $row->invoice_id);
+        $sheet->setCellValue('E' . $rn, $row->name);
+        $sheet->setCellValue('F' . $rn, $row->company_name);
+        $sheet->setCellValue('G' . $rn, $row->class_fees);
+        $sheet->setCellValue('H' . $rn, $row->discount_rate);
+        $sheet->setCellValue('I' . $rn, $row->gst_amount);
+        $sheet->setCellValue('J' . $rn, $inv_amt);
+        $sheet->setCellValue('K' . $rn, $row->tg_number);
+        $sheet->setCellValue('L' . $rn, $row->subsidy_amount);
+        $sheet->setCellValue('M' . $rn, $row->user_id);
+        $sheet->setCellValue('N' . $rn, $row->payment_status);
+        $sheet->setCellValue('O' . $rn, $row->mode_of_pymnt);
+        $sheet->setCellValue('P' . $rn, $row->class_start_datetime);
+        $sheet->setCellValue('Q' . $rn, $row->class_end_datetime);
+        $sheet->setCellValue('R' . $rn, $row->class_name);
+        $sheet->setCellValue('S' . $rn, $row->training_score);
+        $sheet->setCellValue('T' . $rn, $row->att_status);
         $rn++;
     }
     ob_end_clean();
