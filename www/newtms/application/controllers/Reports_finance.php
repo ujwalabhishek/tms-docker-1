@@ -50,10 +50,12 @@ class Reports_finance extends CI_Controller {
             $tenant_id = $this->session->userdata('userDetails')->tenant_id;
             if ($_POST['payStatus'] == '1') {
                 $payment_status = "PAID','PARTPAID";
+                $displayText = "Total Amount Received for Paid invoices :";
             } else if ($_POST['payStatus'] == '2') {
                 $payment_status = "NOTPAID','PARTPAID";
+                 $displayText = "Total Amount Due for unpaid invoices :";
             }
-
+            $data['text'] = $displayText;
             $year = $_POST['yearVal'];
             $month = $_POST['monthVal'];
             $training_score = $_POST['trainingStatus'];

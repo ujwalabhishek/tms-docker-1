@@ -173,8 +173,8 @@
                                 
                             </tr>
                         <?php } 
-                        
-                        echo "Total Amount Due for unpaid invoices :".$unpaidVal;
+                      
+                        echo $text.$unpaidVal;
                         
                         ?>
                     </tbody>      
@@ -228,5 +228,7 @@
             
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
         });
+        
+        
         
     </script>
