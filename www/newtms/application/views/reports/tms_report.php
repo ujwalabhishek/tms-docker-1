@@ -111,7 +111,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><div id='count_res'> <?php echo $displayTextCount;?></div></td>
+                    <td><div id='count_res'> <?php echo $text1;?></div></td>
                 </tr>
             </tbody>
         </table>
