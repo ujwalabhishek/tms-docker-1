@@ -7,15 +7,15 @@ function export_tms_report_page($result) {
     $CI->excel->setActiveSheetIndex(0);
     $CI->excel->getActiveSheet()->setTitle('TMS Report');
     $sheet = $CI->excel->getActiveSheet();
-    foreach (range('A', 'R') as $columnID) {
+    foreach (range('A', 'S') as $columnID) {
         $CI->excel->getActiveSheet()->getColumnDimension($columnID)
                 ->setAutoSize(true);
     }
-    $sheet->mergeCells('A1:R1');
+    $sheet->mergeCells('A1:S1');
     $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     $sheet->setCellValue('A1', 'TMS Report List as on ' . date('M j Y, l'));
     $sheet->getStyle('A1:G1')->getFont()->setBold(true);
-    $sheet->setCellValue('A2', 'Sl #');
+    $sheet->setCellValue('A2', 'SL #');
     $sheet->setCellValue('B2', 'NRIC/FIN No.');
     $sheet->setCellValue('C2', 'User ID');
     $sheet->setCellValue('D2', 'Invoice ID');
@@ -24,24 +24,25 @@ function export_tms_report_page($result) {
     $sheet->setCellValue('G2', 'Class Fees');
     $sheet->setCellValue('H2', 'Discount Rate');
     $sheet->setCellValue('I2', 'GST Amount');
-    $sheet->setCellValue('J2', 'TG Number');
-    $sheet->setCellValue('K2', 'Subsidy Amount');
-    $sheet->setCellValue('L2', 'Payment Status');
-    $sheet->setCellValue('M2', 'Mode Of Payment');
-    $sheet->setCellValue('N2', 'Class Start Date');
-    $sheet->setCellValue('O2', 'Class End Date');
-    $sheet->setCellValue('P2', 'Class Name');
-    $sheet->setCellValue('Q2', 'Training Score');
-    $sheet->setCellValue('R2', 'Att Status');
+    $sheet->setCellValue('J2', 'Net Amount');
+    $sheet->setCellValue('K2', 'TG Number');
+    $sheet->setCellValue('L2', 'Subsidy Amount');
+    $sheet->setCellValue('M2', 'Payment Status');
+    $sheet->setCellValue('N2', 'Mode Of Payment');
+    $sheet->setCellValue('O2', 'Class Start Date');
+    $sheet->setCellValue('P2', 'Class End Date');
+    $sheet->setCellValue('Q2', 'Class Name');
+    $sheet->setCellValue('R2', 'Training Score');
+    $sheet->setCellValue('S2', 'Att Status');
 
-    $sheet->getStyle('A2:R2')->applyFromArray(
+    $sheet->getStyle('A2:S2')->applyFromArray(
             array('fill' => array(
                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
                     'color' => array('argb' => 'FFCCCCCC')
                 )
             )
     );
-    $sheet->getStyle('A2:R2')->getFont()->setBold(true);
+    $sheet->getStyle('A2:S2')->getFont()->setBold(true);
     $rn = 3;
     $CI->load->model('Reports_Model', 'reports');
     foreach ($tabledata as $row) {
@@ -62,14 +63,13 @@ function export_tms_report_page($result) {
         $sheet->setCellValue('J' . $rn, $inv_amt);
         $sheet->setCellValue('K' . $rn, $row->tg_number);
         $sheet->setCellValue('L' . $rn, $row->subsidy_amount);
-        $sheet->setCellValue('M' . $rn, $row->user_id);
-        $sheet->setCellValue('N' . $rn, $row->payment_status);
-        $sheet->setCellValue('O' . $rn, $row->mode_of_pymnt);
-        $sheet->setCellValue('P' . $rn, $row->class_start_datetime);
-        $sheet->setCellValue('Q' . $rn, $row->class_end_datetime);
-        $sheet->setCellValue('R' . $rn, $row->class_name);
-        $sheet->setCellValue('S' . $rn, $row->training_score);
-        $sheet->setCellValue('T' . $rn, $row->att_status);
+        $sheet->setCellValue('M' . $rn, $row->payment_status);
+        $sheet->setCellValue('N' . $rn, $row->mode_of_pymnt);
+        $sheet->setCellValue('O' . $rn, $row->class_start_datetime);
+        $sheet->setCellValue('P' . $rn, $row->class_end_datetime);
+        $sheet->setCellValue('Q' . $rn, $row->class_name);
+        $sheet->setCellValue('R' . $rn, $row->training_score);
+        $sheet->setCellValue('S' . $rn, $row->att_status);
         $rn++;
     }
     ob_end_clean();

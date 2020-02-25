@@ -3258,6 +3258,7 @@ SELECT  {$calc_rows} c.crse_name,
         $query = "SELECT 
             tu.tax_code,
             ei.invoice_id,
+            tu.user_id,
             tup.first_name as name,
             cm.company_name,
             due.class_fees,
