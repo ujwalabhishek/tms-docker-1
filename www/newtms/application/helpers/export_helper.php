@@ -46,10 +46,10 @@ function export_tms_report_page($result) {
     $rn = 3;
     $CI->load->model('Reports_Model', 'reports');
     foreach ($tabledata as $row) {
-        if ($row->enrolment_mode = 'SELF') {
+        if ($row->enrolment_mode == 'SELF') {
            $inv_amt = $CI->reports->get_invoice_data_for_individual($row->invoice_id,$row->user_id);
         } else {
-            $inv_amt = $CI->reports->get_invoice_data_for_comp($row->invoice_id,$row->user_id);
+           $inv_amt = $CI->reports->get_invoice_data_for_comp($row->invoice_id,$row->user_id);
         }
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
