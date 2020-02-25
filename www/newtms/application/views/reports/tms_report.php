@@ -119,7 +119,7 @@
                             <div class="add_button " style='margin-top: 6px;'>
                 <?php if (count($result) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['INTUSR'])) { ?>
                                            
-                                            <a href="<?php echo site_url('/reports_finance/export_tms_report' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export All Fields</span></a>
+                                            <a href="<?php echo site_url('/reports_finance/export_tms_report' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export All As XLS</span></a>
                 <?php } ?>
                             </div>
                 <div style="clear:both;"></div>
