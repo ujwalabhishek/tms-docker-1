@@ -116,7 +116,7 @@
             </tbody>
         </table>
         <div class="push_right btn_srch">
-            <button type="button" class="search_button1 btn btn-xs btn-primary no-mar">
+            <button type="submit" class="search_button1 btn btn-xs btn-primary no-mar">
                 <span class="glyphicon glyphicon-search"></span>
                 Search
             </button>
