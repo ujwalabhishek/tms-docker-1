@@ -30,9 +30,7 @@
                         Select Any Year
                     </td>
                     <td>
-              
-                        
-                         <?php
+                      <?php
                         $yearVal_options = array(
                             '' => '--Select Year--',
                             '2018' => '2018',
@@ -40,7 +38,7 @@
                             '2020' => '2020'
                         );
                          $attr = 'id="gYear" name="yearVal"';
-                        echo form_dropdown('gYear', $yearVal_options, $this->input->post('yearVal'), $attr);
+                        echo form_dropdown('yearVal', $yearVal_options, $this->input->post('yearVal'), $attr);
                         ?>
                     </td>
                     <td class="td_heading">                               
@@ -66,7 +64,7 @@
                             '12' => 'December',
                         );
                          $attr = 'id="gMonth" name="monthVal"';
-                        echo form_dropdown('gMonth', $monthVal_options, $this->input->post('monthVal'), $attr);
+                        echo form_dropdown('monthVal', $monthVal_options, $this->input->post('monthVal'), $attr);
                         ?>
                     </td>
                     <td class="td_heading">                               
@@ -100,7 +98,7 @@
                             '4' => 'Competant / Not Yet Competant'
                         );
                          $attr = 'id="tStatus" name="trainingStatus"';
-                        echo form_dropdown('tStatus', $trainingStatus_options, $this->input->post('trainingStatus'), $attr);
+                        echo form_dropdown('trainingStatus', $trainingStatus_options, $this->input->post('trainingStatus'), $attr);
                         ?>
                     </td>
                 </tr>
