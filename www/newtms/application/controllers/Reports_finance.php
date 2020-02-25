@@ -125,8 +125,10 @@ class Reports_finance extends CI_Controller {
             } else if ($_POST['pStatus'] == '2') {
                 $data['count'] = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
             } else if ($_POST['pStatus'] == '3'){
-                $data['count1'] = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
-                $data['count2'] = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
+                $payment_status1 = "PAID','PARTPAID";
+                $payment_status2 = "NOTPAID','PARTPAID";
+                $data['count1'] = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status1, $year, $month, $training_score);
+                $data['count2'] = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status2, $year, $month, $training_score);
                 $data['count'] = $data['count1']+$data['count2'];
                 $displayTextCount = "Total Paid+Unpaid Trainees : ";
             }
