@@ -18,6 +18,104 @@
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/internal_user.png"/>  TMS REPORT - PAID/NOTPAID</h2>
     <div class="table-responsive">
         
+        <?php
+//            print_r($tabledata);
+        $atr = 'id="search_form" name="search_form" method="POST"';
+//        echo form_open("internal_user/activity_log", $atr);
+        echo form_open("reports_finance/tms_report", $atr);
+        ?>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td class="td_heading">                               
+                        Select Any Year
+                    </td>
+                    <td>
+                      <?php
+                        $yearVal_options = array(
+                            '' => '--Select Year--',
+                            '2018' => '2018',
+                            '2019' => '2019',
+                            '2020' => '2020'
+                        );
+                         $attr = 'id="gYear" name="yearVal"';
+                        echo form_dropdown('yearVal', $yearVal_options, $this->input->post('yearVal'), $attr);
+                        ?>
+                    </td>
+                    <td class="td_heading">                               
+                        Select Any Month
+                    </td>
+                    <td>
+                 
+                        
+                        <?php
+                        $monthVal_options = array(
+                            '' => '--Select Month--',
+                            '01' => 'Janaury',
+                            '02' => 'February',
+                            '03' => 'March',
+                            '04' => 'April',
+                            '05' => 'May',
+                            '06' => 'June',
+                            '07' => 'July',
+                            '08' => 'August',
+                            '09' => 'September',
+                            '10' => 'October',
+                            '11' => 'November',
+                            '12' => 'December',
+                        );
+                         $attr = 'id="gMonth" name="monthVal"';
+                        echo form_dropdown('monthVal', $monthVal_options, $this->input->post('monthVal'), $attr);
+                        ?>
+                    </td>
+                    <td class="td_heading">                               
+                        Payment Status
+                    </td>
+                    <td>
+                 
+                        <?php
+                        $trainingStatus_options = array(
+                            '' => '--Select Payment Status--',
+                            '1' => 'Paid',
+                            '2' => 'Not Paid'
+                        );
+                         $attr = 'id="payStatus" name="payStatus"';
+                        echo form_dropdown('payStatus', $trainingStatus_options, $this->input->post('payStatus'), $attr);
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_heading">                               
+                        Result Status
+                    </td>
+                    <td>
+                    
+                        <?php
+                        $trainingStatus_options = array(
+                            '' => '--Select Training Score--',
+                            '1' => 'Competant',
+                            '2' => 'Not Yet Competant',
+                            '3' => 'Absentees',
+                            '4' => 'Competant / Not Yet Competant'
+                        );
+                         $attr = 'id="tStatus" name="trainingStatus"';
+                        echo form_dropdown('trainingStatus', $trainingStatus_options, $this->input->post('trainingStatus'), $attr);
+                        ?>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="push_right btn_srch">
+            <button type="button" class="search_button btn btn-xs btn-primary no-mar">
+                <span class="glyphicon glyphicon-search"></span>
+                Search
+            </button>
+
+        </div>
+        <?php echo form_close(); ?>
+
+        
+        
         <?php 
         if($this->session->userdata('userDetails')->user_id == '2'){
         ?>
@@ -125,103 +223,6 @@
         <?php echo form_close();}?>
         
         
-        
-        <?php
-//            print_r($tabledata);
-        $atr = 'id="search_form" name="search_form" method="POST"';
-//        echo form_open("internal_user/activity_log", $atr);
-        echo form_open("reports_finance/tms_report", $atr);
-        ?>
-        <table class="table table-striped">
-            <tbody>
-                <tr>
-                    <td class="td_heading">                               
-                        Select Any Year
-                    </td>
-                    <td>
-                      <?php
-                        $yearVal_options = array(
-                            '' => '--Select Year--',
-                            '2018' => '2018',
-                            '2019' => '2019',
-                            '2020' => '2020'
-                        );
-                         $attr = 'id="gYear" name="yearVal"';
-                        echo form_dropdown('yearVal', $yearVal_options, $this->input->post('yearVal'), $attr);
-                        ?>
-                    </td>
-                    <td class="td_heading">                               
-                        Select Any Month
-                    </td>
-                    <td>
-                 
-                        
-                        <?php
-                        $monthVal_options = array(
-                            '' => '--Select Month--',
-                            '01' => 'Janaury',
-                            '02' => 'February',
-                            '03' => 'March',
-                            '04' => 'April',
-                            '05' => 'May',
-                            '06' => 'June',
-                            '07' => 'July',
-                            '08' => 'August',
-                            '09' => 'September',
-                            '10' => 'October',
-                            '11' => 'November',
-                            '12' => 'December',
-                        );
-                         $attr = 'id="gMonth" name="monthVal"';
-                        echo form_dropdown('monthVal', $monthVal_options, $this->input->post('monthVal'), $attr);
-                        ?>
-                    </td>
-                    <td class="td_heading">                               
-                        Payment Status
-                    </td>
-                    <td>
-                 
-                        <?php
-                        $trainingStatus_options = array(
-                            '' => '--Select Payment Status--',
-                            '1' => 'Paid',
-                            '2' => 'Not Paid'
-                        );
-                         $attr = 'id="payStatus" name="payStatus"';
-                        echo form_dropdown('payStatus', $trainingStatus_options, $this->input->post('payStatus'), $attr);
-                        ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="td_heading">                               
-                        Result Status
-                    </td>
-                    <td>
-                    
-                        <?php
-                        $trainingStatus_options = array(
-                            '' => '--Select Training Score--',
-                            '1' => 'Competant',
-                            '2' => 'Not Yet Competant',
-                            '3' => 'Absentees',
-                            '4' => 'Competant / Not Yet Competant'
-                        );
-                         $attr = 'id="tStatus" name="trainingStatus"';
-                        echo form_dropdown('trainingStatus', $trainingStatus_options, $this->input->post('trainingStatus'), $attr);
-                        ?>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="push_right btn_srch">
-            <button type="button" class="search_button btn btn-xs btn-primary no-mar">
-                <span class="glyphicon glyphicon-search"></span>
-                Search
-            </button>
-
-        </div>
-        <?php echo form_close(); ?>
-
 
         <div class="bs-example">
             <div class="table-responsive">
