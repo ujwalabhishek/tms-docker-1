@@ -3359,7 +3359,7 @@ SELECT  {$calc_rows} c.crse_name,
                                     (SELECT `invoice_id`, user_id,MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id ."' and user_id='".$user_id."' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id and tt.user_id=gtt.user_id";
 
         $result = $this->db->query($query)->result();
-        echo print_r($result,true);exit;
+        echo $this->db->last_query();exit;
         return $result[0]->amount_recd;
     }
     
