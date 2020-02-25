@@ -61,7 +61,7 @@ function export_tms_report_page($result) {
         $sheet->setCellValue('G' . $rn, $row->class_fees);
         $sheet->setCellValue('H' . $rn, $row->discount_rate);
         $sheet->setCellValue('I' . $rn, $row->gst_amount);
-        $sheet->setCellValue('J' . $rn, $inv_amt);
+        $sheet->setCellValue('J' . $rn, ($row->payment_status == 'NOTPAID') ? $row->total_amount_due : $inv_amt);
         $sheet->setCellValue('K' . $rn, $row->tg_number);
         $sheet->setCellValue('L' . $rn, $row->subsidy_amount);
         $sheet->setCellValue('M' . $rn, $row->payment_status);
