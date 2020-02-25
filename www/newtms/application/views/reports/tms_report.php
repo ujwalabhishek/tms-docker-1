@@ -49,7 +49,7 @@
                         
                         <?php
                         $monthVal_options = array(
-                            '' => '--Select Payment Status--',
+                            '' => '--Select Month--',
                             '01' => 'Janaury',
                             '02' => 'February',
                             '03' => 'March',
