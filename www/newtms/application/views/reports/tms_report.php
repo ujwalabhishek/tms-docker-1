@@ -111,7 +111,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><div id='count_res'>0</div></td>
+                    <td><div id='count_res'>Total Trainees: <?php echo $count;?></div></td>
                 </tr>
             </tbody>
         </table>

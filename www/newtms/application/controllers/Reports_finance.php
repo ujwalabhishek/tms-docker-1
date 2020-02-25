@@ -93,19 +93,20 @@ class Reports_finance extends CI_Controller {
 
 
             $tenant_id = $this->session->userdata('userDetails')->tenant_id;
-            if ($_POST['payStatus'] == '1') {
+            if ($_POST['pStatus'] == '1') {
                 $payment_status = "PAID','PARTPAID";
                 $displayText = "Total Amount Received for Paid invoices :";
-                $export_url = '?payStatus=1';
-            } else if ($_POST['payStatus'] == '2') {
+                $export_url = '?pStatus=1';
+            } else if ($_POST['pStatus'] == '2') {
                 $payment_status = "NOTPAID','PARTPAID";
                 $displayText = "Total Amount Due for unpaid invoices :";
                 $export_url = '?payStatus=2';
             }
             $data['text'] = $displayText;
-            $year = $_POST['yearVal'];
-            $month = $_POST['monthVal'];
-            $training_score1 = $_POST['trainingStatus'];
+            $year = $_POST['yVal'];
+            $month = $_POST['mVal'];
+            
+            $training_score1 = $_POST['tStatus'];
             $export_url .='&yearVal=' . $year . '&monthVal=' . $month;
             if ($training_score1 == '1') {
                 $training_score = 'C';
@@ -119,10 +120,10 @@ class Reports_finance extends CI_Controller {
 
             $export_url .= '&trainingStatus=' . $training_score1;
             $temp_data = array();
-            if ($_POST['payStatus'] == '1') {
-                $data['result'] = $this->reportsModel->tms_paid_report($tenant_id, $payment_status, $year, $month, $training_score);
-            } else if ($_POST['payStatus'] == '2') {
-                $data['result'] = $this->reportsModel->tms_unpaid_report($tenant_id, $payment_status, $year, $month, $training_score);
+            if ($_POST['pStatus'] == '1') {
+                $data['count'] = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
+            } else if ($_POST['pStatus'] == '2') {
+                $data['count'] = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
             }
         }
         $data['page_title'] = 'TMS Reports';
