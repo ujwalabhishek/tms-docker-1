@@ -190,7 +190,7 @@
         </div>
     </div>
     <script>
-        $("#search_form").click(function () {
+        $(".search_button").click(function () {
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
             $status = true;
             if($('#gYear').val() ==''){
