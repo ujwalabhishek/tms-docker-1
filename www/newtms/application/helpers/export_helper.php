@@ -48,8 +48,9 @@ function export_tms_report_page($result) {
     foreach ($tabledata as $row) {
         if ($row->enrolment_mode == 'SELF') {
            $inv_amt = $CI->reports->get_invoice_data_for_individual($row->invoice_id,$row->user_id);
-        } else {print_r($row);EXIT;
+        } else {
            $inv_amt = $CI->reports->get_invoice_data_for_comp($row->invoice_id,$row->user_id);
+           echo print_r($inv_amt);EXIT;
         }
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
