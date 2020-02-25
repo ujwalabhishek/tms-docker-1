@@ -1,6 +1,6 @@
 <?php
 
-function export_tms_report_page($result) {
+function export_tms_report_page($result) {print_r($result);exit;
     $CI = & get_instance();
     $CI->load->model('Meta_Values', 'meta');
     $meta_map = $CI->meta->get_param_map();
