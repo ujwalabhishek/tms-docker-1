@@ -3361,5 +3361,7 @@ SELECT  {$calc_rows} c.crse_name,
         //echo print_r($result,true);exit;
         return $result[0]->amount_recd;
     }
+    
+    
 
 }
