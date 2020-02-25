@@ -129,6 +129,7 @@ class Reports_finance extends CI_Controller {
                 $payment_status2 = "NOTPAID','PARTPAID";
                 $data['count1'] = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status1, $year, $month, $training_score);
                 $data['count2'] = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status2, $year, $month, $training_score);
+                echo $data['count1'].' ddd '.$data['count2'];exit;
                 $data['count'] = $data['count1']+$data['count2'];
                 $displayTextCount = "Total Paid+Unpaid Trainees : ";
             }
