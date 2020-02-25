@@ -30,43 +30,59 @@
                         Select Any Year
                     </td>
                     <td>
-                        <select id='gYear' name='yearVal'>
-                            <option value=''>--Select Year--</option>
-                           
-                            <option value='2018'>2018</option>
-                            <option value='2019'>2019</option>
-                            <option value='2020'>2020</option>
-                        </select> 
+              
+                        
+                         <?php
+                        $yearVal_options = array(
+                            '' => '--Select Year--',
+                            '2018' => '2018',
+                            '2019' => '2019',
+                            '2020' => '2020'
+                        );
+                         $attr = 'id="gYear" name="yearVal"';
+                        echo form_dropdown('gYear', $yearVal_options, $this->input->post('yearVal'), $attr);
+                        ?>
                     </td>
                     <td class="td_heading">                               
                         Select Any Month
                     </td>
                     <td>
-                        <select id='gMonth' name='monthVal'>
-                            <option value=''>--Select Month--</option>
-                            <option value='01'>Janaury</option>
-                            <option value='02'>February</option>
-                            <option value='03'>March</option>
-                            <option value='04'>April</option>
-                            <option value='05'>May</option>
-                            <option value='06'>June</option>
-                            <option value='07'>July</option>
-                            <option value='08'>August</option>
-                            <option value='09'>September</option>
-                            <option value='10'>October</option>
-                            <option value='11'>November</option>
-                            <option value='12'>December</option>
-                        </select> 
+                 
+                        
+                        <?php
+                        $monthVal_options = array(
+                            '' => '--Select Payment Status--',
+                            '01' => 'Janaury',
+                            '02' => 'February',
+                            '03' => 'March',
+                            '04' => 'April',
+                            '05' => 'May',
+                            '06' => 'June',
+                            '07' => 'July',
+                            '08' => 'August',
+                            '09' => 'September',
+                            '10' => 'October',
+                            '11' => 'November',
+                            '12' => 'December',
+                        );
+                         $attr = 'id="gMonth" name="monthVal"';
+                        echo form_dropdown('gMonth', $monthVal_options, $this->input->post('monthVal'), $attr);
+                        ?>
                     </td>
                     <td class="td_heading">                               
                         Payment Status
                     </td>
                     <td>
-                        <select id='payStatus' name='payStatus'>
-                            <option value=''>--Select Payment Status--</option>
-                            <option value='1'>Paid</option>
-                            <option value='2'>Not - Paid</option>
-                        </select> 
+                 
+                        <?php
+                        $trainingStatus_options = array(
+                            '' => '--Select Payment Status--',
+                            '1' => 'Paid',
+                            '2' => 'Not Paid'
+                        );
+                         $attr = 'id="payStatus" name="payStatus"';
+                        echo form_dropdown('payStatus', $trainingStatus_options, $this->input->post('payStatus'), $attr);
+                        ?>
                     </td>
                 </tr>
                 <tr>
@@ -74,13 +90,18 @@
                         Result Status
                     </td>
                     <td>
-                        <select id='tStatus' name='trainingStatus'>
-                            <option value=''>--Select Training Score--</option>
-                            <option value='1'>Competant</option>
-                            <option value='2'>Not Yet Competant</option>
-                            <option value='3'>Absentees</option>
-                            <option value='4'>Competant / Not Yet Competant</option>
-                        </select> 
+                    
+                        <?php
+                        $trainingStatus_options = array(
+                            '' => '--Select Training Score--',
+                            '1' => 'Competant',
+                            '2' => 'Not Yet Competant',
+                            '3' => 'Absentees',
+                            '4' => 'Competant / Not Yet Competant'
+                        );
+                         $attr = 'id="tStatus" name="trainingStatus"';
+                        echo form_dropdown('tStatus', $trainingStatus_options, $this->input->post('trainingStatus'), $attr);
+                        ?>
                     </td>
                 </tr>
             </tbody>
