@@ -4730,9 +4730,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         }
 
 
-$this->db->get()->result();
-echo $this->db->last_query();exit;
-       // return $this->db->get()->result();
+
+        return $this->db->get()->result();
     }
 
     /**
