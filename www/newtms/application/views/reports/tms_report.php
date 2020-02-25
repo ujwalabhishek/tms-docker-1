@@ -86,7 +86,7 @@
             </tbody>
         </table>
         <div class="push_right btn_srch">
-            <button type="submit" class="search_button btn btn-xs btn-primary no-mar">
+            <button type="button" class="search_button btn btn-xs btn-primary no-mar">
                 <span class="glyphicon glyphicon-search"></span>
                 Search
             </button>
@@ -190,19 +190,43 @@
         </div>
     </div>
     <script>
-        $("#search_form").submit(function () {
+        $("#search_form").click(function () {
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
-            check_remove_id();
-            var self = $(".btn_srch"),
+            $status = true;
+            if($('#gYear').val() ==''){
+                $status=false;
+                $('#gYear').css('color','red');
+            }else{
+                $('#gYear').css('color','black');
+            }
+            if($('#gMonth').val() ==''){
+                $status=false;
+                $('#gMonth').css('color','red');
+            }else{
+                $('#gMonth').css('color','black');
+            }
+            if($('#payStatus').val() ==''){
+                $status=false;
+                $('#payStatus').css('color','red');
+            }else{
+                $('#payStatus').css('color','black');
+            }
+            if($('#tStatus').val() ==''){
+                $status=false;
+                $('#tStatus').css('color','red');
+            }else{
+                $('#tStatus').css('color','black');
+            }    
+            
+            
+            if($status){
+                $('#search_form').submit();
+                var self = $(".btn_srch"),
                     button = self.find('input[type="submit"],button');
             button.attr('disabled', 'disabled').html('Please Wait..');
+            }
+            
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
         });
-        function check_remove_id() {
-            $staff = $('#internal_staff').val();
-            if ($staff == '') {
-                $('#user_id').val('');
-            }
-
-        }
+        
     </script>
