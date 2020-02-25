@@ -21,9 +21,9 @@
         <?php 
         if($this->session->userdata('userDetails')->user_id == '2'){
         ?>
-        
+        <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> TMS Trainee Counts</h2>   
         <?php
-           
+        
 //            print_r($tabledata);
         $atr = 'id="search_form_count" name="search_form_count" method="POST"';
 //        echo form_open("internal_user/activity_log", $atr);
