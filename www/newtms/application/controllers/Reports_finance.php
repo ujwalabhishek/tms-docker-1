@@ -88,7 +88,7 @@ class Reports_finance extends CI_Controller {
     
     //// desgined by shubhranshu to pull the PAID /NOTPAID report
     public function tms_report_count() {
-      
+        $data['sideMenuData'] = fetch_non_main_page_content();
         if (!empty($_POST)) {
 
 
