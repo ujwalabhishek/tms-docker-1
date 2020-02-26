@@ -121,7 +121,7 @@
     <div class="container">
         
     </div>
-    <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> <a href='#' data-toggle="collapse" data-target="#data_hide">TMS Trainee Counts</a><div id='count_res'> <?php echo $text1;?></div></h2> 
+    <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> <a href='#' data-toggle="collapse" data-target="#data_hide">TMS Trainee Counts</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='count_res'> <?php echo $text1;?></span></h2> 
     
     <div class="table-responsive collapse" id='data_hide'>    
         <?php 
