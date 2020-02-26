@@ -10759,7 +10759,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->trans_start();
 
         foreach ($seleced_trainee_list as $user_id) {
-
+echo "sorryhsssss5557777777777s";exit;
             $status = $this->update_classenrol_audittrail($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
 echo "sorryhsssss555s";exit;
             $this->remove_enrollment($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
