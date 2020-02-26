@@ -217,7 +217,7 @@
     </div>    
    
 
-        <div class="bs-example">
+        <div class="bs-example" style='display:<?php $_POST['mVal'] ? 'none': 'block';?>'>
             <div class="table-responsive">
                             <div class="add_button " style='margin-top: 6px;'>
                 <?php if (count($result) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['INTUSR'])) { ?>
