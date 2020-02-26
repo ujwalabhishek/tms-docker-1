@@ -10751,7 +10751,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $total_subsidy_amount_due = 0;
         $data = $this->get_current_invoice_data($payment_due_id);
-      echo "sorryhs";exit;  
+       
         $curr_invoice_details = json_decode($data);
         if(empty($curr_invoice_details->pymnt_due_id)){// added by shubhranshu for blank data since attendance status 0
             return FALSE;
@@ -10763,7 +10763,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $status = $this->update_classenrol_audittrail($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
 
             $this->remove_enrollment($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
-           
+            echo "sorryhssssss";exit;
             $payments_result = $this->get_payment_due($payment_due_id, $user_id);
 
             $discount_rate = $payments_result->discount_rate;
@@ -10780,6 +10780,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
             $this->remove_payment_due($payment_due_id, $user_id);
         }
+         echo "sorryhs44";exit;
         $absent_trainee_present = $this->get_payment_due_absent($payment_due_id);////added by shubhranshu
         $status = $this->update_invoice_audit_trail($curr_invoice_details->pymnt_due_id);
         $due_to='Remove Enrollment From Company Invoice';
