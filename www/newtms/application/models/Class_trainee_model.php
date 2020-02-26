@@ -10754,7 +10754,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         
         $curr_invoice_details = json_decode($data);
         if(empty($curr_invoice_details->pymnt_due_id)){// added by shubhranshu for blank data since attendance status 0
-            return FALSE;echo "sorry";exit;
+            return FALSE;
         }
         $this->db->trans_start();
 
@@ -10784,7 +10784,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $status = $this->update_invoice_audit_trail($curr_invoice_details->pymnt_due_id);
         $due_to='Remove Enrollment From Company Invoice';
         $status=$this->enrol_invoice_view($curr_invoice_details->pymnt_due_id,$data,$logged_in_user_id,$due_to);
-
+echo "sorryh";exit;
         if ($status) {
 
             $status = $this->remove_invoice($payment_due_id);
