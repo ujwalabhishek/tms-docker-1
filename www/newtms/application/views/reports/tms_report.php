@@ -123,7 +123,7 @@
     
     <div class="table-responsive" id='data_hide' style='display:none'>    
         <?php 
-        if($this->session->userdata('userDetails')->user_id == '2'){
+        if($this->session->userdata('userDetails')->user_id == '2' && $this->session->userdata('userDetails')->user_id == '89788'){
         ?>
           
         <?php
