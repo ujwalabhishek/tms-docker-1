@@ -121,20 +121,35 @@ class Reports_finance extends CI_Controller {
             $export_url .= '&trainingStatus=' . $training_score1;
             $temp_data = array();
             if ($_POST['pStatus'] == '1') {
-                $data['count'] = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
+                $data_res = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
             } else if ($_POST['pStatus'] == '2') {
-                $data['count'] = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
+                $data_res = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
             } else if ($_POST['pStatus'] == '3'){
                 $payment_status2 = "PAID','PARTPAID";
                 $payment_status1 = "NOTPAID','PARTPAID";
-                $data['count1'] = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status1, $year, $month, $training_score);
-                $data['count2'] = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status2, $year, $month, $training_score);
-                $data['count'] = $data['count1']+$data['count2'];
+                $data1_res = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status1, $year, $month, $training_score);
+                $data2_res = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status2, $year, $month, $training_score);
+                //$data['count'] = count($data['result1'])+count($data['result2']);
                 $displayTextCount = "Total Paid+Unpaid Trainees : ";
+                $data_res = array_merge($data1_res,$data2_res);
+                $paidVal ='';
+                
             }
+            foreach($data_res as $raw){
+                if($raw->enrolment_mode =='SELF'){
+                    $amount = $this->reportsModel->get_invoice_data_for_individual($raw->invoice_id, $raw->user_id);
+                    $paidVal = $paidVal + $amount;
+
+                }else{
+                    $amount1= $this->reportsModel->get_invoice_data_for_comp($raw->invoice_id, $raw->user_id);
+                    $paidVal = $paidVal + $amount1;
+                }
+
+           }
         }
         
         $data['text1'] = $displayTextCount.$data['count'];
+        $data['amount1'] = $paidVal;
         $data['page_title'] = 'TMS Reports';
         $data['export_url'] = $export_url;
         $data['main_content'] = 'reports/tms_report';
