@@ -10751,7 +10751,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $total_subsidy_amount_due = 0;
         $data = $this->get_current_invoice_data($payment_due_id);
-       
+  echo "sohhhhhhh7s";exit;     
         $curr_invoice_details = json_decode($data);
         if(empty($curr_invoice_details->pymnt_due_id)){// added by shubhranshu for blank data since attendance status 0
             return FALSE;
