@@ -3393,7 +3393,7 @@ SELECT  {$calc_rows} c.crse_name,
                     AND date(cc.class_end_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
 
         $result = $this->db->query($query)->result();
-
+echo $this->db->last_query();exit;
         return $result;
     }
 
