@@ -114,12 +114,13 @@
         </div>
         <?php echo form_close(); ?>
 
-        
-        
+    </div>   
+    
+    <div class="table-responsive">    
         <?php 
         if($this->session->userdata('userDetails')->user_id == '2'){
         ?>
-        <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> TMS Trainee Counts</h2>   
+        <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> <a href='#' data-toggle="collapse" data-target="#demo">TMS Trainee Counts</a></h2>   
         <?php
         
 //            print_r($tabledata);
@@ -222,7 +223,7 @@
         </div>
         <?php echo form_close();}?>
         
-        
+    </div>    
 
         <div class="bs-example">
             <div class="table-responsive">
@@ -317,7 +318,7 @@
                 ?>
             </ul>
         </div>
-    </div>
+    
     <script>
         $(".search_button").click(function () {
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
