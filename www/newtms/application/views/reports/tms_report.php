@@ -121,7 +121,7 @@
     <div class="container">
         
     </div>
-    <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> <a href='#' data-toggle="collapse" data-target="#data_hide">TMS Trainee Counts</a></h2> 
+    <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> <a href='#' data-toggle="collapse" data-target="#data_hide">TMS Trainee Counts</a><div id='count_res'> <?php echo $text1;?></div></h2> 
     
     <div class="table-responsive collapse" id='data_hide'>    
         <?php 
@@ -216,9 +216,7 @@
                         ?>
                     </td>
                 </tr>
-                <tr>
-                    <td><div id='count_res'> <?php echo $text1;?></div></td>
-                </tr>
+                
             </tbody>
         </table>
         <div class="push_right btn_srch">
