@@ -10754,7 +10754,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         
         $curr_invoice_details = json_decode($data);
         if(empty($curr_invoice_details->pymnt_due_id)){// added by shubhranshu for blank data since attendance status 0
-            return FALSE;
+            return FALSE;echo "sorry";exit;
         }
         $this->db->trans_start();
 
@@ -10821,7 +10821,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
             $status = FALSE;
         }
-
+echo "sorryd";exit;
         return $status;
     }
      public function get_enroll_old_invoice($id,$inv)
