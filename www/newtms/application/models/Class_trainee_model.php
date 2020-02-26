@@ -10761,7 +10761,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         foreach ($seleced_trainee_list as $user_id) {
 
             $status = $this->update_classenrol_audittrail($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
-
+echo "sorryhsssss555s";exit;
             $this->remove_enrollment($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
             echo "sorryhssssss";exit;
             $payments_result = $this->get_payment_due($payment_due_id, $user_id);
@@ -10780,12 +10780,12 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
             $this->remove_payment_due($payment_due_id, $user_id);
         }
-         echo "sorryhs44";exit;
+         
         $absent_trainee_present = $this->get_payment_due_absent($payment_due_id);////added by shubhranshu
         $status = $this->update_invoice_audit_trail($curr_invoice_details->pymnt_due_id);
         $due_to='Remove Enrollment From Company Invoice';
         $status=$this->enrol_invoice_view($curr_invoice_details->pymnt_due_id,$data,$logged_in_user_id,$due_to);
-echo "sorryh";exit;
+
         if ($status) {
 
             $status = $this->remove_invoice($payment_due_id);
@@ -10822,7 +10822,7 @@ echo "sorryh";exit;
 
             $status = FALSE;
         }
-echo "sorryd";exit;
+
         return $status;
     }
      public function get_enroll_old_invoice($id,$inv)
