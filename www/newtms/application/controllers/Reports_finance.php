@@ -148,7 +148,7 @@ class Reports_finance extends CI_Controller {
            }
         }
         
-        $data['text1'] = $displayTextCount.$data['count'];
+        $data['text1'] = $displayTextCount.count($data_res);
         $data['amount1'] = $paidVal;
         $data['page_title'] = 'TMS Reports';
         $data['export_url'] = $export_url;
