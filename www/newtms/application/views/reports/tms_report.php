@@ -1,6 +1,6 @@
 
 <script>
-    $siteurl = '<?php echo site_url(); ?>';
+    $siteurl = '<?php echo site_url(); echo $this->session->userdata('userDetails')->user_id;exit;?>';
     $baseurl = '<?php echo base_url(); ?>';
 </script>
 <div class="col-md-10">
@@ -123,7 +123,7 @@
     
     <div class="table-responsive" id='data_hide' style='display:none'>    
         <?php 
-        echo $this->session->userdata('userDetails')->user_id;exit;
+        
         if($this->session->userdata('userDetails')->user_id == '2' && $this->session->userdata('userDetails')->user_id == '89788'){
         ?>
           
