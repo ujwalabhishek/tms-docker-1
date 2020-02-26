@@ -50,24 +50,29 @@ class Reports_finance extends CI_Controller {
             $tenant_id = $this->session->userdata('userDetails')->tenant_id;
             if ($_POST['payStatus'] == '1') {
                 $payment_status = "PAID','PARTPAID";
+                $displayText = "Total Amount Received for Paid invoices :";
+                $export_url = '?payStatus=1';
             } else if ($_POST['payStatus'] == '2') {
                 $payment_status = "NOTPAID','PARTPAID";
+                $displayText = "Total Amount Due for unpaid invoices :";
+                $export_url = '?payStatus=2';
             }
-
+            $data['text'] = $displayText;
             $year = $_POST['yearVal'];
             $month = $_POST['monthVal'];
-            $training_score = $_POST['trainingStatus'];
-
-            if ($training_score == '1') {
+            $training_score1 = $_POST['trainingStatus'];
+            $export_url .='&yearVal=' . $year . '&monthVal=' . $month;
+            if ($training_score1 == '1') {
                 $training_score = 'C';
-            } else if ($training_score == '2') {
+            } else if ($training_score1 == '2') {
                 $training_score = "NYC','2NYC";
-            } else if ($training_score == '3') {
+            } else if ($training_score1 == '3') {
                 $training_score = 'ABS';
-            } else if ($training_score == '4') {
+            } else if ($training_score1 == '4') {
                 $training_score = "C','NYC','2NYC";
             }
 
+            $export_url .= '&trainingStatus=' . $training_score1;
             $temp_data = array();
             if ($_POST['payStatus'] == '1') {
                 $data['result'] = $this->reportsModel->tms_paid_report($tenant_id, $payment_status, $year, $month, $training_score);
@@ -75,12 +80,13 @@ class Reports_finance extends CI_Controller {
                 $data['result'] = $this->reportsModel->tms_unpaid_report($tenant_id, $payment_status, $year, $month, $training_score);
             }
         }
-
+        $data['page_title'] = 'TMS Reports';
+        $data['export_url'] = $export_url;
         $data['main_content'] = 'reports/tms_report';
         $this->load->view('layout', $data);
     }
     
-     //// desgined by shubhranshu to pull the PAID /NOTPAID report
+    //// desgined by shubhranshu to pull the PAID /NOTPAID report
     public function tms_report_count() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         if (!empty($_POST)) {
