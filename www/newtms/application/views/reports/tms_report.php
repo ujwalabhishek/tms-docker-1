@@ -1,6 +1,6 @@
 
 <script>
-    $siteurl = '<?php echo site_url(); echo $this->session->userdata('userDetails')->user_id;exit;?>';
+    $siteurl = '<?php echo site_url(); echo print_r($this->session->userdata('userDetails'));exit;?>';
     $baseurl = '<?php echo base_url(); ?>';
 </script>
 <div class="col-md-10">
