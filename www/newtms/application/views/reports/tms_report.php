@@ -123,6 +123,7 @@
     
     <div class="table-responsive" id='data_hide' style='display:none'>    
         <?php 
+        echo $this->session->userdata('userDetails')->user_id;exit;
         if($this->session->userdata('userDetails')->user_id == '2' && $this->session->userdata('userDetails')->user_id == '89788'){
         ?>
           
