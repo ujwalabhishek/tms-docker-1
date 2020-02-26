@@ -10753,19 +10753,20 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $data = $this->get_current_invoice_data($payment_due_id);
    
         $curr_invoice_details = json_decode($data);
-          echo "so88h7s";exit;  
+           
         if(empty($curr_invoice_details->pymnt_due_id)){// added by shubhranshu for blank data since attendance status 0
+             echo "666";exit;  
             return FALSE;
         }
-          echo "soh7454h7s";exit;  
+         
         $this->db->trans_start();
 
         foreach ($seleced_trainee_list as $user_id) {
-echo "sorryhsssss5557777777777s";exit;
+
             $status = $this->update_classenrol_audittrail($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
-echo "sorryhsssss555s";exit;
+
             $this->remove_enrollment($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
-            echo "sorryhssssss";exit;
+           
             $payments_result = $this->get_payment_due($payment_due_id, $user_id);
 
             $discount_rate = $payments_result->discount_rate;
