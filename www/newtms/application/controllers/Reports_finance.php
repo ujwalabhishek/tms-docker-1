@@ -138,7 +138,7 @@ class Reports_finance extends CI_Controller {
                 $data2_res = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status2, $year, $month, $training_score);
                 $amount_due = $data1_res[0]->total_amount_due;
                 $paid_amout = $this->calculate_paid($data2_res);
-                $count = count($data1_res)+count($data2_res);
+                $count = ($data1_res[0]->count)+count($data2_res);
                 $displayTextCount = "Total Paid + Unpaid Amount : ";
                 
                 $paidVal =$amount_due + $paid_amout;
