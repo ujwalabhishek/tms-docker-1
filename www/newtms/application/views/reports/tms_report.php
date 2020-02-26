@@ -4,7 +4,6 @@
     $baseurl = '<?php echo base_url(); ?>';
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <div class="col-md-10">
     <?php
     $CI = & get_instance();
@@ -117,10 +116,11 @@
         <?php echo form_close(); ?>
 
     </div>   
-    
+  
+    <div class="container">
     <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> <a href='#' data-toggle="collapse" data-target="#data_hide">TMS Trainee Counts</a></h2> 
     
-    <div class="table-responsive" id='data_hide'>    
+    <div class="table-responsive collapse" id='data_hide'>    
         <?php 
         if($this->session->userdata('userDetails')->user_id == '2'){
         ?>
@@ -228,6 +228,7 @@
         <?php echo form_close();}?>
         
     </div>    
+    </div>
 
         <div class="bs-example">
             <div class="table-responsive">
