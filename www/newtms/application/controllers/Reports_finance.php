@@ -129,7 +129,7 @@ class Reports_finance extends CI_Controller {
                 $data_res = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
                 $amount_due = $data_res[0]->total_amount_due;
                 $paidVal = $amount_due;
-                $count=count($data_res);
+                $count=$data_res[0]->count;
                 $displayTextCount = 'Total Amount Pending : ';
             } else if ($_POST['pStatus'] == '3'){
                 $payment_status2 = "PAID','PARTPAID";

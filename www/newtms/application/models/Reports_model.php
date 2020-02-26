@@ -3374,10 +3374,10 @@ SELECT  {$calc_rows} c.crse_name,
 
         $query = "SELECT 
            
-            ei.invoice_id,
-            tu.user_id,
-            sum(due.total_amount_due),
-            ce.enrolment_mode
+           
+            count(tu.user_id) as count,
+            sum(due.total_amount_due) as total_amount_due
+           
            
                     FROM ( course_class cc) 
                     JOIN course c ON c.course_id = cc.course_id 
@@ -3393,7 +3393,7 @@ SELECT  {$calc_rows} c.crse_name,
                     AND date(cc.class_end_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
 
         $result = $this->db->query($query)->result();
-echo $this->db->last_query();exit;
+
         return $result;
     }
 
