@@ -79,6 +79,90 @@ class Reports_finance extends CI_Controller {
         $data['main_content'] = 'reports/tms_report';
         $this->load->view('layout', $data);
     }
+    
+     //// desgined by shubhranshu to pull the PAID /NOTPAID report
+    public function tms_report_count() {
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        if (!empty($_POST)) {
+
+
+            $tenant_id = $this->session->userdata('userDetails')->tenant_id;
+            if ($_POST['pStatus'] == '1') {
+                $payment_status = "PAID','PARTPAID";
+                $displayTextCount = "Total Paid Trainees : ";
+                $export_url = '?pStatus=1';
+            } else if ($_POST['pStatus'] == '2') {
+                $payment_status = "NOTPAID','PARTPAID";
+                $displayTextCount = "Total Unpaid Trainees : ";
+                $export_url = '?payStatus=2';
+            }
+            
+            $year = $_POST['yVal'];
+            $month = $_POST['mVal'];
+            
+            $training_score1 = $_POST['tStatus'];
+            $export_url .='&yearVal=' . $year . '&monthVal=' . $month;
+            if ($training_score1 == '1') {
+                $training_score = 'C';
+            } else if ($training_score1 == '2') {
+                $training_score = "NYC','2NYC";
+            } else if ($training_score1 == '3') {
+                $training_score = 'ABS';
+            } else if ($training_score1 == '4') {
+                $training_score = "C','NYC','2NYC";
+            }
+
+            $export_url .= '&trainingStatus=' . $training_score1;
+            $temp_data = array();
+            if ($_POST['pStatus'] == '1') {
+                $data_res = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
+                $paidVal = $this->calculate_paid($data_res);
+                $count=count($data_res);
+                $displayTextCount = 'Total Amount Received : ';
+            } else if ($_POST['pStatus'] == '2') {
+                $data_res = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
+                $amount_due = $data_res[0]->total_amount_due;
+                $paidVal = $amount_due;
+                $count=$data_res[0]->count;
+                $displayTextCount = 'Total Amount Pending : ';
+            } else if ($_POST['pStatus'] == '3'){
+                $payment_status2 = "PAID','PARTPAID";
+                $payment_status1 = "NOTPAID','PARTPAID";
+                $data1_res = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status1, $year, $month, $training_score);
+                $data2_res = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status2, $year, $month, $training_score);
+                $amount_due = $data1_res[0]->total_amount_due;
+                $paid_amout = $this->calculate_paid($data2_res);
+                $count = ($data1_res[0]->count)+count($data2_res);
+                $displayTextCount = "Total Paid + Unpaid Amount : ";
+                
+                $paidVal =$amount_due + $paid_amout;
+                
+            }
+            
+        }
+        
+        $data['text1'] = 'Total Trainee: '.$count;
+        $data['amount1'] = $displayTextCount.$paidVal;
+        $data['page_title'] = 'TMS Reports';
+        $data['export_url'] = $export_url;
+        $data['main_content'] = 'reports/tms_report';
+        $this->load->view('layout', $data);
+    }
+    
+    public function calculate_paid($data_res){
+        foreach($data_res as $raw){
+            if($raw->enrolment_mode =='SELF'){
+                $amount = $this->reportsModel->get_invoice_data_for_individual($raw->invoice_id, $raw->user_id);
+                $paidVal = $paidVal + $amount;
+
+            }else{
+                $amount1= $this->reportsModel->get_invoice_data_for_comp($raw->invoice_id, $raw->user_id);
+                $paidVal = $paidVal + $amount1;
+            }
+
+       }
+       return $paidVal;
+    }
 
     //// desgined by shubhranshu to pull the PAID /NOTPAID report by xls
     public function export_tms_report() {

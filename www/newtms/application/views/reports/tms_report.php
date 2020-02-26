@@ -17,6 +17,7 @@
 
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/internal_user.png"/>  TMS REPORT - PAID/NOTPAID</h2>
     <div class="table-responsive">
+        
         <?php
 //            print_r($tabledata);
         $atr = 'id="search_form" name="search_form" method="POST"';
@@ -49,7 +50,7 @@
                         
                         <?php
                         $monthVal_options = array(
-                            '' => '--Select Payment Status--',
+                            '' => '--Select Month--',
                             '01' => 'Janaury',
                             '02' => 'February',
                             '03' => 'March',
@@ -113,8 +114,110 @@
         </div>
         <?php echo form_close(); ?>
 
+    </div>   
+  
+    <div class="container">
+        
+    </div>
+    <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> <a href='#' id='collapse_data'>TMS Trainee Counts</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='count_res'> <?php echo $text1.' :: '.$amount1?></span></h2> 
+    
+    <div class="table-responsive" id='data_hide' style='display:none'>    
+        <?php 
+        if($this->session->userdata('userDetails')->user_id == '2' && $this->session->userdata('userDetails')->user_id == '89788'){
+        ?>
+          
+        <?php
+        
+//            print_r($tabledata);
+        $atr = 'id="search_form_count" name="search_form_count" method="POST"';
+//        echo form_open("internal_user/activity_log", $atr);
+        echo form_open("reports_finance/tms_report_count", $atr);
+        ?>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td class="td_heading">                               
+                        Select Any Year
+                    </td>
+                    <td>
+                      <?php
+                        $y_options = array(
+                            '' => '--Select Year--',
+                            '2018' => '2018',
+                            '2019' => '2019',
+                            '2020' => '2020'
+                        );
+                         $attr = 'id="cYear" name="yVal"';
+                        echo form_dropdown('yVal', $y_options, $this->input->post('yVal'), $attr);
+                        ?>
+                    </td>
+                    <td class="td_heading">                               
+                        Select Any Month
+                    </td>
+                    <td>
+                 
+                        
+                        <?php
+                        $m_options = array(
+                            '' => '--Select Month--',
+                            'ALL'  => 'ALL MONTHS',
+                        );
+                         $attr = 'id="cMonth" name="mVal"';
+                        echo form_dropdown('mVal', $m_options, $this->input->post('mVal'), $attr);
+                        ?>
+                    </td>
+                    <td class="td_heading">                               
+                        Payment Status
+                    </td>
+                    <td>
+                 
+                        <?php
+                        $t_options = array(
+                            '' => '--Select Payment Status--',
+                            '1' => 'Paid',
+                            '2' => 'Not Paid',
+                            '3' => 'PAID/UNPAID'
+                        );
+                         $attr = 'id="pStatus" name="pStatus"';
+                        echo form_dropdown('pStatus', $t_options, $this->input->post('pStatus'), $attr);
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_heading">                               
+                        Result Status
+                    </td>
+                    <td>
+                    
+                        <?php
+                        $s_options = array(
+                            '' => '--Select Training Score--',
+                            '1' => 'Competant',
+                            '2' => 'Not Yet Competant',
+                            '3' => 'Absentees',
+                            '4' => 'Competant / Not Yet Competant'
+                        );
+                         $attr = 'id="tStatus" name="tStatus"';
+                        echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
+                        ?>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+        <div class="push_right btn_srch">
+            <button type="submit" class="search_button1 btn btn-xs btn-primary no-mar">
+                <span class="glyphicon glyphicon-search"></span>
+                Search
+            </button>
 
-        <div class="bs-example">
+        </div>
+        <?php echo form_close();}?>
+        
+    </div>    
+   
+
+        <div class="bs-example" style='display:<?php echo ($_POST['mVal'] ? 'none': 'block');?>'>
             <div class="table-responsive">
                             <div class="add_button " style='margin-top: 6px;'>
                 <?php if (count($result) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['INTUSR'])) { ?>
@@ -192,8 +295,8 @@
                                 
                             </tr>
                         <?php } 
-                      
-                        echo $text.$unpaidVal;
+                            
+                        echo ($text ? $text : '').($unpaidVal ? $unpaidVal : '');
                         
                         ?>
                     </tbody>      
@@ -207,7 +310,7 @@
                 ?>
             </ul>
         </div>
-    </div>
+    
     <script>
         $(".search_button").click(function () {
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
@@ -246,6 +349,10 @@
             }
             
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
+        });
+        
+        $('#collapse_data').click(function(){
+            $('#data_hide').toggle(500);
         });
         
         

@@ -3361,5 +3361,74 @@ SELECT  {$calc_rows} c.crse_name,
         //echo print_r($result,true);exit;
         return $result[0]->amount_recd;
     }
+    
+    public function tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score) {
+        $start_date = $year . '-' . $month . '-01';
+        $end_date = $year . '-' . $month . '-31';
+        if($month =='ALL'){
+            $start_date = $year . '-01-01';
+            $end_date = $year . '-12-31';
+        }
+
+        $query = "SELECT 
+           
+           
+            count(tu.user_id) as count,
+            sum(due.total_amount_due) as total_amount_due
+           
+           
+                    FROM ( course_class cc) 
+                    JOIN course c ON c.course_id = cc.course_id 
+                    JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                    JOIN enrol_pymnt_due due ON ce.pymnt_due_id = due.pymnt_due_id and ce.user_id = due.user_id 
+                    join enrol_invoice ei on ei.pymnt_due_id and due.pymnt_due_id and ei.pymnt_due_id=ce.pymnt_due_id
+                    JOIN tms_users tu ON tu.user_id = ce.user_id 
+                    left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
+                    left join company_master cm on cm.company_id=ce.company_id
+                    WHERE cc . tenant_id = '" . $tenant_id . "' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
+                    AND ce.training_score in ('" . $training_score . "')
+                    AND ce.payment_status in ('" . $payment_status . "')
+                    AND date(cc.class_end_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
+
+        $result = $this->db->query($query)->result();
+
+        return $result;
+    }
+
+    public function tms_paid_report_count($tenant_id, $payment_status, $year, $month, $training_score) {
+        $start_date = $year . '-' . $month . '-01';
+        $end_date = $year . '-' . $month . '-31';
+        
+        if($month =='ALL'){
+            $start_date = $year . '-01-01';
+            $end_date = $year . '-12-31';
+        }
+        
+        $query = "SELECT 
+            
+            tu.user_id,
+            ei.invoice_id,
+            ce.enrolment_mode
+                    FROM ( course_class cc) 
+                    JOIN course c ON c.course_id = cc.course_id 
+                    JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                    JOIN enrol_pymnt_due due ON ce.pymnt_due_id = due.pymnt_due_id and ce.user_id = due.user_id 
+                    join enrol_invoice ei on ei.pymnt_due_id and due.pymnt_due_id and ei.pymnt_due_id=ce.pymnt_due_id
+                    JOIN tms_users tu ON tu.user_id = ce.user_id 
+                    left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
+                    left join company_master cm on cm.company_id=ce.company_id
+                    JOIN(SELECT ttt.*
+                        FROM enrol_paymnt_recd ttt
+                        JOIN
+                        (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_paymnt_recd GROUP BY invoice_id) gttt ON ttt.invoice_id = gttt.invoice_id AND ttt.trigger_date = gttt.Maxdate) epr on epr.invoice_id=ei.invoice_id 
+                    WHERE cc . tenant_id = '" . $tenant_id . "' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
+                    AND ce.training_score in ('" . $training_score . "')
+                    AND ce.payment_status in ('" . $payment_status . "')
+                    AND date(cc.class_end_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
+
+        $result = $this->db->query($query)->result();
+
+        return $result;
+    }
 
 }
