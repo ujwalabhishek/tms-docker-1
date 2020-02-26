@@ -3,8 +3,6 @@
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
 </script>
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
 <div class="col-md-10">
     <?php
     $CI = & get_instance();
@@ -162,19 +160,7 @@
                         <?php
                         $m_options = array(
                             '' => '--Select Month--',
-                            '01' => 'Janaury',
-                            '02' => 'February',
-                            '03' => 'March',
-                            '04' => 'April',
-                            '05' => 'May',
-                            '06' => 'June',
-                            '07' => 'July',
-                            '08' => 'August',
-                            '09' => 'September',
-                            '10' => 'October',
-                            '11' => 'November',
-                            '12' => 'December',
-                            'ALL'  => 'ALL',
+                            'ALL'  => 'ALL MONTHS',
                         );
                          $attr = 'id="cMonth" name="mVal"';
                         echo form_dropdown('mVal', $m_options, $this->input->post('mVal'), $attr);
