@@ -9376,7 +9376,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->insert('enrol_invoice_audittrail', $audit_inv_data);
 
         $this->db->trans_complete();
-
+echo $this->db->last_query();exit;
         if ($this->db->trans_status() === FALSE) {
 
             $insert_status = FALSE;
@@ -10780,7 +10780,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
             $this->remove_payment_due($payment_due_id, $user_id);
         }
-
+echo $curr_invoice_details->pymnt_due_id;
         $status = $this->update_invoice_audit_trail($curr_invoice_details->pymnt_due_id);
         $due_to='Remove Enrollment From Company Invoice';
         $status=$this->enrol_invoice_view($curr_invoice_details->pymnt_due_id,$data,$logged_in_user_id,$due_to);
