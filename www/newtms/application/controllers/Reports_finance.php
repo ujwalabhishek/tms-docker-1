@@ -122,38 +122,50 @@ class Reports_finance extends CI_Controller {
             $temp_data = array();
             if ($_POST['pStatus'] == '1') {
                 $data_res = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
+                $paidVal = $this->calculate_paid($data_res);
+                $displayTextCount = 'Total Amount Received : ';
             } else if ($_POST['pStatus'] == '2') {
                 $data_res = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
+                $amount_due = $data_res[0]->total_amount_due;
+                $paidVal = $amount_due;
+                $displayTextCount = 'Total Amount Pending : ';
             } else if ($_POST['pStatus'] == '3'){
                 $payment_status2 = "PAID','PARTPAID";
                 $payment_status1 = "NOTPAID','PARTPAID";
                 $data1_res = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status1, $year, $month, $training_score);
                 $data2_res = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status2, $year, $month, $training_score);
-                //$data['count'] = count($data['result1'])+count($data['result2']);
-                $displayTextCount = "Total Paid+Unpaid Trainees : ";
-                $data_res = array_merge($data1_res,$data2_res);
-                $paidVal ='';
+                $amount_due = $data1_res[0]->total_amount_due;
+                $paid_amout = $this->calculate_paid($data2_res);
+                $count = count($data1_res)+count($data2_res);
+                $displayTextCount = "Total Paid + Unpaid Amount : ";
+                
+                $paidVal =$amount_due + $paid_amout;
                 
             }
-            foreach($data_res as $raw){
-                if($raw->enrolment_mode =='SELF'){
-                    $amount = $this->reportsModel->get_invoice_data_for_individual($raw->invoice_id, $raw->user_id);
-                    $paidVal = $paidVal + $amount;
-
-                }else{
-                    $amount1= $this->reportsModel->get_invoice_data_for_comp($raw->invoice_id, $raw->user_id);
-                    $paidVal = $paidVal + $amount1;
-                }
-
-           }
+            
         }
         
-        $data['text1'] = $displayTextCount.count($data_res);
-        $data['amount1'] = $paidVal;
+        $data['text1'] = 'Total Trainee: '.$count;
+        $data['amount1'] = $displayTextCount.$paidVal;
         $data['page_title'] = 'TMS Reports';
         $data['export_url'] = $export_url;
         $data['main_content'] = 'reports/tms_report';
         $this->load->view('layout', $data);
+    }
+    
+    public function calculate_paid($data_res){
+        foreach($data_res as $raw){
+            if($raw->enrolment_mode =='SELF'){
+                $amount = $this->reportsModel->get_invoice_data_for_individual($raw->invoice_id, $raw->user_id);
+                $paidVal = $paidVal + $amount;
+
+            }else{
+                $amount1= $this->reportsModel->get_invoice_data_for_comp($raw->invoice_id, $raw->user_id);
+                $paidVal = $paidVal + $amount1;
+            }
+
+       }
+       return $paidVal;
     }
 
     //// desgined by shubhranshu to pull the PAID /NOTPAID report by xls

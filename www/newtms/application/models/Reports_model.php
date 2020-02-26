@@ -3376,6 +3376,7 @@ SELECT  {$calc_rows} c.crse_name,
            
             ei.invoice_id,
             tu.user_id,
+            sum(due.total_amount_due),
             ce.enrolment_mode
            
                     FROM ( course_class cc) 
