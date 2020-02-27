@@ -116,7 +116,104 @@
 
     </div>   
   
-    <div class="container">
+     
+   
+
+        <div class="bs-example" style='display:<?php echo ($_POST['mVal'] ? 'none': 'block');?>'>
+            <div class="table-responsive">
+                            <div class="add_button " style='margin-top: 6px;'>
+                <?php if (count($result) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['INTUSR'])) { ?>
+                                           
+                                            <a href="<?php echo site_url('/reports_finance/export_tms_report' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export All As XLS</span></a>
+                <?php } ?>
+                            </div>
+                <div style="clear:both;"></div>
+                <table id="listview" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th width="10%">Tax Code</th>
+                            <th width="10%">Invoice ID.</th>
+                            <th width="10%">Trainee Name</th>
+                            <th width="15%">Company Name</th>
+                            <th width="20%">Class Fees</th>
+                            <th width="10%">Discount</th>
+                            <th width="10%">Subsidy</th>
+                            <th width="10%">GST</th>
+                            <th width="10%">Net Amt.</th>
+                            <th width="9%">Mode</th>
+                            <th width="9%">TG No.</th>
+                            <th width="9%">Class Start Date</th>
+                            <th width="9%">Class End Date</th>
+                            <th width="9%">Class Name</th>
+                            <th width="9%">Training Score</th>
+                            <th width="9%">Payment Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <?php
+                            echo "Total Count : ".count($result);
+                            ?>
+                        </tr>
+                        <?php
+                        $unpaidVal = 0;
+                        $paidVal = 0;
+                        foreach ($result as $data) {
+                            ?>
+                            <tr>
+                                <td><?php echo $data->tax_code; ?></td>
+                                <td><?php echo $data->invoice_id; ?></td>
+                                <td><?php echo $data->name; ?></td>
+                                <td><?php echo $data->company_name ?? "N/A"; ?></td>
+                                <td>$ <?php echo $data->class_fees; ?></td>
+                                <td>$ <?php echo $data->discount_rate ?? "N/A"; ?></td>
+                                <td>$ <?php echo $data->subsidy_amount ?? "N/A"; ?></td>
+                                <td>$ <?php echo $data->gst_amount ?? "N/A"; ?></td>
+                                <td>$ <?php 
+                                if($data->payment_status == "NOTPAID") {
+                                    echo $data->total_amount_due; 
+                                    $unpaidVal = $unpaidVal + $data->total_amount_due;
+                                } else {
+                                    if($data->enrolment_mode =='SELF'){
+                                        $amount = $CI->reports_model->get_invoice_data_for_individual($data->invoice_id, $data->user_id);
+                                        $unpaidVal = $unpaidVal + $amount;
+                                        echo $amount;
+                                    }else{
+                                        $amount1= $CI->reports_model->get_invoice_data_for_comp($data->invoice_id, $data->user_id);
+                                        $unpaidVal = $unpaidVal + $amount1;
+                                        echo $amount1;
+                                    }
+                                    
+                                }
+                                
+                                ?></td>
+                                <td> <?php echo $data->mode_of_pymnt ?? "N/A"; ?></td>
+                                <td><?php echo $data->tg_number ?? "N/A"; ?></td>
+                                <td><?php echo date('d/m/Y', strtotime($data->class_start_datetime)); ?></td>
+                                <td><?php echo date('d/m/Y', strtotime($data->class_end_datetime)); ?></td>
+                                <td><?php echo $data->class_name; ?></td>
+                                <td><?php echo $data->training_score; ?></td>
+                                <td><?php echo $data->payment_status; ?></td>
+                                
+                            </tr>
+                        <?php } 
+                            
+                        echo ($text ? $text : '').($unpaidVal ? $unpaidVal : '');
+                        
+                        ?>
+                    </tbody>      
+                </table>
+            </div>
+            <div style="clear:both;"></div><br>
+            <ul class="pagination pagination_style">
+                <?php
+                echo $pagination;
+//            echo $this->input->get('cls_name');
+                ?>
+            </ul>
+        </div>
+    
+     <div class="container">
         
     </div>
     <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> <a href='#' id='collapse_data'>TMS Trainee Counts</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='count_res'> <?php echo $text1.' :: '.$amount1?></span></h2> 
@@ -214,102 +311,7 @@
         </div>
         <?php echo form_close();}?>
         
-    </div>    
-   
-
-        <div class="bs-example" style='display:<?php echo ($_POST['mVal'] ? 'none': 'block');?>'>
-            <div class="table-responsive">
-                            <div class="add_button " style='margin-top: 6px;'>
-                <?php if (count($result) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['INTUSR'])) { ?>
-                                           
-                                            <a href="<?php echo site_url('/reports_finance/export_tms_report' . $export_url) ?>"  class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export All As XLS</span></a>
-                <?php } ?>
-                            </div>
-                <div style="clear:both;"></div>
-                <table id="listview" class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th width="10%">Tax Code</th>
-                            <th width="10%">Invoice ID.</th>
-                            <th width="10%">Trainee Name</th>
-                            <th width="15%">Company Name</th>
-                            <th width="20%">Class Fees</th>
-                            <th width="10%">Discount</th>
-                            <th width="10%">Subsidy</th>
-                            <th width="10%">GST</th>
-                            <th width="10%">Net Amt.</th>
-                            <th width="9%">Mode</th>
-                            <th width="9%">TG No.</th>
-                            <th width="9%">Class Start Date</th>
-                            <th width="9%">Class End Date</th>
-                            <th width="9%">Class Name</th>
-                            <th width="9%">Training Score</th>
-                            <th width="9%">Payment Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <?php
-                            echo "Total Count : ".count($result);
-                            ?>
-                        </tr>
-                        <?php
-                        $unpaidVal = 0;
-                        $paidVal = 0;
-                        foreach ($result as $data) {
-                            ?>
-                            <tr>
-                                <td><?php echo $data->tax_code; ?></td>
-                                <td><?php echo $data->invoice_id; ?></td>
-                                <td><?php echo $data->name; ?></td>
-                                <td><?php echo $data->company_name ?? "N/A"; ?></td>
-                                <td>$ <?php echo $data->class_fees; ?></td>
-                                <td>$ <?php echo $data->discount_rate ?? "N/A"; ?></td>
-                                <td>$ <?php echo $data->subsidy_amount ?? "N/A"; ?></td>
-                                <td>$ <?php echo $data->gst_amount ?? "N/A"; ?></td>
-                                <td>$ <?php 
-                                if($data->payment_status == "NOTPAID") {
-                                    echo $data->total_amount_due; 
-                                    $unpaidVal = $unpaidVal + $data->total_amount_due;
-                                } else {
-                                    if($data->enrolment_mode =='SELF'){
-                                        $amount = $CI->reports_model->get_invoice_data_for_individual($data->invoice_id, $data->user_id);
-                                        $unpaidVal = $unpaidVal + $amount;
-                                        echo $amount;
-                                    }else{
-                                        $amount1= $CI->reports_model->get_invoice_data_for_comp($data->invoice_id, $data->user_id);
-                                        $unpaidVal = $unpaidVal + $amount1;
-                                        echo $amount1;
-                                    }
-                                    
-                                }
-                                
-                                ?></td>
-                                <td> <?php echo $data->mode_of_pymnt ?? "N/A"; ?></td>
-                                <td><?php echo $data->tg_number ?? "N/A"; ?></td>
-                                <td><?php echo date('d/m/Y', strtotime($data->class_start_datetime)); ?></td>
-                                <td><?php echo date('d/m/Y', strtotime($data->class_end_datetime)); ?></td>
-                                <td><?php echo $data->class_name; ?></td>
-                                <td><?php echo $data->training_score; ?></td>
-                                <td><?php echo $data->payment_status; ?></td>
-                                
-                            </tr>
-                        <?php } 
-                            
-                        echo ($text ? $text : '').($unpaidVal ? $unpaidVal : '');
-                        
-                        ?>
-                    </tbody>      
-                </table>
-            </div>
-            <div style="clear:both;"></div><br>
-            <ul class="pagination pagination_style">
-                <?php
-                echo $pagination;
-//            echo $this->input->get('cls_name');
-                ?>
-            </ul>
-        </div>
+    </div>  
     
     <script>
         $(".search_button").click(function () {
