@@ -133,13 +133,13 @@
                         <tr>
                             <th width="10%">Tax Code</th>
                             <th width="10%">Invoice ID.</th>
-                            <th width="10%">Trainee Name</th>
-                            <th width="10%">Company Name</th>
-                            <th width="20%">Class Fees</th>
-                            <th width="10%">Discount</th>
-                            <th width="10%">Subsidy</th>
-                            <th width="10%">GST</th>
-                            <th width="10%">Net Amt.</th>
+                            <th width="9%">Trainee Name</th>
+                            <th width="9%">Company Name</th>
+                            <th width="9%">Class Fees</th>
+                            <th width="9%">Discount</th>
+                            <th width="9%">Subsidy</th>
+                            <th width="8%">GST</th>
+                            <th width="9%">Net Amt.</th>
                             <th width="9%">Mode</th>
                             <th width="9%">TG No.</th>
                             <th width="9%">Class Start Date</th>
