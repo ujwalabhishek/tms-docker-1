@@ -163,8 +163,8 @@
                             <tr>
                                 <td><?php echo $data->tax_code; ?></td>
                                 <td><?php echo $data->invoice_id; ?></td>
-                                <td><?php echo $data->name; ?></td>
-                                <td><?php echo $data->company_name ?? "N/A"; ?></td>
+                                <td width="8%"><?php echo $data->name; ?></td>
+                                <td width="8%"><?php echo $data->company_name ?? "N/A"; ?></td>
                                 <td>$ <?php echo $data->class_fees; ?></td>
                                 <td>$ <?php echo $data->discount_rate ?? "N/A"; ?></td>
                                 <td>$ <?php echo $data->subsidy_amount ?? "N/A"; ?></td>
