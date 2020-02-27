@@ -131,22 +131,22 @@
                 <table id="listview" class="table table-striped">
                     <thead>
                         <tr>
-                            <th width="10%">Tax Code</th>
-                            <th width="10%">Invoice ID.</th>
-                            <th width="9%">Trainee Name</th>
-                            <th width="9%">Company Name</th>
-                            <th width="9%">Class Fees</th>
-                            <th width="9%">Discount</th>
-                            <th width="9%">Subsidy</th>
-                            <th width="8%">GST</th>
-                            <th width="9%">Net Amt.</th>
-                            <th width="9%">Mode</th>
-                            <th width="9%">TG No.</th>
-                            <th width="9%">Class Start Date</th>
-                            <th width="9%">Class End Date</th>
-                            <th width="9%">Class Name</th>
-                            <th width="9%">Training Score</th>
-                            <th width="9%">Payment Status</th>
+                            <th width="5%">Tax Code</th>
+                            <th width="5%">Invoice ID.</th>
+                            <th width="10%">Trainee Name</th>
+                            <th width="10%">Company Name</th>
+                            <th width="5%">Class Fees</th>
+                            <th width="5%">Discount</th>
+                            <th width="5%">Subsidy</th>
+                            <th width="5%">GST</th>
+                            <th width="5%">Net Amt.</th>
+                            <th width="5%">Mode</th>
+                            <th width="5%">TG No.</th>
+                            <th width="7%">Class Start Date</th>
+                            <th width="7%">Class End Date</th>
+                            <th width="5%">Class Name</th>
+                            <th width="5%">Training Score</th>
+                            <th width="5%">Payment Status</th>
                         </tr>
                     </thead>
                     <tbody>
