@@ -122,13 +122,13 @@ class Reports_finance extends CI_Controller {
             $temp_data = array();
             if ($_POST['pStatus'] == '1') {
                 $data_res = $this->reportsModel->tms_paid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
-                $paidVal = $this->calculate_paid($data_res);
+                $paidVal1 = $this->calculate_paid($data_res);
                 $count=count($data_res);
                 $displayTextCount = 'Total Amount Received : ';
             } else if ($_POST['pStatus'] == '2') {
                 $data_res = $this->reportsModel->tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score);
                 $amount_due = $data_res[0]->total_amount_due;
-                $paidVal = $amount_due;
+                $paidVal1 = $amount_due;
                 $count=$data_res[0]->count;
                 $displayTextCount = 'Total Amount Pending : ';
             } else if ($_POST['pStatus'] == '3'){
@@ -141,14 +141,14 @@ class Reports_finance extends CI_Controller {
                 $count = ($data1_res[0]->count)+count($data2_res);
                 $displayTextCount = "Total Paid + Unpaid Amount : ";
                 
-                $paidVal =$amount_due + $paid_amout;
+                $paidVal1 =$amount_due + $paid_amout;
                 
             }
             
         }
         
         $data['text1'] = 'Total Trainee: '.$count;
-        $data['amount1'] = $displayTextCount.$paidVal;
+        $data['amount1'] = $displayTextCount.$paidVal1;
         $data['page_title'] = 'TMS Reports';
         $data['export_url'] = $export_url;
         $data['main_content'] = 'reports/tms_report';
