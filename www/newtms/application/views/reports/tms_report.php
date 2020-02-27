@@ -134,7 +134,7 @@
                             <th width="10%">Tax Code</th>
                             <th width="10%">Invoice ID.</th>
                             <th width="10%">Trainee Name</th>
-                            <th width="15%">Company Name</th>
+                            <th width="10%">Company Name</th>
                             <th width="20%">Class Fees</th>
                             <th width="10%">Discount</th>
                             <th width="10%">Subsidy</th>
