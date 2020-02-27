@@ -293,7 +293,7 @@
                             '3' => 'Absentees',
                             '4' => 'Competant / Not Yet Competant'
                         );
-                         $attr = 'id="tStatus" name="tStatus"';
+                         $attr = 'id="cStatus" name="tStatus"';
                         echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
                         ?>
                     </td>
@@ -302,7 +302,7 @@
             </tbody>
         </table>
         <div class="push_right btn_srch">
-            <button type="submit" class="search_button1 btn btn-xs btn-primary no-mar">
+            <button type="button" class="search_button1 btn btn-xs btn-primary no-mar">
                 <span class="glyphicon glyphicon-search"></span>
                 Search
             </button>
@@ -344,9 +344,7 @@
             
             if($status){
                 $('#search_form').submit();
-                var self = $(".btn_srch"),
-                    button = self.find('input[type="submit"],button');
-            button.attr('disabled', 'disabled').html('Please Wait..');
+                $('.search_button').attr('disabled', 'disabled').html('Please Wait..');
             }
             
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
@@ -356,6 +354,46 @@
             $('#data_hide').toggle(500);
         });
         
+        
+        $(".search_button1").click(function () {
+            ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
+            $status = true;
+            if($('#cYear').val() ==''){
+                $status=false;
+                $('#cYear').css('color','red');
+            }else{
+                $('#cYear').css('color','black');
+            }
+            if($('#cMonth').val() ==''){
+                $status=false;
+                $('#cMonth').css('color','red');
+            }else{
+                $('#cMonth').css('color','black');
+            }
+            if($('#pStatus').val() ==''){
+                $status=false;
+                $('#pStatus').css('color','red');
+            }else{
+                $('#pStatus').css('color','black');
+            }
+            if($('#cStatus').val() ==''){
+                $status=false;
+                $('#cStatus').css('color','red');
+            }else{
+                $('#cStatus').css('color','black');
+            }    
+            
+            
+            if($status){
+                $('#search_form_count').submit();
+               
+            $('.search_button1').attr('disabled', 'disabled').html('Please Wait..');
+            }
+            
+            ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
+        });
+        
+       
         
         
     </script>
