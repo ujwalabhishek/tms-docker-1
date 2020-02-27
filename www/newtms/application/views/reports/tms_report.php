@@ -220,9 +220,7 @@
     <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> <a href='#' id='collapse_data'>TMS Trainee Counts</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='count_res'> <?php echo $text1.' :: '.$amount1?></span></h2> 
     
     <div class="table-responsive" id='data_hide' style='display:none'>    
-        <?php 
-        if($this->session->userdata('userDetails')->user_id == '2' || $this->session->userdata('userDetails')->user_id == '89788' || $this->session->userdata('userDetails')->user_id == '171163'){
-        ?>
+        
           
         <?php
         
@@ -310,7 +308,7 @@
             </button>
 
         </div>
-        <?php echo form_close();}?>
+        <?php echo form_close();?>
         
     </div>  
     
