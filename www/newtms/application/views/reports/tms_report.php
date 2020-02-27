@@ -216,6 +216,7 @@
      <div class="container">
         
     </div>
+    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/internal_user.png"/>  TMS TRAINEE - COUNT/AMOUNT</h2>
     <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> <a href='#' id='collapse_data'>TMS Trainee Counts</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='count_res'> <?php echo $text1.' :: '.$amount1?></span></h2> 
     
     <div class="table-responsive" id='data_hide' style='display:none'>    
