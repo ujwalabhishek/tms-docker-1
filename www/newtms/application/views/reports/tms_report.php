@@ -388,9 +388,8 @@
             
             if($status){
                 $('#search_form_count').submit();
-                var self = $(".btn_srch"),
-                    button = self.find('input[type="submit"],button');
-            button.attr('disabled', 'disabled').html('Please Wait..');
+               
+            $('#search_button1').attr('disabled', 'disabled').html('Please Wait..');
             }
             
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
