@@ -334,16 +334,16 @@
             }else{
                 $('#payStatus').css('color','black');
             }
-            if($('#cStatus').val() ==''){
+            if($('#tStatus').val() ==''){
                 $status=false;
-                $('#cStatus').css('color','red');
+                $('#tStatus').css('color','red');
             }else{
-                $('#cStatus').css('color','black');
+                $('#tStatus').css('color','black');
             }    
             
             
             if($status){
-                $('#search_form1').submit();
+                $('#search_form').submit();
                 var self = $(".btn_srch"),
                     button = self.find('input[type="submit"],button');
             button.attr('disabled', 'disabled').html('Please Wait..');
@@ -378,11 +378,11 @@
             }else{
                 $('#pStatus').css('color','black');
             }
-            if($('#tStatus').val() ==''){
+            if($('#cStatus').val() ==''){
                 $status=false;
-                $('#tStatus').css('color','red');
+                $('#cStatus').css('color','red');
             }else{
-                $('#tStatus').css('color','black');
+                $('#cStatus').css('color','black');
             }    
             
             
