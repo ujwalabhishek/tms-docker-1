@@ -567,6 +567,7 @@ class Trainee extends CI_Controller {
      * This method for validating each excel field.
      */
       private function validate_excel($trainee, $i) {
+        $tenant_id=$this->data['user']->tenant_id;
         $metavalues = array();
         $metavalues = $this->get_metavalues_array();
         $is_taxcode_unique = $this->is_taxcode_unique($trainee[$i][taxcode]);
@@ -956,7 +957,8 @@ class Trainee extends CI_Controller {
 //        return $trainee;
 //    }
     
-    public function validate_bulk_trainee($excel_data) {print_r($this->data['user']);exit;
+    public function validate_bulk_trainee($excel_data) {
+        $tenant_id=$this->data['user']->tenant_id;
         $trainee = array();
         $i = 1;
         $trainee[1]['db_error'] = '';
@@ -969,16 +971,26 @@ class Trainee extends CI_Controller {
             }
             $trainee[$i][countryofresidence] = ($exceldata[1])? trim($exceldata[1]): 'SGP';
             ////addded by shubhranshu for Xprienz requirement
-//            if(){
-//                
-//            }
-            $trainee[$i][nrictype] = trim($exceldata[2]);
-            $trainee[$i][nrictypeOthers] = trim($exceldata[3]);
+            if($tenant_id =='T02'){
+                $trainee[$i][nrictype] = trim($exceldata[2] ? $exceldata[2] : 'Others');
+                $trainee[$i][nrictypeOthers] = ($exceldata[3] ? $exceldata[3] : 'NO TAX CODE');
+                $trainee[$i][nationality] = ($exceldata[5] ? $exceldata[5] : 'NS');
+                $trainee[$i][education] = ($exceldata[6] ? $exceldata[6] : 'TALGC3');
+                $trainee[$i][gender] = ($exceldata[8] ? $exceldata[8] : 'MALE');
+            }else{
+                $trainee[$i][nrictype] = trim($exceldata[2]);
+                $trainee[$i][nrictypeOthers] = trim($exceldata[3]);
+                $trainee[$i][nationality] = trim($exceldata[5]);
+                $trainee[$i][education] = trim($exceldata[6]);
+                $trainee[$i][gender] = trim($exceldata[8]);
+            }
+            
+            
             $trainee[$i][taxcode] = trim($exceldata[4]);
-            $trainee[$i][nationality] = trim($exceldata[5]);
-            $trainee[$i][education] = trim($exceldata[6]);
+            
+            
             $trainee[$i][firstname] = trim($exceldata[7]);
-            $trainee[$i][gender] = trim($exceldata[8]);
+           
             $trainee[$i][dob] = trim($exceldata[9]);
             $trainee[$i][ContactNumber] = trim($exceldata[10]);
             $trainee[$i][EmailId] = trim($exceldata[12]);
@@ -1050,7 +1062,7 @@ class Trainee extends CI_Controller {
                 } else {
                     $excel_data = $this->excel_reader->sheets[0][cells];
                     $trainee = $this->validate_bulk_trainee($excel_data);
-
+print_r($excel_data);exit;
 		if ($trainee[1]['db_error'] == 'db_error') {
                         $this->session->set_flashdata('error_message', 'Oops! Sorry, it looks like something went wrong with some record.Please check!');
                     }
