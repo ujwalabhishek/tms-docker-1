@@ -1159,7 +1159,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
        // /////////////////////////////////////////////////////////////
         
         if($this->user->tenant_id == 'T02') {
-            $user_name = "XPR".$taxcode;
+            $user_name = "XPZ".$taxcode;
         } else if($this->user->tenant_id == 'T03'){
             $user_name = "CAI".$taxcode;
         } else if($this->user->tenant_id == 'T04'){
