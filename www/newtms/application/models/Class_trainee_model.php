@@ -10791,17 +10791,17 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
                     $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
                     $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);
-                }else if($status && (($curr_invoice_details->total_inv_amount - $total_net_fees_due) == 0) && (count($absent_trainee_present) > 0)){///added by shubhransu from this block
-                    list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, (round($curr_invoice_details->total_inv_amount,2) - round($total_net_fees_due,2)), ($curr_invoice_details->total_unit_fees - $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt - $total_discount_due), ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), (round($curr_invoice_details->total_gst,2) - round($total_gst_due,2)), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
+                }
+            }else if($status && (($curr_invoice_details->total_inv_amount - $total_net_fees_due) == 0) && (count($absent_trainee_present) > 0)){///added by shubhransu from this block
+                list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, (round($curr_invoice_details->total_inv_amount,2) - round($total_net_fees_due,2)), ($curr_invoice_details->total_unit_fees - $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt - $total_discount_due), ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), (round($curr_invoice_details->total_gst,2) - round($total_gst_due,2)), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
 
-                     if ($status) {  
-                         /* update invoice id into invoice related table if invoice is paid and refund start */
-                         $total_amount = (round($curr_invoice_details->total_inv_amount,2) - round($total_net_fees_due,2));
-                         $invoice_id = $new_invoice_id;
+                 if ($status) {  
+                     /* update invoice id into invoice related table if invoice is paid and refund start */
+                     $total_amount = (round($curr_invoice_details->total_inv_amount,2) - round($total_net_fees_due,2));
+                     $invoice_id = $new_invoice_id;
 
-                         $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
-                         $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);
-                     }
+                     $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
+                     $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);
                  }
             }
         }
