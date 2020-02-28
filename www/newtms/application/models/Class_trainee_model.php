@@ -10771,7 +10771,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
             $this->remove_payment_due($payment_due_id, $user_id);
         }
-
+        $absent_trainee_present = $this->get_payment_due_absent($payment_due_id);////added by shubhranshu for remove enrollment issue
         $status = $this->update_invoice_audit_trail($curr_invoice_details->pymnt_due_id);
         $due_to='Remove Enrollment From Company Invoice';
         $status=$this->enrol_invoice_view($curr_invoice_details->pymnt_due_id,$data,$logged_in_user_id,$due_to);
@@ -10791,7 +10791,18 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
                     $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
                     $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);
-                }
+                }else if($status && (($curr_invoice_details->total_inv_amount - $total_net_fees_due) == 0) && (count($absent_trainee_present) > 0)){///added by shubhransu from this block
+                    list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, (round($curr_invoice_details->total_inv_amount,2) - round($total_net_fees_due,2)), ($curr_invoice_details->total_unit_fees - $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt - $total_discount_due), ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), (round($curr_invoice_details->total_gst,2) - round($total_gst_due,2)), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
+
+                     if ($status) {  
+                         /* update invoice id into invoice related table if invoice is paid and refund start */
+                         $total_amount = (round($curr_invoice_details->total_inv_amount,2) - round($total_net_fees_due,2));
+                         $invoice_id = $new_invoice_id;
+
+                         $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
+                         $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);
+                     }
+                 }
             }
         }
      
@@ -11290,6 +11301,22 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
          $this->db->where("att_status", 1);
 
         $result_set = $this->db->get()->row();
+
+        return $result_set;
+    }
+    
+    /////added by shubhranshu
+    private function get_payment_due_absent($payment_due_id) {
+
+        $this->db->select('*');
+
+        $this->db->from('enrol_pymnt_due');
+
+        $this->db->where("pymnt_due_id", $payment_due_id);
+
+        $this->db->where("att_status", 0);
+
+        $result_set = $this->db->get()->result();
 
         return $result_set;
     }
