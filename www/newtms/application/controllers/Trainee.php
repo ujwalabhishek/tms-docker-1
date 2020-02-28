@@ -1072,12 +1072,24 @@ class Trainee extends CI_Controller {
     * download smaple excel file.
     * @param type $file_name
     */
-    public function download_xls($file_name = "uploads/Trainee_Bulk_Registration.xls") {
-        ob_clean();
-        header("Content-Type: application/octet-stream");
-        header("Content-Disposition: attachment;filename=Trainee_Bulk_Registration.xls");
-        readfile(base_url() . $file_name);
-        exit();
+    public function download_xls() {
+        $tenant_id = $this->user->tenant_id;
+        if($tenant_id =='T02'){
+            $file_name = "uploads/Xprienz_Trainee_Bulk_Registration.xls";
+            ob_clean();
+            header("Content-Type: application/octet-stream");
+            header("Content-Disposition: attachment;filename=Trainee_Bulk_Registration.xls");
+            readfile(base_url() . $file_name);
+            exit();
+        }else{
+            $file_name = "uploads/Trainee_Bulk_Registration.xls";
+            ob_clean();
+            header("Content-Type: application/octet-stream");
+            header("Content-Disposition: attachment;filename=Trainee_Bulk_Registration.xls");
+            readfile(base_url() . $file_name);
+            exit();
+        }
+        
     }
     /**
      * download import xls
