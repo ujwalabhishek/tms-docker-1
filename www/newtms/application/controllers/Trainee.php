@@ -969,9 +969,9 @@ class Trainee extends CI_Controller {
             }
             $trainee[$i][countryofresidence] = ($exceldata[1])? trim($exceldata[1]): 'SGP';
             ////addded by shubhranshu for Xprienz requirement
-            if(){
-                
-            }
+//            if(){
+//                
+//            }
             $trainee[$i][nrictype] = trim($exceldata[2]);
             $trainee[$i][nrictypeOthers] = trim($exceldata[3]);
             $trainee[$i][taxcode] = trim($exceldata[4]);
