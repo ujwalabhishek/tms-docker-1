@@ -1073,12 +1073,12 @@ class Trainee extends CI_Controller {
     * @param type $file_name
     */
     public function download_xls() {
-        $tenant_id = $this->user->tenant_id;echo $tenant_id;exit;
+        $tenant_id = $this->user->tenant_id;
         if($tenant_id =='T02'){
             $file_name = "uploads/Xprienz_Trainee_Bulk_Registration.xls";
             ob_clean();
             header("Content-Type: application/octet-stream");
-            header("Content-Disposition: attachment;filename=Trainee_Bulk_Registration.xls");
+            header("Content-Disposition: attachment;filename=Xprienz_Trainee_Bulk_Registration.xls");
             readfile(base_url() . $file_name);
             exit();
         }else{
