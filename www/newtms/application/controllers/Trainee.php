@@ -974,8 +974,8 @@ class Trainee extends CI_Controller {
             if($tenant_id =='T02'){
                 $trainee[$i][nrictype] = trim($exceldata[2] ? $exceldata[2] : 'Others');
                 $trainee[$i][nrictypeOthers] = ($exceldata[3] ? $exceldata[3] : 'NO TAX CODE');
-                $trainee[$i][nationality] = ($exceldata[5] ? $exceldata[5] : 'NS');
-                $trainee[$i][education] = ($exceldata[6] ? $exceldata[6] : 'TALGC3');
+                $trainee[$i][nationality] = ($exceldata[5] ? $exceldata[5] : 'SINGAPORE PR');
+                $trainee[$i][education] = ($exceldata[6] ? $exceldata[6] : "At least 1 GCE 'N' Level Pass");
                 $trainee[$i][gender] = ($exceldata[8] ? $exceldata[8] : 'MALE');
             }else{
                 $trainee[$i][nrictype] = trim($exceldata[2]);
@@ -1062,7 +1062,7 @@ class Trainee extends CI_Controller {
                 } else {
                     $excel_data = $this->excel_reader->sheets[0][cells];
                     $trainee = $this->validate_bulk_trainee($excel_data);
-print_r($excel_data);exit;
+
 		if ($trainee[1]['db_error'] == 'db_error') {
                         $this->session->set_flashdata('error_message', 'Oops! Sorry, it looks like something went wrong with some record.Please check!');
                     }
