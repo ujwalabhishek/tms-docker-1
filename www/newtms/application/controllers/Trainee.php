@@ -956,7 +956,7 @@ class Trainee extends CI_Controller {
 //        return $trainee;
 //    }
     
-    public function validate_bulk_trainee($excel_data) {
+    public function validate_bulk_trainee($excel_data) {print_r($this->data['user']);exit;
         $trainee = array();
         $i = 1;
         $trainee[1]['db_error'] = '';
@@ -968,6 +968,10 @@ class Trainee extends CI_Controller {
                 $trainee[$i][CompanyCode] = $this->data['user']->company_id;
             }
             $trainee[$i][countryofresidence] = ($exceldata[1])? trim($exceldata[1]): 'SGP';
+            ////addded by shubhranshu for Xprienz requirement
+            if(){
+                
+            }
             $trainee[$i][nrictype] = trim($exceldata[2]);
             $trainee[$i][nrictypeOthers] = trim($exceldata[3]);
             $trainee[$i][taxcode] = trim($exceldata[4]);
@@ -1073,7 +1077,7 @@ class Trainee extends CI_Controller {
     * @param type $file_name
     */
     public function download_xls() {
-        $tenant_id = $this->user->tenant_id;
+        $tenant_id = $this->user->tenant_id;////added by shubhranshu due to client request
         if($tenant_id =='T02'){
             $file_name = "uploads/Xprienz_Trainee_Bulk_Registration.xls";
             ob_clean();
