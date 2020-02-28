@@ -1175,7 +1175,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         $check_username_unique = $this->is_username_unique($user_name);
         
         if($check_username_unique >0){
-            $user_name = $user_name.'1';
+            $user_name = $user_name.date('is');
         }////////////////////////////////////ssp end///////////////////////////////////
         $tms_users_data = array(
             'tenant_id' => $this->user->tenant_id,
