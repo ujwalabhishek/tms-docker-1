@@ -1072,7 +1072,7 @@ class Trainee extends CI_Controller {
                     if (empty($trainee[1]))
                         unset($trainee[1]);
                     $this->load->helper('export');
-                    //$files = write_import_status($trainee, $this->user->user_id);
+                    $files = write_import_status($trainee, $this->user->user_id);
                     unlink('./uploads/' . $data['file_name']);
                     
                 }
