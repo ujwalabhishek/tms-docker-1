@@ -973,7 +973,12 @@ class Trainee extends CI_Controller {
             ////addded by shubhranshu for Xprienz requirement
             if($tenant_id =='T02'){
                 $trainee[$i][nrictype] = trim($exceldata[2] ? $exceldata[2] : 'Others');
-                $trainee[$i][nrictypeOthers] = ($exceldata[3] ? $exceldata[3] : 'NO TAX CODE');
+                if($exceldata[2]){
+                    $trainee[$i][nrictypeOthers] = $exceldata[3];
+                }else{
+                   $trainee[$i][nrictypeOthers] = 'NO TAX CODE';  
+                }
+               
                 $trainee[$i][nationality] = ($exceldata[5] ? $exceldata[5] : 'SINGAPORE PR');
                 $trainee[$i][education] = ($exceldata[6] ? $exceldata[6] : "At least 1 GCE 'N' Level Pass");
                 $trainee[$i][gender] = ($exceldata[8] ? $exceldata[8] : 'MALE');
@@ -1056,7 +1061,7 @@ class Trainee extends CI_Controller {
                     $data['error'] = 'File is not readable.';
                 } else {
                     $excel_data = $this->excel_reader->sheets[0][cells];
-                    if(count($excel_data[1]) > 0){
+                    if(count($excel_data[1]) > 0){////added by shubhranshu to prevent if the sheet is blank
                         
                         $trainee = $this->validate_bulk_trainee($excel_data);
                     }else{
