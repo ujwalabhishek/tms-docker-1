@@ -1061,6 +1061,7 @@ class Trainee extends CI_Controller {
                     $data['error'] = 'File is not readable.';
                 } else {
                     $excel_data = $this->excel_reader->sheets[0][cells];
+                    print_r($excel_data);exit;
                     $trainee = $this->validate_bulk_trainee($excel_data);
 
 		if ($trainee[1]['db_error'] == 'db_error') {
