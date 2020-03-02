@@ -1057,7 +1057,7 @@ class Trainee extends CI_Controller {
                 } else {
                     $excel_data = $this->excel_reader->sheets[0][cells];
                     if(count($excel_data[1]) > 0){
-                        
+                        echo "heraw";exit;
                         $trainee = $this->validate_bulk_trainee($excel_data);
                     }else{
                         $this->session->set_flashdata('error_message', 'Oops! Excel Sheet is blank!');
