@@ -1010,7 +1010,7 @@ class Trainee extends CI_Controller {
                 $trainee['flag'] = $restrict_flag;
             }
             ///////////////////////////////////////////////////
-            if ($trainee[$i][rowstatus] == 'success') {          echo "here";exit;      
+            if ($trainee[$i][rowstatus] == 'success') {               
                 $status = $this->traineemodel->save_bulk_user_data($trainee[$i]);
                //print_r($status);exit;
                 if ($status['status'] == FALSE) {
@@ -1060,7 +1060,7 @@ class Trainee extends CI_Controller {
                         $trainee = $this->validate_bulk_trainee($excel_data);
                     }else{
                         $this->session->set_flashdata('error_message', 'Oops! Excel Sheet is blank!');
-                        unlink('./uploads/' . $data['file_name']);
+                        //unlink('./uploads/' . $data['file_name']);
                     }
                     
 
@@ -1072,7 +1072,7 @@ class Trainee extends CI_Controller {
                         unset($trainee[1]);
                     $this->load->helper('export');
                     $files = write_import_status($trainee, $this->user->user_id);
-                    unlink('./uploads/' . $data['file_name']);
+                    //unlink('./uploads/' . $data['file_name']);
                     
                 }
             }
