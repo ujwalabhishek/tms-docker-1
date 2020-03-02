@@ -984,13 +984,8 @@ class Trainee extends CI_Controller {
                 $trainee[$i][education] = trim($exceldata[6]);
                 $trainee[$i][gender] = trim($exceldata[8]);
             }
-            
-            
-            $trainee[$i][taxcode] = trim($exceldata[4]);
-            
-            
+            $trainee[$i][taxcode] = trim($exceldata[4]);          
             $trainee[$i][firstname] = trim($exceldata[7]);
-           
             $trainee[$i][dob] = trim($exceldata[9]);
             $trainee[$i][ContactNumber] = trim($exceldata[10]);
             $trainee[$i][EmailId] = trim($exceldata[12]);
@@ -1032,7 +1027,7 @@ class Trainee extends CI_Controller {
             }
             $i++;
         }
-        //print_r($trainee);exit;
+        print_r($trainee);exit;
         return $trainee;
     }
     /*
