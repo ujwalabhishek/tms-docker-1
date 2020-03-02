@@ -804,7 +804,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
            
             if( $this->user->tenant_id=='T02')
             {
-                    $taxcode_prefix = 'XPR';
+                    $taxcode_prefix = 'XP';
             }
             if($this->user->tenant_id=='T03')
            {
@@ -1152,20 +1152,20 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         // added by shubhranshu to generate user name while notax code on 03/12/2018//////
         if($other_identi_type == 'NOTAXCODE'){
             $user_notax=random_key_generation().date('is');
-            $taxcode = strtoupper($user_notax);
+            $taxcode = 'XP'.strtoupper($user_notax);
         }else{
              $taxcode = strtoupper($taxcode);
         }
        // /////////////////////////////////////////////////////////////
         
         if($this->user->tenant_id == 'T02') {
-            $user_name = "XPZ".$taxcode;
+            $user_name = "XPZ".strtoupper($user_notax);
         } else if($this->user->tenant_id == 'T03'){
-            $user_name = "CAI".$taxcode;
+            $user_name = "CAI".strtoupper($user_notax);
         } else if($this->user->tenant_id == 'T04'){
-            $user_name = "FL".$taxcode;
+            $user_name = "FL".strtoupper($user_notax);
         } else {
-            $user_name = $taxcode;
+            $user_name = strtoupper($user_notax);
         }
         /////////below code added by shubhranshu to check & unique NRIC/////
         if(strlen($user_name) > 13){
