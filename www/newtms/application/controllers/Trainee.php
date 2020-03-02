@@ -1060,9 +1060,14 @@ class Trainee extends CI_Controller {
                 if ($read_perm == 'FALSE') {
                     $data['error'] = 'File is not readable.';
                 } else {
-                    $excel_data = $this->excel_reader->sheets[0][cells];
-                    print_r($excel_data);exit;
-                    $trainee = $this->validate_bulk_trainee($excel_data);
+                    if(count($excel_data[1]) > 0){
+                        $excel_data = $this->excel_reader->sheets[0][cells];
+                        $trainee = $this->validate_bulk_trainee($excel_data);
+                    }else{
+                        $this->session->set_flashdata('error_message', 'Oops! Excel Sheet is blank!');
+                        unlink('./uploads/' . $data['file_name']);
+                    }
+                    
 
 		if ($trainee[1]['db_error'] == 'db_error') {
                         $this->session->set_flashdata('error_message', 'Oops! Sorry, it looks like something went wrong with some record.Please check!');
