@@ -1010,7 +1010,7 @@ class Trainee extends CI_Controller {
                 $trainee['flag'] = $restrict_flag;
             }
             ///////////////////////////////////////////////////
-            if ($trainee[$i][rowstatus] == 'success') {                
+            if ($trainee[$i][rowstatus] == 'success') {          echo "here";exit;      
                 $status = $this->traineemodel->save_bulk_user_data($trainee[$i]);
                //print_r($status);exit;
                 if ($status['status'] == FALSE) {
@@ -1027,7 +1027,7 @@ class Trainee extends CI_Controller {
             }
             $i++;
         }
-        print_r($trainee);exit;
+        //print_r($trainee);exit;
         return $trainee;
     }
     /*
