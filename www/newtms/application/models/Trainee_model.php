@@ -1152,20 +1152,20 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         // added by shubhranshu to generate user name while notax code on 03/12/2018//////
         if($other_identi_type == 'NOTAXCODE'){
             $user_notax=random_key_generation().date('is');
-            $taxcode = 'XP'.strtoupper($user_notax);
+            $taxcode = strtoupper($user_notax);
         }else{
              $taxcode = strtoupper($taxcode);
         }
        // /////////////////////////////////////////////////////////////
         
         if($this->user->tenant_id == 'T02') {
-            $user_name = "XPZ".strtoupper($user_notax);
+            $user_name = "XPZ".$taxcode;
         } else if($this->user->tenant_id == 'T03'){
-            $user_name = "CAI".strtoupper($user_notax);
+            $user_name = "CAI".$taxcode;
         } else if($this->user->tenant_id == 'T04'){
-            $user_name = "FL".strtoupper($user_notax);
+            $user_name = "FL".$taxcode;
         } else {
-            $user_name = strtoupper($user_notax);
+            $user_name = $taxcode;
         }
         /////////below code added by shubhranshu to check & unique NRIC/////
         if(strlen($user_name) > 13){
@@ -1264,7 +1264,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         if($other_identi_type == 'NOTAXCODE' && $taxcodetype == "SNG_3"){
             $notaxcode_data = array(
                 'other_identi_code' => $user_id,
-                'tax_code' => $user_id
+                'tax_code' => 'XP'.$user_id
             );
             $this->db->where('user_id', $user_id);
             $this->db->update('tms_users', $notaxcode_data);
