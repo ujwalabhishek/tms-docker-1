@@ -1263,7 +1263,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         //// added by shubhranshu to update the tax code and other identi code as taxcode on 03/12/2018//////
         if($other_identi_type == 'NOTAXCODE' && $taxcodetype == "SNG_3"){
             $notaxcode_data = array(
-                'other_identi_code' => $user_id,
+                'other_identi_code' => 'XP'.$user_id,
                 'tax_code' => 'XP'.$user_id
             );
             $this->db->where('user_id', $user_id);
