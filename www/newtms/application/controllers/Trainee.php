@@ -1068,10 +1068,10 @@ class Trainee extends CI_Controller {
                     if ($trainee[1]['db_error'] == 'db_error') {
                         $this->session->set_flashdata('error_message', 'Oops! Sorry, it looks like something went wrong with some record.Please check!');
                     }
-                    //unset($trainee[1]['db_error']);
-                    //if (empty($trainee[1]))
-                    //    unset($trainee[1]);
-                    //$this->load->helper('export');
+                    unset($trainee[1]['db_error']);
+                    if (empty($trainee[1]))
+                        unset($trainee[1]);
+                    $this->load->helper('export');
                     //$files = write_import_status($trainee, $this->user->user_id);
                     unlink('./uploads/' . $data['file_name']);
                     
