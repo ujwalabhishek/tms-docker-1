@@ -1003,7 +1003,6 @@ class Trainee extends CI_Controller {
             $trainee[$i][password] = '';
             $trainee[$i][CompanyName] = '';
             $trainee[$i] = $this->validate_excel($trainee, $i);
-            echo "hersaw";exit;
             /////added by shubhranshu to check the restriction
             $is_nric_restriction = $this->traineemodel->check_nric_restriction($trainee[$i][taxcode],'BULK_REGISTER'); // added by shubhranshu for client requirement 22/03/2019 for prevent restriction
             if($is_nric_restriction > 0){
@@ -1011,6 +1010,7 @@ class Trainee extends CI_Controller {
                 $trainee['flag'] = $restrict_flag;
             }
             ///////////////////////////////////////////////////
+            echo "333";exit;
             if ($trainee[$i][rowstatus] == 'success') {               
                 $status = $this->traineemodel->save_bulk_user_data($trainee[$i]);
                //print_r($status);exit;
