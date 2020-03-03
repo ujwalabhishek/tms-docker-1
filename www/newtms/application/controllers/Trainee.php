@@ -957,6 +957,7 @@ class Trainee extends CI_Controller {
 //    }
     
     public function validate_bulk_trainee($excel_data) {
+        $tenant_id=$this->data['user']->tenant_id;
         $trainee = array();
         $i = 1;
         $trainee[1]['db_error'] = '';
