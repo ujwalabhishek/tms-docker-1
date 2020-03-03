@@ -969,7 +969,7 @@ class Trainee extends CI_Controller {
             }
             $trainee[$i][countryofresidence] = ($exceldata[1])? trim($exceldata[1]): 'SGP';
             ////Below if else was addded by shubhranshu for Xprienz requirement
-            if($tenant_id =='T02'){
+            if($tenant_id =='T02' || $tenant_id =='T01'){
                 $trainee[$i][nrictype] = trim($exceldata[2] ? $exceldata[2] : 'Others');
                 if($exceldata[2]){////added by shubhranshu
                     $trainee[$i][nrictypeOthers] = $exceldata[3];
