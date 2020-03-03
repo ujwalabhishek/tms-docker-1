@@ -968,13 +968,27 @@ class Trainee extends CI_Controller {
                 $trainee[$i][CompanyCode] = $this->data['user']->company_id;
             }
             $trainee[$i][countryofresidence] = ($exceldata[1])? trim($exceldata[1]): 'SGP';
-            $trainee[$i][nrictype] = trim($exceldata[2]);
-            $trainee[$i][nrictypeOthers] = trim($exceldata[3]);
+            ////Below if else was addded by shubhranshu for Xprienz requirement
+            if($tenant_id =='T02'){
+                $trainee[$i][nrictype] = trim($exceldata[2] ? $exceldata[2] : 'Others');
+                if($exceldata[2]){////added by shubhranshu
+                    $trainee[$i][nrictypeOthers] = $exceldata[3];
+                }else{
+                   $trainee[$i][nrictypeOthers] = 'NO TAX CODE';  
+                }
+               
+                $trainee[$i][nationality] = ($exceldata[5] ? $exceldata[5] : 'SINGAPORE PR');
+                $trainee[$i][education] = ($exceldata[6] ? $exceldata[6] : "At least 1 GCE 'N' Level Pass");
+                $trainee[$i][gender] = ($exceldata[8] ? $exceldata[8] : 'MALE');
+            }else{
+                $trainee[$i][nrictype] = trim($exceldata[2]);
+                $trainee[$i][nrictypeOthers] = trim($exceldata[3]);
+                $trainee[$i][nationality] = trim($exceldata[5]);
+                $trainee[$i][education] = trim($exceldata[6]);
+                $trainee[$i][gender] = trim($exceldata[8]);
+            }
             $trainee[$i][taxcode] = trim($exceldata[4]);
-            $trainee[$i][nationality] = trim($exceldata[5]);
-            $trainee[$i][education] = trim($exceldata[6]);
             $trainee[$i][firstname] = trim($exceldata[7]);
-            $trainee[$i][gender] = trim($exceldata[8]);
             $trainee[$i][dob] = trim($exceldata[9]);
             $trainee[$i][ContactNumber] = trim($exceldata[10]);
             $trainee[$i][EmailId] = trim($exceldata[12]);
@@ -1071,13 +1085,26 @@ class Trainee extends CI_Controller {
    /**
     * download smaple excel file.
     * @param type $file_name
+    * download_xls function  was modified by shubhranshu due to client request
     */
-    public function download_xls($file_name = "uploads/Trainee_Bulk_Registration.xls") {
-        ob_clean();
-        header("Content-Type: application/octet-stream");
-        header("Content-Disposition: attachment;filename=Trainee_Bulk_Registration.xls");
-        readfile(base_url() . $file_name);
-        exit();
+    public function download_xls() {
+        $tenant_id = $this->user->tenant_id;////added by shubhranshu due to client request
+        if($tenant_id =='T02'){
+            $file_name = "uploads/Xprienz_Trainee_Bulk_Registration.xls";
+            ob_clean();
+            header("Content-Type: application/octet-stream");
+            header("Content-Disposition: attachment;filename=Xprienz_Trainee_Bulk_Registration.xls");
+            readfile(base_url() . $file_name);
+            exit();
+        }else{
+            $file_name = "uploads/Trainee_Bulk_Registration.xls";
+            ob_clean();
+            header("Content-Type: application/octet-stream");
+            header("Content-Disposition: attachment;filename=Trainee_Bulk_Registration.xls");
+            readfile(base_url() . $file_name);
+            exit();
+        }
+        
     }
     /**
      * download import xls

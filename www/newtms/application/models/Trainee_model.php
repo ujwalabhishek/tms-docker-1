@@ -804,7 +804,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
            
             if( $this->user->tenant_id=='T02')
             {
-                    $taxcode_prefix = 'XPR';
+                    $taxcode_prefix = 'XP';
             }
             if($this->user->tenant_id=='T03')
            {
@@ -1159,7 +1159,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
        // /////////////////////////////////////////////////////////////
         
         if($this->user->tenant_id == 'T02') {
-            $user_name = "XPR".$taxcode;
+            $user_name = "XPZ".$taxcode;
         } else if($this->user->tenant_id == 'T03'){
             $user_name = "CAI".$taxcode;
         } else if($this->user->tenant_id == 'T04'){
@@ -1175,7 +1175,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         $check_username_unique = $this->is_username_unique($user_name);
         
         if($check_username_unique >0){
-            $user_name = $user_name.'1';
+           $user_name = $user_name.date('is');
         }////////////////////////////////////ssp end///////////////////////////////////
         $tms_users_data = array(
             'tenant_id' => $this->user->tenant_id,
@@ -1263,8 +1263,8 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         //// added by shubhranshu to update the tax code and other identi code as taxcode on 03/12/2018//////
         if($other_identi_type == 'NOTAXCODE' && $taxcodetype == "SNG_3"){
             $notaxcode_data = array(
-                'other_identi_code' => $user_id,
-                'tax_code' => $user_id
+                'other_identi_code' => 'XP'.$user_id,
+                'tax_code' => 'XP'.$user_id
             );
             $this->db->where('user_id', $user_id);
             $this->db->update('tms_users', $notaxcode_data);
@@ -1283,7 +1283,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
          if(!empty($EmailId)) {
             $this->send_trainy_email($user_details, $bypassemail);
         }
-        $status['userid_for_notax'] = $user_id;// added userid by shubhranshu to fetch the user_id if notaxcode
+        $status['userid_for_notax'] = 'XP'.$user_id;// added userid by shubhranshu to fetch the user_id if notaxcode
         $status['status'] = TRUE;
         $status['password'] = $password;
         $status['username'] = $user_name;
