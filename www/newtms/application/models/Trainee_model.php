@@ -1283,7 +1283,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
          if(!empty($EmailId)) {
             $this->send_trainy_email($user_details, $bypassemail);
         }
-        $status['userid_for_notax'] = $user_id;// added userid by shubhranshu to fetch the user_id if notaxcode
+        $status['userid_for_notax'] = 'XP'.$user_id;// added userid by shubhranshu to fetch the user_id if notaxcode
         $status['status'] = TRUE;
         $status['password'] = $password;
         $status['username'] = $user_name;
@@ -1411,7 +1411,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             }
             if( $this->user->tenant_id=='T02')
             {
-                    $taxcode_prefix = 'XPR';
+                    $taxcode_prefix = 'XP';
             }
             if($this->user->tenant_id=='T03')
             {
