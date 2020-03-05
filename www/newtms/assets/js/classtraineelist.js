@@ -291,6 +291,9 @@ $(document).ready(function() {
                 if(res.data.sfc_claim_id !=''){
                    $('.sfc_claim_id').html(res.data.sfc_claim_id);// added by shubhranshu for sfc claim id
                    $('#sfc_claim_id_tr').show();
+                }else{
+                    $('.sfc_claim_id').html("");
+                    $('#sfc_claim_id_tr').hide();
                 }
                 
                 $('.r_class_fees').html(parseFloat(res.data.class_fees).toFixed(2))
