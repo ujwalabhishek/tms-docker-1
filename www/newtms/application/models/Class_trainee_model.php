@@ -5866,6 +5866,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     'othr_mode_of_payment' => $payment_type1,
                     'amount_recd' => round($net_amount, 2),
                     'sfc_claimed'  => round($sfcato_amount, 2),
+                    'sfc_claim_id'=>$sfc_ato_claim_id,  //// added by shubhranshu for sfc claim id
                     'other_amount_recd'=>round($cheque_amount1,2),
                     'cheque_number' => $cheque_number1,
                     'cheque_date' => date('Y-m-d', strtotime($cheque_date1)),
@@ -5891,6 +5892,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     'othr_mode_of_payment' => $payment_type1,
                     'amount_recd' => round($net_amount, 2),
                     'sfc_claimed'  => round($sfcato_amount, 2),
+                    'sfc_claim_id'=>$sfc_ato_claim_id,  //// added by shubhranshu for sfc claim id
                     //'amount_recd_other'=>round($giro_amount1,2),/// commented by shubhranshu
                     'other_amount_recd'=>round($giro_amount1,2), 
                     'cheque_number' => NULL,
@@ -5913,6 +5915,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     'mode_of_pymnt' => $payment_type,
                     'amount_recd' => round($sfcato_amount, 2),
                     'sfc_claimed' => round($sfcato_amount, 2),
+                    'sfc_claim_id'=>$sfc_ato_claim_id,  //// added by shubhranshu for sfc claim id
                     'cheque_number' => NULL,
                     'cheque_date' => NULL,
                     'bank_name' => NULL,
@@ -5970,6 +5973,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     'othr_mode_of_payment' => $payment_type1,
                     'amount_recd' => round($net_amount, 2),
                     'sfc_claimed' => round($sfc_amount, 2),
+                    'sfc_claim_id'=>$sfc_self_claim_id,  //// added by shubhranshu for sfc claim id
                     'other_amount_recd'=>round($cheque_amount1,2),
                     'cheque_number' => $cheque_number1,
                     'cheque_date' => date('Y-m-d', strtotime($cheque_date1)),
@@ -5995,6 +5999,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     'othr_mode_of_payment' => $payment_type1,
                     'amount_recd' => round($net_amount, 2),
                     'sfc_claimed' => round($sfc_amount, 2),
+                    'sfc_claim_id'=>$sfc_self_claim_id,  //// added by shubhranshu for sfc claim id
                     'other_amount_recd'=>round($giro_amount1,2),
                     'cheque_number' => NULL,
                     'cheque_date' => NULL,
@@ -6018,7 +6023,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     'mode_of_pymnt' => $payment_type,
                     'amount_recd' => round($sfc_amount, 2),
                     'sfc_claimed' => round($sfc_amount, 2),
-                    
+                    'sfc_claim_id'=>$sfc_self_claim_id,  //// added by shubhranshu for sfc claim id
                     'cheque_number' => NULL,
                     'cheque_date' => NULL,
                     'bank_name' => NULL,
