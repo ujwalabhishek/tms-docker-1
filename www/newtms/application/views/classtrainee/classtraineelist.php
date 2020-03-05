@@ -392,6 +392,10 @@
                 <td class="td_heading">Mode of Payment:</td>
                 <td><span class="r_mode"></span></td>
             </tr>
+            <tr style='display:none' id='sfc_claim_id_tr'>
+                <td class="td_heading">SFC Claim ID:</td>
+                <td><span class="sfc_claim_id"></span></td>
+            </tr>
             <tr>
                 <td class="td_heading">Other Mode of Payment:</td>
                 <td><span class="othr_mode"></span></td>
