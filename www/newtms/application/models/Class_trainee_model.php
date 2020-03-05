@@ -5826,6 +5826,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 
                 if ($payment_type1 == 'CASH1' || $payment_type1 == 'NETS1') 
                 {
+                    
                      $sfcclaim_on;
                      date('Y-m-d',strtotime($sfcatoclaim_on));
                  
@@ -5837,7 +5838,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         'mode_of_pymnt' => $payment_type,
                         'othr_mode_of_payment' => $payment_type1,
                         'amount_recd' => round($net_amount, 2),
-                        'sfc_claimed'=>round($sfcato_amount,2),   
+                        'sfc_claimed'=>round($sfcato_amount,2),  
+                        'sfc_claim_id'=>$sfc_ato_claim_id,  //// added by shubhranshu for sfc claim id
                         'other_amount_recd'=>round($cash_amount1,2),
                         'cheque_number' => NULL,
                         'cheque_date' => NULL,
@@ -5941,6 +5943,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         'othr_mode_of_payment' => $payment_type1,
                         'amount_recd' => round($net_amount, 2),
                         'sfc_claimed' => round($sfc_amount, 2),
+                        'sfc_claim_id'=>$sfc_self_claim_id,  //// added by shubhranshu for sfc claim id
                         'other_amount_recd'=>round($cash_amount1,2),
                         'cheque_number' => NULL,
                         'cheque_date' => NULL,
