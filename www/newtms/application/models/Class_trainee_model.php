@@ -14122,5 +14122,20 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->get_compiled_select();exit;
         return $this->db->get()->result_object();
     }
+    
+    /* This Function get the sfc claim id of trainee by shubhranshu start */
+
+    public function get_sfc_claim_id($class_id, $user_id, $payid, $tenant_id) {
+        $this->db->select('sfc_claim_id');
+        $this->db->from('class_enrol');
+        $this->db->where('class_id', $class_id);
+        $this->db->where('user_id', $user_id);
+        $this->db->where('pymnt_due_id', $payid);
+        $this->db->where('tenant_id', $tenant_id);
+        $qry = $this->db->get();
+        $result = $qry->row();
+        return $result->sfc_claim_id;
+    }
+
 
 }

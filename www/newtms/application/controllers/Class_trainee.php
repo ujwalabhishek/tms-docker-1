@@ -2599,10 +2599,13 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $invoice->recd_on = date('d/m/Y', strtotime($invoice->recd_on));
              
             $invoice->mode_of_pymnt = rtrim($this->course->get_metadata_on_parameter_id($invoice->mode_of_pymnt), ', ');
+            $sfc_claim_id = $this->classtraineemodel->get_sfc_claim_id($result->class_id, $result->user_id, $payid, $tenant_id); // addded by shubhranshu for sfc claim id
+
         } 
         else {
             $label = 'inactive';
         }
+        $result->sfc_claim_id = $sfc_claim_id; // added by shubhranshu
         $result->att_status;
         $result->enrolment_mode;
         if((($result->total_inv_amount + $refund_amount) - $total_paid) == 0){
