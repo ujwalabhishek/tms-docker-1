@@ -6,6 +6,7 @@ function export_tms_report_page($result) {
     $CI->load->library('excel');
     $CI->excel->setActiveSheetIndex(0);
     $CI->excel->getActiveSheet()->setTitle('TMS Report');
+    $user_id = $this->session->userdata('userDetails')->user_id;
     $sheet = $CI->excel->getActiveSheet();
     foreach (range('A', 'V') as $columnID) {
         $CI->excel->getActiveSheet()->getColumnDimension($columnID)
@@ -66,7 +67,12 @@ function export_tms_report_page($result) {
         
         
         $sheet->setCellValue('A' . $rn, $rn - 2);
-        $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
+        if($user_id == '89788'){
+            $sheet->setCellValue('B' . $rn, $row->tax_code);
+        }else{
+            $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
+        }
+        
         $sheet->setCellValue('C' . $rn, $row->user_id);
         $sheet->setCellValue('D' . $rn, $row->invoice_id);
         $sheet->setCellValue('E' . $rn, $row->name);
