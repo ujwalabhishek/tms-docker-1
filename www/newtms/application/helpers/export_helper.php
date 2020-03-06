@@ -6,7 +6,7 @@ function export_tms_report_page($result) {
     $CI->load->library('excel');
     $CI->excel->setActiveSheetIndex(0);
     $CI->excel->getActiveSheet()->setTitle('TMS Report');
-    $user_id = $this->session->userdata('userDetails')->user_id;
+    $user_id = $CI->session->userdata('userDetails')->user_id;
     $sheet = $CI->excel->getActiveSheet();
     foreach (range('A', 'V') as $columnID) {
         $CI->excel->getActiveSheet()->getColumnDimension($columnID)
