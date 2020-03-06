@@ -55,6 +55,16 @@ function export_tms_report_page($result) {
            $inv_amt = $CI->reports->get_invoice_data_for_comp($row->invoice_id,$row->user_id);
            
         }
+        
+        if($row->Payment_Reference !=''){
+            $pymnt_ref = $row->Payment_Reference;
+        }else if($row->bank_name !=''){
+            $pymnt_ref = $row->bank_name;
+        }else{
+            $pymnt_ref = '';
+        }
+        
+        
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
         $sheet->setCellValue('C' . $rn, $row->user_id);
@@ -75,7 +85,7 @@ function export_tms_report_page($result) {
         $sheet->setCellValue('R' . $rn, $row->training_score);
         $sheet->setCellValue('S' . $rn, $row->att_status);
         $sheet->setCellValue('T' . $rn, $row->Invoice_Date);
-        $sheet->setCellValue('U' . $rn, $row->Payment_Reference);
+        $sheet->setCellValue('U' . $rn, $pymnt_ref);
         $sheet->setCellValue('V' . $rn, $row->Payment_Rcvd_Date);
         $rn++;
     }
