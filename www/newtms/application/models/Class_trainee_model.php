@@ -8821,9 +8821,10 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 ->where('pymnt_due_id', $args['individual_payment_due_id'])
                  ->get()->row(0);
             $user_id= $data->user_id;
-            
+            //// added by shubhranshu for update the sfc claim id to be zero
             $sfc_data = array('sfc_claim_id' => NULL);
             $this->db->where('pymnt_due_id',$args['individual_payment_due_id']);
+            $this->db->where('user_id',$user_id);
             $this->db->update('class_enrol',$sfc_data);
           
             $check_attendance=$this->check_attendance_row($args["tenant_id"],$args['course_id'],$args['class_id']);
@@ -8877,7 +8878,12 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $status = FALSE;
 
         if (!empty($args)) {
-
+            //// added by shubhranshu for update the sfc claim id to be zero
+            $sfc_data = array('sfc_claim_id' => NULL);
+            $this->db->where('pymnt_due_id',$args['individual_payment_due_id']);
+            $this->db->where('user_id',$args["individual_user_id"]);
+            $this->db->update('class_enrol',$sfc_data);
+            //////end of code
             $status = $this->update_classenrol_audittrail($args["tenant_id"], $args["individual_payment_due_id"], $args["individual_user_id"], $args["course_id"], $args["class_id"]);
              $due_to = ' Change individual enrollment to company enrollment';  // s1
             $data = $this->get_current_individule_invoice_data($args["individual_payment_due_id"]); //s2
