@@ -8821,7 +8821,10 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 ->where('pymnt_due_id', $args['individual_payment_due_id'])
                  ->get()->row(0);
             $user_id= $data->user_id;
-          
+            
+            $sfc_data = array('sfc_claim_id' => NULL);
+            $this->db->where('pymnt_due_id',$args['individual_payment_due_id']);
+            $this->db->update('class_enrol',$sfc_data);
           
             $check_attendance=$this->check_attendance_row($args["tenant_id"],$args['course_id'],$args['class_id']);
             if($check_attendance>0)
