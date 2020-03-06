@@ -7,6 +7,7 @@ function export_tms_report_page($result) {
     $CI->excel->setActiveSheetIndex(0);
     $CI->excel->getActiveSheet()->setTitle('TMS Report');
     $user_id = $CI->session->userdata('userDetails')->user_id;
+    $tenant_id = $CI->session->userdata('userDetails')->tenant_id;
     $sheet = $CI->excel->getActiveSheet();
     foreach (range('A', 'V') as $columnID) {
         $CI->excel->getActiveSheet()->getColumnDimension($columnID)
@@ -67,7 +68,7 @@ function export_tms_report_page($result) {
         
         
         $sheet->setCellValue('A' . $rn, $rn - 2);
-        if($user_id == '89788'){
+        if(($tenant_id == 'T02' && $user_id == '89788') || ($tenant_id == 'T12' && $user_id =='105312')){
             $sheet->setCellValue('B' . $rn, $row->tax_code);
         }else{
             $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
