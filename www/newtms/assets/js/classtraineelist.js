@@ -288,6 +288,13 @@ $(document).ready(function() {
                 $('.r_recd_on').html(res.invoice.recd_on);
                 $('.r_mode').html(res.invoice.mode_of_pymnt);
                 $('.othr_mode').html(res.invoice.othr_mode_of_payment);// added by shubhranshu for other payment mode
+                if(res.data.sfc_claim_id !=''){
+                   $('.sfc_claim_id').html(res.data.sfc_claim_id);// added by shubhranshu for sfc claim id
+                   $('#sfc_claim_id_tr').show();
+                }else{
+                    $('.sfc_claim_id').html("");
+                    $('#sfc_claim_id_tr').hide();
+                }
                 $('.r_class_fees').html(parseFloat(res.data.class_fees).toFixed(2))
                 $('.r_net_due').html(parseFloat(res.invoice.amount_recd).toFixed(2));
                 $('.r_dis_label').html(res.data.discount_label);

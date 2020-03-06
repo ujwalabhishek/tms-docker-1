@@ -7,7 +7,7 @@ function export_tms_report_page($result) {
     $CI->excel->setActiveSheetIndex(0);
     $CI->excel->getActiveSheet()->setTitle('TMS Report');
     $sheet = $CI->excel->getActiveSheet();
-    foreach (range('A', 'S') as $columnID) {
+    foreach (range('A', 'V') as $columnID) {
         $CI->excel->getActiveSheet()->getColumnDimension($columnID)
                 ->setAutoSize(true);
     }
@@ -34,8 +34,11 @@ function export_tms_report_page($result) {
     $sheet->setCellValue('Q2', 'Class Name');
     $sheet->setCellValue('R2', 'Training Score');
     $sheet->setCellValue('S2', 'Att Status');
+    $sheet->setCellValue('T2', 'Invoice Date');
+    $sheet->setCellValue('U2', 'Payment Ref');
+    $sheet->setCellValue('V2', 'Payment Rcvd Date');
 
-    $sheet->getStyle('A2:S2')->applyFromArray(
+    $sheet->getStyle('A2:V2')->applyFromArray(
             array('fill' => array(
                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
                     'color' => array('argb' => '2551920')
@@ -71,6 +74,9 @@ function export_tms_report_page($result) {
         $sheet->setCellValue('Q' . $rn, $row->class_name);
         $sheet->setCellValue('R' . $rn, $row->training_score);
         $sheet->setCellValue('S' . $rn, $row->att_status);
+        $sheet->setCellValue('T' . $rn, $row->Invoice_Date);
+        $sheet->setCellValue('U' . $rn, $row->Payment_Reference);
+        $sheet->setCellValue('V' . $rn, $row->Payment_Rcvd_Date);
         $rn++;
     }
     $filename = 'Tms_Report_'.ucfirst(strtolower($result[0]->payment_status)).'.xls';

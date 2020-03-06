@@ -962,6 +962,20 @@ function form_validate($retVal) {
         {
             remove_err('#sfcclaim_on');
         }
+        
+        ////added by shubhranshu for sfc claim id
+        $sfc_self_claim_id = $('#sfc_self_claim_id').val();
+        if ($sfc_self_claim_id.length == 0) 
+        {
+            $retVal = false;
+            disp_err('#sfc_self_claim_id');
+        } 
+        else 
+        {
+            remove_err('#sfc_self_claim_id');
+        }
+        //////end of the code
+        
         $sfc_amount = $.trim($('#sfc_amount').val());
         
         $p_paid = parseFloat($sfc_amount);
@@ -1034,6 +1048,21 @@ function form_validate($retVal) {
         {
             remove_err('#sfcatoclaim_on');
         }
+        
+        ////added by shubhranshu for sfc claim id
+        $sfc_ato_claim_id = $('#sfc_ato_claim_id').val();
+        if ($sfc_ato_claim_id.length == 0) 
+        {
+            $retVal = false;
+            disp_err('#sfc_ato_claim_id');
+        } 
+        else 
+        {
+            remove_err('#sfc_ato_claim_id');
+        }
+        /////end of the code
+        
+        
         $sfcato_amount = $.trim($('#sfcato_amount').val());
         
         $p_paid = parseFloat($sfcato_amount);

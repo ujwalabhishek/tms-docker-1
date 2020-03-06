@@ -6028,7 +6028,19 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
             $this->db->insert('enrol_pymnt_brkup_dt', $breakup_data);
 
-            $data = array('payment_status' => 'PAID', 'enrol_status' => 'ENRLACT');
+             /////added by shubhranshu sfc claim id
+            if ($payment_type = 'SFC_SELF' || $payment_type = 'SFC_ATO') {
+                 $sfc_claim_id = '';
+                if (!empty($sfc_self_claim_id)) {
+                    $sfc_claim_id = strtoupper($sfc_self_claim_id);
+                } else {
+                    $sfc_claim_id = strtoupper($sfc_ato_claim_id);
+                }
+                $data = array('payment_status' => 'PAID', 'enrol_status' => 'ENRLACT', 'sfc_claim_id' => $sfc_claim_id);
+            }else{
+                $data = array('payment_status' => 'PAID', 'enrol_status' => 'ENRLACT');
+            }
+            //////end of the code by ssp
 
             $this->db->where('tenant_id', $tenant_id);
 
@@ -8797,8 +8809,12 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 ->where('pymnt_due_id', $args['individual_payment_due_id'])
                  ->get()->row(0);
             $user_id= $data->user_id;
-          
-          
+            //// added by shubhranshu for update the sfc claim id to be zero
+            $sfc_data = array('sfc_claim_id' => NULL);
+            $this->db->where('pymnt_due_id',$args['individual_payment_due_id']);
+            $this->db->where('user_id',$user_id);
+            $this->db->update('class_enrol',$sfc_data);
+            //////end of the code ssp
             $check_attendance=$this->check_attendance_row($args["tenant_id"],$args['course_id'],$args['class_id']);
             if($check_attendance>0)
             {
@@ -8850,7 +8866,12 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $status = FALSE;
 
         if (!empty($args)) {
-
+            //// added by shubhranshu for update the sfc claim id to be NULL
+            $sfc_data = array('sfc_claim_id' => NULL);
+            $this->db->where('pymnt_due_id',$args['individual_payment_due_id']);
+            $this->db->where('user_id',$args["individual_user_id"]);
+            $this->db->update('class_enrol',$sfc_data);
+            //////end of code
             $status = $this->update_classenrol_audittrail($args["tenant_id"], $args["individual_payment_due_id"], $args["individual_user_id"], $args["course_id"], $args["class_id"]);
              $due_to = ' Change individual enrollment to company enrollment';  // s1
             $data = $this->get_current_individule_invoice_data($args["individual_payment_due_id"]); //s2
@@ -14095,6 +14116,20 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->group_by('eia.invoice_id');
         //echo $this->db->get_compiled_select();exit;
         return $this->db->get()->result_object();
+    }
+    
+    /* This Function get the sfc claim id of trainee by shubhranshu start */
+
+    public function get_sfc_claim_id($class_id, $user_id, $payid, $tenant_id) {
+        $this->db->select('sfc_claim_id');
+        $this->db->from('class_enrol');
+        $this->db->where('class_id', $class_id);
+        $this->db->where('user_id', $user_id);
+        $this->db->where('pymnt_due_id', $payid);
+        $this->db->where('tenant_id', $tenant_id);
+        $qry = $this->db->get();
+        $result = $qry->row();
+        return $result->sfc_claim_id;
     }
 
 }

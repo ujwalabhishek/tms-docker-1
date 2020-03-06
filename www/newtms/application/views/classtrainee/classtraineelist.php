@@ -3,7 +3,7 @@
     $baseurl = '<?php echo base_url(); ?>';
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?v=1"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?v=2"></script>
 <style>
     table td{
         font-size: 11px;
@@ -391,6 +391,11 @@
             <tr>
                 <td class="td_heading">Mode of Payment:</td>
                 <td><span class="r_mode"></span></td>
+            </tr>
+            <!--added by shubhranshu for sfc claim id-->
+            <tr style='display:none' id='sfc_claim_id_tr'>
+                <td class="td_heading">SFC Claim ID:</td>
+                <td><span class="sfc_claim_id"></span></td>
             </tr>
             <tr>
                 <td class="td_heading">Other Mode of Payment:</td>
