@@ -606,7 +606,7 @@
                         </tr>
                         <!--added by shubhranshu for client requirement-->
                         <tr>
-                            <td class="td_heading">SFC(ATO) Claim ID:<span class="required">*</span></td>
+                            <td class="td_heading">SFC(ATO) Claim ID:<span class="required"></span></td>
                             <td>
                                 <?php
                                 $sfc_ato_claim_id = array(
