@@ -589,7 +589,7 @@
                                 );
                                 echo form_input($sfcatoclaim_on);
                                 ?>
-                                <span id="sfcclaim_on_err"></span>
+                                <span id="sfcatoclaim_on_err"></span>
                             </td>
                            <td width="14%" class="td_heading">SFC(ATO) Amount:<span class="required">*</span></td>
                             <td width="19%">$ <?php
