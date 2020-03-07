@@ -568,23 +568,7 @@
                                 <span id="sfc_amount_err"></span>
                             </td>
                         </tr>
-                        <!--added by shubhranshu for client requirement-->
-<!--                        <tr>
-                        <td class="td_heading">SFC(SELF) Claim ID:<span class="required">*</span></td>
-                        <td>
-                            <?php
-//                            $sfc_self_claim_id = array(
-//                                'name' => 'sfc_self_claim_id',
-//                                'id' => 'sfc_self_claim_id',
-//                                'class' => 'sfc_self_claim_id',
-//                                'type' => 'text',
-//                                'value' => $this->input->post('sfc_self_claim_id'),
-//                            );
-                            echo //form_input($sfc_self_claim_id);
-                            ?>   
-                             <span id="sfc_self_claim_id_err"></span>
-                        </td>
-                        </tr>-->
+                        
                     </tbody>
                 </table>
             </div>
