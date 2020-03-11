@@ -4099,6 +4099,17 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
      * Insert data into class_enrol,
 
      */
+    
+    public function fetch_compnay_discount($tenant_id,$course,$company_id){
+        $this->db->select('*');
+        $this->db->from('company_discount');
+        $this->db->where('Tenant_ID', $tenant_id);
+        $this->db->where('Company_ID', $company_id);
+        $this->db->where('Course_ID', $course);
+        $res = $this->db->get()->row();
+        return $res;
+    }
+    
     public function create_bulk_enrol($tenant_id, $insert_data, $company_id, $course, $salesexec, $class, $class_detail, $curuser_id, $company_details) {
 
         $cur_date = date('Y-m-d H:i:s');
@@ -4112,7 +4123,12 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $company_gst = 0;
 
         $company_total_unitfees = 0;
-print_r($company_details);exit;
+
+        
+        //// added by shubhranshu to fetch the company discount 
+        $comp_discounts_details = $this->fetch_compnay_discount($tenant_id,$course,$company_id);
+        print_r($comp_discounts_details);exit;
+        
         if ($company_details[0]->comp_discount > 0) {
 
             $discount_rate = round($company_details[0]->comp_discount, 4);
