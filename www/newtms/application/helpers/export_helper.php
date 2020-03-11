@@ -3205,7 +3205,7 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
 //                        )
 //                    )
 //            );
-    $sheet->getStyle('A3:K3')->applyFromArray(
+    $sheet->getStyle('A3:U3')->applyFromArray(
             array('fill' => array(
                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
                     'color' => array('argb' => 'FFCCCCCC')
@@ -3218,7 +3218,7 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
 //            exit();
 //            
     //$sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->getFont()->setBold(true);
-    $sheet->getStyle('A3:T3')->getFont()->setBold(true);
+    $sheet->getStyle('A3:U3')->getFont()->setBold(true);
     $r = 4;
     $CI->load->model('reports_model', 'reportsmodel');
     $data_arr = array();
