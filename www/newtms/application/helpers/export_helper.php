@@ -3192,6 +3192,7 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
 //    $sheet->setCellValueExplicit('C1', 'Total Trainees: '.$total_data);
 
     //$sheet->setCellValueExplicit('A2', '');
+     $sheet->getStyle('D2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     $sheet->setCellValueExplicit('D2', 'Total Trainees: '.$total_data);
     //$sheet->setCellValueExplicit('C2', $total_data);
     /* skm code end */
