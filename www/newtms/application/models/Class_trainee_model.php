@@ -4094,12 +4094,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         return $result->num_rows();
     }
 
-    /**
-
-     * Insert data into class_enrol,
-
-     */
     
+    /// added by shubhranshu to fetch the company discount 
     public function fetch_compnay_discount($tenant_id,$course,$company_id){
         $this->db->select('*');
         $this->db->from('company_discount');
@@ -4109,7 +4105,11 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $res = $this->db->get()->row();
         return $res;
     }
-    
+    /**
+
+     * Insert data into class_enrol,
+
+     */
     public function create_bulk_enrol($tenant_id, $insert_data, $company_id, $course, $salesexec, $class, $class_detail, $curuser_id, $company_details) {
 
         $cur_date = date('Y-m-d H:i:s');
@@ -4127,23 +4127,31 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         
         //// added by shubhranshu to fetch the company discount 
         $comp_discounts_details = $this->fetch_compnay_discount($tenant_id,$course,$company_id);
+        
+         $temp_ind_discnt_amt = $discount_amount;
+            $indv_discount_rate = round((($temp_ind_discnt_amt / $classes->class_fees) * 100), 4);
+            $indv_discount_amt = round(($classes->class_fees * ($indv_discount_rate / 100)), 4);
         print_r($comp_discounts_details);exit;
         
-        if ($company_details[0]->comp_discount > 0) {
+        if (($comp_discounts_details->Discount_Percent > 0) || ($comp_discounts_details->Discount_Amount > 0)) {
 
-            $discount_rate = round($company_details[0]->comp_discount, 4);
-
+            if($comp_discounts_details->Discount_Percent > 0){
+                $discount_rate = round($comp_discounts_details->Discount_Percent, 4);
+                $discount_total = ( $discount_rate * $class_detail->class_fees) / 100;
+            }else{
+                $discount_total = $comp_discounts_details->Discount_Amount;
+            }
             $discount_label = 'DISCOMP';
         } else {
 
             $discount_rate = round($class_detail->class_discount, 4);
-
+            $discount_total = ( $discount_rate * $class_detail->class_fees) / 100;
             $discount_label = 'DISCLASS';
         }
 
 
 
-        $discount_total = ( $discount_rate * $class_detail->class_fees) / 100;
+        
 
         $course_detail = $this->db->select('subsidy_after_before,gst_on_off')->from('course')->where('course_id', $course)->get()->row();
 
