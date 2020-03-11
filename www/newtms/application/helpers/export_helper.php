@@ -3175,21 +3175,28 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
         $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
                 ->setAutoSize(true);
     }
+    
+        
+    $sheet->mergeCells('A1:G1');
+    $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->setCellValue('A1', 'TRAQAM-2 REPORT As ON ' . date('M j Y, l'));
+    $sheet->getStyle('A1:G1')->getFont()->setBold(true);
+    
     /* skm code st */
     $course_end_time_filename = date('His', strtotime($tabledata[0]->class_end_datetime));
     $course_end_date_filename = date('Ymd', strtotime($tabledata[0]->class_end_datetime));
 
     $filename = $tabledata[0]->comp_reg_no . "_" . $course_end_date_filename . "_" . $course_end_time_filename . ".xls";
-    $sheet->setCellValueExplicit('A1', '');
-    $sheet->setCellValueExplicit('B1', 'TRAQAM-2 REPORT');
-    $sheet->setCellValueExplicit('C1', 'Total Trainees: '.$total_data);
+//    $sheet->setCellValueExplicit('A1', '');
+//    $sheet->setCellValueExplicit('B1', 'TRAQAM-2 REPORT');
+//    $sheet->setCellValueExplicit('C1', 'Total Trainees: '.$total_data);
 
     $sheet->setCellValueExplicit('A2', '');
-    $sheet->setCellValueExplicit('B2', 'Scenario');
-    $sheet->setCellValueExplicit('C2', 'Outcome');
+    $sheet->setCellValueExplicit('B2', 'Total Trainees: ');
+    $sheet->setCellValueExplicit('C2', $total_data);
     /* skm code end */
     $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3', 'J3', 'K3', 'L3', 'M3', 'N3', 'O3', 'P3', 'Q3', 'R3', 'S3', 'T3', 'U3');
-    $column_title = array('H',
+    $column_title = array('SL #',
         'Trainee Name', 'Trainee ID', 'ID Type', 'Email', 'Mobile Country Code', 'Mobile Area Code', 'Mobile', 'TP Alias', 'Course Title', 'Area of Training',
         'Course Reference Number', 'Course Run Reference Number',
         'Course Start Date', 'Course End Date', 'Postal Code', 'Floor', 'Unit', 'Room', 'Full Qualification', 'Trainer Name'
