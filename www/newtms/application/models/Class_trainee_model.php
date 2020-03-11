@@ -4127,11 +4127,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         
         //// added by shubhranshu to fetch the company discount 
         $comp_discounts_details = $this->fetch_compnay_discount($tenant_id,$course,$company_id);
-        
-         $temp_ind_discnt_amt = $discount_amount;
-            $indv_discount_rate = round((($temp_ind_discnt_amt / $classes->class_fees) * 100), 4);
-            $indv_discount_amt = round(($classes->class_fees * ($indv_discount_rate / 100)), 4);
-        
+
         
         if (($comp_discounts_details->Discount_Percent > 0) || ($comp_discounts_details->Discount_Amount > 0)) {
 
@@ -4148,10 +4144,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             $discount_total = ( $discount_rate * $class_detail->class_fees) / 100;
             $discount_label = 'DISCLASS';
         }
+        //////end of code by ssp
 
-
-
-        
 
         $course_detail = $this->db->select('subsidy_after_before,gst_on_off')->from('course')->where('course_id', $course)->get()->row();
 
