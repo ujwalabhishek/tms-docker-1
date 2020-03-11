@@ -4112,7 +4112,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $company_gst = 0;
 
         $company_total_unitfees = 0;
-
+print_r($company_details);exit;
         if ($company_details[0]->comp_discount > 0) {
 
             $discount_rate = round($company_details[0]->comp_discount, 4);
