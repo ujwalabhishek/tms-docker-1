@@ -4134,7 +4134,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 $discount_total = ( $discount_rate * $class_detail->class_fees) / 100;
             }else{
                 $discount_total = $comp_discounts_details->Discount_Amount;
-                $discount_rate =  round((($discount_total / $classes->class_fees) * 100), 4);
+                $discount_rate =  round((($discount_total / $class->class_fees) * 100), 4);
             }
             $discount_label = 'DISCOMP';
         } else {
