@@ -3191,9 +3191,9 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
 //    $sheet->setCellValueExplicit('B1', 'TRAQAM-2 REPORT');
 //    $sheet->setCellValueExplicit('C1', 'Total Trainees: '.$total_data);
 
-    $sheet->setCellValueExplicit('A2', '');
-    $sheet->setCellValueExplicit('B2', 'Total Trainees: ');
-    $sheet->setCellValueExplicit('C2', $total_data);
+    //$sheet->setCellValueExplicit('A2', '');
+    $sheet->setCellValueExplicit('D2', 'Total Trainees: '.$total_data);
+    //$sheet->setCellValueExplicit('C2', $total_data);
     /* skm code end */
     $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3', 'J3', 'K3', 'L3', 'M3', 'N3', 'O3', 'P3', 'Q3', 'R3', 'S3', 'T3', 'U3');
     $column_title = array('SL #',
