@@ -3276,7 +3276,7 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
         $course_end_date = date('Ymd', strtotime($row->class_end_datetime));
         $enrollment_date = date('Y-m-d', strtotime($row->enrolled_on));
 
-        $sheet->setCellValueExplicit('A' . $r, 'I');
+        $sheet->setCellValueExplicit('A' . $r, '1');
         $sheet->setCellValue('B' . $r, $row->first_name);
         $sheet->setCellValue('C' . $r, $row->tax_code);
         $sheet->setCellValue('D' . $r, $tax_code_type);
