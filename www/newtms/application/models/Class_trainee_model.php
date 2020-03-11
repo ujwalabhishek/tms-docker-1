@@ -4125,10 +4125,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $company_total_unitfees = 0;
 
         
-        //// added by shubhranshu to fetch the company discount 
+        //// Below code added by shubhranshu to fetch the company discount 
         $comp_discounts_details = $this->fetch_compnay_discount($tenant_id,$course,$company_id);
-
-        
         if (($comp_discounts_details->Discount_Percent > 0) || ($comp_discounts_details->Discount_Amount > 0)) {
 
             if($comp_discounts_details->Discount_Percent > 0){
