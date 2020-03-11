@@ -3180,9 +3180,9 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
     $course_end_date_filename = date('Ymd', strtotime($tabledata[0]->class_end_datetime));
 
     $filename = $tabledata[0]->comp_reg_no . "_" . $course_end_date_filename . "_" . $course_end_time_filename . ".xls";
-    $sheet->setCellValueExplicit('A1', 'H');
-    $sheet->setCellValueExplicit('B1', $filename);
-    $sheet->setCellValueExplicit('C1', $total_data);
+    $sheet->setCellValueExplicit('A1', 'H1');
+    $sheet->setCellValueExplicit('B1', 'TRAQAM-2 REPORT');
+    $sheet->setCellValueExplicit('C1', 'Total Trainees: '.$total_data);
 
     $sheet->setCellValueExplicit('A2', 'H');
     $sheet->setCellValueExplicit('B2', 'Scenario');
