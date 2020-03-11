@@ -4131,7 +4131,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
          $temp_ind_discnt_amt = $discount_amount;
             $indv_discount_rate = round((($temp_ind_discnt_amt / $classes->class_fees) * 100), 4);
             $indv_discount_amt = round(($classes->class_fees * ($indv_discount_rate / 100)), 4);
-        print_r($comp_discounts_details);exit;
+        
         
         if (($comp_discounts_details->Discount_Percent > 0) || ($comp_discounts_details->Discount_Amount > 0)) {
 
