@@ -3247,20 +3247,22 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
         {
             ///author: added by shubhranshu as per client requirement on 11/03/2020
             //Singapore PR
-            if($row->nationality == 'NS'){
-                $tax_code_type='Singapore Blue Identification Card';
-            }else if($row->nationality == 'SG'){//Singapore Citizen
-                $tax_code_type='Singapore Pink Identification Card';
-            }else{
-                $tax_code_type='Others';
-            }
+//            if($row->nationality == 'NS'){
+//                $tax_code_type='Singapore Blue Identification Card';
+//            }else if($row->nationality == 'SG'){//Singapore Citizen
+//                $tax_code_type='Singapore Pink Identification Card';
+//            }else{
+//                $tax_code_type='Others';
+//            }
+            $tax_code_type='SP';
 
         }else if($tax_code_type == 'FIN'){
-            //$tax_code_type='SO';
-           $tax_code_type= 'FIN/Work Permit/SAF 11B';
+            $tax_code_type='SO';
+           //$tax_code_type= 'FIN/Work Permit/SAF 11B';
         }
         else{
-            $tax_code_type='Others';
+            //$tax_code_type='Others';
+             $tax_code_type='OT';
         }
         /* skm code for new style email which is the combination of taxocde and class name intials st */
         $pattern = "/[_,-]/";
