@@ -406,6 +406,9 @@
             $('#data_hide').toggle(500);
         });
         
+        $('#collapse_datas').click(function(){
+            $('#data_hides').toggle(500);
+        });
         
         $(".search_button1").click(function () {
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
