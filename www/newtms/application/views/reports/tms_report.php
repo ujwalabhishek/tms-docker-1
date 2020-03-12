@@ -1,10 +1,17 @@
 <style>
     .comp_block{
-        background: #a8dbf7;
-        height: 200px;
-        width: 200px;
+        text-align: center;
+        background: #c6e6f7;
+        height: 119px;
+        width: 525px;
+        font-weight: bold;
         margin: auto;
-        font-size: 15px;
+        margin-top: 29px;
+        color: #1b2dad;
+        font-size: 20px;
+        padding: 34px;
+        border-radius: 5px;
+        display:none;
     }
 </style>
 <script>
@@ -374,6 +381,7 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
                     },
                     success: function(data) {
                         $('.comp_block').html(data.company_name);
+                        $(".comp_block").slideToggle("slow");  
                     }
                 });
             } else{
