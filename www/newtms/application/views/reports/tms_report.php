@@ -360,7 +360,9 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
         </table>
     </div> 
      <div class="table-responsive">    
-         <div class='text-center'>Company Name</div>
+         <div class='text-center comp_head' style='font-size: 20px;
+    color: #696666;
+    padding-top: 10px;display:none;'>Company Name</div>
          <div class='comp_block'></div>
      </div>
 
@@ -378,6 +380,7 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
             
             if ($status){
                 $(".comp_block").slideUp("slow"); 
+                $(".comp_head").slideUp("slow");
                 $('.comp_block').html('');
                 $('.comp_search_button1').attr('disabled', 'disabled').html('Please Wait..');
                 $.ajax({
@@ -390,6 +393,7 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
                     success: function(data) {
                         $('.comp_block').html(data.company_name);
                         $(".comp_block").slideDown("slow");
+                        $(".comp_head").slideDown("slow");
                         $('.comp_search_button1').removeAttr('disabled').html('<span class="glyphicon glyphicon-search"> Search</span>');
                     }
                 });
