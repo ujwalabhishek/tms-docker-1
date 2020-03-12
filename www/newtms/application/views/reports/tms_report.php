@@ -348,7 +348,7 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
 
                         echo form_input($invoice);
                         ?>
-                        <span class='invoice_no_err'>required</span>
+                        <span class='invoice_no_err'></span>
                         <button type="button" class="comp_search_button1 btn btn-xs btn-primary no-mar">
                             <span class="glyphicon glyphicon-search"></span>
                             Search
