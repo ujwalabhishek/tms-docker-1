@@ -379,7 +379,7 @@ echo form_input($invoice);
             } else{
                 return false;
             }
-        }
+        });
 
         $(".search_button").click(function () {
         ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
