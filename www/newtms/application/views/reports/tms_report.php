@@ -348,6 +348,7 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
 
                         echo form_input($invoice);
                         ?>
+                        <span class='invoice_no_err'>required</span>
                         <button type="button" class="comp_search_button1 btn btn-xs btn-primary no-mar">
                             <span class="glyphicon glyphicon-search"></span>
                             Search
@@ -367,9 +368,11 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
             $status = true;
             if ($('#invoice_no').val() == ''){
                 $status = false;
-                $('#invoice_no').css('color', 'red');
+                $('.invoice_no_err').html('required');
+                $('.invoice_no_err').css('color', 'red');
             } else{
-                $('#invoice_no').css('color', 'black');
+                
+                 $('.invoice_no_err').html('');
             }
             
             if ($status){
