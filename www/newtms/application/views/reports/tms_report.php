@@ -1,4 +1,12 @@
-
+<style>
+    .comp_block{
+        background: #a8dbf7;
+        height: 200px;
+        width: 200px;
+        margin: auto;
+        font-size: 15px;
+    }
+</style>
 <script>
     $siteurl = '<?php echo site_url(); ?>';
             $baseurl = '<?php echo base_url(); ?>';</script>
@@ -343,8 +351,8 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
             </tbody>
         </table>
     </div> 
-     <div class="table-responsive" id='data_hides' style='display:none'>    
-         <div class='text-center' style=''></div>
+     <div class="table-responsive">    
+         <div class='comp_block'></div>
      </div>
 
     <script>
