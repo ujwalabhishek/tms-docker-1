@@ -186,7 +186,7 @@ span.psw {
                                               <label for="psw"><b>Password</b></label>
                                               <input type="password" placeholder="Enter Password" name="password" id='pwd' class='form-control' required>
                                                <div><span id="pass_err"></span></div>
-                                               <div class='row'>
+<!--                                               <div class='row'>
                                                    <div class='col-sm-6'>
                                                        <label for="psw"><b>Captcha Code</b></label>
                                                         <div><?php echo $captcha;?>
@@ -206,9 +206,15 @@ span.psw {
                                                             ?>	
                                                         </div>
                                                    </div>
+                                               </div>-->
+                                               <div class='row'>
+                                                    <div class='col-sm-12'>
+                                                       <div></div>
+                                                       
+                                                   </div>
                                                </div>
                                                <div class='row'>
-                                                    <div class='col-sm-6'>
+                                                    <div class='col-sm-12'>
                                                        <div class="g-recaptcha" data-sitekey="<?php echo GOOGLE_CAPTCHA_SITEKEY;?>"></div>
                                                        
                                                    </div>
