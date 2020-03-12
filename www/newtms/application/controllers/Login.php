@@ -153,6 +153,7 @@ class Login extends CI_Controller {
             redirect('login/administrator');
         }
         //////above block of code added by shubhranshu for google captcha
+        
 //        if(strtolower($captcha) != strtolower($this->session->userdata('captcha_key'))){//added by shubhranshu
 //            $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
 //            redirect('login/administrator');//added by shubhranshu
