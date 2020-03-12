@@ -342,6 +342,7 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
                             //'value' => $this->input->get('invoice_no'),
                             'style' => 'width:200px;',
                             'class' => 'upper_case',
+                            'placeholder' => 'Enter Invoice ID',
                             'autocomplete' => 'off'
                         );
 
