@@ -371,7 +371,10 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
             } else{
                 $('#invoice_no').css('color', 'black');
             }
+            
             if ($status){
+                $(".comp_block").slideToggle("slow"); 
+                $('.comp_search_button1').attr('disabled', 'disabled').html('Please Wait..');
                 $.ajax({
                 url: 'tms_report_search_company_name',
                     type: "post",
@@ -381,7 +384,8 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
                     },
                     success: function(data) {
                         $('.comp_block').html(data.company_name);
-                        $(".comp_block").slideToggle("slow");  
+                        $(".comp_block").slideToggle("slow");
+                        $('.comp_search_button1').attr('disabled', 'false').html('<span class="glyphicon glyphicon-search">Search</span>');
                     }
                 });
             } else{
