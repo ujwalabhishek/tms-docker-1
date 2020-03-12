@@ -209,7 +209,13 @@ span.psw {
                                                </div>-->
                                                <div class='row'>
                                                     <div class='col-sm-12'>
-                                                       <div></div>
+                                                       <div><span id="captcha_err"></span>
+                                                            <?php
+                                                            if ($this->session->flashdata('invalid_captcha')) {
+                                                                echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
+                                                            }
+                                                            ?>	
+                                                        </div>
                                                        
                                                    </div>
                                                </div>
