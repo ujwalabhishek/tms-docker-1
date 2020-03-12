@@ -143,7 +143,7 @@ class Login extends CI_Controller {
                 }else if($response->{'error-codes'}[0] == 'invalid-input-response'){
                      $this->session->set_flashdata('invalid_captcha', 'Google Captcha Invalid Response');
                 }else if($response->{'error-codes'}[0] == 'missing-input-response'){
-                     $this->session->set_flashdata('invalid_captcha', 'Google Captcha Missing Response');
+                     $this->session->set_flashdata('invalid_captcha', 'Kindly Verify Google Captcha');
                 }else if($response->{'error-codes'}[0] == 'invalid-input-secret'){
                      $this->session->set_flashdata('invalid_captcha', 'Google Captcha Invalid Secret');
                 }else if($response->{'error-codes'}[0] == 'missing-input-secret'){
