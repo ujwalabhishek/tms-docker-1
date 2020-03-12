@@ -176,14 +176,14 @@ span.psw {
                                             </div>
 
                                             <div class="container-login">
-                                                <div><label for="uname"><b>Username</b></label></div>
+                                                <div><label for="uname" style='font-size: 13px;'><b>Username</b></label></div>
                                                 <div> <input type="text" placeholder="Enter Username" id='uname' name="username" class='form-control' value="<?php
                                                             if (isset($_COOKIE['remember_me'])) {
                                                                 echo $_COOKIE['remember_me'];
                                                             }
                                                             ?>" required></div>
                                               <div><span id="uname_err"></span></div>
-                                              <div><label for="psw"><b>Password</b></label></div>
+                                              <div><label for="psw" style='font-size: 13px;'><b>Password</b></label></div>
                                              <div> <input type="password" placeholder="Enter Password" name="password" id='pwd' class='form-control' required></div>
                                                <div><span id="pass_err"></span></div>
 <!--                                               <div class='row'>
