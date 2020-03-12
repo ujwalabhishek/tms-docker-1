@@ -1540,6 +1540,12 @@ class Reports_finance extends CI_Controller {
     public function tms_report_search_company_name(){
        $invoice_no = $this->input->post('invoice_no'); 
        $res = $this->reportsModel->fetch_company_name_by_invoice_id($invoice_no);
-       echo json_encode($res);
+       if(!empty($res)){
+          echo json_encode($res); 
+       }else{
+           $res->company_name='Please Enter a Company Invoice';
+         echo json_encode($res);  
+       }
+       
     }
 }
