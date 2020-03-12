@@ -129,11 +129,35 @@ class Login extends CI_Controller {
     public function validate_user() {
         $user_name = $this->input->post('username');
         $captcha = $this->input->post('captcha');
-        if(strtolower($captcha) != strtolower($this->session->userdata('captcha_key'))){//added by shubhranshu
-            $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
-            redirect('login/administrator');//added by shubhranshu
-             
-        }//added by shubhranshu
+        //////below block of code added by shubhranshu for google captcha
+        $google_response = $this->input->post('g-recaptcha-response');
+        $google_api_url = 'https://www.google.com/recaptcha/api/siteverify?response='.$google_response.'&secret='.GOOGLE_CAPTCHA_SECRETKEY.'';
+        $response = file_get_contents($google_api_url);
+        $response = json_decode($response);
+        if($response->success != 1){
+            if(count($response->{'error-codes'}) > 0){
+                if($response->{'error-codes'}[0] == 'timeout-or-duplicate'){
+                    $this->session->set_flashdata('invalid_captcha', 'Google Captcha Timeout');
+                }else if($response->{'error-codes'}[0] == 'bad-request'){
+                     $this->session->set_flashdata('invalid_captcha', 'Bad Request for Google Captcha');
+                }else if($response->{'error-codes'}[0] == 'invalid-input-response'){
+                     $this->session->set_flashdata('invalid_captcha', 'Google Captcha Invalid Response');
+                }else if($response->{'error-codes'}[0] == 'missing-input-response'){
+                     $this->session->set_flashdata('invalid_captcha', 'Kindly Verify Google Captcha');
+                }else if($response->{'error-codes'}[0] == 'invalid-input-secret'){
+                     $this->session->set_flashdata('invalid_captcha', 'Google Captcha Invalid Secret');
+                }else if($response->{'error-codes'}[0] == 'missing-input-secret'){
+                     $this->session->set_flashdata('invalid_captcha', 'Google Captcha Missing Secret');
+                }
+            }
+            redirect('login/administrator');
+        }
+        //////above block of code added by shubhranshu for google captcha
+//        if(strtolower($captcha) != strtolower($this->session->userdata('captcha_key'))){//added by shubhranshu
+//            $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
+//            redirect('login/administrator');//added by shubhranshu
+//             
+//        }//added by shubhranshu
         if (empty($user_name)) {
             return FALSE;
         }

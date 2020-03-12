@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="timezone" value="<?php echo $timezone = date_default_timezone_get()." / ". date('m/d/Y h:i:s a', time()); ?>">
     <title><?php echo $page_title; ?></title>  
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -160,7 +161,7 @@ span.psw {
                 <div class="container container_row">
                     <div class="row row_pushdown">
                         <div class="col-md-12 col_10_height_other" style='height: 520px;'>
-                            <div class="makecenter" style="margin: 0px auto 0;">
+                            <div class="makecenter" style="margin: 0px auto 0;width:455px">
                                 <div class="bs-example">
                                     <!--<h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>-->
                                                            
@@ -175,20 +176,20 @@ span.psw {
                                             </div>
 
                                             <div class="container-login">
-                                              <label for="uname"><b>Username</b></label>
-                                              <input type="text" placeholder="Enter Username" id='uname' name="username" class='form-control' value="<?php
+                                                <div><label for="uname" style='font-size: 13px;'><b>Username</b></label></div>
+                                                <div> <input type="text" placeholder="Enter Username" id='uname' name="username" class='form-control' value="<?php
                                                             if (isset($_COOKIE['remember_me'])) {
                                                                 echo $_COOKIE['remember_me'];
                                                             }
-                                                            ?>" required>
+                                                            ?>" required></div>
                                               <div><span id="uname_err"></span></div>
-                                              <label for="psw"><b>Password</b></label>
-                                              <input type="password" placeholder="Enter Password" name="password" id='pwd' class='form-control' required>
+                                              <div><label for="psw" style='font-size: 13px;'><b>Password</b></label></div>
+                                             <div> <input type="password" placeholder="Enter Password" name="password" id='pwd' class='form-control' required></div>
                                                <div><span id="pass_err"></span></div>
-                                               <div class='row'>
+<!--                                               <div class='row'>
                                                    <div class='col-sm-6'>
                                                        <label for="psw"><b>Captcha Code</b></label>
-                                                        <div><?php echo $captcha;?>
+                                                        <div><?php //echo $captcha;?>
                                                             <a href="administrator" title="Refresh">
                                                             &nbsp;<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
                                                             </a>
@@ -196,14 +197,32 @@ span.psw {
                                                    </div>
                                                    <div class='col-sm-6'>
                                                        <label for="psw"><b>Enter Captcha Code</b></label>
-                                                       <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php //echo $this->session->userdata('captcha_key')?>" required>
+                                                       <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php echo $this->session->userdata('captcha_key')?>" required>
                                                         <div><span id="captcha_err"></span>
+                                                            <?php
+//                                                            if ($this->session->flashdata('invalid_captcha')) {
+//                                                                echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
+//                                                            }
+                                                            ?>	
+                                                        </div>
+                                                   </div>
+                                               </div>-->
+                                               <div class='row'>
+                                                    <div class='col-sm-12'>
+                                                       <div><span id="captcha_err"></span>
                                                             <?php
                                                             if ($this->session->flashdata('invalid_captcha')) {
                                                                 echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
                                                             }
                                                             ?>	
                                                         </div>
+                                                       
+                                                   </div>
+                                               </div>
+                                               <div class='row'>
+                                                    <div class='col-sm-12'>
+                                                       <div class="g-recaptcha" data-sitekey="<?php echo GOOGLE_CAPTCHA_SITEKEY;?>"></div>
+                                                       
                                                    </div>
                                                </div>
                                                     <?php
