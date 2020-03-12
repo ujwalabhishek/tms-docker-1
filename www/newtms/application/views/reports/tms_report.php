@@ -373,7 +373,7 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
             }
             
             if ($status){
-                $(".comp_block").slideUp("slow"); 
+                $(".comp_block").slideUp("fast"); 
                 $('.comp_block').html('');
                 $('.comp_search_button1').attr('disabled', 'disabled').html('Please Wait..');
                 $.ajax({
