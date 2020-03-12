@@ -6,7 +6,7 @@
         width: 525px;
         font-weight: bold;
         margin: auto;
-        margin-top: 29px;
+        margin-top: 5px;
         color: #1b2dad;
         font-size: 20px;
         padding: 34px;
