@@ -130,7 +130,7 @@ class Login extends CI_Controller {
         $user_name = $this->input->post('username');
         $captcha = $this->input->post('captcha');
         $google_response = $this->input->post('g-recaptcha-response');
-        $google_api_url = "https://www.google.com/recaptcha/api/siteverify?response=".$google_response."&secret=".GOOGLE_CAPTCHA_SECRETKEY.";
+        $google_api_url = 'https://www.google.com/recaptcha/api/siteverify?response='.$google_response.'&secret='.GOOGLE_CAPTCHA_SECRETKEY.'';
         $response = file_get_contents($google_api_url);
         $response = json_decode($response);
         print_r($response);exit;
