@@ -364,11 +364,11 @@ echo form_input($invoice);
             }
             if ($status){
                 $.ajax({
-                url: 'reports_finance/tms_report_search_company_name',
+                url: 'tms_report_search_company_name',
                     type: "post",
                     dataType: "json",
                     data: {
-                    tax_code: $("#invoice_no").val()
+                    invoice_no: $("#invoice_no").val()
                     },
                     success: function(data) {
                         if (data != '1'){
