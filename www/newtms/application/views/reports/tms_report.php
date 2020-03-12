@@ -312,6 +312,58 @@
         
     </div>  
     
+    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/internal_user.png"/>SEARCH COMPANY NAME BY INVOICE ID</h2>
+    <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl;?>/assets/images/education.png"> <a href='#' id='collapse_datas'>Company Name :</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='comp_name'></span></h2> 
+    
+    <div class="table-responsive" id='data_hides' style='display:none'>    
+        
+          
+        <?php
+        
+// /           print_r($tabledata);
+        $atr = 'id="search_form_company_invoiceid" name="search_form_company_invoiceid" method="POST"';
+//        echo form_open("internal_user/activity_log", $atr);
+        echo form_open("reports_finance/tms_report_search_company_name", $atr);
+        ?>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+              
+                    <td class="td_heading">                               
+                        Enter Invoice ID To Search: 
+                    </td>
+                    <td>
+
+                        <?php
+                        $invoice = array(
+                            'name' => 'invoice_no',
+                            'id' => 'invoice_no',
+                            //'value' => $this->input->get('invoice_no'),
+                            'style' => 'width:200px;',
+                            'class' => 'upper_case',
+                            'autocomplete' => 'off'
+                        );
+        
+                        echo form_input($invoice);
+ 
+                        ?>
+                    </td>
+                </tr>
+                
+                
+            </tbody>
+        </table>
+        <div class="push_right btn_srch">
+            <button type="button" class="search_button1 btn btn-xs btn-primary no-mar">
+                <span class="glyphicon glyphicon-search"></span>
+                Search
+            </button>
+
+        </div>
+        <?php echo form_close();?>
+        
+    </div>  
+    
     <script>
         $(".search_button").click(function () {
             ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
