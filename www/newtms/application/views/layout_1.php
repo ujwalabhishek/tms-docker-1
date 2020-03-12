@@ -176,20 +176,20 @@ span.psw {
                                             </div>
 
                                             <div class="container-login">
-                                              <label for="uname"><b>Username</b></label>
-                                              <input type="text" placeholder="Enter Username" id='uname' name="username" class='form-control' value="<?php
+                                                <div><label for="uname"><b>Username</b></label></div>
+                                                <div> <input type="text" placeholder="Enter Username" id='uname' name="username" class='form-control' value="<?php
                                                             if (isset($_COOKIE['remember_me'])) {
                                                                 echo $_COOKIE['remember_me'];
                                                             }
-                                                            ?>" required>
+                                                            ?>" required></div>
                                               <div><span id="uname_err"></span></div>
-                                              <label for="psw"><b>Password</b></label>
-                                              <input type="password" placeholder="Enter Password" name="password" id='pwd' class='form-control' required>
+                                              <div><label for="psw"><b>Password</b></label></div>
+                                             <div> <input type="password" placeholder="Enter Password" name="password" id='pwd' class='form-control' required></div>
                                                <div><span id="pass_err"></span></div>
 <!--                                               <div class='row'>
                                                    <div class='col-sm-6'>
                                                        <label for="psw"><b>Captcha Code</b></label>
-                                                        <div><?php echo $captcha;?>
+                                                        <div><?php //echo $captcha;?>
                                                             <a href="administrator" title="Refresh">
                                                             &nbsp;<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
                                                             </a>
@@ -200,9 +200,9 @@ span.psw {
                                                        <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' value="<?php echo $this->session->userdata('captcha_key')?>" required>
                                                         <div><span id="captcha_err"></span>
                                                             <?php
-                                                            if ($this->session->flashdata('invalid_captcha')) {
-                                                                echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
-                                                            }
+//                                                            if ($this->session->flashdata('invalid_captcha')) {
+//                                                                echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
+//                                                            }
                                                             ?>	
                                                         </div>
                                                    </div>
