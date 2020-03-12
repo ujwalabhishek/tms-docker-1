@@ -360,6 +360,7 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
         </table>
     </div> 
      <div class="table-responsive">    
+         <div class='text-center'>Company Name</div>
          <div class='comp_block'></div>
      </div>
 
