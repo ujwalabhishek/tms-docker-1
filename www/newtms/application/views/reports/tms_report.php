@@ -373,9 +373,7 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
                     invoice_no: $("#invoice_no").val()
                     },
                     success: function(data) {
-                        if (data != '1'){
-                            $('#ex1011').show();
-                        }
+                        $('.comp_block').html(data);
                     }
                 });
             } else{
