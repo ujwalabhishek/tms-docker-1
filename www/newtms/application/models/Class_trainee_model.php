@@ -4084,6 +4084,17 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         return $result->num_rows();
     }
+    
+     /// added by shubhranshu to fetch the company discount 
+    public function fetch_compnay_discount($tenant_id,$course,$company_id){
+        $this->db->select('*');
+        $this->db->from('company_discount');
+        $this->db->where('Tenant_ID', $tenant_id);
+        $this->db->where('Company_ID', $company_id);
+        $this->db->where('Course_ID', $course);
+        $res = $this->db->get()->row();
+        return $res;
+    }
 
     /**
 
@@ -4104,21 +4115,26 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         $company_total_unitfees = 0;
 
-        if ($company_details[0]->comp_discount > 0) {
+       //// Below code added by shubhranshu to fetch the company discount 
+        $comp_discounts_details = $this->fetch_compnay_discount($tenant_id,$course,$company_id);
+        if (($comp_discounts_details->Discount_Percent > 0) || ($comp_discounts_details->Discount_Amount > 0)) {
 
-            $discount_rate = round($company_details[0]->comp_discount, 4);
-
+            if($comp_discounts_details->Discount_Percent > 0){
+                $discount_rate = round($comp_discounts_details->Discount_Percent, 4);
+                $discount_total = ( $discount_rate * $class_detail->class_fees) / 100;
+            }else{
+                $discount_total = $comp_discounts_details->Discount_Amount;
+                $discount_rate =  round((($discount_total / $class_detail->class_fees) * 100), 4);
+            }
             $discount_label = 'DISCOMP';
         } else {
 
             $discount_rate = round($class_detail->class_discount, 4);
-
+            $discount_total = ( $discount_rate * $class_detail->class_fees) / 100;
             $discount_label = 'DISCLASS';
         }
+        //////end of code by ssp
 
-
-
-        $discount_total = ( $discount_rate * $class_detail->class_fees) / 100;
 
         $course_detail = $this->db->select('subsidy_after_before,gst_on_off')->from('course')->where('course_id', $course)->get()->row();
 

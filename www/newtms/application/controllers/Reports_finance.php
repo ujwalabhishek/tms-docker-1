@@ -1291,83 +1291,83 @@ class Reports_finance extends CI_Controller {
         $export_url = '';
 
         $sort_url = '';
-    if (!empty($_GET)) {
         if (!empty($_GET)) {
+            if (!empty($_GET)) {
 
-            $export_url = '?';
+                $export_url = '?';
 
-            foreach ($_GET as $k => $v) {
-
-                if (!empty($v)) {
-
-                    $export_url .="$k=$v&";
-                }
-
-                if ($k != 'f' && $k != 'o') {
+                foreach ($_GET as $k => $v) {
 
                     if (!empty($v)) {
 
-                        $sort_url .="$k=$v&";
+                        $export_url .="$k=$v&";
+                    }
+
+                    if ($k != 'f' && $k != 'o') {
+
+                        if (!empty($v)) {
+
+                            $sort_url .="$k=$v&";
+                        }
                     }
                 }
             }
+
+            $export_url = rtrim($export_url, '&');
+
+            $sort_url = rtrim($sort_url, '&');
+
+            $data['export_url'] = $export_url;
+
+            $data['sort_url'] = '?' . $sort_url;
+
+            $module = ($this->input->get('module')) ? $this->input->get('module') : '';
+
+            $user_id = ($this->input->get('user_id')) ? $this->input->get('user_id') : '';
+
+            $com_id = ($this->input->get('com_id')) ? $this->input->get('com_id') : '';
+
+            $invid = ($this->input->get('invid')) ? $this->input->get('invid') : '';
+
+            $inv_taxcode = ($this->input->get('inv_taxcode')) ? $this->input->get('inv_taxcode') : '';
+
+            $crs = ($this->input->get('crs')) ? $this->input->get('crs') : '';
+
+            $cls_id = ($this->input->get('cls_id')) ? $this->input->get('cls_id') : '';
+
+            $cls_name = ($this->input->get('cls_name')) ? $this->input->get('cls_name') : '';
+
+            $account_type = ($this->input->get('account_type')) ? $this->input->get('account_type') : '';
+
+            $pass = ($this->input->get('pass')) ? $this->input->get('pass') : '';
+
+            $field = ($this->input->get('f')) ? $this->input->get('f') : 'at.trigger_datetime';
+
+            $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'desc';
+
+
+
+            $records_per_page = RECORDS_PER_PAGE;
+
+            $baseurl = base_url() . 'reports_finance/activity_log/';
+
+            $pageno = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
+
+
+
+            $offset = ($pageno * $records_per_page);
+
+            $data['tenant'] = $tenant_id;
+
+            $this->db->cache_on();
+
+            $tabledata = $this->activitylog->get_activity_list_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $module, $user_id, $com_id, $invid, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass);
+
+
+            //$tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
+
+            $totalrows = $this->activitylog->get_activity_log_count_by_tenant_id($tenant_id, $module, $user_id, $com_id, $invid, $user_id, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass);
         }
-
-        $export_url = rtrim($export_url, '&');
-
-        $sort_url = rtrim($sort_url, '&');
-
-        $data['export_url'] = $export_url;
-
-        $data['sort_url'] = '?' . $sort_url;
-
-        $module = ($this->input->get('module')) ? $this->input->get('module') : '';
-
-        $user_id = ($this->input->get('user_id')) ? $this->input->get('user_id') : '';
-
-        $com_id = ($this->input->get('com_id')) ? $this->input->get('com_id') : '';
-
-        $invid = ($this->input->get('invid')) ? $this->input->get('invid') : '';
-
-        $inv_taxcode = ($this->input->get('inv_taxcode')) ? $this->input->get('inv_taxcode') : '';
-
-        $crs = ($this->input->get('crs')) ? $this->input->get('crs') : '';
-
-        $cls_id = ($this->input->get('cls_id')) ? $this->input->get('cls_id') : '';
-
-        $cls_name = ($this->input->get('cls_name')) ? $this->input->get('cls_name') : '';
-
-        $account_type = ($this->input->get('account_type')) ? $this->input->get('account_type') : '';
-
-        $pass = ($this->input->get('pass')) ? $this->input->get('pass') : '';
-
-        $field = ($this->input->get('f')) ? $this->input->get('f') : 'at.trigger_datetime';
-
-        $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'desc';
-
-
-
-        $records_per_page = RECORDS_PER_PAGE;
-
-        $baseurl = base_url() . 'reports_finance/activity_log/';
-
-        $pageno = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
-
-
-
-        $offset = ($pageno * $records_per_page);
-
-        $data['tenant'] = $tenant_id;
-
-        $this->db->cache_on();
-
-        $tabledata = $this->activitylog->get_activity_list_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $module, $user_id, $com_id, $invid, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass);
-
-
-        //$tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
-
-        $totalrows = $this->activitylog->get_activity_log_count_by_tenant_id($tenant_id, $module, $user_id, $com_id, $invid, $user_id, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass);
-    }
         $this->db->cache_off();
 
         $data['tabledata'] = $tabledata;
