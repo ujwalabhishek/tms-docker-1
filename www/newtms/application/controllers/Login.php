@@ -129,6 +129,7 @@ class Login extends CI_Controller {
     public function validate_user() {
         $user_name = $this->input->post('username');
         $captcha = $this->input->post('captcha');
+        //////below block of code added by shubhranshu for google captcha
         $google_response = $this->input->post('g-recaptcha-response');
         $google_api_url = 'https://www.google.com/recaptcha/api/siteverify?response='.$google_response.'&secret='.GOOGLE_CAPTCHA_SECRETKEY.'';
         $response = file_get_contents($google_api_url);
@@ -151,12 +152,12 @@ class Login extends CI_Controller {
             }
             redirect('login/administrator');
         }
-        
-        if(strtolower($captcha) != strtolower($this->session->userdata('captcha_key'))){//added by shubhranshu
-            $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
-            redirect('login/administrator');//added by shubhranshu
-             
-        }//added by shubhranshu
+        //////above block of code added by shubhranshu for google captcha
+//        if(strtolower($captcha) != strtolower($this->session->userdata('captcha_key'))){//added by shubhranshu
+//            $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
+//            redirect('login/administrator');//added by shubhranshu
+//             
+//        }//added by shubhranshu
         if (empty($user_name)) {
             return FALSE;
         }
