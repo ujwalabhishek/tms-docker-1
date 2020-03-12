@@ -373,7 +373,7 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
                     invoice_no: $("#invoice_no").val()
                     },
                     success: function(data) {
-                        $('.comp_block').html(data);
+                        $('.comp_block').html(data.company_name);
                     }
                 });
             } else{
