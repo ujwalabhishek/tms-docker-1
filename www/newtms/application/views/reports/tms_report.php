@@ -347,13 +347,12 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
 
                         echo form_input($invoice);
                         ?>
-                    </td>
-                    <td>
                         <button type="button" class="comp_search_button1 btn btn-xs btn-primary no-mar">
                             <span class="glyphicon glyphicon-search"></span>
                             Search
                         </button>
                     </td>
+                    
                 </tr>
             </tbody>
         </table>
