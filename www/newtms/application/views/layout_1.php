@@ -209,7 +209,7 @@ span.psw {
                                                </div>
                                                <div class='row'>
                                                     <div class='col-sm-6'>
-                                                       <div class="g-recaptcha" data-sitekey="6Le7puAUAAAAAPUPDMn2d98Zf6ABHAB1fen1Te-R"></div>
+                                                       <div class="g-recaptcha" data-sitekey="<?php echo GOOGLE_CAPTCHA_SITEKEY;?>"></div>
                                                        
                                                    </div>
                                                </div>
