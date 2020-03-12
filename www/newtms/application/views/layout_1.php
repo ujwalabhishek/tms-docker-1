@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="timezone" value="<?php echo $timezone = date_default_timezone_get()." / ". date('m/d/Y h:i:s a', time()); ?>">
     <title><?php echo $page_title; ?></title>  
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -204,6 +205,12 @@ span.psw {
                                                             }
                                                             ?>	
                                                         </div>
+                                                   </div>
+                                               </div>
+                                               <div class='row'>
+                                                    <div class='col-sm-6'>
+                                                       <div class="g-recaptcha" data-sitekey="6Le7puAUAAAAAPUPDMn2d98Zf6ABHAB1fen1Te-R"></div>
+                                                       
                                                    </div>
                                                </div>
                                                     <?php
