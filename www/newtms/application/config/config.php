@@ -23,7 +23,7 @@ date_default_timezone_set('Asia/Singapore');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] =  "https://".$_SERVER['HTTP_HOST']; // added by shubhranshu for dynamic domain mapping
+$config['base_url'] =  "http://".$_SERVER['HTTP_HOST']; // added by shubhranshu for dynamic domain mapping
 
 /*
 |--------------------------------------------------------------------------
