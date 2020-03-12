@@ -324,7 +324,7 @@ echo form_dropdown('tStatus', $s_options, $this->input->post('tStatus'), $attr);
     </div>  
 
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/internal_user.png"/>SEARCH COMPANY NAME BY INVOICE ID</h2>
-    <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl; ?>/assets/images/education.png"> <a href='#' id='collapse_datas'>Company Name :</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='comp_name'></span></h2> 
+    <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl; ?>/assets/images/education.png"> <a href='#' id='collapse_datas'> Search Company Name :</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='comp_name'></span></h2> 
 
     <div class="table-responsive" id='data_hides' style='display:none'>    
         <table class="table table-striped">
