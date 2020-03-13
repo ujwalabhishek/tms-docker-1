@@ -4137,11 +4137,15 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 $discount_rate =  round((($discount_total / $class_detail->class_fees) * 100), 4);
             }
             $discount_label = 'DISCOMP';
-        } else {
+        } else if($class_detail->class_discount > 0){
 
             $discount_rate = round($class_detail->class_discount, 4);
             $discount_total = ( $discount_rate * $class_detail->class_fees) / 100;
             $discount_label = 'DISCLASS';
+        }else{
+            $discount_rate = 0;
+            $discount_total = 0;
+            $discount_label = 'DISCOMP';
         }
         //////end of code by ssp
 
