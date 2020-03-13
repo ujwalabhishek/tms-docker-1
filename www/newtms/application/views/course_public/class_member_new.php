@@ -154,14 +154,14 @@ if (!defined('BASEPATH'))
                     </div>
 
                     <div class="container-login">
-                        <label for="uname"><b>Username</b></label>
+                        <label for="uname" style='font-size: 13px;'><b>Username</b></label>
                         <input type="text" placeholder="Enter Username" id='uname' name="username" class='form-control' value="<?php
 if (isset($_COOKIE['remember_me'])) {
     echo $_COOKIE['remember_me'];
 }
 ?>" required>
                         <div><span id="uname_err"></span></div>
-                        <label for="psw"><b>Password</b></label>
+                        <label for="psw" style='font-size: 13px;'><b>Password</b></label>
                         <input type="password" placeholder="Enter Password" name="password" id='pwd' class='form-control' required>
                         <input type="hidden" name="course_id" value="<?php echo $course_id; ?>" />
                         <input type="hidden" name="class_id" value="<?php echo $class_id; ?>" />
