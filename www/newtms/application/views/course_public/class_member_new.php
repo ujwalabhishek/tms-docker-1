@@ -137,9 +137,9 @@ if (!defined('BASEPATH'))
         border-bottom-right-radius: 7px;
     }
 </style>
-
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <div class="col-md-12 col_10_height_other" style='height: 520px;'>
-    <div class="makecenter" style="margin: 0px auto 0;">
+    <div class="makecenter" style="margin: 0px auto 0;width:455px">
         <div class="bs-example">
             <!--<h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>-->
 
@@ -166,10 +166,10 @@ if (isset($_COOKIE['remember_me'])) {
                         <input type="hidden" name="course_id" value="<?php echo $course_id; ?>" />
                         <input type="hidden" name="class_id" value="<?php echo $class_id; ?>" />
                         <div><span id="pass_err"></span></div>
-                        <div class='row'>
+<!--                        <div class='row'>
                             <div class='col-sm-6'>
                                 <label for="psw"><b>Captcha Code</b></label>
-                                <div><?php echo $captcha; ?>
+                                <div><?php //echo $captcha; ?>
                                     <a href="class_member_check" title="Refresh">
                                         &nbsp;<span class="glyphicon glyphicon-refresh" style="font-size: 20px;color: #486d90;font-weight:bold;top:6px;"></span>
                                     </a>
@@ -180,13 +180,19 @@ if (isset($_COOKIE['remember_me'])) {
                                 <input type="captcha" placeholder="Enter captcha code" name="captcha" id='captcha' class='form-control' required>
                                 <div><span id="captcha_err"></span>
                                     <?php
-                                    if ($this->session->flashdata('invalid_captcha')) {
-                                        echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
-                                    }
+//                                    if ($this->session->flashdata('invalid_captcha')) {
+//                                        echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
+//                                    }
                                     ?>	
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                               <div class="g-recaptcha" data-sitekey="<?php echo GOOGLE_CAPTCHA_SITEKEY;?>"></div>
+
+                           </div>
+                       </div>
                         <?php
                         if ($this->session->flashdata('invalid')) {
                             echo '<center><div class="error">' . $this->session->flashdata('invalid') . '</div></center>';
