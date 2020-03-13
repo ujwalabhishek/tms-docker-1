@@ -189,6 +189,18 @@ if (isset($_COOKIE['remember_me'])) {
                         </div>-->
                         <div class='row'>
                             <div class='col-sm-12'>
+                               <div><span id="captcha_err"></span>
+                                    <?php
+                                    if ($this->session->flashdata('invalid_captcha')) {
+                                        echo '<div class="error">' . $this->session->flashdata('invalid_captcha') . '</div>';
+                                    }
+                                    ?>	
+                                </div>
+
+                           </div>
+                       </div>
+                        <div class='row'>
+                            <div class='col-sm-12'>
                                <div class="g-recaptcha" data-sitekey="<?php echo GOOGLE_CAPTCHA_SITEKEY;?>"></div>
 
                            </div>
