@@ -139,7 +139,7 @@ if (!defined('BASEPATH'))
 </style>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <div class="col-md-12 col_10_height_other" style='height: 520px;'>
-    <div class="makecenter" style="margin: 0px auto 0;width:455px">
+    <div class="makecenter" style="margin: 0px auto 0;width:431px">
         <div class="bs-example">
             <!--<h2 class="panel_heading_style"><span class="glyphicon glyphicon-log-in"></span> Sign In</h2>-->
 
