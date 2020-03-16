@@ -3,7 +3,7 @@
     $baseurl = '<?php echo base_url(); ?>';
 </script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment.js?v=2"></script>
 <!--<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment_all_tenant.js"></script>-->
 <div class="col-md-10 right-minheight">
     <?php
@@ -568,24 +568,7 @@
                                 <span id="sfc_amount_err"></span>
                             </td>
                         </tr>
-                        <!--added by shubhranshu for client requirement-->
-                        <tr>
-                        <td class="td_heading">SFC(SELF) Claim ID:<span class="required">*</span></td>
-                        <td>
-                            <?php
-                            $sfc_self_claim_id = array(
-                                'name' => 'sfc_self_claim_id',
-                                'id' => 'sfc_self_claim_id',
-                                'class' => 'sfc_self_claim_id',
-                                'type' => 'text',
-                                'value' => $this->input->post('sfc_self_claim_id'),
-                            );
-                            echo form_input($sfc_self_claim_id);
-                            ?>   
-                             <span id="sfc_self_claim_id_err"></span>
-                        </td>
-                        </tr>
-
+                        
                     </tbody>
                 </table>
             </div>
@@ -606,7 +589,7 @@
                                 );
                                 echo form_input($sfcatoclaim_on);
                                 ?>
-                                <span id="sfcclaim_on_err"></span>
+                                <span id="sfcatoclaim_on_err"></span>
                             </td>
                            <td width="14%" class="td_heading">SFC(ATO) Amount:<span class="required">*</span></td>
                             <td width="19%">$ <?php
@@ -623,7 +606,7 @@
                         </tr>
                         <!--added by shubhranshu for client requirement-->
                         <tr>
-                            <td class="td_heading">SFC(ATO) Claim ID:<span class="required">*</span></td>
+                            <td class="td_heading">SFC(ATO) Claim ID:<span class="required"></span></td>
                             <td>
                                 <?php
                                 $sfc_ato_claim_id = array(
@@ -638,7 +621,6 @@
                                 <span id="sfc_ato_claim_id_err"></span>
                             </td>
                         </tr>
-
                     </tbody>
                 </table>
             </div>
