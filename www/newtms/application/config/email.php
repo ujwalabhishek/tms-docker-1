@@ -16,11 +16,16 @@ $config['protocol'] = 'sendmail';
 //$config['smtp_user'] = 'noreply@xprienz.net';
 //$config['smtp_pass'] = 'noreplySG@2019';
 
+//
+//$config['smtp_host'] = 'ssl://smtp.gmail.com';
+//$config['smtp_port'] = '465';
+//$config['smtp_user'] = 'biipbytedns@gmail.com';
+//$config['smtp_pass'] = 'qwertyuiop@123';
 
 $config['smtp_host'] = 'ssl://smtp.gmail.com';
 $config['smtp_port'] = '465';
-$config['smtp_user'] = 'biipbytedns@gmail.com';
-$config['smtp_pass'] = 'qwertyuiop@123';
+$config['smtp_user'] = 'biipmisg2020@gmail.com';
+$config['smtp_pass'] = 'biipmisupport@123';
 
 //$config['smtp_host'] = 'ssl://mail.biipmi.co';
 //$config['smtp_port'] = '465';
