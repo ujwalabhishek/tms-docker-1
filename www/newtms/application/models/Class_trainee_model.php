@@ -12741,7 +12741,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      */
     private function generate_invoice_id() {
 
-        $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.","T22" => "CBLD.");
+        $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.","T22" => "CBLD");
 
         $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id","T22" => "cbld_invoice_id");
 
