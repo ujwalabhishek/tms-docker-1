@@ -1268,13 +1268,13 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         $this->db->insert('tms_users_pers', $tms_users_pers_data);
         //// added by shubhranshu to update the tax code and other identi code as taxcode on 03/12/2018//////
         if($this->user->tenant_id == 'T02') {
-            $no_tax_tax_code = "X".$user_id;
+            $no_tax_tax_code = "XPZ".$user_id;
         } else if($this->user->tenant_id == 'T03'){
-            $no_tax_tax_code = "CR".$user_id;
+            $no_tax_tax_code = "CAI".$user_id;
         } else if($this->user->tenant_id == 'T04'){
-            $no_tax_tax_code = "F".$user_id;
+            $no_tax_tax_code = "FL".$user_id;
         }else if($this->user->tenant_id == 'T22'){
-            $no_tax_tax_code = "C".$user_id;
+            $no_tax_tax_code = "CD".$user_id;
         } else {
             $no_tax_tax_code = $user_id;
         }
