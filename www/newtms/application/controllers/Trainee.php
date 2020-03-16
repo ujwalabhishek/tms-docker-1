@@ -1620,10 +1620,9 @@ class Trainee extends CI_Controller {
   
         $this->load->library('email');
         $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
-        $this->email->to($to_email_id);
-        $this->email->cc($cc_email_id);
-        $this->email->subject($mail_subject);
-        $this->email->message($mail_body);
+        $this->email->to('testtrainee2@mailinator.com');
+        $this->email->subject('Hello');
+        $this->email->message('Good to know you are happy');
         if ($this->email->send()) {
             echo "mail sent successfully";
         
