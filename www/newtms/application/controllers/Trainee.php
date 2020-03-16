@@ -1620,7 +1620,7 @@ class Trainee extends CI_Controller {
   
         $this->load->library('email');
         $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
-        $this->email->to('testtrainee2@mailinator.com');
+        $this->email->to('abdullah@mailinator.com');
         $this->email->subject('Hello');
         $this->email->message('Good to know you are happy');
         if ($this->email->send()) {
