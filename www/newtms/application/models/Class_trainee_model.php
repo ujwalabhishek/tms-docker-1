@@ -6049,7 +6049,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             $this->db->insert('enrol_pymnt_brkup_dt', $breakup_data);
 
              /////added by shubhranshu sfc claim id
-            if ($payment_type = 'SFC_ATO') {
+            if ($payment_type == 'SFC_ATO') {
                 $sfc_claim_id = strtoupper($sfc_ato_claim_id);
                 $data = array('payment_status' => 'PAID', 'enrol_status' => 'ENRLACT', 'sfc_claim_id' => $sfc_claim_id);
             }else{
