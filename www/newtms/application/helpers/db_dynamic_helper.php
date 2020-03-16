@@ -46,6 +46,7 @@ function fetch_dynamic_db_details(){
         $res = $CI->dbs->get()->row();
         //$CI->session->set_userdata('master_tenant_id', $res->tenant_id);
         define('TENANT_ID',  $res->tenant_id); //////very very imporatant line by shubhranshu
+        define('TENANT_LOGO',  $res->tenant_logo);//////very very imporatant line by shubhranshu
         if(empty($res)){
             redirect('http://xprienz.net/'); // this if condition was added by shubhranshu check if the url is invalid redirect to home page
         }
