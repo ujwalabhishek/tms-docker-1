@@ -1615,5 +1615,21 @@ class Trainee extends CI_Controller {
             redirect('trainee/view_trainee/'.$user_id);
         }
     }
+    
+    public function test_send_mail(){
+  
+        $this->load->library('email');
+        $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
+        $this->email->to($to_email_id);
+        $this->email->cc($cc_email_id);
+        $this->email->subject($mail_subject);
+        $this->email->message($mail_body);
+        if ($this->email->send()) {
+            echo "mail sent successfully";
+        
+        }else{
+            echo "something went wrong";
+        }
+    }
 }
 
