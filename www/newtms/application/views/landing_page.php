@@ -75,7 +75,7 @@
 
                         <div class="col-sm-2">
                            <a href="<?php echo base_url()?>" class='pull-left'>
-                            <img class="logo" src="<?php echo base_url()?>logos/<?php echo TENANT_LOGO;?>" border="0">
+                            <img class="logo" src="<?php echo base_url()?>logos/t01.png" border="0">
                             </a>
                    
                         </div>
