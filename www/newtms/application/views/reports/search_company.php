@@ -59,7 +59,7 @@
          <div class='comp_block'></div>
           <div class='comp_status' style='font-size: 15px;
     color: grey;
-    padding-top: 10px;display:none;'></div>
+    padding-top: 10px;display:none;text-align: center;'></div>
      </div>
 </div>
 <script>
