@@ -1534,18 +1534,4 @@ class Reports_finance extends CI_Controller {
     }
 
     /* activity log code end */
-    
-    
-    ////below function added by shubhranshu to search the company name by invoice id
-    public function tms_report_search_company_name(){
-       $invoice_no = $this->input->post('invoice_no'); 
-       $res = $this->reportsModel->fetch_company_name_by_invoice_id($invoice_no);
-       if(!empty($res)){
-          echo json_encode($res); 
-       }else{
-           $res->company_name='Please Enter a Company Invoice';
-         echo json_encode($res);  
-       }
-       
-    }
 }
