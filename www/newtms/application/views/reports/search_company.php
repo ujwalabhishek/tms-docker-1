@@ -82,5 +82,9 @@ $(document).ready(function() {
             }
         });
         
+        $('#collapse_datas').click(function(){
+            $('#data_hides').toggle(500);
+        });
+        
     });
     </script>
