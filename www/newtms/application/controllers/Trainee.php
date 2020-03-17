@@ -1629,6 +1629,7 @@ class Trainee extends CI_Controller {
         }else{
             echo "something went wrong";
         }
+        echo $this->email->print_debugger();
     }
 }
 
