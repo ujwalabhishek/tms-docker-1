@@ -19,7 +19,7 @@
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/internal_user.png"/>SEARCH COMPANY NAME BY INVOICE ID</h2>
     <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl; ?>/assets/images/education.png"> <a href='#' id='collapse_datas'> Search Company Name :</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='comp_name'></span></h2> 
 
-    <div class="table-responsive" id='data_hides' style='display:none'>    
+    <div class="table-responsive" id='data_hides'>    
         <table class="table table-striped">
             <tbody>
                 <tr>
@@ -97,9 +97,9 @@ $(document).ready(function() {
             }
         });
         
-        $('#collapse_datas').click(function(){
-            $('#data_hides').toggle(500);
-        });
+//        $('#collapse_datas').click(function(){
+//            $('#data_hides').toggle(500);
+//        });
         
     });
     </script>
