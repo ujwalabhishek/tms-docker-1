@@ -89,7 +89,7 @@ $(document).ready(function() {
                         $('.comp_block').html(data.company_name);
                         $(".comp_block").slideDown("slow");
                         $(".comp_head").slideDown("slow");
-                        $('.comp_search_button1').removeAttr('disabled').html('<span class="glyphicon glyphicon-search"> Search</span>');
+                        $('.comp_search_button1').removeAttr('disabled').html('<span class="glyphicon glyphicon-search"></span> Search');
                     }
                 });
             } else{
