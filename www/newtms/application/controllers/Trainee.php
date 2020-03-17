@@ -1619,7 +1619,7 @@ class Trainee extends CI_Controller {
     public function test_send_mail(){
         
         
-  
+        $this->load->config('email');
         $this->load->library('email');
         $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
         $this->email->to('abdullah1@mailinator.com');
