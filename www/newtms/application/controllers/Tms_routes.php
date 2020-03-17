@@ -45,6 +45,7 @@ $tms_route['RPTS']['ops'] = array(
     'SOA' => 'soa_report',
     'WDA' => 'wda',
     'MENRLCT'=>'monthly_enrollment_count',
+    'SCNRPT' => 'search_company_name',
     'CRTD'=>'certificate_distribution'
     );
 //------------------------ Settings mapping -------------------------------------
