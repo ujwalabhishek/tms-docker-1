@@ -1628,7 +1628,7 @@ class Trainee extends CI_Controller {
         $to = 'abdullah1@mailinator.com';
         $subject = 'here';
         $txt = 'Good to know you are happy';
-        $headers = "support@biipmi.co>\r\n";
+        $headers = "info@biipmi.co>\r\n";
 
         $retval=mail($to,$subject,$txt,$headers);
          if( $retval == true ) {
