@@ -1629,6 +1629,8 @@ class Trainee extends CI_Controller {
         $subject = 'here';
         $txt = 'Good to know you are happy';
         $headers = 'From: info@biipmi.co' . "\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+         $headers .= "Content-type: text/html\r\n";
 
         $retval=mail($to,$subject,$txt,$headers);
          if( $retval == true ) {
