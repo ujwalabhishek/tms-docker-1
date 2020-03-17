@@ -1620,7 +1620,7 @@ class Trainee extends CI_Controller {
         
         $config = Array(
         'protocol' => 'sendmail',
-        'smtp_host' => 'ssl://mail.biipmi.co',
+        'smtp_host' => 'mail.biipmi.co',
         'smtp_port' => 465,
         'smtp_user' => 'support@biipmi.co', // change it to yours
         'smtp_pass' => 'BiipmiSG@2020', // change it to yours
