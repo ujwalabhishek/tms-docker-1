@@ -49,6 +49,7 @@ $tms_route['RPTS']['ops'] = array(
     'WDA' => 'wda',  
     'TRAQOM' => 'traqom_report',
     'MENRLCT'=>'monthly_enrollment_count',
+     'SCNRPT' => 'search_company_name',
     'CRTD'=>'certificate_distribution'
     );
 //------------------------ Settings mapping -------------------------------------

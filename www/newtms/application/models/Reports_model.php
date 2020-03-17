@@ -3437,6 +3437,29 @@ SELECT  {$calc_rows} c.crse_name,
         return $result;
     }
     
-    
+     ///added by shubhranshu to fetch the compoay name by invoice id
+    public function fetch_company_name_by_invoice_id($invoice_id){
+        $this->db->select('cm.company_name');
+        $this->db->from('enrol_invoice ei');
+        $this->db->join('company_master cm', 'cm.company_id = ei.company_id');
+        //$this->db->where('tenant_id', $tenant_id);
+        $this->db->where('ei.invoice_id', $invoice_id);
+        $current= $this->db->get()->row();
+        
+        $this->db->select('cm.company_name');
+        $this->db->from('enrol_invoice_audittrail ei');
+        $this->db->join('company_master cm', 'cm.company_id = ei.company_id');
+        //$this->db->where('tenant_id', $tenant_id);
+        $this->db->where('ei.invoice_id', $invoice_id);
+        $old= $this->db->get()->row();
+        
+        $comp = array(
+            'current' => $current,
+            'old' => $old
+        );
+        
+        return $comp;
+        
+    }
 
 }
