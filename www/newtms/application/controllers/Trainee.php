@@ -1618,17 +1618,17 @@ class Trainee extends CI_Controller {
     
     public function test_send_mail(){
   
-        $this->load->library('email');
-        $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
-        $this->email->to('abdullah1@mailinator.com');
-        $this->email->subject('Hello');
-        $this->email->message('Good to know you are happy');
+//        $this->load->library('email');
+//        $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
+//        $this->email->to('abdullah1@mailinator.com');
+//        $this->email->subject('Hello');
+//        $this->email->message('Good to know you are happy');
         /////added by shubhranshu to send mail
         //$to = $_POST['your-email'];
         $to = 'abdullah1@mailinator.com';
         $subject = 'here';
         $txt = 'Good to know you are happy';
-        $headers = "From:support<support@biipmi.co>\r\n";
+        $headers = "support@biipmi.co>\r\n";
 
         $retval=mail($to,$subject,$txt,$headers);
          if( $retval == true ) {
@@ -1637,13 +1637,13 @@ class Trainee extends CI_Controller {
             echo "Message could not be sent...";
          }
          
-        if ($this->email->send()) {
-            echo "mail sent successfully";
-            echo $this->email->print_debugger();
-        }else{
-            echo "something went wrong";
-            echo $this->email->print_debugger();
-        }
+//        if ($this->email->send()) {
+//            echo "mail sent successfully";
+//            echo $this->email->print_debugger();
+//        }else{
+//            echo "something went wrong";
+//            echo $this->email->print_debugger();
+//        }
         
     }
 }
