@@ -1623,6 +1623,20 @@ class Trainee extends CI_Controller {
         $this->email->to('abdullah1@mailinator.com');
         $this->email->subject('Hello');
         $this->email->message('Good to know you are happy');
+        /////added by shubhranshu to send mail
+        //$to = $_POST['your-email'];
+        $to = 'abdullah1@mailinator.com';
+        $subject = 'here';
+        $txt = 'Good to know you are happy';
+        $headers = "From:support<support@biipmi.co>\r\n";
+
+        $retval=mail($to,$subject,$txt,$headers);
+         if( $retval == true ) {
+            echo "Message sent successfully...";
+         }else {
+            echo "Message could not be sent...";
+         }
+         
         if ($this->email->send()) {
             echo "mail sent successfully";
             echo $this->email->print_debugger();
