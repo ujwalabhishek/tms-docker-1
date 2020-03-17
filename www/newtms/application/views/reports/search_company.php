@@ -57,6 +57,9 @@
     color: #696666;
     padding-top: 10px;display:none;'>Company Name</div>
          <div class='comp_block'></div>
+          <div class='comp_status' style='font-size: 15px;
+    color: grey;
+    padding-top: 10px;display:none;'></div>
      </div>
 </div>
 <script>
@@ -77,6 +80,8 @@ $(document).ready(function() {
                 $(".comp_block").slideUp("slow"); 
                 $(".comp_head").slideUp("slow");
                 $('.comp_block').html('');
+                $(".comp_status").html();
+                $(".comp_status").slideUp("slow");
                 $('.comp_search_button1').attr('disabled', 'disabled').html('Please Wait..');
                 $.ajax({
                 url: 'tms_report_search_company_name',
@@ -88,6 +93,7 @@ $(document).ready(function() {
                     success: function(data) {
                         $('.comp_block').html(data.company_name);
                         $(".comp_block").slideDown("slow");
+                        $(".comp_status").slideDown("slow");
                         $(".comp_head").slideDown("slow");
                         $('.comp_search_button1').removeAttr('disabled').html('<span class="glyphicon glyphicon-search"></span> Search');
                     }
