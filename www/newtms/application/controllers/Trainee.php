@@ -1619,7 +1619,7 @@ class Trainee extends CI_Controller {
     public function test_send_mail(){
         
         $config = Array(
-        'protocol' => 'smtp',
+        'protocol' => 'sendmail',
         'smtp_host' => 'ssl://mail.biipmi.co',
         'smtp_port' => 465,
         'smtp_user' => 'support@biipmi.co', // change it to yours
