@@ -95,6 +95,7 @@ $(document).ready(function() {
                         $(".comp_block").slideDown("slow");
                         $(".comp_status").slideDown("slow");
                         $(".comp_head").slideDown("slow");
+                        $(".comp_status").html(data.status);
                         $('.comp_search_button1').removeAttr('disabled').html('<span class="glyphicon glyphicon-search"></span> Search');
                     }
                 });
