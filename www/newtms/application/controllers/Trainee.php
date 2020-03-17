@@ -1618,38 +1618,13 @@ class Trainee extends CI_Controller {
     
     public function test_send_mail(){
         
-        $config = Array(
-        'protocol' => 'sendmail',
-        'smtp_host' => 'mail.biipmi.co',
-        'smtp_port' => 465,
-        'smtp_user' => 'support@biipmi.co', // change it to yours
-        'smtp_pass' => 'BiipmiSG@2020', // change it to yours
-        'mailtype' => 'html',
-        'charset' => 'iso-8859-1',
-        'wordwrap' => TRUE
-      );
-
-              $message = '';
-              $this->load->library('email', $config);
-            $this->email->set_newline("\r\n");
-            $this->email->from('support@biipmi.co'); // change it to yours
-            $this->email->to('abdullah1@mailinator.com');// change it to yours
-            $this->email->subject('Resume from JobsBuddy for your Job posting');
-            $this->email->message($message);
-            if($this->email->send())
-           {
-            echo 'Email sent.';
-           }
-           else
-          {
-           show_error($this->email->print_debugger());
-          }
+        
   
-//        $this->load->library('email');
-//        $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
-//        $this->email->to('abdullah1@mailinator.com');
-//        $this->email->subject('Hello');
-//        $this->email->message('Good to know you are happy');
+        $this->load->library('email');
+        $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
+        $this->email->to('abdullah1@mailinator.com');
+        $this->email->subject('Hello');
+        $this->email->message('Good to know you are happy');
         /////added by shubhranshu to send mail
         //$to = $_POST['your-email'];
 
@@ -1667,13 +1642,13 @@ class Trainee extends CI_Controller {
 //            echo "Message could not be sent...";
 //         }
          
-//        if ($this->email->send()) {
-//            echo "mail sent successfully";
-//            echo $this->email->print_debugger();
-//        }else{
-//            echo "something went wrong";
-//            echo $this->email->print_debugger();
-//        }
+        if ($this->email->send()) {
+            echo "mail sent successfully";
+            echo $this->email->print_debugger();
+        }else{
+            echo "something went wrong";
+            echo $this->email->print_debugger();
+        }
         
     }
 }
