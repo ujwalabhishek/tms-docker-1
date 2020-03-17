@@ -1625,6 +1625,8 @@ class Trainee extends CI_Controller {
 //        $this->email->message('Good to know you are happy');
         /////added by shubhranshu to send mail
         //$to = $_POST['your-email'];
+        error_reporting(E_ALL); 
+ini_set("display_errors", 1);
         $to = 'abdullah1@mailinator.com';
         $subject = 'here';
         $txt = 'Good to know you are happy';
