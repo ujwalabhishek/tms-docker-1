@@ -30,7 +30,7 @@ $config['protocol'] = 'smtp';
 $config['smtp_host'] = 'mail.biipmi.co';
 $config['smtp_port'] = '26';
 $config['smtp_user'] = 'support@biipmi.co';
-$config['smtp_pass'] = 'BiipmiSG@20201';
+$config['smtp_pass'] = 'BiipmiSG@2020';
 
 $config['mailtype'] = 'html';
 $config['charset'] = 'utf-8';
