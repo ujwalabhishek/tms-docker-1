@@ -1617,6 +1617,33 @@ class Trainee extends CI_Controller {
     }
     
     public function test_send_mail(){
+        
+        $config = Array(
+        'protocol' => 'smtp',
+        'smtp_host' => 'ssl://mail.biipmi.co',
+        'smtp_port' => 465,
+        'smtp_user' => 'support@biipmi.co', // change it to yours
+        'smtp_pass' => 'BiipmiSG@2020', // change it to yours
+        'mailtype' => 'html',
+        'charset' => 'iso-8859-1',
+        'wordwrap' => TRUE
+      );
+
+              $message = '';
+              $this->load->library('email', $config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('support@biipmi.co'); // change it to yours
+            $this->email->to('abdullah1@mailinator.com');// change it to yours
+            $this->email->subject('Resume from JobsBuddy for your Job posting');
+            $this->email->message($message);
+            if($this->email->send())
+           {
+            echo 'Email sent.';
+           }
+           else
+          {
+           show_error($this->email->print_debugger());
+          }
   
 //        $this->load->library('email');
 //        $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
@@ -1625,21 +1652,20 @@ class Trainee extends CI_Controller {
 //        $this->email->message('Good to know you are happy');
         /////added by shubhranshu to send mail
         //$to = $_POST['your-email'];
-        error_reporting(E_ALL); 
-ini_set("display_errors", 1);
-        $to = 'abdullah1@mailinator.com';
-        $subject = 'here';
-        $txt = 'Good to know you are happy';
-        $headers = 'From: info@biipmi.co' . "\r\n";
-        $headers .= "MIME-Version: 1.0\r\n";
-         $headers .= "Content-type: text/html\r\n";
 
-        $retval=mail($to,$subject,$txt,$headers);
-         if( $retval == true ) {
-            echo "Message sent successfully...";
-         }else {
-            echo "Message could not be sent...";
-         }
+//        $to = 'abdullah1@mailinator.com';
+//        $subject = 'here';
+//        $txt = 'Good to know you are happy';
+//        $headers = 'From: info@biipmi.co' . "\r\n";
+//        $headers .= "MIME-Version: 1.0\r\n";
+//         $headers .= "Content-type: text/html\r\n";
+//
+//        $retval=mail($to,$subject,$txt,$headers);
+//         if( $retval == true ) {
+//            echo "Message sent successfully...";
+//         }else {
+//            echo "Message could not be sent...";
+//         }
          
 //        if ($this->email->send()) {
 //            echo "mail sent successfully";
