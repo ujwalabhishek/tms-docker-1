@@ -1624,12 +1624,11 @@ class Trainee extends CI_Controller {
         $this->email->subject('Hello');
         $this->email->message('Good to know you are happy');
         if ($this->email->send()) {
-            echo "mail sent successfully";
-        
+            echo $this->email->print_debugger();
         }else{
             echo "something went wrong";
         }
-        echo $this->email->print_debugger();
+        
     }
 }
 
