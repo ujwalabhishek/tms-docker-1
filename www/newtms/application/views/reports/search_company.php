@@ -1,5 +1,20 @@
 
-
+<style>
+    .comp_block{
+        text-align: center;
+        background: #c6e6f7;
+        height: 119px;
+        width: 525px;
+        font-weight: bold;
+        margin: auto;
+        margin-top: 5px;
+        color: #1b2dad;
+        font-size: 20px;
+        padding: 34px;
+        border-radius: 5px;
+        display:none;
+    }
+</style>
 <div class="col-md-10">
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/internal_user.png"/>SEARCH COMPANY NAME BY INVOICE ID</h2>
     <h2 class="sub_panel_heading_style"><img src="<?php echo $baseurl; ?>/assets/images/education.png"> <a href='#' id='collapse_datas'> Search Company Name :</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='comp_name'></span></h2> 
