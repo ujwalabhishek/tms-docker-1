@@ -3257,25 +3257,40 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
                         ->where('parameter_id', $row->tax_code_type)
                         ->get()->row(0);
         $tax_code_type = $data->code_type;
-        if($tax_code_type == 'NRIC')
-        {
+        //author: added by shubhranshu as per client requirement on 11/03/2020
+        if(TENANT_ID == 'T02'){
+            if($tax_code_type == 'NRIC')
+            {
             ///author: added by shubhranshu as per client requirement on 11/03/2020
             //Singapore PR
-            if($row->nationality == 'NS'){
-                $tax_code_type='Singapore Blue Identification Card';
-            }else if($row->nationality == 'SG'){//Singapore Citizen
-                $tax_code_type='Singapore Pink Identification Card';
-            }else{
+                if($row->nationality == 'NS'){
+                    $tax_code_type='Singapore Blue Identification Card';
+                }else if($row->nationality == 'SG'){//Singapore Citizen
+                    $tax_code_type='Singapore Pink Identification Card';
+                }else{
+                    $tax_code_type='Others';
+                }
+
+            }else if($tax_code_type == 'FIN'){
+                //$tax_code_type='SO';
+               $tax_code_type= 'FIN/Work Permit/SAF 11B';
+            }
+            else{
                 $tax_code_type='Others';
             }
+        }else{
+            if($tax_code_type == 'NRIC')
+            {
+                $tax_code_type='SP';
 
-        }else if($tax_code_type == 'FIN'){
-            //$tax_code_type='SO';
-           $tax_code_type= 'FIN/Work Permit/SAF 11B';
+            }else if($tax_code_type == 'FIN'){
+                $tax_code_type='SO';
+            }
+            else{
+                 $tax_code_type='OT';
+            }
         }
-        else{
-            $tax_code_type='Others';
-        }
+        
         /* skm code for new style email which is the combination of taxocde and class name intials st */
         $pattern = "/[_,-]/";
         $string = $row->class_name;
