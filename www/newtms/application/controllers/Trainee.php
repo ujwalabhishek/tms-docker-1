@@ -1651,5 +1651,25 @@ class Trainee extends CI_Controller {
         }
         
     }
+    
+    function send_with_mail()
+    {    
+        $headers = 'From: info@biipmi.co' . "\r\n";
+
+        if ($this->safe_mode == TRUE)
+        {
+            if ( ! mail('abdullah1@mailinator.com', 'test', 'Heelo How are you', $headers))
+                return false;
+            else
+                return true;        
+        }
+        else
+        {
+             if ( ! mail('abdullah1@mailinator.com', 'test1', 'Heelo How are you', $headers))
+                return false;
+            else
+                return true;
+        }
+    }
 }
 
