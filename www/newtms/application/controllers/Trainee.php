@@ -1622,25 +1622,9 @@ class Trainee extends CI_Controller {
         $this->load->config('email');
         $this->load->library('email');
         $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
-        $this->email->to('shubhranshu2010@gmail.com');
+        $this->email->to('abdullah1@mailinator.com');
         $this->email->subject('Hello');
         $this->email->message('Good to know you are happy');
-        /////added by shubhranshu to send mail
-        //$to = $_POST['your-email'];
-
-//        $to = 'abdullah1@mailinator.com';
-//        $subject = 'here';
-//        $txt = 'Good to know you are happy';
-//        $headers = 'From: info@biipmi.co' . "\r\n";
-//        $headers .= "MIME-Version: 1.0\r\n";
-//         $headers .= "Content-type: text/html\r\n";
-//
-//        $retval=mail($to,$subject,$txt,$headers);
-//         if( $retval == true ) {
-//            echo "Message sent successfully...";
-//         }else {
-//            echo "Message could not be sent...";
-//         }
          
         if ($this->email->send()) {
             echo "mail sent successfully";
@@ -1652,24 +1636,5 @@ class Trainee extends CI_Controller {
         
     }
     
-    function send_with_mail()
-    {    
-        $headers = 'From: info@biipmi.co' . "\r\n";
-
-        if ($this->safe_mode != TRUE)
-        {
-            if ( ! mail('abdullah1@mailinator.com', 'test', 'Heelo How are you', $headers))
-                return false;
-            else
-                return true;        
-        }
-        else
-        {
-             if ( ! mail('abdullah1@mailinator.com', 'test1', 'Heelo How are you', $headers))
-                return false;
-            else
-                return true;
-        }
-    }
 }
 
