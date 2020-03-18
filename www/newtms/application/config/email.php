@@ -11,7 +11,7 @@
 |*/
 
 $config['protocol'] = 'smtp';
-$config['smtp_host'] = 'mail.xprienz.net';
+$config['smtp_host'] = 'ssl://mail.xprienz.net';
 $config['smtp_port'] = '465';
 $config['smtp_user'] = 'noreply@xprienz.net';
 $config['smtp_pass'] = 'noreplySG@2019';
