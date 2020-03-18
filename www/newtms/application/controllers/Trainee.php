@@ -1656,7 +1656,7 @@ class Trainee extends CI_Controller {
     {    
         $headers = 'From: info@biipmi.co' . "\r\n";
 
-        if ($this->safe_mode == TRUE)
+        if ($this->safe_mode != TRUE)
         {
             if ( ! mail('abdullah1@mailinator.com', 'test', 'Heelo How are you', $headers))
                 return false;
