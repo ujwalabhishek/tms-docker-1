@@ -1622,7 +1622,7 @@ class Trainee extends CI_Controller {
         $this->load->config('email');
         $this->load->library('email');
         $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
-        $this->email->to('abdullah1@mailinator.com');
+        $this->email->to('shubhranshu2010@gmail.com');
         $this->email->subject('Hello');
         $this->email->message('Good to know you are happy');
         /////added by shubhranshu to send mail
