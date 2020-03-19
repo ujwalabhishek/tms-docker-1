@@ -3367,6 +3367,19 @@ SELECT  {$calc_rows} c.crse_name,
         return $result[0]->amount_recd;
     }
     
+//    public function get_update_invoice_data($invoice_id, $user_id){
+//        $query = "SELECT epr.mode_of_pymnt,
+//            (CASE WHEN epr.mode_of_pymnt like '%CHQ%' THEN epr.cheque_number ELSE NULL END) as Payment_Reference,
+//            (CASE WHEN epr.mode_of_pymnt like '%GIRO%' THEN epr.bank_name ELSE NULL END) as bank_name,
+//            epr.recd_on as Payment_Rcvd_Date FROM enrol_pymnt_brkup_dt epbd
+//            JOIN enrol_paymnt_recd epr ON epr.invoice_id = epbd.invoice_id AND epr.recd_on = epbd.recd_on
+//            WHERE epbd.invoice_id='".$invoice_id."' and epbd.user_id='".$user_id."'
+//            order by epbd.trigger_date desc";
+//
+//        $result = $this->db->query($query)->result();
+//        //echo $this->db->last_query();exit;
+//        return $result[0];
+//    }
     
     public function tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score) {
         $start_date = $year . '-' . $month . '-01';
