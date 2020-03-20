@@ -2948,11 +2948,11 @@ function generate_soa_report_xls($tabledata, $metadata) {
         $manager_text = rtrim($manager_text, ', ');
         $classroom_trainer = explode(',', $row->classroom_trainer);
         $trainer = $CI->reportsmodel->get_user_taxcode($classroom_trainer);
-        print_r($trainer);exit;
+        
         $trainer_text = '';
         foreach ($trainer as $train) {
             $trainer_text .= $train->tax_code . ', ';
-            break;
+            
         }
         $trainer_text = rtrim($trainer_text, ', ');
         $classroom_assessor = explode(',', $assment_det->assessor_id);
