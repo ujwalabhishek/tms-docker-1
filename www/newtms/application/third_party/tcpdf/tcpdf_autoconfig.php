@@ -165,7 +165,7 @@ if (!defined('PDF_MARGIN_FOOTER')) {
 }
 
 if (!defined('PDF_MARGIN_TOP')) {
-	define ('PDF_MARGIN_TOP', 25);
+	define ('PDF_MARGIN_TOP', 26);
 }
 
 if (!defined('PDF_MARGIN_BOTTOM')) {
