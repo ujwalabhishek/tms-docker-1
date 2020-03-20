@@ -2920,7 +2920,7 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
         $trainer_text = '';
         foreach ($trainer as $train) {
             $trainer_text .= $train->tax_code . ', ';
-            break;
+         
         }
         $trainer_text = rtrim($trainer_text, ', ');
         $classroom_assessor = explode(',', $assment_det->assessor_id);
