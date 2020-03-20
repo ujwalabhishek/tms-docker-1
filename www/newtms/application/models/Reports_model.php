@@ -2560,8 +2560,8 @@ SELECT  {$calc_rows} c.crse_name,
                 $this->db->where('date(cc.class_end_datetime) <=', $to_label);
             }
         }
-
-        return $this->db->get()->result();
+$this->db->get()->result();echo $this->db->Last_query();exit;
+        //return $this->db->get()->result();
     }
 
     /**
