@@ -3246,7 +3246,7 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
                         ->get()->row(0);
         $tax_code_type = $data->code_type;
          //author: added by shubhranshu as per client requirement on 11/03/2020
-        if(TENANT_ID == 'T02'){
+        if(TENANT_ID == 'T02' || TENANT_ID == 'T12'){
             if($tax_code_type == 'NRIC')
             {
             ///author: added by shubhranshu as per client requirement on 11/03/2020
