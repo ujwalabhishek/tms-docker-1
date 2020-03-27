@@ -10,7 +10,7 @@
 |	http://codeigniter.com/user_guide/libraries/email.html
 |*/
 
-$config['protocol'] = 'smtp';
+$config['protocol'] = 'sendmail';
 //$config['smtp_host'] = 'ssl://mail.xprienz.net';
 //$config['smtp_port'] = '465';
 //$config['smtp_user'] = 'noreply@xprienz.net';
