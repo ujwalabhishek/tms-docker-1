@@ -515,6 +515,8 @@ class Manage_Tenant_Model extends CI_Model {
 //        $this->db->where('tenant_id <>', 'T01');
         if (!empty($tenant_id)) {
             $this->db->where('nrl.tenant_id', $tenant_id);
+        }else{
+            $this->db->where('nrl.tenant_id', TENANT_ID);
         }
         if (!empty($offset)) {
             if ($limit == $offset) {
