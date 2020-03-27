@@ -523,8 +523,8 @@ class Manage_Tenant_Model extends CI_Model {
                 $limitvalue = $offset - $limit;
                 $this->db->limit($limit, $limitvalue);
             }
-        }//$this->db->get();
-        //echo $this->db->last_query();exit;
+        }$this->db->get();
+        echo $this->db->last_query();exit;
         return $this->db->get();
     }
     ///added by shubhranshu for blocked nric for company enrol
