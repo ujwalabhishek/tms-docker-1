@@ -507,7 +507,7 @@ class Manage_Tenant_Model extends CI_Model {
     public function list_blocked_nric_logs($tenant_id = 0, $limit = NULL, $offset = NULL, $sort_by = 'id', $sort_order = 'DESC') {
         $this->db->select('nrl.operation,tup.first_name,tup.last_name,nrl.id,nrl.tenant_id,nrl.enrolled_by_user_id,nrl.role_id,nrl.enrolled_by_user_name,nrl.nric_taxcode,nrl.trigger_datetime');
         $this->db->from('nric_restriction_logs nrl');
-        $this->db->join('tms_users tu','tu.tax_code=nrl.nric_taxcode', 'left');
+        $this->db->join('tms_users tu','tu.tax_code=nrl.nric_taxcode AND tu.tenant_id=nrl.tenant_id', 'left');
         $this->db->join('tms_users_pers tup','tup.user_id=tu.user_id','left');
         $this->db->order_by($sort_by, $sort_order);
         
@@ -515,6 +515,8 @@ class Manage_Tenant_Model extends CI_Model {
 //        $this->db->where('tenant_id <>', 'T01');
         if (!empty($tenant_id)) {
             $this->db->where('nrl.tenant_id', $tenant_id);
+        }else{
+            $this->db->where('nrl.tenant_id', TENANT_ID);
         }
         if (!empty($offset)) {
             if ($limit == $offset) {
