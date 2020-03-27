@@ -505,7 +505,7 @@ class Manage_Tenant_Model extends CI_Model {
     
      ///added by shubhranshu for blocked nric logs
     public function list_blocked_nric_logs($tenant_id = 0, $limit = NULL, $offset = NULL, $sort_by = 'id', $sort_order = 'DESC') {
-        $this->db->select('nrl.operation,tup.first_name,tup.last_name,nrl.id,nrl.tenant_id,nrl.enrolled_by_user_id,nrl.role_id,nrl.enrolled_by_user_name,nrl.nric_taxcode,nrl.trigger_datetime');
+        $this->db->select('nrl.operation,tup.first_name,tup.last_name,nrl.id,tu.tenant_id,nrl.enrolled_by_user_id,nrl.role_id,nrl.enrolled_by_user_name,nrl.nric_taxcode,nrl.trigger_datetime');
         $this->db->from('nric_restriction_logs nrl');
         $this->db->join('tms_users tu','tu.tax_code=nrl.nric_taxcode', 'left');
         $this->db->join('tms_users_pers tup','tup.user_id=tu.user_id','left');
