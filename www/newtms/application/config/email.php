@@ -10,7 +10,7 @@
 |	http://codeigniter.com/user_guide/libraries/email.html
 |*/
 
-$config['protocol'] = 'sendmail';
+$config['protocol'] = 'smtp';
 //$config['smtp_host'] = 'ssl://mail.xprienz.net';
 //$config['smtp_port'] = '465';
 //$config['smtp_user'] = 'noreply@xprienz.net';
@@ -27,7 +27,7 @@ $config['protocol'] = 'sendmail';
 //$config['smtp_user'] = 'biipmisg2020@gmail.com';
 //$config['smtp_pass'] = 'biipmisupport@123';
 
-$config['smtp_host'] = 'ssl://server01.thatsithosting.com';
+$config['smtp_host'] = 'ssl://smtp.server01.thatsithosting.com';
 $config['smtp_port'] = '465';
 $config['smtp_user'] = 'support@biipmi.co';
 $config['smtp_pass'] = 'BiipmiSG@2020';
