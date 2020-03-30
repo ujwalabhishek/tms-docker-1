@@ -35,7 +35,7 @@ $config['smtp_pass'] = 'BiipmiSG@2020';
 $config['mailpath'] = '/usr/sbin/sendmail';
 $config['charset'] = 'iso-8859-1';
 $config['wordwrap'] = TRUE;
-$mail_config['smtp_crypto'] = 'tls';
+$config['smtp_crypto'] = 'tls';
 
 $config['mailtype'] = 'html';
 //$config['charset'] = 'utf-8';
