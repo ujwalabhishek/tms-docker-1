@@ -33,7 +33,7 @@ $config['smtp_user'] = 'support@biipmi.co';
 $config['smtp_pass'] = 'BiipmiSG@2020';
 
 $config['mailtype'] = 'html';
-$config['charset'] = 'utf-8';
+$config['charset'] = 'iso-8859-1';
 $config['newline'] = "\r\n";
 $config['smtp_timeout'] = 30;
 
