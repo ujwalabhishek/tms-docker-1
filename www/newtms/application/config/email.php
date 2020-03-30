@@ -27,8 +27,8 @@ $config['protocol'] = 'mail';
 //$config['smtp_user'] = 'biipmisg2020@gmail.com';
 //$config['smtp_pass'] = 'biipmisupport@123';
 
-$config['smtp_host'] = 'ssl://server01.thatsithosting.com';
-$config['smtp_port'] = '587';
+$config['smtp_host'] = 'server01.thatsithosting.com';
+$config['smtp_port'] = '';
 $config['smtp_user'] = 'support@biipmi.co';
 $config['smtp_pass'] = 'BiipmiSG@2020';
 
