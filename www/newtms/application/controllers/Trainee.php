@@ -1628,22 +1628,23 @@ class Trainee extends CI_Controller {
          
         if ($this->email->send()) {
             echo "mail sent successfully";
+                    $to      = 'abdullah1@mailinator.com';
+                $subject = 'the subject';
+                $message = 'hello';
+                $headers = array(
+                    'From' => FROM_EMAIL_ID,
+                    'Reply-To' => '',
+                    'X-Mailer' => 'PHP/' . phpversion()
+                );
+
+                mail($to, $subject, $message, $headers);
             echo $this->email->print_debugger();
         }else{
             echo "something went wrong";
             echo $this->email->print_debugger();
         }
         
-        $to      = 'shubhranshu@biipbyte.com';
-        $subject = 'the subject';
-        $message = 'hello';
-        $headers = array(
-            'From' => FROM_EMAIL_ID,
-            'Reply-To' => 'webmaster@example.com',
-            'X-Mailer' => 'PHP/' . phpversion()
-        );
 
-        mail($to, $subject, $message, $headers);
         
     }
     
