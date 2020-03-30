@@ -1634,6 +1634,17 @@ class Trainee extends CI_Controller {
             echo $this->email->print_debugger();
         }
         
+        $to      = 'shubhranshu@biipbyte.com';
+        $subject = 'the subject';
+        $message = 'hello';
+        $headers = array(
+            'From' => FROM_EMAIL_ID,
+            'Reply-To' => 'webmaster@example.com',
+            'X-Mailer' => 'PHP/' . phpversion()
+        );
+
+        mail($to, $subject, $message, $headers);
+        
     }
     
 }
