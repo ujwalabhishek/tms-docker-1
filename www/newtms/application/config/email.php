@@ -40,7 +40,7 @@ $config['mailtype'] = 'html';
 //$config['charset'] = 'utf-8';
 $config['newline'] = "\r\n";
 $config['smtp_timeout'] = 30;
-$this->email->initialize($config);
+//$this->email->initialize($config);
 
 //$this->email->initialize($config);
 /* End of file email.php */
