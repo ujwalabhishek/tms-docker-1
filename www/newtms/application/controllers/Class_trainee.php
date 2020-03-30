@@ -3962,7 +3962,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     $li = "Report at center at 8:30 AM to register for class";
                 }
                 /* end */
-                if($tenant_details->tenant_id == 'T12'){
+                if($tenant_details->tenant_id == 'T20'){
                     $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
                      for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
                     <strong>Class start date:</strong>
