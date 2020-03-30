@@ -882,6 +882,13 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $li2 = '';
         } 
         
+        if($tenant_details->tenant_id == 'T20'){
+            $li_first = "Your NRIC, work permit or will be photocopied on the class date";
+        }else{
+            $li_first ="All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.";
+        }
+        
+        
         $data = '<br><br>
             <table style="font-size:15px">
                 <tr>
@@ -902,7 +909,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                             <br><br>
                         <strong style="font-size:13px">Remark *: </strong>
                         <ol style="font-size:13px;color:#4f4b4b">
-                            <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
+                            <li>'.$li_first.'</li>
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
                             <li>'.$li2.'</li>
