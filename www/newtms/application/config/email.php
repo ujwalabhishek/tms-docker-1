@@ -27,7 +27,7 @@ $config['protocol'] = 'sendmail';
 //$config['smtp_user'] = 'biipmisg2020@gmail.com';
 //$config['smtp_pass'] = 'biipmisupport@123';
 
-$config['smtp_host'] = '111.221.46.150';
+$config['smtp_host'] = 'server01.thatsithosting.com';
 $config['smtp_port'] = '465';
 $config['smtp_user'] = 'support@biipmi.co';
 $config['smtp_pass'] = 'BiipmiSG@2020';
