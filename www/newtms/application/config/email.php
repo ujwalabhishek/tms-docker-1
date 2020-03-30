@@ -36,6 +36,7 @@ $config['mailpath'] = '/usr/sbin/sendmail';
 $config['charset'] = 'iso-8859-1';
 $config['wordwrap'] = TRUE;
 $config['smtp_crypto'] = 'tls';
+$config['priority'] = 1;
 
 $config['mailtype'] = 'html';
 //$config['charset'] = 'utf-8';
