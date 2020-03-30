@@ -10,7 +10,7 @@
 |	http://codeigniter.com/user_guide/libraries/email.html
 |*/
 
-$config['protocol'] = 'sendmail';
+$config['protocol'] = 'mail';
 //$config['smtp_host'] = 'ssl://mail.xprienz.net';
 //$config['smtp_port'] = '465';
 //$config['smtp_user'] = 'noreply@xprienz.net';
@@ -32,11 +32,15 @@ $config['smtp_port'] = '465';
 $config['smtp_user'] = 'support@biipmi.co';
 $config['smtp_pass'] = 'BiipmiSG@2020';
 
+$config['mailpath'] = '/usr/sbin/sendmail';
+$config['charset'] = 'iso-8859-1';
+$config['wordwrap'] = TRUE;
+
 $config['mailtype'] = 'html';
-$config['charset'] = 'utf-8';
+//$config['charset'] = 'utf-8';
 $config['newline'] = "\r\n";
 $config['smtp_timeout'] = 30;
-
+$this->email->initialize($config);
 
 //$this->email->initialize($config);
 /* End of file email.php */
