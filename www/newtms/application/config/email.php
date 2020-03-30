@@ -27,7 +27,7 @@ $config['protocol'] = 'sendmail';
 //$config['smtp_user'] = 'biipmisg2020@gmail.com';
 //$config['smtp_pass'] = 'biipmisupport@123';
 
-$config['smtp_host'] = 'server01.thatsithosting.com';
+$config['smtp_host'] = 'ssl://server01.thatsithosting.com';
 $config['smtp_port'] = '465';
 $config['smtp_user'] = 'support@biipmi.co';
 $config['smtp_pass'] = 'BiipmiSG@2020';
@@ -35,7 +35,7 @@ $config['smtp_pass'] = 'BiipmiSG@2020';
 $config['mailpath'] = '/usr/sbin/sendmail';
 $config['charset'] = 'iso-8859-1';
 $config['wordwrap'] = TRUE;
-$config['smtp_crypto'] = 'tls';
+$config['smtp_crypto'] = 'ssl';
 $config['priority'] = 1;
 
 $config['mailtype'] = 'html';
