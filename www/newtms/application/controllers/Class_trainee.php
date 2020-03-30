@@ -877,7 +877,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         /* end */
         if($tenant_details->tenant_id == 'T02')
         {
-            $li2 = "In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.";
+            $li2 = "<li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>";
         } else {
             $li2 = '';
         } 
@@ -912,7 +912,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                             <li>'.$li_first.'</li>
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
-                            <li>'.$li2.'</li>
+                            '.$li2.'
                         </ol>
                             
                     </td>
