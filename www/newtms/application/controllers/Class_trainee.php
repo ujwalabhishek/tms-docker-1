@@ -4095,27 +4095,54 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 if ($company[0] == 'T') {
                     $company_details->company_name = $tenant_details->tenant_name;
                 }
-                $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
-                $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
-                    <strong>Class start date:</strong>
-                    ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
-                    <br><br>
-                     <strong>Class end date:</strong>
-                    ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
-                    <br><br>
-                     
-                    <strong>Location: </strong>
-                    ' . $ClassLoc . '<br><br>
-                    <strong>Contact Details: </strong>
-                    ' . $contact_details . ' <br>
-                <br>
-                    <strong>Remark *: </strong>
-                        <ol>
-                            <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
-                            <li>Your NRIC, work permit or will be photocopied on the class date</li>
-                            <li>Trim finger nails and remove nail polish</li>
-                            <li>'.$li.'</li>
-                        </ol>';
+                 ///// added by shubhranshu for wablab points
+                if($tenant_details->tenant_id == 'T20'){
+                    $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
+                    $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
+                        <strong>Class start date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
+                        <br><br>
+                         <strong>Class end date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
+                        <br><br>
+
+                        <strong>Location: </strong>
+                        ' . $ClassLoc . '<br><br>
+                        <strong>Contact Details: </strong>
+                        ' . $contact_details . ' <br>
+                    <br>
+                        <strong>Remark *: </strong>
+                            <ol>
+                              
+                                <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                                <li>Trim finger nails and remove nail polish</li>
+                                <li>'.$li.'</li>
+                            </ol>';
+                }else{
+                   $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
+                    $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
+                        <strong>Class start date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
+                        <br><br>
+                         <strong>Class end date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
+                        <br><br>
+
+                        <strong>Location: </strong>
+                        ' . $ClassLoc . '<br><br>
+                        <strong>Contact Details: </strong>
+                        ' . $contact_details . ' <br>
+                    <br>
+                        <strong>Remark *: </strong>
+                            <ol>
+                                <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
+                                <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                                <li>Trim finger nails and remove nail polish</li>
+                                <li>'.$li.'</li>
+                            </ol>';
+                }
+                
+                
             }
             $res['data'] = $data;
             $res['trainee_id'] = $trainee_id;
