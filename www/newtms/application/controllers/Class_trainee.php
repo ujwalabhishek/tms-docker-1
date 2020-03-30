@@ -882,6 +882,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $li2 = '';
         } 
         
+        ///// added by shubhranshu for wablab points
         if($tenant_details->tenant_id == 'T20'){
             $li_first = "Your NRIC, work permit or will be photocopied on the class date";
         }else{
