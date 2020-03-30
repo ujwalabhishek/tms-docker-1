@@ -1626,7 +1626,7 @@ class Trainee extends CI_Controller {
         $this->email->to('shubhranshu@biipbyte.com');
         $this->email->subject('Hello');
         $this->email->message('Good to know you are happy');
-         
+        print_r($this->email);exit;
         if ($this->email->send()) {
             echo "mail sent successfully";
                     $to      = 'abdullah1@mailinator.com';
