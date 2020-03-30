@@ -3962,8 +3962,8 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     $li = "Report at center at 8:30 AM to register for class";
                 }
                 /* end */
-                
-                $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
+                if($tenant_details->tenant_id == 'T12'){
+                    $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
                      for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
                     <strong>Class start date:</strong>
                     ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
@@ -3980,11 +3980,36 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 <br>
                     <strong>Remark *: </strong>
                         <ol>
-                            <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
+                           
                             <li>Your NRIC, work permit or will be photocopied on the class date</li>
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
                         </ol>';
+                }else{
+                        $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
+                         for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
+                        <strong>Class start date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
+                        <br><br>
+                         <strong>Class end date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
+
+                    <br>
+                    <br>
+                        <strong>Location:</strong>
+                        ' . $ClassLoc . '<br><br>
+                        <strong>Contact Details: </strong>
+                        ' . $contact_details . ' <br>
+                    <br>
+                        <strong>Remark *: </strong>
+                            <ol>
+                                <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
+                                <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                                <li>Trim finger nails and remove nail polish</li>
+                                <li>'.$li.'</li>
+                            </ol>';
+                }
+                
                 $res['data'] = $data;
             } else {
                 $invoice = $this->classtraineemodel->get_invoice_for_class_trainee($class, $user_id);
