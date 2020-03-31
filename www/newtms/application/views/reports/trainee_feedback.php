@@ -9,7 +9,7 @@ if (empty($class_id)) {
     $class_id = key($classes);
 }
 
-//echo $tenant_id;exit;
+echo $tenant_id.'ggg';exit;
 ?>
 <script type="text/javascript">
     var SITE_URL = '<?php echo site_url(); ?>';
