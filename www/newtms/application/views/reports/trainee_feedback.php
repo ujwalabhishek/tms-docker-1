@@ -481,7 +481,7 @@ echo form_open("reports/trainee_feedback", $atr);
 echo form_close();
 ?>
 <?php
-if(1){
+if($tenant_id == 'T20'){
 ?>
 <div class="modal1_trainee_feedback" id="ex6">
     <?php
@@ -794,7 +794,7 @@ if(1){
 <?php form_close(); ?>
 </p>
 </div>
-<?php form_close(); ?>
+<?php } form_close(); ?>
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>-->
  
 <script>
