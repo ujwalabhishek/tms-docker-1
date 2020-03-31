@@ -9,7 +9,7 @@ if (empty($class_id)) {
     $class_id = key($classes);
 }
 $tenant_id =  $this->session->userdata('userDetails')->tenant_id;
-echo $tenant_id;exit;
+//echo $tenant_id;exit;
 ?>
 <script type="text/javascript">
     var SITE_URL = '<?php echo site_url(); ?>';
@@ -480,7 +480,7 @@ echo form_open("reports/trainee_feedback", $atr);
 <?php
 echo form_close();
 
-if(){
+if($tenant_id == 'T20'){
 ?>
 <div class="modal1_trainee_feedback" id="ex6">
     <?php
