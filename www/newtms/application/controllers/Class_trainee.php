@@ -784,9 +784,15 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 } else {
                     $li2 = '';
                 } 
+                ///// added by shubhranshu for wablab points
+                if($tenant_details->tenant_id == 'T20'){
+                    $li_first = "<li>Your NRIC, work permit or will be photocopied on the class date</li>";
+                }else{
+                    $li_first ="<li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>";
+                }
               $message3 = '
              <ol style="font-size:13px;color:#4f4b4b">
-                            <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
+                          '.$li_first.'
                             
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>

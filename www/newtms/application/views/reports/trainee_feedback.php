@@ -481,6 +481,7 @@ echo form_open("reports/trainee_feedback", $atr);
 echo form_close();
 ?>
 <?php
+///added by shubhranshu to display the trainee form for wablab
 if($tenant_id == 'T20'){
 ?>
 <div class="modal1_trainee_feedback" id="ex6">
