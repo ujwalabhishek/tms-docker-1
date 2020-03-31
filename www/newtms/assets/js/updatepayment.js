@@ -857,9 +857,7 @@ $(document).ready(function() {
                
                 if($comp=="company")
                 {
-                    if($tenant_id == 'T20'){
-                        ('#sfc_ato_claim_id').hide();
-                    }
+                   
                     $msg="SFC can not be claimed for company.";
                     disp_err('#sfc_claim', $msg);
                     $('#sfcato_div').hide();
@@ -878,6 +876,11 @@ $(document).ready(function() {
                     $('#giro_div1').hide();
                     $('.other_payment').hide();
                     $('.sfc_clm').hide();
+                    if($tenant_id == 'T20'){
+                        $('#sfc_ato_divv').hide();
+                    }else{
+                        $('#sfc_ato_divv').show();
+                    }
                 }
             }
                 

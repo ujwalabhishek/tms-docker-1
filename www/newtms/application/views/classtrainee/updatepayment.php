@@ -4,7 +4,7 @@
     $tenant_id ='<?php echo $this->session->userdata('userDetails')->tenant_id; ?>';
 </script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment.js?v=4"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment.js?v=5"></script>
 <!--<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment_all_tenant.js"></script>-->
 <div class="col-md-10 right-minheight">
     <?php
@@ -606,7 +606,7 @@
                             </td>
                         </tr>
                         <!--added by shubhranshu for client requirement-->
-                        <tr>
+                        <tr id='sfc_ato_divv'>
                             <td class="td_heading">SFC(ATO) Claim ID:<span class="required"></span></td>
                             <td>
                                 <?php
@@ -627,7 +627,9 @@
             </div>
         </div>
         <!-- SFC Ends -->
+        
         <br>
+        
          <!-- other payment for SFC -->
     <div class="other_payment" id="other_payment" style="display:none;">
         <table class="table table-striped ">
