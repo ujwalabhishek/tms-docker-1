@@ -193,8 +193,10 @@
                     if (in_array($data->course_id, $wsq_courses_array) && in_array($tenant_id, $tenant_array)) // xp and xp2
                     { 
                        $linkStr = '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$data->course_id.'/'. $data->class_id . '/' . $data->user_id . '">TCS</a><br/>'; 
+                    }else if($tenant_id == 'T20'){
+                         $linkStr = '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$data->course_id.'/'. $data->class_id . '/' . $data->user_id . '">TCS</a><br/>'; 
                     }
-                    /*skm code end */
+                    /*added by shubhranshu */
                     
                     echo '<tr>
                             <td>' . $data->crse_name . '</td>
