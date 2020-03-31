@@ -858,7 +858,7 @@ $(document).ready(function() {
                 if($comp=="company")
                 {
                     if($tenant_id == 'T20'){
-                        ('#sfc_ato_claim_id$').hide();
+                        ('#sfc_ato_claim_id').hide();
                     }
                     $msg="SFC can not be claimed for company.";
                     disp_err('#sfc_claim', $msg);
