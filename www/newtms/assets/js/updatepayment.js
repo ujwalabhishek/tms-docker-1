@@ -857,14 +857,17 @@ $(document).ready(function() {
                
                 if($comp=="company")
                 {
+                    if($tenant_id == 'T20'){
+                        ('#sfc_ato_claim_id$').hide();
+                    }
                     $msg="SFC can not be claimed for company.";
                     disp_err('#sfc_claim', $msg);
-                $('#sfcato_div').hide();
-                $('#row_dim31').hide();
-                $('#row_dim1').hide();
-                $('#giro_div1').hide();
-                $('.other_payment').hide();
-                 $('.sfc_clm').show();
+                    $('#sfcato_div').hide();
+                    $('#row_dim31').hide();
+                    $('#row_dim1').hide();
+                    $('#giro_div1').hide();
+                    $('.other_payment').hide();
+                     $('.sfc_clm').show();
                 }
                 else
                 {
