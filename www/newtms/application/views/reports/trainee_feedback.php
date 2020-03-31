@@ -8,7 +8,7 @@ $class_id = set_value('class_id');
 if (empty($class_id)) {
     $class_id = key($classes);
 }
-$tenant_id =  $this->session->userDetails->tenant_id;
+$tenant_id =  $this->session->userdata('userDetails')->tenant_id;
 echo $tenant_id;exit;
 ?>
 <script type="text/javascript">
