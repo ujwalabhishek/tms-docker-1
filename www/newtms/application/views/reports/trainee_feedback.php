@@ -479,7 +479,8 @@ echo form_open("reports/trainee_feedback", $atr);
 </div>
 <?php
 echo form_close();
-
+?>
+<?php
 if($tenant_id == 'T20'){
 ?>
 <div class="modal1_trainee_feedback" id="ex6">
