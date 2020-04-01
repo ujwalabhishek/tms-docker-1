@@ -11,6 +11,14 @@
 
 
 class Course_Model extends CI_Model {
+    
+    private $user;
+    
+    public function __construct() {
+        parent::__construct();
+        $this->user = $this->session->userdata('userDetails');
+        
+    }
 
     
     /*
@@ -29,21 +37,21 @@ class Course_Model extends CI_Model {
 
         $this->db->where('c.tenant_id', $tenantId);
 ///added by shubhranshu due to deactivate class are coming on 0/12/2018//
-        //if ($this->data['user']->role_id != 'ADMN') { 
+        //if ($this->user->role_id != 'ADMN') { 
 
             $this->db->where('c.crse_status', 'ACTIVE');
 
         //}/////////////////////////////////////////////////////////////////////
 
-        if ($this->data['user']->role_id == 'SLEXEC' && (string)$classTrainee == 'classTrainee') {
+        if ($this->user->role_id == 'SLEXEC' && (string)$classTrainee == 'classTrainee') {
 
             $this->traineelist_querychange();
 
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR' && (string)$classTrainee == 'discount') {
+        if ($this->user->role_id == 'CRSEMGR' && (string)$classTrainee == 'discount') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
 
         }
 
@@ -54,7 +62,7 @@ class Course_Model extends CI_Model {
 
         $tenant_active_courses = array();
 
-        $logged_in_user_id = $this->data['user']->user_id;
+        $logged_in_user_id = $this->user->user_id;
 
             foreach ($query->result() as $item) {
 
@@ -156,7 +164,7 @@ class Course_Model extends CI_Model {
 
     public function get_course_list_by_tenant($tenant_id, $is_inactive = 0) {
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
             $this->db->select("c.course_id, c.crse_name, c.crse_type, c.class_type, "
 
@@ -170,7 +178,7 @@ class Course_Model extends CI_Model {
 
             $this->db->join('course_class ccl', 'ccl.course_id = c.course_id'
 
-            . ' AND FIND_IN_SET(' . $this->data['user']->user_id . ',ccl.classroom_trainer)');
+            . ' AND FIND_IN_SET(' . $this->user->user_id . ',ccl.classroom_trainer)');
 
             $result = $this->db->get();            
 
@@ -202,7 +210,7 @@ class Course_Model extends CI_Model {
 
                 $this->db->order_by("c.crse_name");
 
-                if ($this->data['user']->role_id == 'SLEXEC') {
+                if ($this->user->role_id == 'SLEXEC') {
 
                     $this->traineelist_querychange();
 
@@ -218,9 +226,9 @@ class Course_Model extends CI_Model {
 
                 $filter_array = array('certificates','attendance','soa_report');
 
-                if ($this->data['user']->role_id == 'CRSEMGR' && in_array($current_page, $filter_array)) {
+                if ($this->user->role_id == 'CRSEMGR' && in_array($current_page, $filter_array)) {
 
-                    $logged_in_user_id = $this->data['user']->user_id;
+                    $logged_in_user_id = $this->user->user_id;
 
                     foreach ($courses as $item) {
 
@@ -288,9 +296,9 @@ class Course_Model extends CI_Model {
 
         $this->db->order_by("pers.first_name");
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('pers.user_id', $this->data['user']->user_id);
+            $this->db->where('pers.user_id', $this->user->user_id);
 
         }
 
@@ -321,7 +329,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
        // $this->db->where_not_in("iur.role_id",$role_id);
         $this->db->order_by("pers.first_name");
         $this->db->group_by('ce.sales_executive_id');
-        if($this->data['user']->role_id=='SLEXEC'){
+        if($this->user->role_id=='SLEXEC'){
             $this->db->where("pers.user_id",$this->data['user_id']->user_id);
         }
         $result =$this->db->get();
@@ -554,7 +562,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
         }
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
             $this->db->where('c.crse_status !=', 'INACTIV');
 
@@ -730,7 +738,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
 
 
-            if ($this->data['user']->role_id == 'COMPACT') {
+            if ($this->user->role_id == 'COMPACT') {
 
                 $this->db->where('c.crse_status !=', 'INACTIV');
 
@@ -962,7 +970,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
 
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
             $this->db->where('c.crse_status !=', 'INACTIV');
 
@@ -970,25 +978,25 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
         $result = $this->db->get()->result_array();
 
-        if ($this->data['user']->role_id == 'ADMN' || $this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') {
 
             return count($result);
 
         }
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
             return count($result);
 
         }
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
             return count($result);
 
         }
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
             return count($result);
 
@@ -1134,9 +1142,9 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
             $this->db->where('course_id', $course_id);
 
-            if ($this->data['user']->role_id == 'SLEXEC') {
+            if ($this->user->role_id == 'SLEXEC') {
 
-                $this->db->where('user_id', $this->data['user']->user_id);
+                $this->db->where('user_id', $this->user->user_id);
 
             }
 
@@ -1252,7 +1260,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
             $this->db->where('c.tenant_id', $tenant_id);
 
-            if ($this->data['user']->role_id == 'COMPACT') {
+            if ($this->user->role_id == 'COMPACT') {
 
                 $this->db->where('c.crse_status !=', 'INACTIV');
 
@@ -1314,9 +1322,9 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
             }
 
-            if ($this->data['user']->role_id == 'CRSEMGR') {
+            if ($this->user->role_id == 'CRSEMGR') {
 
-                $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",crse_manager) !=", 0);
+                $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",crse_manager) !=", 0);
 
             }
 
@@ -1897,15 +1905,15 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
         $this->db->group_by('cc.class_id');
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->like('cc.sales_executive', $this->data['user']->user_id, 'both');
+            $this->db->like('cc.sales_executive', $this->user->user_id, 'both');
 
         }
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",classroom_trainer) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",classroom_trainer) !=", 0);
 
         }
 
@@ -1945,15 +1953,15 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
         $this->db->group_by('cc.class_id');
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->like('cc.sales_executive', $this->data['user']->user_id, 'both');
+            $this->db->like('cc.sales_executive', $this->user->user_id, 'both');
 
         }
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",classroom_trainer) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",classroom_trainer) !=", 0);
 
         }
 
@@ -2485,7 +2493,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
     public function get_class_courses($tenant_id) {
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
             $this->db->select("c.course_id, c.crse_name, c.crse_type, c.class_type, "
 
@@ -2499,7 +2507,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
             $this->db->join('course_class ccl', 'ccl.course_id = c.course_id'
 
-            . ' AND FIND_IN_SET(' . $this->data['user']->user_id . ',ccl.classroom_trainer)');
+            . ' AND FIND_IN_SET(' . $this->user->user_id . ',ccl.classroom_trainer)');
 
             $result = $this->db->get();            
 
@@ -2539,7 +2547,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
                 $this->db->group_by("c.course_id");
 
-                if ($this->data['user']->role_id == 'SLEXEC') {
+                if ($this->user->role_id == 'SLEXEC') {
 
                     $this->traineelist_querychange();
 
@@ -2555,9 +2563,9 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
                 $filter_array = array('certificates','attendance','mark_attendance');
 
-                if ($this->data['user']->role_id == 'CRSEMGR' && in_array($current_page, $filter_array)) {
+                if ($this->user->role_id == 'CRSEMGR' && in_array($current_page, $filter_array)) {
 
-                    $logged_in_user_id = $this->data['user']->user_id;
+                    $logged_in_user_id = $this->user->user_id;
 
                     foreach ($courses as $item) {
 
@@ -2598,7 +2606,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
     public function get_class_courses_all($tenant_id) {
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
             $this->db->select("c.course_id, c.crse_name, c.crse_type, c.class_type, "
 
@@ -2612,7 +2620,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
             $this->db->join('course_class ccl', 'ccl.course_id = c.course_id'
 
-            . ' AND FIND_IN_SET(' . $this->data['user']->user_id . ',ccl.classroom_trainer)');
+            . ' AND FIND_IN_SET(' . $this->user->user_id . ',ccl.classroom_trainer)');
 
             $result = $this->db->get();            
 
@@ -2650,7 +2658,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
                 $this->db->group_by("c.course_id");
 
-                if ($this->data['user']->role_id == 'SLEXEC') {
+                if ($this->user->role_id == 'SLEXEC') {
 
                     $this->traineelist_querychange();
 
@@ -2666,9 +2674,9 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
                 $filter_array = array('certificates','attendance','mark_attendance');
 
-                if ($this->data['user']->role_id == 'CRSEMGR' && in_array($current_page, $filter_array)) {
+                if ($this->user->role_id == 'CRSEMGR' && in_array($current_page, $filter_array)) {
 
-                    $logged_in_user_id = $this->data['user']->user_id;
+                    $logged_in_user_id = $this->user->user_id;
 
                     foreach ($courses as $item) {
 
@@ -2710,7 +2718,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
         $this->db->join('course_sales_exec cse', 'cse.tenant_id = c.tenant_id AND cse.course_id = c.course_id');
 
-        $this->db->where('cse.user_id', $this->data['user']->user_id);
+        $this->db->where('cse.user_id', $this->user->user_id);
 
     }
 

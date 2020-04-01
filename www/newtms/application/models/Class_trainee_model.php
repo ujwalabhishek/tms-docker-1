@@ -363,16 +363,16 @@ class Class_Trainee_Model extends CI_Model {
             $this->db->order_by($sort_by, $sort_order);
         }
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
             $this->db->join('tenant_company_users tcu', 'ce.tenant_id = tu.tenant_id and tu.user_id = tcu.user_id');
 
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
 
         if ($attendance_status == 'ab') {
@@ -529,16 +529,16 @@ class Class_Trainee_Model extends CI_Model {
             $this->db->order_by($sort_by, $sort_order);
         }
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
             $this->db->join('tenant_company_users tcu', 'ce.tenant_id = tu.tenant_id and tu.user_id = tcu.user_id');
 
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
         if($sort_by==''){
         $this->db->order_by('name',asc); // show all trainee in asc order
@@ -1857,18 +1857,18 @@ class Class_Trainee_Model extends CI_Model {
 
         $this->db->join('tms_users_pers pers', 'usr.user_id=pers.user_id and usr.tenant_id=pers.tenant_id');
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
             $this->db->join('course c', 'c.tenant_id = pers.tenant_id '
-                    . 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',c.crse_manager)');
+                    . 'AND FIND_IN_SET(' . $this->user->user_id . ',c.crse_manager)');
 
             $trainer_where = 'AND c.course_id = ce.course_id and c.tenant_id=ce.tenant_id';
         }
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
             $this->db->join('course_class ccl', 'ccl.tenant_id = pers.tenant_id '
-                    . 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',ccl.classroom_trainer)');
+                    . 'AND FIND_IN_SET(' . $this->user->user_id . ',ccl.classroom_trainer)');
 
             $trainer_where = 'AND ccl.course_id = ce.course_id AND ccl.class_id = ce.class_id and ccl.tenant_id=ce.tenant_id';
         }
@@ -1891,9 +1891,9 @@ class Class_Trainee_Model extends CI_Model {
 
         $this->db->group_by('ce.user_id');
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
 
         $this->db->limit(200);
@@ -2296,11 +2296,11 @@ class Class_Trainee_Model extends CI_Model {
                 ->join('tms_users_pers tup', 'tup.user_id=tu.user_id')
                 ->join('enrol_invoice ei', 'ei.pymnt_due_id=ce.pymnt_due_id');
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
             $this->db->join('course crse', 'crse.course_id=ce.course_id');
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",crse.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",crse.crse_manager) !=", 0);
         }
 
         $this->db->where('ce.tenant_id', $tenant_id)
@@ -2345,11 +2345,11 @@ class Class_Trainee_Model extends CI_Model {
                 ->join('tms_users_pers tup', 'tup.user_id=tu.user_id')
                 ->join('enrol_invoice ei', 'ei.pymnt_due_id=ce.pymnt_due_id');
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
             $this->db->join('course crse', 'crse.course_id=ce.course_id');
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",crse.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",crse.crse_manager) !=", 0);
         }
 
         $this->db->where('ce.tenant_id', $tenant_id)
@@ -2404,9 +2404,9 @@ class Class_Trainee_Model extends CI_Model {
      /* This function get only notpaid invoice of company */
        public function get_company_notpaid_invoices_list($tenant_id, $company_id) 
        {
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $crsemgr_where = " AND FIND_IN_SET(" . $this->data['user']->user_id . ",crse.crse_manager) !=0";
+            $crsemgr_where = " AND FIND_IN_SET(" . $this->user->user_id . ",crse.crse_manager) !=0";
         }
 -
         $result_set = $this->db->query("SELECT
@@ -2625,9 +2625,9 @@ class Class_Trainee_Model extends CI_Model {
 
         $this->db->join('course_class class', 'enrol.class_id =class.class_id and crse.course_id = class.course_id');
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",crse.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",crse.crse_manager) !=", 0);
         }
 
         if (empty($all_paid)) {
@@ -2685,11 +2685,11 @@ class Class_Trainee_Model extends CI_Model {
                 ->join('tms_users tu', 'tu.user_id=ce.user_id')
                 ->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
             $this->db->join('course crse', 'crse.course_id=ce.course_id');
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",crse.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",crse.crse_manager) !=", 0);
         }
 
         $this->db->where('ce.tenant_id', $tenant_id)
@@ -3399,15 +3399,15 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 $class_status = $this->get_class_statustext($class);
                 
                   /* sales executive thread*/
-                if ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id == 'CRSEMGR' || $this->data['user']->role_id == 'TRAINER') 
+                if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') 
                 {
-                    $salesexec = $this->data['user']->user_id;
+                    $salesexec = $this->user->user_id;
                 }
                 else
                 {
                 ///$salesexec = empty($salesexec) ? NULL : $salesexec;
                         if(empty($salesexec)){
-                            $salesexec = $this->data['user']->user_id;
+                            $salesexec = $this->user->user_id;
                         }
                         else{
                             $salesexec =$salesexec;
@@ -3628,15 +3628,15 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 $class_status = $this->get_class_statustext($class);
                 
                   /* sales executive thread*/
-                if ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id == 'CRSEMGR' || $this->data['user']->role_id == 'TRAINER') 
+                if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') 
                 {
-                    $salesexec = $this->data['user']->user_id;
+                    $salesexec = $this->user->user_id;
                 }
                 else
                 {
                 ///$salesexec = empty($salesexec) ? NULL : $salesexec;
                         if(empty($salesexec)){
-                            $salesexec = $this->data['user']->user_id;
+                            $salesexec = $this->user->user_id;
                         }
                         else{
                             $salesexec =$salesexec;
@@ -3852,7 +3852,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
      */
       public function individual_enrollment_db_update($tenant_id, $loggedin_user_id, $unit_fees) {
-          //$this->data['user'] = $this->user;
+          //$this->user = $this->user;
           //print_r($this->data);exit;
 		  
 		$cur_time = date('H:i:s'); //sk
@@ -3921,12 +3921,12 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             $class_status = $this->get_class_statustext($class);
             
            /* sales executive thread*/
-            if ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id == 'CRSEMGR' || $this->data['user']->role_id == 'TRAINER') {
-                $salesexec = $this->data['user']->user_id;
+            if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') {
+                $salesexec = $this->user->user_id;
             } else {
                 ///$salesexec = empty($salesexec) ? NULL : $salesexec;
                 if(empty($salesexec)){
-                    $salesexec = $this->data['user']->user_id;
+                    $salesexec = $this->user->user_id;
                 }
                 else{
                     $salesexec =$salesexec;
@@ -4211,9 +4211,9 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                 $tg_number = $excel['tg_number'];
 
-                if ($this->data['user']->role_id == 'SLEXEC') {
+                if ($this->user->role_id == 'SLEXEC') {
 
-                    $salesexec = $this->data['user']->user_id;
+                    $salesexec = $this->user->user_id;
                 } else {
 
                     $salesexec = empty($salesexec) ? NULL : $salesexec;
@@ -4733,9 +4733,9 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
 
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
-            $this->db->where('comp.company_id', $this->data['user']->company_id);
+            $this->db->where('comp.company_id', $this->user->company_id);
         }
 
 
@@ -4768,9 +4768,9 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
 
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
-            $this->db->where('comp.company_id', $this->data['user']->company_id);
+            $this->db->where('comp.company_id', $this->user->company_id);
         }
 
 
@@ -6134,9 +6134,9 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 ->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'))
                 ->where_not_in('ce.payment_status', 'PAID');
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
 
         if ($invoice_id) {
@@ -6204,9 +6204,9 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 ->where('ce.enrolment_mode', 'SELF')
                 ->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'));
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
 
         if (!empty($paid)) {
@@ -6267,9 +6267,9 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 ->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'))
                 ->where('ce.payment_status', 'PAID');
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
 
         if ($invoice_id) {
@@ -6400,7 +6400,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         if ($data['enrolment_mode'] == 'COMPSPON') {
 
-            $status = $this->remove_company_enrollment($tenant_id, $this->data['user']->user_id, $course_id, $prev_class_id, $data['company_id']
+            $status = $this->remove_company_enrollment($tenant_id, $this->user->user_id, $course_id, $prev_class_id, $data['company_id']
                     , $inv_id = 0, $data['pymnt_due_id'], array($trainee_id));
 
             if ($status) {
@@ -6442,7 +6442,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                 if (array_key_exists($data['company_id'], $temp_array)) {
 
-                    $status = $this->reschedule_add_to_company_enrollment($tenant_id, $this->data['user']->user_id, $course_id, $new_class_id, $data['company_id']
+                    $status = $this->reschedule_add_to_company_enrollment($tenant_id, $this->user->user_id, $course_id, $new_class_id, $data['company_id']
                             , $temp_array[$data['company_id']]['invoice_id'], $temp_array[$data['company_id']]['paymnt_due_id'], array($trainee_id));
                 } else {
 
@@ -6801,7 +6801,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             $this->db->select('cc.total_seats, cc.class_id, cc.class_name,cc.lock_status, cc.course_id, cc.class_pymnt_enrol');
             $this->db->from('course_class cc');
             
-            if(($this->data['user']->role_id == 'SLEXEC'))
+            if(($this->user->role_id == 'SLEXEC'))
             {
                 $this->db->join("course  crse", "crse.course_id = cc.course_id AND crse.tenant_id = cc.tenant_id", "left");
                 $this->db->join("course_sales_exec  sales", "sales.course_id = crse.course_id AND sales.tenant_id = crse.tenant_id", "left");
@@ -6825,19 +6825,19 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         $this->db->where('cc.class_status !=', 'INACTIV');
 
-        if ($this->data['user']->role_id == 'SLEXEC') 
+        if ($this->user->role_id == 'SLEXEC') 
         {
-             $this->db->like('sales.user_id', $this->data['user']->user_id, 'both');
+             $this->db->like('sales.user_id', $this->user->user_id, 'both');
 //            if (!empty($course)){
-//             $this->db->like('sales.user_id', $this->data['user']->user_id, 'both');
+//             $this->db->like('sales.user_id', $this->user->user_id, 'both');
 //            }
 //            else{
-//             $this->db->like('cc.sales_executive', $this->data['user']->user_id, 'both');
+//             $this->db->like('cc.sales_executive', $this->user->user_id, 'both');
 //            }
         }
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",classroom_trainer) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",classroom_trainer) !=", 0);
         }
 
         $this->db->order_by("DATE(cc.class_start_datetime)","DESC");
@@ -6862,11 +6862,11 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         $this->db->group_by('c.course_id');
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
             $this->db->join('course_sales_exec cse', 'cse.tenant_id = c.tenant_id AND cse.course_id = c.course_id');
 
-            $this->db->where('cse.user_id', $this->data['user']->user_id);
+            $this->db->where('cse.user_id', $this->user->user_id);
         }
         $this->db->where('c.crse_status', 'ACTIVE'); // added by shubhranshu prevent de-activate course on 6/12/2018
         $query = $this->db->get();
@@ -6919,7 +6919,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             $this->db->like('tup.first_name', $username, 'both');
         }
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
             if (!empty($taxcode)) {
 
@@ -6964,7 +6964,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         $this->db->join('class_enrol ce', 'ce.tenant_id = tup.tenant_id AND ce.user_id = tup.user_id');
 
-        $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+        $this->db->where('ce.sales_executive_id', $this->user->user_id);
 
         $this->db->group_by('ce.user_id');
     }
@@ -7091,25 +7091,25 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
             $this->db->where('ce.user_id', $user_id);
         }
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",cc.classroom_trainer) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",cc.classroom_trainer) !=", 0);
         }
 
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
         //echo $this->db->last_query();  exit;
         //$query = $this->db->get();   
@@ -7242,26 +7242,26 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $this->db->where('ce.user_id', $user_id);
         }
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",cc.classroom_trainer) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",cc.classroom_trainer) !=", 0);
         }
 
 
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
 
 //        $query = $this->db->get();   
@@ -7431,24 +7431,24 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $this->db->where('ce.user_id', $user_id);
         }
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",cc.classroom_trainer) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",cc.classroom_trainer) !=", 0);
         }
 
         $query = $this->db->get();
@@ -7553,24 +7553,24 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $this->db->where('ce.user_id', $user_id);
         }
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",cc.classroom_trainer) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",cc.classroom_trainer) !=", 0);
         }
 
         $query = $this->db->get();
@@ -7674,26 +7674,26 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $this->db->where('ce.user_id', $user_id);
         }
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",cc.classroom_trainer) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",cc.classroom_trainer) !=", 0);
         }
 
 
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
 
         //$query = $this->db->get();        
@@ -7724,18 +7724,18 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $this->db->where('tu.tenant_id', $tenant_id);
 
-//        if ($this->data['user']->role_id == 'TRAINER') {
+//        if ($this->user->role_id == 'TRAINER') {
 //
 //            $this->db->join('course_class ccl', 'ccl.tenant_id = tup.tenant_id '
-//                    . 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',ccl.classroom_trainer)');
+//                    . 'AND FIND_IN_SET(' . $this->user->user_id . ',ccl.classroom_trainer)');
 //
 //            $trainer_where = 'AND ccl.course_id = ce.course_id AND ccl.class_id = ce.class_id and ccl.tenant_id=ce.tenant_id';
 //        }
 //
-//        if ($this->data['user']->role_id == 'CRSEMGR') {
+//        if ($this->user->role_id == 'CRSEMGR') {
 //
 //            $this->db->join('course c', 'c.tenant_id = tup.tenant_id '
-//                    . 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',c.crse_manager)');
+//                    . 'AND FIND_IN_SET(' . $this->user->user_id . ',c.crse_manager)');
 //
 //            $trainer_where = 'AND c.course_id = ce.course_id and c.tenant_id=ce.tenant_id';
 //        }
@@ -7896,24 +7896,24 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $this->db->where('ce.user_id', $user_id);
         }
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",cc.classroom_trainer) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",cc.classroom_trainer) !=", 0);
         }
 
         $query = $this->db->get();
@@ -7985,18 +7985,18 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $this->db->where('tu.tenant_id', $tenant_id);
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
             $this->db->join('course_class ccl', 'ccl.tenant_id = tup.tenant_id '
-                    . 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',ccl.classroom_trainer)');
+                    . 'AND FIND_IN_SET(' . $this->user->user_id . ',ccl.classroom_trainer)');
 
             $trainer_where = 'AND ccl.course_id = ce.course_id AND ccl.class_id = ce.class_id and ccl.tenant_id=ce.tenant_id';
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
             $this->db->join('course c', 'c.tenant_id = tup.tenant_id '
-                    . 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',c.crse_manager)');
+                    . 'AND FIND_IN_SET(' . $this->user->user_id . ',c.crse_manager)');
 
             $trainer_where = 'AND c.course_id = ce.course_id and c.tenant_id=ce.tenant_id';
         }
@@ -8032,9 +8032,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $this->db->where("tcu.company_id", $this->user->company_id);
         }
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
 
         $this->db->group_by('tup.user_id');
@@ -8617,9 +8617,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $extra = " AND usr.tax_code LIKE '%$query%' ";
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $crsemgr_where = " AND FIND_IN_SET(" . $this->data['user']->user_id . ",crs.crse_manager) !=0";
+            $crsemgr_where = " AND FIND_IN_SET(" . $this->user->user_id . ",crs.crse_manager) !=0";
         }
 
         $str_query1 = "select usr.user_id, usr.tax_code, pers.first_name,pers.last_name, crs.crse_name, "
@@ -8643,9 +8643,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $extra = " AND usr.tax_code LIKE '%$query%' ";
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $crsemgr_where = " AND FIND_IN_SET(" . $this->data['user']->user_id . ",crs.crse_manager) !=0";
+            $crsemgr_where = " AND FIND_IN_SET(" . $this->user->user_id . ",crs.crse_manager) !=0";
         }
 
         $str_query1 = "select usr.user_id, usr.tax_code, pers.first_name,pers.last_name, crs.crse_name, "
@@ -8678,9 +8678,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $extra = " AND comp.company_name LIKE '%$query%' ";
         }
         $crsemgr_where='';
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $crsemgr_where = " AND FIND_IN_SET(" . $this->data['user']->user_id . ",crse.crse_manager) !=0";
+            $crsemgr_where = " AND FIND_IN_SET(" . $this->user->user_id . ",crse.crse_manager) !=0";
         }
 
         $result_set = $this->db->query("SELECT inv.`invoice_id`, inv.`pymnt_due_id`, enrl.payment_status, inv.inv_date, inv.company_id, 
@@ -8758,9 +8758,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $extra = " AND comp.company_name LIKE '%$query%' ";
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $crsemgr_where = " AND FIND_IN_SET(" . $this->data['user']->user_id . ",crse.crse_manager) !=0";
+            $crsemgr_where = " AND FIND_IN_SET(" . $this->user->user_id . ",crse.crse_manager) !=0";
         }
 
         $result_set = $this->db->query("SELECT inv.`invoice_id`, inv.`pymnt_due_id`, enrl.payment_status, inv.inv_date, inv.company_id, 
@@ -9644,7 +9644,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         if ($data->num_rows() == 0) {
 
             $insert_data = array(
-                'tenant_id' => $this->data['user']->tenant_id,
+                'tenant_id' => $this->user->tenant_id,
                 'user_id' => $trainee_id,
                 'course_id' => $course_id,
                 'discount_percent' => 0
@@ -9813,7 +9813,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $this->db->join("class_enrol  enrol", "enrol.course_id = cls.course_id AND enrol.class_id = cls.class_id AND crse.tenant_id = cls.tenant_id", "left");
         /*get the course class list for sales executive on course level*/
-        if($this->data['user']->role_id == 'SLEXEC'){
+        if($this->user->role_id == 'SLEXEC'){
              $this->db->join("course_sales_exec  sales", "sales.course_id = crse.course_id AND sales.tenant_id = crse.tenant_id", "left");
         }
         $this->db->where("cls.class_status !=", "INACTIV");
@@ -9843,10 +9843,10 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             }
         }
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            //$this->db->like('cls.sales_executive', $this->data['user']->user_id, 'both');
-           $this->db->like('sales.user_id', $this->data['user']->user_id, 'both');
+            //$this->db->like('cls.sales_executive', $this->user->user_id, 'both');
+           $this->db->like('sales.user_id', $this->user->user_id, 'both');
         }
 
         $this->db->group_by("cls.course_id, cls.class_id");
@@ -10153,18 +10153,18 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
        /* $salesexec = $this->input->post('salesexec');
         if (empty($salesexec)) {
-            $salesexec = ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id == 'ADMN') ? $this->data['user']->user_id : NULL;
+            $salesexec = ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN') ? $this->user->user_id : NULL;
         }*/
          /* sales executive thread to tagged who enrolles on 18-07-2015 by prti*/
-        if ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id == 'CRSEMGR' || $this->data['user']->role_id == 'TRAINER') 
+        if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') 
         {
-            $salesexec = $this->data['user']->user_id;
+            $salesexec = $this->user->user_id;
         }
         else
         {
             ///$salesexec = empty($salesexec) ? NULL : $salesexec;
                 if(empty($salesexec)){
-                    $salesexec = $this->data['user']->user_id;
+                    $salesexec = $this->user->user_id;
                 }
                 else{
                     $salesexec =$salesexec;
@@ -10421,19 +10421,19 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
        /* $salesexec = $this->input->post('salesexec');
         if (empty($salesexec)) {
-            $salesexec = ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id == 'ADMN') ? $this->data['user']->user_id : NULL;
+            $salesexec = ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN') ? $this->user->user_id : NULL;
         }*/
          /* sales executive thread to tagged who enrolles on 18-07-2015 by prti*/
-        //print_r($this->data['user']);exit;
-        if ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id == 'CRSEMGR' || $this->data['user']->role_id == 'TRAINER') 
+        //print_r($this->user);exit;
+        if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') 
         {
-            $salesexec = $this->data['user']->user_id;
+            $salesexec = $this->user->user_id;
         }
         else
         {
             ///$salesexec = empty($salesexec) ? NULL : $salesexec;
                 if(empty($salesexec)){
-                    $salesexec = $this->data['user']->user_id;
+                    $salesexec = $this->user->user_id;
                 }
                 else{
                     $salesexec =$salesexec;
@@ -12205,7 +12205,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $this->db->like('crn.credit_note_number', $credit_note_number, 'both');
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
             $this->db->join('enrol_invoice ei', 'ei.invoice_id=crn.ori_invoice_number');
 
@@ -12213,7 +12213,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
             $this->db->join('course crse', 'crse.course_id=ce.course_id');
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",crse.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",crse.crse_manager) !=", 0);
 
             $this->db->group_by("crn.credit_note_number");
         }
@@ -12959,26 +12959,26 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
             $this->db->where('ce.user_id', $user_id);
         }
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",cc.classroom_trainer) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",cc.classroom_trainer) !=", 0);
         }
 
 
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
 
         //$query = $this->db->get();        
@@ -13083,24 +13083,24 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
             $this->db->where('ce.user_id', $user_id);
         }
 
-        if ($this->data['user']->role_id == 'COMPACT') {
+        if ($this->user->role_id == 'COMPACT') {
 
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
 
-            $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
 
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
 
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",cc.classroom_trainer) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",cc.classroom_trainer) !=", 0);
         }
 
         $query = $this->db->get();
@@ -13138,10 +13138,10 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 ->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'))
                 ->where_in('ce.payment_status', array('PYNOTREQD', 'NOTPAID'));
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
             $this->db->join('course c', 'c.tenant_id = ce.tenant_id '
-                    . 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',c.crse_manager)');
+                    . 'AND FIND_IN_SET(' . $this->user->user_id . ',c.crse_manager)');
         }
 
         if (!empty($taxcode)) {
@@ -13208,9 +13208,9 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
             $where .= " and tu.user_id ='$trainee_id'";
         }
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
 
-            $where .= " and FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) != 0";
+            $where .= " and FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) != 0";
         }
 
         $where .= " group by ce.pymnt_due_id, cc.course_id, cc.class_id order by ce.pymnt_due_id";
@@ -13962,7 +13962,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         
         $reschedule = 1;
         
-        $res = $this->company_enrollment_db_update($tenant_id, $this->data['user']->user_id, '', 'N', $reschedule);
+        $res = $this->company_enrollment_db_update($tenant_id, $this->user->user_id, '', 'N', $reschedule);
         
         return $res;
     }
@@ -14084,9 +14084,9 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 ->join('tms_users_pers tup', 'tup.user_id=tu.user_id')
                 ->join('enrol_invoice ei', 'ei.pymnt_due_id=ce.pymnt_due_id')
                 ->join('company_master cm', 'cm.company_id=ce.company_id', 'left');
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
             $this->db->join('course crse', 'crse.course_id=ce.course_id');
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",crse.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",crse.crse_manager) !=", 0);
         }
         // Modification ends here,
         $this->db->where('ce.tenant_id', $tenant_id);
@@ -14144,9 +14144,9 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 ->join('tms_users tu', 'tu.user_id=ce.user_id')
                 ->join('tms_users_pers tup', 'tup.user_id=tu.user_id')
                 ->join('company_master cm', 'cm.company_id=ce.company_id', 'left');
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
             $this->db->join('course crse', 'crse.course_id=ce.course_id');
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",crse.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",crse.crse_manager) !=", 0);
         }
         // Modification ends here,
         $this->db->where('ce.tenant_id', $tenant_id);

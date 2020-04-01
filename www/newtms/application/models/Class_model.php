@@ -6,10 +6,13 @@
 
 class Class_Model extends CI_Model {
 
+    private $user;
+    
     public function __construct() {
         parent::__construct();
         $this->load->helper('common');
         $this->sess_user = $this->session->userdata('userDetails'); // added by shubhranshu to het the user data
+        $this->user = $this->session->userdata('userDetails');
     }
 
     /**
@@ -347,8 +350,8 @@ class Class_Model extends CI_Model {
         $this->db->where('class_id', $class_id);
         $this->db->where('course_id', $course_id);
         $this->db->where_in('enrol_status', array('ENRLACT', 'ENRLBKD'));
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('sales_executive_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('sales_executive_id', $this->user->user_id);
         }
         return $this->db->get()->row()->count;
     }
@@ -406,8 +409,8 @@ class Class_Model extends CI_Model {
             $limitvalue = $offset - $limit;
             $this->db->limit($limit, $limitvalue);
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('enrol.sales_executive_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('enrol.sales_executive_id', $this->user->user_id);
         }
        $query = $this->db->get();
         return $query->result_object();
@@ -540,8 +543,8 @@ class Class_Model extends CI_Model {
             $this->db->from('course');
             $this->db->where('tenant_id', $tenant_id);
             $this->db->where_not_in('crse_status', 'INACTIV');
-            if ($this->data['user']->role_id == 'CRSEMGR') {
-                $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",crse_manager) !=", 0);
+            if ($this->user->role_id == 'CRSEMGR') {
+                $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",crse_manager) !=", 0);
             }
             $this->db->like('crse_name', $search_course_code, 'both');
             $results = $this->db->get()->result_object();
@@ -593,15 +596,15 @@ class Class_Model extends CI_Model {
                     break;
             }
         }
-        if ($this->data['user']->role_id == 'TRAINER') {
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",classroom_trainer) !=", 0);
+        if ($this->user->role_id == 'TRAINER') {
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",classroom_trainer) !=", 0);
         }
         if ($sort_by) {
             $this->db->order_by($sort_by, $sort_order);
         } else {
             $this->db->order_by('last_modified_on', 'DESC');
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
             $this->traineelist_querychange();
         }
         $result = $this->db->get()->result_object();
@@ -668,8 +671,8 @@ class Class_Model extends CI_Model {
         $this->db->where_in('pers.user_id', $ids);
         $this->db->where('pers.tenant_id', $tenant_id);
         $this->db->where('sales.course_id', $course_id);
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('pers.user_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('pers.user_id', $this->user->user_id);
         }
         $result = $this->db->get();
         return $result->result_array();
@@ -695,8 +698,8 @@ class Class_Model extends CI_Model {
         $this->db->where('pers.user_id', $ids);
         $this->db->where('pers.tenant_id', $tenant_id);
         $this->db->where('ce.course_id', $course_id);
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('pers.user_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('pers.user_id', $this->user->user_id);
         }*/
          if (empty($ids)) {
             return;
@@ -713,8 +716,8 @@ class Class_Model extends CI_Model {
         $this->db->from('tms_users_pers pers');
         $this->db->where('pers.user_id', $sales_executive_id);
         $this->db->where('pers.tenant_id', $tenant_id);
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('pers.user_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('pers.user_id', $this->user->user_id);
         }
         $result = $this->db->get();
         return $result->result_array();
@@ -1799,7 +1802,7 @@ class Class_Model extends CI_Model {
      * role based access for salesexec
      */
     private function traineelist_querychange() {
-        $this->db->like('sales_executive', $this->data['user']->user_id, 'both');
+        $this->db->like('sales_executive', $this->user->user_id, 'both');
     }
     
     /**

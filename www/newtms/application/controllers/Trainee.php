@@ -568,7 +568,7 @@ class Trainee extends CI_Controller {
      * This method for validating each excel field.
      */
       private function validate_excel($trainee, $i) {
-        $tenant_id=$this->data['user']->tenant_id;
+        $tenant_id=$this->user->tenant_id;
         $metavalues = array();
         $metavalues = $this->get_metavalues_array();
         $is_taxcode_unique = $this->is_taxcode_unique($trainee[$i][taxcode]);
@@ -913,8 +913,8 @@ class Trainee extends CI_Controller {
 //        unset($excel_data[1]);
 //        foreach ($excel_data as $k => $exceldata) {
 //            $trainee[$i][CompanyCode] = trim($exceldata[10]);
-//            if ($this->data['user']->role_id == 'COMPACT') {
-//                $trainee[$i][CompanyCode] = $this->data['user']->company_id;
+//            if ($this->user->role_id == 'COMPACT') {
+//                $trainee[$i][CompanyCode] = $this->user->company_id;
 //            }
 //            $trainee[$i][countryofresidence] = ($exceldata[1])? trim($exceldata[1]): 'SGP';
 //            $trainee[$i][nrictype] = trim($exceldata[2]);
@@ -959,7 +959,7 @@ class Trainee extends CI_Controller {
 //    }
     
     public function validate_bulk_trainee($excel_data) {
-        $tenant_id=$this->data['user']->tenant_id;
+        $tenant_id=$this->user->tenant_id;
         $trainee = array();
         $i = 1;
         $trainee[1]['db_error'] = '';
@@ -967,8 +967,8 @@ class Trainee extends CI_Controller {
         $restrict_flag = 'false'; // added by shubhranshu for restriction array
         foreach ($excel_data as $k => $exceldata) {
             $trainee[$i][CompanyCode] = trim($exceldata[11]);
-            if ($this->data['user']->role_id == 'COMPACT') {
-                $trainee[$i][CompanyCode] = $this->data['user']->company_id;
+            if ($this->user->role_id == 'COMPACT') {
+                $trainee[$i][CompanyCode] = $this->user->company_id;
             }
             $trainee[$i][countryofresidence] = ($exceldata[1])? trim($exceldata[1]): 'SGP';
             ////addded by shubhranshu for Xprienz requirement
@@ -1540,7 +1540,7 @@ class Trainee extends CI_Controller {
         if($role->role_id!='ADMN')
         {
             //if ($check_salesexe_assigned || $role->role_id=='CRSEMGR' || $role->role_id=='TRAINER')
-            if ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id=='CRSEMGR' || $this->data['user']->role_id=='TRAINER') 
+            if ($this->user->role_id == 'SLEXEC' || $this->user->role_id=='CRSEMGR' || $this->user->role_id=='TRAINER') 
             {
                    $data['salesexec_check'] = 1;
 

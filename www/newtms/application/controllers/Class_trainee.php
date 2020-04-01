@@ -200,7 +200,7 @@ class Class_Trainee extends CI_Controller {
                         $check_attendance=$this->classtraineemodel->check_attendance_row($tenant_id,$row['course_id'],$row['class_id']);
                          $check_competent=$this->classtraineemodel->check_competent($tenant_id,$row['course_id'],$row['class_id'],$row['user_id']);
                         $linkStr = '';                    
-                        if ($this->data['user']->role_id == 'ADMN' || $this->data['user']->role_id == 'CRSEMGR') 
+                        if ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') 
                         {
                              $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
                             if ($status == 'Completed') 
@@ -220,7 +220,7 @@ class Class_Trainee extends CI_Controller {
                             } 
 
                         }    
-                        if ($row['payment_status'] != 'PYNOTREQD' && $this->data['user']->role_id == 'ADMN' || $row['payment_status'] != 'PYNOTREQD' && $this->data['user']->role_id == 'CRSEMGR') 
+                        if ($row['payment_status'] != 'PYNOTREQD' && $this->user->role_id == 'ADMN' || $row['payment_status'] != 'PYNOTREQD' && $this->user->role_id == 'CRSEMGR') 
                         {
                             $linkStr .= '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
 
@@ -254,7 +254,7 @@ class Class_Trainee extends CI_Controller {
                     else 
                     {
                         if ($row['payment_status'] != 'PYNOTREQD' &&
-                                $this->data['user']->role_id == 'ADMN') 
+                                $this->user->role_id == 'ADMN') 
                         {
                             $linkStr = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
 
@@ -470,7 +470,7 @@ class Class_Trainee extends CI_Controller {
                     $check_attendance=$this->classtraineemodel->check_attendance_row($tenant_id,$row['course_id'],$row['class_id']);
                      $check_competent=$this->classtraineemodel->check_competent($tenant_id,$row['course_id'],$row['class_id'],$row['user_id']);
                     $linkStr = '';                    
-                    if ($this->data['user']->role_id == 'ADMN' || $this->data['user']->role_id == 'CRSEMGR') 
+                    if ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') 
                     {
                          $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
                         if ($status == 'Completed') 
@@ -491,7 +491,7 @@ class Class_Trainee extends CI_Controller {
                        
                     }    
                     if ($row['payment_status'] != 'PYNOTREQD' &&
-                            ($this->data['user']->role_id == 'ADMN' || $this->data['user']->role_id == 'CRSEMGR')
+                            ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR')
                     ) 
                     {
                         $linkStr .= '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
@@ -510,7 +510,7 @@ class Class_Trainee extends CI_Controller {
                 else 
                 {
                     if ($row['payment_status'] != 'PYNOTREQD' &&
-                            $this->data['user']->role_id == 'ADMN') 
+                            $this->user->role_id == 'ADMN') 
                     {
                         $linkStr = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
 
@@ -1249,7 +1249,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         if (!empty($class)) {
             $data['salesexec'] = $this->class->get_class_salesexec($tenant_id, $course, $class_detail->sales_executive);
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
             $data['salesexec_check'] = 1;
         }
         
@@ -3908,7 +3908,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $role = $this->internal_user_model->check_sales_exec1($loggedin_user_id);
             if($role->role_id!=="ADMN")
             {
-                if ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id=='CRSEMGR' || $this->data['user']->role_id=='TRAINER') 
+                if ($this->user->role_id == 'SLEXEC' || $this->user->role_id=='CRSEMGR' || $this->user->role_id=='TRAINER') 
                 {
                     $data['salesexec_check'] = 1;
                 }

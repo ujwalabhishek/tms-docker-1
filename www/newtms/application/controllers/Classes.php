@@ -7,6 +7,8 @@ if (!defined('BASEPATH'))
  */
 
 class Classes extends CI_Controller {
+    
+    private $user;
 
     public function __construct() {
         parent::__construct();
@@ -14,6 +16,7 @@ class Classes extends CI_Controller {
         $this->load->model('class_model', 'classmodel');
         $this->load->model('course_model', 'coursemodel');
         $this->load->model('meta_values');
+        $this->user = $this->session->userdata('userDetails');
        
     }
 
@@ -63,7 +66,7 @@ class Classes extends CI_Controller {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Class';
         $tenantId = $this->tenant_id;
-        $userId = $this->data['user']->user_id;
+        $userId = $this->user->user_id;
         $courseId = $this->input->get('course_id');
         $data['courses'] = $this->coursemodel->get_active_course_list_by_tenant($tenantId);
         $data['classes'] = array();
@@ -119,7 +122,7 @@ class Classes extends CI_Controller {
         $data['courses'] = $this->coursemodel->get_active_course_list_by_tenant($tenant_id);
         $data['trainer'] = $this->classmodel->get_tenant_users_by_role($tenant_id, 'TRAINER');
         $data['course_manager'] = $this->classmodel->get_tenant_users_by_role($tenant_id, 'CRSEMGR'); 
-        $data['role'] = $this->data['user']->role_id;
+        $data['role'] = $this->user->role_id;
         $data['page_title'] = 'Class';
         $this->load->library('form_validation');
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
@@ -143,7 +146,7 @@ class Classes extends CI_Controller {
                 //$data['sideMenuData'] = $this->sideMenu;
                 $this->load->view('layout', $data);
             } else {
-                if($this->data['user']->role_id != 'ADMN'){
+                if($this->user->role_id != 'ADMN'){
                     $start_date_timestamp = strtotime($this->input->post('start_date'));        
                     $today_date = strtotime(date('Y-m-d'));                                            
                     if($start_date_timestamp < $today_date){                       
@@ -253,7 +256,7 @@ class Classes extends CI_Controller {
                         $label = array('fees' => 'label', 'discount' => 'label');
                         $data['js_class_status']='completed';
                     }
-                    if($this->data['user']->role_id == 'ADMN'){
+                    if($this->user->role_id == 'ADMN'){
                         $label['fees'] = '';
                     }
                 }
@@ -308,7 +311,7 @@ class Classes extends CI_Controller {
             return show_404();
         }
         $tenant_id = $this->tenant_id;
-        $user_id = $this->data['user']->user_id;
+        $user_id = $this->user->user_id;
         $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_id);
         $coursedetails = $this->coursemodel->get_course_detailse($class->course_id);
         $status = $this->classmodel->get_class_status($class_id, '');
@@ -466,7 +469,7 @@ class Classes extends CI_Controller {
         $data['class'] = $class = $this->classmodel->get_class_by_classid($tenant_id, $id);
         $data['course'] = $course = $this->coursemodel->get_course_detailse($class['course_id']);
         $data['total_booked'] = $totalrows = $this->classmodel->get_class_booked_count($class['course_id'], $id, $tenant_id);
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
             $data['sales_total_booked'] = $totalrows = $this->classmodel->get_class_booked_by_salesexec($class['course_id'], $id, $tenant_id);
         }
         $field = ($this->input->get('f')) ? $this->input->get('f') : 'class_id';
@@ -611,7 +614,7 @@ class Classes extends CI_Controller {
         $user_id = $this->session->userdata('userDetails')->user_id;
         extract($_POST);
         if (!empty($class_hid)) {    
-            if($this->data['user']->role_id != 'ADMN'){
+            if($this->user->role_id != 'ADMN'){
                 $start_date_timestamp = date('Y-m-d', strtotime($this->input->post('start_date')));        
                 $today_date = strtotime(date('Y-m-d'));                                            
                 if($start_date_timestamp < $today_date){                       
