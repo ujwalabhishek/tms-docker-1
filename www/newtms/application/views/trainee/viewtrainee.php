@@ -723,17 +723,17 @@ endif;
                                     $wsq_courses_array = $this->config->item('wsq_courses'); // wsq courses modified by shubhranshu
                                     
                                     $tenant_array = array('T02','T12'); // xp and xp2 
-                                    $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/'. $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
+                                    $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/'. $item->class_id . '/' . $item->user_id . '">LOC</a><br/>';
                                     //////added by shubhranshu for wablab TCS for all courses
                                     $tenant_id = $trainee[userdetails]['tenant_id'];
                                    
                                     if($tenant_id == 'T20'){
-                                        $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$row['course_id'].'/'. $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>';
+                                        $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$item->course_id.'/'. $item->class_id  . '/' . $item->user_id . '">TCS</a><br/>';
 
                                     }else{
-                                        if (in_array($row['course_id'], $wsq_courses_array) && in_array($tenant_id, $tenant_array))
+                                        if (in_array($item->course_id, $wsq_courses_array) && in_array($tenant_id, $tenant_array))
                                         { 
-                                           $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$row['course_id'].'/'. $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>'; 
+                                           $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$item->course_id.'/'. $item->class_id . '/' . $item->user_id . '">TCS</a><br/>'; 
                                         }
                                     }
 
