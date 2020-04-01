@@ -4,7 +4,7 @@
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
     $role_id = "<?php echo $this->session->userdata('userDetails')->role_id;?>";//added by shubhranshu
-     $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id;?>";//added by shubhranshu
+    
 $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/addnewenroll.js"></script>
@@ -16,6 +16,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
         <?php
         $atr = 'id="search_form" name="search_form" method="post" onkeypress="return event.keyCode != 13;"';
         echo form_open("class_trainee/enrollment_view_page", $atr);
+         $tenant_id = $this->session->userdata('userDetails')->tenant_id;//added by shubhranshu
         ?>  
         <table class="table table-striped">
             <tbody>
