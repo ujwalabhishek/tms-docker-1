@@ -25,7 +25,8 @@ class Class_Trainee extends CI_Controller {
         $this->load->model('trainee_model', 'traineemodel'); 
         $this->load->model('activity_log_model', 'activitylog');
         $this->user = $this->session->userdata('userDetails');
-        $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;        
+        $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;    
+        $data = store_session_data();////added by shubhranshu for data object to access session
     }
 
     /*
@@ -3650,7 +3651,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      * to get all taxcode
      */
     public function get_alltaxcode() {
-       $data = store_session_data();
+      
         $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
         $result = $this->classtraineemodel->get_alluser($this->tenant_id, '', $query_string);
         if ($result) {
