@@ -4207,6 +4207,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      *  This method gets the invoice drop down values based on the enrollment type selected.
      */
     public function get_select_box() {
+         $data['sideMenuData'] = fetch_non_main_page_content();
         ini_set('memory_limit','256M');// added by shubhranshu since 500 error due to huge data
         $type = $this->input->post('type');
         $tenant_id = $this->tenant_id;
