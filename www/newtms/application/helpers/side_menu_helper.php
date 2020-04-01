@@ -155,13 +155,15 @@ function database_connection_check_url(){
     }
     return $db_name;
 }
+
+
 function store_session_data(){
     $CI =& get_instance();
     $data['user'] = $CI->session->userdata('userDetails');
     $CI->data = $data;
-    echo print_r($CI->data);exit;
     return;
 }
+
 function connect_primary($url_str){
    // $conn = new mysqli('localhost', 'root', '','db_parameters');
     //$sql = "SELECT db_name FROM db_parameters WHERE url_string='$url_str'";
