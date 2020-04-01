@@ -721,6 +721,7 @@ endif;
                               
                                 if($item->training_score=='C'){
                                     $wsq_courses_array = $this->config->item('wsq_courses'); // wsq courses modified by shubhranshu
+                                    print_r($wsq_courses_array);exit;
                                     $tenant_array = array('T02','T12'); // xp and xp2 
                                     $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/'. $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
                                     //////added by shubhranshu for wablab TCS for all courses
