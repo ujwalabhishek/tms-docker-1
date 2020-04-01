@@ -721,6 +721,10 @@ endif;
                               
                                 if($item->training_score=='C'){
                                 $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/' . $item->class_id . '/' . $user_id . '">LOC</a>&nbsp;&nbsp;&nbsp;';
+                                if($this->data['user']->role_id != 'SLEXEC') {
+                                 		$linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$item->course_id.'/'. $item->class_id . '/' . $user_id. '">TCS</a><br/>'; 
+                                	}
+
                                 }
                             } else {
                             if ($item->payment_status != 'PYNOTREQD' &&
