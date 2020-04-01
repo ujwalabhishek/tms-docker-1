@@ -4222,16 +4222,14 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
                 echo $check_attendance.' -'.$tenant_id.'-'.$course.'-'.$class;exit;
                 if($check_attendance>0)
-                {
-                    $check_attendance_trainee=$this->check_attendance_trainee($tenant_id,$course,$class,$user_id);
-                    if($check_attendance_trainee > 0){
-                        $training_score='C';
-                        $att_status=1;
-                    }else{
-                     $training_score='ABS';
-                     $att_status=0;
-                    }
-                }else { $att_status=1;}
+                { 
+                    $training_score='ABS';
+                    $att_status=0;
+                    
+                }else { 
+                    $att_status=1;$training_score='C';
+                    
+                }
                 /////////////////////////////end of code by shubhranshu////////////////////////////////
                 $data = array(
                     'tenant_id' => $tenant_id,
