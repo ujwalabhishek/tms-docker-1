@@ -726,7 +726,7 @@ endif;
                                     $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/'. $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
                                     //////added by shubhranshu for wablab TCS for all courses
                                     $tenant_id = $trainee[userdetails]['tenant_id'];
-                                    echo $tenant_id;exit;
+                                   
                                     if($tenant_id == 'T20'){
                                         $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$row['course_id'].'/'. $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>';
 
