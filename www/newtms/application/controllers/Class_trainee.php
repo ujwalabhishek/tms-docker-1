@@ -26,7 +26,7 @@ class Class_Trainee extends CI_Controller {
         $this->load->model('activity_log_model', 'activitylog');
         $this->user = $this->session->userdata('userDetails');
         $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;    
-        store_session_data();////added by shubhranshu for data object to access session
+      
     }
 
     /*
