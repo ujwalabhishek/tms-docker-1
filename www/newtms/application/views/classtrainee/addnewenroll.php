@@ -4,6 +4,7 @@
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
     $role_id = "<?php echo $this->session->userdata('userDetails')->role_id;?>";//added by shubhranshu
+     $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id;?>";//added by shubhranshu
 $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/addnewenroll.js"></script>
@@ -89,6 +90,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                             <label style="color:blue;font-weight:bold">Remove individual enrollment</label>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <?php
+                        if($tenant_id != 'T20'){
                             $data=array(
                                     'id'=>'move_enrollment',
                                     'class'=>'enrollment_type',
@@ -97,10 +99,12 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                                     'checked'=>FALSE
                                     );
                             echo form_radio($data);
+                        
                         ?>
                          &nbsp;&nbsp;
                         <label style="color:blue;font-weight: bold">Move Trainee from one company Invoice to other company invoice</label>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <?php }?>
                     </td>
                 </tr>
                 <?php } ?>
