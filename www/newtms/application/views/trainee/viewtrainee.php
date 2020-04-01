@@ -727,7 +727,7 @@ endif;
                                     //////added by shubhranshu for wablab TCS for all courses
                                     $tenant_id = $trainee[userdetails]['tenant_id'];
                                    
-                                    if($tenant_id == 'T20'){
+                                    if(($tenant_id == 'T20') && ($this->data['user']->role_id != 'SLEXEC')){
                                         $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$item->course_id.'/'. $item->class_id  . '/' . $item->user_id . '">TCS</a><br/>';
 
                                     }else{
