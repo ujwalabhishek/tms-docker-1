@@ -1282,7 +1282,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         }else if($this->user->tenant_id == 'T22'){
             $no_tax_tax_code = "CD".$user_id;
         }else if($this->user->tenant_id == 'T20'){
-            $user_name = "WB".$taxcode;
+            $no_tax_tax_code = "WB".$user_id;
         } else {
             $no_tax_tax_code = $user_id;
         }
