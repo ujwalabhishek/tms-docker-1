@@ -179,6 +179,7 @@ class Login extends CI_Controller {
             unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file')); // added by shubhranshu to delete the captcha file
             $user = $this->assign_my_role($user);
             $this->session->set_userdata('userDetails', $user);
+            $this->session->set_userdata('userDetails', $data['user']);
             if (empty($user->role_id)) {
                 $this->session->sess_destroy();
                 redirect('login/');
