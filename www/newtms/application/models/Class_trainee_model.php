@@ -4265,7 +4265,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         'subsidy_recd_date' => $subsidy_recd_on,
                         'subsidy_modified_on' => $cur_date,
                         'gst_amount' => round($totalgst, 4),
-                        'att_status' => $att_status ///added by shubhranshu to by default the score should be
+                        'att_status' => $att_status ///added by shubhranshu 
                     );
 
                     $this->db->insert('enrol_pymnt_due', $data);
