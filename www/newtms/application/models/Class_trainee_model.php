@@ -4250,7 +4250,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     'class_status' => $class_status,
                     'enrol_status' => $enrol_status
                 );
-
+print_r($data);exit;
                 $this->db->insert('class_enrol', $data);
 
                 if ($pay_status != 'PYNOTREQD') {
