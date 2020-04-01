@@ -4220,6 +4220,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 }
                 /////////below block was added by shubhranshu for training score to be update for bulk enrol/////
                 $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
+                echo $check_attendance.' -'.$tenant_id.'-'.$course.'-'.$class;exit;
                 if($check_attendance>0)
                 {
                     $check_attendance_trainee=$this->check_attendance_trainee($tenant_id,$course,$class,$user_id);
