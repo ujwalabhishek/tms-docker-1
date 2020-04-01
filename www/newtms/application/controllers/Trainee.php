@@ -464,7 +464,7 @@ class Trainee extends CI_Controller {
      * export trainee data
      */
     public function export_trainee_page() {
-        $data['sideMenuData'] = fetch_non_main_page_content();
+        
         set_time_limit(0);
         ini_set("memory_limit","-1");
         $result = $this->traineemodel->get_trainee_list_export();
