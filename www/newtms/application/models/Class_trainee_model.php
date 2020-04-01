@@ -4218,7 +4218,20 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                     $salesexec = empty($salesexec) ? NULL : $salesexec;
                 }
-
+                /////////below block was added by shubhranshu for training score to be update for bulk enrol/////
+                $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
+                if($check_attendance>0)
+                {
+                    $check_attendance_trainee=$this->check_attendance_trainee($tenant_id,$course,$class,$user_id);
+                    if($check_attendance_trainee > 0){
+                        $training_score='C';
+                        $att_status=1;
+                    }else{
+                     $training_score='ABS';
+                     $att_status=0;
+                    }
+                }else { $att_status=1;}
+                /////////////////////////////end of code by shubhranshu////////////////////////////////
                 $data = array(
                     'tenant_id' => $tenant_id,
                     'course_id' => $course,
@@ -4231,6 +4244,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     'enrolled_on' => $cur_date,
                     'enrolled_by' => $curuser_id,
                     'tg_number' => $tg_number,
+                    'training_score' => $training_score,////added by shubhranshu to by default the score should be present.
                     'payment_status' => $pay_status,
                     'sales_executive_id' => $salesexec,
                     'class_status' => $class_status,
@@ -4251,7 +4265,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         'subsidy_amount' => round($subsidy_amount, 4),
                         'subsidy_recd_date' => $subsidy_recd_on,
                         'subsidy_modified_on' => $cur_date,
-                        'gst_amount' => round($totalgst, 4)
+                        'gst_amount' => round($totalgst, 4),
+                        'att_status' => $att_status ///added by shubhranshu to by default the score should be
                     );
 
                     $this->db->insert('enrol_pymnt_due', $data);
