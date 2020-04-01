@@ -159,6 +159,7 @@ function store_session_data(){
     $CI =& get_instance();
     $data['user'] = $CI->session->userdata('userDetails');
     $CI->data = $data;
+    return;
 }
 function connect_primary($url_str){
    // $conn = new mysqli('localhost', 'root', '','db_parameters');
