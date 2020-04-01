@@ -3650,7 +3650,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      * to get all taxcode
      */
     public function get_alltaxcode() {
-       
+       $data['sideMenuData'] = fetch_non_main_page_content();
         $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
         $result = $this->classtraineemodel->get_alluser($this->tenant_id, '', $query_string);
         if ($result) {
