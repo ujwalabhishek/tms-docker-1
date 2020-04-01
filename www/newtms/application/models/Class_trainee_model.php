@@ -6899,7 +6899,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
      */
     public function get_alluser($tenant_id, $username, $taxcode) {
-
+echo $this->data['user']->role_id;exit;
         $username = trim($username);
 
         $taxcode = trim($taxcode);
