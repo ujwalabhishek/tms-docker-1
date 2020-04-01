@@ -91,7 +91,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                             <label style="color:blue;font-weight:bold">Remove individual enrollment</label>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <?php
-                        echo $tenant_id.'dd';exit;
+                        
                         if($tenant_id != 'T20'){
                             $data=array(
                                     'id'=>'move_enrollment',
