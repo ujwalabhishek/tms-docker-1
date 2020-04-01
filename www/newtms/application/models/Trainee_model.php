@@ -13,7 +13,7 @@ class Trainee_Model extends CI_Model {
         $this->load->library('bcrypt');
         $this->load->helper('common');
         $this->user = $this->session->userdata('userDetails');
-        $data = store_session_data();////added by shubhranshu for data object to access session
+        store_session_data();////added by shubhranshu for data object to access session
     }
 
     /**
