@@ -156,7 +156,7 @@ function database_connection_check_url(){
     return $db_name;
 }
 
-
+/////added by shubhranshu for Data variable to be access session object
 function store_session_data(){
     $CI =& get_instance();
     $data['user'] = $CI->session->userdata('userDetails');
