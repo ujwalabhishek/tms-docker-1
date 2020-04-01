@@ -7,7 +7,9 @@
 class Trainee_Model extends CI_Model {
 
     private $user;
-
+    
+    private $data;
+    
     public function __construct() {
         parent::__construct();
         $this->load->library('bcrypt');
