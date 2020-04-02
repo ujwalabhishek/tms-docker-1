@@ -172,7 +172,7 @@
                                             <?php if ($class['lab_location']): ?>
                                                 <tr>
                                                     <td><span class="crse_des">Lab Location :</span></td>
-                                                    <td><?php if($class['lab_location'] == 'OTH'){echo $class['lab_location_oth']; }else{echo $status_lookup_location[$class['lab_location']]; }?></td>
+                                                    <td><?php if($class['lab_location'] == 'OTH'){echo $class['lab_venue_oth']; }else{echo $status_lookup_location[$class['lab_location']]; }?></td>
                                                 </tr>
                                             <?php endif; ?>
                                             <tr>
