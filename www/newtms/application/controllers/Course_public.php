@@ -202,8 +202,11 @@ class course_public extends CI_Controller {
             if($data['tabledata'][$key]['classroom_location'] == 'OTH'){
                 $data['tabledata'][$key]['classroom_location']  = $class['classroom_venue_oth'];
             }
+             if($data['tabledata'][$key]['lab_location'] == 'OTH'){
+                $data['tabledata'][$key]['lab_location']  = $class['lab_venue_oth'];
+            }
         }
-        print_r($data['tabledata']);exit;
+        
         foreach ($data['tabledata'] as $key => $cl) {
             $data['tabledata'][$key]['crse_manager'] = $this->course_model->get_managers($cl['training_aide']);
         }
