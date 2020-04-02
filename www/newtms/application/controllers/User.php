@@ -724,7 +724,7 @@ class User extends CI_Controller {
                             <li>'.$li.'</li>
                         </ol>';
             
-            if(TENANT_ID == 'T20'){
+            if(TENANT_ID == 'T20'){////added by shubhranshu due to points fow wablab
                 $message3 = '<strong>Remark *: </strong>
              <ol>
                         

@@ -2655,7 +2655,15 @@ class course_public extends CI_Controller {
                             <li>Trim finger nails and remove nail polish</li>
                             <li>' . $li . '</li>
                         </ol>';
-        /* skm end */
+        if(TENANT_ID == 'T20'){////added by shubhranshu due to points fow wablab
+                $message3 = '<strong>Remark *: </strong>
+             <ol>
+                        
+                            <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                            <li>Trim finger nails and remove nail polish</li>
+                            <li>'.$li.'</li>
+                        </ol>';
+            }
 
         if ($booking_details) {
 
