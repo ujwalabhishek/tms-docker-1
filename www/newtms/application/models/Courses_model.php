@@ -977,7 +977,7 @@ class Courses_Model extends CI_Model {
         $this->db->join('trainee_feedback tf', 'tf.feedback_question_id = mv.parameter_id and tf.class_id = ' . $class_id . ' and tf.user_id =' . $user_id .
                 ' and tf.course_id =' . $course_id, 'left');
         $this->db->like('mv.category_id', 'CAT32_01', 'after');
-        $this->db->where('tf.tenant_id', $tenant_id);
+        //$this->db->where('tf.tenant_id', $tenant_id);
         $query = $this->db->get();
         $result = $query->result_array();
         $grouped_by_question = array();
