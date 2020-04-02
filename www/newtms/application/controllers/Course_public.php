@@ -199,6 +199,7 @@ class course_public extends CI_Controller {
             $available = $cl['total_seats'] - $booked;
             $available = ($available < 0) ? 0 : $available;
             $data['tabledata'][$key]['available'] = $available;
+            
         }
         foreach ($data['tabledata'] as $key => $cl) {
             $data['tabledata'][$key]['crse_manager'] = $this->course_model->get_managers($cl['training_aide']);
@@ -207,6 +208,7 @@ class course_public extends CI_Controller {
             $data['tabledata'][$key]['classroom_trainer'] = $this->course_model->get_trainers($cl['classroom_trainer']);
         }
         $data['status_lookup_language'] = $status_lookup_language;
+        
         $data['status_lookup_location'] = $status_lookup_location;
         $data['course_name'] = $this->course_model->get_course_name($course_id);
         $data['main_content'] = 'course_public/course_class_schedule';

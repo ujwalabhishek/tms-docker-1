@@ -81,7 +81,7 @@
                                             <td><?php echo $class['total_classroom_duration'] + $class['total_lab_duration'] + $class['assmnt_duration']; ?></td>
                                             <td ><div class="table-scrol" style="    height: 75px;"><?php echo $class['crse_manager']; ?></div></td>
                                             <td ><div class="table-scrol" style="    height: 75px;"><?php echo $class['classroom_trainer']; ?></div></td>
-                                            <td><?php echo $class['classroom_location']; ?></td>
+                                            <td><?php if($class['classroom_location'] == 'OTH'){echo $class['classroom_venue_oth']; }else{echo $status_lookup_location[$class['classroom_location']]; }?></td>
                                             <td><?php echo $status_lookup_language[$class['class_language']]; ?></td>
                                             <td><?php echo $class['available']; ?></td>
                                             <?php
