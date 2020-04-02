@@ -140,7 +140,7 @@
                                             </tr>
                                             <tr>
                                                 <td><span class="crse_des">Classroom Duration (hrs) :</span></td>
-                                                <td><?php if($class['classroom_location'] == 'OTH'){echo $class['classroom_venue_oth']; }else{echo [$class['classroom_location']]; }; ?></td>
+                                                <td><?php echo $class['total_classroom_duration']; ?></td>
                                             </tr>
                                             <tr>
                                                 <td><span class="crse_des">Lab Duration (hrs) :</span></td>
@@ -167,12 +167,12 @@
                                             </tr>
                                             <tr>
                                                 <td><span class="crse_des">Class Room Location :</span></td>
-                                                <td><?php echo $status_lookup_location[$class['classroom_location']]; ?></td>
+                                                <td><?php if($class['classroom_location'] == 'OTH'){echo $class['classroom_venue_oth']; }else{echo $status_lookup_location[$class['classroom_location']]; }?></td>
                                             </tr>
                                             <?php if ($class['lab_location']): ?>
                                                 <tr>
                                                     <td><span class="crse_des">Lab Location :</span></td>
-                                                    <td><?php echo $status_lookup_location[$class['lab_location']]; ?></td>
+                                                    <td><?php if($class['lab_location'] == 'OTH'){echo $class['lab_location_oth']; }else{echo $status_lookup_location[$class['lab_location']]; }?></td>
                                                 </tr>
                                             <?php endif; ?>
                                             <tr>
