@@ -12,6 +12,7 @@ class Settings extends CI_Controller {
         $this->load->model('notifications_model');
         $this->load->helper('metavalues_helper');
         $this->load->model('meta_values', 'meta');
+        $this->load->library('bcrypt');
         $this->user=$this->session->userdata('userDetails');
     }
     /*
