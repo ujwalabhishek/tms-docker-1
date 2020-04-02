@@ -666,7 +666,7 @@ class Course_Public_Model extends CI_Model {
 
         $this->db->select('crs.crse_name, crs.crse_manager,c_cls.class_id, c_cls.course_id, c_cls.total_seats, c_cls.classroom_trainer,c_cls.class_name, c_cls.class_start_datetime,c_cls.class_end_datetime, c_cls.description,c_cls.classroom_venue_oth,
 
-                c_cls.total_classroom_duration, c_cls.total_lab_duration,c_cls.assmnt_duration,c_cls.class_fees,c_cls.classroom_location, c_cls.lab_location ,c_cls.class_language,c_cls.class_pymnt_enrol,c_cls.class_status,c_cls.training_aide');
+                c_cls.total_classroom_duration, c_cls.total_lab_duration,c_cls.assmnt_duration,c_cls.class_fees,c_cls.classroom_location, c_cls.lab_location,c_cls.lab_venue_oth ,c_cls.class_language,c_cls.class_pymnt_enrol,c_cls.class_status,c_cls.training_aide');
 
         $this->db->from('course_class c_cls');
 
