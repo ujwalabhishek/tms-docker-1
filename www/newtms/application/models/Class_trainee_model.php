@@ -4164,122 +4164,131 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         foreach ($insert_data as $key => $excel) {
              ////////////////////////added by shubhranshu to prevent negative invoice due to subsidy on 4/1/2019////////////
-            $k= 4;
-            $subsidy_amount = $excel['subsidy_amount'];
-            $netdue = $this->calculate_net_due($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
+            $user_id = $row['user_id'];
+            $check = $this->db->select('*')
+            ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $course)
+            ->where('class_id', $class)->where('user_id', $excel['user_id'])->get();
+            
+            if ($check->num_rows() == 0) 
+            {
+                $k= 4;
+                $subsidy_amount = $excel['subsidy_amount'];
+                $netdue = $this->calculate_net_due($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
 
-            if($netdue <= 0){
-                $insert_data[$k]['status'] = 'FAILED';
-                $excel['status']='FAILED';
-                $insert_data[$k]['failure_reason'] = 'Subsidy amount can not be nagative';
-            }
-            $k++;
-            ////////////////////////added by shubhranshu to prevent negative invoice due to subsidy////////////
-            if ($excel['status'] == 'PASSED') {
-
-                //$subsidy_amount = $excel['subsidy_amount'];
-
-                $subsidy_recd_on = $excel['subsidy_recd_on'];
-
-                if ($subsidy_recd_on) {
-
-                    $subsidy_recd_on = date('Y-m-d', strtotime($subsidy_recd_on));
-                } else {
-
-                    $subsidy_recd_on = '';
+                if($netdue <= 0){
+                    $insert_data[$k]['status'] = 'FAILED';
+                    $excel['status']='FAILED';
+                    $insert_data[$k]['failure_reason'] = 'Subsidy amount can not be nagative';
                 }
+                $k++;
+                ////////////////////////added by shubhranshu to prevent negative invoice due to subsidy////////////
+                if ($excel['status'] == 'PASSED') {
 
-                //$netdue = $this->calculate_net_due($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
+                    //$subsidy_amount = $excel['subsidy_amount'];
 
-                $class_status = $this->get_class_statustext($class);
+                    $subsidy_recd_on = $excel['subsidy_recd_on'];
 
-                $totalgst = $this->calculate_gst($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
+                    if ($subsidy_recd_on) {
 
-                if (($excel['enrollment_type'] == 'RETAKE') && ($excel['enrol_retake_pay_mode'] == 'BYPASS')) {
+                        $subsidy_recd_on = date('Y-m-d', strtotime($subsidy_recd_on));
+                    } else {
 
-                    $pay_status = 'PYNOTREQD';
+                        $subsidy_recd_on = '';
+                    }
 
-                    $enrol_status = 'ENRLACT';
+                    //$netdue = $this->calculate_net_due($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
 
-                    $payment_due_id = '';
-                } else {
+                    $class_status = $this->get_class_statustext($class);
 
-                    $pay_status = 'NOTPAID';
+                    $totalgst = $this->calculate_gst($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
 
-                    $enrol_status = 'ENRLBKD';
-                }
+                    if (($excel['enrollment_type'] == 'RETAKE') && ($excel['enrol_retake_pay_mode'] == 'BYPASS')) {
 
-                $tg_number = $excel['tg_number'];
+                        $pay_status = 'PYNOTREQD';
 
-                if ($this->user->role_id == 'SLEXEC') {
+                        $enrol_status = 'ENRLACT';
 
-                    $salesexec = $this->user->user_id;
-                } else {
+                        $payment_due_id = '';
+                    } else {
 
-                    $salesexec = empty($salesexec) ? NULL : $salesexec;
-                }
-                /////////below block was added by shubhranshu for training score to be update for bulk enrol/////
-                $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
-                //echo $check_attendance.' -'.$tenant_id.'-'.$course.'-'.$class;exit;
-                if($check_attendance>0)
-                { 
-                    $training_score='ABS';
-                    $att_status=0;
-                    
-                }else { 
-                    $att_status=1;$training_score='C';
-                    
-                }
-                /////////////////////////////end of code by shubhranshu////////////////////////////////
-                $data = array(
-                    'tenant_id' => $tenant_id,
-                    'course_id' => $course,
-                    'class_id' => $class,
-                    'user_id' => $excel['user_id'],
-                    'enrolment_type' => $excel['enrollment_type'],
-                    'enrolment_mode' => 'COMPSPON',
-                    'pymnt_due_id' => $payment_due_id,
-                    'company_id' => $company_id,
-                    'enrolled_on' => $cur_date,
-                    'enrolled_by' => $curuser_id,
-                    'tg_number' => $tg_number,
-                    'training_score' => $training_score,////added by shubhranshu to by default the score should be present.
-                    'payment_status' => $pay_status,
-                    'sales_executive_id' => $salesexec,
-                    'class_status' => $class_status,
-                    'enrol_status' => $enrol_status
-                );
+                        $pay_status = 'NOTPAID';
 
-                $this->db->insert('class_enrol', $data);
+                        $enrol_status = 'ENRLBKD';
+                    }
 
-                if ($pay_status != 'PYNOTREQD') {
+                    $tg_number = $excel['tg_number'];
 
+                    if ($this->user->role_id == 'SLEXEC') {
+
+                        $salesexec = $this->user->user_id;
+                    } else {
+
+                        $salesexec = empty($salesexec) ? NULL : $salesexec;
+                    }
+                    /////////below block was added by shubhranshu for training score to be update for bulk enrol/////
+                    $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
+                    //echo $check_attendance.' -'.$tenant_id.'-'.$course.'-'.$class;exit;
+                    if($check_attendance>0)
+                    { 
+                        $training_score='ABS';
+                        $att_status=0;
+
+                    }else { 
+                        $att_status=1;$training_score='C';
+
+                    }
+                    /////////////////////////////end of code by shubhranshu////////////////////////////////
                     $data = array(
+                        'tenant_id' => $tenant_id,
+                        'course_id' => $course,
+                        'class_id' => $class,
                         'user_id' => $excel['user_id'],
+                        'enrolment_type' => $excel['enrollment_type'],
+                        'enrolment_mode' => 'COMPSPON',
                         'pymnt_due_id' => $payment_due_id,
-                        'class_fees' => round($class_detail->class_fees, 4),
-                        'total_amount_due' => round($netdue, 4),
-                        'discount_type' => $discount_label,
-                        'discount_rate' => round($discount_rate, 4),
-                        'subsidy_amount' => round($subsidy_amount, 4),
-                        'subsidy_recd_date' => $subsidy_recd_on,
-                        'subsidy_modified_on' => $cur_date,
-                        'gst_amount' => round($totalgst, 4),
-                        'att_status' => $att_status ///added by shubhranshu 
+                        'company_id' => $company_id,
+                        'enrolled_on' => $cur_date,
+                        'enrolled_by' => $curuser_id,
+                        'tg_number' => $tg_number,
+                        'training_score' => $training_score,////added by shubhranshu to by default the score should be present.
+                        'payment_status' => $pay_status,
+                        'sales_executive_id' => $salesexec,
+                        'class_status' => $class_status,
+                        'enrol_status' => $enrol_status
                     );
 
-                    $this->db->insert('enrol_pymnt_due', $data);
+                    $this->db->insert('class_enrol', $data);
 
-                    $company_net_due = $company_net_due + round($netdue, 4);
+                    if ($pay_status != 'PYNOTREQD') {
 
-                    $company_discount = $company_discount + round($discount_total, 4);
+                        $data = array(
+                            'user_id' => $excel['user_id'],
+                            'pymnt_due_id' => $payment_due_id,
+                            'class_fees' => round($class_detail->class_fees, 4),
+                            'total_amount_due' => round($netdue, 4),
+                            'discount_type' => $discount_label,
+                            'discount_rate' => round($discount_rate, 4),
+                            'subsidy_amount' => round($subsidy_amount, 4),
+                            'subsidy_recd_date' => $subsidy_recd_on,
+                            'subsidy_modified_on' => $cur_date,
+                            'gst_amount' => round($totalgst, 4),
+                            'att_status' => $att_status ///added by shubhranshu 
+                        );
 
-                    $company_subsidy = $company_subsidy + round($subsidy_amount, 4);
+                        $this->db->insert('enrol_pymnt_due', $data);
 
-                    $company_gst = $company_gst + round($totalgst, 4);
+                        $company_net_due = $company_net_due + round($netdue, 4);
 
-                    $company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
+                        $company_discount = $company_discount + round($discount_total, 4);
+
+                        $company_subsidy = $company_subsidy + round($subsidy_amount, 4);
+
+                        $company_gst = $company_gst + round($totalgst, 4);
+
+                        $company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
+                    }
                 }
+            
             }
         }
 
