@@ -6,7 +6,7 @@ function ispassword_exist(e,id) {
         return false;
     }else {
         $.ajax({
-            url: baseurl + "settings_public/password_exist",
+            url: baseurl + "settings/password_exist",
             type: "post",
             data: 'oldpassword='+e,
             success: function(res) {
