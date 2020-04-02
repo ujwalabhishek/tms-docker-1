@@ -103,8 +103,8 @@
                 <td>
                     <?php echo $feedback['FDBCK01']['trainee_other_remarks']; ?>
                     <span style="float:right;">
-                        <a href="<?php echo base_url(); ?>reports/print_trainee_feedback?course_id=<?php echo $course_id ?>&class_id=<?php echo $class_id ?>&user_id=<?php echo $user_id ?>" class="small_text1">
-                            <button class="btn btn-primary" type="button">Print</button></a>
+                     
+                            <button class="btn btn-primary" type="submit">Print</button>
                         <a href="#" rel="modal:close">
                             <button class="btn btn-primary" type="button">Close</button>
                         </a>
