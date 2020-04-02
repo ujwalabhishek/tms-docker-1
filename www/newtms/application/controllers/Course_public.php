@@ -194,7 +194,7 @@ class course_public extends CI_Controller {
 
             $status_lookup_location[$value['parameter_id']] = $value['category_name'];
         }
-        print_r($data['tabledata']);exit;
+        
         foreach ($data['tabledata'] as $key => $cl) {
             
             $data['class_count'][$cl['class_id']] = $booked = $this->course_model->get_course_class_count($course_id, $cl['class_id']);
@@ -202,10 +202,10 @@ class course_public extends CI_Controller {
             $available = ($available < 0) ? 0 : $available;
             $data['tabledata'][$key]['available'] = $available;
             if($data['tabledata'][$key]['classroom_location'] == 'OTH'){
-                $data['tabledata'][$key]['classroom_location']  = $class['classroom_venue_oth'];
+                $data['tabledata'][$key]['classroom_location']  =  $data['tabledata'][$key]['classroom_venue_oth'];
             }
              if($data['tabledata'][$key]['lab_location'] == 'OTH'){
-                $data['tabledata'][$key]['lab_location']  = $class['lab_venue_oth'];
+                $data['tabledata'][$key]['lab_location']  = $data['tabledata'][$key]['lab_venue_oth'];
             }
         }
         
