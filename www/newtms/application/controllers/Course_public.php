@@ -194,7 +194,9 @@ class course_public extends CI_Controller {
 
             $status_lookup_location[$value['parameter_id']] = $value['category_name'];
         }
+        print_r($data['tabledata']);exit;
         foreach ($data['tabledata'] as $key => $cl) {
+            
             $data['class_count'][$cl['class_id']] = $booked = $this->course_model->get_course_class_count($course_id, $cl['class_id']);
             $available = $cl['total_seats'] - $booked;
             $available = ($available < 0) ? 0 : $available;
