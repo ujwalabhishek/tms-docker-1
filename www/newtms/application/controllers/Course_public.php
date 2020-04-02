@@ -199,8 +199,11 @@ class course_public extends CI_Controller {
             $available = $cl['total_seats'] - $booked;
             $available = ($available < 0) ? 0 : $available;
             $data['tabledata'][$key]['available'] = $available;
-            
+            if($data['tabledata']['classroom_location'] == 'OTH'){
+                $data['tabledata']['classroom_location']  = $class['classroom_venue_oth'];
+            }
         }
+        print_r($data['tabledata']);exit;
         foreach ($data['tabledata'] as $key => $cl) {
             $data['tabledata'][$key]['crse_manager'] = $this->course_model->get_managers($cl['training_aide']);
         }
