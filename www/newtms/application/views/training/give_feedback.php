@@ -103,11 +103,7 @@
                 <td>
                     <?php echo $feedback['FDBCK01']['trainee_other_remarks']; ?>
                     <span style="float:right;">
-                        <a href="#" class="small_text1">
-                            <button class="btn btn-primary" type="submit">Print</button></a>
-                        <a href="#" rel="modal:close">
-                            <button class="btn btn-primary" type="button">Close</button>
-                        </a>
+                         <button class="btn btn-primary" type="submit" id="save" style="display: none;">Save</button>
                     </span>
                 </td>
             </tr>
