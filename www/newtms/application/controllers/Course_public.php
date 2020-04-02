@@ -201,12 +201,7 @@ class course_public extends CI_Controller {
             $available = $cl['total_seats'] - $booked;
             $available = ($available < 0) ? 0 : $available;
             $data['tabledata'][$key]['available'] = $available;
-            if($data['tabledata'][$key]['classroom_location'] == 'OTH'){
-                $data['tabledata'][$key]['classroom_location']  =  $data['tabledata'][$key]['classroom_venue_oth'];
-            }
-             if($data['tabledata'][$key]['lab_location'] == 'OTH'){
-                $data['tabledata'][$key]['lab_location']  = $data['tabledata'][$key]['lab_venue_oth'];
-            }
+           
         }
         print_r($data['tabledata']);exit;
         foreach ($data['tabledata'] as $key => $cl) {
