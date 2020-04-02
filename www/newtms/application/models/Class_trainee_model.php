@@ -4164,13 +4164,6 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         foreach ($insert_data as $key => $excel) {
              ////////////////////////added by shubhranshu to prevent negative invoice due to subsidy on 4/1/2019////////////
-            $user_id = $row['user_id'];
-            $check = $this->db->select('*')
-            ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $course)
-            ->where('class_id', $class)->where('user_id', $excel['user_id'])->get();
-            
-            if ($check->num_rows() == 0) 
-            {
                 $k= 4;
                 $subsidy_amount = $excel['subsidy_amount'];
                 $netdue = $this->calculate_net_due($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
@@ -4288,37 +4281,102 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         $company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
                     }
                 }
+                
+            } 
             
-            }
-        }
+            /////////////////////addded by shubhranshu for company invoice which is exist/////////////
+                $check = $this->db->select('*')
+                    ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $course)
+                    ->where('class_id', $class)->where('company_id', $company_id)->get();
 
-        if ($company_net_due > 0) {
+                if ($check->num_rows() == 0) {
 
-            $gst_rule = (empty($course_detail->gst_on_off)) ? '' : $course_detail->subsidy_after_before;
+                    if ($company_net_due > 0) {
 
-            $data = array(
-                'invoice_id' => $invoice_id,
-                'pymnt_due_id' => $payment_due_id,
-                'inv_date' => $cur_date,
-                'inv_type' => 'INVCOMALL',
-                'company_id' => $company_id,
-                'total_inv_amount' => round($company_net_due, 4),
-                'total_unit_fees' => round($company_total_unitfees, 4),
-                'total_inv_discnt' => round($company_discount, 4),
-                'total_inv_subsdy' => round($company_subsidy, 4),
-                'total_gst' => round($company_gst, 4),
-                'gst_rate' => round($gst_rate, 4),
-                'gst_rule' => $gst_rule,
-            );
+                        $gst_rule = (empty($course_detail->gst_on_off)) ? '' : $course_detail->subsidy_after_before;
 
-            $this->db->insert('enrol_invoice', $data);
+                        $data = array(
+                            'invoice_id' => $invoice_id,
+                            'pymnt_due_id' => $payment_due_id,
+                            'inv_date' => $cur_date,
+                            'inv_type' => 'INVCOMALL',
+                            'company_id' => $company_id,
+                            'total_inv_amount' => round($company_net_due, 4),
+                            'total_unit_fees' => round($company_total_unitfees, 4),
+                            'total_inv_discnt' => round($company_discount, 4),
+                            'total_inv_subsdy' => round($company_subsidy, 4),
+                            'total_gst' => round($company_gst, 4),
+                            'gst_rate' => round($gst_rate, 4),
+                            'gst_rule' => $gst_rule,
+                        );
 
-            $insert_data['invoice_id'] = $invoice_id;
-      
-        }
+                        $this->db->insert('enrol_invoice', $data);
+
+                        $insert_data['invoice_id'] = $invoice_id;
+
+                    }
+
+                }else{    
+
+                        $inv_detls = $this->fetch_enrol_invoice_check($tenant_id,$course,$class,$company_id);
+                        
+                        if (!empty($inv_detls->pymnt_due_id)) {
+
+
+                            $company_net_due = $company_net_due + round($netdue, 4) + $inv_detls->total_inv_amount;
+
+                            $company_discount = $company_discount + round($discount_total, 4) + $inv_detls->total_inv_discnt;
+
+                            $company_subsidy = $company_subsidy + round($subsidy_amount, 4) + $inv_detls->total_inv_subsdy;
+
+                            $totalgst = $this->calculate_gst($course_detail->gst_on_off, $course_detail->subsidy_after_before, ($feesdue+$inv_detls->total_inv_amount), ($subsidy_amount+$inv_detls->total_inv_subsdy), $gst_rate);
+
+                            $company_gst = $company_gst + round($totalgst, 4);
+
+                            $company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
+
+                            $data = array(
+                                'invoice_id' => $inv_detls->invoice_id,
+                                'pymnt_due_id' => $inv_detls->pymnt_due_id,
+                                'inv_date' => $cur_date,
+                                'inv_type' => 'INVCOMALL',
+                                'company_id' => $company_id,
+                                'total_inv_amount' => round($company_net_due, 4),
+                                'total_unit_fees' => round($company_total_unitfees, 4),
+                                'total_inv_discnt' => round(($company_discount) , 4),
+                                'total_inv_subsdy' => round(($company_subsidy), 4),
+                                'total_gst' => round($company_gst, 4),
+                                'gst_rate' => round($gst_rate, 4),
+                                'gst_rule' => $gst_rule,
+                            );
+
+                            $this->db->where('pymnt_due_id', $inv_detls->pymnt_due_id);
+
+                            $this->db->update('enrol_invoice', $data);
+
+                            $insert_data['invoice_id'] = $inv_detls->invoice_id;
+
+                        }
+
+                }
+            
 
         return $insert_data;
     }
+    
+    public function fetch_enrol_invoice_check($tenant_id,$course_id,$class_id,$comp_id) {
+
+        $result = $this->db->select('ei.*')->from('enrol_invoice ei')
+                        ->join('class_enrol ce', 'ce.pymnt_due_id=ei.pymnt_due_id')                       
+                        ->where('ce.course_id', $course_id) 
+                        ->where('ce.class_id', $class_id) 
+                         ->where('ce.tenant_id', $tenant_id) 
+                        ->where('ce.company_id',$comp_id)
+                        ->get()->row();
+
+        return $result;
+    }
+    ///////////addded by shubhranshu for company invoice if exist
 
     /**
 
