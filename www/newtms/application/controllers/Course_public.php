@@ -194,7 +194,7 @@ class course_public extends CI_Controller {
 
             $status_lookup_location[$value['parameter_id']] = $value['category_name'];
         }
-        
+        print_r($data['tabledata']);
         foreach ($data['tabledata'] as $key => $cl) {
             
             $data['class_count'][$cl['class_id']] = $booked = $this->course_model->get_course_class_count($course_id, $cl['class_id']);
@@ -208,7 +208,7 @@ class course_public extends CI_Controller {
                 $data['tabledata'][$key]['lab_location']  = $data['tabledata'][$key]['lab_venue_oth'];
             }
         }
-        
+        print_r($data['tabledata']);exit;
         foreach ($data['tabledata'] as $key => $cl) {
             $data['tabledata'][$key]['crse_manager'] = $this->course_model->get_managers($cl['training_aide']);
         }
