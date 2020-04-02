@@ -716,13 +716,24 @@ class User extends CI_Controller {
                  $li = "Report at center at 8:30 AM to register for class";
             }
         /* end */
-          $message3 = '<strong>Remark *: </strong>
+            $message3 = '<strong>Remark *: </strong>
              <ol>
                             <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                             <li>Your NRIC, work permit or will be photocopied on the class date</li>
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
                         </ol>';
+            
+            if(TENANT_ID == 'T20'){
+                $message3 = '<strong>Remark *: </strong>
+             <ol>
+                        
+                            <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                            <li>Trim finger nails and remove nail polish</li>
+                            <li>'.$li.'</li>
+                        </ol>';
+            }
+          
         /* skm end */
         if ($booking_details) {
             $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
