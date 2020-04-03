@@ -4231,6 +4231,11 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                     }
                     /////////////////////////////end of code by shubhranshu////////////////////////////////
+                     $check = $this->db->select('*')
+                    ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $course)
+                    ->where('class_id', $class)->where('company_id', $company_id)->get();
+                    
+                    
                     $data = array(
                         'tenant_id' => $tenant_id,
                         'course_id' => $course,
@@ -4250,7 +4255,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         'enrol_status' => $enrol_status
                     );
 
-                    //$this->db->insert('class_enrol', $data);
+                    $this->db->insert('class_enrol', $data);
 
                     if ($pay_status != 'PYNOTREQD') {
 
@@ -4268,7 +4273,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                             'att_status' => $att_status ///added by shubhranshu 
                         );
 
-                        ///$this->db->insert('enrol_pymnt_due', $data);
+                        $this->db->insert('enrol_pymnt_due', $data);
 
                         $company_net_due = $company_net_due + round($netdue, 4);
 
@@ -4285,9 +4290,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             } 
             
             /////////////////////addded by shubhranshu for company invoice which is exist/////////////
-                $check = $this->db->select('*')
-                    ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $course)
-                    ->where('class_id', $class)->where('company_id', $company_id)->get();
+               
 
                 if ($check->num_rows() == 0) { echo "its new invoice, enrollment is not there";
 
@@ -4309,7 +4312,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                             'gst_rate' => round($gst_rate, 4),
                             'gst_rule' => $gst_rule,
                         );
-print_r($data);exit;
+                        //print_r($data);exit;
                         $this->db->insert('enrol_invoice', $data);
 
                         $insert_data['invoice_id'] = $invoice_id;
