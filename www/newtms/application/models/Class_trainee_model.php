@@ -4332,9 +4332,9 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                             $company_subsidy = $company_subsidy + $inv_detls->total_inv_subsdy;
 
-                            $totalgst = $totalgst+$inv_detls->total_gst;
+                            //$totalgst = $totalgst+$inv_detls->total_gst;
 
-                            $company_gst = $company_gst + $totalgst;
+                            $company_gst = $company_gst + $inv_detls->total_gst;
 
                             $company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
 
