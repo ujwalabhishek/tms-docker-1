@@ -4336,7 +4336,7 @@ echo $company_net_due.'-'.$netdue.'-'.$inv_detls->total_inv_amount;
 
                             //$company_gst = $company_gst + round($totalgst, 4);
 
-                            //$company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
+                            $company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
 
                             $data = array(
                                 'invoice_id' => $inv_detls->invoice_id,
