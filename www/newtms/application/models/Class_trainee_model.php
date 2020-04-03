@@ -4345,7 +4345,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                             $company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
 
                             $data = array(
-                                'invoice_id' => $inv_detls->invoice_id,
+                                'invoice_id' => $invoice_id,
                                 'pymnt_due_id' => $inv_detls->pymnt_due_id,
                                 'inv_date' => $cur_date,
                                 'inv_type' => 'INVCOMALL',
@@ -4363,7 +4363,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                             $this->db->update('enrol_invoice', $data);
 
-                            $insert_data['invoice_id'] = $inv_detls->invoice_id;
+                            $insert_data['invoice_id'] = $invoice_id;
 
                         }
 
