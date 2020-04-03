@@ -4126,6 +4126,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         
         //// Below code added by shubhranshu to fetch the company discount 
+        
+        
         $comp_discounts_details = $this->fetch_compnay_discount($tenant_id,$course,$company_id);
         if (($comp_discounts_details->Discount_Percent > 0) || ($comp_discounts_details->Discount_Amount > 0)) {
 
@@ -4167,7 +4169,22 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         }else{
             $inv_detls = $this->fetch_enrol_invoice_check($tenant_id,$course,$class,$company_id);
             $payment_due_id = $inv_detls->pymnt_due_id;
-             $invoice_id = $this->generate_invoice_id();
+            $invoice_id = $this->generate_invoice_id();
+            $check_regenerate_comp_discount = $this->db->select('*')
+                ->from('enrol_pymnt_due')->where('pymnt_due_id', $inv_detls->pymnt_due_id)->get()->result();
+            $regenet_comp_dis_rate = 0;
+            foreach($check_regenerate_comp_discount as $arrays){
+                if($arrays->discount_rate > $regenet_comp_dis_rate){
+                    $regenet_comp_dis_rate = $arrays->discount_rate;
+                }
+            }
+            if((!empty($regenet_comp_dis_rate)) && ($regenet_comp_dis_rate !=0)){
+                $discount_total = ($regenet_comp_dis_rate * $class_detail->class_fees) / 100;
+                $discount_rate = round($regenet_comp_dis_rate, 4);
+                $discount_label = 'DISCOMP';
+            }
+            
+             
         }
 
         
@@ -4330,7 +4347,9 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 }else{    
   
                         if (!empty($inv_detls->pymnt_due_id)) {
-
+                                 
+                           
+                            
                             $gst_rule = (empty($course_detail->gst_on_off)) ? '' : $course_detail->subsidy_after_before;
                             
                             $company_net_due = $company_net_due + $inv_detls->total_inv_amount;
