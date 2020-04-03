@@ -4250,7 +4250,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         'enrol_status' => $enrol_status
                     );
 
-                    $this->db->insert('class_enrol', $data);
+                    //$this->db->insert('class_enrol', $data);
 
                     if ($pay_status != 'PYNOTREQD') {
 
@@ -4268,7 +4268,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                             'att_status' => $att_status ///added by shubhranshu 
                         );
 
-                        $this->db->insert('enrol_pymnt_due', $data);
+                        ///$this->db->insert('enrol_pymnt_due', $data);
 
                         $company_net_due = $company_net_due + round($netdue, 4);
 
@@ -4289,7 +4289,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $course)
                     ->where('class_id', $class)->where('company_id', $company_id)->get();
 
-                if ($check->num_rows() == 0) {
+                if ($check->num_rows() == 0) { echo "its new invoice, enrollment is not there";exit;
 
                     if ($company_net_due > 0) {
 
@@ -4317,7 +4317,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     }
 
                 }else{    
-
+                        echo "Need to add the trainee to the invoice as enrollment is already exist";exit;
                         $inv_detls = $this->fetch_enrol_invoice_check($tenant_id,$course,$class,$company_id);
                         
                         if (!empty($inv_detls->pymnt_due_id)) {
