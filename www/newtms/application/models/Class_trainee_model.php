@@ -4331,7 +4331,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
   
                         if (!empty($inv_detls->pymnt_due_id)) {
 
-
+                            $gst_rule = (empty($course_detail->gst_on_off)) ? '' : $course_detail->subsidy_after_before;
+                            
                             $company_net_due = $company_net_due + $inv_detls->total_inv_amount;
 
                             $company_discount = $company_discount + $inv_detls->total_inv_discnt;
