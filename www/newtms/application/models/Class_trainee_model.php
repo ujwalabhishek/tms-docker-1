@@ -4334,7 +4334,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                             $totalgst = $totalgst+$inv_detls->total_gst;
 
-                            $company_gst = $company_gst + round($totalgst, 4);
+                            $company_gst = $company_gst + $totalgst;
 
                             $company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
 
