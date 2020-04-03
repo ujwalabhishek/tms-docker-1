@@ -4331,10 +4331,10 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                             $company_discount = $company_discount + $inv_detls->total_inv_discnt;
 
                             $company_subsidy = $company_subsidy + $inv_detls->total_inv_subsdy;
-echo $totalgst.'-'.$netdue.'-'.$inv_detls->total_gst;
+
                             $totalgst = $totalgst+$inv_detls->total_gst;
 
-                            //$company_gst = $company_gst + round($totalgst, 4);
+                            $company_gst = $company_gst + round($totalgst, 4);
 
                             $company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
 
