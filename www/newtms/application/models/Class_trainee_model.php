@@ -4332,7 +4332,7 @@ echo $company_net_due.'-'.$netdue.'-'.$inv_detls->total_inv_amount;
 
                             $company_subsidy = $company_subsidy + $inv_detls->total_inv_subsdy;
 
-                            $totalgst = $this->calculate_gst($course_detail->gst_on_off, $course_detail->subsidy_after_before, ($feesdue+$inv_detls->total_inv_amount), ($subsidy_amount+$inv_detls->total_inv_subsdy), $gst_rate);
+                            $totalgst = $this->calculate_gst($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue+, $subsidy_amount, $gst_rate);
 
                             $company_gst = $company_gst + round($totalgst, 4);
 
