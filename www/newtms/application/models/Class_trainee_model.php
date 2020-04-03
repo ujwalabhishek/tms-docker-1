@@ -4155,12 +4155,22 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $feesdue = $class_detail->class_fees - ($discount_total);
 
         $gst_rate = $this->get_gst_current();
+        
+       ///most important added by shubhranshu
+        $check = $this->db->select('*')
+                    ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $course)
+                    ->where('class_id', $class)->where('company_id', $company_id)->get();
+        if ($check->num_rows() == 0) { 
+            $payment_due_id = get_max_lookup(ENROL_PYMNT_DUE);
 
+            $invoice_id = $this->generate_invoice_id();
+        }else{
+            $inv_detls = $this->fetch_enrol_invoice_check($tenant_id,$course,$class,$company_id);
+            $payment_due_id = $inv_detls->pymnt_due_id;
+            $invoice_id = $inv_detls->invoice_id;
+        }
 
-
-        $payment_due_id = get_max_lookup(ENROL_PYMNT_DUE);
-
-        $invoice_id = $this->generate_invoice_id();
+        
 
         foreach ($insert_data as $key => $excel) {
              ////////////////////////added by shubhranshu to prevent negative invoice due to subsidy on 4/1/2019////////////
@@ -4231,9 +4241,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                     }
                     /////////////////////////////end of code by shubhranshu////////////////////////////////
-                     $check = $this->db->select('*')
-                    ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $course)
-                    ->where('class_id', $class)->where('company_id', $company_id)->get();
+                    
                     
                     
                     $data = array(
@@ -4320,9 +4328,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     }
 
                 }else{    
-                        
-                        $inv_detls = $this->fetch_enrol_invoice_check($tenant_id,$course,$class,$company_id);
-                        
+  
                         if (!empty($inv_detls->pymnt_due_id)) {
 
 
