@@ -4343,7 +4343,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                             $company_gst = $company_gst + $inv_detls->total_gst;
 
-                            $company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
+                            $company_total_unitfees = $company_total_unitfees + $inv_detls->total_unit_fees;
 
                             $data = array(
                                 'invoice_id' => $invoice_id,
