@@ -4182,6 +4182,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 $discount_total = ($regenet_comp_dis_rate * $class_detail->class_fees) / 100;
                 $discount_rate = round($regenet_comp_dis_rate, 4);
                 $discount_label = 'DISCOMP';
+                $feesdue = $class_detail->class_fees - ($discount_total);
             }
             
              
