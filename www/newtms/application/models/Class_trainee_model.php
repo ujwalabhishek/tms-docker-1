@@ -4167,7 +4167,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         }else{
             $inv_detls = $this->fetch_enrol_invoice_check($tenant_id,$course,$class,$company_id);
             $payment_due_id = $inv_detls->pymnt_due_id;
-            $invoice_id = $inv_detls->invoice_id;
+             $invoice_id = $this->generate_invoice_id();
         }
 
         
