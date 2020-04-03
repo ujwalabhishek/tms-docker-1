@@ -4326,11 +4326,11 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         if (!empty($inv_detls->pymnt_due_id)) {
 echo $company_net_due.'-'.$netdue.'-'.$inv_detls->total_inv_amount;
 
-                            $company_net_due = $company_net_due + round($netdue, 4) + $inv_detls->total_inv_amount;
+                            $company_net_due = $company_net_due + $inv_detls->total_inv_amount;
 
-                            $company_discount = $company_discount + round($discount_total, 4) + $inv_detls->total_inv_discnt;
+                            $company_discount = $company_discount + $inv_detls->total_inv_discnt;
 
-                            $company_subsidy = $company_subsidy + round($subsidy_amount, 4) + $inv_detls->total_inv_subsdy;
+                            $company_subsidy = $company_subsidy + $inv_detls->total_inv_subsdy;
 
                             $totalgst = $this->calculate_gst($course_detail->gst_on_off, $course_detail->subsidy_after_before, ($feesdue+$inv_detls->total_inv_amount), ($subsidy_amount+$inv_detls->total_inv_subsdy), $gst_rate);
 
