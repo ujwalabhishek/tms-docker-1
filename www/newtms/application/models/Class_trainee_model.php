@@ -4289,7 +4289,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $course)
                     ->where('class_id', $class)->where('company_id', $company_id)->get();
 
-                if ($check->num_rows() == 0) { echo "its new invoice, enrollment is not there";exit;
+                if ($check->num_rows() == 0) { echo "its new invoice, enrollment is not there";
 
                     if ($company_net_due > 0) {
 
@@ -4309,7 +4309,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                             'gst_rate' => round($gst_rate, 4),
                             'gst_rule' => $gst_rule,
                         );
-
+print_r($data);exit;
                         $this->db->insert('enrol_invoice', $data);
 
                         $insert_data['invoice_id'] = $invoice_id;
