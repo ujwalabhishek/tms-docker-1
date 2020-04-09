@@ -661,7 +661,7 @@ function user_activity($module_id,$act_on,$previous_details,$account_type = null
     }
     /* End */
     
-    function get_course_class_schedule($course_id = NULL, $class_id) {echo "ssssssss";exit;
+    function get_course_class_schedule($course_id = NULL, $class_id) {
         $ci= & get_instance();
         $user = $ci->session->userdata('userDetails');
         $tenant_id = $user->tenant_id;
@@ -679,7 +679,7 @@ function user_activity($module_id,$act_on,$previous_details,$account_type = null
         $this->db->group_by('class_date');
         
         $query = $this->db->get();
-       
+       echo $this->db->last_query();exit;
         $res = $query->result_array();
         print_r($res);exit;
     }
