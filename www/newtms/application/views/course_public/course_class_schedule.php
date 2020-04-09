@@ -23,7 +23,7 @@
                                 $pageurl = $controllerurl;
                                 ?>        
                                 <tr>
-                                    <th width="15%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=class_name&o=" . $ancher; ?>" >Class Details</a></th>
+                                    <th width="12%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=class_name&o=" . $ancher; ?>" >Class Details</a></th>
                                     <th width="20%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=class_start_datetime&o=" . $ancher; ?>" >Date &amp; Time</a></th>
                                     <th width="10%" class="">Class Schedule</th>
                                     <th width="6%" class="">Duration <br/>(hrs)</th>
