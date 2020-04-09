@@ -660,7 +660,7 @@ function user_activity($module_id,$act_on,$previous_details,$account_type = null
         return $res;
     }
     /* End */
-    
+    /////added by shubhranshu for new requirement class schedule 
     function get_course_class_schedule($course_id, $class_id) {
         $ci= & get_instance();
         
@@ -681,7 +681,8 @@ function user_activity($module_id,$act_on,$previous_details,$account_type = null
         $res = $query->result_array();
         $arr = '';
         foreach($res as $v){
-           $arr .= '<div>'.$v[class_date].'(Start: '.date('d/m/Y , <br>l @ h:i A', strtotime($v[session_start_time])).')</div>';
+           //$arr .= '<div>'.$v[class_date].'(Start: '.date('d/m/Y , <br>l @ h:i A', strtotime($v[session_start_time])).')</div>';
+           $arr .= '<div>'.$v[class_date].'</div>';
         }
         return $arr;
     }
