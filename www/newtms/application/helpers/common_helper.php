@@ -663,9 +663,7 @@ function user_activity($module_id,$act_on,$previous_details,$account_type = null
     
     function get_course_class_schedule($course_id, $class_id) {
         $ci= & get_instance();
-        $user = $ci->session->userdata('userDetails');
-        $tenant_id = $user->tenant_id;
-
+        
         $ci->db->select('class_date');
 
         $ci->db->from('class_schld');
@@ -674,12 +672,12 @@ function user_activity($module_id,$act_on,$previous_details,$account_type = null
         
         $ci->db->where('class_id', $class_id);
 
-        $ci->db->where('tenant_id', $tenant_id);
+        $ci->db->where('tenant_id', TENANT_ID);
         
         $ci->db->group_by('class_date');
         
         $query = $ci->db->get();
-        //echo $ci->db->last_query();exit;
+        echo $ci->db->last_query();exit;
         $res = $query->result_array();
         print_r($res);exit;
     }
