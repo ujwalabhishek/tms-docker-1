@@ -23,7 +23,7 @@
                                 <tr>
                                     <th width="10%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=class_name&o=" . $ancher; ?>" >Class Details</a></th>
                                     <th width="10%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=class_start_datetime&o=" . $ancher; ?>" >Date &amp; Time</a></th>
-                                    <th width="20%" class="">Class Schedule</th>
+                                    <?php if(TENANT_ID == 'T17'){ ?> <th width="20%" class="">Class Schedule</th><?php } ?>
                                     <th width="6%" class="">Duration <br/>(hrs)</th>
                                     <th width="11%" class="">Trainer Aide</th>
                                     <th width="10%" class="">Trainer</th>
@@ -79,7 +79,9 @@
                                         <tr>
                                             <td><a class="small_text1" rel="modal:open" href="#course_clas<?php echo $class['class_id']; ?>"><?php echo $class['class_name']; ?></a></td>
                                             <td><?php echo date('d/m/Y , <br>l @ h:i A', strtotime($class['class_start_datetime'])); ?></td>
+                                            <?php if(TENANT_ID == 'T17'){ ?>
                                             <td><?php echo get_course_class_schedule($class['course_id'],$class['class_id']);?></td>
+                                            <?php }?>
                                             <td><?php echo $class['total_classroom_duration'] + $class['total_lab_duration'] + $class['assmnt_duration']; ?></td>
                                             <td ><div class="table-scrol" style="    height: 75px;"><?php echo $class['crse_manager']; ?></div></td>
                                             <td ><div class="table-scrol" style="    height: 75px;"><?php echo $class['classroom_trainer']; ?></div></td>
