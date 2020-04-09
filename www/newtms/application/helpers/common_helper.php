@@ -660,3 +660,26 @@ function user_activity($module_id,$act_on,$previous_details,$account_type = null
         return $res;
     }
     /* End */
+    
+    function get_course_class_schedule($course_id = NULL, $class_id) {
+        $ci= & get_instance();
+        $user = $ci->session->userdata('userDetails');
+        $tenant_id = $user->tenant_id;
+
+        $this->db->select('class_date');
+
+        $this->db->from('class_schld');
+
+        $this->db->where('course_id', $course_id);
+        
+        $this->db->where('class_id', $class_id);
+
+        $this->db->where('tenant_id', $tenant_id);
+        
+        $this->db->group_by('class_date');
+        
+        $query = $this->db->get();
+       
+        $res = $query->result_array();
+        print_r($res);exit;
+    }
