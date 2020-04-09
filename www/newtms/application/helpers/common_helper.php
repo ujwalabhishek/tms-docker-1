@@ -677,7 +677,7 @@ function user_activity($module_id,$act_on,$previous_details,$account_type = null
         $ci->db->group_by('class_date');
         
         $query = $ci->db->get();
-        echo $ci->db->last_query();exit;
+        //echo $ci->db->last_query();exit;
         $res = $query->result_array();
         print_r($res);exit;
     }
