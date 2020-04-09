@@ -202,7 +202,7 @@
                     </div>
                 </div>
                 <?php }else{?>
-                      <div class="bs-example">
+                <div class="bs-example">
                     <div class="table-responsive">
                         <table class="table table-striped" id="class_schedule">
                             <thead>
