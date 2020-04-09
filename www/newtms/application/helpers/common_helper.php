@@ -661,7 +661,7 @@ function user_activity($module_id,$act_on,$previous_details,$account_type = null
     }
     /* End */
     
-    function get_course_class_schedule($course_id = NULL, $class_id) {
+    function get_course_class_schedule($course_id = NULL, $class_id) {echo "ssssssss";exit;
         $ci= & get_instance();
         $user = $ci->session->userdata('userDetails');
         $tenant_id = $user->tenant_id;
