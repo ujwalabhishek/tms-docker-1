@@ -1336,6 +1336,8 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         
         $tenant_id = $this->user->tenant_id;
         $user_id = $this->input->post('userid');
+        $reason_for_deactivation = $this->input->post('reason_for_deactivation');
+        $other_reason_for_deactivation = $this->input->post('other_reason_for_deactivation');
         $company_id = $this->input->post('hiddencompanyid');
         //$this->db->trans_start();
         if (!empty($company_id)) {
