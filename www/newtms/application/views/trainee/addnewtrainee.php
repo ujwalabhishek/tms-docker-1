@@ -392,7 +392,7 @@ if (!empty($tax_error)) {
                         $highest_educ_level = fetch_metavalues_by_category_id(Meta_Values::HIGHEST_EDUC_LEVEL);
                         $highest_educ_level_options[''] = 'Select';
                         foreach ($highest_educ_level as $item):
-                            if($user->tenant_id == 'T20'){
+                            if($user->tenant_id == 'T20' || $user->tenant_id == 'T17'){
                            
                                  $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
                                     
