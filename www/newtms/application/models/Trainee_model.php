@@ -1365,6 +1365,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $this->db->update('tms_users', $deactive);
         }
         $this->db->trans_complete();
+        echo $this->db->last_query();exit;
         if ($this->db->trans_status() === FALSE) {
             return FALSE;
         } else {

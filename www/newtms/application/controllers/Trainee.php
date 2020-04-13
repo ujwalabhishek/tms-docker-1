@@ -372,7 +372,7 @@ class Trainee extends CI_Controller {
                 $this->load->view('layout', $data);
                 return;
             }
-        } else if ($this->input->post('task') == 'deactivate') {
+        } else if ($this->input->post('task') == 'deactivate') {echo 
             $user_id = $this->input->post('userid');
             $res = $this->traineemodel->get_complete_trainee_details($user_id);
             $previous_trainee_data = json_encode($res);
