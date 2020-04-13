@@ -1333,9 +1333,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
      * @return boolean
      */
     public function deactivate_trainee() {
-        foreach ($this->input->post() as $key => $value) {
-            $$key = $value;
-        }
+        
         $tenant_id = $this->user->tenant_id;
         $user_id = $this->input->post('userid');
         $company_id = $this->input->post('hiddencompanyid');
