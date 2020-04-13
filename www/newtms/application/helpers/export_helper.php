@@ -3250,9 +3250,10 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
         if(in_array($row->contact_number,$duplicate_mobile_arry)){
             $remove_duplicate_contact_number = '';
         }else{
+            $duplicate_mobile_arry[] = $row->contact_number;
             $remove_duplicate_contact_number = $row->contact_number;
         }
-        $duplicate_mobile_arry[] = $row->contact_number;
+        
         //////////////////end of code added by shubhranshu for removing duplicate mobile no/////////////
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
