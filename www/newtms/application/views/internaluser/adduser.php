@@ -203,23 +203,29 @@ echo form_open_multipart("internal_user/add_user", $atr);
                 </tr>
                 <tr>
                     <td class="td_heading">Highest Education:<span class="required">*</span></td>
-                    <?php
-                    $highest_educ_level = fetch_metavalues_by_category_id(Meta_Values::HIGHEST_EDUC_LEVEL);
-                    $highest_educ_level_options[''] = 'Select';
-                    foreach ($highest_educ_level as $item):
-                    if($item['parameter_id']=='WSQDP_74' || $item['parameter_id']=='LSEC_20' || $item['parameter_id']=='UNIVFD_80'
-                                || $item['parameter_id']=='UNIVDD_90'|| $item['parameter_id']=='MNITEC_53' || $item['parameter_id']=='TWGC_36'||
-                                $item['parameter_id']=='TWGD_37' || $item['parameter_id']=='TSD_32'
-                                 ){
-
-                                }else{
-                                     $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
-                                }
-                        
-                        
-                       // $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
-                    endforeach;
-                    ?>
+                   <?php
+                        $highest_educ_level = fetch_metavalues_by_category_id(Meta_Values::HIGHEST_EDUC_LEVEL);
+                        $highest_educ_level_options[''] = 'Select';
+                        foreach ($highest_educ_level as $item):
+                            if($user->tenant_id == 'T20' || $user->tenant_id == 'T17'){
+                           
+                                 $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
+                                    
+                            }else{
+                                if($item['parameter_id']=='WSQDP_74' || $item['parameter_id']=='LSEC_20' || $item['parameter_id']=='UNIVFD_80'
+                                    || $item['parameter_id']=='UNIVDD_90'|| $item['parameter_id']=='MNITEC_53' || $item['parameter_id']=='TWGC_36'||
+                                    $item['parameter_id']=='WSQGD_93' || $item['parameter_id']=='TSD_32' ||  $item['parameter_id']=='WSQCERT_54' ||
+                                      $item['parameter_id']=='WSQSD_75' ||  $item['parameter_id']=='WSQHC_55' ||  $item['parameter_id']=='WSQAC_73'
+                                     ){
+                           
+                                    }else{
+                                         $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
+                                    }
+                            }
+                            
+//                            $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
+                        endforeach;
+                        ?>
                     <td colspan="4">
                         <?php echo form_dropdown('highest_educ_level', $highest_educ_level_options, set_value('highest_educ_level'), 'id="highest_educ_level" style="width:100%"'); ?>
                         <span id="highest_educ_level_err"></span>
