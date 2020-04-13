@@ -1337,7 +1337,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         $tenant_id = $this->user->tenant_id;
         $user_id = $this->input->post('userid');
         $company_id = $this->input->post('hiddencompanyid');
-        $this->db->trans_start();
+        //$this->db->trans_start();
         if (!empty($company_id)) {
             $deactive = array(
                 'acct_deacti_date_time' => date('Y-m-d H:i:s'),
@@ -1362,13 +1362,13 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $this->db->where('tenant_id', $tenant_id);
             $this->db->update('tms_users', $deactive);
         }
-        $this->db->trans_complete();
+        //$this->db->trans_complete();
         //echo $this->db->last_query();exit;
-        if ($this->db->trans_status() === FALSE) {
-            return FALSE;
-        } else {
+        //if ($this->db->trans_status() === FALSE) {
+            //return FALSE;
+       // } else {
             return TRUE;
-        }
+        //}
     }
 
     /**
