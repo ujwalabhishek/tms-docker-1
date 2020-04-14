@@ -3651,7 +3651,7 @@ class course_public extends CI_Controller {
         $data['status_lookup_location'] = $status_lookup_location;
         $data['course_name'] = $this->course_model->get_course_name($course_id);
         $data['main_content'] = 'course_public/all_course_class_schedule';
-        $this->load->view('layout', $data);
+        $this->load->view('layout_public', $data);
     }
 
 
