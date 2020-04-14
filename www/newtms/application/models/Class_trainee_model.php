@@ -4500,8 +4500,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             if ($subsidy_after_before == 'GSTBSD') {
 
                 //return ($feesdue + (($feesdue * $gst_rate) / 100));
-                $feesduetemp = ($feesdue + (($feesdue * $gst_rate) / 100));
-                return $feesdue;
+                $feesduetemp = ($feesdue * $gst_rate) / 100;
+                return $feesduetemp;
                 return round($feesduetemp, 2, PHP_ROUND_HALF_UP);/////ssp/////
             } else {
                 // added by shubhranshu to fixed calculation issue while round off upto 2decimal places on 5/12/2018/////
