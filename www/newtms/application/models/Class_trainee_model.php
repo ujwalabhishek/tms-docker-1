@@ -4513,7 +4513,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             //return ($feesdue - $subsidy);
             return round($feesduetemp, 2, PHP_ROUND_HALF_UP);
         }
-       return $feesduetemp;
+       return $feesduetemp.'-'.$feesdue.'-'.$gst_rate.'-'.$subsidy.'-';
     }
 
     /**
