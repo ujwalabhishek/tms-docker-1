@@ -4494,26 +4494,26 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
      */
     public function calculate_after_before_gst($gst_onoff, $subsidy_after_before, $feesdue, $subsidy, $gst_rate) {
+//
+        if ($gst_onoff == 1) {
 
-//        if ($gst_onoff == 1) {
-//
-//            if ($subsidy_after_before == 'GSTBSD') {
-//
-//                //return ($feesdue + (($feesdue * $gst_rate) / 100));
-//                $feesduetemp = ($feesdue + (($feesdue * $gst_rate) / 100));
-//                return round($feesduetemp, 2, PHP_ROUND_HALF_UP);/////ssp/////
-//            } else {
-//                // added by shubhranshu to fixed calculation issue while round off upto 2decimal places on 5/12/2018/////
-//                 $feesduetemp = ($feesdue - $subsidy);
-//               // return $feesduetemp = ($feesdue - $subsidy);
-//                return round($feesduetemp, 2, PHP_ROUND_HALF_UP);///////////////////ssp/////////////
-//            }
-//        } else {
-//            $feesduetemp=($feesdue - $subsidy);
-//            //return ($feesdue - $subsidy);
-//            return round($feesduetemp, 2, PHP_ROUND_HALF_UP);
-//        }
-        return $gst_rate;
+            if ($subsidy_after_before == 'GSTBSD') {
+
+                //return ($feesdue + (($feesdue * $gst_rate) / 100));
+                $feesduetemp = ($feesdue + (($feesdue * $gst_rate) / 100));
+                //return round($feesduetemp, 2, PHP_ROUND_HALF_UP);/////ssp/////
+            } else {
+                // added by shubhranshu to fixed calculation issue while round off upto 2decimal places on 5/12/2018/////
+                 $feesduetemp = ($feesdue - $subsidy);
+               // return $feesduetemp = ($feesdue - $subsidy);
+                //return round($feesduetemp, 2, PHP_ROUND_HALF_UP);///////////////////ssp/////////////
+            }
+        } else {
+            $feesduetemp=($feesdue - $subsidy);
+            //return ($feesdue - $subsidy);
+            //return round($feesduetemp, 2, PHP_ROUND_HALF_UP);
+        }
+        return $feesduetemp;
     
     }
 
