@@ -64,7 +64,7 @@ if(count($course_list) == 0) {
             <?php endforeach; ?>
             </div>
         </li>
-        <li><div class=''><a href='/course_public/all_course_class'>Course Class Schedule</a></div></li>
+        <li><div class='panel_heading_style' style='color:white;'><a href='/course_public/all_course_class'>Course Class Schedule</a></div></li>
         <li><a href="#" class="thumbnail"><img src="<?php echo base_url(); ?>assets/images/ad2.jpg" style="display: block;" data-src="holder.js/100%x180" alt="100%x180"></a></li>
     </ul>
 </div>
