@@ -3594,6 +3594,66 @@ class course_public extends CI_Controller {
 
         return $this->load->view('layout_public', $data);
     }
+    
+    public function all_course_class()
+    {
+        $data['page_title'] = 'Course Schedule List';
+        $tenant_id = TENANT_ID;
+        $field = $this->input->get('f');
+        $order_by = $this->input->get('o');
+        $baseurl = base_url() . 'course_public/all_course_class/';
+        
+        $records_per_page = RECORDS_IN_MAIN_PAGE;
+//        $records_per_page = '5';
+        $pageno = $this->uri->segment(3);
+
+        if (empty($pageno)) {
+            $pageno = 1;
+        }
+         $offset = ($pageno * $records_per_page);
+        
+        
+        $data['tabledata'] = $this->course_model->get_all_course_class_list($tenant_id, $records_per_page, $offset, $field, $order_by);
+
+        $data['sort_order'] = $order_by;
+        $data['controllerurl'] = 'course_public/all_course_class/';
+        $totalrows = $this->course_model->get_all_course_class_list_count($tenant_id, $records_per_page, $offset, $field, $order_by); 
+         
+        $this->load->helper('pagination');
+        $data['pagination'] = get_pagination($records_per_page, $pageno, $baseurl, $totalrows, $field, $order_by,$search_value);
+        
+        
+        $meta_result = fetch_all_metavalues();
+        $values = $meta_result[Meta_Values::LANGUAGE];
+        $meta_map = $this->meta_values->get_param_map();
+        $class_values = $meta_result[Meta_Values::CLASSROOM_LOCATION];
+        foreach ($values as $value) {
+
+            $status_lookup_language[$value['parameter_id']] = $value['category_name'];
+        }
+        foreach ($class_values as $value) {
+
+            $status_lookup_location[$value['parameter_id']] = $value['category_name'];
+        }
+        foreach ($data['tabledata'] as $key=>$cl) {
+            $data['class_count'][$cl['class_id']] = $booked = $this->course_model->get_course_class_count($cl['course_id'], $cl['class_id']);
+            $available = $cl['total_seats'] - $booked;
+            $available = ($available < 0) ? 0 : $available;
+            $data['tabledata'][$key]['available'] = $available;
+        }
+        foreach ($data['tabledata'] as $key => $cl) {
+               $data['tabledata'][$key]['crse_manager'] = $this->course_model->get_managers($cl['training_aide']);
+        }
+        foreach ($data['tabledata'] as $key => $cl) {
+            $data['tabledata'][$key]['classroom_trainer'] = $this->course_model->get_trainers($cl['classroom_trainer']);
+        }
+        $data['status_lookup_language'] = $status_lookup_language;
+        $data['status_lookup_location'] = $status_lookup_location;
+        $data['course_name'] = $this->course_model->get_course_name($course_id);
+        $data['main_content'] = 'course_public/all_course_class_schedule';
+        $this->load->view('layout', $data);
+    }
+
 
 }
 
