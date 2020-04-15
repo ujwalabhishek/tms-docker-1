@@ -1647,7 +1647,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
     /**
      * function to get sales class executive
      */
-    public function get_class_salesexec() {
+    public function get_class_salesexec() {echo "ss";exit;
         $tenant_id = $this->tenant_id;
         $course_id = $this->input->post('course');
         $class_id = $this->input->post('class');
