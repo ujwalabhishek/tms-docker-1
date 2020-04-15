@@ -675,7 +675,7 @@ class Class_Model extends CI_Model {
             $this->db->where('pers.user_id', $this->user->user_id);
         }
         $result = $this->db->get();
-        echo $this->db->last_query();exit;
+        
         return $result->result_array();
     }
     ///////below function was added by shubhranshu for fetch of course sales executive assisgn
