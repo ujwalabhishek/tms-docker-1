@@ -246,6 +246,7 @@ class Class_Model extends CI_Model {
         $this->db->where('tenant_id', $tenant_id);
         $this->db->where('class_id', $class_id);
         $result = $this->db->get()->row();
+        echo $this->db->last_query();exit;
         return $result;
     }
 
