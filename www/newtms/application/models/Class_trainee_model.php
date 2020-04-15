@@ -4239,13 +4239,26 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                     $tg_number = $excel['tg_number'];
 
-                    if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') {
+//                    if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') {
+//
+//                        $salesexec = $this->user->user_id;
+//                    } else {
+//
+//                        $salesexec = empty($salesexec) ? NULL : $salesexec;
+//                    }
+                    
+                    if(empty($salesexec)){
+                        if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') {
+                           $salesexec = $this->user->user_id;
+                        } else {
 
-                        $salesexec = $this->user->user_id;
-                    } else {
+                            $salesexec = NULL;
+                        }
+                    }else{
 
-                        $salesexec = empty($salesexec) ? NULL : $salesexec;
+                        $salesexec = $salesexec;
                     }
+                    
                     /////////below block was added by shubhranshu for training score to be update for bulk enrol/////
                     $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
                     //echo $check_attendance.' -'.$tenant_id.'-'.$course.'-'.$class;exit;
