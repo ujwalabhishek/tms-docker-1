@@ -1651,7 +1651,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $tenant_id = $this->tenant_id;
         $course_id = $this->input->post('course');
         $class_id = $this->input->post('class');
-        $class_details = $this->class->get_class_details($tenant_id, $class_id);
+        //$class_details = $this->class->get_class_details($tenant_id, $class_id);
         $result = $this->class->get_all_salesexec_course($tenant_id, $course_id);
         echo json_encode($result);
         exit();
