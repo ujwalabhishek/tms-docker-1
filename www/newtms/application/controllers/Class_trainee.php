@@ -793,7 +793,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     $li2 = '';
                 } 
                 ///// added by shubhranshu for wablab points
-                if($tenant_details->tenant_id == 'T20'){
+                if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
                     $li_first = "<li>Your NRIC, work permit or will be photocopied on the class date</li>";
                 }else{
                     $li_first ="<li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>";
@@ -897,7 +897,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         } 
         
         ///// added by shubhranshu for wablab points
-        if($tenant_details->tenant_id == 'T20'){
+        if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
             $li_first = "Your NRIC, work permit or will be photocopied on the class date";
         }else{
             $li_first ="All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.";
@@ -3977,7 +3977,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     $li = "Report at center at 8:30 AM to register for class";
                 }
                 /* end */
-                if($tenant_details->tenant_id == 'T20'){
+                if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
                     $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
                      for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
                     <strong>Class start date:</strong>
@@ -4136,7 +4136,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     $company_details->company_name = $tenant_details->tenant_name;
                 }
                  ///// added by shubhranshu for wablab points
-                if($tenant_details->tenant_id == 'T20'){
+                if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
                     $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
                     $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
                         <strong>Class start date:</strong>
