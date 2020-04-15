@@ -92,7 +92,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <?php
                         
-                        if($tenant_id != 'T20'){
+                        if($tenant_id != 'T20' || $tenant_id != 'T17'){
                             $data=array(
                                     'id'=>'move_enrollment',
                                     'class'=>'enrollment_type',
