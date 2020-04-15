@@ -1647,11 +1647,11 @@ if (!empty($tenant_details->tenant_contact_num)) {
     /**
      * function to get sales class executive
      */
-    public function get_class_salesexec() {echo "ss";exit;
+    public function get_class_salesexec() {
         $tenant_id = $this->tenant_id;
         $course_id = $this->input->post('course');
         $class_id = $this->input->post('class');
-        $class_details = $this->class->get_class_details($tenant_id, $class_id);
+        $class_details = $this->class->get_class_details($tenant_id, $class_id);echo "ssr";exit;
         $result = $this->class->get_class_salesexec($tenant_id, $course_id, $class_details->sales_executive);
         echo json_encode($result);
         exit();
