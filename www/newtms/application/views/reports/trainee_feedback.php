@@ -482,7 +482,7 @@ echo form_close();
 ?>
 <?php
 ///added by shubhranshu to display the trainee form for wablab
-if($tenant_id == 'T20'){
+if($tenant_id == 'T20' || $tenant_id == 'T17'){
 ?>
 <div class="modal1_trainee_feedback" id="ex6">
     <?php
