@@ -680,20 +680,20 @@ class Class_Model extends CI_Model {
     }
     ///////below function was added by shubhranshu for fetch of course sales executive assisgn
     function get_all_salesexec_course($tenant_id, $course_id) {
-       if ($this->user->role_id == 'TRAINER') {
-            return;
-        }
-        $this->db->select('pers.user_id, pers.first_name, pers.last_name, sales.commission_rate');
-        $this->db->from('tms_users_pers pers');
-        $this->db->join('course_sales_exec sales', 'sales.user_id=pers.user_id');
-        $this->db->where('pers.tenant_id', $tenant_id);
-        $this->db->where('sales.course_id', $course_id);
-        if ($this->user->role_id == 'SLEXEC') {
-            $this->db->where('pers.user_id', $this->user->user_id);
-        }
-        $result = $this->db->get();
-       
-        return $result->result_array();
+       if($this->user->role_id == 'ADMN') { 
+            $this->db->select('pers.user_id, pers.first_name, pers.last_name, sales.commission_rate');
+            $this->db->from('tms_users_pers pers');
+            $this->db->join('course_sales_exec sales', 'sales.user_id=pers.user_id');
+            $this->db->where('pers.tenant_id', $tenant_id);
+            $this->db->where('sales.course_id', $course_id);
+            if ($this->user->role_id == 'SLEXEC') {
+                $this->db->where('pers.user_id', $this->user->user_id);
+            }
+            $result = $this->db->get();
+            return $result->result_array();
+       }else{
+           return;
+       }
     }
      /**
      * class sales executive details
