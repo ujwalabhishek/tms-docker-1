@@ -658,7 +658,7 @@ echo form_hidden('page', $this->uri->segment(2));
 </div>
 
 <?php 
-if($tenant_id == 'T20'){
+if($tenant_id == 'T20' || $tenant_id == 'T17'){
 ?>
 <!--added by shubhranshu for the wablab trainee feedback-->
 
