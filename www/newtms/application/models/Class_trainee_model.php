@@ -4239,7 +4239,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                     $tg_number = $excel['tg_number'];
 
-                    if ($this->user->role_id == 'SLEXEC') {
+                    if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') {
 
                         $salesexec = $this->user->user_id;
                     } else {
