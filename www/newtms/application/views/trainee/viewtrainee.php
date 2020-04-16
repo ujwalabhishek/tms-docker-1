@@ -728,7 +728,7 @@ endif;
                                     $tenant_id = $trainee[userdetails]['tenant_id'];
                                    
                                     if(($tenant_id == 'T20') || ($tenant_id == 'T17')){
-                                        $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$item->course_id.'/'. $item->class_id  . '/' . $item->user_id . '">'.$item->training_score.'</a><br/>';
+                                        $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$item->course_id.'/'. $item->class_id  . '/' . $item->user_id . '">TCS</a><br/>';
 
                                     }else{
                                         if (in_array($item->course_id, $wsq_courses_array) && in_array($tenant_id, $tenant_array))
