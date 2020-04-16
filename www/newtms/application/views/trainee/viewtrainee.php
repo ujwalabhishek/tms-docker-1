@@ -718,8 +718,8 @@ endif;
                                     }    
                                 }
                                 $check_competent=$this->classtraineemodel->check_competent($item->tenant_id,$item->course_id,$item->class_id,$item->user_id);
-                              
-                                if($item->training_score=='C'){
+                                
+                                if($check_competent > 0){
                                     $wsq_courses_array = $this->config->item('wsq_courses'); // wsq courses modified by shubhranshu
                                     
                                     $tenant_array = array('T02','T12'); // xp and xp2 
