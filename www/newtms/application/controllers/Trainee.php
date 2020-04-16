@@ -1455,7 +1455,7 @@ class Trainee extends CI_Controller {
         }
             $this->load->helper('pdf_reports_helper');       
             $loc_details = $this->traineemodel->get_wsq_loc_details($tenant_id, $class_id, $user_id);
-            //$loc_details->trainer_name = $this->traineemodel->get_trainer_details($loc_details->classroom_trainer);
+            $loc_details->trainer_name = $this->traineemodel->get_trainer_details($loc_details->classroom_trainer);
             generate_wsq_loc_pdf($loc_details);
 
     }
