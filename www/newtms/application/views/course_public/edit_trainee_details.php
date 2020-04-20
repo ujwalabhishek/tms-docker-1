@@ -127,7 +127,7 @@ if (!empty($tax_error)) {
     </div>
     <br>
     <?php
-    if ($trainee):
+    
         
         $atr = 'id="trainee_edit" name="trainee_edit"';
         
@@ -587,7 +587,7 @@ if (!empty($tax_error)) {
     echo form_hidden('userid', $trainee[userdetails]['user_id']);
     echo form_hidden('task', 'deactivate');
     echo form_close();
-endif;
+
 ?>
     <div class="modal1_055" id="ex9" style="display:none;">         
         <h2 class="panel_heading_style">Warning</h2>   
