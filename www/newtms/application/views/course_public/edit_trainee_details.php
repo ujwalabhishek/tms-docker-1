@@ -234,7 +234,7 @@ if (!empty($tax_error)) {
             <br>
             <h2 class="sub_panel_heading_style">
                 <img src="<?php echo base_url(); ?>/assets/images/personal_details.png"/> Personal Details
-                <span class="pull-right"> <img src="<?php echo base_url(); ?>/assets/images/personal_details.png"> <a href="#ex3" rel="modal:open" style="color: blue;">Individual Discount</a></span>
+             
             </h2>
             <div class="table-responsive" style='overflow-x: initial;'>
                 <table class="table table-striped">      
