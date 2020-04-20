@@ -1692,7 +1692,7 @@ $('.nric_submit').click(function(){
     e=$.trim(e);   
     $taxcode = e;
     $.ajax({
-                url: baseurl + "course_public/check_nric_no_cc",
+                url: baseurl + "course_public/check_nric_no_public",
                 type: "post",
                 data: {taxcode_nric: e, course_id: $course_id, class_id: $class_id},
                 async: false,
@@ -1715,79 +1715,6 @@ $('.nric_submit').click(function(){
                     {
                         var res = 0;
                     }
-
-                    if(res == 3)
-                    {
-                        $("#user_exists_class_msg").html('Looks like this Person is already registered in the system but not active, please contact admin to active his/her account.');
-                        $("#user_class_msg").show();
-                        $('#nric_found_msg').hide();
-                        $("#btn_dis").hide(); // it hide form submit button
-                        $('#flag_row_hide').hide(); // it hide relationship row
-                        $('#nric_not_found1').hide(); // it hides nric  
-                        $("#realtion").hide();//hide relationship
-                    }
-                    else if(res == 1)
-                    {
-                        if($flag == 1)
-                        {   
-                           $("#user_exists_class_msg").html('This Person is already enrolled in this class. Click <a href='+$baseurl+'course_public/course_class_schedule/'+$course_id+'>here</a> to go back to the Class list.');
-                           $("#user_class_msg").show();
-                           $('#nric_found_msg').hide();
-                           $('#flag_row_hide').hide(); // it hide relationship row
-                           $("#btn_dis").hide(); // it hide form submit button
-                            $("#realtion").hide();//hide relationship
-                        }else{
-                            $("#user_class_msg").hide();
-                            $("#nric_found_user_msg").html('Looks like this Person is already registered in the system, please proceed enrollment in this class.');
-                            $('#nric_found_msg').show();// when nric found then show user msg
-                            $('#flag_row_hide').show(); // it show relationship row     
-                            $("#btn_dis").show(); // it hide form submit button
-                             $("#realtion").show();// show relationship
-                        }
-
-                                       $("#flag").show();
-                                       $("#admin_msg_err").hide();
-                                        $("#" + id + "_err").text("").removeClass('error');
-                                        $("#" + id).removeClass('error');
-                                        $('#try').hide();
-                                        $('#nric_not_found1').hide();
-                                        $('#nric_not_found2').hide();
-                                        //$('#nric_found_msg').show();// when nric found then show user msg
-                                        $('#nric_found').html('<input type="hidden" id="taxcode_found" name="taxcode_found" value="' + $taxcode + '">');
-                                        $('#nric_res').html('<input type="hidden" id="res_found1" name="res_found1" value="' + res + '">');
-    //                                    $('#existing_user').show();
-                                        $('#success').show();
-                                        $('#success').html('NRIC FOUND');
-                                        $("#admin_msg_err").hide();
-
-
-                                    return true;
-                    }else{
-                                    $("#flag").show();
-                                    $("#user_class_msg").hide();
-                                    $('#flag_row_hide').show(); // it show relationship row
-                                    $('#trainee_validation_div1').show(); // it show rerrer porttion.
-
-                                    $('#nric_res').html('<input type="hidden" id="res_found1" name="res_found1" value="' + res + '">');
-                                    $("#admin_msg_err").hide();
-
-                                    $("#" + id + "_err").text("").removeClass('error');
-                                    $("#" + id).removeClass('error');
-
-                                    $('#success').hide();
-                                    $('#nric_found_msg').hide();// when nric not found then hide user msg
-
-                                    $('#nric_not_found1').show();
-                                    $('#nric_not_found2').show();
-                                    $('#try').show();
-                                    $('#try').html('NRIC NOT FOUND');
-                                    $("#admin_msg_err").hide();
-    //                  
-                                    $('#taxcode_found').removeAttr('value');   
-                                return true; 
-                    }
-
-
                 },
                 error:function(){
                     return false;

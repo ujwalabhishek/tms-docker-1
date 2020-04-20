@@ -3694,6 +3694,17 @@ class course_public extends CI_Controller {
 
         $this->load->view('layout_public', $data);
     }
+    
+    
+    public function check_nric_no_public() {
+        extract($_POST);
+
+        $taxcode = trim(($taxcode_nric));
+        $course_id = trim(($course_id));
+        $class_id = trim(($class_id));
+
+        $res = $this->course_model->check_taxcode_exists_public($taxcode, $course_id, $class_id);
+    }
 
 
 }
