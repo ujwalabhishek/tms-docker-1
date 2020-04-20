@@ -219,6 +219,8 @@
                                         $class['user_id'] = $user_id;
                                         if(TENANT_ID == 'T02'){
                                             $enroll_link ='<a class="enroll_now_link" href="' . base_url() . 'course_public/class_member_check_elearning/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">';
+                                            $enroll_link_label = 'Enroll Now';
+                                            
                                         }else{
                                             if($user_id!='')                                
                                             {   
@@ -232,9 +234,10 @@
 
                                             } 
 
-                                            $enroll_link_suffix = '</a>';
-                                            $enroll_link = $enroll_link_prefix . $enroll_link_label . $enroll_link_suffix;
+                                            
                                         }
+                                        $enroll_link_suffix = '</a>';
+                                        $enroll_link = $enroll_link_prefix . $enroll_link_label . $enroll_link_suffix;
                                         ?>
                                         <tr>
                                             <td><a class="small_text1" rel="modal:open" href="#course_clas<?php echo $class['class_id']; ?>"><?php echo $class['class_name']; ?></a></td>
