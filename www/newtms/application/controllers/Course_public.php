@@ -687,7 +687,7 @@ class course_public extends CI_Controller {
                 }
             }
             
-            if ($flag == 0) {
+            if ($flag == 0) {echo "sss666";exit;
                 $data['course_id'] = $course_id;
                 $data['class_id'] = $class_id;
                 /* course class complete details */
