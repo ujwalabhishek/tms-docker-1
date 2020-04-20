@@ -93,39 +93,4 @@ if($course_id!='' && $class_id!=''){
     </table>
 </div>
 
-<div class="modalnew modal13" id="ex12" style="display:none;height:280px !important; min-height: 280px !important;">
-      <h2 class="panel_heading_style" style="margin-bottom: -3px !important;">Class Details </h2>
-                <div class="class_desc_course">
-                    <div class="table-responsive">
-                        <table class="table table-striped">     
-                            <tr>
-                                <td width="40%"><span class="crse_des">Course Name :</span></td>
-                                <td><?php echo   $course_details->crse_name;?></td>
-                            </tr>
-                            <tr>
-                                <td><span class="crse_des">Class Name :</span></td>
-                                <td><?php echo $class_details->class_name; ?></td>
-                            </tr>
-                            <tr>
-                                <td><span class="crse_des">Class Start Date and Time :</span></td>
-                                <td><?php echo date('d/m/Y h:i A', strtotime($class_details->class_start_datetime)); ?></td>
-                            </tr>
-                            <tr>
-                                <td><span class="crse_des">Class End Date and Time :</span></td>
-                                <td><?php echo  date('d/m/Y h:i A', strtotime($class_details->class_end_datetime)); ?></td>
-                            </tr>
-                            <tr>
-                                <td><span class="crse_des">Classroom Location :</span></td>
-                                <td><?php echo $classloc; ?></td>
-                            </tr>
-                            
-
-                        </table>
-                    </div>                                
-                </div>
-                <div class="popup_cancel11">
-                    <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Close</button></a>
-                </div>
-            </div>  
-
 <?php } ?>

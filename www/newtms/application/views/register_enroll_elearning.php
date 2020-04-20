@@ -185,6 +185,141 @@ if($course_id!='' && $class_id!=''){
 
 <br/><br/>
 
+<!----------------modal by ssp start----------------------->
+<?php if (TENANT_ID == 'T02'){$show='display:block';}else{$show='display:none';}?>
+<div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;height: auto;left: 0px !important;">
+<p>
+  <h2 class="panel_heading_style">Declaration</h2>
+    <!--Section: Contact v.2-->
+<section class="mb-4">
+
+    <!--Section heading-->
+    <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
+    <!--Section description-->
+    <p class="text-center alert alert-danger">You must fill this form to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of the company policy.</p>
+  
+    <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-12 mb-md-0 mb-5">
+           
+        
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-12">
+                        <div class="md-form mb-0">
+                            <label for="name" class="">Your Name<span style='color:red'>*</span></label>
+                            <input type="text" id="dec_name" class="form-control" required>
+                            
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                </div>
+                
+                <div class="row">
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                             <label for="email" class="">Your Email</label>
+                             <input type="email" id="dec_email" class="form-control" pattern=".+@gmail.com" size="30" required>
+                           
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                             <label for="email" class="">Your Mobile<span style='color:red'>*</span></label>
+                            <input type="tel" id="dec_mobile" class="form-control" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                           
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                    
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <label for="subject" class="">Lesson Date:<span style='color:red'>*</span></label>
+                            <input type="date" id="dec_les_time" class="form-control" required>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-12">
+
+                        <div class="md-form">
+                            <label for="message">Do you have any relatives who returned from China on 15th January or later and is staying together? <span style='color:red'>*</span></label>
+                            <div><input type="radio" value="1" class="" name='dec_res' id='dec_res' style='height: 1.7em;width: 20px;' checked><b style='padding:2px'>Yes</b></div>
+                            <div><input type="radio" value="0" class="" name='dec_res' id='dec_res1' style='height: 1.7em;width: 20px;'><b style='padding:2px'>No</b> </div> 
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+
+                        <div class="md-form">
+                            <label for="message">Have you travelled overseas in the past 14 days? <span style='color:red'>*</span></label>
+                            <input type="text" id="dec_overseas" placeholder='Please State' class="form-control" required>
+                        </div>
+
+                    </div>
+                </div>
+                
+                 <div class="statuserr"></div>
+                 <br>
+                 <br>
+                <!--Grid row-->
+                 <div class="text-center">
+                    <a href='#' class="btn btn-primary" id='declarations' type='button'>Submit & Continue</a></div>
+                  
+           
+        </div>
+        <!--Grid column-->
+    </div>
+         
+</section>
+<!--Section: Contact v.2-->
+
+</p>
+</div>
+
+
+
+<div class="modal" id="modal_nric_found" style="display:hidden;margin:auto auto;height: 263px;left: 0px !important;">
+
+  <h2 class="panel_heading_style">NRIC DETAILS</h2>
+    <!--Section: Contact v.2-->
+<section class="mb-4">
+    <!--<form action='course_public/confirm_trainee_details' method='post'>-->
+    <!--Section heading-->
+    <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
+    <!--Section description-->
+    <p class="text-center alert-success" style='padding: 10px;'>This NRIC(<span id='nricid'></span>) is belongs to <span id='nric_name'></span></p>
+    <br>
+    <h4 class="text-center">Are you Sure! You want to Continue?</h4>
+    <br>
+    <div class="text-center"><button type='button' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</button></div>
+    <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
+    <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
+    <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
+    </form>    
+</section>
+<!--Section: Contact v.2-->
+
+
+</div>
 
 
 
