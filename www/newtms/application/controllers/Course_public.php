@@ -3849,7 +3849,7 @@ class course_public extends CI_Controller {
                      //user_activity(3,$user_id,$previous_data);
                     $this->session->set_flashdata('success_message', 'Trainee has been updated successfully');
                 }
-                redirect('course_public/enrolnow_elearning/'.$course_id.'/'.$class_id);
+                redirect('course_public/enrolnow_elearning/'.$course_id.'/'.$class_id.'/'.$user_id.'/'.$NRIC_ID_MATCH);
             }else {
                 $data['main_content'] = 'course_public/edit_trainee_details';
                 $data['tax_error'] = ($data['tax_error'])?$data['tax_error']:$failure_msg;
@@ -3862,7 +3862,7 @@ class course_public extends CI_Controller {
         $this->load->view('layout_public', $data);
     }
     
-    public function enrolnow_elearning($course_id = null, $class_id = null){
+    public function enrolnow_elearning($course_id = null, $class_id = null, $user_id=NULL,$nric=NULL){
           ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
         $user_role = $this->session->userdata('userDetails')->role_id ?? '';
         if($user_role != ''){
@@ -3878,7 +3878,8 @@ class course_public extends CI_Controller {
 
         $data['class_id'] = $class_id;
 
-        $data['user_id'] = $this->session->userdata('userDetails')->user_id;
+        $data['user_id'] = $user_id;
+        $data['nric'] = $nric;
         /* course class complete details */
         $data['class_details'] = $class_details = $this->course_model->get_class_details($class_id);
         $data['course_details'] = $course_details = $this->course_model->course_basic_details($class_details->course_id);
