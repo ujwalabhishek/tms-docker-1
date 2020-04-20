@@ -297,7 +297,7 @@ if($course_id!='' && $class_id!=''){
 
 
 
-<div class="modal" id="modal_nric_found" style="display:hidden;margin:auto;margin-top:20px;margin-bottom:20px;height: auto;left: 0px !important;">
+<div class="modal" id="modal_nric_found" style="display:hidden;margin:auto;margin-top:20px;margin-bottom:20px;height: 263px;left: 0px !important;">
 <p>
   <h2 class="panel_heading_style">NRIC DETAILS</h2>
     <!--Section: Contact v.2-->
@@ -307,7 +307,9 @@ if($course_id!='' && $class_id!=''){
     <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
     <!--Section description-->
     <p class="text-center alert-success" style='padding: 10px;'>This NRIC(<span id='nricid'></span>) is belongs to <span id='nric_name'></span></p>
+    <br>
     <h4 class="text-center">Are you Sure! You want to Continue?</h4>
+    <br>
     <div class="text-center"><button class='btn btn-primary' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<button class='btn btn-primary' style='padding: 3px 17px !important;font-size: 18px !important;'>No</button></div>
          
 </section>
