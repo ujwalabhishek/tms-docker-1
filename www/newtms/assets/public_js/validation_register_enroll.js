@@ -1703,6 +1703,7 @@ $('.nric_submit').click(function(){
                         
                     }else{
                         $('#modal_nric_found').show();
+                        $('#nric_name').html(res.first_name+' '+res.last_name);
                     }
                     
                 },
