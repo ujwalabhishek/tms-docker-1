@@ -745,64 +745,8 @@ if (!empty($tax_error)) {
         ?>                       
 
 
-    <?php
-    $form_attributes = array('name' => 'deactivate_trainee_form', 'id' => 'deactivate_trainee_form', "onsubmit" => "return(validate_deactivate_user());");
-    echo form_open("trainee/edit_trainee", $form_attributes);
-    ?>
-        <div class="modal1_055" id="ex8" style="display:none;">
-            <p>
-            <h2 class="panel_heading_style">Deactivate Trainee</h2>         
-            <strong> De-Activation Date:<span class="red">*</span> </strong>
-            <label id="deactivation_date" class='error'></label>
-            <span id="deactivation_date_err"></span>
-            <br><br>
-            <strong>Reason for De-Activation:<span class="red">*</span></strong> 
-    <?php
-    $d_reasons = fetch_metavalues_by_category_id(Meta_Values::DEACTIVATE_REASONS);
-    $reasons_options[''] = 'Select';
-    foreach ($d_reasons as $item):
-        $reasons_options[$item['parameter_id']] = $item['category_name'];
-    endforeach;
-    $reasons_options['OTHERS'] = 'Others';
-    $attr = 'id="reason_for_deactivation"';
-    echo form_dropdown('reason_for_deactivation', $reasons_options, $this->input->post('reason_for_deactivation'), $attr);
-    $company_name_data = array(
-        'name' => 'hiddencompanyid',
-        'id' => 'hiddencompanyid',
-        'class' => 'hiddencompanyid',
-        'type' => 'hidden',
-        'value' => $trainee['company']['company_id']
-    );
-    echo form_input($company_name_data);
-    ?> &nbsp; 
-            <span id="reason_for_deactivation_err"></span>
-
-            <span id="other_reason" style="display:none;">
-    <?php
-    $attr = array(
-        'name' => 'other_reason_for_deactivation',
-        'id' => 'other_reason_for_deactivation',
-        'size' => 35,
-        'style' => 'margin:5px 0 0 27.5%',
-        'class' => 'upper_case'
-    );
-    echo form_input($attr);
-    echo form_hidden('course_id_deactive', $course_data->course_id);
-    ?>  
-                <span id="other_reason_for_deactivation_err"></span>
-            </span>
-            <br><br>
-
-
-            Are you sure you want to deactivate this User?
-            <br>
-            <span class="required_i red">*Required Field</span>
-
-            <div class="popup_cancel9">
-                <div rel="modal:close"><button class="btn btn-primary" type="submit">Save</button>&nbsp;&nbsp;<a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Cancel</button></a>
-                </div>
-            </div>
-        </div>
+    
+   
     <?php
     echo form_hidden('userid', $trainee[userdetails]['user_id']);
     echo form_hidden('task', 'deactivate');
