@@ -125,7 +125,7 @@ if (!empty($tax_error)) {
         
    <?php echo form_close(); ?>  
         <div class="text-center">
-            <a href='<?php echo base_url();?>/referral_credentials1' class="btn btn-primary" id='declarations' type='button'>Enrol Now</a></div>
+            <a href='<?php echo base_url();?>referral_credentials1' class="btn btn-primary" id='declarations' type='button'>Enrol Now</a></div>
     </div>
    
 
