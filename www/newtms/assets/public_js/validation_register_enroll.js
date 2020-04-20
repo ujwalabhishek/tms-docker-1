@@ -1706,6 +1706,7 @@ $('.nric_submit').click(function(){
                         $('#modal_nric_found').show();
                         $('#nric_name').html(res.first_name);
                         $('#nricid').html(res.tax_code);
+                        $('#user_id_popup').html(res.user_id);
                     }
                     
                 },

@@ -298,11 +298,11 @@ if($course_id!='' && $class_id!=''){
 
 
 <div class="modal" id="modal_nric_found" style="display:hidden;margin:auto auto;height: 263px;left: 0px !important;">
-<p>
+
   <h2 class="panel_heading_style">NRIC DETAILS</h2>
     <!--Section: Contact v.2-->
 <section class="mb-4">
-    <form action='' method='post'>
+    <form action='course_public/confirm_trainee_details' method='post'>
     <!--Section heading-->
     <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
     <!--Section description-->
@@ -311,11 +311,14 @@ if($course_id!='' && $class_id!=''){
     <h4 class="text-center">Are you Sure! You want to Continue?</h4>
     <br>
     <div class="text-center"><button type='submit' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</button></div>
+    <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
+    <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
+    <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
     </form>    
 </section>
 <!--Section: Contact v.2-->
 
-</p>
+
 </div>
 
 
