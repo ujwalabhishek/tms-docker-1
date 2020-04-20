@@ -504,41 +504,7 @@ if (!empty($tax_error)) {
                                 <span id="occupation_err"></span>
                             </td>
                         </tr>               
-                        <tr>
-                            <td class="td_heading">Email Activation:<span class="required">*</span></td>
-                            <td colspan="5">
-                                <?php
-                                $bypassemail_info = $trainee[userdetails][acc_activation_type];
-                                $bypass = array(
-                                    'id' => 'bypassemail_1',
-                                    'name' => 'bypassemail',
-                                    'checked' => ($bypassemail_info == 'BPEMAC') ? TRUE : FALSE,
-                                    'value' => 'BPEMAC',
-                                    'class' => 'email',
-                                );
-                                $donotbypass = array(
-                                    'id' => 'bypassemail_2',
-                                    'name' => 'bypassemail',
-                                    'checked' => ($bypassemail_info == 'EMACRQ') ? TRUE : FALSE,
-                                    'value' => 'EMACRQ',
-                                    'class' => 'email',
-                                );
-                                ?>
-                                <?php
-                                if ($trainee[userdetails]['account_status'] == 'PENDACT') {
-                                    echo form_radio($bypass);
-                                    ?>By-pass email activation &nbsp;&nbsp; 
-                                    <?php
-                                    echo form_radio($donotbypass);
-                                    ?> Do not By-pass email activation
-                                    <?php
-                                } else { 
-                                    echo ($bypassemail_info == 'BPEMAC') ? 'By-pass email activation' : 'Do not By-pass email activation';
-                                }
-                                $display_email = ($bypassemail_info == 'BPEMAC') ? 'none' : '';
-                                ?>
-                            </td>
-                        </tr>
+                       
                         <tr>
                             <td class="td_heading">Email Id:
                                 <span id="span_email_id" class="required" style="display:<?php echo $display_email; ?>">*</span>
