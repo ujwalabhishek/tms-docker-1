@@ -5891,7 +5891,7 @@ class Course_Public_Model extends CI_Model {
         $data = $sql->row();
 
         if ($sql->num_rows() > 0) {
-            echo $data;
+            echo json_encode($data);
            
         } else {
 
