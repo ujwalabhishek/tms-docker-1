@@ -5878,13 +5878,13 @@ class Course_Public_Model extends CI_Model {
     
     public function check_taxcode_exists_public($taxcode, $course_id, $class_id) {
         $tenant_id = TENANT_ID;
-        $this->db->select('*');
+        $this->db->select('tup.*');
 
-        $this->db->from('tms_users');
+        $this->db->from('tms_users tu');
+        $this->db->join('tms_users_pers tup','tup.user_id=tu.user_id and tup.tenant_id=tu.tenant_id');
+        $this->db->where('tu.tax_code', $taxcode);
 
-        $this->db->where('tax_code', $taxcode);
-
-        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('tu.tenant_id', $tenant_id);
 
         $sql = $this->db->get();
 
