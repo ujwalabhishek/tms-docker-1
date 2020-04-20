@@ -3839,6 +3839,7 @@ class course_public extends CI_Controller {
                 return;
             }
         } 
+        print_r($data);exit;
         $data['main_content'] = 'course_public/edit_trainee_details';
         $this->load->view('layout_public', $data);
     }
