@@ -138,6 +138,8 @@ if (!empty($tax_error)) {
         <input type="hidden" name="taxcode" value="<?php echo $this->input->post('taxcode'); ?>" />
         <input type="hidden" name="trainee_name" value="<?php echo $this->input->post('trainee_name'); ?>" />
         <input type="hidden" name="search_radio" value="<?php echo $this->input->post('search_radio'); ?>" />
+         <input type="hidden" name="course_id" value="<?php echo $this->input->post('course_id'); ?>" />
+          <input type="hidden" name="class_id" value="<?php echo $this->input->post('class_id'); ?>" />
         <input type="hidden" name="NRIC_ID_MATCH" value="<?php echo $this->input->post('taxcode_nric'); ?>" />
     
        
