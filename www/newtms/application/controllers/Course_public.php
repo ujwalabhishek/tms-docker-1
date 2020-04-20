@@ -3720,9 +3720,9 @@ class course_public extends CI_Controller {
 
         $data['page_title'] = 'Enrollment';
 
-        $data['course_id'] = $this->input->post('course_id');
+        $data['course_id'] = $course_id = $this->input->post('course_id');
 
-        $data['class_id'] = $this->input->post('class_id');
+        $data['class_id'] = $class_id = $this->input->post('class_id');
 
         $data['user_id'] = $this->session->userdata('userDetails')->user_id;
         /* course class complete details */
