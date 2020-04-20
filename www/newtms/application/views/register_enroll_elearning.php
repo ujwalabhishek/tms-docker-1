@@ -173,7 +173,7 @@ if($course_id!='' && $class_id!=''){
                                 </td>
                              
                             </tr>
-                            <tr> <td colspan="2" class='text-center'><button type='button' class='btn-lg btn btn-primary'>Submit</button></td><tr>
+                            <tr> <td colspan="2" class='text-center'><button type='button' class='btn btn-primary' style='padding: 10px 16px;font-size: 18px;'>Submit</button></td><tr>
                            
 
 
