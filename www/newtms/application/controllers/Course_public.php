@@ -3725,7 +3725,7 @@ class course_public extends CI_Controller {
     }
     
     
-    public function confirm_trainee_details($course_id = null, $class_id = null) {
+    public function confirm_trainee_details($course_id = null, $class_id = null,$user_id_popup=null) {
         
          ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
         $user_role = $this->session->userdata('userDetails')->role_id ?? '';
@@ -3770,7 +3770,7 @@ class course_public extends CI_Controller {
         $data['page_title'] = 'Edit Trainee';
         
 
-        $user_id = $this->input->post('user_id_popup');
+        $user_id=$this->input->post('user_id_popup');
         if ($user_id) { 
                        
             $data['trainee'] = $this->traineemodel->get_trainee_taxcode($user_id, TENANT_ID); 
