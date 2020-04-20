@@ -24,7 +24,7 @@ if (!empty($tax_error)) {
         <li><a href="#" class="thumbnail"><img src="<?php echo base_url();?>/assets/images/ad2.jpg" style="display: block;" data-src="holder.js/100%x180" alt="100%x180"></a></li>
     </ul>
 </div>
-<div class="col-md-10">
+<div class="col-md-10" style='font-size: 16px;'>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/trainee.png"/> Trainee - Edit/ Deactivate</h2>
     <div class="table-responsive">
         <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
@@ -33,7 +33,7 @@ if (!empty($tax_error)) {
         echo form_open("trainee/edit_trainee", $form_attributes);
         ?>
             <?php 
-               $atr = 'id="trainee_form2" name="trainee_form2" style="font-size:16px"';
+               $atr = 'id="trainee_form2" name="trainee_form2" style="font-size:16px;"';
               // echo form_open_multipart("course/enrol_once", $atr);
                echo form_open_multipart("course_public/confirm_trainee_details", $atr);
               //  echo form_open_multipart("user/add_trainee1", $atr);
@@ -53,7 +53,7 @@ if (!empty($tax_error)) {
    if($course_id!='' && $class_id!=''){
 
    ?>
-   <div style="color:black;font-weight: bold; padding: 6px;text-align:center;width:100%" class="reg_tbl_div">                                
+   <div style="color:black;font-weight: bold; padding: 14px;text-align:center;width:100%" class="reg_tbl_div">                                
        <table class="table table-striped" style="">
                     <tbody>
                        <tr>
