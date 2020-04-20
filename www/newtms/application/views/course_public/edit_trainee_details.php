@@ -142,7 +142,7 @@ if (!empty($tax_error)) {
         <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/other_details.png"/> Access Detail</h2>
         <div id ='trainee_validation_div'>
             <div class="bs-example">
-                <div class="table-responsive">
+                <div class="table-responsive" style='overflow-x: initial;'>
                     <table class="table table-striped">
                         <tbody>
                             <tr>
@@ -236,7 +236,7 @@ if (!empty($tax_error)) {
                 <img src="<?php echo base_url(); ?>/assets/images/personal_details.png"/> Personal Details
                 <span class="pull-right"> <img src="<?php echo base_url(); ?>/assets/images/personal_details.png"> <a href="#ex3" rel="modal:open" style="color: blue;">Individual Discount</a></span>
             </h2>
-            <div class="table-responsive">
+            <div class="table-responsive" style='overflow-x: initial;'>
                 <table class="table table-striped">      
                     <tbody>                
                         <tr>
@@ -625,7 +625,7 @@ if (!empty($tax_error)) {
             </div>
             <br>
             <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/address.png"/> Address</h2>
-            <div class="table-responsive">
+            <div class="table-responsive" style='overflow-x: initial;'>
                 <table class="table table-striped">
                     <tbody>
                         <tr>
@@ -724,7 +724,7 @@ if (!empty($tax_error)) {
         <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/education.png"/> Educational Details 
             <span class="label label-default push_right black-btn" onclick="javascript:addmore('edu')"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add More</span> 
         </h2>
-        <div class="table-responsive">
+        <div class="table-responsive" style='overflow-x: initial;'>
             <table id="edu_tbl" class="table table-striped">
                 <thead>
                     <tr>
@@ -850,7 +850,7 @@ if (!empty($tax_error)) {
         <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/personal_details.png"/> Other Certificates and Trainings 
             <span class="label label-default push_right black-btn" onclick="javascript:addmore('other')"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add More</span> 
         </h2>
-        <div class="table-responsive">
+        <div class="table-responsive" style='overflow-x: initial;'>
             <table id="other_tbl" class="table table-striped">
                 <thead>
                     <tr>
@@ -982,7 +982,7 @@ if (!empty($tax_error)) {
         <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/officail_details.png"/> Work Experience 
             <span class="label label-default push_right black-btn" onclick="javascript:addmore('work')"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add More</span> 
         </h2>
-        <div class="table-responsive">
+        <div class="table-responsive" style='overflow-x: initial;'>
             <table id="work_tbl" class="table table-striped">
                 <thead>
                     <tr>
