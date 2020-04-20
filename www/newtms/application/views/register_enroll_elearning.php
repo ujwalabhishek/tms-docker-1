@@ -42,7 +42,7 @@ echo $this->load->view('common/refer_left_wrapper');
     <?php 
             $atr = 'id="trainee_form2" name="trainee_form2" style="font-size:16px"';
            // echo form_open_multipart("course/enrol_once", $atr);
-            echo form_open_multipart("user/add_trainee", $atr);
+            echo form_open_multipart("course_public/confirm_trainee_details", $atr);
            //  echo form_open_multipart("user/add_trainee1", $atr);
              $user_id;
             echo form_hidden('r_user_id', $user_id);
@@ -310,7 +310,7 @@ if($course_id!='' && $class_id!=''){
     <br>
     <h4 class="text-center">Are you Sure! You want to Continue?</h4>
     <br>
-    <div class="text-center"><button type='submit' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</button></div>
+    <div class="text-center"><button type='button' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</button></div>
     <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
     <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
     <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
@@ -368,7 +368,10 @@ if($course_id!='' && $class_id!=''){
         $('.nocls').click(function(){
              $('#modal_nric_found').hide();
         });
-        
+        $('.yescls').click(function(){
+             $('#modal_nric_found').hide();
+             $('#trainee_form2').submit();
+        });
        
      //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
      <?php if (TENANT_ID == 'T02'){?>
