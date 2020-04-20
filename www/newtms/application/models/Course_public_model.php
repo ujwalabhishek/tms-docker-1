@@ -5886,18 +5886,22 @@ class Course_Public_Model extends CI_Model {
 
         $this->db->where('tu.tenant_id', $tenant_id);
 
+        
         $sql = $this->db->get();
 
         $data = $sql->row();
-
-        if ($sql->num_rows() > 0) {
-            echo json_encode($data);
-           
+        $res = $this->nric_exits_cc($taxcode, $course_id, $class_id);
+        if ($res == 1) {
+            echo 1; // already enrolled
         } else {
-
-            echo 0;
-            
-        } exit();
+            if ($sql->num_rows() > 0) {
+                echo json_encode($data);
+            } else {
+                echo 0;  
+            }
+        }
+        
+       exit();
     }
     
 

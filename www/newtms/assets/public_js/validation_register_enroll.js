@@ -1698,14 +1698,21 @@ $('.nric_submit').click(function(){
                 async: false,
                 success: function(res)
                 {
+                     $('.yescls').show();
                     if(res == 0) // if trainee exists but his status is not active
                     {
                         
+                    }else if(res == 1){
+                        var res = JSON.parse(res);
+                        $('#modal_nric_found').show();
+                        $('.msg').html("You are Already Enrolled for this class!");
+                        $('.yescls').hide();
+                        $('#user_id_popup').val(res.user_id);
                     }else{
                         var res = JSON.parse(res);
                         $('#modal_nric_found').show();
-                        $('#nric_name').html(res.first_name);
-                        $('#nricid').html(res.tax_code);
+                        $('.msg').html("This NRIC("+res.tax_code+") is belongs to "+res.first_name);
+                        
                         $('#user_id_popup').val(res.user_id);
                     }
                     
