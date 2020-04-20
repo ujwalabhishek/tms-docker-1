@@ -660,6 +660,7 @@ class course_public extends CI_Controller {
                             $this->create_classenroll2($uid, $user_password, $course_id, $class_id, $tax_code, $registration, $friend_id, $friend_password, $relation);
                             $flag = 1;
                         }
+                    }
                     
                 }else{
                     $this->_refer_friend_server_validation(1, 1);
