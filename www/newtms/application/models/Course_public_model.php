@@ -12,7 +12,7 @@ class Course_Public_Model extends CI_Model {
         parent::__construct();
 
         $this->load->helper('common');
-
+        
         $this->load->library('bcrypt');
     }
     /*
@@ -2610,7 +2610,7 @@ class Course_Public_Model extends CI_Model {
 //                    }
 //
 //        }
-
+        $this->load->helper('user_model');
         /* Check existing user details skm start */
         if ($res_found1 == 1 && $taxcode_found != '') {
 
