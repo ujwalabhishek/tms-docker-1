@@ -138,6 +138,8 @@ if (!empty($tax_error)) {
         <input type="hidden" name="taxcode" value="<?php echo $this->input->post('taxcode'); ?>" />
         <input type="hidden" name="trainee_name" value="<?php echo $this->input->post('trainee_name'); ?>" />
         <input type="hidden" name="search_radio" value="<?php echo $this->input->post('search_radio'); ?>" />
+        <input type="hidden" name="NRIC_ID_MATCH" value="<?php echo $this->input->post('taxcode_nric'); ?>" />
+    
        
         <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/other_details.png"/> Access Detail</h2>
         <div id ='trainee_validation_div'>
@@ -199,7 +201,7 @@ if (!empty($tax_error)) {
                                         <label id="SGP_ID_label"> NRIC Code : </label><span class="required">* </span>
                                         
                                         <?php
-                                        form_hidden('NRIC_ID_MATCH', $this->input->post('taxcode_nric'));
+                                        
                                         $attr = array('name' => 'NRIC_ID', 'class' => 'upper_case alphanumeric', 'id' => 'NRIC_ID', 'onblur' => 'javascript:isunique_taxcode(this.value,this.id);', 'maxlength' => '50');
                                         echo form_input($attr, $trainee[userdetails]['tax_code']);
                                         ?>
