@@ -297,7 +297,7 @@ if($course_id!='' && $class_id!=''){
 
 
 
-<div class="modal" id="modal_nric_found" style="display:hidden;margin:auto;margin-bottom:20px;height: 263px;left: 0px !important;">
+<div class="modal" id="modal_nric_found" style="display:hidden;margin:auto auto;height: 263px;left: 0px !important;">
 <p>
   <h2 class="panel_heading_style">NRIC DETAILS</h2>
     <!--Section: Contact v.2-->
