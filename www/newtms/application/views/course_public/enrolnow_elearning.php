@@ -48,8 +48,7 @@ if (!empty($tax_error)) {
                echo form_hidden('course_id', $course_id);
                echo form_hidden('class_id', $class_id);
                echo form_hidden('registration', '1');
-$course_id = $this->input->post('course_id');
-   $class_id = $this->input->post('class_id');    
+ 
    
    if($course_id!='' && $class_id!=''){
 
@@ -80,8 +79,8 @@ $course_id = $this->input->post('course_id');
 
                         <td class="td_heading" ><?php echo $gst_label; ?>: <label class="label_font">$ <?php echo number_format($totalgst, 2, '.', ''); ?></label></td>
                         <td colspan="2" class="td_heading">Net Fee: <label class="label_font"><?php echo '$ ' . number_format($net_due, 2, '.', ''); ?></label></td>
-                         <input type="hidden" name="course_id" value="<?php echo $this->input->post('course_id'); ?>" />
- <input type="hidden" name="class_id" value="<?php echo $this->input->post('class_id'); ?>" />
+                         <input type="hidden" name="course_id" value="<?php echo $course_id; ?>" />
+ <input type="hidden" name="class_id" value="<?php echo $class_id; ?>" />
                        </tr>  
 
                    </tbody>
