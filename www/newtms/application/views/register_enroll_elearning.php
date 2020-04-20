@@ -40,7 +40,7 @@ echo $this->load->view('common/refer_left_wrapper');
 </div>-->
 
     <?php 
-            $atr = 'id="trainee_form" name="trainee_form" onsubmit="return(validate(\'refer_form\'));"';
+            $atr = 'id="trainee_form" name="trainee_form" style="font-size:16px" onsubmit="return(validate(\'refer_form\'));"';
            // echo form_open_multipart("course/enrol_once", $atr);
             echo form_open_multipart("user/add_trainee", $atr);
            //  echo form_open_multipart("user/add_trainee1", $atr);
@@ -143,7 +143,7 @@ if($course_id!='' && $class_id!=''){
                             
                              <tr>
                                 <td width="20%" class="td_heading">Please Enter NRIC:<span class="required">*</span></td>
-                                <td colspan="2"  >
+                                <td colspan="2" style="text-align: center;">
                                   
                                     <?php                            
                                             $taxcode_nric = array(
@@ -154,7 +154,7 @@ if($course_id!='' && $class_id!=''){
                                                 'class' => 'upper_case',
                                                 'onblur' => 'javascript:check_taxcode_nric(this.value,this.id);',
                                                 'onkeypress' =>'return IsAlphaNumeric(event);',
-                                                'style' => 'width:150px',
+                                                'style' => 'width: 328px;padding: 6px;border-radius: 5px;',
 
                                             );
                                              
@@ -173,9 +173,7 @@ if($course_id!='' && $class_id!=''){
                                 </td>
                             </tr>
                             
-                          
-                       
-                            
+                           
 
 
                         </table>
