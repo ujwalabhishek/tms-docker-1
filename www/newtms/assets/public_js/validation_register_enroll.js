@@ -1705,7 +1705,7 @@ $('.nric_submit').click(function(){
                         var res = JSON.parse(res);
                         $('#modal_nric_found').show();
                         $('#nric_name').html(res.first_name);
-                         $('#nricid').html(res.tax_code);
+                        $('#nricid').html(res.tax_code);
                     }
                     
                 },

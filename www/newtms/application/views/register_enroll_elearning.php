@@ -308,7 +308,7 @@ if($course_id!='' && $class_id!=''){
     <!--Section description-->
     <p class="text-center alert-danger" style='padding: 10px;'>This NRIC(<span id='nricid'></span>) is belongs to <span id='nric_name'></span></p>
     <h4 class="text-center">Are you Sure! You want to Continue?</h4>
-    <button class="text-center">Confirm</button>
+    <div class="text-center"><button class='btn btn-primary'>Confirm</button></div>
          
 </section>
 <!--Section: Contact v.2-->
