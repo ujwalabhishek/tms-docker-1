@@ -302,7 +302,7 @@ if($course_id!='' && $class_id!=''){
   <h2 class="panel_heading_style">NRIC DETAILS</h2>
     <!--Section: Contact v.2-->
 <section class="mb-4">
-
+    <form action='' method='post'>
     <!--Section heading-->
     <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
     <!--Section description-->
@@ -310,8 +310,8 @@ if($course_id!='' && $class_id!=''){
     <br>
     <h4 class="text-center">Are you Sure! You want to Continue?</h4>
     <br>
-    <div class="text-center"><button class='btn btn-primary' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<button class='btn btn-primary' style='padding: 3px 17px !important;font-size: 18px !important;'>No</button></div>
-         
+    <div class="text-center"><button type='submit' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</button></div>
+    </form>    
 </section>
 <!--Section: Contact v.2-->
 
@@ -362,6 +362,11 @@ if($course_id!='' && $class_id!=''){
         }
         
     $(document).ready(function(){
+        $('.nocls').click(function(){
+             $('#modal_nric_found').hide();
+        });
+        
+       
      //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
      <?php if (TENANT_ID == 'T02'){?>
     $('#declarations').click(function(){
