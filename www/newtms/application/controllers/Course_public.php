@@ -3759,7 +3759,7 @@ class course_public extends CI_Controller {
             //$data['payment_status'] = $this->traineemodel->payment_status($data['trainee'][userdetails][user_id],$tenant_id);            
         }        
         if ($this->input->post('task') == 'update') 
-        {
+        {echo "a";exit;
             $data['edit_tax_code'] = $code;
             $valid = TRUE;
             $country_of_residence = $this->input->post('country_of_residence');
