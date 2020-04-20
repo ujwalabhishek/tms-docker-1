@@ -3831,9 +3831,10 @@ class course_public extends CI_Controller {
                      user_activity(3,$user_id,$previous_data);
                     $this->session->set_flashdata('success_message', 'Trainee has been updated successfully');
                 }
-                redirect('/');
+                redirect('course_public/confirm_trainee_details');
             }
             else {
+                $data['main_content'] = 'course_public/edit_trainee_details';
                 $data['tax_error'] = ($data['tax_error'])?$data['tax_error']:$failure_msg;
                 $this->load->view('layout_public', $data);
                 return;
