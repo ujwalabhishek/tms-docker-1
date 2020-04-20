@@ -4187,8 +4187,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             
              
         }
-
         
+       
 
         foreach ($insert_data as $key => $excel) {
              ////////////////////////added by shubhranshu to prevent negative invoice due to subsidy on 4/1/2019////////////
@@ -4251,7 +4251,6 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') {
                            $salesexec = $this->user->user_id;
                         } else {
-
                             $salesexec = NULL;
                         }
                     }
@@ -4292,7 +4291,26 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     );
 
                     $this->db->insert('class_enrol', $data);
-
+                    
+                    ////added by shubhranshu if the invoice id re-generated  to fetch the discount
+                    $fees_array = $this->fees_payable_check_discount($excel['user_id'], $tenant_id, $course, $class, 0,$company_id, $payment_due_id, $this->user->user_id);
+                    
+                    $data = array(
+                        'user_id' => $user_id,
+                        'pymnt_due_id' => $payment_due_id,
+                        'class_fees' => round($fees_array["unit_fees"], 4),//sk1
+                        'total_amount_due' => round($fees_array["net_fees_due"], 2),//sk2
+                        'discount_type' => $fees_array["discount_type"],
+                        'discount_rate' => round($fees_array["discount_rate"], 4),
+                        'gst_amount' => round($fees_array["gst_amount"], 2),//sk3
+                        'subsidy_amount' => 0,
+                        'subsidy_recd_date' => '0000-00-00',
+                        'att_status' => $att_status
+                    );
+                    /////////////////////need to work on this//////////////////
+                    
+                    
+                    
                     if ($pay_status != 'PYNOTREQD') {
 
                         $data = array(
