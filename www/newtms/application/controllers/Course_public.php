@@ -645,11 +645,11 @@ class course_public extends CI_Controller {
 
                 $data['post'] = 1;
                 $submit = $this->input->post('submit');
-
+echo "dd";exit;
                 $this->load->library('form_validation');
                 $this->_refer_friend_server_validation(1, 1);
 
-                if ($this->form_validation->run() == TRUE) {echo "dd";exit;
+                if ($this->form_validation->run() == TRUE) {
                     $this->session->unset_userdata('captcha_key');
                     $this->load->model('user_model');
                         unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file')); // added by shubhranshu to delete the captcha file
