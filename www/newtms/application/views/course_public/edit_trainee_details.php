@@ -18,6 +18,9 @@ if (!empty($tax_error)) {
         width:210px;
     }
 </style>
+<div class="col-md-2">
+    
+</div>
 <div class="col-md-10">
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/trainee.png"/> Trainee - Edit/ Deactivate</h2>
     <div class="table-responsive">
