@@ -463,7 +463,7 @@ class User_Model extends CI_Model {
     }//end
     
      public function check_tmsuser_taxcode($taxcode)
-    {
+    {echo "$taxcode";exit;
         $this->db->select('*');
 
         $this->db->from('tms_users tu');
