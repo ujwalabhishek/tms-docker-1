@@ -565,23 +565,7 @@ if (!empty($tax_error)) {
                             <td class="td_heading">Confirm Email Id:<span id="span_confirm_email_id" class="required" style="display:<?php echo $display_email; ?>">*</span></td>
                             <td colspan="2"> <?php echo form_input($conf_email); ?><span id="pers_conf_email_err"></span></td>
                             </txr>
-                        <tr>
-    <?php
-    $alt_email = array(
-        'name' => 'pers_alt_email',
-        'maxlength' => '50',
-        'id' => 'pers_alt_email',
-        'value' => $trainee[userdetails]['alternate_email_id'],
-        'onblur' => 'javascript:validate_alternate_email(this.value,this.id);',
-        'style' => 'width:250px',
-    );
-    ?>
-                            <td class="td_heading">Alternate Email Id:</td>
-                            <td colspan="5">
-    <?php echo form_input($alt_email); ?><span id="pers_alt_email_err"></span>
-                            </td>
-
-                        </tr>
+                        
                         <tr>
                             <td class="td_heading">Highest Education Level:<span class="required">*</span></td>
                                     <?php
@@ -605,113 +589,18 @@ if (!empty($tax_error)) {
         </div>
         <br>
         </br>
-    <?php
-    $display = 'none';
-    $display_contents = 'none';
-    if ($trainee[userdetails]['account_status'] == 'PENDACT' && $bypassemail_info == 'BPEMAC') {
-        $display = '';
-    }
-    if ($trainee[userdetails]['account_status'] == 'PENDACT' && $bypassemail_info == 'EMACRQ') {
-        $display_contents = '';
-    }
-    ?>
-        <span colspan="4" id="span_activate_user" style="display:<?php echo $display; ?>">
-        <?php
-        if ($trainee[userdetails]['account_status'] == 'PENDACT') {
-            $now = array(
-                'name' => 'activate_user',
-                'checked' => ($trainee[userdetails]['account_status'] == 'ACTIVE') ? TRUE : FALSE,
-                'value' => 'ACTIVE'
-            );
-            $later = array(
-                'name' => 'activate_user',
-                'value' => 'PENDACT',
-                'checked' => ($trainee[userdetails]['account_status'] == 'PENDACT') ? TRUE : FALSE,
-            );
-            ?>
-                <?php echo form_radio($now); ?>Activate Trainee Now &nbsp;&nbsp; 
-                <?php echo form_radio($later); ?> Activate Trainee Later    
-            <?php } ?>
-        </span>
-        <br>
-        <span colspan="4">
-            <i id="BPEMAC_content" style='display: <?php echo $display; ?>'>(On activation, mail will be sent to the trainee's email Id, with the username.)</i>
-            <i id="EMACRQ_content" style="display:<?php echo $display_contents; ?>">
-                (An activation mail will be sent to the trainee's email Id, with the username and password.
-                Trainee will be required to click on the activation link to get the account activated.)
-            </i>
-        </span>
-        <br>
-        <span class="required required_i">* Required Fields</span>
-        <br>
+
         <div class="throw_right">
             <button id="update_btn" class="btn btn-primary" type="submit">
                 <span class="glyphicon glyphicon-retweet"></span>
                 &nbsp;Update
             </button> &nbsp; &nbsp;  
-            <?php
-            if ($trainee[userdetails]['account_status'] == 'ACTIVE') 
-            {
-                if ($payment_status > 0) 
-                {
-                    $link = "#ex9";
-                } 
-                else 
-                {
-                    $link = "#ex8";
-                }
-                ?>
-            <a class="small_text" rel="modal:open" href="<?php echo $link ?>">
-                <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Deactivate</button>
-            </a> &nbsp; &nbsp;
-            <?php 
-            } ?>
+            
+            
+          
+            
         </div>
-    <?php if (empty($trainee['discountdetails'])) { ?>
-            <div class="modal0000" id="ex3" style="display:none;">
-                <p>
-                <h2 class="panel_heading_style">Alert Message</h2>
-                There are no courses available.<br>
-                <div class="popup_cancel popup_cancel001">
-                    <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Ok</button></a></div>
-                </p>
-            </div>
-    <?php } else { ?>
-            <div class="modal_333" id="ex3" style="display:none;">
-                <p>
-                <h2 class="panel_heading_style">Individual Discount by Course</h2>
-                <div class="table-responsive payment_scroll" style="height: 250px;">
-                    <table style="width:100%; margin:0 auto;" class="table table-striped cpayment_received">
-                        <thead>
-                            <tr>
-                                <th>Course</th>
-                                <th>Discount %</th>
-                               
-                                <th>Discount Amt. (SGD)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            foreach ($trainee['discountdetails'] as $row):
-                                $k = $row['course_id'];
-                                echo "<tr>"
-                            . "<td>" . $row['crse_name'] . "</td>"
-                            . "<td><input type='text' maxlength='10' id='indi_disc_" . $k . "' class='indi_disc' data-key='" . $k . "' value='" . number_format($row['discount_percent'], 2, '.', '') . "' name='indi_disc[" . $k . "]'>%<span id='indi_disc_" . $k . "_err'></span></td>"
-                            . "<td>$ <input type='text' maxlength='10' id='indi_disc_amt_" . $k . "' class='indi_disc_amt' data-key='" . $k . "' value='" . number_format($row['discount_amount'], 2, '.', '') . "' name='indi_disc_amt[" . $k . "]'><span id='indi_disc_amt_" . $k . "_err'></span></td>"
-                            . "</tr>";
-                            endforeach;
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <br>
-                <span id="popup_error_err"></span>
-                <div class="popup_cance89">
-                    <a rel="modal:close" href="#"><button type="button" class="btn btn-primary disc_save">Save</button></a>
-                </div>
-                </p>
-            </div>
-    <?php } ?>
+    
         <?php
         echo form_hidden('userid', $trainee[userdetails]['user_id']);
         echo form_hidden('task', 'update');
