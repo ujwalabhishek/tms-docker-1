@@ -751,7 +751,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         $this->db->order_by("c.crse_name");  
         $query = $this->db->get();
         $data[discountdetails] = $query->result_array();
-
+echo $this->db->last_query();exit;
         return $data;
     }
 
