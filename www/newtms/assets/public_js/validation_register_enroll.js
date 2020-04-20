@@ -1697,7 +1697,7 @@ $('.nric_submit').click(function(){
                 data: {taxcode_nric: e, course_id: $course_id, class_id: $class_id},
                 async: false,
                 success: function(res)
-                {
+                {alert(res);alert(res.first_name);
                     if(res == 0) // if trainee exists but his status is not active
                     {
                         
