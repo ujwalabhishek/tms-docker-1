@@ -702,6 +702,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         $this->db->where('usr.user_id', $user_id);
         $this->db->where('usr.tenant_id', $tenantid);
         $query = $this->db->get();
+        echo $this->db->last_query();exit;
         $result = $query->result_array();
         $data[userdetails] = $result[0];
         $userid = $data[userdetails][user_id];
@@ -751,7 +752,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         $this->db->order_by("c.crse_name");  
         $query = $this->db->get();
         $data[discountdetails] = $query->result_array();
-echo $this->db->last_query();exit;
+
         return $data;
     }
 
