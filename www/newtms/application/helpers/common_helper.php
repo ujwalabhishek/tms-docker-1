@@ -648,7 +648,7 @@ function user_activity($module_id,$act_on,$previous_details,$account_type = null
 
         
         $data = array(
-                        'tenant_id' => $tenant_id,
+                        'tenant_id' => $tenant_id ?? TENANT_ID,
                         'module_id'=> $module_id, 
                         'account_type' => $account_type,
                         'act_on' => $act_on,
