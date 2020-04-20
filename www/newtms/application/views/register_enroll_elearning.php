@@ -152,7 +152,7 @@ if($course_id!='' && $class_id!=''){
                                                 'value' => $this->input->post('taxcode_nric'),
                                                 'maxlength' => '25',
                                                 'class' => 'upper_case',
-                                                'onblur' => 'javascript:check_taxcode_nric(this.value,this.id);',
+                                                //'onblur' => 'javascript:check_taxcode_nric(this.value,this.id);',
                                                 'onkeypress' =>'return IsAlphaNumeric(event);',
                                                 'style' => 'width: 328px;padding: 6px;border-radius: 5px;',
 
@@ -297,7 +297,7 @@ if($course_id!='' && $class_id!=''){
 <!----------------modal by ssp end----------------------->
 
 <!--<script src="<?php echo base_url(); ?>assets/js/validation_old.js" type="text/javascript"></script>-->
-
+<script src="<?php echo base_url(); ?>assets/public_js/validation_register_enroll.js" type="text/javascript"></script>
 <script>
 
 
