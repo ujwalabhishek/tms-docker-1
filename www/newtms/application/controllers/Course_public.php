@@ -645,9 +645,12 @@ class course_public extends CI_Controller {
 
                 $data['post'] = 1;
                 $submit = $this->input->post('submit');
-
+                $enrolment = $this->input->post('enrolment');
                 $this->load->library('form_validation');
-                $this->_refer_friend_server_validation(1, 1);
+                if($enrolment != 'elearning'){
+                    $this->_refer_friend_server_validation(1, 1);
+                }
+                
 
                 if ($this->form_validation->run() == TRUE) {
                     $this->session->unset_userdata('captcha_key');
@@ -3855,7 +3858,7 @@ class course_public extends CI_Controller {
         ////////////////////////////////////////////////////////////////////////////////////////
 
         $data['page_title'] = 'Enrollment';
-        $data['captcha']=$this->generateCaptcha();
+
         $data['course_id'] = $course_id;
 
         $data['class_id'] = $class_id;

@@ -48,7 +48,7 @@ if (!empty($tax_error)) {
                echo form_hidden('course_id', $course_id);
                echo form_hidden('class_id', $class_id);
                echo form_hidden('registration', '1');
- 
+               echo form_hidden('enrolment', 'elearning');
    
    if($course_id!='' && $class_id!=''){
 
@@ -123,7 +123,7 @@ if (!empty($tax_error)) {
 
    <?php } ?>
         <div class="text-center">
-            <span><?php echo $captcha;?></span><button type='submit'class="btn btn-primary" type='button'>Enrol Now</button></div>
+            <button type='submit'class="btn btn-primary" type='button'>Enrol Now</button></div>
    <?php echo form_close(); ?>  
         
     </div>
