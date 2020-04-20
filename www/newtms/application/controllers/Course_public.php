@@ -3741,7 +3741,7 @@ class course_public extends CI_Controller {
         //end
 
 
-        $data['main_content'] = 'register_enroll_elearning';
+        $data['main_content'] = 'course_public/edi_trainee_details';
 
         $this->load->view('layout_public', $data);
     }
