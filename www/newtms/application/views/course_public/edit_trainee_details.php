@@ -559,7 +559,7 @@ if (!empty($tax_error)) {
         <div class="throw_right">
             <button id="update_btn" class="btn btn-primary" type="submit">
                 <span class="glyphicon glyphicon-retweet"></span>
-                &nbsp;Update
+                &nbsp;Update & Continue
             </button> &nbsp; &nbsp;  
             
             
