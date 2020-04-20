@@ -173,15 +173,7 @@ if($course_id!='' && $class_id!=''){
                                 </td>
                             </tr>
                             
-                            <tr id="nric_found_msg">
-                                <td colspan="4"><strong><span id="nric_found_user_msg" style="color: green;"> </span> </strong></td> 
-                            </tr>
-                            
-                            <tr id="user_class_msg">
-                                 <td colspan="4"><strong> <span id="user_exists_class_msg" style="color:red;"></span></strong>
-                                        
-                            </tr>
-                            
+                          
                        
                             
 
