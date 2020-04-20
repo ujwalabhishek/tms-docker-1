@@ -213,7 +213,7 @@ if (!empty($tax_error)) {
                                 </td>
                             </tr>
                             <tr>
-                                <td width="14%" class="td_heading">Username:<span class="required">*</span></td>
+                                <td width="14%" class="td_heading">Username: <span class="required">*</span></td>
                                 <td width="40%" colspan="1"><?php echo $trainee[userdetails]['user_name']; ?> <div id="show_user_name"> </div></td> 
                                 <td class="td_heading">Activation Status:</td>                        
                                 <td colspan="1">
