@@ -25,7 +25,7 @@ if (!empty($tax_error)) {
     </ul>
 </div>
 <div class="col-md-10" style='font-size: 16px;'>
-    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/trainee.png"/> Trainee - Edit/ Deactivate</h2>
+    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/trainee.png"/>Confirm Trainee Details:</h2>
     <div class="table-responsive">
         <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
         <?php
