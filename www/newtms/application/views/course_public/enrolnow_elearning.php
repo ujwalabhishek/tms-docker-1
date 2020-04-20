@@ -49,7 +49,7 @@ if (!empty($tax_error)) {
                echo form_hidden('class_id', $class_id);
                 echo form_hidden('user_id', $user_id);
                echo form_hidden('registration', '1');
-               
+               echo form_hidden('enrolment', 'elearning');
                echo form_hidden('taxcode_found', $nric);
                echo form_hidden('res_found1', '1');
                
