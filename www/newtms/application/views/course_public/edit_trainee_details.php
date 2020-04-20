@@ -131,7 +131,7 @@ if (!empty($tax_error)) {
         
         $atr = 'id="trainee_edit" name="trainee_edit"';
         
-        echo form_open_multipart("trainee/edit_trainee", $atr);
+        echo form_open_multipart("course_public/confirm_trainee_details", $atr);
         ?>
         <input type="hidden" name="edit_user_id" id="edit_user_id" value="<?php echo $edit_user_id ?>" />
         
