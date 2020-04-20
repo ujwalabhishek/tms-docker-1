@@ -14,7 +14,7 @@ class course_public extends CI_Controller {
         parent::__construct();
          
         $this->load->model('course_public_model','course_model');
-
+        $this->load->model('Trainee_model','traineemodel');
         $this->load->helper('metavalues_helper', 'common');
 
         $this->load->model('meta_values');
