@@ -302,7 +302,7 @@ if($course_id!='' && $class_id!=''){
   <h2 class="panel_heading_style">NRIC DETAILS</h2>
     <!--Section: Contact v.2-->
 <section class="mb-4">
-    <form action='course_public/confirm_trainee_details' method='post'>
+    <!--<form action='course_public/confirm_trainee_details' method='post'>-->
     <!--Section heading-->
     <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
     <!--Section description-->
