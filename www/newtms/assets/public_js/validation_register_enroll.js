@@ -1698,23 +1698,13 @@ $('.nric_submit').click(function(){
                 async: false,
                 success: function(res)
                 {
-                    if(res == 3) // if trainee exists but his status is not active
+                    if(res == 0) // if trainee exists but his status is not active
                     {
-                        $flag =1;
-                        var res =3;
+                        
+                    }else{
+                        $('#modal_nric_found').show();
                     }
-                    else if(res == 2) // if trainee exists but enrolled in class
-                    {
-                        $flag = 1;
-                        var res = 1;
-                    }else if(res == 1) // if trainee exists but not enrolled in class
-                    {
-                        $flag = 0;
-                        var res = 1;
-                    }else               // if trainee not exists in db
-                    {
-                        var res = 0;
-                    }
+                    
                 },
                 error:function(){
                     return false;
