@@ -647,12 +647,26 @@ class course_public extends CI_Controller {
                 $submit = $this->input->post('submit');
                 $enrolment = $this->input->post('enrolment');
                 $this->load->library('form_validation');
-                if($enrolment != 'elearning'){
+                if($enrolment == 'elearning'){
+                    $res = $this->course_model->save_imp_trainee_skm();
+                    if ($res['user_id'] != 0) {
+                        if ($res['status'] != FALSE) {
+                            $uid = $res['user_id'];
+                            $tax_code = $res['tax_code'];
+                            $friend_id = $res['friend_id'];
+                            $user_password = $res['user_pass'];
+                            $friend_password = $res['friend_pass'];
+                            //                        
+                            $this->create_classenroll2($uid, $user_password, $course_id, $class_id, $tax_code, $registration, $friend_id, $friend_password, $relation);
+                            $flag = 1;
+                        }
+                    
+                }else{
                     $this->_refer_friend_server_validation(1, 1);
                 }
                 
 
-                if ($this->form_validation->run() == TRUE) {echo "sss";exit;
+                if ($this->form_validation->run() == TRUE) {
                     $this->session->unset_userdata('captcha_key');
                     $this->load->model('user_model');
                         unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file')); // added by shubhranshu to delete the captcha file
@@ -687,7 +701,7 @@ class course_public extends CI_Controller {
                 }
             }
             
-            if ($flag == 0) {echo "sss666";exit;
+            if ($flag == 0) {
                 $data['course_id'] = $course_id;
                 $data['class_id'] = $class_id;
                 /* course class complete details */
