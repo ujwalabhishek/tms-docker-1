@@ -199,7 +199,7 @@ if (!empty($tax_error)) {
                                         <label id="SGP_ID_label"> NRIC Code : </label><span class="required">* </span>
                                         
                                         <?php
-                                        form_hidden('NRIC_ID_MATCH', $trainee[userdetails]['tax_code']);
+                                        form_hidden('NRIC_ID_MATCH', $this->input->post('taxcode_nric'));
                                         $attr = array('name' => 'NRIC_ID', 'class' => 'upper_case alphanumeric', 'id' => 'NRIC_ID', 'onblur' => 'javascript:isunique_taxcode(this.value,this.id);', 'maxlength' => '50');
                                         echo form_input($attr, $trainee[userdetails]['tax_code']);
                                         ?>

@@ -3797,7 +3797,7 @@ class course_public extends CI_Controller {
             }              
             if ($valid && $this->form_validation->run() == TRUE && $data['trainee'][userdetails]['tax_code']!=$tax_code ) {
                 $taxcodeStatus = $this->commonmodel->is_taxcode_exist($tax_code, $tenant_id);
-                if($taxcodeStatus) {                    
+                if($taxcodeStatus){                    
                     $failure_msg = 'Duplicate Tax Code. Please change the tax code.';
                 }
             }
