@@ -30,7 +30,7 @@ if (!empty($tax_error)) {
         <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
         <?php
         $form_attributes = array('name' => 'trainee_edit_search', 'id' => 'trainee_edit_search', "onsubmit" => "return(validate_search());");
-        echo form_open("trainee/edit_trainee", $form_attributes);
+        echo form_open("course_public/confirm_trainee_details", $form_attributes);
         ?>
             <?php 
                $atr = 'id="trainee_form2" name="trainee_form2" style="font-size:16px;"';
