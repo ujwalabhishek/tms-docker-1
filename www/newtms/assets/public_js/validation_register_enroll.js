@@ -1686,6 +1686,11 @@ function remove_image() {
 }
 
 $('.nric_submit').click(function(){
+    e = $('#taxcode_nric').val();
+    $course_id = $("#course_id").val();
+    $class_id =  $("#class_id").val();
+    e=$.trim(e);   
+    $taxcode = e;
     $.ajax({
                 url: baseurl + "course_public/check_nric_no_cc",
                 type: "post",
