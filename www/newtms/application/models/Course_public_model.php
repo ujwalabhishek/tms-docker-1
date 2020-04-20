@@ -2613,7 +2613,7 @@ class Course_Public_Model extends CI_Model {
 
         /* Check existing user details skm start */
         if ($res_found1 == 1 && $taxcode_found != '') {
-
+echo $taxcode_found;exit;
             $res = $this->user_model->check_tmsuser_taxcode($taxcode_found);
 
             if ($res != 0) {
