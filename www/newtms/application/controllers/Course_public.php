@@ -3759,7 +3759,7 @@ class course_public extends CI_Controller {
             //$data['payment_status'] = $this->traineemodel->payment_status($data['trainee'][userdetails][user_id],$tenant_id);            
         }        
         if ($this->input->post('task') == 'update') 
-        {echo "a";exit;
+        {
             $data['edit_tax_code'] = $code;
             $valid = TRUE;
             $country_of_residence = $this->input->post('country_of_residence');
@@ -3776,7 +3776,7 @@ class course_public extends CI_Controller {
                 $NRIC_ID_MATCH = $this->input->post('NRIC_ID_MATCH'); // addded by shubhranshu for NRIC ID
                 $tax_code = $NRIC_ID;
                 
-                if($NRIC != "SNG_3"){
+                if($NRIC != "SNG_3"){echo "as";exit;
                     if($NRIC_ID != $NRIC_ID_MATCH){ //added by shubhranshu for check NRIC if it does not match
                         $this->form_validation->set_rules('NRIC_ID', 'NRIC Number', 'required|max_length[50]|callback_check_unique_usertaxcode');   
                         if(!empty($NRIC)) {
