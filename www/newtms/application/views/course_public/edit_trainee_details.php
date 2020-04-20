@@ -584,42 +584,19 @@ if (!empty($tax_error)) {
                         </tr>
                         <tr>
                             <td class="td_heading">Highest Education Level:<span class="required">*</span></td>
-    <?php
-    $highest_educ_level = fetch_metavalues_by_category_id(Meta_Values::HIGHEST_EDUC_LEVEL);
-    $highest_educ_level_options[''] = 'Select';
-    foreach ($highest_educ_level as $item):
-        $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
-    endforeach;
-    ?>
+                                    <?php
+                                    $highest_educ_level = fetch_metavalues_by_category_id(Meta_Values::HIGHEST_EDUC_LEVEL);
+                                    $highest_educ_level_options[''] = 'Select';
+                                    foreach ($highest_educ_level as $item):
+                                        $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
+                                    endforeach;
+                                    ?>
                             <td colspan="5">
                             <?php echo form_dropdown('highest_educ_level', $highest_educ_level_options, $trainee[userdetails]['highest_educ_level'], 'id="highest_educ_level" style="width:900px;"'); ?>
                                 <span id="highest_educ_level_err"></span>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="td_heading">Certificate Pickup Detail:</td>
-    <?php
-    $pickup_info = $trainee[userdetails][certificate_pick_pref];
-    $cerit_mail = array(
-        'name' => 'certificate_pick_pref',
-        'value' => 'cerit_mail',
-        'checked' => ($pickup_info == 'cerit_mail') ? TRUE : FALSE
-    );
-    $cerit_self = array(
-        'name' => 'certificate_pick_pref',
-        'value' => 'cerit_self',
-        'checked' => ($pickup_info == 'cerit_self') ? TRUE : FALSE
-    );
-    $cerit_post = array(
-        'name' => 'certificate_pick_pref',
-        'value' => 'cerit_post',
-        'checked' => ($pickup_info == 'cerit_post') ? TRUE : FALSE
-    );
-    ?>
-                            <td colspan="5"><?php echo form_radio($cerit_mail); ?> Mail to my personal email Id &nbsp;&nbsp; 
-                            <?php echo form_radio($cerit_self); ?> I will pickup myself &nbsp;&nbsp; 
-                                <?php echo form_radio($cerit_post); ?> Mail to my postal address    </td>		  
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
