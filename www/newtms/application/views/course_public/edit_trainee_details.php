@@ -133,7 +133,7 @@ if (!empty($tax_error)) {
         
         echo form_open_multipart("course_public/confirm_trainee_details", $atr);
         ?>
-        <input type="hidden" name="edit_user_id" id="edit_user_id" value="<?php echo $edit_user_id ?>" />
+        <input type="hidden" name="edit_user_id" id="edit_user_id" value="<?php echo $this->input->post('user_id_popup'); ?>" />
         
         <input type="hidden" name="taxcode" value="<?php echo $this->input->post('taxcode'); ?>" />
         <input type="hidden" name="trainee_name" value="<?php echo $this->input->post('trainee_name'); ?>" />
