@@ -3831,7 +3831,7 @@ class course_public extends CI_Controller {
                      //user_activity(3,$user_id,$previous_data);
                     $this->session->set_flashdata('success_message', 'Trainee has been updated successfully');
                 }
-                redirect('course_public/enrolnow_elearning');
+                redirect('course_public/enrolnow_elearning/'.$course_id.'/'.$class_id);
             }else {
                 $data['main_content'] = 'course_public/edit_trainee_details';
                 $data['tax_error'] = ($data['tax_error'])?$data['tax_error']:$failure_msg;
@@ -3844,7 +3844,7 @@ class course_public extends CI_Controller {
         $this->load->view('layout_public', $data);
     }
     
-    public function enrolnow_elearning(){
+    public function enrolnow_elearning($course_id = null, $class_id = null){
           ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
         $user_role = $this->session->userdata('userDetails')->role_id ?? '';
         if($user_role != ''){
@@ -3856,9 +3856,9 @@ class course_public extends CI_Controller {
 
         $data['page_title'] = 'Enrollment';
 
-        $data['course_id'] = $course_id = $this->input->post('course_id');
+        $data['course_id'] = $course_id;
 
-        $data['class_id'] = $class_id = $this->input->post('class_id');
+        $data['class_id'] = $class_id;
 
         $data['user_id'] = $this->session->userdata('userDetails')->user_id;
         /* course class complete details */
