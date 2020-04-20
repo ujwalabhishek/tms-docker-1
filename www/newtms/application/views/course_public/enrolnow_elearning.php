@@ -30,8 +30,8 @@ if (!empty($tax_error)) {
         
         <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
         <?php
-        $form_attributes = array('name' => 'trainee_edit_search', 'id' => 'trainee_edit_search', "onsubmit" => "return(validate_search());");
-        echo form_open("course_public/confirm_trainee_details", $form_attributes);
+        $form_attributes = array('name' => 'trainee_edit_search', 'id' => 'trainee_edit_search');
+        echo form_open("course_public/referral_credentials1", $form_attributes);
      
            
                $atr = 'id="trainee_form2" name="trainee_form2" style="font-size:16px;"';
@@ -122,10 +122,10 @@ if (!empty($tax_error)) {
                </div>  
 
    <?php } ?>
-        
-   <?php echo form_close(); ?>  
         <div class="text-center">
-            <a href='<?php echo base_url();?>course_public/referral_credentials1' class="btn btn-primary" id='declarations' type='button'>Enrol Now</a></div>
+            <button type='submit'class="btn btn-primary" type='button'>Enrol Now</button></div>
+   <?php echo form_close(); ?>  
+        
     </div>
    
 
