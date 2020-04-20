@@ -171,9 +171,9 @@ if($course_id!='' && $class_id!=''){
                                 <span id="taxcode_nric_err"></span>
                                     
                                 </td>
-                                <td><button class='btn btn-primary'>Submit</button></td>
+                             
                             </tr>
-                            
+                            <tr> <td colspan="2" class='text-center'><button class='btn btn-primary'>Submit</button></td><tr>
                            
 
 
