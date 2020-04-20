@@ -3755,7 +3755,7 @@ class course_public extends CI_Controller {
         $user_id = $this->input->post('user_id_popup');
         if ($user_id) { 
                        
-            $data['trainee'] = $this->traineemodel->get_trainee_taxcode($user_id, $this->user->tenant_id); 
+            $data['trainee'] = $this->traineemodel->get_trainee_taxcode($user_id, TENANT_ID); 
             //$data['payment_status'] = $this->traineemodel->payment_status($data['trainee'][userdetails][user_id],$tenant_id);            
         }        
         if ($this->input->post('task') == 'update') 
