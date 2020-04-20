@@ -45,7 +45,7 @@
                                         $user_id = $this->session->userdata('userDetails')->user_id; // get user_id from session
                                         
                                         $result = $this->course_model->is_user_enrolled1($user_id,$class['class_id'],$class['course_id']);// check user alreaady enrolled in particular class or not
-                                        $class['user_id'] = $user_id;
+                                        $class['user_id'] = $user_id;echo TENANT_ID;exit;
                                         if(TENANT_ID == 'T02'){
                                             $enroll_link ='<a class="enroll_now_link" href="' . base_url() . 'course_public/class_member_check_elearning/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">';
                                         }else{
