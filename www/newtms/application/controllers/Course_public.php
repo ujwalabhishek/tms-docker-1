@@ -568,6 +568,8 @@ class course_public extends CI_Controller {
 
         $this->load->view('layout_public', $data);
     }
+    
+    
 
 //end
 //  skm code for check nric is present in db or not start    
@@ -3653,16 +3655,47 @@ class course_public extends CI_Controller {
         $data['main_content'] = 'course_public/all_course_class_schedule';
         $this->load->view('layout_public', $data);
     }
+    
+    public function class_member_check_elearning($course_id = null, $class_id = null) {
+        
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+        $data['page_title'] = 'Enrollment';
+
+        $data['course_id'] = $course_id;
+
+        $data['class_id'] = $class_id;
+
+        $data['user_id'] = $this->session->userdata('userDetails')->user_id;
+        /* course class complete details */
+        $data['class_details'] = $class_details = $this->course_model->get_class_details($class_id);
+        $data['course_details'] = $course_details = $this->course_model->course_basic_details($class_details->course_id);
+
+        $data['discount_total'] = $discount_total = round(($class_details->class_discount / 100) * $class_details->class_fees, 2);
+        $data['feesdue'] = $feesdue = $class_details->class_fees - ($discount_total);
+        $data['gst_rate'] = $gst_rate = $this->course_model->get_gst_current();
+        $data['totalgst'] = $totalgst = ($course_details->gst_on_off == 1) ? round(($feesdue * $gst_rate) / 100, 2) : 0;
+        $data['net_due'] = $net_due = $feesdue + $totalgst;
+        $meta_result = $this->meta_values->get_param_map();
+        $data['gst_label'] = $gst_label = ($course_details->gst_on_off == 1) ? 'GST applicable ' . '(' . number_format($data['gst_rate'], 2, '.', '') . '%)' : 'GST not applicable';
+        $data['class_type'] = $meta_result[$course_details->class_type];
+        $data['classloc'] = ($class_details->classroom_location == 'OTH') ? 'Others (' . $class_details->classroom_venue_oth . ')' : $meta_result[$class_details->classroom_location];
+        //end
+
+
+        $data['main_content'] = 'register_enroll_elearning';
+
+        $this->load->view('layout_public', $data);
+    }
 
 
 }
-
-/*
-
-     * End  of  the File
-
-     * Location:application/controllers/courses
-
-     */
 
     
