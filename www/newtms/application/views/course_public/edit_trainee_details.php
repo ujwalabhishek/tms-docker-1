@@ -18,8 +18,11 @@ if (!empty($tax_error)) {
         width:210px;
     }
 </style>
-<div class="col-md-2">
-    
+<div class="col-md-2 col_2_style">
+    <ul class="ad">
+        <li><a href="#" class="thumbnail"><img src="http://wablab.xprienz.net/assets/images/ad1.jpg" style="display: block;" data-src="holder.js/100%x180" alt="100%x180"></a></li>
+        <li><a href="#" class="thumbnail"><img src="http://wablab.xprienz.net/assets/images/ad2.jpg" style="display: block;" data-src="holder.js/100%x180" alt="100%x180"></a></li>
+    </ul>
 </div>
 <div class="col-md-10">
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/trainee.png"/> Trainee - Edit/ Deactivate</h2>
