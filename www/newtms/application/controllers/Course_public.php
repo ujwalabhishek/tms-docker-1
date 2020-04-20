@@ -652,7 +652,7 @@ class course_public extends CI_Controller {
                 }
                 
 
-                if ($this->form_validation->run() == TRUE) {
+                if ($this->form_validation->run() == TRUE) {echo "sss";exit;
                     $this->session->unset_userdata('captcha_key');
                     $this->load->model('user_model');
                         unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file')); // added by shubhranshu to delete the captcha file
@@ -686,7 +686,7 @@ class course_public extends CI_Controller {
 //                    }
                 }
             }
-            $flag;
+            
             if ($flag == 0) {
                 $data['course_id'] = $course_id;
                 $data['class_id'] = $class_id;
