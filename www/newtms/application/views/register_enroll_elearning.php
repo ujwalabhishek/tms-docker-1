@@ -60,7 +60,7 @@ echo $this->load->view('common/refer_left_wrapper');
 if($course_id!='' && $class_id!=''){
    
 ?>
-<div style="color:black;font-weight: bold; padding: 6px;text-align:center;" class="reg_tbl_div">                                
+<div style="color:black;font-weight: bold; padding: 6px;text-align:center;width:80%" class="reg_tbl_div">                                
     <table class="table table-striped" style="">
                  <tbody>
                     <tr>
