@@ -142,7 +142,7 @@ if($course_id!='' && $class_id!=''){
                             <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/personal_details.png"/>  Access Detail</h2>
                             
                              <tr>
-                                <td  width="20%" class="td_heading" style='padding:6px;text-align: right;'>Please Enter NRIC:<span class="required">*</span></td>
+                                <td class="td_heading" style='padding:15px;text-align: right;'>Please Enter NRIC:<span class="required">*</span></td>
                                 <td style="text-align: left;">
                                   
                                     <?php                            
