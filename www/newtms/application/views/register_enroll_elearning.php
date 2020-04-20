@@ -40,7 +40,7 @@ echo $this->load->view('common/refer_left_wrapper');
 </div>-->
 
     <?php 
-            $atr = 'id="trainee_form" name="trainee_form" style="font-size:16px" onsubmit="return(validate(\'refer_form\'));"';
+            $atr = 'id="trainee_form2" name="trainee_form2" style="font-size:16px"';
            // echo form_open_multipart("course/enrol_once", $atr);
             echo form_open_multipart("user/add_trainee", $atr);
            //  echo form_open_multipart("user/add_trainee1", $atr);
@@ -173,7 +173,7 @@ if($course_id!='' && $class_id!=''){
                                 </td>
                              
                             </tr>
-                            <tr> <td colspan="2" class='text-center'><button type='button' class='btn btn-primary' style='padding: 3px 17px !important;font-size: 18px !important;'>Submit</button></td><tr>
+                            <tr> <td colspan="2" class='text-center'><button type='button' class='btn btn-primary nric_submit' style='padding: 3px 17px !important;font-size: 18px !important;'>Submit</button></td><tr>
                            
 
 
