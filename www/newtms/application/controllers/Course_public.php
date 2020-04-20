@@ -645,7 +645,7 @@ class course_public extends CI_Controller {
 
                 $data['post'] = 1;
                 $submit = $this->input->post('submit');
-echo "dd";exit;
+
                 $this->load->library('form_validation');
                 $this->_refer_friend_server_validation(1, 1);
 
@@ -3855,7 +3855,7 @@ echo "dd";exit;
         ////////////////////////////////////////////////////////////////////////////////////////
 
         $data['page_title'] = 'Enrollment';
-
+        $data['captcha']=$this->generateCaptcha();
         $data['course_id'] = $course_id;
 
         $data['class_id'] = $class_id;

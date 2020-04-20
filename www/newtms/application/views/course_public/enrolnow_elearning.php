@@ -123,7 +123,7 @@ if (!empty($tax_error)) {
 
    <?php } ?>
         <div class="text-center">
-            <button type='submit'class="btn btn-primary" type='button'>Enrol Now</button></div>
+            <span><?php echo $captcha;?></span><button type='submit'class="btn btn-primary" type='button'>Enrol Now</button></div>
    <?php echo form_close(); ?>  
         
     </div>
