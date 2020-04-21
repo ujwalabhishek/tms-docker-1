@@ -136,7 +136,7 @@ if (!empty($tax_error)) {
     
     
     <!----------------modal by ssp start----------------------->
-<?php if (TENANT_ID == 'T02'){'display:block';}else{'display:none';}?>
+<?php if (TENANT_ID == 'T02'){$show='display:block';}else{$show='display:none';}?>
 <div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;height: auto;left: 0px !important;">
 <p>
   <h2 class="panel_heading_style">Declaration</h2>
