@@ -125,8 +125,10 @@ if (!empty($tax_error)) {
                </div>  
 
    <?php } ?>
+        <br>
+        <br>
         <div class="text-center">
-            <button type='submit'class="btn btn-primary" type='button'>Enrol Now</button></div>
+            <button type='submit'class="btn btn-primary" type='button' style="padding: 3px 17px !important;font-size: 18px !important;">Enrol Now</button></div>
    <?php echo form_close(); ?>  
         
     </div>
