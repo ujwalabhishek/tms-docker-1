@@ -1688,7 +1688,7 @@ function remove_image() {
 $('.nric_submit').click(function(){
     e = $('#taxcode_nric').val();
     if(e == ''){
-        $('#taxcode_nric_err').text('Required!').addClass('error');
+        $('#taxcode_nric_err').text('[Required!]').addClass('error');
     }else{
         $('#taxcode_nric_err').text('').removeClass('error');
        

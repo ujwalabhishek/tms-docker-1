@@ -427,5 +427,32 @@ if($course_id!='' && $class_id!=''){
         }
     }); 
      <?php } ?>
+ 
+ 
+ 
  });
+ 
+ function blockSpecialCharacters(e) {
+            let key = e.key;
+            let keyCharCode = key.charCodeAt(0);
+
+            // 0-9
+            if(keyCharCode >= 48 && keyCharCode <= 57) {
+                return key;
+            }
+            // A-Z
+            if(keyCharCode >= 65 && keyCharCode <= 90) {
+                return key;
+            }
+            // a-z
+            if(keyCharCode >= 97 && keyCharCode <= 122) {
+                return key;
+            }
+
+            return false;
+    }
+
+    $('#taxcode_nric').keypress(function(e) {
+        blockSpecialCharacters(e);
+    });
     </script>
