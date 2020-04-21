@@ -1713,9 +1713,10 @@ $('.nric_submit').click(function(){
                         }else if(res == 1){
                             var res = JSON.parse(res);
                             $('#modal_nric_found').show();
-                            $('.msg').html("You are Already Enrolled for this class!<br>Please, choose other class from and enrol.");
+                            $('.msg').html("Oops! You are Already Enrolled for this class!");
+                            $('.suremsg').html("Kindly Choose Another Class To Enrol!");
                             $('.yescls').hide();
-                            $('.nocls').html('Close & Choose Another Class!');
+                            $('.nocls').html('Proceed!');
                             $('#user_id_popup').val(res.user_id);
                             $(".nocls").attr("href", baseurl)
 
@@ -1723,7 +1724,7 @@ $('.nric_submit').click(function(){
                             var res = JSON.parse(res);
                             $('#modal_nric_found').show();
                             $('.msg').html("This NRIC("+res.tax_code+") is belongs to "+res.first_name);
-
+                            $('.suremsg').html("Are you Sure! You want to Continue?");
                             $('#user_id_popup').val(res.user_id);
                         }
 
