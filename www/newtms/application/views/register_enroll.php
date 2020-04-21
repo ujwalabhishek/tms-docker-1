@@ -525,7 +525,7 @@ if($course_id!='' && $class_id!=''){
                             
                             <span id="admin_msg_err" style="color: red;"><br/>* Your credentials not matched, Please Contact to Admin for  Email, contact Number or D.O.B. !</span>-->
                             <div class="button_class99">
-                                <button class="btn btn-sm btn-info" id="btn_dis" type="submit" name='submit' value="exit"><span class="glyphicon"></span> <strong>
+                                <button class="btn btn-primary" id="btn_dis" type="submit" name='submit' value="exit"><span class="glyphicon"></span> <strong>
 <!--                                        <span id="sub1">Register Now</span>
                                         <span id="sub2">Enroll Now</span>-->
                                          <span >Enroll Now</span>
