@@ -107,7 +107,7 @@ if($course_id!='' && $class_id!=''){
 
 ?>
 
-<div style="color:black;font-weight: bold; padding: 6px;text-align:center;" class="reg_tbl_div" style='width: auto;'>                                
+<div style="color:black;font-weight: bold; padding: 6px;text-align:center;" class="reg_tbl_div">                                
 
     <table class="table table-striped" style="">
 
@@ -220,7 +220,7 @@ if($course_id!='' && $class_id!=''){
 
 
 
-    <div id ='trainee_validation_div' class='reg_tbl_div' style='width: auto;'>
+    <div id ='trainee_validation_div' class='reg_tbl_div'>
 
         <div class="bs-example">                    
 
@@ -1019,7 +1019,7 @@ if($course_id!='' && $class_id!=''){
 
      
 
-     <div id ='trainee_validation_div1' class='reg_tbl_div' style='width: auto;'>
+     <div id ='trainee_validation_div1' class='reg_tbl_div'>
 
         <div class="bs-example">                    
 
