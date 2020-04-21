@@ -11,9 +11,6 @@ $this->load->helper('common_helper');
 echo $this->load->view('common/refer_left_wrapper');
 
 
-
-echo validation_errors('<div class="error1">', '</div>');
-
 ?>
 
 <script>

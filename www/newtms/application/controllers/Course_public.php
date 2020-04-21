@@ -635,7 +635,7 @@ class course_public extends CI_Controller {
             $flag = 0;
             $data['post'] = 0;
             $data['show_error_form'] = 0;
-            if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            if ($this->input->server('REQUEST_METHOD') === 'POST' && $course_id_popup == '') {
                 $course_id = $this->input->post('course_id');
                 $class_id = $this->input->post('class_id');
                 $registration = $this->input->post('registration');
