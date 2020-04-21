@@ -244,4 +244,62 @@ if (!empty($tax_error)) {
 
 </p>
 </div>
+    
+    <script>
+        $baseurl = '<?php echo base_url(); ?>';
+     //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
+     <?php if (TENANT_ID == 'T02'){?>
+    $('#declarations').click(function(){
+        $status = 1;
+        if($('#dec_name').val()==''){
+            $status=0;
+        }
+//        if($('#dec_email').val()==''){
+//            $status=0;
+//        }
+        if($('#dec_mobile').val()==''){
+            $status=0;
+        }
+        if($('#dec_overseas').val()==''){
+            $status=0;
+        }
+        if($('#dec_les_time').val()==''){
+            $status=0;
+        }
+        
+        if($status == 1){
+            $('#ex1011').hide();
+            $('.statuserr').html('');
+            
+            $url = $baseurl + "class_trainee/save_declaration_trainee_data";
+            $.ajax({
+                url: $url,
+                type: "post",
+                dataType: "json",
+                data: {
+                    tax_code: $('#taxcode_nric').val(),
+                    type:'PUBLIC_PORTAL',
+                    name: $('#dec_name').val(),  
+                    email: $('#dec_email').val(),
+                    mobile: $('#dec_mobile').val(),
+                    user_id:'<?php echo $user_id;?>',
+                    res: $('input[name="dec_res"]:checked').val(),
+                    class_id:'<?php echo $class_id;?>',
+                    lesson_timing: $('#dec_les_time').val(),
+                    overseas: $('#dec_overseas').val()
+                },
+                success: function(data) {
+                   if(data !='1'){
+                      $('#ex1011').show();  
+                  }
+                }
+            });
+        }else{
+             $('.statuserr').html('<span style="color:red">Please fill all the (*) Mark fields to Continue!</span>');
+        }
+    }); 
+     <?php } ?>
+ });
+    
+    </script>
 
