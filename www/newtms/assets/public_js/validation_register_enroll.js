@@ -1701,7 +1701,8 @@ $('.nric_submit').click(function(){
                      $('.yescls').show();
                     if(res == 0) // if trainee exists but his status is not active
                     {
-                       window.location= baseurl+"course_public/referral_credentials1/"+$course_id+"/"+$class_id;
+                       document.trainee_form2.action = baseurl+"course_public/referral_credentials1";
+                       $('#trainee_form2').submit();
                     }else if(res == 1){
                         var res = JSON.parse(res);
                         $('#modal_nric_found').show();
