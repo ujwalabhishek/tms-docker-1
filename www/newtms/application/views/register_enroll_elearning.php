@@ -38,7 +38,7 @@ echo $this->load->view('common/refer_left_wrapper');
 </div>-->
 
     <?php 
-            $atr = 'id="trainee_form2" name="trainee_form2" style="font-size:16px"';
+            $atr = 'id="trainee_form2" name="trainee_form2"';
            // echo form_open_multipart("course/enrol_once", $atr);
             echo form_open_multipart("course_public/confirm_trainee_details", $atr);
            //  echo form_open_multipart("user/add_trainee1", $atr);
