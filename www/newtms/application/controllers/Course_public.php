@@ -617,6 +617,7 @@ class course_public extends CI_Controller {
      */
 
     public function referral_credentials1($course_id=0, $class_id=0) {
+        extract($_POST);
          ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
         $user_role = $this->session->userdata('userDetails')->role_id ?? '';
         if($user_role != ''){
@@ -627,6 +628,7 @@ class course_public extends CI_Controller {
         ////////////////////////////////////////////////////////////////////////////////////////
         unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file'));// added by shubhranshu to delete the captcha file
         $session_user_id = $this->session->userdata('userDetails')->user_id;
+        $course_id_popup = $this->input->post('course_id_popup');
         if (!empty($session_user_id)) {
             redirect('register_enroll/' . $course_id . '/' . $class_id);
         } else {
