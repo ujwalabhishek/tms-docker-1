@@ -1715,7 +1715,7 @@ $('.nric_submit').click(function(){
                             $('#modal_nric_found').show();
                             $('.msg').html("You are Already Enrolled for this class!<br>Please, choose other class from and enrol.");
                             $('.yescls').hide();
-                            $('.nocls').html('Close');
+                            $('.nocls').html('Close & Choose Another Class!');
                             $('#user_id_popup').val(res.user_id);
                             $(".nocls").attr("href", baseurl)
 
