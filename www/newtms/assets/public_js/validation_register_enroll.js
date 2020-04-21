@@ -1687,6 +1687,12 @@ function remove_image() {
 
 $('.nric_submit').click(function(){
     e = $('#taxcode_nric').val();
+    if(e == ''){
+        $('#taxcode_nric_err').text('Required!').addClass('error');
+    }else{
+        $('#taxcode_nric_err').text('').removeClass('error');
+       
+    }
     $course_id = $("#course_id").val();
     $class_id =  $("#class_id").val();
     e=$.trim(e);   
