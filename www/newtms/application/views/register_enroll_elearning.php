@@ -368,7 +368,7 @@ if($course_id!='' && $class_id!=''){
         $('.nocls').click(function(){
              $('#modal_nric_found').hide();
              document.trainee_form2.action = "course_public/referral_credentials1";
-              //$('#trainee_form2').submit();
+              $('#trainee_form2').submit();
         });
         $('.yescls').click(function(){
              $('#modal_nric_found').hide();
