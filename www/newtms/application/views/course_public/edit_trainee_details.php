@@ -546,7 +546,7 @@ if (!empty($tax_error)) {
                                     endforeach;
                                     ?>
                             <td colspan="5">
-                            <?php echo form_dropdown('highest_educ_level', $highest_educ_level_options, $trainee[userdetails]['highest_educ_level'], 'id="highest_educ_level" style="width:900px;"'); ?>
+                            <?php echo form_dropdown('highest_educ_level', $highest_educ_level_options, $trainee[userdetails]['highest_educ_level'], 'id="highest_educ_level" style="width:500px;"'); ?>
                                 <span id="highest_educ_level_err"></span>
                             </td>
                         </tr>
