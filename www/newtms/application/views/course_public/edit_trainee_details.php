@@ -1559,7 +1559,7 @@ endif;
         });
         $(document).ready(function() {
             var check = 0;
-            $('#trainee_edit').submit(function() {alert();
+            $('#trainee_edit').submit(function() {
                 check = 1;
                  return validate(true);
             });
