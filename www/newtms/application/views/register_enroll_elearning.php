@@ -20,7 +20,7 @@ echo $this->load->view('common/refer_left_wrapper');
 <div class="col-md-10" style='font-size: 13px;'>  
     <h2 class="panel_heading_style">
         <span aria-hidden="true" class="glyphicon glyphicon-user"></span> 
-          Check NRIC:
+          Trainee Enrolment:
 
     </h2>
     <?php
