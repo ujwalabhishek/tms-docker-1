@@ -326,7 +326,7 @@ if($course_id!='' && $class_id!=''){
 <!----------------modal by ssp end----------------------->
 
 <!--<script src="<?php echo base_url(); ?>assets/js/validation_old.js" type="text/javascript"></script>-->
-<script src="<?php echo base_url(); ?>assets/public_js/validation_register_enroll.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/public_js/validation_register_enroll.js?v=1" type="text/javascript"></script>
 <script>
 
 
