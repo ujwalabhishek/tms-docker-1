@@ -639,6 +639,7 @@ endif;
 
 <!--//////////////////////////////////////////////////////-->
     <script type="text/javascript">
+        $baseurl = '<?php echo base_url(); ?>';
         $role_id = "<?php echo $this->session->userdata('userDetails')->role_id;?>";//added by shubhranshu
         $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
         edituser_country_of_residence = '<?php echo $trainee[userdetails]['country_of_residence']; ?>';
@@ -1926,7 +1927,7 @@ endif;
                 $("#" + id).addClass('error');
             } else if (e != primary_email) {
                 $.ajax({
-                    url: "user/check_email",
+                    url: $baseurl+"user/check_email",
                     type: "post",
                     data: 'email=' + e,
                     success: function(res) {
