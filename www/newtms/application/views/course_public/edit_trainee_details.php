@@ -178,9 +178,10 @@ if (!empty($tax_error)) {
                                         foreach ($nrics as $item):
                                             $nris_options[$item['parameter_id']] = $item['category_name'];
                                         endforeach;
-                                        $attr = 'id="NRIC"';
+                                        $attr = 'id="NRIC" disabled="true"';
                                         echo form_dropdown('NRIC', $nris_options, $trainee[userdetails]['tax_code_type'], $attr);
                                         ?>
+                                        <input type='hidden' name='NRIC' value="<?php echo $trainee[userdetails]['tax_code_type'];?>">
                                         <span id="NRIC_err"></span>
                                     </SPAN> 
                                     <SPAN id="SGP_OTHERS" style="display:none;">
