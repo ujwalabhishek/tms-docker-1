@@ -17,7 +17,7 @@ echo $this->load->view('common/refer_left_wrapper');
 
 
 
-<div class="col-md-10" style='font-size: 16px;'>  
+<div class="col-md-10" style='font-size: 13px;'>  
     <h2 class="panel_heading_style">
         <span aria-hidden="true" class="glyphicon glyphicon-user"></span> 
           <?php if(!empty($user_id)){?> Enroll For Someone<?php }else{?> Registration Form <?php }?>
@@ -171,7 +171,7 @@ if($course_id!='' && $class_id!=''){
                                 </td>
                              
                             </tr>
-                            <tr> <td colspan="2" class='text-center'><button type='button' class='btn btn-primary nric_submit' style='padding: 3px 17px !important;font-size: 18px !important;'>Submit</button></td><tr>
+                            <tr> <td colspan="2" class='text-center'><button type='button' class='btn btn-primary nric_submit'>Submit</button></td><tr>
                            
 
 
