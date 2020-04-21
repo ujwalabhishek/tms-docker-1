@@ -129,7 +129,7 @@ if (!empty($tax_error)) {
     <?php
     if ($trainee):
         
-        $atr = 'id="trainee_edit" name="trainee_edit"';
+        $atr = 'id="trainee_edit" name="trainee_edit" "onsubmit" => "return(validate());"';
         
         echo form_open_multipart("course_public/confirm_trainee_details", $atr);
         ?>
