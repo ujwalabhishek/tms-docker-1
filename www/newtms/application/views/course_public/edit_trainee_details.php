@@ -193,7 +193,7 @@ if (!empty($tax_error)) {
                                             $nric_other_options[$item['parameter_id']] = $item['category_name'];
                                         endforeach;
 
-                                        $attr = 'id="NRIC_OTHER" readonly="readonly"';
+                                        $attr = 'id="NRIC_OTHER"';
                                         echo form_dropdown('NRIC_OTHER', $nric_other_options, $trainee[userdetails]['other_identi_type'], $attr);
                                         ?>
                                         <span id="NRIC_OTHER_err"></span>
@@ -204,7 +204,7 @@ if (!empty($tax_error)) {
                                         
                                         <?php
                                         
-                                        $attr = array('name' => 'NRIC_ID', 'class' => 'upper_case alphanumeric', 'id' => 'NRIC_ID', 'onblur' => 'javascript:isunique_taxcode(this.value,this.id);', 'maxlength' => '50');
+                                        $attr = array('name' => 'NRIC_ID', 'class' => 'upper_case alphanumeric', 'id' => 'NRIC_ID', 'onblur' => 'javascript:isunique_taxcode(this.value,this.id);', 'maxlength' => '50','readonly'=>'readonly');
                                         echo form_input($attr, $trainee[userdetails]['tax_code']);
                                         ?>
                                         <span id="NRIC_ID_err"></span>
