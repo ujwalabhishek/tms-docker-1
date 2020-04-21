@@ -220,7 +220,7 @@ if($course_id!='' && $class_id!=''){
 
 
 
-    <div id ='trainee_validation_div' class='reg_tbl_div'>
+    <div id ='trainee_validation_div' class='reg_tbl_div' style='width: auto;'>
 
         <div class="bs-example">                    
 
