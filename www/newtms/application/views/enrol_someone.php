@@ -37,7 +37,7 @@ echo $this->load->view('common/refer_left_wrapper');
 
 
 
-<div class="col-md-10" style='font-size: 16px;'>
+<div class="col-md-10">
 
     <h2 class="panel_heading_style">
 
