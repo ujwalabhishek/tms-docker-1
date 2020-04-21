@@ -134,7 +134,7 @@ if (!empty($tax_error)) {
             'name' => 'trainee_edit',
             'id' => 'trainee_edit',
             'method'  => 'post',
-            "onsubmit" => "return(validate());");
+            );
         echo form_open_multipart("course_public/confirm_trainee_details", $atr);
         ?>
         <input type="hidden" name="edit_user_id" id="edit_user_id" value="<?php echo $this->input->post('user_id_popup'); ?>" />
@@ -1564,7 +1564,7 @@ endif;
         });
         $(document).ready(function() {
             var check = 0;
-            $('#trainee_edit').submit(function() {
+            $('#trainee_edit').submit(function() {alert();
                 check = 1;
                  return validate(true);
             });
