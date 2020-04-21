@@ -1708,7 +1708,7 @@ $('.nric_submit').click(function(){
                          $('.nocls').html('No');
                         if(res == 0) // if trainee exists but his status is not active
                         {
-                           document.trainee_form2.action = baseurl+"course_public/register_enroll";
+                           document.trainee_form2.action = baseurl+"course_public/register_enroll/"+$course_id+"/"+$class_id;
                            $('#trainee_form2').submit();
                         }else if(res == 1){
                             var res = JSON.parse(res);
