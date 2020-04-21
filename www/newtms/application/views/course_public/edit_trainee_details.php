@@ -24,7 +24,7 @@ if (!empty($tax_error)) {
         <li><a href="#" class="thumbnail"><img src="<?php echo base_url();?>/assets/images/ad2.jpg" style="display: block;" data-src="holder.js/100%x180" alt="100%x180"></a></li>
     </ul>
 </div>
-<div class="col-md-10" style='font-size: 16px;'>
+<div class="col-md-10" style='font-size: 13px;'>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/trainee.png"/>Confirm Trainee Details:</h2>
     <div class="table-responsive">
         <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
@@ -567,7 +567,7 @@ if (!empty($tax_error)) {
         </br>
 
         <div class="throw_right">
-            <button id="update_btn" class="btn btn-primary" type="submit" style="padding: 3px 17px !important;font-size: 18px !important;">
+            <button id="update_btn" class="btn btn-primary" type="submit">
                 <span class="glyphicon glyphicon-retweet"></span>
                 &nbsp;Update & Continue
             </button> &nbsp; &nbsp;  
