@@ -628,7 +628,7 @@ class course_public extends CI_Controller {
         ////////////////////////////////////////////////////////////////////////////////////////
         unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file'));// added by shubhranshu to delete the captcha file
         $session_user_id = $this->session->userdata('userDetails')->user_id;
-        $course_id_popup = $this->input->post('course_id_popup');
+    
         if (!empty($session_user_id)) {
             redirect('register_enroll/' . $course_id . '/' . $class_id);
         } else {
@@ -637,7 +637,7 @@ class course_public extends CI_Controller {
             $flag = 0;
             $data['post'] = 0;
             $data['show_error_form'] = 0;
-            if ($this->input->server('REQUEST_METHOD') === 'POST' && $course_id_popup == '') {
+            if ($this->input->server('REQUEST_METHOD') === 'POST') {
                 $course_id = $this->input->post('course_id');
                 $class_id = $this->input->post('class_id');
                 $registration = $this->input->post('registration');
@@ -649,24 +649,9 @@ class course_public extends CI_Controller {
                 $submit = $this->input->post('submit');
                 $enrolment = $this->input->post('enrolment');
                 $this->load->library('form_validation');
-                if($enrolment == 'elearning'){
-                    $res = $this->course_model->save_imp_trainee_skm();
-                    if ($res['user_id'] != 0) {
-                        if ($res['status'] != FALSE) {
-                            $uid = $res['user_id'];
-                            $tax_code = $res['tax_code'];
-                            $friend_id = $res['friend_id'];
-                            $user_password = $res['user_pass'];
-                            $friend_password = $res['friend_pass'];
-                            //                        
-                            $this->create_classenroll2($uid, $user_password, $course_id, $class_id, $tax_code, $registration, $friend_id, $friend_password, $relation);
-                            $flag = 1;
-                        }
-                    }
-                    
-                }else{
-                    $this->_refer_friend_server_validation(1, 1);
-                }
+                
+                $this->_refer_friend_server_validation(1, 1);
+                
                 
 
                 if ($this->form_validation->run() == TRUE) {
@@ -3880,7 +3865,7 @@ class course_public extends CI_Controller {
 
         $data['class_id'] = $class_id;
 
-        $data['user_id'] = $user_id;
+        $data['r_user_id'] =  $this->session->userdata('userDetails')->user_id;
         $data['nric'] = $nric;
         /* course class complete details */
         $data['class_details'] = $class_details = $this->course_model->get_class_details($class_id);

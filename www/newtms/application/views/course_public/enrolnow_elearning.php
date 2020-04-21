@@ -31,16 +31,12 @@ if (!empty($tax_error)) {
         <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
         <?php
         $form_attributes = array('name' => 'trainee_edit_search', 'id' => 'trainee_edit_search');
-        echo form_open("course_public/referral_credentials1", $form_attributes);
+        echo form_open("user/add_trainee", $form_attributes);
      
            
-               $atr = 'id="trainee_form2" name="trainee_form2" style="font-size:16px;"';
-              // echo form_open_multipart("course/enrol_once", $atr);
-               echo form_open_multipart("course_public/confirm_trainee_details", $atr);
-              //  echo form_open_multipart("user/add_trainee1", $atr);
-                $user_id;
-               echo form_hidden('r_user_id', $user_id);
-               if(!empty($user_id)){
+              
+               echo form_hidden('r_user_id', $r_user_id);
+               if(!empty($r_user_id)){
                     echo form_hidden('loggedin', 1);
                }
 
@@ -49,8 +45,10 @@ if (!empty($tax_error)) {
                echo form_hidden('class_id', $class_id);
                 echo form_hidden('user_id', $user_id);
                echo form_hidden('registration', '1');
+               echo form_hidden('submit', 'exit');
                echo form_hidden('enrolment', 'elearning');
                echo form_hidden('taxcode_found', $nric);
+               echo form_hidden('taxcode_nric', $nric);
                echo form_hidden('res_found1', '1');
                
    if($course_id!='' && $class_id!=''){
