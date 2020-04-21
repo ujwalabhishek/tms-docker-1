@@ -1713,10 +1713,12 @@ $('.nric_submit').click(function(){
                         }else if(res == 1){
                             var res = JSON.parse(res);
                             $('#modal_nric_found').show();
-                            $('.msg').html("You are Already Enrolled for this class!");
+                            $('.msg').html("You are Already Enrolled for this class!<br>Please, choose other class from and enrol.");
                             $('.yescls').hide();
                             $('.nocls').html('Close');
                             $('#user_id_popup').val(res.user_id);
+                            $(".nocls").attr("href", baseurl)
+
                         }else{
                             var res = JSON.parse(res);
                             $('#modal_nric_found').show();

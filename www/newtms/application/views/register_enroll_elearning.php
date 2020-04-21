@@ -308,7 +308,7 @@ if($course_id!='' && $class_id!=''){
     <br>
     <h4 class="text-center">Are you Sure! You want to Continue?</h4>
     <br>
-    <div class="text-center"><button type='button' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</button></div>
+    <div class="text-center"><button type='button' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<a href='#'class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</a></div>
     <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
     <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
     <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
@@ -324,7 +324,7 @@ if($course_id!='' && $class_id!=''){
 <!----------------modal by ssp end----------------------->
 
 <!--<script src="<?php echo base_url(); ?>assets/js/validation_old.js" type="text/javascript"></script>-->
-<script src="<?php echo base_url(); ?>assets/public_js/validation_register_enroll.js?v=1" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/public_js/validation_register_enroll.js?v=2" type="text/javascript"></script>
 <script>
 
 
@@ -365,8 +365,9 @@ if($course_id!='' && $class_id!=''){
     $(document).ready(function(){
         $('.nocls').click(function(){
              $('#modal_nric_found').hide();
-             document.trainee_form2.action = "<?php echo base_url(); ?>"+"course_public/referral_credentials1";
-              $('#trainee_form2').submit();
+             //document.trainee_form2.action = "<?php //echo base_url(); ?>"+"course_public/referral_credentials1";
+             //window.location = "<?php //echo base_url(); ?>";
+              //$('#trainee_form2').submit();
         });
         $('.yescls').click(function(){
              $('#modal_nric_found').hide();

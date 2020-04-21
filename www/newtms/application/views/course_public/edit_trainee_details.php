@@ -182,7 +182,7 @@ if (!empty($tax_error)) {
                                         foreach ($nrics as $item):
                                             $nris_options[$item['parameter_id']] = $item['category_name'];
                                         endforeach;
-                                        $attr = 'id="NRIC" disabled="true"';
+                                        $attr = 'id="NRIC" disabled="true" style="background: #ebebe4;"';
                                         echo form_dropdown('NRIC', $nris_options, $trainee[userdetails]['tax_code_type'], $attr);
                                         ?>
                                         <input type='hidden' name='NRIC' value="<?php echo $trainee[userdetails]['tax_code_type'];?>">
@@ -209,9 +209,10 @@ if (!empty($tax_error)) {
                                         
                                         <?php
                                         
-                                        $attr = array('name' => 'NRIC_ID', 'class' => 'upper_case alphanumeric', 'id' => 'NRIC_ID', 'onblur' => 'javascript:isunique_taxcode(this.value,this.id);', 'maxlength' => '50','readonly'=>'readonly');
+                                        $attr = array('name' => 'NRIC_ID', 'class' => 'upper_case alphanumeric', 'id' => 'NRIC_ID', 'onblur' => 'javascript:isunique_taxcode(this.value,this.id);', 'maxlength' => '50','disabled'=>'disabled');
                                         echo form_input($attr, $trainee[userdetails]['tax_code']);
                                         ?>
+                                         <input type='hidden' name='NRIC_ID' value="<?php echo $trainee[userdetails]['tax_code'];?>">
                                         <span id="NRIC_ID_err"></span>
                                     </SPAN>
 
