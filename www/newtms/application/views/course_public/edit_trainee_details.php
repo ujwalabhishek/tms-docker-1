@@ -129,8 +129,12 @@ if (!empty($tax_error)) {
     <?php
     if ($trainee):
         
-        $atr = 'id="trainee_edit" name="trainee_edit" method="post" onsubmit => "return(validate());"';
-        
+       
+        $atr = array(
+            'name' => 'trainee_edit',
+            'id' => 'trainee_edit',
+            'method'  => 'post',
+            "onsubmit" => "return(validate());");
         echo form_open_multipart("course_public/confirm_trainee_details", $atr);
         ?>
         <input type="hidden" name="edit_user_id" id="edit_user_id" value="<?php echo $this->input->post('user_id_popup'); ?>" />
