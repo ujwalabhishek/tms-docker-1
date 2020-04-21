@@ -246,6 +246,7 @@ if (!empty($tax_error)) {
 </div>
     
     <script>
+ $(document).ready(function(){
         $baseurl = '<?php echo base_url(); ?>';
      //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
      <?php if (TENANT_ID == 'T02'){?>
