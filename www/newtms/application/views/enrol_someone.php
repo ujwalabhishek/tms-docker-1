@@ -107,7 +107,7 @@ if($course_id!='' && $class_id!=''){
 
 ?>
 
-<div style="color:black;font-weight: bold; padding: 6px;text-align:center;" class="reg_tbl_div">                                
+<div style="color:black;font-weight: bold; padding: 6px;text-align:center;" class="reg_tbl_div" style='width: auto;'>                                
 
     <table class="table table-striped" style="">
 
