@@ -1699,6 +1699,7 @@ $('.nric_submit').click(function(){
                 success: function(res)
                 {
                      $('.yescls').show();
+                     $('.nocls').html('No');
                     if(res == 0) // if trainee exists but his status is not active
                     {
                        document.trainee_form2.action = baseurl+"course_public/referral_credentials1";
@@ -1708,6 +1709,7 @@ $('.nric_submit').click(function(){
                         $('#modal_nric_found').show();
                         $('.msg').html("You are Already Enrolled for this class!");
                         $('.yescls').hide();
+                        $('.nocls').html('Close');
                         $('#user_id_popup').val(res.user_id);
                     }else{
                         var res = JSON.parse(res);
