@@ -193,7 +193,7 @@ if (!empty($tax_error)) {
                                             $nric_other_options[$item['parameter_id']] = $item['category_name'];
                                         endforeach;
 
-                                        $attr = 'id="NRIC_OTHER" readonly';
+                                        $attr = 'id="NRIC_OTHER" readonly="true"';
                                         echo form_dropdown('NRIC_OTHER', $nric_other_options, $trainee[userdetails]['other_identi_type'], $attr);
                                         ?>
                                         <span id="NRIC_OTHER_err"></span>
