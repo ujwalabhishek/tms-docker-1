@@ -1926,7 +1926,7 @@ endif;
                 $("#" + id).addClass('error');
             } else if (e != primary_email) {
                 $.ajax({
-                    url: "check_email_id",
+                    url: "user/check_email",
                     type: "post",
                     data: 'email=' + e,
                     success: function(res) {
