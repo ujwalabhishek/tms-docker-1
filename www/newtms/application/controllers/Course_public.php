@@ -3733,36 +3733,8 @@ class course_public extends CI_Controller {
         /* course class complete details */
         $data['class_details'] = $class_details = $this->course_model->get_class_details($class_id);
         $data['course_details'] = $course_details = $this->course_model->course_basic_details($class_details->course_id);
-        $discount_total = 0;
-
-        $data['discount_type'] = 'DISINDVI';
-
-        $data['indv_class_details'] = $indv_class_details = $this->course_model->get_indv_class_details($course_id, $data['user_id']);
-
-        $data['discount_rate'] = $class_details->class_discount;
+        
         $data['discount_total'] = $discount_total = round(($class_details->class_discount / 100) * $class_details->class_fees, 2);
-        $feesdue = $class_details->class_fees;
-
-        if ($discount_total > 0) {
-            $data['discount_type'] = 'DISCLASS';
-            $data['feesdue'] = $feesdue = $class_details->class_fees - ($discount_total);
-        }
-
-        if ($discount_total == 0) {
-            if ($indv_class_details->discount_amount == 0 && $indv_class_details->discount_percent != 0) {
-                $data['discount_total'] = $discount_total = round(($indv_class_details->discount_percent / 100) * $class_details->class_fees, 2);
-                $data['discount_type'] = 'DISINDVI';
-                $data['discount_rate'] = $indv_class_details->discount_percent;
-                
-            }
-            if ($indv_class_details->discount_amount != 0 && $indv_class_details->discount_percent == 0) {
-                $data['discount_total'] = $discount_total = $indv_class_details->discount_amount;
-                $data['discount_type'] = 'DISINDVI';
-                $data['discount_rate'] = round(($indv_class_details->discount_amount / $class_details->class_fees) * 100, 2);
-               
-            }
-        }
-        //$data['discount_total'] = $discount_total = round(($class_details->class_discount / 100) * $class_details->class_fees, 2);
         $data['feesdue'] = $feesdue = $class_details->class_fees - ($discount_total);
         $data['gst_rate'] = $gst_rate = $this->course_model->get_gst_current();
         $data['totalgst'] = $totalgst = ($course_details->gst_on_off == 1) ? round(($feesdue * $gst_rate) / 100, 2) : 0;
