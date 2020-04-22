@@ -66,7 +66,7 @@ if (!empty($tax_error)) {
 
                                </label></td>
                            <td class="td_heading">Discount@ : <label class="label_font">&nbsp;&nbsp;$
-                               <?php echo number_format($discount_total, 2, '.', ''); ?>%</td>
+                               <?php echo $discount_total;?>%</td>
                        </tr>
 
                        <tr style="display:none;">
