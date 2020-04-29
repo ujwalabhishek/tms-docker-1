@@ -1,4 +1,4 @@
-<?php if(TENANT_ID == 'T20'){?>
+<?php if(TENANT_ID == 'T20' || TENANT_ID == 'T17'){?>
 <div class="modal modal1_5551" id="ex6" style="height:600px; max-height: 600px !important;">
     <?php  
         $atr = 'id="feedbackForm" name="validate_form"';
