@@ -1753,7 +1753,10 @@ class User extends CI_Controller {
             $res = $this->course_public_model->loggedin_enroll_someone(); 
                 if($res['user_id']!=0)
                 {
-                    $error = 'Congratulation! Trainee Registration Successful';
+                   
+                   $error= "<div style='color:green;font-weight: bold;text-align:center;padding: 9px;'>Congratulation! Trainee Registration Successful</div>";
+                            
+                        
                     $uid = $res["user_id"];
                     $tax_code = $res['tax_code'];
                     $friend_id = $res['friend_id']; 
@@ -1761,7 +1764,8 @@ class User extends CI_Controller {
                     $this->session->set_flashdata('error', $error);
                     return redirect('course_public/class_member_check_elearning'); 
                 }else{
-                    $error = 'Oops!!. Please try again later or contact your Administrator.';                             
+                      $error= "<div style='color:red;font-weight: bold;text-align:center;padding: 9px;'>Oops!!. Please try again later or contact your Administrator</div>";
+                                          
                     $this->session->set_flashdata('error', $error);
                     return redirect('course_public/class_member_check_elearning'); 
                 }

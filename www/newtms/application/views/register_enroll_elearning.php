@@ -20,18 +20,14 @@ echo $this->load->view('common/refer_left_wrapper');
 <div class="col-md-10" style='font-size: 13px;'>  
     <h2 class="panel_heading_style">
         <span aria-hidden="true" class="glyphicon glyphicon-user"></span> 
-          Trainee Enrolment:
+          Trainee Edit/Registration:
 
     </h2>
     <?php
 
-    if (!empty($error_message)) {
-                    echo '<div style="color:red;font-weight: bold;">' . $error_message . '</div>';
-                }
+    
     if ($this->session->flashdata('error')) {
-                    echo '<div style="color:red;font-weight: bold;">
-                            ' . $this->session->flashdata('error') . '
-                        </div>';
+                    echo $this->session->flashdata('error');
                 }
     ?>
 <!--    <div class="tax_col">
