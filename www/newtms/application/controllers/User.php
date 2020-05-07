@@ -1758,6 +1758,7 @@ class User extends CI_Controller {
                     $tax_code = $res['tax_code'];
                     $friend_id = $res['friend_id']; 
                     $user_password = $res['user_password'];
+                    $this->session->set_flashdata('error', $error);
                     return redirect('course_public/class_member_check_elearning'); 
                 }else{
                     $error = 'Oops!!. Please try again later or contact your Administrator.';                             
