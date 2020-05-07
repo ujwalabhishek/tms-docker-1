@@ -3884,6 +3884,17 @@ class course_public extends CI_Controller {
         $data['main_content'] = 'course_public/enrolnow_elearning';
         $this->load->view('layout_public', $data);
     }
+    
+    public function register_trainee($course_id = null, $class_id = null) {
+        
+        $data['page_title'] = 'Trainee registration';
+
+        
+
+        $data['main_content'] = 'course_public/register_new';
+
+        $this->load->view('layout_public', $data);
+    }
 
 }
 

@@ -217,11 +217,7 @@
                                         
                                         $result = $this->course_model->is_user_enrolled1($user_id,$class['class_id'],$class['course_id']);// check user alreaady enrolled in particular class or not
                                         $class['user_id'] = $user_id;
-                                        if(TENANT_ID == 'T02'){
-                                            $enroll_link_prefix ='<a class="enroll_now_link1" href="' . base_url() . 'course_public/class_member_check_elearning/' . $class['course_id']  .'/'.$class['class_id']. '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">';
-                                            $enroll_link_label = 'Enroll Now';
-                                            
-                                        }else{
+                                        
                                             if($user_id!='')                                
                                             {   
                                                 $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'" data-user="'.$class['user_id'].'">';
@@ -235,7 +231,7 @@
                                             } 
 
                                             
-                                        }
+                                        
                                         $enroll_link_suffix = '</a>';
                                         $enroll_link = $enroll_link_prefix . $enroll_link_label . $enroll_link_suffix;
                                         ?>

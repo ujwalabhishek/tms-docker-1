@@ -1736,6 +1736,37 @@ class User extends CI_Controller {
         $data['main_content'] = 'user/refer_trainee';
         $this->load->view('layout_public', $data);
     }
+    
+    
+    ///// added by shubhranshu for add new trainee from public portal
+    public function add_new_trainee($course_id=null,$class_id=null) { 
+   
+            $data['page_title'] = 'Trainee Register';
+            $registration = '';
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            
+            $course_id = $this->input->post('course_id');
+            $class_id = $this->input->post('class_id');
+            $registration = $this->input->post('registration');
+            $relation = $this->input->post('relationship');
+
+            $res = $this->course_public_model->loggedin_enroll_someone(); 
+                if($res['user_id']!=0)
+                {
+                    $error = 'Congratulation! Trainee Registration Successful';
+                    $uid = $res["user_id"];
+                    $tax_code = $res['tax_code'];
+                    $friend_id = $res['friend_id']; 
+                    $user_password = $res['user_password'];
+                    return redirect('course_public/class_member_check_elearning'); 
+                }else{
+                    $error = 'Oops!!. Please try again later or contact your Administrator.';                             
+                    $this->session->set_flashdata('error', $error);
+                    return redirect('course_public/class_member_check_elearning'); 
+                }
+              
+            }
+    }
 
     
 
