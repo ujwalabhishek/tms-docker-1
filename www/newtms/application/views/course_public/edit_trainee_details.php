@@ -35,7 +35,7 @@ if (!empty($tax_error)) {
             <?php 
                $atr = 'id="trainee_form2" name="trainee_form2" style="font-size:16px;"';
               // echo form_open_multipart("course/enrol_once", $atr);
-               echo form_open_multipart("course_public/confirm_trainee_details", $atr);
+               echo form_open_multipart("course_public/confirm_trainee_detail", $atr);
               //  echo form_open_multipart("user/add_trainee1", $atr);
                 $user_id;
                echo form_hidden('r_user_id', $user_id);
