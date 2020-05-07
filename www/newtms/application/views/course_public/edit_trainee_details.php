@@ -135,7 +135,7 @@ if (!empty($tax_error)) {
             'id' => 'trainee_edit',
             'method'  => 'post',
             );
-        echo form_open_multipart("course_public/confirm_trainee_details", $atr);
+        echo form_open_multipart("course_public/confirm_trainee_detail", $atr);
         ?>
         <input type="hidden" name="edit_user_id" id="edit_user_id" value="<?php echo $this->input->post('user_id_popup'); ?>" />
         
