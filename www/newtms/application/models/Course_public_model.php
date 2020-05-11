@@ -3168,7 +3168,7 @@ class Course_Public_Model extends CI_Model {
         /* when user loggedin and enroll for some */
 
   
-        $this->send_reg_someone_referance_email($r_someone, $user_details, 'BPEMAC'); // referance
+        $this->send_reg_someone_referance_email($r_someone, $user_details, 'BPEMAC'); // send mail
                
         $data = array(
             'tax_code' => $tax_code,
