@@ -3663,14 +3663,7 @@ class course_public extends CI_Controller {
     ///////////added by shubhranshu for new requirement for elearning
     public function class_member_check_elearning($course_id = null, $class_id = null) {
         
-         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
-        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
-        if($user_role != ''){
-            if($user_role != 'TRAINE'){
-                redirect('login/administrator/'); ///// added by shubhranshu
-            }
-        }
-        ////////////////////////////////////////////////////////////////////////////////////////
+       
 
         $data['page_title'] = 'Enrollment';
 
