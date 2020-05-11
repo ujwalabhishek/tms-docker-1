@@ -3167,21 +3167,9 @@ class Course_Public_Model extends CI_Model {
 
         /* when user loggedin and enroll for some */
 
-        if(!empty($loggedin) && !empty($this->session->userdata('userDetails')->user_id))
-        {
-                $user_data = $this->user_model->r_userDetails($r_user_id);
-                $r_someone = array(
-                                    'firstname' => strtoupper($user_data->first_name),
-                                    'lastname' => strtoupper($user_data->last_name),
-                                    'email' => $user_data->registered_email_id
-                                  );
-                $this->send_reg_someone_referance_email($r_someone, $user_details, 'BPEMAC'); // referance
-                $this->send_reg_someone_referal_email($r_someone, $user_details, 'BPEMAC'); // referance referal
-                $this->send_tenant_mail($user_details, 'BPEMAC'); // tenent email
-                $data = array('tax_code'=>$tax_code,'user_id'=>$user_id,'friend_id'=>$r_user_id);
-                return $data;
-        }
-
+  
+        $this->send_reg_someone_referance_email($r_someone, $user_details, 'BPEMAC'); // referance
+               
         $data = array(
             'tax_code' => $tax_code,
             'user_id' => $user_id,
