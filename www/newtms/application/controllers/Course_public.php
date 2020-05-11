@@ -3886,7 +3886,7 @@ class course_public extends CI_Controller {
 
         $data['main_content'] = 'course_public/register_new';
 
-        $this->load->view('layout_public', $data);
+        $this->load->view('layout_public_new', $data);
     }
     
     
@@ -3992,13 +3992,13 @@ class course_public extends CI_Controller {
             }else {
                 $data['main_content'] = 'course_public/edit_trainee_details';
                 $data['tax_error'] = ($data['tax_error'])?$data['tax_error']:$failure_msg;
-                $this->load->view('layout_public', $data);
+                $this->load->view('layout_public_new', $data);
                 return;
             }
         } 
      
         $data['main_content'] = 'course_public/edit_trainee_details';
-        $this->load->view('layout_public', $data);
+        $this->load->view('layout_public_new', $data);
     }
 
 }
