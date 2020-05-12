@@ -3661,11 +3661,11 @@ class course_public extends CI_Controller {
         $this->load->view('layout_public', $data);
     }
     ///////////added by shubhranshu for new requirement for elearning
-    protected $sgpTimer = date('H');
+    define('SGPTIME',date('H'));
     public function class_member_check_elearning($course_id = null, $class_id = null) {
        
        
-       if ($this->sgpTimer >= 8 && $this->sgpTimer < 10) {  /////site will be only available during 8 to 10am
+       if (SGPTIME >= 8 && SGPTIME < 10) {  /////site will be only available during 8 to 10am
         
          $data['page_title'] = 'Enrollment';
 
@@ -3884,7 +3884,7 @@ class course_public extends CI_Controller {
     }
     
     public function register_trainee($course_id = null, $class_id = null) {
-        if ($this->sgpTimer >= 8 && $this->sgpTimer < 10) {  /////site will be only available during 8 to 10am
+        if (SGPTIME >= 8 && SGPTIME < 10) {  /////site will be only available during 8 to 10am
             $data['page_title'] = 'Trainee registration';
 
 
@@ -3899,7 +3899,7 @@ class course_public extends CI_Controller {
     
     
     public function confirm_trainee_detail($course_id = null, $class_id = null,$user_id_popup=null) {
-        if ($this->sgpTimer >= 8 && $this->sgpTimer < 10) {  /////site will be only available during 8 to 10am
+        if (SGPTIME >= 8 && SGPTIME < 10) {  /////site will be only available during 8 to 10am
             $data['page_title'] = 'Update Trainee';
 
             $data['user_id'] = $this->session->userdata('userDetails')->user_id;
