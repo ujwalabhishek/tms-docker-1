@@ -3667,7 +3667,7 @@ class course_public extends CI_Controller {
        if ($date >= 18 && $date < 19) {
             echo "Sorry ! This page is only Available During 8:00AM to 10:00 AM Only.".date('Y-m-d H:i:s');exit;
          }
-       echo date('Y-m-d H:i:s').'-'.$date;exit;
+       //echo date('Y-m-d H:i:s').'-'.$date;exit;
         $data['page_title'] = 'Enrollment';
 
         $data['course_id'] = $course_id;
