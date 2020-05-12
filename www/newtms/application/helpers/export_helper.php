@@ -2930,6 +2930,7 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
             $assessor_text .= $assess->tax_code . ', ';
             //break;
         }
+        echo $assessor_text;exit;
         $assessor_text = rtrim($assessor_text, ', ');
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
