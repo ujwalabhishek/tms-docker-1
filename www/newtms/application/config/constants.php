@@ -50,7 +50,7 @@ defined('FOPEN_WRITE_CREATE_STRICT')            OR define('FOPEN_WRITE_CREATE_ST
 defined('FOPEN_READ_WRITE_CREATE_STRICT')       OR define('FOPEN_READ_WRITE_CREATE_STRICT', 'x+b');
 define('PAY_D_ENROL','PDENROL');
 define('PAY_A_ENROL', 'PAENROL');
-
+define('SGPTIME',date('H'));
 /*
 |--------------------------------------------------------------------------
 | Exit Status Codes

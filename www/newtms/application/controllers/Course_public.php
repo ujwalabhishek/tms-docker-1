@@ -3661,7 +3661,7 @@ class course_public extends CI_Controller {
         $this->load->view('layout_public', $data);
     }
     ///////////added by shubhranshu for new requirement for elearning
-    define('SGPTIME',date('H'));
+    
     public function class_member_check_elearning($course_id = null, $class_id = null) {
        
        
