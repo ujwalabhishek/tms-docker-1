@@ -3664,7 +3664,7 @@ class course_public extends CI_Controller {
     public function class_member_check_elearning($course_id = null, $class_id = null) {
        $date = date('H');
        
-       if ($date >= 18 && $date < 19) {
+       if ($date >= 17 && $date < 18) {
             echo "Sorry ! This page is only Available During 8:00AM to 10:00 AM Only.".date('Y-m-d H:i:s');exit;
          }
        //echo date('Y-m-d H:i:s').'-'.$date;exit;
