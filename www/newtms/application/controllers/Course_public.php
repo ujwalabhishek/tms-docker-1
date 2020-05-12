@@ -3663,7 +3663,7 @@ class course_public extends CI_Controller {
     ///////////added by shubhranshu for new requirement for elearning
     public function class_member_check_elearning($course_id = null, $class_id = null) {
         
-       
+       echo date('Y-m-d h:i:s');exit;
 
         $data['page_title'] = 'Enrollment';
 
