@@ -31,7 +31,6 @@ class course_public extends CI_Controller {
     /*
      * This function loads the initial list view page for courses.
      */
-
     public function index() {
        
         ////////////added by shubhranshu to show the landing page for all tenants////////////
@@ -3663,9 +3662,9 @@ class course_public extends CI_Controller {
     ///////////added by shubhranshu for new requirement for elearning
     
     public function class_member_check_elearning($course_id = null, $class_id = null) {
-       echo SGPTIME;exit;
+       $SGPTIME = date('H');
        
-       if (SGPTIME >= 8 && SGPTIME < 10) {  /////site will be only available during 8 to 10am
+       if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
         
          $data['page_title'] = 'Enrollment';
 
@@ -3884,7 +3883,8 @@ class course_public extends CI_Controller {
     }
     
     public function register_trainee($course_id = null, $class_id = null) {
-        if (SGPTIME >= 8 && SGPTIME < 10) {  /////site will be only available during 8 to 10am
+        $SGPTIME = date('H');
+        if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
             $data['page_title'] = 'Trainee registration';
 
 
@@ -3899,7 +3899,8 @@ class course_public extends CI_Controller {
     
     
     public function confirm_trainee_detail($course_id = null, $class_id = null,$user_id_popup=null) {
-        if (SGPTIME >= 8 && SGPTIME < 10) {  /////site will be only available during 8 to 10am
+         $SGPTIME = date('H');
+        if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
             $data['page_title'] = 'Update Trainee';
 
             $data['user_id'] = $this->session->userdata('userDetails')->user_id;
