@@ -3661,13 +3661,12 @@ class course_public extends CI_Controller {
         $this->load->view('layout_public', $data);
     }
     ///////////added by shubhranshu for new requirement for elearning
+    protected $sgpTimer = date('H');
     public function class_member_check_elearning($course_id = null, $class_id = null) {
-       $date = date('H');
        
-       if ($date >= 18 && $date < 19) {
-           
-         
-        //echo date('Y-m-d H:i:s').'-'.$date;exit;
+       
+       if ($this->sgpTimer >= 8 && $this->sgpTimer < 10) {  /////site will be only available during 8 to 10am
+        
          $data['page_title'] = 'Enrollment';
 
          $data['course_id'] = $course_id;
@@ -3885,128 +3884,133 @@ class course_public extends CI_Controller {
     }
     
     public function register_trainee($course_id = null, $class_id = null) {
-        
-        $data['page_title'] = 'Trainee registration';
+        if ($this->sgpTimer >= 8 && $this->sgpTimer < 10) {  /////site will be only available during 8 to 10am
+            $data['page_title'] = 'Trainee registration';
 
-        
 
-        $data['main_content'] = 'course_public/register_new';
 
-        $this->load->view('layout_public_new', $data);
+            $data['main_content'] = 'course_public/register_new';
+
+            $this->load->view('layout_public_new', $data);
+        }else{
+            redirect('course_public/class_member_check_elearning');
+        }
     }
     
     
-     public function confirm_trainee_detail($course_id = null, $class_id = null,$user_id_popup=null) {
+    public function confirm_trainee_detail($course_id = null, $class_id = null,$user_id_popup=null) {
+        if ($this->sgpTimer >= 8 && $this->sgpTimer < 10) {  /////site will be only available during 8 to 10am
+            $data['page_title'] = 'Update Trainee';
 
-        $data['page_title'] = 'Update Trainee';
+            $data['user_id'] = $this->session->userdata('userDetails')->user_id;
+            /* course class complete details */
+            //$data['sideMenuData'] = fetch_non_main_page_content();
+            $user = $this->session->userdata('userDetails');
+            $tenant_id = $user->tenant_id;
+            $data['user'] = $user;
+            $data['privilage'] = $this->manage_tenant->get_privilage();//added by shubhranshu
+            $this->load->library('form_validation');
+            $data['page_title'] = 'Edit Trainee';
 
-        $data['user_id'] = $this->session->userdata('userDetails')->user_id;
-        /* course class complete details */
-        //$data['sideMenuData'] = fetch_non_main_page_content();
-        $user = $this->session->userdata('userDetails');
-        $tenant_id = $user->tenant_id;
-        $data['user'] = $user;
-        $data['privilage'] = $this->manage_tenant->get_privilage();//added by shubhranshu
-        $this->load->library('form_validation');
-        $data['page_title'] = 'Edit Trainee';
-        
 
-        $user_id=$this->input->post('user_id_popup');
-        if ($user_id) { 
-                       
-            $data['trainee'] = $this->traineemodel->get_trainee_taxcode($user_id, TENANT_ID); 
-            //$data['payment_status'] = $this->traineemodel->payment_status($data['trainee'][userdetails][user_id],$tenant_id);            
-        }        
-        if ($this->input->post('task') == 'update') 
-        {
-            $data['edit_tax_code'] = $code;
-            $valid = TRUE;
-            $country_of_residence = $this->input->post('country_of_residence');
-            $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
-            if ($country_of_residence == 'IND') {
-                $tax_code = $this->input->post("PAN");
-                $this->form_validation->set_rules('PAN', 'PAN Number', 'required|max_length[15]');
-            }            
-            if ($country_of_residence == 'SGP') {
-                $this->form_validation->set_rules('NRIC', 'NRIC Type', 'required|max_length[15]');
-                $NRIC = $this->input->post('NRIC');
-                $NRIC_OTHER = $this->input->post("NRIC_OTHER");
-                $NRIC_ID = $this->input->post('NRIC_ID');
-                $NRIC_ID_MATCH = $this->input->post('NRIC_ID_MATCH'); // addded by shubhranshu for NRIC ID
-                $tax_code = $NRIC_ID;
-                
-                if($NRIC != "SNG_3"){
-                    if($NRIC_ID != $NRIC_ID_MATCH){ //added by shubhranshu for check NRIC if it does not match
-                        $this->form_validation->set_rules('NRIC_ID', 'NRIC Number', 'required|max_length[50]|callback_check_unique_usertaxcode');   
-                        if(!empty($NRIC)) {
-                        $valid = validate_nric_code($NRIC, $NRIC_ID);
-                            if ($valid == FALSE) {
-                                $data['tax_error'] = 'Invalid NRIC Code.'; //Added By dummy for Edit issue (Nov 10 2014)
+            $user_id=$this->input->post('user_id_popup');
+            if ($user_id) { 
+
+                $data['trainee'] = $this->traineemodel->get_trainee_taxcode($user_id, TENANT_ID); 
+                //$data['payment_status'] = $this->traineemodel->payment_status($data['trainee'][userdetails][user_id],$tenant_id);            
+            }        
+            if ($this->input->post('task') == 'update') 
+            {
+                $data['edit_tax_code'] = $code;
+                $valid = TRUE;
+                $country_of_residence = $this->input->post('country_of_residence');
+                $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
+                if ($country_of_residence == 'IND') {
+                    $tax_code = $this->input->post("PAN");
+                    $this->form_validation->set_rules('PAN', 'PAN Number', 'required|max_length[15]');
+                }            
+                if ($country_of_residence == 'SGP') {
+                    $this->form_validation->set_rules('NRIC', 'NRIC Type', 'required|max_length[15]');
+                    $NRIC = $this->input->post('NRIC');
+                    $NRIC_OTHER = $this->input->post("NRIC_OTHER");
+                    $NRIC_ID = $this->input->post('NRIC_ID');
+                    $NRIC_ID_MATCH = $this->input->post('NRIC_ID_MATCH'); // addded by shubhranshu for NRIC ID
+                    $tax_code = $NRIC_ID;
+
+                    if($NRIC != "SNG_3"){
+                        if($NRIC_ID != $NRIC_ID_MATCH){ //added by shubhranshu for check NRIC if it does not match
+                            $this->form_validation->set_rules('NRIC_ID', 'NRIC Number', 'required|max_length[50]|callback_check_unique_usertaxcode');   
+                            if(!empty($NRIC)) {
+                            $valid = validate_nric_code($NRIC, $NRIC_ID);
+                                if ($valid == FALSE) {
+                                    $data['tax_error'] = 'Invalid NRIC Code.'; //Added By dummy for Edit issue (Nov 10 2014)
+                                }
                             }
+
                         }
-                        
+
+
                     }
-                                                       
-                    
-                }
-            }                       
-            if ($country_of_residence == 'USA') {
-                $tax_code = $this->input->post('SSN');
-                $this->form_validation->set_rules('SSN', 'SSNNumber', 'required|max_length[15]');
-            }              
-//            if ($valid && $this->form_validation->run() == TRUE && $data['trainee'][userdetails]['tax_code']!=$tax_code ) {
-//                $taxcodeStatus = $this->commonmodel->is_taxcode_exist($tax_code, $tenant_id);
-//                if($taxcodeStatus){                    
-//                    $failure_msg = 'Duplicate Tax Code. Please change the tax code.';
-//                }
-//            }
-            if ( ($valid) && ($this->form_validation->run() == TRUE) && (!$taxcodeStatus)) {
-               $delete_image = $this->input->post('deleteimage') ? $this->input->post('deleteimage') : 'no';
-               
-                $user_id = $this->input->post('userid');
-                $result = $this->traineemodel->get_trainee_details($user_id);              
-                $previous_data = json_encode($result);
-                
-                $uid = $this->traineemodel->update_trainee();
-                $this->load->helper('upload_helper');
-                if (!empty($_FILES['userfile']['name']) && $uid != FALSE && $delete_image == 'no') {
-                    $image_data = upload_image('uploads/images/trainee', $uid);
-                    if ($image_data['status']) {
-                        $image_path = $image_data['image']['system_path'] . '/' .
-                                $image_data['image']['raw_name'] . '_thumb' . $image_data['image']['file_ext'];
+                }                       
+                if ($country_of_residence == 'USA') {
+                    $tax_code = $this->input->post('SSN');
+                    $this->form_validation->set_rules('SSN', 'SSNNumber', 'required|max_length[15]');
+                }              
+    //            if ($valid && $this->form_validation->run() == TRUE && $data['trainee'][userdetails]['tax_code']!=$tax_code ) {
+    //                $taxcodeStatus = $this->commonmodel->is_taxcode_exist($tax_code, $tenant_id);
+    //                if($taxcodeStatus){                    
+    //                    $failure_msg = 'Duplicate Tax Code. Please change the tax code.';
+    //                }
+    //            }
+                if ( ($valid) && ($this->form_validation->run() == TRUE) && (!$taxcodeStatus)) {
+                   $delete_image = $this->input->post('deleteimage') ? $this->input->post('deleteimage') : 'no';
+
+                    $user_id = $this->input->post('userid');
+                    $result = $this->traineemodel->get_trainee_details($user_id);              
+                    $previous_data = json_encode($result);
+
+                    $uid = $this->traineemodel->update_trainee();
+                    $this->load->helper('upload_helper');
+                    if (!empty($_FILES['userfile']['name']) && $uid != FALSE && $delete_image == 'no') {
+                        $image_data = upload_image('uploads/images/trainee', $uid);
+                        if ($image_data['status']) {
+                            $image_path = $image_data['image']['system_path'] . '/' .
+                                    $image_data['image']['raw_name'] . '_thumb' . $image_data['image']['file_ext'];
+                            $previous_thumb_path = fetch_image_path_by_uid($uid);
+                            remove_previous_image($previous_thumb_path);
+                            save_image_path($uid, $image_path);
+                        } 
+                    } else if ($uid != FALSE && $delete_image == 'no') {
                         $previous_thumb_path = fetch_image_path_by_uid($uid);
                         remove_previous_image($previous_thumb_path);
-                        save_image_path($uid, $image_path);
-                    } 
-                } else if ($uid != FALSE && $delete_image == 'no') {
-                    $previous_thumb_path = fetch_image_path_by_uid($uid);
-                    remove_previous_image($previous_thumb_path);
-                    save_image_path($uid);
-                }
-                if ($uid == FALSE) {
-                    $error= "<div style='color:red;font-weight: bold;text-align:center;padding: 9px;'>Unable to update Trainee.Please try again later</div>";
-                    $this->session->set_flashdata('error', $error);
-                } else {
-                     //user_activity(3,$user_id,$previous_data);
-                    $error= "<div style='color:green;font-weight: bold;text-align:center;padding: 9px;'>Trainee has been updated successfully</div>";
-                    $this->session->set_flashdata('error', $error);
-                }
-                 
-                            
-                        
-                redirect('course_public/class_member_check_elearning');
-            }else {
-                $data['main_content'] = 'course_public/edit_trainee_details';
-                $data['tax_error'] = ($data['tax_error'])?$data['tax_error']:$failure_msg;
-                $this->load->view('layout_public_new', $data);
-                return;
-            }
-        } 
-     
-        $data['main_content'] = 'course_public/edit_trainee_details';
-        $this->load->view('layout_public_new', $data);
-    }
+                        save_image_path($uid);
+                    }
+                    if ($uid == FALSE) {
+                        $error= "<div style='color:red;font-weight: bold;text-align:center;padding: 9px;'>Unable to update Trainee.Please try again later</div>";
+                        $this->session->set_flashdata('error', $error);
+                    } else {
+                         //user_activity(3,$user_id,$previous_data);
+                        $error= "<div style='color:green;font-weight: bold;text-align:center;padding: 9px;'>Trainee has been updated successfully</div>";
+                        $this->session->set_flashdata('error', $error);
+                    }
 
+
+
+                    redirect('course_public/class_member_check_elearning');
+                }else {
+                    $data['main_content'] = 'course_public/edit_trainee_details';
+                    $data['tax_error'] = ($data['tax_error'])?$data['tax_error']:$failure_msg;
+                    $this->load->view('layout_public_new', $data);
+                    return;
+                }
+            } 
+
+            $data['main_content'] = 'course_public/edit_trainee_details';
+            $this->load->view('layout_public_new', $data);
+        }
+    }else{
+        redirect('course_public/class_member_check_elearning');
+    }
 }
 
     
