@@ -2906,13 +2906,17 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
     $data_arr = array();
     foreach ($tabledata as $row) 
     {
-        $assment_det = $CI->reportsmodel->get_assessment_details($row->class_id, $row->user_id);
+        //if($row->user_id == '214918' && $row->class_id=='9998'){
+            $assment_det = $CI->reportsmodel->get_assessment_details($row->class_id, $row->user_id);
+           // print_r($assment_det);echo "exit";exit;
+        //}
+        
         $crse_manager = explode(',', $row->crse_manager);
         $manager = $CI->reportsmodel->get_user_taxcode($crse_manager);
         $manager_text = '';
         foreach ($manager as $man) {
             $manager_text .= $man->tax_code . ', ';
-            break;
+            //break;
         }
         $manager_text = rtrim($manager_text, ', ');
         $classroom_trainer = explode(',', $row->classroom_trainer);
