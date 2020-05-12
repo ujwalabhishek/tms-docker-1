@@ -1705,7 +1705,7 @@ $('.nric_submit').click(function(){
                     success: function(res)
                     {
                          $('.yescls').show();
-                         $('.nocls').html('No');
+                         $('.nocls').html('Cancel');
                         if(res == 0) // if trainee exists but his status is not active
                         {
                            document.trainee_form2.action = baseurl+"course_public/register_trainee/";
