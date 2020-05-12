@@ -3693,7 +3693,7 @@ class course_public extends CI_Controller {
 
          $this->load->view('layout_public_new', $data);
        }else{
-            echo "<div>Sorry ! This page is only Available During 8:00AM to 10:00 AM Only.</div><br>".date('Y-m-d H:i:s');exit;
+            echo "<div style='font-size: 24px;border: 5px solid grey;padding: 100px;text-align: center;color: red;'>Sorry ! This page is only Available During 8:00AM to 10:00 AM Only.</div><br>".date('Y-m-d H:i:s');exit;
        }
     }
     
