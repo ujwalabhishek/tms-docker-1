@@ -2906,18 +2906,18 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
     $data_arr = array();
     foreach ($tabledata as $row) 
     {
-        if($row->user_id == '214921' && $row->class_id=='9996'){
-            $assment_det = $CI->reportsmodel->get_assessment_details($row->class_id, $row->user_id);
-            $classroom_assessor = explode(',', $assment_det->assessor_id);
-                $assessor = $CI->reportsmodel->get_user_taxcode($classroom_assessor);
-                $assessor_text = '';
-                foreach ($assessor as $assess) {
-                    $assessor_text .= $assess->tax_code . ', ';
-                   // break;
-                }
-            print_r($assment_det);print_r($assessor_text);print_r($assessor);echo "exit";exit;
-        }
-        
+//        if($row->user_id == '214921' && $row->class_id=='9996'){
+//            $assment_det = $CI->reportsmodel->get_assessment_details($row->class_id, $row->user_id);
+//            $classroom_assessor = explode(',', $assment_det->assessor_id);
+//                $assessor = $CI->reportsmodel->get_user_taxcode($classroom_assessor);
+//                $assessor_text = '';
+//                foreach ($assessor as $assess) {
+//                    $assessor_text .= $assess->tax_code . ', ';
+//                   // break;
+//                }
+//            print_r($assment_det);print_r($assessor_text);print_r($assessor);echo "exit";exit;
+//        }
+        $assment_det = $CI->reportsmodel->get_assessment_details($row->class_id, $row->user_id);
         $crse_manager = explode(',', $row->crse_manager);
         $manager = $CI->reportsmodel->get_user_taxcode($crse_manager);
         $manager_text = '';
@@ -2939,10 +2939,10 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
         $assessor_text = '';
         foreach ($assessor as $assess) {
             $assessor_text .= $assess->tax_code . ', ';
-            break;
+            //break;
         }
         //echo $assessor_text;exit;
-        $assessor_text = rtrim($assessor_text, ', ');
+        //$assessor_text = rtrim($assessor_text, ', ');
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
         $row->tax_code_type;
