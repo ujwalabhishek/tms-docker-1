@@ -3663,7 +3663,7 @@ class course_public extends CI_Controller {
     ///////////added by shubhranshu for new requirement for elearning
     
     public function class_member_check_elearning($course_id = null, $class_id = null) {
-       
+       echo SGPTIME;exit;
        
        if (SGPTIME >= 8 && SGPTIME < 10) {  /////site will be only available during 8 to 10am
         
