@@ -2906,10 +2906,10 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
     $data_arr = array();
     foreach ($tabledata as $row) 
     {
-        //if($row->user_id == '214918' && $row->class_id=='9998'){
+        if($row->user_id == '214921' && $row->class_id=='9996'){
             $assment_det = $CI->reportsmodel->get_assessment_details($row->class_id, $row->user_id);
-           // print_r($assment_det);echo "exit";exit;
-        //}
+            print_r($assment_det);echo "exit";exit;
+        }
         
         $crse_manager = explode(',', $row->crse_manager);
         $manager = $CI->reportsmodel->get_user_taxcode($crse_manager);
