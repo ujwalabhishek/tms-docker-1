@@ -3664,7 +3664,7 @@ class course_public extends CI_Controller {
     public function class_member_check_elearning($course_id = null, $class_id = null) {
        $SGPTIME = date('H');
        
-       if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
+       if (SGPTIME >= 8 && SGPTIME < 10) {  /////site will be only available during 8 to 10am
         
          $data['page_title'] = 'Enrollment';
 
