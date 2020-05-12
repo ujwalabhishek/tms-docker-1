@@ -2908,7 +2908,14 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
     {
         if($row->user_id == '214921' && $row->class_id=='9996'){
             $assment_det = $CI->reportsmodel->get_assessment_details($row->class_id, $row->user_id);
-            print_r($assment_det);echo "exit";exit;
+            $classroom_assessor = explode(',', $assment_det->assessor_id);
+                $assessor = $CI->reportsmodel->get_user_taxcode($classroom_assessor);
+                $assessor_text = '';
+                foreach ($assessor as $assess) {
+                    $assessor_text .= $assess->tax_code . ', ';
+                   // break;
+                }
+            print_r($assment_det);print_r($assessor_text);print_r($assessor);echo "exit";exit;
         }
         
         $crse_manager = explode(',', $row->crse_manager);
