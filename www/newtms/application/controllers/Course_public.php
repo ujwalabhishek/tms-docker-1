@@ -4008,9 +4008,9 @@ class course_public extends CI_Controller {
 
             $data['main_content'] = 'course_public/edit_trainee_details';
             $this->load->view('layout_public_new', $data);
+        }else{
+            redirect('course_public/class_member_check_elearning');
         }
-    }else{
-        redirect('course_public/class_member_check_elearning');
     }
 }
 
