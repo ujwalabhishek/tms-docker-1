@@ -304,7 +304,7 @@ if($course_id!='' && $class_id!=''){
     <br>
     <h4 class="text-center suremsg">Are you Sure! You want to Continue?</h4>
     <br>
-    <div class="text-center"><button type='button' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<a href='#'class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</a></div>
+    <div class="text-center"><button type='button' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Continue</button>&nbsp;&nbsp;&nbsp;<a href='#'class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>Cancel</a></div>
     <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
     <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
     <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>

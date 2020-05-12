@@ -1723,7 +1723,7 @@ $('.nric_submit').click(function(){
                         }else{
                             var res = JSON.parse(res);
                             $('#modal_nric_found').show();
-                            $('.msg').html("This NRIC("+res.tax_code+") is belongs to "+res.first_name);
+                            $('.msg').html("Please Confirm That You Are "+res.first_name+"("+res.tax_code+") To Continue.");
                             $('.suremsg').html("Are you Sure! You want to Continue?");
                             $('#user_id_popup').val(res.user_id);
                         }
