@@ -152,4 +152,3 @@ define('ENROL_PYMNT_DUE', "enrol_pymnt_due");
 ////added by shubhranshu for google captcha////////////////
 define('GOOGLE_CAPTCHA_SITEKEY', "6Le7puAUAAAAAPUPDMn2d98Zf6ABHAB1fen1Te-R"); 
 define('GOOGLE_CAPTCHA_SECRETKEY', "6Le7puAUAAAAAISg1yqxoXAur7FxGj5u9a-OSd66"); 
-define('SGPTIME', date('H:i:s'));

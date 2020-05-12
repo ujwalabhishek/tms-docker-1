@@ -3664,7 +3664,7 @@ class course_public extends CI_Controller {
     public function class_member_check_elearning($course_id = null, $class_id = null) {
        $SGPTIME = date('H');
        
-       if (SGPTIME >= 8 && SGPTIME < 10) {  /////site will be only available during 8 to 10am
+       if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
         
          $data['page_title'] = 'Enrollment';
 
@@ -3693,7 +3693,7 @@ class course_public extends CI_Controller {
 
          $this->load->view('layout_public_new', $data);
        }else{
-            echo "Sorry ! This page is only Available During 8:00AM to 10:00 AM Only.".date('Y-m-d H:i:s').'--'.SGPTIME;exit;
+            echo "<div>Sorry ! This page is only Available During 8:00AM to 10:00 AM Only.</div><br>".date('Y-m-d H:i:s');exit;
        }
     }
     
