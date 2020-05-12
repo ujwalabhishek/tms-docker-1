@@ -3663,7 +3663,10 @@ class course_public extends CI_Controller {
     ///////////added by shubhranshu for new requirement for elearning
     public function class_member_check_elearning($course_id = null, $class_id = null) {
         
-       echo date('Y-m-d h:i:s');exit;
+       
+       if (date('H') > 18 && date('H') < 19) {
+            echo "Sorry ! This page is only Available During 8:00AM to 10:00 AM Only.";exit;
+         }
 
         $data['page_title'] = 'Enrollment';
 
