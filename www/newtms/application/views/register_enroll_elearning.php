@@ -66,7 +66,7 @@ echo $this->load->view('common/refer_left_wrapper_public');
                 </div>
                 <div class="col-sm-4"></div>
             </div>
-            <div><span id="taxcode_nric_err"></span><span id="error"></span></div>
+            <div><span id="taxcode_nric_err"></span></div>
             <div class='row'>
                 <div class='col-sm-12'><br></div>
             </div>
@@ -151,8 +151,6 @@ Section: Contact v.2
         }
         
     $(document).ready(function(){
-        $('#exampleModalCenter').modal({show: false});
-        $("#exampleModalCenter").modal("hide");
         $('.nocls').click(function(){
              $('#exampleModalCenter').modal('hide');
              //document.trainee_form2.action = "<?php //echo base_url(); ?>"+"course_public/referral_credentials1";
@@ -160,7 +158,7 @@ Section: Contact v.2
               //$('#trainee_form2').submit();
         });
         $('.yescls').click(function(){
-             $('#exampleModalCenter').modal('hide');
+             $('#modal_nric_found').hide();
              $('#trainee_form2').submit();
         });
        
@@ -193,10 +191,11 @@ Section: Contact v.2
     $('#taxcode_nric').keypress(function(e) {
         blockSpecialCharacters(e);
     });
-    $("#exampleModalCenter").modal("hide");
     </script>
     
    <!-- Button trigger modal -->
+<input type="hidden" id='modal_nric_found' class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
