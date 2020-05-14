@@ -44,7 +44,7 @@ echo $this->load->view('common/refer_left_wrapper_public');
     ?>  
 
 
-    <div id ='trainee_validation_div' class='reg_tbl_div'>
+    <div id ='trainee_validation_div'>
         <div class="bs-example">                    
                     <div class="table-responsive">
                         
