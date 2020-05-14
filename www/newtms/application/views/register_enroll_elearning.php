@@ -45,7 +45,7 @@ echo $this->load->view('common/refer_left_wrapper');
                 <div class="col-sm-4"></div>
                 
                 <div class="col-sm-4">
-                 <label type="email">Please Enter NRIC:<span class="required">*</span></label>
+                 <label type="email">PLEASE ENTER NRIC:<span class="required">*</span></label>
                 <?php 
 
                     $taxcode_nric = array(
