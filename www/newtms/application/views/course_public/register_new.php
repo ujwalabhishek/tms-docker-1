@@ -625,7 +625,7 @@ Section: Contact v.2
         }
         
     $(document).ready(function(){
-        $tenantid = <?php echo TENANT_ID;?>;
+        $tenantid = '<?php echo TENANT_ID;?>';
         if($tenantid == 'T02'){
             $('#modal_nric_found').click();
         }
