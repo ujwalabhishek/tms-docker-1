@@ -625,13 +625,13 @@ Section: Contact v.2
         }
         
     $(document).ready(function(){
-//        $('#exampleModalCenter').modal({
-//            backdrop: 'static',
-//            keyboard: false
-//        });
+        $('#exampleModalCenter').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
         $tenantid = '<?php echo TENANT_ID;?>';
         if($tenantid == 'T02'){
-            $('#modal_nric_found').click();
+            $('#exampleModalCenter').modal('show');
         }
      //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
      <?php if (TENANT_ID == 'T02'){?>
@@ -654,7 +654,7 @@ Section: Contact v.2
         }
         
         if($status == 1){
-            $('#ex1011').hide();
+            $('#exampleModalCenter').hide();
             $('.statuserr').html('');
             
             $url = $siteurl + "class_trainee/save_declaration_trainee_data";
@@ -676,7 +676,7 @@ Section: Contact v.2
                 },
                 success: function(data) {
                    if(data !='1'){
-                      $('#ex1011').show();  
+                      $('#exampleModalCenter').show();  
                   }
                 }
             });
