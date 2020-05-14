@@ -1684,3 +1684,55 @@ function remove_image() {
     $('#deleteimageno').attr('checked', 'checked');
 
 }
+
+$('.nric_submit').click(function(){
+    e = $('#taxcode_nric').val();
+    if(e == ''){
+        $('#taxcode_nric_err').text('[Required!]').addClass('error');
+    }else{
+        $('#taxcode_nric_err').text('').removeClass('error');
+       
+    
+        $course_id = $("#course_id").val();
+        $class_id =  $("#class_id").val();
+        e=$.trim(e);   
+        $taxcode = e;
+        $.ajax({
+                    url: baseurl + "course_public/check_nric_no_public",
+                    type: "post",
+                    data: {taxcode_nric: e, course_id: $course_id, class_id: $class_id},
+                    async: false,
+                    success: function(res)
+                    {
+                         $('.yescls').show();
+                         $('.nocls').html('No');
+                        if(res == 0) // if trainee exists but his status is not active
+                        {
+                           document.trainee_form2.action = baseurl+"course_public/register_enroll/"+$course_id+"/"+$class_id;
+                           $('#trainee_form2').submit();
+                        }else if(res == 1){
+                            var res = JSON.parse(res);
+                            $('#modal_nric_found').show();
+                            $('.msg').html("Oops! You are Already Enrolled for this class!");
+                            $('.suremsg').html("Kindly Choose Another Class To Enrol!");
+                            $('.yescls').hide();
+                            $('.nocls').html('Proceed!');
+                            $('#user_id_popup').val(res.user_id);
+                            $(".nocls").attr("href", baseurl)
+
+                        }else{
+                            var res = JSON.parse(res);
+                            $('#modal_nric_found').show();
+                            $('.msg').html("This NRIC("+res.tax_code+") is belongs to "+res.first_name);
+                            $('.suremsg').html("Are you Sure! You want to Continue?");
+                            $('#user_id_popup').val(res.user_id);
+                        }
+
+                    },
+                    error:function(){
+                        return false;
+                    }
+                });
+                
+    }
+});

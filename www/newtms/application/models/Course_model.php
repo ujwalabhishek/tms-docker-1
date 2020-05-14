@@ -11,6 +11,16 @@
 
 
 class Course_Model extends CI_Model {
+    
+    
+    
+    private $user;
+    
+    public function __construct() {
+        parent::__construct();
+        $this->user = $this->session->userdata('userDetails');
+        
+    }
 
     
     /*

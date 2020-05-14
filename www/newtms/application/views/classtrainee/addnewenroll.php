@@ -15,6 +15,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
         <?php
         $atr = 'id="search_form" name="search_form" method="post" onkeypress="return event.keyCode != 13;"';
         echo form_open("class_trainee/enrollment_view_page", $atr);
+         $tenant_id = $this->session->userdata('userDetails')->tenant_id;//added by shubhranshu
         ?>  
         <table class="table table-striped">
             <tbody>
@@ -89,6 +90,10 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                             <label style="color:blue;font-weight:bold">Remove individual enrollment</label>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <?php
+                        //////added by shubhranshu to disable option for wablab
+                         if((TENANT_ID == 'T20') || (TENANT_ID == 'T17')){
+                            
+                        }else{
                             $data=array(
                                     'id'=>'move_enrollment',
                                     'class'=>'enrollment_type',
@@ -97,10 +102,12 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                                     'checked'=>FALSE
                                     );
                             echo form_radio($data);
+                        
                         ?>
                          &nbsp;&nbsp;
                         <label style="color:blue;font-weight: bold">Move Trainee from one company Invoice to other company invoice</label>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <?php }?>
                     </td>
                 </tr>
                 <?php } ?>

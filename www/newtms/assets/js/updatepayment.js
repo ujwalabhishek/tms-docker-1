@@ -875,6 +875,12 @@ $(document).ready(function() {
                     $('#giro_div1').hide();
                     $('.other_payment').hide();
                     $('.sfc_clm').hide();
+                    /////added by shubhranshu for wablab not to display sfc id blok
+                    if($tenant_id == 'T20'){
+                        $('#sfc_ato_divv').hide();
+                    }else{
+                        $('#sfc_ato_divv').show();
+                    }
                 }
             }
                 

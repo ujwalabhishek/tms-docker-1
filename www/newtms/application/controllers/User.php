@@ -723,6 +723,15 @@ class User extends CI_Controller {
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
                         </ol>';
+          if(TENANT_ID == 'T20'){////added by shubhranshu due to points fow wablab
+                $message3 = '<strong>Remark *: </strong>
+             <ol>
+                        
+                            <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                            <li>Trim finger nails and remove nail polish</li>
+                            <li>'.$li.'</li>
+                        </ol>';
+            }
         /* skm end */
         if ($booking_details) {
             $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;

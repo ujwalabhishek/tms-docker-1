@@ -12,6 +12,7 @@
                     if ($this->session->flashdata('error')) {
                         echo '<div style="color:red;font-weight: bold;">' . $this->session->flashdata('error') . '</div>';
                 } ?>
+                <h2 class="panel_heading_style">Available Courses and Classes Schedule</h2>
                 <div class="bs-example">
                     <div class="table-responsive">
                         <table class="table table-striped" id="class_schedule">
@@ -21,15 +22,26 @@
                                 $pageurl = $controllerurl;
                                 ?>        
                                 <tr>
-                                    <th width="20%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=class_name&o=" . $ancher; ?>" >Class Details</a></th>
-                                    <th width="20%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=class_start_datetime&o=" . $ancher; ?>" >Date &amp; Time</a></th>
-                                    <th width="6%" class="">Duration <br/>(hrs)</th>
+                                    <th width="15%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=course_name&o=" . $ancher; ?>" ></a>Course Name </th>
+                                    <th width="15%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=class_name&o=" . $ancher; ?>" >Class Details</a></th>
+			           
+
+                                    <th width="15%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=class_start_datetime&o=" . $ancher; ?>" >Date &amp; Time</a></th>
+                                    <th width="10%" class="">Class Schedule</th>
+					 <th width="6%" class="">Duration <br/>(hrs)</th>
                                     <th width="11%" class="">Trainer Aide</th>
                                     <th width="10%" class="">Trainer</th>
                                     <th width="12%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=classroom_location&o=" . $ancher; ?>" >Location/Address</a></th>
                                     <th width="7%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=class_language&o=" . $ancher; ?>" >Language</a></th>
-                                    <th width="5%" class="">Available<br/>Seats</th>
+                                    <th width="20%" class="" colspan="3"><center>Seats</center></th>
                                     <th width="22%" class="">Status</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="9">&nbsp;</th>
+                                    <th width="5%" class="text_move">Booked</th>
+                                    <th width="10%" class="text_move">Available</th>
+                                    <th width="5%" class="text_move">Total</th>
+                                    <th> &nbsp; </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,14 +88,20 @@
                                         $enroll_link = $enroll_link_prefix . $enroll_link_label . $enroll_link_suffix;
                                         ?>
                                         <tr>
+                                            
+                                            <td><?php echo $class['crse_name']; ?></td>
                                             <td><a class="small_text1" rel="modal:open" href="#course_clas<?php echo $class['class_id']; ?>"><?php echo $class['class_name']; ?></a></td>
                                             <td><?php echo date('d/m/Y , <br>l @ h:i A', strtotime($class['class_start_datetime'])); ?></td>
+						 <td><?php echo get_course_class_schedule($class['course_id'],$class['class_id']);?></td>
+
                                             <td><?php echo $class['total_classroom_duration'] + $class['total_lab_duration'] + $class['assmnt_duration']; ?></td>
                                             <td ><div class="table-scrol" style="    height: 75px;"><?php echo $class['crse_manager']; ?></div></td>
                                             <td ><div class="table-scrol" style="    height: 75px;"><?php echo $class['classroom_trainer']; ?></div></td>
-                                            <td><?php if($class['classroom_location'] == 'OTH'){echo $class['classroom_venue_oth']; }else{echo $status_lookup_location[$class['classroom_location']]; }?></td>
+                                            <td><?php echo $status_lookup_location[$class['classroom_location']]; ?></td>
                                             <td><?php echo $status_lookup_language[$class['class_language']]; ?></td>
+                                            <td><?php echo $class_count[$class['class_id']]; ?></td>
                                             <td><?php echo $class['available']; ?></td>
+                                            <td><?php echo $class['total_seats']; ?></td>
                                             <?php
                                             $total_available_seats = $class['total_seats'];
                                             $total_booked_seats = $class_count[$class['class_id']];
@@ -167,12 +185,12 @@
                                             </tr>
                                             <tr>
                                                 <td><span class="crse_des">Class Room Location :</span></td>
-                                                <td><?php if($class['classroom_location'] == 'OTH'){echo $class['classroom_venue_oth']; }else{echo $status_lookup_location[$class['classroom_location']]; }?></td>
+                                                <td><?php echo $status_lookup_location[$class['classroom_location']]; ?></td>
                                             </tr>
                                             <?php if ($class['lab_location']): ?>
                                                 <tr>
                                                     <td><span class="crse_des">Lab Location :</span></td>
-                                                    <td><?php if($class['lab_location'] == 'OTH'){echo $class['lab_venue_oth']; }else{echo $status_lookup_location[$class['lab_location']]; }?></td>
+                                                    <td><?php echo $status_lookup_location[$class['lab_location']]; ?></td>
                                                 </tr>
                                             <?php endif; ?>
                                             <tr>
@@ -192,7 +210,7 @@
                         endforeach;
                         ?>
                         <div style="clear:both;"></div><br>
-                        <ul class="pagination pagination_style"></ul>
+                       <ul class="pagination pagination_style"><?php echo $pagination; ?></ul>
                     </div>
                 </div>
             </div>

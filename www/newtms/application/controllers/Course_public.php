@@ -2650,7 +2650,15 @@ class Course_public extends CI_Controller {
                             <li>Trim finger nails and remove nail polish</li>
                             <li>' . $li . '</li>
                         </ol>';
-        /* skm end */
+        if(TENANT_ID == 'T20'){////added by shubhranshu due to points fow wablab
+                $message3 = '<strong>Remark *: </strong>
+             <ol>
+                        
+                            <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                            <li>Trim finger nails and remove nail polish</li>
+                            <li>'.$li.'</li>
+                        </ol>';
+            }
 
         if ($booking_details) {
 
@@ -2756,7 +2764,15 @@ class Course_public extends CI_Controller {
                         </ol>';
 
 
-        /* skm end */
+        if(TENANT_ID == 'T20'){////added by shubhranshu due to points fow wablab
+                $message3 = '<strong>Remark *: </strong>
+             <ol>
+                        
+                            <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                            <li>Trim finger nails and remove nail polish</li>
+                            <li>'.$li.'</li>
+                        </ol>';
+            }
 
         if (!empty($tenant_details->tenant_contact_num)) {
 
@@ -3572,6 +3588,430 @@ class Course_public extends CI_Controller {
         $data['main_content'] = 'course_public/payment_details';
 
         return $this->load->view('layout_public', $data);
+    }
+    
+    
+    
+    public function all_course_class()
+    {
+        $data['page_title'] = 'Course Schedule List';
+        $tenant_id = TENANT_ID;
+        $field = $this->input->get('f');
+        $order_by = $this->input->get('o');
+        $baseurl = base_url() . 'course_public/all_course_class/';
+        
+        $records_per_page = RECORDS_IN_MAIN_PAGE;
+//        $records_per_page = '5';
+        $pageno = $this->uri->segment(3);
+
+        if (empty($pageno)) {
+            $pageno = 1;
+        }
+         $offset = ($pageno * $records_per_page);
+        
+        
+        $data['tabledata'] = $this->course_model->get_all_course_class_list($tenant_id, $records_per_page, $offset, $field, $order_by);
+
+        $data['sort_order'] = $order_by;
+        $data['controllerurl'] = 'course_public/all_course_class/';
+        $totalrows = $this->course_model->get_all_course_class_list_count($tenant_id, $records_per_page, $offset, $field, $order_by); 
+         
+        $this->load->helper('pagination');
+        $data['pagination'] = get_pagination($records_per_page, $pageno, $baseurl, $totalrows, $field, $order_by,$search_value);
+        
+        
+        $meta_result = fetch_all_metavalues();
+        $values = $meta_result[Meta_Values::LANGUAGE];
+        $meta_map = $this->meta_values->get_param_map();
+        $class_values = $meta_result[Meta_Values::CLASSROOM_LOCATION];
+        foreach ($values as $value) {
+
+            $status_lookup_language[$value['parameter_id']] = $value['category_name'];
+        }
+        foreach ($class_values as $value) {
+
+            $status_lookup_location[$value['parameter_id']] = $value['category_name'];
+        }
+        foreach ($data['tabledata'] as $key=>$cl) {
+            $data['class_count'][$cl['class_id']] = $booked = $this->course_model->get_course_class_count($cl['course_id'], $cl['class_id']);
+            $available = $cl['total_seats'] - $booked;
+            $available = ($available < 0) ? 0 : $available;
+            $data['tabledata'][$key]['available'] = $available;
+        }
+        foreach ($data['tabledata'] as $key => $cl) {
+               $data['tabledata'][$key]['crse_manager'] = $this->course_model->get_managers($cl['training_aide']);
+        }
+        foreach ($data['tabledata'] as $key => $cl) {
+            $data['tabledata'][$key]['classroom_trainer'] = $this->course_model->get_trainers($cl['classroom_trainer']);
+        }
+        $data['status_lookup_language'] = $status_lookup_language;
+        $data['status_lookup_location'] = $status_lookup_location;
+        $data['course_name'] = $this->course_model->get_course_name($course_id);
+        $data['main_content'] = 'course_public/all_course_class_schedule';
+        $this->load->view('layout_public', $data);
+    }
+    
+    
+    ///////////added by shubhranshu for new requirement for elearning
+    
+    public function class_member_check_elearning($course_id = null, $class_id = null) {
+       $SGPTIME = date('H');
+       $SGPTIME =9;
+       if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
+        
+         $data['page_title'] = 'Enrollment';
+
+         $data['course_id'] = $course_id;
+
+         $data['class_id'] = $class_id;
+
+         $data['user_id'] = $this->session->userdata('userDetails')->user_id;
+         /* course class complete details */
+         $data['class_details'] = $class_details = $this->course_model->get_class_details($class_id);
+         $data['course_details'] = $course_details = $this->course_model->course_basic_details($class_details->course_id);
+
+         $data['discount_total'] = $discount_total = round(($class_details->class_discount / 100) * $class_details->class_fees, 2);
+         $data['feesdue'] = $feesdue = $class_details->class_fees - ($discount_total);
+         $data['gst_rate'] = $gst_rate = $this->course_model->get_gst_current();
+         $data['totalgst'] = $totalgst = ($course_details->gst_on_off == 1) ? round(($feesdue * $gst_rate) / 100, 2) : 0;
+         $data['net_due'] = $net_due = $feesdue + $totalgst;
+         $meta_result = $this->meta_values->get_param_map();
+         $data['gst_label'] = $gst_label = ($course_details->gst_on_off == 1) ? 'GST applicable ' . '(' . number_format($data['gst_rate'], 2, '.', '') . '%)' : 'GST not applicable';
+         $data['class_type'] = $meta_result[$course_details->class_type];
+         $data['classloc'] = ($class_details->classroom_location == 'OTH') ? 'Others (' . $class_details->classroom_venue_oth . ')' : $meta_result[$class_details->classroom_location];
+         //end
+
+
+         $data['main_content'] = 'register_enroll_elearning';
+
+         $this->load->view('layout_public_new', $data);
+       }else{
+            echo "<div style='font-size: 24px;border: 5px solid grey;padding: 100px;text-align: center;color: red;'>Sorry ! This page is only Available During 8:00AM to 10:00 AM Only.<div style='padding:18px;color:black'>".date('Y-m-d H:i:s')."SGT</div></div><br>";exit;
+       }
+    }
+    
+    
+    public function check_nric_no_public() {
+        extract($_POST);
+
+        $taxcode = trim(($taxcode_nric));
+        $course_id = trim(($course_id));
+        $class_id = trim(($class_id));
+
+        $res = $this->course_model->check_taxcode_exists_public($taxcode, $course_id, $class_id);
+    }
+    
+    
+    public function confirm_trainee_details($course_id = null, $class_id = null,$user_id_popup=null) {
+        
+         ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+        $data['page_title'] = 'Enrollment';
+
+        $data['course_id'] = $course_id = $this->input->post('course_id');
+
+        $data['class_id'] = $class_id = $this->input->post('class_id');
+
+        $data['user_id'] = $this->session->userdata('userDetails')->user_id;
+        /* course class complete details */
+        $data['class_details'] = $class_details = $this->course_model->get_class_details($class_id);
+        $data['course_details'] = $course_details = $this->course_model->course_basic_details($class_details->course_id);
+        
+        $data['discount_total'] = $discount_total = round(($class_details->class_discount / 100) * $class_details->class_fees, 2);
+        $data['feesdue'] = $feesdue = $class_details->class_fees - ($discount_total);
+        $data['gst_rate'] = $gst_rate = $this->course_model->get_gst_current();
+        $data['totalgst'] = $totalgst = ($course_details->gst_on_off == 1) ? round(($feesdue * $gst_rate) / 100, 2) : 0;
+        $data['net_due'] = $net_due = $feesdue + $totalgst;
+        $meta_result = $this->meta_values->get_param_map();
+        $data['gst_label'] = $gst_label = ($course_details->gst_on_off == 1) ? 'GST applicable ' . '(' . number_format($data['gst_rate'], 2, '.', '') . '%)' : 'GST not applicable';
+        $data['class_type'] = $meta_result[$course_details->class_type];
+        $data['classloc'] = ($class_details->classroom_location == 'OTH') ? 'Others (' . $class_details->classroom_venue_oth . ')' : $meta_result[$class_details->classroom_location];
+        //end
+        
+
+        
+        
+        //$data['sideMenuData'] = fetch_non_main_page_content();
+        $user = $this->session->userdata('userDetails');
+        $tenant_id = $user->tenant_id;
+        $data['user'] = $user;
+        $data['privilage'] = $this->manage_tenant->get_privilage();//added by shubhranshu
+        $this->load->library('form_validation');
+        $data['page_title'] = 'Edit Trainee';
+        
+
+        $user_id=$this->input->post('user_id_popup');
+        if ($user_id) { 
+                       
+            $data['trainee'] = $this->traineemodel->get_trainee_taxcode($user_id, TENANT_ID); 
+            //$data['payment_status'] = $this->traineemodel->payment_status($data['trainee'][userdetails][user_id],$tenant_id);            
+        }        
+        if ($this->input->post('task') == 'update') 
+        {
+            $data['edit_tax_code'] = $code;
+            $valid = TRUE;
+            $country_of_residence = $this->input->post('country_of_residence');
+            $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
+            if ($country_of_residence == 'IND') {
+                $tax_code = $this->input->post("PAN");
+                $this->form_validation->set_rules('PAN', 'PAN Number', 'required|max_length[15]');
+            }            
+            if ($country_of_residence == 'SGP') {
+                $this->form_validation->set_rules('NRIC', 'NRIC Type', 'required|max_length[15]');
+                $NRIC = $this->input->post('NRIC');
+                $NRIC_OTHER = $this->input->post("NRIC_OTHER");
+                $NRIC_ID = $this->input->post('NRIC_ID');
+                $NRIC_ID_MATCH = $this->input->post('NRIC_ID_MATCH'); // addded by shubhranshu for NRIC ID
+                $tax_code = $NRIC_ID;
+                
+                if($NRIC != "SNG_3"){
+                    if($NRIC_ID != $NRIC_ID_MATCH){ //added by shubhranshu for check NRIC if it does not match
+                        $this->form_validation->set_rules('NRIC_ID', 'NRIC Number', 'required|max_length[50]|callback_check_unique_usertaxcode');   
+                        if(!empty($NRIC)) {
+                        $valid = validate_nric_code($NRIC, $NRIC_ID);
+                            if ($valid == FALSE) {
+                                $data['tax_error'] = 'Invalid NRIC Code.'; //Added By dummy for Edit issue (Nov 10 2014)
+                            }
+                        }
+                        
+                    }
+                                                       
+                    
+                }
+            }                       
+            if ($country_of_residence == 'USA') {
+                $tax_code = $this->input->post('SSN');
+                $this->form_validation->set_rules('SSN', 'SSNNumber', 'required|max_length[15]');
+            }              
+//            if ($valid && $this->form_validation->run() == TRUE && $data['trainee'][userdetails]['tax_code']!=$tax_code ) {
+//                $taxcodeStatus = $this->commonmodel->is_taxcode_exist($tax_code, $tenant_id);
+//                if($taxcodeStatus){                    
+//                    $failure_msg = 'Duplicate Tax Code. Please change the tax code.';
+//                }
+//            }
+            if ( ($valid) && ($this->form_validation->run() == TRUE) && (!$taxcodeStatus)) {
+               $delete_image = $this->input->post('deleteimage') ? $this->input->post('deleteimage') : 'no';
+               
+                $user_id = $this->input->post('userid');
+                $result = $this->traineemodel->get_trainee_details($user_id);              
+                $previous_data = json_encode($result);
+                
+                $uid = $this->traineemodel->update_trainee();
+                $this->load->helper('upload_helper');
+                if (!empty($_FILES['userfile']['name']) && $uid != FALSE && $delete_image == 'no') {
+                    $image_data = upload_image('uploads/images/trainee', $uid);
+                    if ($image_data['status']) {
+                        $image_path = $image_data['image']['system_path'] . '/' .
+                                $image_data['image']['raw_name'] . '_thumb' . $image_data['image']['file_ext'];
+                        $previous_thumb_path = fetch_image_path_by_uid($uid);
+                        remove_previous_image($previous_thumb_path);
+                        save_image_path($uid, $image_path);
+                    } 
+                } else if ($uid != FALSE && $delete_image == 'no') {
+                    $previous_thumb_path = fetch_image_path_by_uid($uid);
+                    remove_previous_image($previous_thumb_path);
+                    save_image_path($uid);
+                }
+                if ($uid == FALSE) {
+                    
+                    $this->session->set_flashdata('error_message', 'Unable to update Trainee.Please try again later.');
+                } else {
+                     //user_activity(3,$user_id,$previous_data);
+                    $this->session->set_flashdata('success_message', 'Trainee has been updated successfully');
+                }
+                redirect('course_public/enrolnow_elearning/'.$course_id.'/'.$class_id.'/'.$user_id.'/'.$NRIC_ID_MATCH);
+            }else {
+                $data['main_content'] = 'course_public/edit_trainee_details';
+                $data['tax_error'] = ($data['tax_error'])?$data['tax_error']:$failure_msg;
+                $this->load->view('layout_public', $data);
+                return;
+            }
+        } 
+     
+        $data['main_content'] = 'course_public/edit_trainee_details';
+        $this->load->view('layout_public', $data);
+    }
+    
+    public function enrolnow_elearning($course_id = null, $class_id = null, $user_id=NULL,$nric=NULL){
+          ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
+        $user_role = $this->session->userdata('userDetails')->role_id ?? '';
+        if($user_role != ''){
+            if($user_role != 'TRAINE'){
+                redirect('login/administrator/'); ///// added by shubhranshu
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+        $data['page_title'] = 'Enrollment';
+
+        $data['course_id'] = $course_id;
+
+        $data['class_id'] = $class_id;
+
+        $data['r_user_id'] =  $this->session->userdata('userDetails')->user_id;
+        $data['nric'] = $nric;
+        /* course class complete details */
+        $data['class_details'] = $class_details = $this->course_model->get_class_details($class_id);
+        $data['course_details'] = $course_details = $this->course_model->course_basic_details($class_details->course_id);
+
+        $data['discount_total'] = $discount_total = round(($class_details->class_discount / 100) * $class_details->class_fees, 2);
+        $data['feesdue'] = $feesdue = $class_details->class_fees - ($discount_total);
+        $data['gst_rate'] = $gst_rate = $this->course_model->get_gst_current();
+        $data['totalgst'] = $totalgst = ($course_details->gst_on_off == 1) ? round(($feesdue * $gst_rate) / 100, 2) : 0;
+        $data['net_due'] = $net_due = $feesdue + $totalgst;
+        $meta_result = $this->meta_values->get_param_map();
+        $data['gst_label'] = $gst_label = ($course_details->gst_on_off == 1) ? 'GST applicable ' . '(' . number_format($data['gst_rate'], 2, '.', '') . '%)' : 'GST not applicable';
+        $data['class_type'] = $meta_result[$course_details->class_type];
+        $data['classloc'] = ($class_details->classroom_location == 'OTH') ? 'Others (' . $class_details->classroom_venue_oth . ')' : $meta_result[$class_details->classroom_location];
+        //end
+        $data['main_content'] = 'course_public/enrolnow_elearning';
+        $this->load->view('layout_public', $data);
+    }
+    
+    public function register_trainee($course_id = null, $class_id = null) {
+        $nric_tax=$this->input->post('taxcode_nric');
+        if($nric_tax == ''){
+            redirect('course_public/class_member_check_elearning');
+        }
+        $SGPTIME = date('H');
+        $SGPTIME =9;
+        if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
+            $data['page_title'] = 'Trainee registration';
+
+            $data['main_content'] = 'course_public/register_new';
+
+            $this->load->view('layout_public_new', $data);
+        }else{
+            redirect('course_public/class_member_check_elearning');
+        }
+    }
+    
+    
+    public function confirm_trainee_detail($course_id = null, $class_id = null,$user_id_popup=null) {
+        $user_id=$this->input->post('user_id_popup') ?? $this->input->post('task');
+        if($user_id == ''){
+            redirect('course_public/class_member_check_elearning');
+        }
+         $SGPTIME = date('H');
+         $SGPTIME =9;
+        if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
+            $data['page_title'] = 'Update Trainee';
+
+            $data['user_id'] = $this->session->userdata('userDetails')->user_id;
+            /* course class complete details */
+            //$data['sideMenuData'] = fetch_non_main_page_content();
+            $user = $this->session->userdata('userDetails');
+            $tenant_id = $user->tenant_id;
+            $data['user'] = $user;
+            $data['privilage'] = $this->manage_tenant->get_privilage();//added by shubhranshu
+            $this->load->library('form_validation');
+            $data['page_title'] = 'Edit Trainee';
+
+
+            
+            if ($user_id) { 
+
+                $data['trainee'] = $this->traineemodel->get_trainee_taxcode($user_id, TENANT_ID); 
+                //$data['payment_status'] = $this->traineemodel->payment_status($data['trainee'][userdetails][user_id],$tenant_id);            
+            }        
+            if ($this->input->post('task') == 'update') 
+            {
+                $data['edit_tax_code'] = $code;
+                $valid = TRUE;
+                $country_of_residence = $this->input->post('country_of_residence');
+                $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
+                if ($country_of_residence == 'IND') {
+                    $tax_code = $this->input->post("PAN");
+                    $this->form_validation->set_rules('PAN', 'PAN Number', 'required|max_length[15]');
+                }            
+                if ($country_of_residence == 'SGP') {
+                    $this->form_validation->set_rules('NRIC', 'NRIC Type', 'required|max_length[15]');
+                    $NRIC = $this->input->post('NRIC');
+                    $NRIC_OTHER = $this->input->post("NRIC_OTHER");
+                    $NRIC_ID = $this->input->post('NRIC_ID');
+                    $NRIC_ID_MATCH = $this->input->post('NRIC_ID_MATCH'); // addded by shubhranshu for NRIC ID
+                    $tax_code = $NRIC_ID;
+
+                    if($NRIC != "SNG_3"){
+                        if($NRIC_ID != $NRIC_ID_MATCH){ //added by shubhranshu for check NRIC if it does not match
+                            $this->form_validation->set_rules('NRIC_ID', 'NRIC Number', 'required|max_length[50]|callback_check_unique_usertaxcode');   
+                            if(!empty($NRIC)) {
+                            $valid = validate_nric_code($NRIC, $NRIC_ID);
+                                if ($valid == FALSE) {
+                                    $data['tax_error'] = 'Invalid NRIC Code.'; //Added By dummy for Edit issue (Nov 10 2014)
+                                }
+                            }
+
+                        }
+
+
+                    }
+                }                       
+                if ($country_of_residence == 'USA') {
+                    $tax_code = $this->input->post('SSN');
+                    $this->form_validation->set_rules('SSN', 'SSNNumber', 'required|max_length[15]');
+                }              
+    //            if ($valid && $this->form_validation->run() == TRUE && $data['trainee'][userdetails]['tax_code']!=$tax_code ) {
+    //                $taxcodeStatus = $this->commonmodel->is_taxcode_exist($tax_code, $tenant_id);
+    //                if($taxcodeStatus){                    
+    //                    $failure_msg = 'Duplicate Tax Code. Please change the tax code.';
+    //                }
+    //            }
+                if ( ($valid) && ($this->form_validation->run() == TRUE) && (!$taxcodeStatus)) {
+                   $delete_image = $this->input->post('deleteimage') ? $this->input->post('deleteimage') : 'no';
+
+                    $user_id = $this->input->post('userid');
+                    $result = $this->traineemodel->get_trainee_details($user_id);              
+                    $previous_data = json_encode($result);
+
+                    $uid = $this->traineemodel->update_trainee();
+                    $this->load->helper('upload_helper');
+                    if (!empty($_FILES['userfile']['name']) && $uid != FALSE && $delete_image == 'no') {
+                        $image_data = upload_image('uploads/images/trainee', $uid);
+                        if ($image_data['status']) {
+                            $image_path = $image_data['image']['system_path'] . '/' .
+                                    $image_data['image']['raw_name'] . '_thumb' . $image_data['image']['file_ext'];
+                            $previous_thumb_path = fetch_image_path_by_uid($uid);
+                            remove_previous_image($previous_thumb_path);
+                            save_image_path($uid, $image_path);
+                        } 
+                    } else if ($uid != FALSE && $delete_image == 'no') {
+                        $previous_thumb_path = fetch_image_path_by_uid($uid);
+                        remove_previous_image($previous_thumb_path);
+                        save_image_path($uid);
+                    }
+                    if ($uid == FALSE) {
+                        $error= "<div style='color:red;font-weight: bold;text-align:center;padding: 9px;'>Unable to update Trainee.Please try again later</div>";
+                        $this->session->set_flashdata('error', $error);
+                    } else {
+                         //user_activity(3,$user_id,$previous_data);
+                        $error= "<div style='color:green;font-weight: bold;text-align:center;padding: 9px;'>Trainee has been updated successfully</div>";
+                        $this->session->set_flashdata('error', $error);
+                    }
+
+
+
+                    redirect('course_public/class_member_check_elearning');
+                }else {
+                    $data['main_content'] = 'course_public/edit_trainee_details';
+                    $data['tax_error'] = ($data['tax_error'])?$data['tax_error']:$failure_msg;
+                    $this->load->view('layout_public_new', $data);
+                    return;
+                }
+            } 
+
+            $data['main_content'] = 'course_public/edit_trainee_details';
+            $this->load->view('layout_public_new', $data);
+        }else{
+            redirect('course_public/class_member_check_elearning');
+        }
     }
 
 }

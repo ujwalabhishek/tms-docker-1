@@ -4,6 +4,14 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Reports_Model extends CI_Model {
+    
+    private $user;
+    
+    public function __construct() {
+        parent::__construct();
+        $this->user = $this->session->userdata('userDetails');
+        
+    }
 
     /**
      * This method gets trainee feedbacks for some class
@@ -25,8 +33,8 @@ class Reports_Model extends CI_Model {
         $this->db->join('tms_users_pers tup', 'ce.user_id = tup.user_id and ce.tenant_id = tu.tenant_id');
         $this->db->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'));
         $array = array('ce.tenant_id' => $tenant_id, 'ce.course_id' => $course_id, 'ce.class_id' => $class_id);
-        if ($this->data['user']->role_id == 'COMPACT') {
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+        if ($this->user->role_id == 'COMPACT') {
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
 
         $this->db->where($array);
@@ -929,13 +937,13 @@ SELECT  {$calc_rows} c.crse_name,
             $end_date_label = date('Y-m-d', strtotime($end_date));
             $this->db->where('date(ei.inv_date) <=', $end_date_label);
         }
-        if ($this->data['user']->role_id == 'COMPACT') {
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+        if ($this->user->role_id == 'COMPACT') {
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
             $this->db->join('course_class ccl', 'ccl.course_id=ce.course_id and ccl.class_id=ce.class_id');
             $this->db->join('course c', 'c.tenant_id = ccl.tenant_id AND c.course_id=ccl.course_id '
-                    . 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',c.crse_manager)');
+                    . 'AND FIND_IN_SET(' . $this->user->user_id . ',c.crse_manager)');
         }
         if (!empty($payment_status) && !empty($not_paid_arr)) {
             if ($payment_status == 'PAID') {
@@ -1072,12 +1080,12 @@ SELECT  {$calc_rows} c.crse_name,
         cls.class_end_datetime, cls.certi_coll_date');
         //,cm.comp_email,cm.company_name,cm.company_id
         $this->db->from('class_enrol enrol');
-        if ($this->data['user']->role_id == 'CRSEMGR') {
-            $crsemgr_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',crse.crse_manager)';
+        if ($this->user->role_id == 'CRSEMGR') {
+            $crsemgr_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',crse.crse_manager)';
         }
         $this->db->join('course crse', 'enrol.course_id = crse.course_id ' . $crsemgr_where);
-        if ($this->data['user']->role_id == 'TRAINER') {
-            $trainer_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',cls.classroom_trainer)';
+        if ($this->user->role_id == 'TRAINER') {
+            $trainer_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',cls.classroom_trainer)';
         }
         $this->db->join('course_class cls', 'enrol.class_id = cls.class_id and crse.course_id = cls.course_id ' . $trainer_where);
         $this->db->join('tms_users usrs', 'enrol.user_id = usrs.user_id');
@@ -1116,11 +1124,11 @@ SELECT  {$calc_rows} c.crse_name,
                 $this->db->where('crse.crse_cert_validity >', 0);
             }
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('enrol.sales_executive_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('enrol.sales_executive_id', $this->user->user_id);
         }
-        if ($this->data['user']->role_id == 'COMPACT') {
-            $this->db->where('enrol.company_id', $this->data['user']->company_id);
+        if ($this->user->role_id == 'COMPACT') {
+            $this->db->where('enrol.company_id', $this->user->company_id);
         }
         return $this->db->get()->num_rows();
     }
@@ -1146,12 +1154,12 @@ SELECT  {$calc_rows} c.crse_name,
         enrol.certificate_coll_on, usrs.tax_code, pers.first_name, pers.last_name, crse.crse_cert_validity, 
         cls.class_end_datetime, cls.certi_coll_date, enrol.user_id,tf.feedback_answer,epd.att_status,epd.pymnt_due_id,epd.total_amount_due,ei.invoice_id,ei.pymnt_due_id');
         $this->db->from('class_enrol enrol');
-        if ($this->data['user']->role_id == 'CRSEMGR') {
-            $crsemgr_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',crse.crse_manager)';
+        if ($this->user->role_id == 'CRSEMGR') {
+            $crsemgr_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',crse.crse_manager)';
         }
         $this->db->join('course crse', 'enrol.course_id = crse.course_id ' . $crsemgr_where);
-        if ($this->data['user']->role_id == 'TRAINER') {
-            $trainer_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',cls.classroom_trainer)';
+        if ($this->user->role_id == 'TRAINER') {
+            $trainer_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',cls.classroom_trainer)';
         }
         $this->db->join('course_class cls', 'enrol.class_id = cls.class_id and crse.course_id = cls.course_id ' . $trainer_where);
         $this->db->join('tms_users usrs', 'enrol.user_id = usrs.user_id');
@@ -1204,11 +1212,11 @@ SELECT  {$calc_rows} c.crse_name,
                 $this->db->where('crse.crse_cert_validity >', 0);
             }
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('enrol.sales_executive_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('enrol.sales_executive_id', $this->user->user_id);
         }
-        if ($this->data['user']->role_id == 'COMPACT') {
-            $this->db->where('enrol.company_id', $this->data['user']->company_id);
+        if ($this->user->role_id == 'COMPACT') {
+            $this->db->where('enrol.company_id', $this->user->company_id);
         }
         if (!empty($limit)) {
             if ($limit == $offset) {
@@ -1242,12 +1250,12 @@ SELECT  {$calc_rows} c.crse_name,
         enrol.certificate_coll_on, usrs.tax_code, pers.first_name, pers.last_name, crse.crse_cert_validity, 
             cls.class_start_datetime,cls.class_end_datetime, cls.certi_coll_date, enrol.user_id,tf.feedback_answer,epd.class_fees,epd.total_amount_due,epd.discount_rate,epd.subsidy_amount,epd.gst_amount,epd.att_status,epd.pymnt_due_id,epd.total_amount_due,ei.invoice_id,ei.pymnt_due_id,ei.total_inv_amount,(SELECT COUNT(*) FROM enrol_pymnt_due ei WHERE ei.pymnt_due_id = epd.pymnt_due_id ) AS  total_inv_people');
         $this->db->from('class_enrol enrol');
-        if ($this->data['user']->role_id == 'CRSEMGR') {
-            $crsemgr_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',crse.crse_manager)';
+        if ($this->user->role_id == 'CRSEMGR') {
+            $crsemgr_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',crse.crse_manager)';
         }
         $this->db->join('course crse', 'enrol.course_id = crse.course_id ' . $crsemgr_where);
-        if ($this->data['user']->role_id == 'TRAINER') {
-            $trainer_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',cls.classroom_trainer)';
+        if ($this->user->role_id == 'TRAINER') {
+            $trainer_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',cls.classroom_trainer)';
         }
         $this->db->join('course_class cls', 'enrol.class_id = cls.class_id and crse.course_id = cls.course_id ' . $trainer_where);
         $this->db->join('tms_users usrs', 'enrol.user_id = usrs.user_id');
@@ -1301,11 +1309,11 @@ SELECT  {$calc_rows} c.crse_name,
                 $this->db->where('crse.crse_cert_validity >', 0);
             }
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('enrol.sales_executive_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('enrol.sales_executive_id', $this->user->user_id);
         }
-        if ($this->data['user']->role_id == 'COMPACT') {
-            $this->db->where('enrol.company_id', $this->data['user']->company_id);
+        if ($this->user->role_id == 'COMPACT') {
+            $this->db->where('enrol.company_id', $this->user->company_id);
         }
         if (!empty($limit)) {
             if ($limit == $offset) {
@@ -1337,12 +1345,12 @@ SELECT  {$calc_rows} c.crse_name,
         cls.class_end_datetime, cls.certi_coll_date,tf.feedback_answer,epd.pymnt_due_id,epd.att_status,epd.total_amount_due,ei.invoice_id,ei.pymnt_due_id');
         //,cm.comp_email,cm.company_name,cm.company_id
         $this->db->from('class_enrol enrol');
-        if ($this->data['user']->role_id == 'CRSEMGR') {
-            $crsemgr_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',crse.crse_manager)';
+        if ($this->user->role_id == 'CRSEMGR') {
+            $crsemgr_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',crse.crse_manager)';
         }
         $this->db->join('course crse', 'enrol.course_id = crse.course_id ' . $crsemgr_where);
-        if ($this->data['user']->role_id == 'TRAINER') {
-            $trainer_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',cls.classroom_trainer)';
+        if ($this->user->role_id == 'TRAINER') {
+            $trainer_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',cls.classroom_trainer)';
         }
         $this->db->join('course_class cls', 'enrol.class_id = cls.class_id and crse.course_id = cls.course_id ' . $trainer_where);
         $this->db->join('tms_users usrs', 'enrol.user_id = usrs.user_id');
@@ -1396,11 +1404,11 @@ SELECT  {$calc_rows} c.crse_name,
                 $this->db->where('crse.crse_cert_validity >', 0);
             }
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('enrol.sales_executive_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('enrol.sales_executive_id', $this->user->user_id);
         }
-        if ($this->data['user']->role_id == 'COMPACT') {
-            $this->db->where('enrol.company_id', $this->data['user']->company_id);
+        if ($this->user->role_id == 'COMPACT') {
+            $this->db->where('enrol.company_id', $this->user->company_id);
         }
         return $this->db->get()->num_rows();
     }
@@ -1426,12 +1434,12 @@ SELECT  {$calc_rows} c.crse_name,
         $this->db->select('enrol.course_id');
         ////////////////------//////////////////////
         $this->db->from('class_enrol enrol');
-        if ($this->data['user']->role_id == 'CRSEMGR') {
-            $crsemgr_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',crse.crse_manager)';
+        if ($this->user->role_id == 'CRSEMGR') {
+            $crsemgr_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',crse.crse_manager)';
         }
         $this->db->join('course crse', 'enrol.course_id = crse.course_id ' . $crsemgr_where);
-        if ($this->data['user']->role_id == 'TRAINER') {
-            $trainer_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',cls.classroom_trainer)';
+        if ($this->user->role_id == 'TRAINER') {
+            $trainer_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',cls.classroom_trainer)';
         }
         $this->db->join('course_class cls', 'enrol.class_id = cls.class_id and crse.course_id = cls.course_id ' . $trainer_where);
         $this->db->join('tms_users usrs', 'enrol.user_id = usrs.user_id');
@@ -1484,11 +1492,11 @@ SELECT  {$calc_rows} c.crse_name,
                 $this->db->where('crse.crse_cert_validity >', 0);
             }
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('enrol.sales_executive_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('enrol.sales_executive_id', $this->user->user_id);
         }
-        if ($this->data['user']->role_id == 'COMPACT') {
-            $this->db->where('enrol.company_id', $this->data['user']->company_id);
+        if ($this->user->role_id == 'COMPACT') {
+            $this->db->where('enrol.company_id', $this->user->company_id);
         }
         return $this->db->get()->num_rows();
     }
@@ -1510,12 +1518,12 @@ SELECT  {$calc_rows} c.crse_name,
         $this->db->select('*'); ////modified by shubhranshu to optimize query
         //,cm.comp_email,cm.company_name,cm.company_id
         $this->db->from('class_enrol enrol');
-        if ($this->data['user']->role_id == 'CRSEMGR') {
-            $crsemgr_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',crse.crse_manager)';
+        if ($this->user->role_id == 'CRSEMGR') {
+            $crsemgr_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',crse.crse_manager)';
         }
         $this->db->join('course crse', 'enrol.course_id = crse.course_id ' . $crsemgr_where);
-        if ($this->data['user']->role_id == 'TRAINER') {
-            $trainer_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',cls.classroom_trainer)';
+        if ($this->user->role_id == 'TRAINER') {
+            $trainer_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',cls.classroom_trainer)';
         }
         $this->db->join('course_class cls', 'enrol.class_id = cls.class_id and crse.course_id = cls.course_id ' . $trainer_where);
         $this->db->join('tms_users usrs', 'enrol.user_id = usrs.user_id');
@@ -1556,11 +1564,11 @@ SELECT  {$calc_rows} c.crse_name,
                 $this->db->where('crse.crse_cert_validity >', 0);
             }
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('enrol.sales_executive_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('enrol.sales_executive_id', $this->user->user_id);
         }
-        if ($this->data['user']->role_id == 'COMPACT') {
-            $this->db->where('enrol.company_id', $this->data['user']->company_id);
+        if ($this->user->role_id == 'COMPACT') {
+            $this->db->where('enrol.company_id', $this->user->company_id);
         }
         return $this->db->get()->num_rows();
     }
@@ -1587,12 +1595,12 @@ SELECT  {$calc_rows} c.crse_name,
         enrol.certificate_coll_on, usrs.tax_code, pers.first_name, pers.last_name, crse.crse_cert_validity, 
         cls.class_end_datetime, cls.certi_coll_date, enrol.user_id');
         $this->db->from('class_enrol enrol');
-        if ($this->data['user']->role_id == 'CRSEMGR') {
-            $crsemgr_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',crse.crse_manager)';
+        if ($this->user->role_id == 'CRSEMGR') {
+            $crsemgr_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',crse.crse_manager)';
         }
         $this->db->join('course crse', 'enrol.course_id = crse.course_id ' . $crsemgr_where);
-        if ($this->data['user']->role_id == 'TRAINER') {
-            $trainer_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',cls.classroom_trainer)';
+        if ($this->user->role_id == 'TRAINER') {
+            $trainer_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',cls.classroom_trainer)';
         }
         $this->db->join('course_class cls', 'enrol.class_id = cls.class_id and crse.course_id = cls.course_id ' . $trainer_where);
         $this->db->join('tms_users usrs', 'enrol.user_id = usrs.user_id');
@@ -1633,11 +1641,11 @@ SELECT  {$calc_rows} c.crse_name,
                 $this->db->where('crse.crse_cert_validity >', 0);
             }
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('enrol.sales_executive_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('enrol.sales_executive_id', $this->user->user_id);
         }
-        if ($this->data['user']->role_id == 'COMPACT') {
-            $this->db->where('enrol.company_id', $this->data['user']->company_id);
+        if ($this->user->role_id == 'COMPACT') {
+            $this->db->where('enrol.company_id', $this->user->company_id);
         }
         if (!empty($limit)) {
             if ($limit == $offset) {
@@ -1670,12 +1678,12 @@ SELECT  {$calc_rows} c.crse_name,
         enrol.certificate_coll_on, usrs.tax_code, pers.first_name, pers.last_name,pers.cert_sent_to, crse.crse_cert_validity, 
         cls.class_end_datetime, cls.certi_coll_date, enrol.user_id,cm.comp_email,cm.company_name,cm.company_id');
         $this->db->from('class_enrol enrol');
-        if ($this->data['user']->role_id == 'CRSEMGR') {
-            $crsemgr_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',crse.crse_manager)';
+        if ($this->user->role_id == 'CRSEMGR') {
+            $crsemgr_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',crse.crse_manager)';
         }
         $this->db->join('course crse', 'enrol.course_id = crse.course_id ' . $crsemgr_where);
-        if ($this->data['user']->role_id == 'TRAINER') {
-            $trainer_where = 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',cls.classroom_trainer)';
+        if ($this->user->role_id == 'TRAINER') {
+            $trainer_where = 'AND FIND_IN_SET(' . $this->user->user_id . ',cls.classroom_trainer)';
         }
 
         $this->db->join('course_class cls', 'enrol.class_id = cls.class_id and crse.course_id = cls.course_id ' . $trainer_where);
@@ -1707,11 +1715,11 @@ SELECT  {$calc_rows} c.crse_name,
             $this->db->where('enrol.user_id', $trainee);
         }
 
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('enrol.sales_executive_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('enrol.sales_executive_id', $this->user->user_id);
         }
-        if ($this->data['user']->role_id == 'COMPACT') {
-            $this->db->where('enrol.company_id', $this->data['user']->company_id);
+        if ($this->user->role_id == 'COMPACT') {
+            $this->db->where('enrol.company_id', $this->user->company_id);
         }
         if (!empty($limit)) {
             if ($limit == $offset) {
@@ -1814,12 +1822,12 @@ SELECT  {$calc_rows} c.crse_name,
         } else {
             $this->db->order_by('ei.inv_date', 'DESC');
         }
-        if ($this->data['user']->role_id == 'COMPACT') {
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+        if ($this->user->role_id == 'COMPACT') {
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
             $this->db->join('course c', 'c.tenant_id = ccl.tenant_id AND c.course_id=ccl.course_id '
-                    . 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',c.crse_manager)');
+                    . 'AND FIND_IN_SET(' . $this->user->user_id . ',c.crse_manager)');
         }
         if (!empty($payment_status) && !empty($not_paid_arr)) {
             if ($payment_status == 'PAID') {
@@ -2182,12 +2190,12 @@ SELECT  {$calc_rows} c.crse_name,
         } else {
             $this->db->order_by('ei.invoice_id', 'DESC');
         }
-        if ($this->data['user']->role_id == 'COMPACT') {
-            $this->db->where('ce.company_id', $this->data['user']->company_id);
+        if ($this->user->role_id == 'COMPACT') {
+            $this->db->where('ce.company_id', $this->user->company_id);
         }
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
             $this->db->join('course c', 'c.tenant_id = ccl.tenant_id AND c.course_id=ccl.course_id '
-                    . 'AND FIND_IN_SET(' . $this->data['user']->user_id . ',c.crse_manager)');
+                    . 'AND FIND_IN_SET(' . $this->user->user_id . ',c.crse_manager)');
         }
         $this->db->group_by('ei.invoice_id');
         return $sql = $this->db->get();
@@ -2273,7 +2281,7 @@ SELECT  {$calc_rows} c.crse_name,
         // $this->db->where_not_in("iur.role_id",$role_id);
         $this->db->order_by("pers.first_name");
         $this->db->group_by('ce.sales_executive_id');
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
             $this->db->where("pers.user_id", $this->data['user_id']->user_id);
         }
         $result = $this->db->get();
@@ -2459,8 +2467,8 @@ SELECT  {$calc_rows} c.crse_name,
         $tenant_courses = array();
 
 
-        if ($this->data['user']->role_id == 'CRSEMGR') {
-            $logged_in_user_id = $this->data['user']->user_id;
+        if ($this->user->role_id == 'CRSEMGR') {
+            $logged_in_user_id = $this->user->user_id;
             foreach ($courses as $item) {
                 $crse_manager_arr = explode(',', $item->crse_manager);
                 if (in_array($logged_in_user_id, $crse_manager_arr)) {
@@ -2537,8 +2545,8 @@ SELECT  {$calc_rows} c.crse_name,
         $this->db->join('tms_users_pers tup', 'ce.tenant_id=tup.tenant_id and ce.user_id = tup.user_id');
         $this->db->join('company_master cm', 'ce.company_id=cm.company_id', 'left');
         $this->db->join('internal_user_emp_detail emp', 'emp.user_id=tu.user_id AND emp.tenant_id=tu.tenant_id', 'left');
-        if ($this->data['user']->role_id == 'CRSEMGR') {
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+        if ($this->user->role_id == 'CRSEMGR') {
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
         $this->db->where('ce.tenant_id', $tenant);
         $this->db->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'));
@@ -2602,8 +2610,8 @@ SELECT  {$calc_rows} c.crse_name,
         $this->db->join('company_master cm', 'ce.company_id=cm.company_id', 'left');
         $this->db->join('internal_user_emp_detail emp', 'emp.user_id=tu.user_id AND emp.tenant_id=tu.tenant_id', 'left');
         $this->db->join('tenant_master tm', 'ce.tenant_id=tm.tenant_id', 'left');
-        if ($this->data['user']->role_id == 'CRSEMGR') {
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+        if ($this->user->role_id == 'CRSEMGR') {
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
         $this->db->where('ce.tenant_id', $tenant);
         $this->db->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'));

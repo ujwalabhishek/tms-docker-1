@@ -121,14 +121,14 @@ class Dashboard_Model extends CI_Model {
         $extra_where = '';
         $trainer_where='';
         $crse_where='';
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
             $trainer_where = " AND FIND_IN_SET(".$this->user->user_id.",cls.classroom_trainer)";
-        } elseif ($this->data['user']->role_id == 'CRSEMGR') {
+        } elseif ($this->user->role_id == 'CRSEMGR') {
             $crse_where = " AND FIND_IN_SET(".$this->user->user_id.",crse.crse_manager)";
         } elseif ($this->user->role_id == 'COMPACT') {
             $extra_where .= " AND enrol.company_id='".$this->user->company_id."'";
         } elseif ($this->user->role_id == 'SLEXEC') {
-            $extra_where .= " AND enrol.sales_executive_id='".$this->data['user']->user_id."'";
+            $extra_where .= " AND enrol.sales_executive_id='".$this->user->user_id."'";
         }
         $query = "SELECT DISTINCT inv.invoice_id, inv.inv_type, inv.total_inv_amount, inv.total_inv_amount,
                 inv.company_id, enrol.user_id, enrol.enrolment_type, enrol.enrolled_on, crse.crse_name, 
@@ -153,10 +153,10 @@ class Dashboard_Model extends CI_Model {
      * @return type
      */
     public function pending_class_bk() {
-        if ($this->data['user']->role_id == 'TRAINER') {                                   
+        if ($this->user->role_id == 'TRAINER') {                                   
             $trainer_where = 'AND FIND_IN_SET('.$this->user->user_id.',cls.classroom_trainer)';
         }
-        if ($this->data['user']->role_id == 'CRSEMGR') {                                   
+        if ($this->user->role_id == 'CRSEMGR') {                                   
             $crsemgr_where = 'AND FIND_IN_SET('.$this->user->user_id.',crse.crse_manager)';
         }
         $this->db->distinct();
@@ -177,7 +177,7 @@ class Dashboard_Model extends CI_Model {
             $this->db->where("enrol.company_id", $this->user->company_id);
         }        
         if ($this->user->role_id == 'SLEXEC') {
-            $this->db->where('enrol.sales_executive_id', $this->data['user']->user_id);
+            $this->db->where('enrol.sales_executive_id', $this->user->user_id);
         }        
         $this->db->group_by("inv.invoice_id");
         $this->db->order_by('enrol.enrolled_on', 'DESC');

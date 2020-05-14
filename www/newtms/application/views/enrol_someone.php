@@ -11,9 +11,6 @@ $this->load->helper('common_helper');
 echo $this->load->view('common/refer_left_wrapper');
 
 
-
-echo validation_errors('<div class="error1">', '</div>');
-
 ?>
 
 <script>
@@ -40,7 +37,7 @@ echo validation_errors('<div class="error1">', '</div>');
 
 
 
-<div class="ref_col ref_col_tax_code">  
+<div class="col-md-10">
 
     <h2 class="panel_heading_style">
 
@@ -1610,7 +1607,7 @@ if($course_id!='' && $class_id!=''){
 
 <!----------------modal by ssp start----------------------->
 <?php if (TENANT_ID == 'T02'){$show='display:block';}else{$show='display:none';}?>
-<div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;height: auto;left: 0px !important;">
+<div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;height: 500px;left: 0px !important;">
 <p>
   <h2 class="panel_heading_style">Declaration</h2>
     <!--Section: Contact v.2-->
@@ -1717,7 +1714,7 @@ if($course_id!='' && $class_id!=''){
 
 </p>
 </div>
-<!----------------modal by ssp end-------------------------->
+<!----------------modal by ssp end----------------------->
 
 
 
@@ -1738,7 +1735,7 @@ $(document).ready(function(){
         });
     });
 
-      ///added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
+     //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
      <?php if (TENANT_ID == 'T02'){?>
     $('#declarations').click(function(){
         $status = 1;
@@ -1821,7 +1818,7 @@ $(document).ready(function(){
 
         }
 
-
+        
 
     });
 

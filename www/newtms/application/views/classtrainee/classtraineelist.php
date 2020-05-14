@@ -2,6 +2,7 @@
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
+    $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?v=2"></script>
 <style>
@@ -656,6 +657,189 @@ echo form_hidden('page', $this->uri->segment(2));
         <br/>                       
 </div>
 </div>
+<?php 
+if($tenant_id == 'T20' || $tenant_id == 'T17'){
+?>
+<!--added by shubhranshu for the wablab trainee feedback-->
+
+<div id="ex6" class="modal1_trainee_feedback modal" width="85%">
+    <?php
+    $atr = 'id="traineefeedbackForm" name="validate_form"';
+    echo form_open('class_trainee/trainee_feedback', $atr);
+    ?> 
+    <p>
+    <h2 class="panel_heading_style" style = "width:100%" >Trainee Feedback</h2>  
+      <div id ="trainee_fdbk">
+    <table class="table table-striped">
+        <?php
+        $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
+        ?>
+        <tbody>
+            
+            <tr>
+                <td colspan="2" class="td_heading"><strong><u>A. <?php echo $trainee_feedback['FDBCK01']['category_name'] ?></u></strong> </td>
+            </tr>
+            <tr>     
+                <td colspan="2">1.<?php echo $trainee_feedback['Q01']['category_name']; ?>
+                    <?php
+                    $atr = 'id="Q01" class="feed"';
+                    echo form_dropdown('Q01', $options, '', $atr);
+                    ?>
+                </td>
+            </tr>
+            <tr>     
+                <td colspan="2">2.<?php echo $trainee_feedback['Q02']['category_name']; ?>
+                    <?php
+                    $atr = 'id="Q02" class="feed"';
+                    echo form_dropdown('Q02', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">3.<?php echo $trainee_feedback['Q03']['category_name']; ?>
+                    <?php
+                    $atr = 'id="Q03" class="feed"';
+                    echo form_dropdown('Q03', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">4.<?php echo $trainee_feedback['Q04']['category_name']; ?>
+                    <?php
+                    $atr = 'id="Q04" class="feed"';
+                    echo form_dropdown('Q04', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            
+            <tr>
+                <td colspan="2" class="td_heading"><strong><u>B. <?php echo $trainee_feedback['FDBCK02']['category_name'] ?></u></strong> </td>
+            </tr>
+            <tr>
+                <td colspan="2">5.<?php echo $trainee_feedback['Q05']['category_name']; ?>
+                    <?php
+                    $atr = 'id="Q05" class="feed"';
+                    echo form_dropdown('Q05', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">6.<?php echo $trainee_feedback['Q06']['category_name']; ?>
+                    <?php
+                    $atr = 'id="Q06" class="feed"';
+                    echo form_dropdown('Q06', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">7.<?php echo $trainee_feedback['Q07']['category_name']; ?>:
+                    <?php
+                    $atr = 'id="Q07" class="feed"';
+                    echo form_dropdown('Q07', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">8.<?php echo $trainee_feedback['Q08']['category_name']; ?>:
+                    <?php
+                    $atr = 'id="Q08" class="feed"';
+                    echo form_dropdown('Q08', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+           
+           
+            <tr>
+                <td colspan="2" class="td_heading"><strong><u>C. <?php echo $trainee_feedback['FDBCK03']['category_name'] ?></u></strong> </td>
+            </tr>
+            <tr>
+                <td colspan="2">9.<?php echo $trainee_feedback['Q09']['category_name']; ?>:
+                    <?php
+                    $atr = 'id="Q09" class="feed"';
+                    echo form_dropdown('Q09', $options, '', $atr);
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">10.<?php echo $trainee_feedback['Q10']['category_name']; ?>:
+                    <?php
+                    $atr = 'id="Q10" class="feed"';
+                    echo form_dropdown('Q10', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><strong>Your satisfaction rating of the training program:</strong>
+                    <?php 
+//                     $atr = 'id="rating"';
+//                    echo form_dropdown('rating', $options,'',$atr); ?>
+                    <input type='text' name="rating" id='rating'  readonly/>
+            </tr>
+            <tr>
+                <td class="td_heading">Other comments that you feel will help improve the course:</td>
+                <td>
+                    <textarea maxlength="500" rows="5" cols="100" name="remarks" id="remarks" class="upper_case"></textarea>                                   
+                                     
+                    <span style="float:right;">
+                        <input type="hidden" id ="trainee_class_id" name="trainee_class_id" value=""/>
+                        <input type="hidden" id ="trainee_course_id" name="trainee_course_id" value=""/>
+                        <input type="hidden" id ="trainee_user_id" name="trainee_user_id" value=""/>
+                        <input type="hidden" id ="action" name="action" value="save_trainee"/>
+                        <button class="btn btn-primary" type="submit" id="save">Save</button>
+                        <a href="#" rel="modal:close">
+                            <button class="btn btn-primary" type="button">Close</button>
+                        </a>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <?php 
+echo form_hidden('query_string', $export_url);
+echo form_hidden('page', $this->uri->segment(2));
+?>
+<?php form_close(); ?>
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>-->
+ 
+<script>
+    $('.training_update').click(function(){
+        
+   
+            if($('.feed').val() == '')
+            {
+               
+                $('#rating').val("");
+            }
+     });
+// we used jQuery 'keyup' to trigger the computation as the user type
+$('.feed').change(function () {
+ 
+    // initialize the sum (total price) to zero
+    var sum = 0;
+   
+     
+    // we use jQuery each() to loop through all the textbox with 'price' class
+    // and compute the sum for each loop
+    var i=0;
+        $('.feed').each(function() {
+        sum += Number($(this).val());
+        i++;
+    });
+     var average= Math.round(sum/i);
+     
+    // set the computed value to 'totalPrice' textbox
+    
+    $('#rating').val(average);
+     
+});
+</script>
+</p>
+</div>
+
+
+<?php }else{?>
+
 <div id="ex6" class="modal1_trainee_feedback modal" width="85%">
     <?php
     $atr = 'id="traineefeedbackForm" name="validate_form"';
@@ -873,4 +1057,6 @@ $(document).ready(function() {
 </script>
 </p>
 </div>
+
+<?php }?>
 </div>

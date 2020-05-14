@@ -666,7 +666,7 @@ class Course_Public_Model extends CI_Model {
 
         $this->db->select('crs.crse_name, crs.crse_manager,c_cls.class_id, c_cls.course_id, c_cls.total_seats, c_cls.classroom_trainer,c_cls.class_name, c_cls.class_start_datetime,c_cls.class_end_datetime, c_cls.description,c_cls.classroom_venue_oth,
 
-                c_cls.total_classroom_duration, c_cls.total_lab_duration,c_cls.assmnt_duration,c_cls.class_fees,c_cls.classroom_location, c_cls.lab_location ,c_cls.class_language,c_cls.class_pymnt_enrol,c_cls.class_status,c_cls.training_aide');
+                c_cls.total_classroom_duration, c_cls.total_lab_duration,c_cls.assmnt_duration,c_cls.class_fees,c_cls.classroom_location, c_cls.lab_location,c_cls.lab_venue_oth ,c_cls.class_language,c_cls.class_pymnt_enrol,c_cls.class_status,c_cls.training_aide');
 
         $this->db->from('course_class c_cls');
 
@@ -5762,6 +5762,146 @@ class Course_Public_Model extends CI_Model {
 
          return $this->db->get()->result();
         
+    }
+    
+    public function get_all_course_class_list($tenant_id,$limit = NULL, $offset = NULL, $sort_by = NULL, $sort_order = NULL)
+    {
+
+        $date = date('Y-m-d h:i A');
+        $time = date("H:i:s", strtotime($date));
+        $today_date = date('Y-m-d').' '.$time; 
+        
+        if ($offset < 0 || empty($tenant_id)) {
+
+            return;
+        }       
+
+        $this->db->select('crs.crse_name, crs.crse_manager,c_cls.class_id, c_cls.course_id, c_cls.total_seats, c_cls.classroom_trainer,c_cls.class_name, c_cls.class_start_datetime,c_cls.class_end_datetime, c_cls.description,c_cls.classroom_venue_oth,
+
+                c_cls.total_classroom_duration, c_cls.total_lab_duration,c_cls.assmnt_duration,c_cls.class_fees,c_cls.classroom_location, c_cls.lab_location ,c_cls.class_language,c_cls.class_pymnt_enrol,c_cls.class_status,c_cls.training_aide');
+
+        $this->db->from('course_class c_cls');
+
+        $this->db->join('course crs', 'crs.course_id = c_cls.course_id and c_cls.tenant_id=crs.tenant_id'); 
+
+        $this->db->where('crs.crse_status', 'ACTIVE');
+
+        $this->db->where('c_cls.class_status !=', 'INACTIV');
+
+        $this->db->where('crs.display_on_portal', '1');
+
+        $this->db->where('c_cls.display_class_public', '1');
+
+        $this->db->where('c_cls.tenant_id', $tenant_id);
+
+        $this->db->where('c_cls.class_start_datetime >= ', $today_date);
+
+        if ($sort_by) {
+
+            $this->db->order_by($sort_by, $sort_order);
+
+        } else {
+
+            $this->db->order_by('c_cls.class_start_datetime', 'ASC');
+
+        }
+        
+        if ($limit == $offset) {
+
+            $this->db->limit($offset);
+
+        } else if ($limit > 0) {
+
+            $limitvalue = $offset - $limit;
+
+            $this->db->limit($limit, $limitvalue);
+
+        }
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+
+    }
+    
+    /* skm end */
+    
+    /* skm start : get count of all course and class list */
+    public function get_all_course_class_list_count($tenant_id,$limit = NULL, $offset = NULL, $sort_by = NULL, $sort_order = NULL)
+    {
+
+        $date = date('Y-m-d h:i A');
+        $time = date("H:i:s", strtotime($date));
+        $today_date = date('Y-m-d').' '.$time; 
+        
+        if ($offset < 0 || empty($tenant_id)) {
+
+            return;
+        }       
+
+        $this->db->select('crs.crse_name, crs.crse_manager,c_cls.class_id, c_cls.course_id, c_cls.total_seats, c_cls.classroom_trainer,c_cls.class_name, c_cls.class_start_datetime,c_cls.class_end_datetime, c_cls.description,c_cls.classroom_venue_oth,
+
+                c_cls.total_classroom_duration, c_cls.total_lab_duration,c_cls.assmnt_duration,c_cls.class_fees,c_cls.classroom_location, c_cls.lab_location ,c_cls.class_language,c_cls.class_pymnt_enrol,c_cls.class_status,c_cls.training_aide');
+
+        $this->db->from('course_class c_cls');
+
+        $this->db->join('course crs', 'crs.course_id = c_cls.course_id and c_cls.tenant_id=crs.tenant_id'); 
+
+        $this->db->where('crs.crse_status', 'ACTIVE');
+
+        $this->db->where('c_cls.class_status !=', 'INACTIV');
+
+        $this->db->where('crs.display_on_portal', '1');
+
+        $this->db->where('c_cls.display_class_public', '1');
+
+        $this->db->where('c_cls.tenant_id', $tenant_id);
+
+        $this->db->where('c_cls.class_start_datetime >= ', $today_date);
+
+        if ($sort_by) {
+
+            $this->db->order_by($sort_by, $sort_order);
+
+        } else {
+
+            $this->db->order_by('c_cls.class_start_datetime', 'ASC');
+
+        }
+
+        $query = $this->db->get();
+
+        return $query->num_rows();
+
+    }
+    
+    ///////////added by shubhranshu for new requirement for elearning
+    public function check_taxcode_exists_public($taxcode, $course_id, $class_id) {
+        $tenant_id = TENANT_ID;
+        $this->db->select('tu.user_id,tu.tax_code,tup.first_name');
+
+        $this->db->from('tms_users tu');
+        $this->db->join('tms_users_pers tup','tup.user_id=tu.user_id and tup.tenant_id=tu.tenant_id');
+        $this->db->where('tu.tax_code', $taxcode);
+
+        $this->db->where('tu.tenant_id', $tenant_id);
+
+        
+        $sql = $this->db->get();
+
+        $data = $sql->row();
+        $res = $this->nric_exits_cc($taxcode, $course_id, $class_id);
+        if ($res == 1) {
+            echo 1; // already enrolled
+        } else {
+            if ($sql->num_rows() > 0) {
+                echo json_encode($data);
+            } else {
+                echo 0;  
+            }
+        }
+        
+       exit();
     }
 
 }

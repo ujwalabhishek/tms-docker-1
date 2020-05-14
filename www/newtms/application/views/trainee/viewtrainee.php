@@ -719,8 +719,23 @@ endif;
                                 }
                                 $check_competent=$this->classtraineemodel->check_competent($item->tenant_id,$item->course_id,$item->class_id,$item->user_id);
                               
-                                if($item->training_score=='C'){
-                                $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/' . $item->class_id . '/' . $user_id . '">LOC</a>&nbsp;&nbsp;&nbsp;';
+                                if($check_competent > 0){
+                                     $wsq_courses_array = $this->config->item('wsq_courses'); // wsq courses modified by shubhranshu
+                                    
+                                    $tenant_array = array('T02','T12'); // xp and xp2 
+                                    $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/'. $item->class_id . '/' . $item->user_id . '">LOC</a><br/>';
+                                    //////added by shubhranshu for wablab TCS for all courses
+                                    $tenant_id = $trainee[userdetails]['tenant_id'];
+                                   
+                                   if(($tenant_id == 'T20') || ($tenant_id == 'T17')){
+                                        $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$item->course_id.'/'. $item->class_id  . '/' . $item->user_id . '">TCS</a><br/>';
+
+                                    }else{
+                                        if (in_array($item->course_id, $wsq_courses_array) && in_array($tenant_id, $tenant_array))
+                                        { 
+                                           $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$item->course_id.'/'. $item->class_id . '/' . $item->user_id . '">TCS</a><br/>'; 
+                                        }
+                                    }
                                 }
                             } else {
                             if ($item->payment_status != 'PYNOTREQD' &&

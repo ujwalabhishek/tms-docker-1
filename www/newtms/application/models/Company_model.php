@@ -5,11 +5,14 @@
  */
 
 class Company_Model extends CI_Model {
+    
+    private $user;
 
     public function __construct() {
         parent::__construct();
         $this->load->library('bcrypt');
         $this->load->helper('common');
+         $this->user = $this->session->userdata('userDetails');
     }
 
     /*
@@ -426,8 +429,8 @@ class Company_Model extends CI_Model {
         $this->db->from('course c');
         $this->db->join('company_discount cd', 'cd.Course_ID = c.course_id and cd.Tenant_ID = c.tenant_id and cd.Company_ID="' . $company_id . '"', 'LEFT');
         $this->db->where('c.tenant_id', $tenant_id);
-        if ($this->data['user']->role_id == 'CRSEMGR' && empty($type)) {
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+        if ($this->user->role_id == 'CRSEMGR' && empty($type)) {
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
         $this->db->where('c.crse_status', 'ACTIVE');
         //code modified on 07-04-2015
@@ -1070,8 +1073,8 @@ class Company_Model extends CI_Model {
         if ($active_enrollment == 1) {
             $this->db->join('class_enrol ce', 'ce.company_id=cm.company_id');
         }
-        if ($this->data['user']->company_id != '') {
-            $this->db->where('cm.company_id', $this->data['user']->company_id);
+        if ($this->user->company_id != '') {
+            $this->db->where('cm.company_id', $this->user->company_id);
         }
         $this->db->group_by('tcu.company_id');
         $this->db->order_by("cm.company_name"); 
@@ -1252,7 +1255,7 @@ class Company_Model extends CI_Model {
         $disc_amt = $this->input->post('disc_amt');
         $data=array();
         $this->db->trans_start();
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
             $delete_courses = array();
             foreach($disc_perc as $k=>$row){
                 if(!empty($row) || !empty($disc_amt[$k])){

@@ -25,7 +25,8 @@ class Class_Trainee extends CI_Controller {
         $this->load->model('trainee_model', 'traineemodel'); 
         $this->load->model('activity_log_model', 'activitylog');
         $this->user = $this->session->userdata('userDetails');
-        $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;        
+        $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;  
+ 
     }
 
     /*
@@ -199,7 +200,7 @@ class Class_Trainee extends CI_Controller {
                         $check_attendance=$this->classtraineemodel->check_attendance_row($tenant_id,$row['course_id'],$row['class_id']);
                          $check_competent=$this->classtraineemodel->check_competent($tenant_id,$row['course_id'],$row['class_id'],$row['user_id']);
                         $linkStr = '';                    
-                        if ($this->data['user']->role_id == 'ADMN' || $this->data['user']->role_id == 'CRSEMGR') 
+                        if ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') 
                         {
                              $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
                             if ($status == 'Completed') 
@@ -219,7 +220,7 @@ class Class_Trainee extends CI_Controller {
                             } 
 
                         }    
-                        if ($row['payment_status'] != 'PYNOTREQD' && $this->data['user']->role_id == 'ADMN' || $row['payment_status'] != 'PYNOTREQD' && $this->data['user']->role_id == 'CRSEMGR') 
+                        if ($row['payment_status'] != 'PYNOTREQD' && $this->user->role_id == 'ADMN' || $row['payment_status'] != 'PYNOTREQD' && $this->user->role_id == 'CRSEMGR') 
                         {
                             $linkStr .= '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
 
@@ -234,9 +235,15 @@ class Class_Trainee extends CI_Controller {
                             $tenant_array = array('T02','T12'); // xp and xp2 
                             $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/'. $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
 
-                            if (in_array($row['course_id'], $wsq_courses_array) && in_array($tenant_id, $tenant_array))
-                            { 
-                               $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$row['course_id'].'/'. $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>'; 
+                            //////added by shubhranshu for wablab TCS for all courses
+                            if($tenant_id == 'T20' || $tenant_id == 'T17'){
+                                $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$row['course_id'].'/'. $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>';
+
+                            }else{
+                                if (in_array($row['course_id'], $wsq_courses_array) && in_array($tenant_id, $tenant_array))
+                                { 
+                                   $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$row['course_id'].'/'. $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>'; 
+                                }
                             }
 
     //                        $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/' . $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
@@ -246,7 +253,7 @@ class Class_Trainee extends CI_Controller {
                     else 
                     {
                         if ($row['payment_status'] != 'PYNOTREQD' &&
-                                $this->data['user']->role_id == 'ADMN') 
+                                $this->user->role_id == 'ADMN') 
                         {
                             $linkStr = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
 
@@ -464,7 +471,7 @@ class Class_Trainee extends CI_Controller {
                     $check_attendance=$this->classtraineemodel->check_attendance_row($tenant_id,$row['course_id'],$row['class_id']);
                      $check_competent=$this->classtraineemodel->check_competent($tenant_id,$row['course_id'],$row['class_id'],$row['user_id']);
                     $linkStr = '';                    
-                    if ($this->data['user']->role_id == 'ADMN' || $this->data['user']->role_id == 'CRSEMGR') 
+                    if ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') 
                     {
                          $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
                         if ($status == 'Completed') 
@@ -485,7 +492,7 @@ class Class_Trainee extends CI_Controller {
                        
                     }    
                     if ($row['payment_status'] != 'PYNOTREQD' &&
-                            ($this->data['user']->role_id == 'ADMN' || $this->data['user']->role_id == 'CRSEMGR')
+                            ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR')
                     ) 
                     {
                         $linkStr .= '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
@@ -504,7 +511,7 @@ class Class_Trainee extends CI_Controller {
                 else 
                 {
                     if ($row['payment_status'] != 'PYNOTREQD' &&
-                            $this->data['user']->role_id == 'ADMN') 
+                            $this->user->role_id == 'ADMN') 
                     {
                         $linkStr = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
 
@@ -780,21 +787,27 @@ if (!empty($tenant_details->tenant_contact_num)) {
                      $li = "Report at center at 8:30 AM to register for class";
                 }
                 
-                if($tenant_details->tenant_id == 'T02')
+                 if($tenant_details->tenant_id == 'T02')
                 {
-                    $li2 = "In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.";
+                    $li2 = "<li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>";
                 } else {
                     $li2 = '';
                 } 
-            /* end */
+                ///// added by shubhranshu for wablab points
+                if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
+                    $li_first = "<li>Your NRIC, work permit or will be photocopied on the class date</li>";
+                }else{
+                    $li_first ="<li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>";
+                }
               $message3 = '
              <ol style="font-size:13px;color:#4f4b4b">
-                            <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
-                           
+                          '.$li_first.'
+                            
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
-                            <li>'.$li2.'</li>
+                            '.$li2.'
                         </ol>';
+            
             
             /* skm end */
             
@@ -880,10 +893,18 @@ if (!empty($tenant_details->tenant_contact_num)) {
         /* end */
         if($tenant_details->tenant_id == 'T02')
         {
-            $li2 = "In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.";
+            $li2 = "<li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>";
         } else {
             $li2 = '';
         } 
+        
+        ///// added by shubhranshu for wablab points
+        if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
+            $li_first = "Your NRIC, work permit or will be photocopied on the class date";
+        }else{
+            $li_first ="All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.";
+        }
+        
         
         $data = '<br><br>
             <table style="font-size:15px">
@@ -905,10 +926,10 @@ if (!empty($tenant_details->tenant_contact_num)) {
                             <br><br>
                         <strong style="font-size:13px">Remark *: </strong>
                         <ol style="font-size:13px;color:#4f4b4b">
-                            <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
+                            <li>'.$li_first.'</li>
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
-                            <li>'.$li2.'</li>
+                            '.$li2.'
                         </ol>
                             
                     </td>
@@ -1230,7 +1251,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         if (!empty($class)) {
             $data['salesexec'] = $this->class->get_class_salesexec($tenant_id, $course, $class_detail->sales_executive);
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
             $data['salesexec_check'] = 1;
         }
         
@@ -1632,8 +1653,8 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $tenant_id = $this->tenant_id;
         $course_id = $this->input->post('course');
         $class_id = $this->input->post('class');
-        $class_details = $this->class->get_class_details($tenant_id, $class_id);
-        $result = $this->class->get_class_salesexec($tenant_id, $course_id, $class_details->sales_executive);
+        //$class_details = $this->class->get_class_details($tenant_id, $class_id);
+        $result = $this->class->get_class_salesexec($tenant_id, $course_id);
         echo json_encode($result);
         exit();
     }
@@ -3883,7 +3904,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $role = $this->internal_user_model->check_sales_exec1($loggedin_user_id);
             if($role->role_id!=="ADMN")
             {
-                if ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id=='CRSEMGR' || $this->data['user']->role_id=='TRAINER') 
+                if ($this->user->role_id == 'SLEXEC' || $this->user->role_id=='CRSEMGR' || $this->user->role_id=='TRAINER') 
                 {
                     $data['salesexec_check'] = 1;
                 }
@@ -3952,8 +3973,9 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     $li = "Report at center at 8:30 AM to register for class";
                 }
                 /* end */
-                
-                $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
+                /////added by shubhranshu for wablab trainee feedback
+                if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
+                    $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
                      for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
                     <strong>Class start date:</strong>
                     ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
@@ -3970,11 +3992,35 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 <br>
                     <strong>Remark *: </strong>
                         <ol>
-                            <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
+                           
                             <li>Your NRIC, work permit or will be photocopied on the class date</li>
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
                         </ol>';
+                }else{
+                        $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
+                         for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
+                        <strong>Class start date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
+                        <br><br>
+                         <strong>Class end date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
+
+                    <br>
+                    <br>
+                        <strong>Location:</strong>
+                        ' . $ClassLoc . '<br><br>
+                        <strong>Contact Details: </strong>
+                        ' . $contact_details . ' <br>
+                    <br>
+                        <strong>Remark *: </strong>
+                            <ol>
+                                <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
+                                <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                                <li>Trim finger nails and remove nail polish</li>
+                                <li>'.$li.'</li>
+                            </ol>';
+                }
                 $res['data'] = $data;
             } else {
                 $invoice = $this->classtraineemodel->get_invoice_for_class_trainee($class, $user_id);
@@ -4085,27 +4131,52 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 if ($company[0] == 'T') {
                     $company_details->company_name = $tenant_details->tenant_name;
                 }
-                $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
-                $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
-                    <strong>Class start date:</strong>
-                    ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
-                    <br><br>
-                     <strong>Class end date:</strong>
-                    ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
-                    <br><br>
-                     
-                    <strong>Location: </strong>
-                    ' . $ClassLoc . '<br><br>
-                    <strong>Contact Details: </strong>
-                    ' . $contact_details . ' <br>
-                <br>
-                    <strong>Remark *: </strong>
-                        <ol>
-                            <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
-                            <li>Your NRIC, work permit or will be photocopied on the class date</li>
-                            <li>Trim finger nails and remove nail polish</li>
-                            <li>'.$li.'</li>
-                        </ol>';
+                ///// added by shubhranshu for wablab points
+                if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
+                    $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
+                    $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
+                        <strong>Class start date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
+                        <br><br>
+                         <strong>Class end date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
+                        <br><br>
+
+                        <strong>Location: </strong>
+                        ' . $ClassLoc . '<br><br>
+                        <strong>Contact Details: </strong>
+                        ' . $contact_details . ' <br>
+                    <br>
+                        <strong>Remark *: </strong>
+                            <ol>
+                              
+                                <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                                <li>Trim finger nails and remove nail polish</li>
+                                <li>'.$li.'</li>
+                            </ol>';
+                }else{
+                   $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
+                    $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
+                        <strong>Class start date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
+                        <br><br>
+                         <strong>Class end date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
+                        <br><br>
+
+                        <strong>Location: </strong>
+                        ' . $ClassLoc . '<br><br>
+                        <strong>Contact Details: </strong>
+                        ' . $contact_details . ' <br>
+                    <br>
+                        <strong>Remark *: </strong>
+                            <ol>
+                                <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
+                                <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                                <li>Trim finger nails and remove nail polish</li>
+                                <li>'.$li.'</li>
+                            </ol>';
+                }
             }
             $res['data'] = $data;
             $res['trainee_id'] = $trainee_id;
@@ -4132,6 +4203,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      *  This method gets the invoice drop down values based on the enrollment type selected.
      */
     public function get_select_box() {
+        $data['sideMenuData'] = fetch_non_main_page_content();
         ini_set('memory_limit','256M');// added by shubhranshu since 500 error due to huge data
         $type = $this->input->post('type');
         $tenant_id = $this->tenant_id;
