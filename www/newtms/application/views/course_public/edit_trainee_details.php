@@ -201,6 +201,7 @@ if (!empty($tax_error)) {
                                         $attr = 'id="NRIC_OTHER" disabled="true" style="background: #ebebe4;"';
                                         echo form_dropdown('NRIC_OTHER', $nric_other_options, $trainee[userdetails]['other_identi_type'], $attr);
                                         ?>
+                                        <input type='hidden' name='NRIC_OTHER' value="<?php echo $trainee[userdetails]['other_identi_type'];?>">
                                         <span id="NRIC_OTHER_err"></span>
                                     </SPAN>
                                     <SPAN id="SGP_ID" style="display:none;">
