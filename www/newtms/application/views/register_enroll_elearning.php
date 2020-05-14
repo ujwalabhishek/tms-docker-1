@@ -158,7 +158,7 @@ Section: Contact v.2
               //$('#trainee_form2').submit();
         });
         $('.yescls').click(function(){
-             $('#modal_nric_found').hide();
+             $('#exampleModalCenter').modal('hide');
              $('#trainee_form2').submit();
         });
        
