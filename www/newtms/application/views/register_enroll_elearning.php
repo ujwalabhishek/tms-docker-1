@@ -112,7 +112,7 @@ Section: Contact v.2
 
 <!----------------modal by ssp end----------------------->
 
-<script src="<?php echo base_url(); ?>assets/public_js/validation_register_enroll.js?v=3.1" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/public_js/validation_register_enroll.js?v=3.2" type="text/javascript"></script>
 <script>
 
 

@@ -1705,14 +1705,14 @@ $('.nric_submit').click(function(){
                     success: function(res)
                     {
                          $('.yescls').show();
-                         $('.nocls').html('No');
+                         $('.nocls').html('Cancel');
                         if(res == 0) // if trainee exists but his status is not active
                         {
-                           document.trainee_form2.action = baseurl+"course_public/register_enroll/"+$course_id+"/"+$class_id;
+                           document.trainee_form2.action = baseurl+"course_public/register_trainee/";
                            $('#trainee_form2').submit();
                         }else if(res == 1){
                             var res = JSON.parse(res);
-                            $('#modal_nric_found').show();
+                            $('#modal_nric_found').click();
                             $('.msg').html("Oops! You are Already Enrolled for this class!");
                             $('.suremsg').html("Kindly Choose Another Class To Enrol!");
                             $('.yescls').hide();
@@ -1722,8 +1722,8 @@ $('.nric_submit').click(function(){
 
                         }else{
                             var res = JSON.parse(res);
-                            $('#modal_nric_found').show();
-                            $('.msg').html("This NRIC("+res.tax_code+") is belongs to "+res.first_name);
+                            $('#modal_nric_found').click();
+                            $('.msg').html("Please Confirm The "+res.first_name+" & ("+res.tax_code+") Are Accurate & Belongs to you.");
                             $('.suremsg').html("Are you Sure! You want to Continue?");
                             $('#user_id_popup').val(res.user_id);
                         }
