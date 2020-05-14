@@ -162,7 +162,10 @@ Section: Contact v.2
              $('#trainee_form2').submit();
         });
        
- 
+        $('#exampleModalCenter').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
  });
  
  function blockSpecialCharacters(e) {

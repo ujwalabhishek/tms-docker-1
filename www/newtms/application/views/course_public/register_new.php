@@ -676,7 +676,7 @@ Section: Contact v.2
                 },
                 success: function(data) {
                    if(data !='1'){
-                      //$('#exampleModalCenter').modal('show'); 
+                      $('#exampleModalCenter').modal('show'); 
                   }
                 }
             });
