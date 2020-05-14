@@ -34,8 +34,9 @@ echo $this->load->view('common/refer_left_wrapper');
 
                 ?>
             <div class="form-group text-center">
-              <label class="control-label col-sm-2" for="email">Please Enter NRIC:<span class="required">*</span></label>
-              <div class="col-sm-10">
+                <div class="col-sm-2"></div>
+                <label class="control-label col-sm-2" for="email">Please Enter NRIC:<span class="required">*</span></label>
+                <div class="col-sm-4">
                 <?php 
 
                     $taxcode_nric = array(
@@ -53,13 +54,14 @@ echo $this->load->view('common/refer_left_wrapper');
 
                     echo form_input($taxcode_nric);
                 ?>
-              </div>
+                </div>
+                <div class="col-sm-2"></div>
             </div>
               <div><span id="error" style="color: Red; display: none"></span><span id="nric_found"> </span><span id="taxcode_nric_err"></span></div>
             
             <div class="form-group">        
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button type="button" class="btn btn-default" id='declarations'>Submit & Continue</button>
+                  <button type="button" class="btn btn-primary" id='declarations'>Submit & Continue</button>
                 </div>
             </div>
         </form>
