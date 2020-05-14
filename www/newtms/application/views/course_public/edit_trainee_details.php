@@ -606,37 +606,8 @@ endif;
             </div>
         </div>
     </div>
-    <div class="modal1_055" id="ex11" style="display:none;">         
-        <h2 class="panel_heading_style">Warning</h2>   
-        <div  style="margin-top:7%">
-            <p style="text-align: center;">
-                We have found a trainee with similar NRIC/ FIN in our database.
-                This user is not currently linked with your Training Organisation/ Institute.
-                Do you want to link this user?
-            </p>
-            <div class="popup_cancel9">
-                <div rel="modal:close">
-                    <a href="#" rel="modal:close"><button class="btn btn-primary trainee_deatils_yes" type="button">Yes</button></a>
-                    <a href="#" rel="modal:close"><button class="btn btn-primary trainee_deatils_no" type="button">NO</button></a>
-                </div>
-            </div>
-        </div>
-    </div>
-        <!---------- /*  added by shubhranshu for client requirement on 21/03/2019 */-->
-<div class="modal1_055" id="ex22">         
-    <h2 class="panel_heading_style">Warning</h2>   
-    <div  style="margin-top:7%">
-        <p style="text-align: center;" >
-            The trainees whom you are about to register is part of the restricted list. Please acknowledge to continue !!!
-        </p>
-        <div class="popup_cancel9">
-            <span rel="modal:close">
-                <a href="#" rel="modal:close"><button class="btn btn-primary trainee_deatils_yes" type="button">Yes, I understand.</button></a>
-            </span>
-            
-        </div>
-    </div>
-</div>
+
+     
 
 <!--//////////////////////////////////////////////////////-->
     <script type="text/javascript">
