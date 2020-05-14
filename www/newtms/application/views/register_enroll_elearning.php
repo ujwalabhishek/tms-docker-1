@@ -78,6 +78,47 @@ echo $this->load->view('common/refer_left_wrapper_public');
      
       </div>
     </div>
+    
+    
+    <!-- Modal -->
+<div class="modal fade" style='top:100px !important' id="modal_nric_found" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <h2 class="panel_heading_style">NRIC DETAILS</h2>
+
+            <form action='course_public/confirm_trainee_details' method='post'>
+            Section heading
+            <h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>
+            Section description
+            <p class="text-center alert-success msg" style='padding: 10px;'></p>
+            <br>
+            <h5 class="text-center suremsg">Are you Sure! You want to Continue?</h5>
+            <br>
+
+            <div class="form-group">        
+                <div class="col-sm-12 text-center">
+                  <button type='button' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<a href='#'class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</a>
+                </div>
+            </div>
+            <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
+            <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
+            <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
+            </form>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!--<div class="modal" id="modal_nric_found" style="display:hidden;margin:auto auto;height: 274px;left: 0px !important;">
 
@@ -191,42 +232,3 @@ Section: Contact v.2
     </script>
     
 
-<!-- Modal -->
-<div class="modal fade" style='top:100px !important' id="modal_nric_found" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-         <h2 class="panel_heading_style">NRIC DETAILS</h2>
-
-            <form action='course_public/confirm_trainee_details' method='post'>
-            Section heading
-            <h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>
-            Section description
-            <p class="text-center alert-success msg" style='padding: 10px;'></p>
-            <br>
-            <h5 class="text-center suremsg">Are you Sure! You want to Continue?</h5>
-            <br>
-
-            <div class="form-group">        
-                <div class="col-sm-12 text-center">
-                  <button type='button' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<a href='#'class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</a>
-                </div>
-            </div>
-            <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
-            <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
-            <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
-            </form>  
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
