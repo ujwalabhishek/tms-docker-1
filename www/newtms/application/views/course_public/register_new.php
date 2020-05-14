@@ -141,7 +141,7 @@ echo $this->load->view('common/refer_left_wrapper_public');
                                         <?php
                                         $nric_other_value = $this->input->post('NRIC_OTHER');
                                         $nric_other = $meta_result[Meta_Values::NRIC_OTHER];
-                                        $nric_other[2] = '';
+                                        //$nric_other[2] = array();
                                         $nric_other_options[''] = 'Select';
                                         foreach ($nric_other as $item):
                                             $nric_other_options[$item['parameter_id']] = $item['category_name'];
