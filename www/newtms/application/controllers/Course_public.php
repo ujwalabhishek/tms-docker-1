@@ -3883,12 +3883,14 @@ class course_public extends CI_Controller {
     }
     
     public function register_trainee($course_id = null, $class_id = null) {
+        $user_id=$this->input->post('user_id_popup');
+        if($user_id == ''){
+            redirect('course_public/class_member_check_elearning');
+        }
         $SGPTIME = date('H');
         $SGPTIME =9;
         if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
             $data['page_title'] = 'Trainee registration';
-
-
 
             $data['main_content'] = 'course_public/register_new';
 
