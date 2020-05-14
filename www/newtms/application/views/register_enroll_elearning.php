@@ -15,8 +15,8 @@ echo $this->load->view('common/refer_left_wrapper');
 
 </script>
 <style>
-    .panel-style{
-        background:#446cb3;
+    .panel-primary>.panel-heading {
+        background-color:#446cb3 !important;
     }
 </style>
 
