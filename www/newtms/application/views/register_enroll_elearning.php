@@ -25,7 +25,7 @@ echo $this->load->view('common/refer_left_wrapper_public');
 </style>
 
 
-<div class="col-md-10" style='font-size: 13px;'>
+<div class="col-md-10 bodymain" style='font-size: 13px;'>
     <h2 class="panel_heading_style"><span aria-hidden="true" class="glyphicon glyphicon-user"></span> Trainee Registration / Update:</h2>
     <?php
     if ($this->session->flashdata('error')) {
