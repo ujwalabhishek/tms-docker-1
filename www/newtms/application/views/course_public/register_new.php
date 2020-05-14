@@ -691,14 +691,14 @@ Section: Contact v.2
     <div class="modal-content">
         
       <div class="modal-header">
-        <h5 class="modal-title panel_heading_style" id="exampleModalCenterTitle">NRIC DETAILS</h5>
+        <h5 class="modal-title panel_heading_style" id="exampleModalCenterTitle">Declaration</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
                
-         <h2 class="panel_heading_style">Declaration</h2>
+        
     <!--Section: Contact v.2-->
 <section class="mb-4">
 
@@ -801,10 +801,10 @@ Section: Contact v.2
 </section>
             
       </div>
-      <div class="modal-footer">
+<!--      <div class="modal-footer">
         <button type="button" class="btn btn-lg btn-primary yescls" data-dismiss="modal">Continue</button>
         <button type="button" class="btn btn-lg btn-danger nocls">Save changes</button>
-      </div>
+      </div>-->
    
     </div>
   </div>
