@@ -15,7 +15,7 @@
         <script> var baseurl = "<?php print base_url(); ?>";
       </script>
       <script src="<?php echo base_url(); ?>assets/public_js/date_time.js" type="text/javascript" charset="utf-8"></script>
-      <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
       <link href="<?php echo base_url(); ?>assets/public_css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
       <link href="<?php echo base_url(); ?>assets/public_css/style.css" rel="stylesheet" type="text/css">
