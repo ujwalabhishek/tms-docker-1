@@ -21,7 +21,7 @@
       <link href="<?php echo base_url(); ?>assets/public_css/style.css" rel="stylesheet" type="text/css">
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
       <link href="<?php echo base_url(); ?>assets/public_css/glyphicons.css" rel="stylesheet" type="text/css">
-
+<link href="<?php echo base_url(); ?>assets/public_css/autocomplete.css" rel="stylesheet" type="text/css"  />
 <link href="<?php echo base_url(); ?>assets/public_css/student.css"  rel="stylesheet" type="text/css" media="screen" />
 
         <style>
