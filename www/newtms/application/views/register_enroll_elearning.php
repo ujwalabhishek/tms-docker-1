@@ -79,7 +79,6 @@ echo $this->load->view('common/refer_left_wrapper_public');
       </div>
     </div>
 
-
 <div class="modal" id="modal_nric_found" style="display:hidden;margin:auto auto;height: 274px;left: 0px !important;">
 
   <h2 class="panel_heading_style">NRIC DETAILS</h2>
@@ -93,7 +92,12 @@ echo $this->load->view('common/refer_left_wrapper_public');
     <br>
     <h5 class="text-center suremsg">Are you Sure! You want to Continue?</h5>
     <br>
-    <div class="text-center"><button type='button' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<a href='#'class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</a></div>
+    
+    <div class="form-group">        
+        <div class="col-sm-12 text-center">
+          <button type='button' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<a href='#'class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</a>
+        </div>
+    </div>
     <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
     <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
     <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
