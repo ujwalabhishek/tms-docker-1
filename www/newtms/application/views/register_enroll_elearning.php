@@ -91,7 +91,7 @@ echo $this->load->view('common/refer_left_wrapper_public');
     <!--Section description-->
     <p class="text-center alert-success msg" style='padding: 10px;'></p>
     <br>
-    <h4 class="text-center suremsg">Are you Sure! You want to Continue?</h4>
+    <h5 class="text-center suremsg">Are you Sure! You want to Continue?</h5>
     <br>
     <div class="text-center"><button type='button' class='btn btn-primary yescls' style='padding: 3px 17px !important;font-size: 18px !important;'>Yes</button>&nbsp;&nbsp;&nbsp;<a href='#'class='btn btn-primary nocls' style='padding: 3px 17px !important;font-size: 18px !important;'>No</a></div>
     <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
