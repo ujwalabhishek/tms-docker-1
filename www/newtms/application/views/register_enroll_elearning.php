@@ -18,6 +18,10 @@ echo $this->load->view('common/refer_left_wrapper');
     .panel-primary>.panel-heading {
         background-color:#446cb3 !important;
     }
+    .nric_submit{
+            padding: 7px 59px !important;
+    font-size: 13px !important;
+    }
 </style>
 
 
@@ -66,7 +70,7 @@ echo $this->load->view('common/refer_left_wrapper');
                 <div class='col-sm-12'><br></div>
             </div>
             <div class="form-group">        
-                <div class="col-sm-offset-2 col-sm-10 text-center">
+                <div class="col-sm-12 text-center">
                   <button type="button" class="btn btn-primary nric_submit">Submit</button>
                 </div>
             </div>
