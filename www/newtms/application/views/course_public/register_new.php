@@ -74,8 +74,8 @@ echo $this->load->view('common/refer_left_wrapper_public');
                                              
                                  echo form_input($taxcode_nric);
                                     ?>
-                                    <input type="hidden" id="course_id" name="course_id" value="<?php echo $course_id;?>">
-                                    <input type="hidden" id="class_id" name="class_id" value="<?php echo $class_id;?>">
+                                    
+                                    
                                     
                                     <span id="error" style="color: Red; display: none"></span>
                                     <span id="nric_found"> </span>
