@@ -625,10 +625,10 @@ Section: Contact v.2
         }
         
     $(document).ready(function(){
-        $('#exampleModalCenter').modal({
-            backdrop: 'static',
-            keyboard: false
-        });
+//        $('#exampleModalCenter').modal({
+//            backdrop: 'static',
+//            keyboard: false
+//        });
         $tenantid = '<?php echo TENANT_ID;?>';
         if($tenantid == 'T02'){
             $('#modal_nric_found').click();
