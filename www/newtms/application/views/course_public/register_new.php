@@ -475,28 +475,28 @@ echo $this->load->view('common/refer_left_wrapper_public');
      
 
 <!----------------modal by ssp start----------------------->
-<?php if (TENANT_ID == 'T02'){$show='display:block';}else{$show='display:none';}?>
-<div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;height: 500px;left: 0px !important;overflow: scroll;">
+<?php //if (TENANT_ID == 'T02'){$show='display:block';}else{$show='display:none';}?>
+<!--<div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;height: 500px;left: 0px !important;overflow: scroll;">
 <p>
   <h2 class="panel_heading_style">Declaration</h2>
-    <!--Section: Contact v.2-->
-<section class="mb-4">
+    Section: Contact v.2
+<section class="mb-4">-->
 
     <!--Section heading-->
     <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
     <!--Section description-->
-    <p class="text-center alert alert-danger">You must fill this form to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of the company policy.</p>
+<!--    <p class="text-center alert alert-danger">You must fill this form to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of the company policy.</p>
   
     <div class="row">
 
-        <!--Grid column-->
+        Grid column
         <div class="col-md-12 mb-md-0 mb-5">
            
         
-                <!--Grid row-->
+                Grid row
                 <div class="row">
 
-                    <!--Grid column-->
+                    Grid column
                     <div class="col-md-12">
                         <div class="md-form mb-0">
                             <label for="name" class="">Your Name<span style='color:red'>*</span></label>
@@ -504,11 +504,11 @@ echo $this->load->view('common/refer_left_wrapper_public');
                             
                         </div>
                     </div>
-                    <!--Grid column-->
+                    Grid column
                 </div>
                 
                 <div class="row">
-                    <!--Grid column-->
+                    Grid column
                     <div class="col-md-6">
                         <div class="md-form mb-0">
                              <label for="email" class="">Your Email</label>
@@ -516,8 +516,8 @@ echo $this->load->view('common/refer_left_wrapper_public');
                            
                         </div>
                     </div>
-                    <!--Grid column-->
-                    <!--Grid column-->
+                    Grid column
+                    Grid column
                     <div class="col-md-6">
                         <div class="md-form mb-0">
                              <label for="email" class="">Your Mobile<span style='color:red'>*</span></label>
@@ -525,12 +525,12 @@ echo $this->load->view('common/refer_left_wrapper_public');
                            
                         </div>
                     </div>
-                    <!--Grid column-->
+                    Grid column
                     
                 </div>
-                <!--Grid row-->
+                Grid row
 
-                <!--Grid row-->
+                Grid row
                 <div class="row">
                     <div class="col-md-6">
                         <div class="md-form mb-0">
@@ -541,12 +541,12 @@ echo $this->load->view('common/refer_left_wrapper_public');
                     </div>
                     <div class="col-md-6"></div>
                 </div>
-                <!--Grid row-->
+                Grid row
 
-                <!--Grid row-->
+                Grid row
                 <div class="row">
 
-                    <!--Grid column-->
+                    Grid column
                     <div class="col-md-12">
 
                         <div class="md-form">
@@ -569,20 +569,20 @@ echo $this->load->view('common/refer_left_wrapper_public');
                  <div class="statuserr"></div>
                  <br>
                  <br>
-                <!--Grid row-->
+                Grid row
                  <div class="text-center">
                     <a href='#' class="btn btn-primary" id='declarations' type='button'>Submit & Continue</a></div>
                   
            
         </div>
-        <!--Grid column-->
+        Grid column
     </div>
          
 </section>
-<!--Section: Contact v.2-->
+Section: Contact v.2
 
-</p>
-</div>
+</p>-->
+<!--</div>-->
 <!----------------modal by ssp end----------------------->
 
 <!--<script src="<?php echo base_url(); ?>assets/js/validation_old.js" type="text/javascript"></script>-->
@@ -698,16 +698,107 @@ echo $this->load->view('common/refer_left_wrapper_public');
       </div>
       <div class="modal-body">
                
-        <p class="text-center alert-success msg" style='padding: 10px;'></p>
-        <br>
-        <h5 class="text-center suremsg">Are you Sure! You want to Continue?</h5>
-        <br>
+         <h2 class="panel_heading_style">Declaration</h2>
+    <!--Section: Contact v.2-->
+<section class="mb-4">
 
+    <!--Section heading-->
+    <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
+    <!--Section description-->
+    <p class="text-center alert alert-danger">You must fill this form to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of the company policy.</p>
+  
+    <div class="row">
 
-        <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
-        <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
-        <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
+        <!--Grid column-->
+        <div class="col-md-12 mb-md-0 mb-5">
+           
+        
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-12">
+                        <div class="md-form mb-0">
+                            <label for="name" class="">Your Name<span style='color:red'>*</span></label>
+                            <input type="text" id="dec_name" class="form-control" required>
+                            
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                </div>
+                
+                <div class="row">
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                             <label for="email" class="">Your Email</label>
+                             <input type="email" id="dec_email" class="form-control" pattern=".+@gmail.com" size="30" required>
+                           
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                             <label for="email" class="">Your Mobile<span style='color:red'>*</span></label>
+                            <input type="tel" id="dec_mobile" class="form-control" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                           
+                        </div>
+                    </div>
+                    <!--Grid column-->
                     
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <label for="subject" class="">Lesson Date:<span style='color:red'>*</span></label>
+                            <input type="date" id="dec_les_time" class="form-control" required>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-12">
+
+                        <div class="md-form">
+                            <label for="message">Do you have any relatives who returned from China on 15th January or later and is staying together? <span style='color:red'>*</span></label>
+                            <div><input type="radio" value="1" class="" name='dec_res' id='dec_res' style='height: 1.7em;width: 20px;' checked><b style='padding:2px'>Yes</b></div>
+                            <div><input type="radio" value="0" class="" name='dec_res' id='dec_res1' style='height: 1.7em;width: 20px;'><b style='padding:2px'>No</b> </div> 
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+
+                        <div class="md-form">
+                            <label for="message">Have you travelled overseas in the past 14 days? <span style='color:red'>*</span></label>
+                            <input type="text" id="dec_overseas" placeholder='Please State' class="form-control" required>
+                        </div>
+
+                    </div>
+                </div>
+                
+                 <div class="statuserr"></div>
+                 <br>
+                 <br>
+                <!--Grid row-->
+                 <div class="text-center">
+                    <a href='#' class="btn btn-primary" id='declarations' type='button'>Submit & Continue</a></div>
+                  
+           
+        </div>
+        <!--Grid column-->
+    </div>
+         
+</section>
             
       </div>
       <div class="modal-footer">
