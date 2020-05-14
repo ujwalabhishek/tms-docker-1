@@ -689,7 +689,7 @@ echo $this->load->view('common/refer_left_wrapper_public');
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-        <form action='course_public/confirm_trainee_detail' method='post'>
+        
       <div class="modal-header">
         <h5 class="modal-title panel_heading_style" id="exampleModalCenterTitle">NRIC DETAILS</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -714,7 +714,7 @@ echo $this->load->view('common/refer_left_wrapper_public');
         <button type="button" class="btn btn-lg btn-primary yescls" data-dismiss="modal">Continue</button>
         <button type="button" class="btn btn-lg btn-danger nocls">Save changes</button>
       </div>
-    </form>
+   
     </div>
   </div>
 </div>
