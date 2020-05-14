@@ -151,7 +151,7 @@ Section: Contact v.2
         }
         
     $(document).ready(function(){
-        $('#exampleModalCenter').modal('hide');
+        $('#exampleModalCenter').modal({show: false});
         $('.nocls').click(function(){
              $('#exampleModalCenter').modal('hide');
              //document.trainee_form2.action = "<?php //echo base_url(); ?>"+"course_public/referral_credentials1";
