@@ -3,7 +3,7 @@ $this->load->helper('metavalues_helper');
 
 $this->load->helper('common_helper');
 
-echo $this->load->view('common/refer_left_wrapper');
+echo $this->load->view('common/refer_left_wrapper_public');
 
 //echo validation_errors('<div class="error1">', '</div>');
 ?>
