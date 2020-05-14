@@ -1685,7 +1685,7 @@ function remove_image() {
 
 }
 
-$('.nric_submit').click(function(){
+$('.nric_submit').click(function(){alert();
     e = $('#taxcode_nric').val();
     if(e == ''){
         $('#taxcode_nric_err').text('[Required!]').addClass('error');
