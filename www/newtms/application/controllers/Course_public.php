@@ -3902,7 +3902,7 @@ class course_public extends CI_Controller {
     
     
     public function confirm_trainee_detail($course_id = null, $class_id = null,$user_id_popup=null) {
-        $user_id=$this->input->post('user_id_popup');
+        $user_id=$this->input->post('user_id_popup') ?? $this->input->post('task');
         if($user_id == ''){
             redirect('course_public/class_member_check_elearning');
         }
