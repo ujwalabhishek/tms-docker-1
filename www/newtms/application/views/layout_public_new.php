@@ -21,7 +21,7 @@
       <link href="<?php echo base_url(); ?>assets/public_css/style.css" rel="stylesheet" type="text/css">
 
       <link href="<?php echo base_url(); ?>assets/public_css/glyphicons.css" rel="stylesheet" type="text/css">
-      <link href="<?php echo base_url(); ?>assets/public_css/jquery.modal.css" rel="stylesheet"  type="text/css" media="screen" />
+
 <link href="<?php echo base_url(); ?>assets/public_css/student.css"  rel="stylesheet" type="text/css" media="screen" />
 
         <style>
