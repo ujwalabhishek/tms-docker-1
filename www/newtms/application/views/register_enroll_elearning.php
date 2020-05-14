@@ -159,7 +159,7 @@ Section: Contact v.2
               //$('#trainee_form2').submit();
         });
         $('.yescls').click(function(){
-             $('#modal_nric_found').hide();
+             $('#exampleModalCenter').modal('hide');
              $('#trainee_form2').submit();
         });
        
@@ -195,8 +195,6 @@ Section: Contact v.2
     </script>
     
    <!-- Button trigger modal -->
-<input type="hidden" id='modal_nric_found' class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
