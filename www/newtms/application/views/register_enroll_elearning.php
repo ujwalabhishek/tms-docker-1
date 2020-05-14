@@ -152,7 +152,7 @@ Section: Contact v.2
         
     $(document).ready(function(){
         $('.nocls').click(function(){
-             $('#modal_nric_found').hide();
+             $('#exampleModalCenter').hide();
              //document.trainee_form2.action = "<?php //echo base_url(); ?>"+"course_public/referral_credentials1";
              //window.location = "<?php //echo base_url(); ?>";
               //$('#trainee_form2').submit();
@@ -220,8 +220,8 @@ Section: Contact v.2
             
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary yescls" data-dismiss="modal">Continue</button>
-        <button type="button" class="btn btn-primary nocls">Save changes</button>
+        <button type="button" class="btn btn-lg btn-primary yescls" data-dismiss="modal">Continue</button>
+        <button type="button" class="btn btn-lg btn-warning nocls">Save changes</button>
       </div>
     </form>
     </div>
