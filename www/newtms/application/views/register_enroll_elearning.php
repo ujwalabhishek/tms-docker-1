@@ -112,7 +112,7 @@ Section: Contact v.2
 
 <!----------------modal by ssp end----------------------->
 
-<script src="<?php echo base_url(); ?>assets/public_js/validation_register_enroll.js?v=3" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/public_js/validation_register_enroll.js?v=3.1" type="text/javascript"></script>
 <script>
 
 
@@ -191,9 +191,8 @@ Section: Contact v.2
     </script>
     
    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-  Launch demo modal
-</button>
+<input type="hidden" id='modal_nric_found' class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

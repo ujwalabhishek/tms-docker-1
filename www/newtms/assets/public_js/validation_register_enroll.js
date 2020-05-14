@@ -1712,7 +1712,7 @@ $('.nric_submit').click(function(){alert();
                            $('#trainee_form2').submit();
                         }else if(res == 1){
                             var res = JSON.parse(res);
-                            $('#modal_nric_found').show();
+                            $('#modal_nric_found').click();
                             $('.msg').html("Oops! You are Already Enrolled for this class!");
                             $('.suremsg').html("Kindly Choose Another Class To Enrol!");
                             $('.yescls').hide();
@@ -1722,7 +1722,7 @@ $('.nric_submit').click(function(){alert();
 
                         }else{
                             var res = JSON.parse(res);
-                            $('#modal_nric_found').show();
+                            $('#modal_nric_found').click();
                             $('.msg').html("Please Confirm The "+res.first_name+" & ("+res.tax_code+") Are Accurate & Belongs to you.");
                             $('.suremsg').html("Are you Sure! You want to Continue?");
                             $('#user_id_popup').val(res.user_id);
