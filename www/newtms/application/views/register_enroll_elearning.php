@@ -198,6 +198,7 @@ Section: Contact v.2
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
+        <form action='course_public/confirm_trainee_detail' method='post'>
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -205,12 +206,30 @@ Section: Contact v.2
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <h2 class="panel_heading_style">NRIC DETAILS</h2>
+                
+            
+                
+                Section heading
+                <h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>
+                Section description
+                <p class="text-center alert-success msg" style='padding: 10px;'></p>
+                <br>
+                <h5 class="text-center suremsg">Are you Sure! You want to Continue?</h5>
+                <br>
+
+              
+                <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
+                <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
+                <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
+                    
+            
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary yescls" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary nocls">Save changes</button>
       </div>
+    </form>
     </div>
   </div>
 </div>
