@@ -75,7 +75,7 @@ echo $this->load->view('common/refer_left_wrapper_public');
                   <button type="button" class="btn btn-primary nric_submit">Submit</button>
                 </div>
             </div>
-     
+            <form>
       </div>
     </div>
     
@@ -93,7 +93,7 @@ echo $this->load->view('common/refer_left_wrapper_public');
       <div class="modal-body">
          <h2 class="panel_heading_style">NRIC DETAILS</h2>
 
-            <form action='course_public/confirm_trainee_details' method='post'>
+            <form action='course_public/confirm_trainee_detail' method='post'>
             Section heading
             <h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>
             Section description
