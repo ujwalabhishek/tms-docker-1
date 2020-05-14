@@ -200,28 +200,22 @@ Section: Contact v.2
     <div class="modal-content">
         <form action='course_public/confirm_trainee_detail' method='post'>
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+        <h5 class="modal-title panel_heading_style" id="exampleModalCenterTitle">NRIC DETAILS</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <h2 class="panel_heading_style">NRIC DETAILS</h2>
-                
-            
-                
-                Section heading
-                <h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>
-                Section description
-                <p class="text-center alert-success msg" style='padding: 10px;'></p>
-                <br>
-                <h5 class="text-center suremsg">Are you Sure! You want to Continue?</h5>
-                <br>
+               
+        <p class="text-center alert-success msg" style='padding: 10px;'></p>
+        <br>
+        <h5 class="text-center suremsg">Are you Sure! You want to Continue?</h5>
+        <br>
 
-              
-                <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
-                <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
-                <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
+
+        <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
+        <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
+        <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
                     
             
       </div>
