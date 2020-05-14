@@ -469,10 +469,10 @@ echo $this->load->view('common/refer_left_wrapper_public');
      
      
 <!----------------modal by ssp start----------------------->
-<?php if (TENANT_ID == 'T02'){$show='display:block';}else{$show='display:none';}?>
+
 <input type="hidden" id='ex1011' class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" style="<?php echo $show;?>;margin:auto;height: 500px;left: 0px !important;overflow: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" style="margin:auto;height: 500px;left: 0px !important;overflow: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
         
