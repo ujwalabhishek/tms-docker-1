@@ -221,7 +221,7 @@ Section: Contact v.2
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-lg btn-primary yescls" data-dismiss="modal">Continue</button>
-        <button type="button" class="btn btn-lg btn-warning nocls">Save changes</button>
+        <button type="button" class="btn btn-lg btn-danger nocls">Save changes</button>
       </div>
     </form>
     </div>
