@@ -14,7 +14,11 @@ echo $this->load->view('common/refer_left_wrapper');
     $baseurl = '<?php echo base_url(); ?>';
 
 </script>
-
+<style>
+    .panel-style{
+        background:#446cb3;
+    }
+</style>
 
 
 <div class="col-md-10" style='font-size: 13px;'>
@@ -57,7 +61,7 @@ echo $this->load->view('common/refer_left_wrapper');
                 </div>
                 <div class="col-sm-2"></div>
             </div>
-            <div><span id="error" style="color: Red; display: none"></span><span id="nric_found"> </span><span id="taxcode_nric_err"></span></div>
+            <div><span id="taxcode_nric_err"></span></div>
             <div class='row'>
                 <div class='col-sm-12'><br></div>
             </div>
