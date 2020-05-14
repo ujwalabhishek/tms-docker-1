@@ -62,13 +62,13 @@
     </head>
     <body>
         <div class="main_container_new_top">    
-<?php $this->load->view('common/login_header_public_new'); ?>
-            
-<style>
-    .ui-datepicker{
-        width:auto !important;
-    }
-</style>
+            <?php $this->load->view('common/login_header_public_new'); ?>
+
+            <style>
+                .ui-datepicker{
+                    width:auto !important;
+                }
+            </style>
             <div class="container_nav_style">	
                 <div class="container container_row">
                     <div class="row row_pushdown">
