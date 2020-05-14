@@ -26,15 +26,17 @@ echo $this->load->view('common/refer_left_wrapper');
     ?>  
 
     <div class="panel panel-primary">
-      <div class="panel-heading"><img src="<?php echo base_url(); ?>/assets/images/personal_details.png"/>  Access Detail</div>
+      <div class="panel-heading"><span aria-hidden="true" class="glyphicon glyphicon-user"></span>  Access Detail</div>
       <div class="panel-body">
-          <form class="form-horizontal" action="/action_page.php">
-            <div class="form-group">
+          <?php 
+                $atr = 'id="trainee_form2" name="trainee_form2"';
+                echo form_open_multipart("course_public/confirm_trainee_detail", $atr);
+
+                ?>
+            <div class="form-group text-center">
               <label class="control-label col-sm-2" for="email">Please Enter NRIC:<span class="required">*</span></label>
               <div class="col-sm-10">
                 <?php 
-                 $atr = 'id="trainee_form2" name="trainee_form2"';
-                     echo form_open_multipart("course_public/confirm_trainee_detail", $atr);
 
                     $taxcode_nric = array(
                         'name' => 'taxcode_nric',
