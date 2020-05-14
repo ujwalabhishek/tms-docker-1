@@ -3656,7 +3656,7 @@ class Course_public extends CI_Controller {
     
     public function class_member_check_elearning($course_id = null, $class_id = null) {
        $SGPTIME = date('H');
-       $SGPTIME =9;
+       
        if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
         
          $data['page_title'] = 'Enrollment';
@@ -3881,7 +3881,7 @@ class Course_public extends CI_Controller {
             redirect('course_public/class_member_check_elearning');
         }
         $SGPTIME = date('H');
-        $SGPTIME =9;
+        
         if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
             $data['page_title'] = 'Trainee registration';
 
@@ -3900,7 +3900,7 @@ class Course_public extends CI_Controller {
             redirect('course_public/class_member_check_elearning');
         }
          $SGPTIME = date('H');
-         $SGPTIME =9;
+         
         if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
             $data['page_title'] = 'Update Trainee';
 
