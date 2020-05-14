@@ -622,11 +622,7 @@ endif;
         other_identi_type = '<?php echo $trainee[userdetails]['other_identi_type']; ?>';         
         
 
-        $("#deactivation_date").text($.datepicker.formatDate("dd/mm/yy", new Date()));
-        edu_cnt_array = [];
-        other_cnt_array = [];
-        work_cnt_array = [];
-        selected_exec_array = [];
+        
 
         $(document).ready(function() {
             country_of_residence = $('#country_of_residence').val();
@@ -1536,11 +1532,7 @@ endif;
                 check = 1;
                  return validate(true);
             });
-            $('#trainee_edit select,#trainee_form input').change(function() {
-                if (check == 1) {
-                    return validate(false);
-                }
-            });
+            
             $('#assign_company').trigger("change");
         });
         $("#reason_for_deactivation").change(function() {
