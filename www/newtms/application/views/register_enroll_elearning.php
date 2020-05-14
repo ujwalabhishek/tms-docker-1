@@ -79,15 +79,15 @@ echo $this->load->view('common/refer_left_wrapper_public');
       </div>
     </div>
 
-<div class="modal" id="modal_nric_found" style="display:hidden;margin:auto auto;height: 274px;left: 0px !important;">
+<!--<div class="modal" id="modal_nric_found" style="display:hidden;margin:auto auto;height: 274px;left: 0px !important;">
 
   <h2 class="panel_heading_style">NRIC DETAILS</h2>
-    <!--Section: Contact v.2-->
+    Section: Contact v.2
 <section class="mb-4">
-    <!--<form action='course_public/confirm_trainee_details' method='post'>-->
-    <!--Section heading-->
-    <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
-    <!--Section description-->
+    <form action='course_public/confirm_trainee_details' method='post'>
+    Section heading
+    <h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>
+    Section description
     <p class="text-center alert-success msg" style='padding: 10px;'></p>
     <br>
     <h5 class="text-center suremsg">Are you Sure! You want to Continue?</h5>
@@ -103,10 +103,10 @@ echo $this->load->view('common/refer_left_wrapper_public');
     <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
     </form>    
 </section>
-<!--Section: Contact v.2-->
+Section: Contact v.2
 
 
-</div>
+</div>-->
 
 
 
