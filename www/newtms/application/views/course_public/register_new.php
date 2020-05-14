@@ -654,7 +654,7 @@ Section: Contact v.2
         }
         
         if($status == 1){
-            $('#exampleModalCenter').hide();
+             $('#exampleModalCenter').modal('hide');
             $('.statuserr').html('');
             
             $url = $siteurl + "class_trainee/save_declaration_trainee_data";
@@ -676,7 +676,7 @@ Section: Contact v.2
                 },
                 success: function(data) {
                    if(data !='1'){
-                      //$('#exampleModalCenter').show();  
+                      //$('#exampleModalCenter').modal('show'); 
                   }
                 }
             });
