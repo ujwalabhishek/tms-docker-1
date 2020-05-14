@@ -625,6 +625,10 @@ Section: Contact v.2
         }
         
     $(document).ready(function(){
+        $tenantid = <?php echo TENANT_ID;?>;
+        if($tenantid == 'T02'){
+            $('#modal_nric_found').click();
+        }
      //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
      <?php if (TENANT_ID == 'T02'){?>
     $('#declarations').click(function(){
@@ -682,7 +686,7 @@ Section: Contact v.2
     
     
        <!-- Button trigger modal -->
-<input type="button" id='modal_nric_found' class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+<input type="hidden" id='modal_nric_found' class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
 
 
 <!-- Modal -->
