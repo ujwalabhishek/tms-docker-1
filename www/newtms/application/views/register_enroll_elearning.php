@@ -152,6 +152,7 @@ Section: Contact v.2
         
     $(document).ready(function(){
         $('#exampleModalCenter').modal({show: false});
+        $("#exampleModalCenter").modal("hide");
         $('.nocls').click(function(){
              $('#exampleModalCenter').modal('hide');
              //document.trainee_form2.action = "<?php //echo base_url(); ?>"+"course_public/referral_credentials1";
@@ -192,6 +193,7 @@ Section: Contact v.2
     $('#taxcode_nric').keypress(function(e) {
         blockSpecialCharacters(e);
     });
+    $("#exampleModalCenter").modal("hide");
     </script>
     
    <!-- Button trigger modal -->
