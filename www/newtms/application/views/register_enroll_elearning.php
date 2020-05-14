@@ -42,9 +42,10 @@ echo $this->load->view('common/refer_left_wrapper');
 
                 ?>
             <div class="form-group text-center">
-                <div class="col-sm-2"></div>
-                <label class="control-label col-sm-2" for="email">Please Enter NRIC:<span class="required">*</span></label>
+                <div class="col-sm-4"></div>
+                
                 <div class="col-sm-4">
+                 <label type="email">Please Enter NRIC:<span class="required">*</span></label>
                 <?php 
 
                     $taxcode_nric = array(
@@ -52,7 +53,7 @@ echo $this->load->view('common/refer_left_wrapper');
                         'id' => 'taxcode_nric',
                         'value' => $this->input->post('taxcode_nric'),
                         'maxlength' => '25',
-                        'class' => 'upper_case',
+                        'class' => 'upper_case form-control',
                         'placeholder' => 'Enter Your NRIC',
                         //'onblur' => 'javascript:check_taxcode_nric(this.value,this.id);',
                         'onkeypress' =>'return IsAlphaNumeric(event);',
@@ -63,7 +64,7 @@ echo $this->load->view('common/refer_left_wrapper');
                     echo form_input($taxcode_nric);
                 ?>
                 </div>
-                <div class="col-sm-2"></div>
+                <div class="col-sm-4"></div>
             </div>
             <div><span id="taxcode_nric_err"></span></div>
             <div class='row'>
