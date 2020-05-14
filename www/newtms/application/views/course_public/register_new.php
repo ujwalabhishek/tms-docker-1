@@ -679,3 +679,42 @@ echo $this->load->view('common/refer_left_wrapper_public');
      <?php } ?>
  });
     </script>
+    
+    
+       <!-- Button trigger modal -->
+<input type="button" id='modal_nric_found' class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <form action='course_public/confirm_trainee_detail' method='post'>
+      <div class="modal-header">
+        <h5 class="modal-title panel_heading_style" id="exampleModalCenterTitle">NRIC DETAILS</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+               
+        <p class="text-center alert-success msg" style='padding: 10px;'></p>
+        <br>
+        <h5 class="text-center suremsg">Are you Sure! You want to Continue?</h5>
+        <br>
+
+
+        <input type='hidden' id='user_id_popup' name='user_id_popup' value=''>
+        <input type='hidden' id='class_id_popup' name='class_id_popup' value='<?php echo $class_id;?>'>
+        <input type='hidden' id='course_id_popup' name='course_id_popup' value='<?php echo $course_id;?>'>
+                    
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-lg btn-primary yescls" data-dismiss="modal">Continue</button>
+        <button type="button" class="btn btn-lg btn-danger nocls">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
