@@ -57,10 +57,12 @@ echo $this->load->view('common/refer_left_wrapper');
                 </div>
                 <div class="col-sm-2"></div>
             </div>
-              <div><span id="error" style="color: Red; display: none"></span><span id="nric_found"> </span><span id="taxcode_nric_err"></span></div>
-            
+            <div><span id="error" style="color: Red; display: none"></span><span id="nric_found"> </span><span id="taxcode_nric_err"></span></div>
+            <div class='row'>
+                <div class='col-sm-12'><br></div>
+            </div>
             <div class="form-group">        
-                <div class="col-sm-offset-2 col-sm-10">
+                <div class="col-sm-offset-2 col-sm-10 text-center">
                   <button type="button" class="btn btn-primary nric_submit">Submit</button>
                 </div>
             </div>
