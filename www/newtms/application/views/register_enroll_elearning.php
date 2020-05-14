@@ -57,7 +57,7 @@ echo $this->load->view('common/refer_left_wrapper_public');
                         'placeholder' => 'Enter Your NRIC',
                         //'onblur' => 'javascript:check_taxcode_nric(this.value,this.id);',
                         'onkeypress' =>'return IsAlphaNumeric(event);',
-                        'style' => 'width: 328px;padding: 6px;border-radius: 5px;',
+                        'style' => 'padding: 6px;border-radius: 5px;',
 
                     );
 
