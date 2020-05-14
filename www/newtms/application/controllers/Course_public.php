@@ -3900,6 +3900,10 @@ class course_public extends CI_Controller {
     
     
     public function confirm_trainee_detail($course_id = null, $class_id = null,$user_id_popup=null) {
+        $user_id=$this->input->post('user_id_popup');
+        if($user_id == ''){
+            redirect('course_public/class_member_check_elearning');
+        }
          $SGPTIME = date('H');
          $SGPTIME =9;
         if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
@@ -3916,7 +3920,7 @@ class course_public extends CI_Controller {
             $data['page_title'] = 'Edit Trainee';
 
 
-            $user_id=$this->input->post('user_id_popup');
+            
             if ($user_id) { 
 
                 $data['trainee'] = $this->traineemodel->get_trainee_taxcode($user_id, TENANT_ID); 
