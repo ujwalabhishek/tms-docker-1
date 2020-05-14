@@ -1544,6 +1544,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $new_array = array('account_status' => 'ACTIVE', 'acc_activation_type' => 'EMACRQ');
         }
         $date = date('Y-m-d H:i:s');
+        
         $data = array(
             'country_of_residence' => $country_of_residence,
             'tax_code_type' => $tax_code_type,
@@ -1555,6 +1556,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             'last_modified_by' => $this->user->user_id,
             'last_modified_on' => $date,
                 ) + $new_array;
+        print_r($data);exit;
         $this->db->trans_start();
         $user_id = $this->input->post('userid');
         $this->db->where('user_id', $user_id);
