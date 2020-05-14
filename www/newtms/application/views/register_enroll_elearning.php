@@ -66,9 +66,9 @@ echo $this->load->view('common/refer_left_wrapper_public');
                 </div>
                 <div class="col-sm-4"></div>
             </div>
-            <div><span id="taxcode_nric_err"></span></div>
+            
             <div class='row'>
-                <div class='col-sm-12'><br></div>
+                <div class='col-sm-12'><span id="taxcode_nric_err"></span><span id="error"></span><br></div>
             </div>
             <div class="form-group">        
                 <div class="col-sm-12 text-center">
