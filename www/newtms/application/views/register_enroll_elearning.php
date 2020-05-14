@@ -75,7 +75,7 @@ echo $this->load->view('common/refer_left_wrapper');
                   <button type="button" class="btn btn-primary nric_submit">Submit</button>
                 </div>
             </div>
-        </form>
+     
       </div>
     </div>
 
