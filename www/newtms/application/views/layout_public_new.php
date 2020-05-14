@@ -9,7 +9,17 @@
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-        <?php //$this->load->view('common/includes_public'); ?>
+        <script type="text/javascript">
+        var baseurl = "<?php print base_url(); ?>";
+      </script>
+
+
+      <link href="<?php echo base_url(); ?>assets/public_css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+      <link href="<?php echo base_url(); ?>assets/public_css/style.css" rel="stylesheet" type="text/css">
+
+      <link href="<?php echo base_url(); ?>assets/public_css/glyphicons.css" rel="stylesheet" type="text/css">
+
         <style>
             #wrapper{
                 margin:0;
