@@ -16,7 +16,7 @@ echo $this->load->view('common/refer_left_wrapper_public');
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/public_js/enrol_some_one.js"></script>
 
-    <h2 class="panel_heading_style"><span aria-hidden="true" class="glyphicon glyphicon-user"></span>Registration Form</h2>
+    <h2 class="panel_heading_style"><span aria-hidden="true" class="glyphicon glyphicon-user"></span>&nbsp;Registration Form</h2>
     <?php
 
     if (!empty($error_message)) {
