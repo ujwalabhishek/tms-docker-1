@@ -53,7 +53,7 @@ echo $this->load->view('common/refer_left_wrapper_public');
                         <table class="table table-striped" width="100%" >   
 
 
-                            <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/personal_details.png"/>  Access Detail</h2>
+                            <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/personal_details.png"/>&nbsp;  Access Detail</h2>
                             
                              <tr>
                                 <td width="20%" class="td_heading">Please Enter NRIC:<span class="required">*</span></td>
