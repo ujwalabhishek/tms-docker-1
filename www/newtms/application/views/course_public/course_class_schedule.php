@@ -48,6 +48,7 @@
                                         $class['user_id'] = $user_id;
                                         if($user_id!='')                                
                                         {   
+                                            
                                             $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'" data-user="'.$class['user_id'].'">'; 
                                             $enroll_link_label = 'Enroll Now';
                                             
@@ -61,6 +62,10 @@
                                         
                                         $enroll_link_suffix = '</a>';
                                         $enroll_link = $enroll_link_prefix . $enroll_link_label . $enroll_link_suffix;
+                                        ////added by shubhranshu for XP requirement for all class
+                                        if(TENANT_ID == 'T02'){
+                                           $enroll_link = "<a href='https://docs.google.com/forms/d/e/1FAIpQLScGLanMTBCiVdf6xb-QKuI3PIOMUQEjfSs4n2klGLBayCXgbg/viewform'>Enroll Now</a>";  
+                                        }
                                         ?>
                                         <tr>
                                             <td><a class="small_text1" rel="modal:open" href="#course_clas<?php echo $class['class_id']; ?>"><?php echo $class['class_name']; ?></a></td>

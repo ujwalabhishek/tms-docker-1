@@ -933,6 +933,38 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     </td>
                 </tr>
             </table>';
+        ///////// below code added by shubhranshu for elearning class only for xp
+        if($tenant_details->tenant_id == 'T02'){
+            if($classes->course_id == 166 || $classes->course_id == 167){
+                $data = '<br><br>
+                <table style="font-size:15px">
+                    <tr>
+                        <td>Your seat has been booked. Please pay the class fees on or before the class start date.
+                            Booking for <strong>' . $trainee . '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
+                            <strong>Class start date:</strong>
+                            ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
+                            <br><br>
+                            <strong>Class end date:</strong>
+                            ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
+
+                            <br>
+                            <br>
+                            <strong>Location:</strong>
+                            ' . $ClassLoc . '<br><br>
+                            <strong>Contact Details: </strong>
+                            ' .$contact_details. '
+                                <br><br>
+                            <strong style="font-size:13px">Remark *: </strong>
+                            <ol style="font-size:13px;color:#4f4b4b">
+                                <li>'.$li_first.'</li>
+                                <li>Trim finger nails and remove nail polish</li>
+                                '.$li2.'
+                            </ol>
+                        </td>
+                    </tr>
+                </table>';
+            }
+        }
         $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
         if ($booking_details) {
             $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
@@ -3972,9 +4004,16 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 $reporting_time = date("H:i A", strtotime('-30 minutes', $time));
                 if($course == 67 || $course == 121)
                 {
-                    $li = "Report at center at $reporting_time to register for class";
+                    $li = "<li>Report at center at $reporting_time to register for class</li>";
                 }else{
-                    $li = "Report at center at 8:30 AM to register for class";
+                    $li = "<li>Report at center at 8:30 AM to register for class</li>";
+                }
+                
+                ///////// below code added by shubhranshu for elearning class only for xp
+                if($tenant_details->tenant_id == 'T02'){
+                     if($course == 166 || $course== 167){
+                         $li ='';
+                     }
                 }
                 /* end */
                 if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
@@ -3998,7 +4037,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                            
                             <li>Your NRIC, work permit or will be photocopied on the class date</li>
                             <li>Trim finger nails and remove nail polish</li>
-                            <li>'.$li.'</li>
+                            '.$li.'
                         </ol>';
                 }else{
                         $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
@@ -4021,7 +4060,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                                 <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Your NRIC, work permit or will be photocopied on the class date</li>
                                 <li>Trim finger nails and remove nail polish</li>
-                                <li>'.$li.'</li>
+                               '.$li.'
                             </ol>';
                 }
                 

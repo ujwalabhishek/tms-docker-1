@@ -2920,19 +2920,19 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
         $trainer = $CI->reportsmodel->get_user_taxcode($classroom_trainer);
         $trainer_text = '';
         foreach ($trainer as $train) {
-            $trainer_text .= $train->tax_code . ', ';
+            $trainer_text .= $train->tax_code . '; ';
          
         }
-        $trainer_text = rtrim($trainer_text, ', ');
+        $trainer_text = rtrim($trainer_text, '; ');
         $classroom_assessor = explode(',', $assment_det->assessor_id);
         $assessor = $CI->reportsmodel->get_user_taxcode($classroom_assessor);
         $assessor_text = '';
         foreach ($assessor as $assess) {
-            $assessor_text .= $assess->tax_code . ', ';
+            $assessor_text .= $assess->tax_code . '; ';
             //break;
         }
         //echo $assessor_text;exit;
-        $assessor_text = rtrim($assessor_text, ', ');
+        $assessor_text = rtrim($assessor_text, '; ');
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
         $row->tax_code_type;

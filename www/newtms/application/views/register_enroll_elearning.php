@@ -66,9 +66,9 @@ echo $this->load->view('common/refer_left_wrapper_public');
                 </div>
                 <div class="col-sm-4"></div>
             </div>
-            <div><span id="taxcode_nric_err"></span></div>
+            
             <div class='row'>
-                <div class='col-sm-12'><br></div>
+                <div class='col-sm-12'><span id="taxcode_nric_err"></span><span id="error"></span><br></div>
             </div>
             <div class="form-group">        
                 <div class="col-sm-12 text-center">
@@ -112,7 +112,7 @@ Section: Contact v.2
 
 <!----------------modal by ssp end----------------------->
 
-<script src="<?php echo base_url(); ?>assets/public_js/validation_register_enroll.js?v=3.1" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/public_js/validation_register_enroll.js?v=3.2" type="text/javascript"></script>
 <script>
 
 
