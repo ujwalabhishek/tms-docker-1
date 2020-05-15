@@ -70,9 +70,6 @@
 
                                     foreach ($tabledata as $class):
 
-                                        ?>
-
-                                        <?php
 
                                         
 
@@ -123,8 +120,6 @@
                                         if(TENANT_ID == 'T02'){
                                            $enroll_link = "<a href='https://docs.google.com/forms/d/e/1FAIpQLScGLanMTBCiVdf6xb-QKuI3PIOMUQEjfSs4n2klGLBayCXgbg/viewform'>Enroll Now</a>";  
                                         }
-                                        ?>
-
                                         ?>
 
                                         <tr>
