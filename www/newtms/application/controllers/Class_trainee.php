@@ -939,6 +939,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         
         if($tenant_details->tenant_id == 'T02'){
             if($classes->course_id == 166 || $classes->course_id == 167){
+                $li = $li2;
                 $data = '<br><br>
                 <table style="font-size:15px">
                     <tr>
@@ -961,7 +962,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                             <ol style="font-size:13px;color:#4f4b4b">
                                 <li>'.$li_first.'</li>
                                 <li>Trim finger nails and remove nail polish</li>
-                                <li>'.$li2.'</li>
+                                <li>'.$li.'</li>
                                 
                             </ol>
 
