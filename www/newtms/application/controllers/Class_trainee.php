@@ -894,7 +894,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         if($tenant_details->tenant_id == 'T02')
         {
             $li2 = "<li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>";
-            $li =$li2;
+            
         } else {
             $li2 = '';
         } 
@@ -936,6 +936,41 @@ if (!empty($tenant_details->tenant_contact_num)) {
                     </td>
                 </tr>
             </table>';
+        
+        if($tenant_details->tenant_id == 'T02'){
+            if($classes->course_id == 166 || $classes->course_id == 167){
+                $data = '<br><br>
+                <table style="font-size:15px">
+                    <tr>
+                        <td>Your seat has been booked. Please pay the class fees on or before the class start date.
+                            Booking for <strong>' . $trainee . '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
+                            <strong>Class start date:</strong>
+                            ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
+                            <br><br>
+                            <strong>Class end date:</strong>
+                            ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
+
+                            <br>
+                            <br>
+                            <strong>Location:</strong>
+                            ' . $ClassLoc . '<br><br>
+                            <strong>Contact Details: </strong>
+                            ' .$contact_details. '
+                                <br><br>
+                            <strong style="font-size:13px">Remark *: </strong>
+                            <ol style="font-size:13px;color:#4f4b4b">
+                                <li>'.$li_first.'</li>
+                                <li>Trim finger nails and remove nail polish</li>
+                                <li>'.$li.'</li>
+                                '.$li2.'
+                            </ol>
+
+                        </td>
+                    </tr>
+                </table>';
+            }
+        }
+        
         $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
         if ($booking_details) {
             $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
