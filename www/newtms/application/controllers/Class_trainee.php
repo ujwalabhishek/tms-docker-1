@@ -961,8 +961,8 @@ if (!empty($tenant_details->tenant_contact_num)) {
                             <ol style="font-size:13px;color:#4f4b4b">
                                 <li>'.$li_first.'</li>
                                 <li>Trim finger nails and remove nail polish</li>
-                                <li>'.$li.'</li>
-                                '.$li2.'
+                                <li>'.$li2.'</li>
+                                
                             </ol>
 
                         </td>
