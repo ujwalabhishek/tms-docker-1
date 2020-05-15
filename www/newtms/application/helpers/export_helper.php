@@ -2960,7 +2960,7 @@ function generate_soa_report_xls($tabledata, $metadata) {
         $assessor_text = '';
         foreach ($assessor as $assess) {
             $assessor_text .= $assess->tax_code . ', ';
-            break;
+            
         }
         $assessor_text = rtrim($assessor_text, ', ');
         $strlength = strpos($row->tax_code_type, '_');
