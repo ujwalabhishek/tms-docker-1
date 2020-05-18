@@ -3232,8 +3232,17 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
     $r = 4;
     $CI->load->model('reports_model', 'reportsmodel');
     $data_arr = array();
+    $duplicate_mobile_arry = array();
     foreach ($tabledata as $row) {
-
+        //////////////////start of code added by shubhranshu for removing duplicate mobile no/////////////
+        if(in_array($row->contact_number,$duplicate_mobile_arry)){
+            $remove_duplicate_contact_number = '';
+        }else{
+            $duplicate_mobile_arry[] = $row->contact_number;
+            $remove_duplicate_contact_number = $row->contact_number;
+        }
+        
+        //////////////////end of code added by shubhranshu for removing duplicate mobile no/////////////
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
         $row->tax_code_type;
@@ -3245,7 +3254,7 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
                         ->where('parameter_id', $row->tax_code_type)
                         ->get()->row(0);
         $tax_code_type = $data->code_type;
-         //author: added by shubhranshu as per client requirement on 11/03/2020
+        //author: added by shubhranshu as per client requirement on 11/03/2020
         if(TENANT_ID == 'T02' || TENANT_ID == 'T12'){
             if($tax_code_type == 'NRIC')
             {
@@ -3278,6 +3287,7 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
                  $tax_code_type='OT';
             }
         }
+        
         /* skm code for new style email which is the combination of taxocde and class name intials st */
         $pattern = "/[_,-]/";
         $string = $row->class_name;
@@ -3307,7 +3317,7 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
         $sheet->setCellValue('E' . $r, $trainee_email);
         $sheet->setCellValue('F' . $r, '');
         $sheet->setCellValue('G' . $r, '');
-        $sheet->setCellValueExplicit('H' . $r, $row->contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('H' . $r, $remove_duplicate_contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
         $sheet->setCellValueExplicit('I' . $r, $row->tenant_name);
         $sheet->setCellValue('J' . $r, $row->crse_name);
         $sheet->setCellValue('K' . $r, '');
