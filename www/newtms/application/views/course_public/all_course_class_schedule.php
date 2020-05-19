@@ -86,10 +86,7 @@
                                         
                                         $enroll_link_suffix = '</a>';
                                         $enroll_link = $enroll_link_prefix . $enroll_link_label . $enroll_link_suffix;
-                                        ////added by shubhranshu for XP requirement for all class
-                                        if(TENANT_ID == 'T02'){
-                                           $enroll_link = "<a href='https://docs.google.com/forms/d/e/1FAIpQLScGLanMTBCiVdf6xb-QKuI3PIOMUQEjfSs4n2klGLBayCXgbg/viewform'>Enroll Now</a>";  
-                                        }
+                                        
                                         ?>
                                         <tr>
                                             
