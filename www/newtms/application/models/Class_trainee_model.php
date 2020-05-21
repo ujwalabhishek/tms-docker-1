@@ -9765,22 +9765,22 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $audit_array = array('regen_inv_id' => $reg_inv_id);
 
-        //$this->db->where("pymnt_due_id", $payment_due_id);
+        $this->db->where("pymnt_due_id", $payment_due_id);
 
-//        $this->db->trans_start();
-//
-//
-//
-//        $status = $this->db->update("enrol_invoice_audittrail", $audit_array);
-//
-//
-//
-//        $this->db->trans_complete();
-//
-//        if ($this->db->trans_status() === FALSE) {
-//
-//            $status = FALSE;
-//        }
+        $this->db->trans_start();
+
+
+
+        $status = $this->db->update("enrol_invoice_audittrail", $audit_array);
+
+
+
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+
+            $status = FALSE;
+        }
 
         return $status;
     }
