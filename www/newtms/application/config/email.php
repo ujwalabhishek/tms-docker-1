@@ -29,7 +29,7 @@ $config['protocol'] = 'smtp';
 
 $config['smtp_host'] = 'ssl://smtp.gmail.com';
 $config['smtp_port'] = '465';
-$config['smtp_user'] = 'payments@xprienz.com';
+$config['smtp_user'] = 'payment@xprienz.com';
 $config['smtp_pass'] = 'biipmiSG2016';
 
 //$config['smtp_host'] = 'ssl://mail.biipmi.co';
