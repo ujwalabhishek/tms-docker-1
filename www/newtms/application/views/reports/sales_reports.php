@@ -34,7 +34,7 @@
                         ?>
                         &nbsp;&nbsp;Sales Executive:
                     </td>
-                    <td colspan='5'><?php echo form_dropdown("sales_exec", $executive, $this->input->get('sales_exec'), 'id="sales_exec"') ?>
+                    <td colspan='5'><?php echo form_dropdown("sales_exec", $executive, $this->input->post('sales_exec'), 'id="sales_exec"') ?>
                     </td>
                 </tr>
                 
@@ -45,7 +45,7 @@
                             'name' => 'start_date',
                             'id' => 'start_date',
                             'style' => 'width:45%',
-                            'value' => $this->input->get('start_date'),
+                            'value' => $this->input->post('start_date'),
                             'placeholder' => 'dd-mm-yyyy'
                         );
                         echo form_input($start_date);
@@ -58,7 +58,7 @@
                             'name' => 'end_date',
                             'id' => 'end_date',
                             'style' => 'width:45%',
-                            'value' => $this->input->get('end_date'),
+                            'value' => $this->input->post('end_date'),
                             'placeholder' => 'dd-mm-yyyy'
                         );
                         echo form_input($start_date);
