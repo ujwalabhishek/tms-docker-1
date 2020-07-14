@@ -3465,10 +3465,10 @@ SELECT  {$calc_rows} c.crse_name,
     
     public function salesrep($tenant_id,$sales_executive_id,$start,$end){
         if (!empty($start)) {
-            $sql_start_date = date('Y-m-d', strtotime($start_date));
+            $sql_start_date = date('Y-m-d', strtotime($start));
         }
         if (!empty($end)) {
-            $sql_end_date = date('Y-m-d', strtotime($start_date));
+            $sql_end_date = date('Y-m-d', strtotime($end));
         }
         $get_course_id_query ="SELECT 
             DISTINCT(crse.course_id)
