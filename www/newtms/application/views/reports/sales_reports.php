@@ -131,7 +131,7 @@
                             <td><?php echo '1' ?></td>
                             <td><?php echo $data->crse_name; ?></td>
                             <td><?php echo $data->class_start_datetime; ?></td>
-                            <td><?php echo $data->tenant_id; ?></td>
+                            <td><?php echo $data->provider; ?></td>
                             <td>$ <?php echo number_format($data->class_fees, 2, '.', ''); ?></td>
                             <td>$ <?php echo count($dat); ?></td>
                             <td>$ <?php echo $data->class_fees; ?></td>
