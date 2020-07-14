@@ -1548,9 +1548,8 @@ class Reports_finance extends CI_Controller {
             $sales_executive_id = $this->input->post('sales_exec');
             $start = $this->input->post('start_date');
             $end = $this->input->post('end_date');
-            
-
-            $this->reportsModel->salesrep($tenant_id,$sales_executive_id,$start,$end);
+            $all_data = $this->reportsModel->salesrep($tenant_id,$sales_executive_id,$start,$end);
+            $data['final_data']=$all_data;
         }
         $data['page_title'] = 'Reports';
         $data['main_content'] = 'reports/sales_reports';

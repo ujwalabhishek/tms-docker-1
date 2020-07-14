@@ -79,7 +79,7 @@
     <?php
     $start_date = $this->input->get('start_date');
     $end_date = $this->input->get('end_date');
-    if (empty($tabledata)) {
+    if (!empty($final_data)) {
         if (empty($start_date) && empty($end_date)) {
             $period = ' for ' . date('F d Y, l');
         } else {
@@ -124,54 +124,19 @@
                 </thead>
                  <tbody>
                     <?php
-                    foreach ($tabledata as $data) {
-                        if ($data->invoice_generated_on == NULL || $data->invoice_generated_on == '0000-00-00 00:00:00') {
-                            $invoiced_label = '<br><span style="color:red">** Not Invoiced</span>';
-                        } else {
-                            $int_date = $data->invoice_generated_on ? $data->invoice_generated_on : $data->inv_date;
-                            $invoiced_label = '<br><span style="color:blue">** Invoiced (' . date('d/m/Y', strtotime($int_date)) . ')</span>';
-                        }
-                        $paid_arr = array('PAID' => 'Paid', 'PARTPAID' => 'Part Paid', 'NOTPAID' => 'Not Paid');
-                        $paid_sty_arr = array('PAID' => 'color:green;', 'PARTPAID' => 'color:red;', 'NOTPAID' => 'color:red;');
-                        if ($data->enrolment_mode == 'SELF') {
-                            $taxcode = 'NRIC- '.$data->tax_code;
-                            $name = $data->first_name . ' ' . $data->last_name;
-                            $status = '<span style="' . $paid_sty_arr[$data->payment_status] . '">' . $paid_arr[$data->payment_status] . '</span>';
-                            $prefix = "<a href='" . base_url() . 'class_trainee/export_generate_invoice/' . $data->pymnt_due_id . "'>";
-                            $suffix = "</a>";
-                            $inv_type = 'Individual';
-                        } else {
-                            // modified by dummy for internal staff enroll on 28 Nov 2014.
-                                //if($data->inv_type == 'INVCOMALL') {
-                                $name = $data->company_name;
-                                //$tenant_details = fetch_tenant_details($data->company_id);
-                                //$name = $tenant_details->tenant_name;
-                                //$taxcode = $tenant_details->tenant_name;
-                            //} else {
-                                $inv_type = 'Company';
-                                $taxcode = 'Reg No- '.$data->comp_regist_num;
-                                $name = $data->company_name;
-                            //}
-                            $status = ($data->payment_status == 'PARTPAID') ? '<span style="color:red;">Part Paid/Not Paid</span>' : '<span style="color:green;">Paid</span>';
-                            if($data->payment_status == 'NOTPAID'){
-                                $status = '<span style="color:red;">Not Paid</span>';
-                            }
-                            $prefix = '<a href="javascript:;" class="company_pdf" data-invoice="' . $data->invoice_id . '" data-pdi="' . $data->pymnt_due_id . '">';
-                            $suffix = '</a>';
-                        }
-                        $inv_type1 = $inv_type . ' (' . $name . ')';
-//                      ?>
+                    foreach ($final_data as $data) {
+                        ?>
                         <tr>
-                            <td><?php echo $data->invoice_id ?></a></td>
-                            <td><?php echo date('d/m/Y', strtotime($data->inv_date)).'<br>'.$status; ?></td>
-                            <td><?php echo $inv_type1 ?></td>
-                            <td><?php echo $taxcode . $invoiced_label; ?></td>
-                            <td>$ <?php echo number_format($data->total_inv_discnt, 2, '.', ''); ?></td>
-                            <td>$ <?php echo number_format($data->total_inv_subsdy, 2, '.', ''); ?></td>
-                            <td>$ <?php echo number_format($data->total_gst, 2, '.', ''); ?></td>
-                            <td>$ <?php echo number_format($data->total_inv_amount, 2, '.', ''); ?></td>
-                            <td><?php echo $data->invoice_id ?></td>
-                            <td><?php echo $data->regen_inv_id ?></td>
+                            <td><?php echo '1' ?></td>
+                            <td><?php echo $data->crse_name; ?></td>
+                            <td><?php echo $data->class_start_datetime; ?></td>
+                            <td><?php echo $data->tenant_id; ?></td>
+                            <td>$ <?php echo number_format($data->class_fees, 2, '.', ''); ?></td>
+                            <td>$ <?php echo $data->noofpax; ?></td>
+                            <td>$ <?php echo $data->class_fees; ?></td>
+                            <td>$ <?php echo $data->first_name; ?></td>
+                            <td><?php echo $data->tax_code; ?></td>
+                            <td><?php echo $data->training_score; ?></td>
                         </tr>
                         <?php
                     }

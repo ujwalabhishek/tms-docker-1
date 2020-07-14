@@ -3500,10 +3500,12 @@ SELECT  {$calc_rows} c.crse_name,
             where ce.tenant_id='$tenant_id' and ce.sales_executive_id='$sales_executive_id' and ce.course_id='$course->course_id' and
             date(ce.enrolled_on)>= '$sql_start_date' and date(ce.enrolled_on) <= '$sql_end_date' 
             order by cc.course_id asc";
-            $final_data[]= $this->db->query($qury)->result();
+            $result = $this->db->query($qury)->result();
+            $result->noofpax = count($result);
+            $final_data[]= $result;
         }
        
-        print_r($final_data);exit;
+        return $final_data;
         
     }
 
