@@ -3501,11 +3501,11 @@ SELECT  {$calc_rows} c.crse_name,
             date(ce.enrolled_on)>= '$sql_start_date' and date(ce.enrolled_on) <= '$sql_end_date' 
             order by cc.course_id asc";
             $result = $this->db->query($qury)->result();
-            $result->noofpax = count($result);
+
             $final_data[]= $result;
-            print_r($result);exit;
+         
         }
-       print_r($final_data);exit;
+     
         return $final_data;
         
     }
