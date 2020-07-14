@@ -136,7 +136,7 @@
                             <td><?php echo $data->provider; ?></td>
                             <td>$ <?php echo number_format($data->class_fees, 2, '.', ''); ?></td>
                             <td>$ <?php echo count($dat); ?></td>
-                            <td>$ <?php echo $data->class_fees; ?></td>
+                            <td>$ <?php echo $data->coursefee; ?></td>
                             <td>$ <?php echo $data->first_name; ?></td>
                             <td><?php echo $data->tax_code; ?></td>
                             <td><?php echo $data->training_score ?? 'NA'; ?></td>
