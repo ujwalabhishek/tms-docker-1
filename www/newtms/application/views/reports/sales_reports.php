@@ -90,10 +90,10 @@
                 $period .= ' to ' . date('F d Y', DateTime::createFromFormat('d-m-Y', $end_date)->getTimestamp());
         }
         ?>
-        <div class="panel-heading panel_headingstyle"><strong>Invoice Audit Trail & Search Report <?php echo $period ?></strong></div>
+        <div class="panel-heading panel_headingstyle"><strong>Sales Commission Search Report <?php echo $period ?></strong></div>
         <br>
         <div>
-            <span style="float:left;color:blue;">**NRIC/Comp Reg. No.:  Individual NRIC/ Company Registration Number</span>
+            
             <span class="pull-right">
                 <a href="<?php echo site_url('/reports_finance/invoice_audit_trail_export_XLS') . '?' . $_SERVER['QUERY_STRING']; ?>"  class="small_text1">
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
