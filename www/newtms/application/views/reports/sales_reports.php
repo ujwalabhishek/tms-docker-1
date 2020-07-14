@@ -9,7 +9,7 @@
 
     <div class="table-responsive">
         <?php
-        $atr = array('id' => 'invoicelistform', 'method' => 'get');
+        $atr = array('id' => 'invoicelistform', 'method' => 'post');
         echo form_open("reports_finance/sales_report", $atr);
         ?>
         <table class="table table-striped">
