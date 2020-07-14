@@ -1538,7 +1538,7 @@ class Reports_finance extends CI_Controller {
     public function sales_report(){
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Reports';
-        $data['main_content'] = 'reports/reports_finance';
+        $data['main_content'] = 'reports/sales_reports';
         $this->load->view('layout', $data);
     }
 }
