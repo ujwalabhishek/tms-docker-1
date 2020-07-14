@@ -67,7 +67,7 @@
                 </tr>
                    
                 <tr>
-                    <td><input type='submit' value='Search'></td>
+                    <td colspan="3"><button type="submit" value="Search" class="btn btn-xs btn-primary no-mar pull-right" title="Search"><span class="glyphicon glyphicon-search"></span> Search</button></td>
                 </tr> 
               
             </tbody>
@@ -128,7 +128,7 @@
                         foreach ($dat as $data) {
                         ?>
                         <tr>
-                            <td><?php echo '1' ?></td>
+                            <td><?php echo ($final_data-(count($final_data)-1)); ?></td>
                             <td><?php echo $data->crse_name; ?></td>
                             <td><?php echo $data->class_start_datetime; ?></td>
                             <td><?php echo $data->provider; ?></td>
