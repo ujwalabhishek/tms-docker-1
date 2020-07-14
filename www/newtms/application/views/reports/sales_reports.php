@@ -39,7 +39,7 @@
                 </tr>
                 
                 <tr>
-                    <td class="td_heading">Invoice Dt. From:</td>
+                    <td class="td_heading">Enroll Dt. From:</td>
                     <td><?php
                         $start_date = array(
                             'name' => 'start_date',
