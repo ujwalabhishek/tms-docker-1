@@ -182,7 +182,7 @@
         <br>
         <table class="table table-striped">
             <tr class="danger">
-                <td colspan="10" style="color:red;text-align: center;">There are no invoice audit trail available.</td>
+                <td colspan="10" style="color:red;text-align: center;"></td>
             </tr>
         </table>
     <?php } ?>
