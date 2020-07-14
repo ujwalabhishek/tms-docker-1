@@ -124,11 +124,12 @@
                 </thead>
                  <tbody>
                     <?php
-                    foreach ($final_data as $dat) {
+                    foreach ($final_data as $dat) {$i=1;
                         foreach ($dat as $data) {
+                            
                         ?>
                         <tr>
-                            <td><?php echo ($final_data-(count($final_data)-1)); ?></td>
+                            <td><?php echo $i++; ?></td>
                             <td><?php echo $data->crse_name; ?></td>
                             <td><?php echo $data->class_start_datetime; ?></td>
                             <td><?php echo $data->provider; ?></td>
