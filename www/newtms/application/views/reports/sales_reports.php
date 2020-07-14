@@ -124,7 +124,8 @@
                 </thead>
                  <tbody>
                     <?php
-                    foreach ($final_data as $data) {
+                    foreach ($final_data as $dat) {
+                        foreach ($dat as $data) {
                         ?>
                         <tr>
                             <td><?php echo '1' ?></td>
@@ -132,13 +133,14 @@
                             <td><?php echo $data->class_start_datetime; ?></td>
                             <td><?php echo $data->tenant_id; ?></td>
                             <td>$ <?php echo number_format($data->class_fees, 2, '.', ''); ?></td>
-                            <td>$ <?php echo count($data); ?></td>
+                            <td>$ <?php echo count($dat); ?></td>
                             <td>$ <?php echo $data->class_fees; ?></td>
                             <td>$ <?php echo $data->first_name; ?></td>
                             <td><?php echo $data->tax_code; ?></td>
                             <td><?php echo $data->training_score; ?></td>
                         </tr>
                         <?php
+                    }
                     }
                     ?>
                 </tbody>
