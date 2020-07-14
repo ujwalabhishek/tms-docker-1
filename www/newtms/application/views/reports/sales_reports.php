@@ -137,7 +137,7 @@
                             <td>$ <?php echo $data->class_fees; ?></td>
                             <td>$ <?php echo $data->first_name; ?></td>
                             <td><?php echo $data->tax_code; ?></td>
-                            <td><?php echo $data->training_score; ?></td>
+                            <td><?php echo $data->training_score ?? 'NA'; ?></td>
                         </tr>
                         <?php
                     }
