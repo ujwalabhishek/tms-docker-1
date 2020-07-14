@@ -3464,13 +3464,19 @@ SELECT  {$calc_rows} c.crse_name,
     }
     
     public function salesrep($tenant_id,$sales_executive_id,$start,$end){
+        if (!empty($start)) {
+            $sql_start_date = date('Y-m-d', strtotime($start_date));
+        }
+        if (!empty($end)) {
+            $sql_end_date = date('Y-m-d', strtotime($start_date));
+        }
         $get_course_id_query ="SELECT 
             DISTINCT(crse.course_id)
             from class_enrol ce
             left join course_class cc on cc.class_id=ce.class_id and cc.course_id=ce.course_id 
             left join course crse on crse.course_id=ce.course_id 
             where ce.tenant_id='$tenant_id' and ce.sales_executive_id='$sales_executive_id' and
-            date(ce.enrolled_on)>= '$start' and date(ce.enrolled_on) <= '$end' 
+            date(ce.enrolled_on)>= '$sql_start_date' and date(ce.enrolled_on) <= '$sql_end_date' 
             group by cc.course_id"; 
         $get_course_ids = $this->db->query($get_course_id_query)->result();
         
