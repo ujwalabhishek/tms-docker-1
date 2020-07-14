@@ -3503,7 +3503,7 @@ SELECT  {$calc_rows} c.crse_name,
             $result = $this->db->query($qury)->result();
             $result->noofpax = count($result);
             $final_data[]= $result;
-            print_r($final_data);exit;
+            print_r($result);exit;
         }
        print_r($final_data);exit;
         return $final_data;
