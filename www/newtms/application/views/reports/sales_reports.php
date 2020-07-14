@@ -37,7 +37,31 @@
                     </td>
                     <td colspan='5'><?php echo form_dropdown("sales_exec", $executive, $this->input->get('sales_exec'), 'id="sales_exec"') ?>
                     </td>
-                   
+                   <td class="td_heading">Invoice Dt. From:</td>
+                    <td><?php
+                        $start_date = array(
+                            'name' => 'start_date',
+                            'id' => 'start_date',
+                            'style' => 'width:45%',
+                            'value' => $this->input->get('start_date'),
+                            'placeholder' => 'dd-mm-yyyy'
+                        );
+                        echo form_input($start_date);
+                        ?>
+                    </td>
+                    <td class="td_heading">To:</td>
+                    <td colspan="2">
+                        <?php
+                        $start_date = array(
+                            'name' => 'end_date',
+                            'id' => 'end_date',
+                            'style' => 'width:45%',
+                            'value' => $this->input->get('end_date'),
+                            'placeholder' => 'dd-mm-yyyy'
+                        );
+                        echo form_input($start_date);
+                        ?>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="10">&nbsp;</td>
