@@ -124,7 +124,8 @@
                 </thead>
                  <tbody>
                     <?php
-                    foreach ($final_data as $dat) {$i=1;
+                    $i=1;
+                    foreach ($final_data as $dat) {
                         foreach ($dat as $data) {
                             
                         ?>
