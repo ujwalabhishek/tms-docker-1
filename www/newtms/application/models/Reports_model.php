@@ -3480,7 +3480,30 @@ SELECT  {$calc_rows} c.crse_name,
             group by cc.course_id"; 
         $get_course_ids = $this->db->query($get_course_id_query)->result();
         
-        print_r($get_course_ids);exit;
+        $final_data = array();
+        
+        foreach ($get_course_ids as $course){
+            $qury ="
+            SELECT 
+            crse.crse_name,      
+            cc.class_start_datetime,
+            ce.tenant_id as provider,
+            cc.class_fees as coursefee,
+            tup.first_name,
+            tu.tax_code,
+            ce.training_score
+            from class_enrol ce
+            left join course_class cc on cc.class_id=ce.class_id and cc.course_id=ce.course_id 
+            left join tms_users tu on tu.user_id =ce.user_id 
+            left join tms_users_pers tup on tup.user_id =ce.user_id 
+            left join course crse on crse.course_id=ce.course_id 
+            where ce.tenant_id='$tenant_id' and ce.sales_executive_id='$sales_executive_id' and ce.course_id='$course->course_id' and
+            date(ce.enrolled_on)>= '$sql_start_date' and date(ce.enrolled_on) <= '$sql_end_date' 
+            order by cc.course_id asc";
+            $final_data[]= $this->db->query($qury)->result();
+        }
+       
+        print_r($final_data);exit;
         
     }
 
