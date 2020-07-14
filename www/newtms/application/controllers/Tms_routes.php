@@ -70,6 +70,7 @@ $tms_route['RPTFIN']['ops'] = array(
     'SLASMNTCOM' => 'sales',
     'ACTLOG' => 'activity_log',
     'TMSRPTS' => 'tms_report',
+    'SALREP' => 'sales_report',
     'INVADTRAIL' => 'invoice_audit_trail'); //Added for new Invoice Audit Trail Report
 //------------------------ Manage Tenant -------------------------------------
 $tms_route['MNGTENT']['controller_name'] = 'manage_tenant';
