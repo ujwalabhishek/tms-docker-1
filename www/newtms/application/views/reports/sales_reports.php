@@ -10,7 +10,7 @@
     <div class="table-responsive">
         <?php
         $atr = array('id' => 'invoicelistform', 'method' => 'get');
-        echo form_open("reports_finance/invoice_audit_trail", $atr);
+        echo form_open("reports_finance/sales_report", $atr);
         ?>
         <table class="table table-striped">
 

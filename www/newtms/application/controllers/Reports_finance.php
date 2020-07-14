@@ -1536,13 +1536,21 @@ class Reports_finance extends CI_Controller {
     /* activity log code end */
     
     public function sales_report(){
+        
         $data['sideMenuData'] = fetch_non_main_page_content();
-                $tenant_id = $this->tenant_id;
+        $tenant_id = $this->tenant_id;
         $executive = array('' => 'Select');
-        foreach ($this->reportsModel->get_sales_executive($tenant_id)->result() as $item) {
-            $executive[$item->user_id] = $item->user_name;
-        }
         $data['executive'] = $executive;
+        if (!empty($_POST)) {
+            $sales_executive_id = $this->input->post('sales_exec');
+            $start = $this->input->post('start_date');
+            $end = $this->input->post('end_date');
+            foreach ($this->reportsModel->get_sales_executive($tenant_id)->result() as $item) {
+                $executive[$item->user_id] = $item->user_name;
+            }
+
+            $this->reportsModel->salesrep($tenant_id,$sales_executive_id,$start,$end);
+        }
         $data['page_title'] = 'Reports';
         $data['main_content'] = 'reports/sales_reports';
         $this->load->view('layout', $data);
