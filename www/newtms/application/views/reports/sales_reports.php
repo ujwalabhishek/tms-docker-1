@@ -67,7 +67,7 @@
                 </tr>
                    
                 <tr>
-                    <td colspan="3"><button type="submit" value="Search" class="btn btn-xs btn-primary no-mar pull-right" title="Search"><span class="glyphicon glyphicon-search"></span> Search</button></td>
+                    <td colspan="4"><button type="submit" value="Search" class="btn btn-xs btn-primary no-mar pull-right" title="Search"><span class="glyphicon glyphicon-search"></span> Search</button></td>
                 </tr> 
               
             </tbody>
