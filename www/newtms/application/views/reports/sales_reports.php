@@ -129,7 +129,7 @@
                         foreach ($dat as $data) {
                             
                         ?>
-                        <tr>
+                        <tr rowspan='<?php echo count($dat)?>'>
                             <td><?php echo $i++; ?></td>
                             <td><?php echo $data->crse_name; ?></td>
                             <td><?php echo $data->class_start_datetime; ?></td>
