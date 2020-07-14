@@ -4,7 +4,7 @@
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/reportsales.js"></script>
 <div class="col-md-10">
-    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/comission.png"/>  Reports - Sales Assignment and Commission</h2>
+    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/comission.png"/>  Reports - Sales Commission</h2>
     <h5 class="sub_panel_heading_style"><span class="glyphicon glyphicon-search"></span> Search By</h5>
 
     <div class="table-responsive">
@@ -37,24 +37,7 @@
                     </td>
                     <td colspan='5'><?php echo form_dropdown("sales_exec", $executive, $this->input->get('sales_exec'), 'id="sales_exec"') ?>
                     </td>
-                    <td width="15%" class="td_heading">
-                        <?php
-                        $checked = ($this->input->get('search_select') == 2) ? TRUE : FALSE;
-                        $data = array(
-                            'id' => 'search_select',
-                            'class' => 'search_select',
-                            'name' => 'search_select',
-                            'value' => 2,
-                            'checked' => $checked
-                        );
-                        echo form_radio($data);
-                        ?>
-                        &nbsp;&nbsp;Non Sales Executive:
-                    </td>
-                    
-                    <td colspan='5'>
-                        <?php echo form_dropdown("non_sales_exec", $non_executive, $this->input->get('non_sales_exec'), 'id="non_sales_exec"') ?>
-                    </td>
+                   
                 </tr>
                 <tr>
                     <td colspan="10">&nbsp;</td>
