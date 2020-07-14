@@ -77,7 +77,7 @@
     <?php
     $start_date = $this->input->get('start_date');
     $end_date = $this->input->get('end_date');
- 
+    if (empty($tabledata)) {
         if (empty($start_date) && empty($end_date)) {
             $period = ' for ' . date('F d Y, l');
         } else {
@@ -178,7 +178,14 @@
             </table>
         </div>
         <div class='error'>*: All currency values are in <b>SGD</b>.</div>
-   
+    <?php } else { ?>
+        <br>
+        <table class="table table-striped">
+            <tr class="danger">
+                <td colspan="10" style="color:red;text-align: center;"></td>
+            </tr>
+        </table>
+    <?php } ?>
     <br>
     <ul class="pagination pagination_style">
         <?php echo $pagination; ?>
