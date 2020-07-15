@@ -1536,7 +1536,7 @@ class Reports_finance extends CI_Controller {
     /* activity log code end */
     
     public function sales_report(){
-        
+        ini_set("memory_limit","512M");
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $executive = array('' => 'Select');
