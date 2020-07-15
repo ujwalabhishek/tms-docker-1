@@ -5174,7 +5174,7 @@ function export_sales_report_xls($tabledata) {
         $sheet->setCellValue($column_names[$i], $column_title[$i]);
     }
 
-    $sheet->getStyle('A3:U3')->applyFromArray(
+    $sheet->getStyle('A3:J3')->applyFromArray(
             array('fill' => array(
                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
                     'color' => array('argb' => 'FFCCCCCC')
@@ -5182,7 +5182,7 @@ function export_sales_report_xls($tabledata) {
             )
     );
 
-    $sheet->getStyle('A3:U3')->getFont()->setBold(true);
+    $sheet->getStyle('A3:J3')->getFont()->setBold(true);
     $r = 4;
     $CI->load->model('reports_model', 'reportsmodel');
     $data_arr = array();
@@ -5219,10 +5219,11 @@ function export_sales_report_xls($tabledata) {
         $sheet->setCellValue('D' . $r, $provider);
         $sheet->setCellValue('E' . $r, $row->coursefee);
         $sheet->setCellValue('F' . $r, count($dat));
-        $sheet->setCellValue('G' . $r, $row->first_name);
-        $sheet->setCellValueExplicit('H' . $r, $row->tax_code);
-        $sheet->setCellValueExplicit('I' . $r, $row->tenant_name);
-        $sheet->setCellValue('J' . $r, $row->training_score);
+        $sheet->setCellValue('G' . $r, $row->coursefee);
+        $sheet->setCellValue('H' . $r, $row->first_name);
+        $sheet->setCellValueExplicit('I' . $r, $row->tax_code);
+        $sheet->setCellValueExplicit('J' . $r, $row->tenant_name);
+        $sheet->setCellValue('K' . $r, $row->training_score);
         
         $r++;
         }
