@@ -5182,8 +5182,8 @@ function export_sales_report_xls($tabledata) {
     $CI->load->model('reports_model', 'reportsmodel');
     $data_arr = array();
     $duplicate_mobile_arry = array();
-    $start_row = 'B4';
-    $count = 4;
+    //$start_row = 'B4';
+    //$count = 4;
     foreach ($tabledata as $dat) {
         
         if(count($dat) > 1){
@@ -5191,9 +5191,9 @@ function export_sales_report_xls($tabledata) {
         }
         
         foreach ($dat as $row) {
-            $start_row = $continue? $continue:$start_row;
-            $merge_row= $start_row.":B".($count+count($dat));
-        $sheet->mergeCells($merge_row);   
+            //$start_row = $continue? $continue:$start_row;
+            //$merge_row= $start_row.":B".($count+count($dat));
+        //$sheet->mergeCells($merge_row);   
         //author: added by shubhranshu as per client requirement on 11/03/2020
         if($row->provider == 'T02'){
            $provider = 'Xprienz';
@@ -5227,8 +5227,8 @@ function export_sales_report_xls($tabledata) {
         $sheet->setCellValue('J' . $r, $row->training_score);
         
         $r++;
-        $count=$count+count($dat);
-        $continue = 'B'.$count;
+        //$count=$count+count($dat);
+        //$continue = 'B'.$count;
         }
     }
     ob_end_clean();
