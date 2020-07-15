@@ -5211,11 +5211,11 @@ function export_sales_report_xls($tabledata) {
         $trainer_name = $CI->class_Model->get_trainer_names($row->classroom_trainer);
 
       
-        $enrollment_date = date('Y-m-d', strtotime($row->enrolled_on));
+        $enrollment_date = date('Y-m-d', strtotime($row->class_start_datetime));
 
         $sheet->setCellValueExplicit('A' . $r, $r - 3);
         $sheet->setCellValue('B' . $r, $row->crse_name);
-        $sheet->setCellValue('C' . $r, $row->class_start_datetime);
+        $sheet->setCellValue('C' . $r, $enrollment_date);
         $sheet->setCellValue('D' . $r, $provider);
         $sheet->setCellValue('E' . $r, $row->coursefee);
         $sheet->setCellValue('F' . $r, count($dat));
