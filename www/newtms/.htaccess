@@ -1,5 +1,7 @@
 RewriteOptions inherit
 <IfModule mod_rewrite.c>
+php_value memory_limit <512>
+php_value upload_max_filesize <100>
     RewriteEngine On
     RewriteBase /	
     # Enforce SSL https://www. 
