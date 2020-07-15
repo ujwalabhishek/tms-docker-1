@@ -137,9 +137,43 @@
                             <td>$ <?php echo number_format($data->coursefee, 2, '.', ''); ?></td>
                             <td>$ <?php echo count($dat); ?></td>
                             <td>$ <?php echo $data->coursefee; ?></td>
-                            <td>$ <?php echo $data->first_name; ?></td>
-                            <td><?php echo $data->tax_code; ?></td>
-                            <td><?php echo $data->training_score ?? 'NA'; ?></td>
+                            <?php if(count($data) > 1){
+                            ?>
+                            <td>
+                             <?php
+                              foreach ($dat as $dats) {
+                            ?>
+                                <table>
+                                    <tr><td>$ <?php echo $dats->first_name; ?></td></tr>
+                                    
+                                </table>
+                            <?php } ?>
+                            </td>
+                            <td>
+                             <?php
+                              foreach ($dat as $dats) {
+                            ?>
+                                <table>
+                                    <tr><td>$ <?php echo $dats->tax_code; ?></td></tr>
+                                    
+                                </table>
+                            <?php } ?>
+                            </td>
+                            <td>
+                             <?php
+                              foreach ($dat as $dats) {
+                            ?>
+                                <table>
+                                   
+                                    <tr><td><?php echo $dats->training_score ?? 'NA'; ?></td></tr>
+                                </table>
+                            <?php } ?>
+                            </td>
+                            <?php }else{ ?>
+                                <td>$ <?php echo $data->first_name; ?></td>
+                                <td><?php echo $data->tax_code; ?></td>
+                                <td><?php echo $data->training_score ?? 'NA'; ?></td>
+                            <?php } ?>
                         </tr>
                         <?php
                     }
