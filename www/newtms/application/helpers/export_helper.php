@@ -5164,7 +5164,7 @@ function export_sales_report_xls($tabledata) {
     $filename = $tabledata[0]->comp_reg_no . "_" . $course_end_date_filename . "_" . $course_end_time_filename . ".xls";
 
      $sheet->getStyle('D2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-    $sheet->setCellValueExplicit('D2', 'Total Trainees: '.count($total_data));
+    $sheet->setCellValueExplicit('D2', 'Total Trainees: '.count($tabledata));
 
     $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3');
     $column_title = array('SL #',
