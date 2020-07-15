@@ -5155,11 +5155,11 @@ function export_sales_report_xls($tabledata) {
         
     $sheet->mergeCells('A1:G1');
     $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-    $sheet->setCellValue('A1', 'Sales REPORT As ON ' . date('M j Y, l'));
+    $sheet->setCellValue('A1', 'CUMULATIVE REPORT AS ON ' . date('M j Y, l'));
     $sheet->getStyle('A1:G1')->getFont()->setBold(true);
 
-     $sheet->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-    $sheet->setCellValueExplicit('B2', 'Total Courses: '.count($tabledata));
+     //$sheet->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    //$sheet->setCellValueExplicit('B2', 'Total Courses: '.count($tabledata));
 
     $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3','J3');
     $column_title = array('SL #',
@@ -5186,9 +5186,7 @@ function export_sales_report_xls($tabledata) {
     //$count = 4;
     foreach ($tabledata as $dat) {
         
-        if(count($dat) > 1){
-            
-        }
+       
         
         foreach ($dat as $row) {
             //$start_row = $continue? $continue:$start_row;
@@ -5198,7 +5196,7 @@ function export_sales_report_xls($tabledata) {
         if($row->provider == 'T02'){
            $provider = 'Xprienz';
         }else if($row->provider == 'T17'){
-            $provider = 'Everest';
+            $provider = 'Wablab';
         }
         else if($row->provider == 'T13'){
             $provider = 'Everest';
