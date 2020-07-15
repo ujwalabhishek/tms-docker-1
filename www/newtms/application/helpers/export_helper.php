@@ -5191,7 +5191,7 @@ function export_sales_report_xls($tabledata) {
         }
         
         foreach ($dat as $row) {
-            $start_row = $continue ?? $start_row;
+            $start_row = ($continue >1) ?? $start_row;
             $merge_row= $start_row.":B".$count+count($dat);echo $merge_row;exit;
         $sheet->mergeCells($merge_row);   
         //author: added by shubhranshu as per client requirement on 11/03/2020
