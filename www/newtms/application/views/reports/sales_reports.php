@@ -133,7 +133,7 @@
                             <td><?php echo $i++; ?></td>
                             <td><?php echo $data->crse_name; ?></td>
                             <td><?php echo $data->class_start_datetime; ?></td>
-                            <td><?php if($data->provider == 'T02'){echo 'Xprienz'}elseif($data->provider == 'T20'){echo "Wablab";}elseif($data->provider == 'T17'){echo "Everest";} ?></td>
+                            <td><?php if($data->provider == 'T02'){echo 'Xprienz';}elseif($data->provider == 'T20'){echo "Wablab";}elseif($data->provider == 'T17'){echo "Everest";} ?></td>
                             <td>$ <?php echo number_format($data->coursefee, 2, '.', ''); ?></td>
                             <td>$ <?php echo count($dat); ?></td>
                             <!--<td>$ <?php //echo $data->coursefee; ?></td>-->
