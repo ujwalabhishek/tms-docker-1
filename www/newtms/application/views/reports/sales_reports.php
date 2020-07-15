@@ -137,7 +137,7 @@
                             <td>$ <?php echo number_format($data->coursefee, 2, '.', ''); ?></td>
                             <td>$ <?php echo count($dat); ?></td>
                             <td>$ <?php echo $data->coursefee; ?></td>
-                            <?php if(count($data) > 1){
+                            <?php if(count($dat) > 1){
                             ?>
                             <td>
                              <?php
