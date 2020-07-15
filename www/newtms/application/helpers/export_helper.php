@@ -5164,13 +5164,11 @@ function export_sales_report_xls($tabledata) {
     $filename = $tabledata[0]->comp_reg_no . "_" . $course_end_date_filename . "_" . $course_end_time_filename . ".xls";
 
      $sheet->getStyle('D2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-    $sheet->setCellValueExplicit('D2', 'Total Trainees: '.$total_data);
+    $sheet->setCellValueExplicit('D2', 'Total Trainees: '.count($total_data));
 
-    $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3', 'J3', 'K3', 'L3', 'M3', 'N3', 'O3', 'P3', 'Q3', 'R3', 'S3', 'T3', 'U3');
+    $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3');
     $column_title = array('SL #',
-        'Trainee Name', 'Trainee ID', 'ID Type', 'Email', 'Mobile Country Code', 'Mobile Area Code', 'Mobile', 'TP Alias', 'Course Title', 'Area of Training',
-        'Course Reference Number', 'Course Run Reference Number',
-        'Course Start Date', 'Course End Date', 'Postal Code', 'Floor', 'Unit', 'Room', 'Full Qualification', 'Trainer Name'
+        'COURSE NAME','TRAINNING PROVIDER','COURSE FEE','NO. OF PAX','TOTAL SALES','TRAINEE NAME','NRIC NO','STATUS'
     );
     for ($i = 0; $i < count($column_title); $i++) {
         $sheet->setCellValue($column_names[$i], $column_title[$i]);
@@ -5230,7 +5228,7 @@ function export_sales_report_xls($tabledata) {
         }
     }
     ob_end_clean();
-    $filename = "'Sales_Report_' .date('h-m-i').xls";
+    $filename = "Sales_Report_ ".date('H-i-s')."xls";
     header('Content-Type: application/vnd.ms-excel');
     header('Content-Disposition: attachment;filename=' . $filename);
     header('Cache-Control: max-age=0');
