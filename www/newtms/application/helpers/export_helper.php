@@ -5157,7 +5157,7 @@ function export_sales_report_xls($tabledata) {
     $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     $sheet->setCellValue('A1', 'Sales REPORT As ON ' . date('M j Y, l'));
     $sheet->getStyle('A1:G1')->getFont()->setBold(true);
- $sheet->mergeCells('A2:G2');
+ $sheet->mergeCells('B2:C2');
      $sheet->getStyle('B2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     $sheet->setCellValueExplicit('B2', 'Total Courses: '.count($tabledata));
 
