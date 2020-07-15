@@ -95,10 +95,9 @@
         <div>
             
             <span class="pull-right">
-                <a href="<?php echo site_url('/reports_finance/invoice_audit_trail_export_XLS') . '?' . $_SERVER['QUERY_STRING']; ?>"  class="small_text1">
+                <a href="<?php echo site_url('/reports_finance/sales_report_export_xls') . '?sales_exec=' . $_POST['sales_exec'].'&start='.$_POST['start_date'].'&end='.$_POST['end_date']; ?>"  class="small_text1">
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
-                <a href="<?php echo site_url('/reports_finance/invoice_audit_trail_export_PDF') . '?' . $_SERVER['QUERY_STRING']; ?>" class="small_text1">
-                    <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>
+               
             </span>
         </div>
         <br><br>

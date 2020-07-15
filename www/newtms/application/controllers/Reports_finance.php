@@ -1555,4 +1555,69 @@ class Reports_finance extends CI_Controller {
         $data['main_content'] = 'reports/sales_reports';
         $this->load->view('layout', $data);
     }
+    
+    public function sales_report_export_xls() {
+
+        //Read page parameter to display report
+        $tenant_id = $this->session->userdata('userDetails')->tenant_id;
+        $invoice_id = $this->input->get('invoice_id');
+        $start_date = $this->input->get('start_date');
+        $end_date = $this->input->get('end_date');
+        $company_id = $this->input->get('company_id');
+
+        //Build required values to display invoice audit report in table format
+        $field = ($this->input->get('f')) ? $this->input->get('f') : 'invoice_id';
+        $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
+        $tabledata = $this->reportsModel->get_invoice_audit_trail($tenant_id, $records_per_page, $offset, $field, $order_by, $payment_status, $start_date, $end_date, $invoice_id, $company_id);
+
+        //EXPORT PART
+        $this->load->helper('export_helper');
+        $count_tabledata = count($tabledata);
+        $excel_titles = array('Inv #', 'Inv Dt.', 'Inv Type', 'Taxcode', 'Discount', 'Subsidy', 'GST', 'Net Amt.', 'Prev. Inv. Number', 'Next Inv. Number');
+        $excel_data = array();
+        for ($i = 0; $i < $count_tabledata; $i++) {
+            $paid_arr = array('PAID' => 'Paid', 'PARTPAID' => 'Part Paid', 'NOTPAID' => 'Not Paid');
+            $paid_sty_arr = array('PAID' => 'color:green;', 'PARTPAID' => 'color:red;', 'NOTPAID' => 'color:red;');
+            if ($tabledata[$i]->enrolment_mode == 'SELF') {
+                $taxcode = $tabledata[$i]->tax_code;
+                $name = $tabledata[$i]->first_name . ' ' . $tabledata[$i]->last_name;
+                $status = $paid_arr[$tabledata[$i]->payment_status];
+            } else {
+                // Modified by dummy for internal staff enroll on 01 Dec 2014.
+                if ($tabledata[$i]->company_id[0] == 'T') {
+                    $tenant_details = fetch_tenant_details($tabledata[$i]->company_id);
+                    $taxcode = $tenant_details->tenant_name;
+                    $name = $tenant_details->tenant_name;
+                } else {
+                    $taxcode = $tabledata[$i]->comp_regist_num;
+                    $name = $tabledata[$i]->company_name;
+                }
+                $status = ($tabledata[$i]->payment_status > 0) ? 'Part Paid/Not Paid' : 'Paid';
+            }
+            $inv_type1 = $tabledata[$i]->inv_type1 . ' (' . $name . ')';
+            $excel_data[$i][] = $tabledata[$i]->invoice_id;
+            $excel_data[$i][] = date('d/m/Y', strtotime($tabledata[$i]->inv_date));
+            $excel_data[$i][] = $inv_type1;
+            $excel_data[$i][] = $this->mask_format($taxcode);
+            $excel_data[$i][] = '$ ' . number_format($tabledata[$i]->total_inv_discnt, 2, '.', '') . ' SGD';
+            $excel_data[$i][] = '$ ' . number_format($tabledata[$i]->total_inv_subsdy, 2, '.', '') . ' SGD';
+            $excel_data[$i][] = '$ ' . number_format($tabledata[$i]->total_gst, 2, '.', '') . ' SGD';
+            $excel_data[$i][] = '$ ' . number_format($tabledata[$i]->total_inv_amount, 2, '.', '') . ' SGD';
+            $excel_data[$i][] = $tabledata[$i]->invoice_id;
+            $excel_data[$i][] = $tabledata[$i]->regen_inv_id;
+        }
+        if (empty($start_date) && empty($end_date)) {
+            $period = ' for ' . date('F d Y, l');
+        } else {
+            $period = 'for the period';
+            if (!empty($start_date))
+                $period .= ' from ' . date('F d Y', DateTime::createFromFormat('d-m-Y', $start_date)->getTimestamp());
+            if (!empty($end_date))
+                $period .= ' to ' . date('F d Y', DateTime::createFromFormat('d-m-Y', $end_date)->getTimestamp());
+        }
+        $excel_filename = 'invlice_audit_list.xls';
+        $excel_sheetname = 'Invoice Audit Trail';
+        $excel_main_heading = 'Accounting Reports - Invoice Audit Trail' . $period;
+        export_page_fields($excel_titles, $excel_data, $excel_filename, $excel_sheetname, $excel_main_heading);
+    }
 }
