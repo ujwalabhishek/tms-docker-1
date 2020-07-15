@@ -3509,5 +3509,51 @@ SELECT  {$calc_rows} c.crse_name,
         return $final_data;
         
     }
+    
+    public function get_sales_report_data_xls($tenant_id, $start_date, $end_date, $sales_exec){
+        if (!empty($start_date)) {
+            $sql_start_date = date('Y-m-d', strtotime($start_date));
+        }
+        if (!empty($end_date)) {
+            $sql_end_date = date('Y-m-d', strtotime($end_date));
+        }
+        $get_course_id_query ="SELECT 
+            DISTINCT(crse.course_id)
+            from class_enrol ce
+            left join course_class cc on cc.class_id=ce.class_id and cc.course_id=ce.course_id 
+            left join course crse on crse.course_id=ce.course_id 
+            where ce.tenant_id='$tenant_id' and ce.sales_executive_id='$sales_exec' and
+            date(ce.enrolled_on)>= '$sql_start_date' and date(ce.enrolled_on) <= '$sql_end_date' 
+            group by cc.course_id"; 
+        $get_course_ids = $this->db->query($get_course_id_query)->result();
+        
+        $final_data = array();
+        
+        foreach ($get_course_ids as $course){
+            $qury ="
+            SELECT 
+            crse.crse_name,      
+            cc.class_start_datetime,
+            ce.tenant_id as provider,
+            cc.class_fees as coursefee,
+            tup.first_name,
+            tu.tax_code,
+            ce.training_score
+            from class_enrol ce
+            left join course_class cc on cc.class_id=ce.class_id and cc.course_id=ce.course_id 
+            left join tms_users tu on tu.user_id =ce.user_id 
+            left join tms_users_pers tup on tup.user_id =ce.user_id 
+            left join course crse on crse.course_id=ce.course_id 
+            where ce.tenant_id='$tenant_id' and ce.sales_executive_id='$sales_exec' and ce.course_id='$course->course_id' and
+            date(ce.enrolled_on)>= '$sql_start_date' and date(ce.enrolled_on) <= '$sql_end_date' 
+            order by cc.course_id asc";
+            $result = $this->db->query($qury)->result();
+
+            $final_data[]= $result;
+         
+        }
+     
+        return $final_data;
+    }
 
 }

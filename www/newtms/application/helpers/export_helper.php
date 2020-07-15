@@ -5134,3 +5134,107 @@ function export_archive_trainee($data,$course_name,$class_name) {
     $objWriter->save('php://output');
 }
 
+function export_sales_report_xls($tabledata) {
+    $total_data = count($tabledata);
+
+    $CI = & get_instance();
+    $CI->load->library('excel');
+    $CI->excel->setActiveSheetIndex(0);
+    $CI->excel->getActiveSheet()->setTitle('Sales  Report');
+    $sheet = $CI->excel->getActiveSheet();
+    foreach (range('A', 'Z') as $columnID) {
+        $CI->excel->getActiveSheet()->getColumnDimension($columnID)
+                ->setAutoSize(true);
+    }
+    foreach (range('A', 'C') as $columnID) {
+        $var = 'A';
+        $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
+                ->setAutoSize(true);
+    }
+    
+        
+    $sheet->mergeCells('A1:G1');
+    $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->setCellValue('A1', 'Sales REPORT As ON ' . date('M j Y, l'));
+    $sheet->getStyle('A1:G1')->getFont()->setBold(true);
+
+//    $course_end_time_filename = date('His', strtotime($tabledata[0]->class_end_datetime));
+//    $course_end_date_filename = date('Ymd', strtotime($tabledata[0]->class_end_datetime));
+
+    $filename = $tabledata[0]->comp_reg_no . "_" . $course_end_date_filename . "_" . $course_end_time_filename . ".xls";
+
+     $sheet->getStyle('D2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->setCellValueExplicit('D2', 'Total Trainees: '.$total_data);
+
+    $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3', 'J3', 'K3', 'L3', 'M3', 'N3', 'O3', 'P3', 'Q3', 'R3', 'S3', 'T3', 'U3');
+    $column_title = array('SL #',
+        'Trainee Name', 'Trainee ID', 'ID Type', 'Email', 'Mobile Country Code', 'Mobile Area Code', 'Mobile', 'TP Alias', 'Course Title', 'Area of Training',
+        'Course Reference Number', 'Course Run Reference Number',
+        'Course Start Date', 'Course End Date', 'Postal Code', 'Floor', 'Unit', 'Room', 'Full Qualification', 'Trainer Name'
+    );
+    for ($i = 0; $i < count($column_title); $i++) {
+        $sheet->setCellValue($column_names[$i], $column_title[$i]);
+    }
+
+    $sheet->getStyle('A3:U3')->applyFromArray(
+            array('fill' => array(
+                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array('argb' => 'FFCCCCCC')
+                )
+            )
+    );
+
+    $sheet->getStyle('A3:U3')->getFont()->setBold(true);
+    $r = 4;
+    $CI->load->model('reports_model', 'reportsmodel');
+    $data_arr = array();
+    $duplicate_mobile_arry = array();
+    foreach ($tabledata as $dat) {
+        foreach ($dat as $row) {
+        
+        
+     
+        //author: added by shubhranshu as per client requirement on 11/03/2020
+        if($row->provider == 'T02'){
+           $provider = 'Xprienz';
+        }else if($row->provider == 'T17'){
+            $provider = 'Everest';
+        }
+        else if($row->provider == 'T13'){
+            $provider = 'Everest';
+        }else{
+            $provider = 'Test';
+        }
+       
+        
+        /* skm code for new style email which is the combination of taxocde and class name intials st */
+
+        $CI->load->model('class_model', 'class_Model');
+        $trainer_name = $CI->class_Model->get_trainer_names($row->classroom_trainer);
+
+      
+        $enrollment_date = date('Y-m-d', strtotime($row->enrolled_on));
+
+        $sheet->setCellValueExplicit('A' . $r, $r - 3);
+        $sheet->setCellValue('B' . $r, $row->crse_name);
+        $sheet->setCellValue('C' . $r, $row->tax_code);
+        $sheet->setCellValue('D' . $r, $provider);
+        $sheet->setCellValue('E' . $r, $row->coursefee);
+        $sheet->setCellValue('F' . $r, count($dat));
+        $sheet->setCellValue('G' . $r, $row->first_name);
+        $sheet->setCellValueExplicit('H' . $r, $row->tax_code);
+        $sheet->setCellValueExplicit('I' . $r, $row->tenant_name);
+        $sheet->setCellValue('J' . $r, $row->training_score);
+        
+        $r++;
+        }
+    }
+    ob_end_clean();
+    $filename = "'Sales_Report_' .date('h-m-i').xls";
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment;filename=' . $filename);
+    header('Cache-Control: max-age=0');
+    $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+    $objWriter->save('php://output');
+}
+
