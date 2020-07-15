@@ -1566,7 +1566,7 @@ class Reports_finance extends CI_Controller {
         
 
         $tabledata = $this->reportsModel->get_sales_report_data_xls($tenant_id, $start_date, $end_date, $sales_exec);
-
+        $this->load->helper('export_helper');
         
         export_sales_report_xls($tabledata);
     }
