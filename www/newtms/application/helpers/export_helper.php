@@ -5158,13 +5158,8 @@ function export_sales_report_xls($tabledata) {
     $sheet->setCellValue('A1', 'Sales REPORT As ON ' . date('M j Y, l'));
     $sheet->getStyle('A1:G1')->getFont()->setBold(true);
 
-//    $course_end_time_filename = date('His', strtotime($tabledata[0]->class_end_datetime));
-//    $course_end_date_filename = date('Ymd', strtotime($tabledata[0]->class_end_datetime));
-
-    $filename = $tabledata[0]->comp_reg_no . "_" . $course_end_date_filename . "_" . $course_end_time_filename . ".xls";
-
-     $sheet->getStyle('D2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-    $sheet->setCellValueExplicit('D2', 'Total Trainees: '.count($tabledata));
+     $sheet->getStyle('B2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->setCellValueExplicit('B2', 'Total Courses: '.count($tabledata));
 
     $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3','J3');
     $column_title = array('SL #',
@@ -5221,9 +5216,8 @@ function export_sales_report_xls($tabledata) {
         $sheet->setCellValue('F' . $r, count($dat));
         $sheet->setCellValue('G' . $r, $row->coursefee);
         $sheet->setCellValue('H' . $r, $row->first_name);
-        $sheet->setCellValueExplicit('I' . $r, $row->tax_code);
-        $sheet->setCellValueExplicit('J' . $r, $row->tenant_name);
-        $sheet->setCellValue('K' . $r, $row->training_score);
+        $sheet->setCellValue('I' . $r, $row->tax_code);
+        $sheet->setCellValue('J' . $r, $row->training_score);
         
         $r++;
         }
