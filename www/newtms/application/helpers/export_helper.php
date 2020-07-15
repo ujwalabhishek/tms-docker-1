@@ -5228,7 +5228,7 @@ function export_sales_report_xls($tabledata) {
         }
     }
     ob_end_clean();
-    $filename = "Sales_Report_ ".date('H-i-s')."xls";
+    $filename = "Sales_Report_ ".date('H-i-s').".xls";
     header('Content-Type: application/vnd.ms-excel');
     header('Content-Disposition: attachment;filename=' . $filename);
     header('Cache-Control: max-age=0');
