@@ -5168,7 +5168,7 @@ function export_sales_report_xls($tabledata) {
 
     $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3');
     $column_title = array('SL #',
-        'COURSE NAME','TRAINNING PROVIDER','COURSE FEE','NO. OF PAX','TOTAL SALES','TRAINEE NAME','NRIC NO','STATUS'
+        'COURSE NAME','COURSE DATE','TRAINNING PROVIDER','COURSE FEE','NO. OF PAX','TOTAL SALES','TRAINEE NAME','NRIC NO','STATUS'
     );
     for ($i = 0; $i < count($column_title); $i++) {
         $sheet->setCellValue($column_names[$i], $column_title[$i]);
@@ -5215,7 +5215,7 @@ function export_sales_report_xls($tabledata) {
 
         $sheet->setCellValueExplicit('A' . $r, $r - 3);
         $sheet->setCellValue('B' . $r, $row->crse_name);
-        $sheet->setCellValue('C' . $r, $row->tax_code);
+        $sheet->setCellValue('C' . $r, $row->class_start_datetime);
         $sheet->setCellValue('D' . $r, $provider);
         $sheet->setCellValue('E' . $r, $row->coursefee);
         $sheet->setCellValue('F' . $r, count($dat));
