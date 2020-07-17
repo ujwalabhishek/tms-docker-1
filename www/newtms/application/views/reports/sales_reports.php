@@ -135,7 +135,7 @@
                             <td><?php if($data->provider == 'T02'){echo 'Xprienz';}elseif($data->provider == 'T20'){echo "Wablab";}elseif($data->provider == 'T17'){echo "Everest";} ?></td>
                             <td>$ <?php echo number_format($data->coursefee, 2, '.', ''); ?></td>
                             <td> <?php echo count($dat); ?></td>
-                            <td rowspan="<?php echo count($dat); ?>">$ <?php echo ($data->coursefee * count($dat)); ?></td>
+                            <td>$ <?php echo ($data->coursefee * count($dat)); ?></td>
                             <td><?php echo $data->first_name; ?></td>
                             <td><?php echo $data->tax_code; ?></td>
                             <td><?php echo $data->training_score ?? 'NA'; ?></td>
