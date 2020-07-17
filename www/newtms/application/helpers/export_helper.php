@@ -5153,7 +5153,7 @@ function export_sales_report_xls($tabledata) {
     }
     
         
-    $sheet->mergeCells('A1:G1');
+    $sheet->mergeCells('A1:J1');
     $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     $sheet->setCellValue('A1', 'CUMULATIVE REPORT AS ON ' . date('M j Y, l'));
     $sheet->getStyle('A1:G1')->getFont()->setBold(true);
