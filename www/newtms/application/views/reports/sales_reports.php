@@ -138,8 +138,8 @@
                             <td> <?php echo count($dat); ?></td>
                             <?php if((count($dat) > 1) && ($j ==1)){ $j=0;?>
                             <td rowspan="<?php echo count($dat);?>">$ <?php echo ($data->coursefee * count($dat)); ?></td>
-                            <?php }else{?>
-                            
+                            <?php }else if(count($dat) == 1){?>
+                                 <td>$ <?php echo ($data->coursefee * count($dat)); ?></td>
                              <?php }?>
                             <td><?php echo $data->first_name; ?></td>
                             <td><?php echo $data->tax_code; ?></td>
