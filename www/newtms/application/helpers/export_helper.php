@@ -5154,6 +5154,13 @@ function export_sales_report_xls($tabledata) {
     
         
     $sheet->mergeCells('A1:J1');
+    $sheet->getStyle('A1:J1')->applyFromArray(
+            array('fill' => array(
+                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array('argb' => 'AAKKJJSS')
+                )
+            )
+    );
     $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     $sheet->setCellValue('A1', 'CUMULATIVE REPORT AS ON ' . date('M j Y, l'));
     $sheet->getStyle('A1:G1')->getFont()->setBold(true);
@@ -5168,7 +5175,7 @@ function export_sales_report_xls($tabledata) {
     for ($i = 0; $i < count($column_title); $i++) {
         $sheet->setCellValue($column_names[$i], $column_title[$i]);
     }
-
+    
     $sheet->getStyle('A3:J3')->applyFromArray(
             array('fill' => array(
                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
