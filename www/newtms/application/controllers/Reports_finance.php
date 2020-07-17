@@ -1551,7 +1551,7 @@ class Reports_finance extends CI_Controller {
             $all_data = $this->reportsModel->salesrep($tenant_id,$sales_executive_id,$start,$end);
             $data['final_data']=$all_data;
         }
-        if($this->input->post('start_date') || $this->input->post('end_date')){
+        if($this->input->post('start_date')=='' || $this->input->post('end_date')==''){
             $data['error']='Kindly Select The Rate Range!!';
         }
         $data['page_title'] = 'Reports';
