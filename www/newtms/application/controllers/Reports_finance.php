@@ -1552,7 +1552,7 @@ class Reports_finance extends CI_Controller {
             $data['final_data']=$all_data;
         }
         if($this->input->post('start_date')=='' || $this->input->post('end_date')==''){
-            $data['error']='Kindly Select The Rate Range!!';
+            $data['error']='Kindly Select The Date Range!!';
         }
         $data['page_title'] = 'Reports';
         $data['main_content'] = 'reports/sales_reports';
