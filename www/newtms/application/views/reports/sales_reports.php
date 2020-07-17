@@ -124,6 +124,7 @@
                  <tbody>
                     <?php
                     $i=1;
+                    $j=1;
                     foreach ($final_data as $dat) {
                         foreach ($dat as $data) {
                             
@@ -135,7 +136,7 @@
                             <td><?php if($data->provider == 'T02'){echo 'Xprienz';}elseif($data->provider == 'T20'){echo "Wablab";}elseif($data->provider == 'T17'){echo "Everest";} ?></td>
                             <td>$ <?php echo number_format($data->coursefee, 2, '.', ''); ?></td>
                             <td> <?php echo count($dat); ?></td>
-                            <?php if(count($dat) > 1){?>
+                            <?php if((count($dat) > 1) && ($j ==1)){?>
                             <td rowspan="<?php echo count($dat);?>">$ <?php echo ($data->coursefee * count($dat)); ?></td>
                             <?php }else{?>
                             <td>$ <?php echo ($data->coursefee * count($dat)); ?></td>
