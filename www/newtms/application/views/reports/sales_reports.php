@@ -134,7 +134,7 @@
                             <td><?php echo $data->class_start_datetime; ?></td>
                             <td><?php if($data->provider == 'T02'){echo 'Xprienz';}elseif($data->provider == 'T20'){echo "Wablab";}elseif($data->provider == 'T17'){echo "Everest";} ?></td>
                             <td>$ <?php echo number_format($data->coursefee, 2, '.', ''); ?></td>
-                            <td>$ <?php echo count($dat); ?></td>
+                            <td> <?php echo count($dat); ?></td>
                             <!--<td>$ <?php //echo $data->coursefee; ?></td>-->
                             <td><?php echo $data->first_name; ?></td>
                             <td><?php echo $data->tax_code; ?></td>
@@ -152,7 +152,7 @@
         <br>
         <table class="table table-striped">
             <tr class="danger">
-                <td colspan="10" style="color:red;text-align: center;"></td>
+                <td colspan="10" style="color:red;text-align: center;"> <?php $error;?></td>
             </tr>
         </table>
     <?php } ?>
