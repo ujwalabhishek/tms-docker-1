@@ -5157,7 +5157,7 @@ function export_sales_report_xls($tabledata) {
     $sheet->getStyle('A1:J1')->applyFromArray(
             array('fill' => array(
                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                    'color' => array('argb' => 'AAKKJJSS')
+                    'color' => array('rgb' => '#FF0000')
                 )
             )
     );
