@@ -5219,7 +5219,7 @@ function export_sales_report_xls($tabledata) {
         $sheet->setCellValue('D' . $r, $provider);
         $sheet->setCellValue('E' . $r, $row->coursefee);
         $sheet->setCellValue('F' . $r, count($dat));
-        $sheet->setCellValue('G' . $r, $row->coursefee);
+        $sheet->setCellValue('G' . $r, (count($dat)*$row->coursefee));
         $sheet->setCellValue('H' . $r, $row->first_name);
         $sheet->setCellValue('I' . $r, $row->tax_code);
         $sheet->setCellValue('J' . $r, $row->training_score);
