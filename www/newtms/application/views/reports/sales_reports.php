@@ -152,7 +152,7 @@
         <br>
         <table class="table table-striped">
             <tr class="danger">
-                <td colspan="10" style="color:red;text-align: center;"> <?php $error;?></td>
+                <td colspan="10" style="color:red;text-align: center;"> <?php echo $error;?></td>
             </tr>
         </table>
     <?php } ?>
