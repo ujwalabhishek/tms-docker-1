@@ -124,29 +124,18 @@
                  <tbody>
                     <?php
                     $i=1;
-                    $j=1;
                     foreach ($final_data as $dat) {
                         foreach ($dat as $data) {
                             
                         ?>
                         <tr rowspan='<?php echo count($dat)?>'>
                             <td><?php echo $i++; ?></td>
-                         
-                            <?php if((count($dat) > 1) && ($j ==1)){ $j=0;?>
-                            <td style='vertical-align: middle;' rowspan="<?php echo count($dat);?>"><?php echo $data->crse_name; ?></td>
-                            <td style='vertical-align: middle;' rowspan="<?php echo count($dat);?>"> <?php echo $data->class_start_datetime; ?></td>
-                            <td style='vertical-align: middle;' rowspan="<?php echo count($dat);?>"><?php if($data->provider == 'T02'){echo 'Xprienz';}elseif($data->provider == 'T20'){echo "Wablab";}elseif($data->provider == 'T17'){echo "Everest";} ?></td>
-                            <td style='vertical-align: middle;' rowspan="<?php echo count($dat);?>">$ <?php echo number_format($data->coursefee, 2, '.', ''); ?></td>
-                            <td style='vertical-align: middle;' rowspan="<?php echo count($dat);?>"> <?php echo count($dat); ?></td>
-                            <td style='vertical-align: middle;' rowspan="<?php echo count($dat);?>">$ <?php echo ($data->coursefee * count($dat)); ?></td>
-                            <?php }else if(count($dat) == 1){$j=1?>
-                                <td><?php echo $data->crse_name; ?></td>
-                                <td> <?php echo $data->class_start_datetime; ?></td>
-                                <td><?php if($data->provider == 'T02'){echo 'Xprienz';}elseif($data->provider == 'T20'){echo "Wablab";}elseif($data->provider == 'T17'){echo "Everest";} ?></td>
-                                <td>$ <?php echo number_format($data->coursefee, 2, '.', ''); ?></td>
-                                 <td> <?php echo count($dat); ?></td>
-                                 <td>$ <?php echo ($data->coursefee * count($dat)); ?></td>
-                             <?php }?>
+                            <td><?php echo $data->crse_name; ?></td>
+                            <td><?php echo $data->class_start_datetime; ?></td>
+                            <td><?php if($data->provider == 'T02'){echo 'Xprienz';}elseif($data->provider == 'T20'){echo "Wablab";}elseif($data->provider == 'T17'){echo "Everest";} ?></td>
+                            <td>$ <?php echo number_format($data->coursefee, 2, '.', ''); ?></td>
+                            <td> <?php echo count($dat); ?></td>
+                            <td>$ <?php echo ($data->coursefee * count($dat)); ?></td>
                             <td><?php echo $data->first_name; ?></td>
                             <td><?php echo $data->tax_code; ?></td>
                             <td><?php echo $data->training_score ?? 'NA'; ?></td>
