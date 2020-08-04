@@ -560,7 +560,7 @@ if($course_id!='' && $class_id!=''){
 
 <!----------------modal by ssp start----------------------->
 <?php if (TENANT_ID == 'T02'){$show='display:block';}else{$show='display:none';}?>
-<div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;height: 500px;left: 0px !important;">
+<div class="modal" id="ex1011" style="<?php //echo $show;?>;margin:auto;height: 500px;left: 0px !important;">
 <p>
   <h2 class="panel_heading_style">Declaration</h2>
     <!--Section: Contact v.2-->
