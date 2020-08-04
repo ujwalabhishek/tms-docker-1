@@ -689,7 +689,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 </div>
 <!----------------modal by ssp start----------------------->
 <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02' && $this->input->post('account_type') == 'individual'){$show='display:block';}else{$show='display:none';}?>
-<div class="modal" id="ex1011" style="<?php echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;">
+<div class="modal" id="ex1011" style="<?php //echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;">
 <p>
   <h2 class="panel_heading_style">Declaration</h2>
     <!--Section: Contact v.2-->
