@@ -792,7 +792,7 @@
 <script>
     $(document).ready(function(){
         $('.book_now').click(function(){
-            $(this).hide();
+           // $(this).hide();
         });
         
     //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol 
