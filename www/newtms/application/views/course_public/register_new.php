@@ -635,7 +635,7 @@ Section: Contact v.2
         });
         $tenantid = '<?php echo TENANT_ID;?>';
         if($tenantid == 'T02'){
-            $('#exampleModalCenter').modal('show');
+            //$('#exampleModalCenter').modal('show');
         }
      //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
      <?php if (TENANT_ID == 'T02'){?>
