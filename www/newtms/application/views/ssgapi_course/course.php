@@ -58,7 +58,7 @@
                         <span class="td_heading">Course Code:&nbsp;&nbsp;</span>                        
                     </td>
                     <td>
-                        <input type="text" value="<?php echo $this->input->get('course_code'); ?>" name="course_code" id="course_code">
+                        <input type="text" value="<?php echo $this->input->get('course_code'); ?>" name="course_code" id="course_code_ssg_api">
                         <input type="hidden" value="<?php echo $this->input->get('course_code'); ?>" name="course_code_id" id="course_code_id">
                         <span id='course_code_err'></span>
                     </td>

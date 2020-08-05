@@ -43,4 +43,14 @@ class ssgapi_course extends CI_Controller {
         $data['main_content'] = 'ssgapi_course/course';
         $this->load->view('layout', $data);
     }
+    
+    public function get_course_list_autocomplete(){
+        $query_string = htmlspecialchars($_GET['query'], ENT_QUOTES, 'UTF-8');
+        $google_api_url ="https://public-api.ssg-wsg.sg/courses/directory/autocomplete?keyword=$query_string";
+        $result = file_get_contents($google_api_url);
+
+        print json_encode($result);
+
+        exit;
+    }
 }
