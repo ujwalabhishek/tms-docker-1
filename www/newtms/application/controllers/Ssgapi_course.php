@@ -37,7 +37,7 @@ class ssgapi_course extends CI_Controller {
         $this->load->view('layout', $data);
     }
     
-    public function ssgapi_course(){
+    public function list_search_course(){
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Accounting';
         $data['main_content'] = 'ssgapi_course/course';
