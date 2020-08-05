@@ -52,7 +52,7 @@ class ssgapi_course extends CI_Controller {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://public-api.ssg-wsg.sg/courses/directory/autocomplete?keyword=trend",
+        CURLOPT_URL => "https://public-api.ssg-wsg.sg/courses/directory/autocomplete?keyword=$query_string",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
