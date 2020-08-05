@@ -76,8 +76,8 @@ class ssgapi_course extends CI_Controller {
         //print_r(json_decode($response));exit;
         
         
-        //print json_encode($response);
-        echo $response->data->courses;
+        $resp= json_encode($response);
+        echo $resp->data->courses;
         exit;
     }
 }
