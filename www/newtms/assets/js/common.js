@@ -162,7 +162,7 @@ $(document).ready(function() {
                 dataType: "json"
             }, function(data) {
                 var d = jQuery.parseJSON(data);
-                response(d.title);
+                response(d);
                 
             });
         },select: function(event, ui) {
