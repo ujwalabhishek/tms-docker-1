@@ -46,9 +46,34 @@ class ssgapi_course extends CI_Controller {
     
     public function get_course_list_autocomplete(){
         $query_string = htmlspecialchars($_GET['query'], ENT_QUOTES, 'UTF-8');
-        $google_api_url ="https://public-api.ssg-wsg.sg/courses/directory/autocomplete?keyword=$query_string";
-        $result = file_get_contents($google_api_url);
+        //$google_api_url ="https://public-api.ssg-wsg.sg/courses/directory/autocomplete?keyword=trend";
+        //$result = file_get_contents($google_api_url);
 
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://public-api.ssg-wsg.sg/courses/directory/autocomplete?keyword=$query_string",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+       "Authorization: c0d3cf1102b248a097846d7232d6ad8f",
+       "Cache-Control: no-cache"
+        ),
+      ));
+
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        print_r(json_decode($response));exit;
+        
+        
         print json_encode($result);
 
         exit;
