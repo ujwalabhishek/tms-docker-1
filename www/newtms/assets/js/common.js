@@ -166,8 +166,8 @@ $(document).ready(function() {
                 
             });
         },select: function(event, ui) {
-            $('#course_code_id').val(ui.item.value);
-            $('#course_code').val(ui.item.value);
+            $('#course_code_id').val(ui.item.key);
+            $('#course_code_ssg_api').val(ui.item.value);
             return false;
         },
         minLength: 3
