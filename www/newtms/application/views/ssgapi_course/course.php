@@ -12,7 +12,7 @@
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course</h2>
     <div class="table-responsive">  
         <?php
-        $atr = 'id="search_form" name="search_form" method="GET"';
+        $atr = 'id="search_form" name="search_form" method="GET" autocomplete="off"';
         echo form_open("course", $atr);
         ?>
         <table class="table table-striped">
