@@ -61,7 +61,7 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => array(
-       "Authorization: Bearer 5d0ca2f39834e80019ca018a2a1a3246ee034e7e83a9fe8839a3c72a",
+       "Authorization: Bearer 5d0ca2f39834e80019ca018a1eef39d207254ed39623b51378e61d6c",
        "Cache-Control: no-cache",
        "Content-Type: application/x-www-form-urlencoded",
        "grant_type=client_credentials"
