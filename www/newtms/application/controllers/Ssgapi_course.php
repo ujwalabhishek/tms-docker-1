@@ -56,6 +56,8 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_URL => "https://public-api.ssg-wsg.sg/dp-oauth/oauth/token",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
+        CURLOPT_POST =>true,
+        CURLOPT_POSTFIELDS => array('grant_type'=>'client_credentials'),
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
@@ -64,8 +66,8 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_HTTPHEADER => array(
        "Authorization: Basic $encr",
        "Cache-Control: no-cache",
-       "Content-Type: application/x-www-form-urlencoded",
-       "grant_type=client_credentials"
+       "Content-Type: application/x-www-form-urlencoded"
+       
         ),
       ));
         
