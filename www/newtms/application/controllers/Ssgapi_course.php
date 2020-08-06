@@ -81,7 +81,7 @@ class ssgapi_course extends CI_Controller {
 
         curl_close($curl);
 
-        //print_r(json_decode($response));exit;
+        $response_token=json_decode($response_token);
         
         echo $response_token->access_token;exit;
         
