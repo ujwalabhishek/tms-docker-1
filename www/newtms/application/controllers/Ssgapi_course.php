@@ -63,7 +63,7 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_POST =>1,
-        CURLOPT_POSTFIELDS => array('grant_type=client_credentials'),
+        CURLOPT_POSTFIELDS => "grant_type=client_credentials",
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
