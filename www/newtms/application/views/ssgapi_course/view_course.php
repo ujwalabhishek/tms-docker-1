@@ -50,7 +50,7 @@ $role_array = array("COMPACT","TRAINER");
                     </tr>
                     <tr>
                         <td class="td_heading" width="28%">Course Name:<span class="required">*</span></td>
-                        <td><label class="label_font"><?php echo $course_data->crse_name; ?></label></td>
+                        <td><label class="label_font"><?php echo $resp->title; ?></label></td>
                         <td class="td_heading">Pre-requisite:</td>
                         <td>
                             <label class="label_font">
