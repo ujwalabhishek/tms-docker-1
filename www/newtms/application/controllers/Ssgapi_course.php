@@ -47,27 +47,9 @@ class ssgapi_course extends CI_Controller {
     public function get_course_list_autocomplete(){
 
     
-                $data = array(
-                        'grant_type'      => 'client_credentials'
- 
-                );
-    
-    $ch = curl_init();
-
-    curl_setopt($ch, CURLOPT_USERPWD, "c0d3cf1102b248a097846d7232d6ad8f:YTlkNzgyN2YtMjEyNi00ZjU0LWIxMTctMTlhMGMzODY4YWJm");
-    curl_setopt($ch, CURLOPT_URL,"https://public-api.ssg-wsg.sg/dp-oauth/oauth/token");
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS,$data);
-
-    // Receive server response ...
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    $server_output = curl_exec($ch);
-    curl_close ($ch);
-    // Further processing ...
-    $response = json_decode($server_output);
+             
               
-                print_r($response);exit;
+              
         
         $query_string = htmlspecialchars($_GET['query'], ENT_QUOTES, 'UTF-8');
         //$google_api_url ="https://public-api.ssg-wsg.sg/courses/directory/autocomplete?keyword=trend";
@@ -80,8 +62,8 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_URL => "https://public-api.ssg-wsg.sg/dp-oauth/oauth/token",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
-        CURLOPT_POST =>true,
-        CURLOPT_POSTFIELDS => array('grant_type'=>'client_credentials'),
+        CURLOPT_POST =>1,
+        CURLOPT_POSTFIELDS => array('grant_type=client_credentials'),
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
