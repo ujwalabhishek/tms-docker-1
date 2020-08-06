@@ -17,32 +17,7 @@
         ?>
         <table class="table table-striped">
             <tbody>
-                <tr>
-                    <td width="15%" class="td_heading">
-                        <?php
-                        $course_name_radio = array(
-                            'name' => 'search_radio',
-                            'id' => 'course_name_radio',
-                            'value' => 'course_name_radio',
-                            'checked' => ($this->input->get('search_radio') == 'course_name_radio') ? TRUE : TRUE,
-                            'class' => 'search'
-                        );
-                        ?>
-                        <?php echo form_radio($course_name_radio); ?>&nbsp;&nbsp;&nbsp;
-                        Search by Course Name:
-                    </td>
-                    <td width="15%" colspan="2">          
-                        <?php
-                        $course_options[''] = 'All';
-                        foreach ($courses as $course):
-                            $course_options[$course->crse_name] = $course->crse_name;
-                        endforeach;
-                        $attr_js = 'id="course_name"';
-                        echo form_dropdown('course_name', $course_options, $this->input->get('course_name'), $attr_js);
-                        ?>
-
-                    </td>                    
-                </tr>                
+                             
                 <tr>
                     <td width="15%">
                         <?php
@@ -50,7 +25,7 @@
                             'name' => 'search_radio',
                             'id' => 'course_code_radio',
                             'value' => 'course_code_radio',
-                            'checked' => ($this->input->get('search_radio') == 'course_code_radio') ? TRUE : FALSE,
+                            'checked' => ($this->input->get('search_radio') == 'course_code_radio') ? TRUE : TRUE,
                             'class' => 'search'
                         );
                         ?>
@@ -58,7 +33,7 @@
                         <span class="td_heading">Course Code:&nbsp;&nbsp;</span>                        
                     </td>
                     <td>
-                        <input type="text" value="<?php echo $this->input->get('course_code'); ?>" name="course_code" id="course_code_ssg_api">
+                        <input type="text" value="<?php echo $this->input->get('course_code'); ?>" name="course_code" id="course_code_ssg_api" style="width: 400px;">
                         <input type="hidden" value="<?php echo $this->input->get('course_code'); ?>" name="course_code_id" id="course_code_id">
                         <span id='course_code_err'></span>
                     </td>
