@@ -83,7 +83,7 @@ class ssgapi_course extends CI_Controller {
 
         //print_r(json_decode($response));exit;
         
-        
+        echo $response_token->access_token;exit;
         
         //$result = file_get_contents($google_api_url);
 
