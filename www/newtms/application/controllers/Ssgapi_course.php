@@ -177,17 +177,14 @@ class ssgapi_course extends CI_Controller {
 
         curl_close($curl);
 
-        print_r(json_decode($response));exit;
+        //print_r(json_decode($response));exit;
         
         
-        $resp= json_decode($response);
-        foreach ($resp->data->courses as $result) {
-                $matches[] = array(
-                    'label' => $result->title,
-                    'key' => $result->referenceNumber
-                );
-            }
-        echo json_encode($matches);
-        exit;
+        $data['resp']= json_decode($response);
+        
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['page_title'] = 'SSG API COURSE DETAILS';
+        $data['main_content'] = 'ssgapi_course/course_details';
+        $this->load->view('layout', $data);
     }
 }
