@@ -77,15 +77,14 @@ class ssgapi_course extends CI_Controller {
         ),
       ));
         
-        $response = curl_exec($curl);
+        $response_token = curl_exec($curl);
 
         curl_close($curl);
 
         //print_r(json_decode($response));exit;
         
         
-        $resp= json_decode($response);
-        print_r($resp);exit;
+        
         //$result = file_get_contents($google_api_url);
 
         $curl = curl_init();
@@ -100,7 +99,7 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => array(
-       "Authorization: Bearer 5d0ca2f39834e80019ca018a1eef39d207254ed39623b51378e61d6c",
+       "Authorization: Bearer $response_token->access_token",
        "Cache-Control: no-cache",
        "Content-Type: application/x-www-form-urlencoded",
        "grant_type=client_credentials"
