@@ -90,7 +90,7 @@ class ssgapi_course extends CI_Controller {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://public-api.ssg-wsg.sg/courses/directory?pageSize=2&page=1&keyword=engineer",
+        CURLOPT_URL => "https://public-api.ssg-wsg.sg/courses/directory?pageSize=2&page=1&keyword=$query_string",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -111,14 +111,14 @@ class ssgapi_course extends CI_Controller {
 
         curl_close($curl);
 
-        print_r(json_decode($response));exit;
+        //print_r(json_decode($response));exit;
         
         
         $resp= json_decode($response);
         foreach ($resp->data->courses as $result) {
                 $matches[] = array(
                     'label' => $result->title,
-                    'key' => ''
+                    'key' => $result->referenceNumber
                 );
             }
         echo json_encode($matches);
