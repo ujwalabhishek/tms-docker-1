@@ -47,12 +47,43 @@ class ssgapi_course extends CI_Controller {
     public function get_course_list_autocomplete(){
         $query_string = htmlspecialchars($_GET['query'], ENT_QUOTES, 'UTF-8');
         //$google_api_url ="https://public-api.ssg-wsg.sg/courses/directory/autocomplete?keyword=trend";
+        //
+        
+        
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://public-api.ssg-wsg.sg/dp-oauth/oauth/token",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_HTTPHEADER => array(
+       "Authorization: Basic YTlkNzgyN2YtMjEyNi00ZjU0LWIxMTctMTlhMGMzODY4YWJm",
+       "Cache-Control: no-cache",
+       "Content-Type: application/x-www-form-urlencoded",
+       "grant_type=client_credentials"
+        ),
+      ));
+        
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        //print_r(json_decode($response));exit;
+        
+        
+        $resp= json_decode($response);
+        print_r($resp);exit;
         //$result = file_get_contents($google_api_url);
 
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://public-api.ssg-wsg.sg/courses/directory/autocomplete?keyword=$query_string",
+        CURLOPT_URL => "https://public-api.ssg-wsg.sg/courses/directory?pageSize=2&page=1&keyword=engineer",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
