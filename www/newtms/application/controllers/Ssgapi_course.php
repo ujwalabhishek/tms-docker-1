@@ -184,7 +184,7 @@ class ssgapi_course extends CI_Controller {
         
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'SSG API COURSE DETAILS';
-        $data['main_content'] = 'ssgapi_course/course_details';
+        $data['main_content'] = 'ssgapi_course/view_course';
         $this->load->view('layout', $data);
     }
 }
