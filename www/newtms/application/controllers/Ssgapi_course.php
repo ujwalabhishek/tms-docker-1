@@ -60,7 +60,7 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_HTTPHEADER => array(
        "Authorization: Basic $encr",
        "Cache-Control: no-cache",
