@@ -180,7 +180,7 @@ class ssgapi_course extends CI_Controller {
         //print_r(json_decode($response));exit;
         
         
-        $data['resp']= json_decode($response);
+        $data['resp']= json_decode($response)->data->courses;
         
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'SSG API COURSE DETAILS';
