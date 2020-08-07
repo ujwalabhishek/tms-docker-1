@@ -73,10 +73,10 @@ $role_array = array("COMPACT","TRAINER");
                         </td>
                     </tr>
                     <tr>
-                        <td class="td_heading">Class Type:<span class="required">*</span></td>
+                        <td class="td_heading">Course Fee:<span class="required">*</span></td>
                         <td>
                             <label class="label_font">
-                                <?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($course_data->class_type), ', '); ?>
+                                <?php echo $resp->totalCostOfTrainingPerTrainee; ?>
                             </label>
                         </td>
                         <td class="td_heading">GST Rate:</td>
@@ -152,7 +152,7 @@ $role_array = array("COMPACT","TRAINER");
                     </tr>
                     <tr>
                         <td class="td_heading">Course Duration (in hrs):<span class="required">*</span></td>
-                        <td><label class="label_font"><?php echo $course_data->crse_duration; ?></label></td>
+                        <td><label class="label_font"><?php echo $resp->totalTrainingDurationHour; ?></label></td>
                         <td class="td_heading">Course Reference Number:<span class="required">*</span></td>
                         <td><label class="label_font"><?php echo $resp->referenceNumber; ?></label></td>                        
                     </tr>
@@ -171,6 +171,22 @@ $role_array = array("COMPACT","TRAINER");
                         <td colspan="3">
                             <label class="label_font">
                                 <?php echo rtrim($CI->course_model->get_managers($course_data->crse_manager), ', '); ?>                                
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>                        
+                        <td class="td_heading">Mode Of Training:<span class="required">*</span></td>
+                        <td colspan="3">
+                            <label class="label_font">
+                                <?php echo $resp->modeOfTrainings[0]->description; ?>                                
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>                        
+                        <td class="td_heading">UEN NO:<span class="required">*</span></td>
+                        <td colspan="3">
+                            <label class="label_font">
+                                <?php echo $resp->trainingProvider->uen; ?>                                
                             </label>
                         </td>
                     </tr>
@@ -214,6 +230,18 @@ $role_array = array("COMPACT","TRAINER");
                      <tr>
                         <td class="td_heading">Skill Future Credit Reference No:<span class="required">*</span></td>
                         <td colspan="3"><label class="label_font"><?php echo $resp->skillsFutureCreditReferenceNumber; ?></label></td>
+                    </tr>
+                    <tr>
+                        <td class="td_heading">Course Created On:<span class="required">*</span></td>
+                        <td colspan="3"><label class="label_font"><?php echo $resp->support[0]->meta->updateDate; ?></label></td>
+                    </tr>
+                    <tr>
+                        <td class="td_heading">Course Updated On:<span class="required">*</span></td>
+                        <td colspan="3"><label class="label_font"><?php echo $resp->support[0]->meta->createDate; ?></label></td>
+                    </tr>
+                    <tr>
+                        <td class="td_heading">Course Tagging:<span class="required">*</span></td>
+                        <td colspan="3"><label class="label_font"><?php echo $resp->taggings[0]->description.','.$resp->taggings[1]->description.','.$resp->taggings[2]->description; ?></label></td>
                     </tr>
                     <?php } ?>
                     <?php if($course_data->copied_from_id) { ?>
