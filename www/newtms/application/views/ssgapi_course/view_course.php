@@ -29,7 +29,7 @@ $role_array = array("COMPACT","TRAINER");
                         <td colspan='3' class="td_heading">Course Status:&nbsp;&nbsp;
                             <label class="label_font">
                                 <span class="<?php echo $div_class; ?>">
-                                    <b><?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($course_data->crse_status), ', '); ?></b>                                
+                                    <b><?php echo $resp->status->description; ?></b>                                
                                 </span>
                             </label>
                            <?php if ($course_data->crse_status == 'INACTIV') { ?>
@@ -62,7 +62,7 @@ $role_array = array("COMPACT","TRAINER");
                         <td class="td_heading">Language:<span class="required">*</span></td>
                         <td>
                             <label class="label_font">
-                                <?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($course_data->language), ', '); ?>
+                                <?php echo $resp->mediumOfInstructions[0]->description; ?>
                             </label>                        
                         </td>
                         <td class="td_heading">Course Type:<span class="required">*</span></td>
@@ -154,7 +154,7 @@ $role_array = array("COMPACT","TRAINER");
                         <td class="td_heading">Course Duration (in hrs):<span class="required">*</span></td>
                         <td><label class="label_font"><?php echo $course_data->crse_duration; ?></label></td>
                         <td class="td_heading">Course Reference Number:<span class="required">*</span></td>
-                        <td><label class="label_font"><?php echo $course_data->reference_num; ?></label></td>                        
+                        <td><label class="label_font"><?php echo $resp->referenceNumber; ?></label></td>                        
                     </tr>
                     <tr>                        
                         <td class="td_heading">Course Competency Code:<span class="required">*</span></td>
@@ -179,7 +179,17 @@ $role_array = array("COMPACT","TRAINER");
                         <td colspan="3">
                             <div class="table-responsive payment_scroll" style="height: 87px;min-height: 87px;">
                                 <label class="label_font">
-                                    <?php echo $course_data->description; ?>
+                                    <?php echo $resp->objective; ?>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>                        
+                        <td class="td_heading">Training Provider Details:<span class="required">*</span></td>
+                        <td colspan="3">
+                            <div class="table-responsive payment_scroll" style="height: 87px;min-height: 87px;">
+                                <label class="label_font">
+                                    <?php echo $resp->trainingProvider->aboutUs; ?>
                                 </label>
                             </div>
                         </td>
@@ -192,6 +202,14 @@ $role_array = array("COMPACT","TRAINER");
                     <tr>
                         <td class="td_heading">Sales Executive:<span class="required">*</span></td>
                         <td colspan="3"><label class="label_font"><?php echo $sales_exec; ?></label></td>
+                    </tr>
+                    <tr>
+                        <td class="td_heading">Training Provider Name:<span class="required">*</span></td>
+                        <td colspan="3"><label class="label_font"><?php echo $resp->trainingProviderAlias; ?></label></td>
+                    </tr>
+                     <tr>
+                        <td class="td_heading">Training Provider Emil Id:<span class="required">*</span></td>
+                        <td colspan="3"><label class="label_font"><?php echo $resp->trainingProvider->email; ?></label></td>
                     </tr>
                     <?php } ?>
                     <?php if($course_data->copied_from_id) { ?>
