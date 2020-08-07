@@ -68,7 +68,7 @@ $role_array = array("COMPACT","TRAINER");
                         <td class="td_heading">Course Type:<span class="required">*</span></td>
                         <td>
                             <label class="label_font">
-                                <?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($course_data->crse_type), ', '); ?>
+                                <?php echo $resp->targetTrainingGroups[0]->description; ?>
                             </label>
                         </td>
                     </tr>
@@ -210,6 +210,10 @@ $role_array = array("COMPACT","TRAINER");
                      <tr>
                         <td class="td_heading">Training Provider Emil Id:<span class="required">*</span></td>
                         <td colspan="3"><label class="label_font"><?php echo $resp->trainingProvider->email; ?></label></td>
+                    </tr>
+                     <tr>
+                        <td class="td_heading">Skill Future Credit Reference No:<span class="required">*</span></td>
+                        <td colspan="3"><label class="label_font"><?php echo $resp->skillsFutureCreditReferenceNumber; ?></label></td>
                     </tr>
                     <?php } ?>
                     <?php if($course_data->copied_from_id) { ?>
