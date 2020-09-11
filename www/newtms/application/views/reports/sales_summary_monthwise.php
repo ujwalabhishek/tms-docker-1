@@ -118,11 +118,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <?php
-                            echo "Total Count : ".count($result);
-                            ?>
-                        </tr>
+                       
                         <?php
                         $unpaidVal = 0;
                         $paidVal = 0;
