@@ -1577,7 +1577,7 @@ class Reports_finance extends CI_Controller {
     public function sales_summary_monthwise(){
         $data['sideMenuData'] = fetch_non_main_page_content(); 
         $data['page_title'] = 'Sales Summary Month Wise';
-        $data['main_content'] = 'reports/sales_reports';
+        $data['main_content'] = 'reports/sales_summary_monthwise';
         $this->load->view('layout', $data);
     }
 }
