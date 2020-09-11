@@ -130,7 +130,7 @@
                                 <td><?php echo $data->inv_date; ?></td>
                                 <td>$ <?php echo $data->class_fees; ?></td>
                                 <td>$ <?php echo $data->gst_amount ?? "N/A"; ?></td>
-                                 <td><?php echo $data->total_inv_amount; ?></td>
+                                 
                                  
                                 
                                 
@@ -154,6 +154,7 @@
                                 ?></td>
                                 
                                 <td width="8%"><?php echo $data->name; ?></td>
+                                <td width="8%"><?php echo $data->class_name; ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($data->class_start_datetime)); ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($data->class_end_datetime)); ?></td>
                                 <td>$ <?php echo $data->subsidy_amount ?? "N/A"; ?></td>
