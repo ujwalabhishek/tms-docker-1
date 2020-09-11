@@ -1580,7 +1580,7 @@ class Reports_finance extends CI_Controller {
             $monthVal = $this->input->post('monthVal');
             $tenant_id = $this->tenant_id;
             $data['result'] = $this->reportsModel->salessummary_monthwise($tenant_id,$yearVal,$monthVal);
-            
+            print_r($data['result']);exit;
         }
         $data['sideMenuData'] = fetch_non_main_page_content(); 
         $data['page_title'] = 'Sales Summary Month Wise';
