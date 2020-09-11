@@ -15,7 +15,7 @@
     }
     ?>
 
-    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/internal_user.png"/>  TMS REPORT - PAID/NOTPAID(COUNT/AMOUNT) MONTHLY</h2>
+    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/internal_user.png"/>  SALES SUMMARY MONTHLY BASIS</h2>
     <div class="table-responsive">
         
         <?php
