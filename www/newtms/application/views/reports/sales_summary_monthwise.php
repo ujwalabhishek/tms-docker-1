@@ -22,7 +22,7 @@
 //            print_r($tabledata);
         $atr = 'id="search_form" name="search_form" method="POST"';
 //        echo form_open("internal_user/activity_log", $atr);
-        echo form_open("reports_finance/tms_report", $atr);
+        echo form_open("reports_finance/sales_summary_monthwise", $atr);
         ?>
         <table class="table table-striped">
             <tbody>
@@ -125,14 +125,15 @@
                         foreach ($result as $data) {
                             ?>
                             <tr>
-                                <td><?php echo $data->tax_code; ?></td>
+                               
                                 <td><?php echo $data->invoice_id; ?></td>
-                                <td width="8%"><?php echo $data->name; ?></td>
-                                <td width="8%"><?php echo $data->company_name ?? "N/A"; ?></td>
+                                <td><?php echo $data->inv_date; ?></td>
                                 <td>$ <?php echo $data->class_fees; ?></td>
-                                <td>$ <?php echo $data->discount_rate ?? "N/A"; ?></td>
-                                <td>$ <?php echo $data->subsidy_amount ?? "N/A"; ?></td>
                                 <td>$ <?php echo $data->gst_amount ?? "N/A"; ?></td>
+                                 <td><?php echo $data->total_inv_amount; ?></td>
+                                 
+                                
+                                
                                 <td>$ <?php 
                                 if($data->payment_status == "NOTPAID") {
                                     echo $data->total_amount_due; 
@@ -151,12 +152,12 @@
                                 }
                                 
                                 ?></td>
-                                <td> <?php echo $data->mode_of_pymnt ?? "N/A"; ?></td>
-                                <td><?php echo $data->tg_number ?? "N/A"; ?></td>
+                                
+                                <td width="8%"><?php echo $data->name; ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($data->class_start_datetime)); ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($data->class_end_datetime)); ?></td>
-                                <td><?php echo $data->class_name; ?></td>
-                                <td><?php echo $data->training_score; ?></td>
+                                <td>$ <?php echo $data->subsidy_amount ?? "N/A"; ?></td>
+                                <td><?php echo $data->total_inv_amount; ?></td>
                                 <td><?php echo $data->payment_status; ?></td>
                                 
                             </tr>

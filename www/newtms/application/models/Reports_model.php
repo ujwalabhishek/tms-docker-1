@@ -3555,5 +3555,50 @@ SELECT  {$calc_rows} c.crse_name,
      
         return $final_data;
     }
+    
+    public function salessummary_monthwise($tenant_id,$yearVal,$monthVal) {
+        $start_date = $yearVal . '-' . $monthVal . '-01';
+        $end_date = $yearVal . '-' . $monthVal . '-31';
+
+        $query = "SELECT 
+            tu.tax_code,
+            tu.user_id,
+            ei.invoice_id,
+            ei.inv_date,
+            tup.first_name as name,
+            ei.total_inv_amount,
+            cm.company_name,
+            due.class_fees,
+            ceil((due.class_fees * due.discount_rate))/ 100 as discount_rate,
+            due.gst_amount,
+            ce.tg_number,
+            due.subsidy_amount,
+            ce.payment_status,
+            ce.enrolment_mode,
+            epr.mode_of_pymnt,
+            cc.class_start_datetime,
+            cc.class_end_datetime,
+            cc.class_name,
+            ce.training_score,
+            due.att_status
+                    FROM ( course_class cc) 
+                    JOIN course c ON c.course_id = cc.course_id 
+                    JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                    JOIN enrol_pymnt_due due ON ce.pymnt_due_id = due.pymnt_due_id and ce.user_id = due.user_id 
+                    join enrol_invoice ei on ei.pymnt_due_id and due.pymnt_due_id and ei.pymnt_due_id=ce.pymnt_due_id
+                    JOIN tms_users tu ON tu.user_id = ce.user_id 
+                    left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
+                    left join company_master cm on cm.company_id=ce.company_id
+                    JOIN(SELECT ttt.*
+                        FROM enrol_paymnt_recd ttt
+                        JOIN
+                        (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_paymnt_recd GROUP BY invoice_id) gttt ON ttt.invoice_id = gttt.invoice_id AND ttt.trigger_date = gttt.Maxdate) epr on epr.invoice_id=ei.invoice_id 
+                    WHERE cc . tenant_id = '" . $tenant_id . "' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
+                    AND date(cc.class_end_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
+
+        $result = $this->db->query($query)->result();
+
+        return $result;
+    }
 
 }

@@ -1575,6 +1575,13 @@ class Reports_finance extends CI_Controller {
     }
     
     public function sales_summary_monthwise(){
+        if (!empty($_POST)) {
+            $yearVal = $this->input->post('yearVal');
+            $monthVal = $this->input->post('monthVal');
+            $tenant_id = $this->tenant_id;
+            $data['result'] = $this->reportsModel->salessummary_monthwise($tenant_id,$yearVal,$monthVal);
+            
+        }
         $data['sideMenuData'] = fetch_non_main_page_content(); 
         $data['page_title'] = 'Sales Summary Month Wise';
         $data['main_content'] = 'reports/sales_summary_monthwise';
