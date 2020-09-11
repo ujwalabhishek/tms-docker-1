@@ -1573,4 +1573,11 @@ class Reports_finance extends CI_Controller {
         
         export_sales_report_xls($tabledata);
     }
+    
+    public function sales_summary_monthwise(){
+        $data['sideMenuData'] = fetch_non_main_page_content(); 
+        $data['page_title'] = 'Sales Summary Month Wise';
+        $data['main_content'] = 'reports/sales_reports';
+        $this->load->view('layout', $data);
+    }
 }

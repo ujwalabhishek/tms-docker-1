@@ -73,6 +73,7 @@ $tms_route['RPTFIN']['ops'] = array(
     'PYMNTRECD' => 'payments',
     'RPTREFND' => 'refunds',
     'SLASMNTCOM' => 'sales',
+    'SLSUMBYMN' => 'sales_summary_monthwise',
     'ACTLOG' => 'activity_log',
     'TMSRPTS' => 'tms_report',
     'SALREP' => 'sales_report',
