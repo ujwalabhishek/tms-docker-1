@@ -99,21 +99,21 @@
                 <table id="listview" class="table table-striped">
                     <thead>
                         <tr>
-                            <th width="5%">Tax Code</th>
-                            <th width="5%">Invoice ID.</th>
-                            <th width="10%">Trainee Name</th>
-                            <th width="10%">Company Name</th>
-                            <th width="5%">Class Fees</th>
-                            <th width="5%">Discount</th>
-                            <th width="5%">Subsidy</th>
+                            
+                            <th width="5%">Invoice No.</th>
+                            <th width="10%">Date Of Invoice</th>
+                            <th width="10%">Amount Before GST</th>
+                        
                             <th width="5%">GST</th>
-                            <th width="5%">Net Amt.</th>
-                            <th width="5%">Mode</th>
-                            <th width="5%">TG No.</th>
+                            <th width="5%">Amount After GST</th>
+                            
+                            <th width="5%">Customer Name.</th>
+                            <th width="5%">Class Details</th>
+                          
                             <th width="7%">Class Start Date</th>
                             <th width="7%">Class End Date</th>
-                            <th width="5%">Class Name</th>
-                            <th width="5%">Training Score</th>
+                            <th width="5%">SSG Grant Amount</th>
+                            <th width="5%">Net Invoice Amount</th>
                             <th width="5%">Payment Status</th>
                         </tr>
                     </thead>
