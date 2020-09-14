@@ -1585,6 +1585,16 @@ class Reports_finance extends CI_Controller {
         $data['sideMenuData'] = fetch_non_main_page_content(); 
         $data['page_title'] = 'Sales Summary Month Wise';
         $data['main_content'] = 'reports/sales_summary_monthwise';
+        $data['export_url'] = '?yearVal=' . $yearVal.'&monthVal='.$monthVal;
         $this->load->view('layout', $data);
+    }
+    
+    public function export_sales_monthwise(){
+        $tenant_id = $this->tenant_id;
+        $yearVal = $this->input->get('yearVal');
+        $monthVal = $this->input->get('monthVal');
+        $result = $this->reportsModel->salessummary_monthwise($tenant_id,$yearVal,$monthVal);
+        $this->load->helper('export_helper');
+        export_tms_report_sales_monthwise($result);
     }
 }

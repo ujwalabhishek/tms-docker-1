@@ -3589,7 +3589,7 @@ SELECT  {$calc_rows} c.crse_name,
                     JOIN tms_users tu ON tu.user_id = ce.user_id 
                     left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
                     left join company_master cm on cm.company_id=ce.company_id
-                    JOIN(SELECT ttt.*
+                    LEFT JOIN(SELECT ttt.*
                         FROM enrol_paymnt_recd ttt
                         JOIN
                         (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_paymnt_recd GROUP BY invoice_id) gttt ON ttt.invoice_id = gttt.invoice_id AND ttt.trigger_date = gttt.Maxdate) epr on epr.invoice_id=ei.invoice_id 
