@@ -53,7 +53,7 @@ function export_tms_report_sales_monthwise($result) {
         $sheet->setCellValue('D' . $rn, $amt_bfr_gst);
         $sheet->setCellValue('E' . $rn, $row->gst_amount);
         
-        $sheet->setCellValue('F' . $rn, ($amt_bfr_gst+$row->gst_amount));
+        $sheet->setCellValue('F' . $rn, $amt_bfr_gst+$row->gst_amount);
         $sheet->setCellValue('G' . $rn, $row->name);
         $sheet->setCellValue('H' . $rn, $row->class_name);
         $sheet->setCellValue('I' . $rn, date('d/m/Y', strtotime($row->class_start_datetime)));
