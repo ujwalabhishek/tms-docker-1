@@ -46,14 +46,14 @@ function export_tms_report_sales_monthwise($result) {
 //           $inv_amt = $CI->reports->get_invoice_data_for_comp($row->invoice_id,$row->user_id);
 //           
 //        }
-        $amt_bfr_gst = ($data->discount_rate ? ($data->class_fees-$data->discount_rate): $data->class_fees);
+        $amt_bfr_gst = ($row->discount_rate ? ($row->class_fees-$row->discount_rate): $row->class_fees);
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, $row->invoice_id);
         $sheet->setCellValue('C' . $rn, $row->inv_date);
         $sheet->setCellValue('D' . $rn, $amt_bfr_gst);
         $sheet->setCellValue('E' . $rn, $row->gst_amount);
         
-        $sheet->setCellValue('F' . $rn, $amt_bfr_gst+$row->gst_amount);
+        $sheet->setCellValue('F' . $rn, ($amt_bfr_gst+$row->gst_amount));
         $sheet->setCellValue('G' . $rn, $row->name);
         $sheet->setCellValue('H' . $rn, $row->class_name);
         $sheet->setCellValue('I' . $rn, date('d/m/Y', strtotime($row->class_start_datetime)));
@@ -63,7 +63,7 @@ function export_tms_report_sales_monthwise($result) {
         $sheet->setCellValue('M' . $rn, $row->payment_status);
         $rn++;
     }
-    $filename = 'Tms_Report_'.ucfirst(strtolower($result[0]->payment_status)).'.xls';
+    $filename = 'Tms_Sales_'.month($row->class_start_datetime).'_Report_.xls';
     ob_end_clean();
     header('Content-Type: application/vnd.ms-excel');
     header('Content-Disposition: attachment;filename="'.$filename.'"');
