@@ -130,7 +130,7 @@
                                $amt_bfr_gst = ($data->discount_rate ? ($data->class_fees-$discount): $data->class_fees); ?>
                                 <td><?php echo $data->invoice_id; ?></td>
                                 <td><?php echo $data->inv_date; ?></td>
-                                <td>$ <?php echo $amt_bfr_gst.'-'.$discount; ?></td>
+                                <td>$ <?php echo $amt_bfr_gst.'-'.$data->discount_rate; ?></td>
                                 <td>$ <?php echo $data->gst_amount ?? "N/A"; ?></td>
                                  
                                  
