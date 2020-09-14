@@ -47,13 +47,14 @@ function export_tms_report_sales_monthwise($result) {
 //           
 //        }
         $amt_bfr_gst = ($row->discount_rate ? ($row->class_fees-$row->discount_rate): $row->class_fees);
+        $amt_afr_gst = $amt_bfr_gst+$row->gst_amount;
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, $row->invoice_id);
         $sheet->setCellValue('C' . $rn, $row->inv_date);
         $sheet->setCellValue('D' . $rn, $amt_bfr_gst);
         $sheet->setCellValue('E' . $rn, $row->gst_amount);
         
-        $sheet->setCellValue('F' . $rn, $amt_bfr_gst+$row->gst_amount);
+        $sheet->setCellValue('F' . $rn, $amt_afr_gst);
         $sheet->setCellValue('G' . $rn, $row->name);
         $sheet->setCellValue('H' . $rn, $row->class_name);
         $sheet->setCellValue('I' . $rn, date('d/m/Y', strtotime($row->class_start_datetime)));
