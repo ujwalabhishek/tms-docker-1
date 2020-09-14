@@ -125,16 +125,16 @@
                         foreach ($result as $data) {
                             ?>
                             <tr>
-                               
+                               <?php $amt_bfr_gst = ($data->total_inv_discnt ? ($data->class_fees-$data->total_inv_discnt): $data->class_fees); ?>
                                 <td><?php echo $data->invoice_id; ?></td>
                                 <td><?php echo $data->inv_date; ?></td>
-                                <td>$ <?php echo $data->class_fees; ?></td>
+                                <td>$ <?php echo $amt_bfr_gst; ?></td>
                                 <td>$ <?php echo $data->gst_amount ?? "N/A"; ?></td>
                                  
                                  
                                 
                                 
-                                <td>$ <?php echo ($data->class_fees + $data->gst_amount) ; 
+                                <td>$ <?php echo ($amt_bfr_gst + $data->gst_amount) ; 
                                 /*if($data->payment_status == "NOTPAID") {
                                     echo $data->total_amount_due; 
                                     $unpaidVal = $unpaidVal + $data->total_amount_due;
