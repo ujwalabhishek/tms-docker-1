@@ -40,22 +40,24 @@ function export_tms_report_sales_monthwise($result) {
     $rn = 3;
     $CI->load->model('Reports_Model', 'reports');
     foreach ($tabledata as $row) {
-        if ($row->enrolment_mode == 'SELF') {
-           $inv_amt = $CI->reports->get_invoice_data_for_individual($row->invoice_id,$row->user_id);
-        } else {
-           $inv_amt = $CI->reports->get_invoice_data_for_comp($row->invoice_id,$row->user_id);
-           
-        }
+//        if ($row->enrolment_mode == 'SELF') {
+//           $inv_amt = $CI->reports->get_invoice_data_for_individual($row->invoice_id,$row->user_id);
+//        } else {
+//           $inv_amt = $CI->reports->get_invoice_data_for_comp($row->invoice_id,$row->user_id);
+//           
+//        }
+        $amt_bfr_gst = ($data->discount_rate ? ($data->class_fees-$data->discount_rate): $data->class_fees);
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, $row->invoice_id);
         $sheet->setCellValue('C' . $rn, $row->inv_date);
-        $sheet->setCellValue('D' . $rn, $row->class_fees);
+        $sheet->setCellValue('D' . $rn, $amt_bfr_gst);
         $sheet->setCellValue('E' . $rn, $row->gst_amount);
-        $sheet->setCellValue('F' . $rn, ($row->payment_status == 'NOTPAID') ? $row->total_amount_due : $inv_amt);
+        
+        $sheet->setCellValue('F' . $rn, $amt_bfr_gst+$row->gst_amount);
         $sheet->setCellValue('G' . $rn, $row->name);
         $sheet->setCellValue('H' . $rn, $row->class_name);
-        $sheet->setCellValue('I' . $rn, $row->class_start_datetime);
-        $sheet->setCellValue('J' . $rn, $row->class_end_datetime);
+        $sheet->setCellValue('I' . $rn, date('d/m/Y', strtotime($row->class_start_datetime)));
+        $sheet->setCellValue('J' . $rn, date('d/m/Y', strtotime($row->class_end_datetime)));
         $sheet->setCellValue('K' . $rn, $row->subsidy_amount);
         $sheet->setCellValue('L' . $rn, $row->total_inv_amount);
         $sheet->setCellValue('M' . $rn, $row->payment_status);
