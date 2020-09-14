@@ -47,24 +47,18 @@ function export_tms_report_sales_monthwise($result) {
            
         }
         $sheet->setCellValue('A' . $rn, $rn - 2);
-        $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
-        $sheet->setCellValue('C' . $rn, $row->user_id);
-        $sheet->setCellValue('D' . $rn, $row->invoice_id);
-        $sheet->setCellValue('E' . $rn, $row->name);
-        $sheet->setCellValue('F' . $rn, $row->company_name);
-        $sheet->setCellValue('G' . $rn, $row->class_fees);
-        $sheet->setCellValue('H' . $rn, $row->discount_rate);
-        $sheet->setCellValue('I' . $rn, $row->gst_amount);
-        $sheet->setCellValue('J' . $rn, ($row->payment_status == 'NOTPAID') ? $row->total_amount_due : $inv_amt);
-        $sheet->setCellValue('K' . $rn, $row->tg_number);
-        $sheet->setCellValue('L' . $rn, $row->subsidy_amount);
+        $sheet->setCellValue('B' . $rn, $row->invoice_id);
+        $sheet->setCellValue('C' . $rn, $row->inv_date);
+        $sheet->setCellValue('D' . $rn, $row->class_fees);
+        $sheet->setCellValue('E' . $rn, $row->gst_amount);
+        $sheet->setCellValue('F' . $rn, ($row->payment_status == 'NOTPAID') ? $row->total_amount_due : $inv_amt);
+        $sheet->setCellValue('G' . $rn, $row->name);
+        $sheet->setCellValue('H' . $rn, $row->class_name);
+        $sheet->setCellValue('I' . $rn, $row->class_start_datetime);
+        $sheet->setCellValue('J' . $rn, $row->class_end_datetime);
+        $sheet->setCellValue('K' . $rn, $row->subsidy_amount);
+        $sheet->setCellValue('L' . $rn, $row->total_inv_amount);
         $sheet->setCellValue('M' . $rn, $row->payment_status);
-        $sheet->setCellValue('N' . $rn, $row->mode_of_pymnt);
-        $sheet->setCellValue('O' . $rn, $row->class_start_datetime);
-        $sheet->setCellValue('P' . $rn, $row->class_end_datetime);
-        $sheet->setCellValue('Q' . $rn, $row->class_name);
-        $sheet->setCellValue('R' . $rn, $row->training_score);
-        $sheet->setCellValue('S' . $rn, $row->att_status);
         $rn++;
     }
     $filename = 'Tms_Report_'.ucfirst(strtolower($result[0]->payment_status)).'.xls';
