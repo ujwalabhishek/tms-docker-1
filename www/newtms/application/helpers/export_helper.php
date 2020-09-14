@@ -64,7 +64,7 @@ function export_tms_report_sales_monthwise($result) {
         $sheet->setCellValue('M' . $rn, $row->payment_status);
         $rn++;
     }
-    $filename = 'Tms_Sales_'.month($row->class_start_datetime).'_Report_.xls';
+    $filename = 'Tms_Sales_Monthwise_Report_.xls';
     ob_end_clean();
     header('Content-Type: application/vnd.ms-excel');
     header('Content-Disposition: attachment;filename="'.$filename.'"');
