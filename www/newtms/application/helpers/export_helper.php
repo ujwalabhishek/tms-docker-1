@@ -13,7 +13,7 @@ function export_tms_report_sales_monthwise($result) {
     }
     $sheet->mergeCells('A1:G1');
     $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-    $sheet->setCellValue('A1', 'TMS '.ucfirst(strtolower($result[0]->payment_status)).' Report List as on ' . date('M j Y, l'));
+    $sheet->setCellValue('A1', 'TMS Sales MonthWise Report List as on ' . date('M j Y, l'));
     $sheet->getStyle('A1:G1')->getFont()->setBold(true);
     $sheet->setCellValue('A2', 'SL #');
     $sheet->setCellValue('B2', 'Invoice No.');
