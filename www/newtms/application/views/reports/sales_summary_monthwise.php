@@ -134,8 +134,8 @@
                                  
                                 
                                 
-                                <td>$ <?php 
-                                if($data->payment_status == "NOTPAID") {
+                                <td>$ <?php echo ($data->class_fees + $data->gst_amount) ; 
+                                /*if($data->payment_status == "NOTPAID") {
                                     echo $data->total_amount_due; 
                                     $unpaidVal = $unpaidVal + $data->total_amount_due;
                                 } else {
@@ -149,7 +149,7 @@
                                         echo $amount1;
                                     }
                                     
-                                }
+                                }*/
                                 
                                 ?></td>
                                 
