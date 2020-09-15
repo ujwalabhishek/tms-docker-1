@@ -136,7 +136,7 @@
                                  
                                 
                                 
-                                <td>$ <?php echo ($amt_bfr_gst + $data->gst_amount) ; 
+                                <td>$ <?php echo ceil($amt_bfr_gst + $data->gst_amount) ; 
                                 /*if($data->payment_status == "NOTPAID") {
                                     echo $data->total_amount_due; 
                                     $unpaidVal = $unpaidVal + $data->total_amount_due;
