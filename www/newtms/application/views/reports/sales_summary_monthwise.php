@@ -127,7 +127,7 @@
                             <tr>
                                <?php 
                                
-                               $amt_bfr_gst = ($data->discount_rate ? ($data->class_fees-$data->discount_rate): $data->class_fees); ?>
+                               $amt_bfr_gst = ($data->discount_rate ? (ceil($data->class_fees-$data->discount_rate)): $data->class_fees); ?>
                                 <td><?php echo $data->invoice_id; ?></td>
                                 <td><?php echo $data->inv_date; ?></td>
                                 <td>$ <?php echo number_format($amt_bfr_gst, 2, '.', ''); ?></td>
