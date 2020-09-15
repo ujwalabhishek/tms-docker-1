@@ -160,7 +160,7 @@
                                 <td><?php echo date('d/m/Y', strtotime($data->class_start_datetime)); ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($data->class_end_datetime)); ?></td>
                                 <td>$ <?php echo $data->subsidy_amount ?? "N/A"; ?></td>
-                                <td><?php echo number_format((float)$data->total_amount_due, 2, '.', ''); ?></td>
+                                <td>$ <?php echo number_format((float)$data->total_amount_due, 2, '.', ''); ?></td>
                                 <td><?php echo $data->payment_status; ?></td>
                                 
                             </tr>
