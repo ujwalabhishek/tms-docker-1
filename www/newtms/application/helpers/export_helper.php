@@ -51,7 +51,7 @@ function export_tms_report_sales_monthwise($result) {
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, $row->invoice_id);
         $sheet->setCellValue('C' . $rn, $row->inv_date);
-        $sheet->setCellValue('D' . $rn, $amt_bfr_gst);
+        $sheet->setCellValue('D' . $rn, ceil($amt_bfr_gst));
         $sheet->setCellValue('E' . $rn, $row->gst_amount);
         
         $sheet->setCellValue('F' . $rn, $amt_afr_gst);
