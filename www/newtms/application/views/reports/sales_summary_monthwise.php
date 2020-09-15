@@ -131,7 +131,7 @@
                                 <td><?php echo $data->invoice_id; ?></td>
                                 <td><?php echo $data->inv_date; ?></td>
                                 <td>$ <?php echo number_format($amt_bfr_gst, 2, '.', ''); ?></td>
-                                <td>$ <?php echo $data->gst_amount ?? "N/A"; ?></td>
+                                <td>$ <?php echo number_format($data->gst_amount, 2, '.', '') ?? "N/A"; ?></td>
                                  
                                  
                                 

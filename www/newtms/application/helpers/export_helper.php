@@ -52,7 +52,7 @@ function export_tms_report_sales_monthwise($result) {
         $sheet->setCellValue('B' . $rn, $row->invoice_id);
         $sheet->setCellValue('C' . $rn, $row->inv_date);
         $sheet->setCellValue('D' . $rn, number_format($amt_bfr_gst, 2, '.', ''));
-        $sheet->setCellValue('E' . $rn, $row->gst_amount);
+        $sheet->setCellValue('E' . $rn, number_format($row->gst_amount, 2, '.', ''));
         
         $sheet->setCellValue('F' . $rn, number_format($amt_afr_gst, 2, '.', ''));
         $sheet->setCellValue('G' . $rn, $row->name);
