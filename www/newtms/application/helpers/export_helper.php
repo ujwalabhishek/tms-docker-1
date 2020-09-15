@@ -60,7 +60,7 @@ function export_tms_report_sales_monthwise($result) {
         $sheet->setCellValue('I' . $rn, date('d/m/Y', strtotime($row->class_start_datetime)));
         $sheet->setCellValue('J' . $rn, date('d/m/Y', strtotime($row->class_end_datetime)));
         $sheet->setCellValue('K' . $rn, $row->subsidy_amount);
-        $sheet->setCellValue('L' . $rn, $row->total_amount_due);
+        $sheet->setCellValue('L' . $rn, number_format((float)$row->total_amount_due, 2, '.', ''));
         $sheet->setCellValue('M' . $rn, $row->payment_status);
         $rn++;
     }
