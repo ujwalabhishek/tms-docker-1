@@ -225,12 +225,12 @@
                                         
                                             if($user_id!='')                                
                                             {   
-                                                $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'" data-user="'.$class['user_id'].'">';
+                                                $enroll_link_prefix = '<a class="enroll_now_link1" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'" data-user="'.$class['user_id'].'">';
                                                 $enroll_link_label = 'Enroll Now';
 
                                             }else{
                                                 //$enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course/class_member_check/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_name'].'" data-course="'.$class['crse_name'].'">' ;
-                                                $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_member_check/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">';;  
+                                                $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link1" href="' . base_url() . 'course_public/class_member_check/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">';;  
                                                 $enroll_link_label = 'Enroll Now';
 
                                             } 
