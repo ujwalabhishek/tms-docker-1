@@ -85,8 +85,14 @@
 
                                         {  
 
-                                            $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'" data-user="'.$class['user_id'].'">'; 
-
+                                            //$enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'" data-user="'.$class['user_id'].'">'; 
+                                            if(TENANT_ID== 'T17' || TENANT_ID== 'T02'){// added by shubhranshu since this changes for xp and xp2 to remove the popup
+                                                $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link1" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id']  . '/'.$class['class_id'].'">';
+                                                $enroll_link_label = 'Enroll Now';
+                                            }else{
+                                                $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">'; 
+                                                $enroll_link_label = 'Enroll Now';
+                                            }
                                         
 
                                            
@@ -97,9 +103,13 @@
 
                                             
 
-                                            $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_member_check/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">';;  
-
-                                           
+                                            if(TENANT_ID== 'T17' || TENANT_ID== 'T02'){// added by shubhranshu since this changes for xp and xp2 to remove the popup
+                                                    $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link1" href="' . base_url() . 'course_public/class_member_check/' . $class['course_id']  . '/'.$class['class_id'].'">';
+                                                    $enroll_link_label = 'Enroll Now';
+                                                }else{
+                                                    $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_member_check/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">'; 
+                                                    $enroll_link_label = 'Enroll Now';
+                                                }
 
                                             
 
