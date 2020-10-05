@@ -136,6 +136,9 @@ if (!defined('BASEPATH'))
         border-bottom-left-radius: 7px;
         border-bottom-right-radius: 7px;
     }
+    #footer{
+        margin: 72px 0px 0px 0px;
+    }
 </style>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <div class="col-md-12 col_10_height_other" style='height: 520px;'>
