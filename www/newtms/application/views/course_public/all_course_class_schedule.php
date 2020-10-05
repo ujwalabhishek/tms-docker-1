@@ -57,16 +57,25 @@
                                         $class['user_id'] = $user_id;
                                         if($user_id!='')                                
                                         {   
+                                            
+                                            if(TENANT_ID== 'T12' || TENANT_ID== 'T02'){// added by shubhranshu since this changes for xp and xp2 to remove the popup
+                                                $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link1" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id']  . '/'.$class['class_id'].'">';
+                                                $enroll_link_label = 'Enroll Now';
+                                            }else{
+                                                $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">'; 
+                                                $enroll_link_label = 'Enroll Now';
+                                            }
+                                            
 //                                            if($result == 0)
 //                                            {
 //                                               // . base_url() . 'course/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'
 //                                              $enroll_link_prefix = '<a class="enroll_now_link" href="#">';  
 //                                            }else{
-                                               $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'" data-user="'.$class['user_id'].'">'; 
+                                              // $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'" data-user="'.$class['user_id'].'">'; 
 //                                            }
                                             
                                             
-                                            $enroll_link_label = 'Enroll Now';
+                                           // $enroll_link_label = 'Enroll Now';
                                             
                                         }
 //                                        elseif($result!=0 && $user_id!='') {
