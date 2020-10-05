@@ -137,7 +137,7 @@ if (!defined('BASEPATH'))
         border-bottom-right-radius: 7px;
     }
     #footer{
-        margin: 30px 0px 0px 0px !important;
+        margin: 45px 0px 0px 0px !important;
     }
 </style>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
