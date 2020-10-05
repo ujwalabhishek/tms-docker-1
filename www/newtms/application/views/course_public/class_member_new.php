@@ -241,7 +241,7 @@ if (isset($_COOKIE['remember_me'])) {
                         <?php } ?>
                         <br>
                         <?php if($course_id != 0 && $class_id != 0){ ?>
-                          <div><a href="<?php echo site_url(); ?>course_public/referral_credentials1/<?php echo $course_id; ?>/<?php echo $class_id; ?>">Enrol For Others ?</a></div>
+                          <center><a href="<?php echo site_url(); ?>course_public/referral_credentials1/<?php echo $course_id; ?>/<?php echo $class_id; ?>">Enrol For Others ?</a></center>
                         <?php } ?>
                     </div>
 
