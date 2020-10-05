@@ -243,7 +243,7 @@ if (isset($_COOKIE['remember_me'])) {
                        
                     </div>
 
-                    <div class="container-footer">
+                    <div class="container-footer" style='padding:10px;'>
                         <!--<button type="button" class="cancelbtn">Cancel</button>-->
                         <label class="pull-left">
                         <?php if($course_id != 0 && $class_id != 0){ ?>
