@@ -139,9 +139,6 @@ if (!defined('BASEPATH'))
     #footer{
         margin: 45px 0px 0px 0px !important;
     }
-    .container-footer > label{
-        text-decoration: underline;
-    }
 </style>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <div class="col-md-12 col_10_height_other" style='height: 520px;'>
@@ -243,27 +240,24 @@ if (isset($_COOKIE['remember_me'])) {
                             </label>
                         <?php } ?>
                         <br>
-                       
-                    </div>
-
-                    <div class="container-footer" style='padding:10px;'>
-                        <!--<button type="button" class="cancelbtn">Cancel</button>-->
-                        <label class="pull-left">
                         <?php if($course_id != 0 && $class_id != 0){ ?>
                           <div><a href="<?php echo site_url(); ?>course_public/referral_credentials1/<?php echo $course_id; ?>/<?php echo $class_id; ?>">Enrol For Others ?</a></div>
                         <?php } ?>
-                          </label>
-                         <label class="pull-right">
+                    </div>
+
+                    <div class="container-footer">
+                        <!--<button type="button" class="cancelbtn">Cancel</button>-->
+                        <center>
                         <?php 
                         if($class_id!='' && $course_id!='')
                         {
                         ?> 
-                        <a href="<?php echo site_url();?>course_public/register_enroll/<?php echo $course_id; ?>/<?php echo $class_id; ?>">Dont Have an Account? Click On </a>
+                        <a href="<?php echo site_url();?>course_public/register_enroll/<?php echo $course_id; ?>/<?php echo $class_id; ?>"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>Dont Have an Account? Click On </button></a>
                         <?php
                         }else{?>
-                         <a href="<?php echo site_url();?>course_public/register">Dont Have an Account? Click On </a>
+                         <a href="<?php echo site_url();?>course_public/register"><span class="btn btn-primary" style='border-radius: inherit;'><span class="glyphicon glyphicon-pencil"></span>Dont Have an Account? Click On </span></a>
                         <?php }?>
-                       </label>
+                        </center>
                         <br>
                     </div>
                 </form>
