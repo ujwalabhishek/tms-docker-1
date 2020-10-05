@@ -240,7 +240,9 @@ if (isset($_COOKIE['remember_me'])) {
                             </label>
                         <?php } ?>
                         <br>
-                        <div><a href="<?php echo site_url(); ?>course_public/referral_credentials1/<?php echo $course_id; ?>/<?php echo $class_id; ?>">Enrol For Others ?</a></div>
+                        <?php if($course_id != 0 || $class_id != 0){ ?>
+                          <div><a href="<?php echo site_url(); ?>course_public/referral_credentials1/<?php echo $course_id; ?>/<?php echo $class_id; ?>">Enrol For Others ?</a></div>
+                        <?php } ?>
                     </div>
 
                     <div class="container-footer">
