@@ -241,7 +241,7 @@ if (isset($_COOKIE['remember_me'])) {
                         <?php } ?>
                         <br>
                         <?php if($course_id != 0 && $class_id != 0){ ?>
-                          <center style='text-decoration: underline;'><a href="<?php echo site_url(); ?>course_public/referral_credentials1/<?php echo $course_id; ?>/<?php echo $class_id; ?>">Enrol For Others ?</a></center>
+                          <center style='text-decoration: underline;font-weight:bold;'><a href="<?php echo site_url(); ?>course_public/referral_credentials1/<?php echo $course_id; ?>/<?php echo $class_id; ?>">Enrol For Others ?</a></center>
                         <?php } ?>
                     </div>
 
@@ -252,7 +252,7 @@ if (isset($_COOKIE['remember_me'])) {
                         if($class_id!='' && $course_id!='')
                         {
                         ?> 
-                        <a href="<?php echo site_url();?>course_public/register_enroll/<?php echo $course_id; ?>/<?php echo $class_id; ?>"><button type="button" style='font-size: 16px!important;' class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>Dont Have an Account? Click On </button></a>
+                        <a href="<?php echo site_url();?>course_public/register_enroll/<?php echo $course_id; ?>/<?php echo $class_id; ?>"><button type="button" style='font-size: 18px!important;' class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>Dont Have an Account? Click On </button></a>
                         <?php
                         }else{?>
                          <a href="<?php echo site_url();?>course_public/register"><span class="btn btn-primary" style='border-radius: inherit;'><span class="glyphicon glyphicon-pencil"></span>Dont Have an Account? Click On </span></a>
