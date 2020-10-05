@@ -240,7 +240,7 @@ if (isset($_COOKIE['remember_me'])) {
                             </label>
                         <?php } ?>
                         <br>
-                        <?php if($course_id != 0 && $class_id != 0){ ?>
+                        <?php if($course_id != 0 && $class_id != 0 && TENANT_ID == 'T02'){ ?>
                           <center style='text-decoration: underline;font-weight:bold;'><a href="<?php echo site_url(); ?>course_public/referral_credentials1/<?php echo $course_id; ?>/<?php echo $class_id; ?>">Enrol For Others ?</a></center>
                         <?php } ?>
                     </div>
