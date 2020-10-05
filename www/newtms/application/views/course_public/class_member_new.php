@@ -139,6 +139,9 @@ if (!defined('BASEPATH'))
     #footer{
         margin: 45px 0px 0px 0px !important;
     }
+    .container-footer > label{
+        text-decoration: underline;
+    }
 </style>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <div class="col-md-12 col_10_height_other" style='height: 520px;'>
