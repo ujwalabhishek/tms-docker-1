@@ -14305,6 +14305,15 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $result = $qry->row();
         return $result->sfc_claim_id;
     }
+    
+    public function get_pymnt_rcvd_detailsforrpt($inv_id) {
+        $this->db->select('*');
+        $this->db->from('enrol_paymnt_recd');
+        $this->db->where('invoice_id', $inv_id);
+        $qry = $this->db->get();
+        $result = $qry->row();
+        return $result;
+    }
 
 
 }
