@@ -3466,7 +3466,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $result = $this->get_payid_details($id, 1);
         //print_r($result);exit;
         $this->load->helper('pdf_reports_helper');
-        $tenant_id = $this->tenant_id;
+        $tenant_id = $this->tenant_id;echo $tenant_id;exit;
         if($tenant_id =='T17'){
             generate_pdf_invoice_everest($result);
         }else{
