@@ -3421,8 +3421,12 @@ if (!empty($tenant_details->tenant_contact_num)) {
          $result->payble_amount=$inv_amt+$refunded_amt-$received_amt;
 
         $this->load->helper('pdf_reports_helper');
+        if($tenant_id =='T17'){
+            generate_company_pdf_invoice_everest($result);
+        }else{
+            generate_company_pdf_invoice_all($result);
+        }
         
-        generate_company_pdf_invoice_all($result);
     }
     public function export_old_generate_invoice($id,$inv) 
     {  
@@ -3462,7 +3466,13 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $result = $this->get_payid_details($id, 1);
         //print_r($result);exit;
         $this->load->helper('pdf_reports_helper');
-        generate_pdf_invoice($result);
+        $tenant_id = $this->tenant_id;
+        if($tenant_id =='T17'){
+            generate_pdf_invoice_everest($result);
+        }else{
+            generate_pdf_invoice($result);
+        }
+       
     }
 
     /**
