@@ -74,7 +74,7 @@ class accounting extends CI_Controller {
                 $this->form_validation->set_rules('cheque_amount', 'Cheque amount', 'required');
                 $this->form_validation->set_rules('cheque_date', 'Cheque date', 'required');
                 $this->form_validation->set_rules('bank_name', 'Bank name', 'required');
-            } else if ($payment_type == 'CASH' || $payment_type == 'NETS') {
+            } else if ($payment_type == 'CASH' || $payment_type == 'NETS' ||  $payment_type == 'PSEA') {
                 $this->form_validation->set_rules('cashpaid_on', ' Paid on', 'required');
                 $this->form_validation->set_rules('cash_amount', 'Cash Amount', 'required');
             } else if ($payment_type == 'GIRO') {

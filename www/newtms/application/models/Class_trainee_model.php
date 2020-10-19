@@ -5927,7 +5927,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         if (!empty($invoice_id)) {
             $cur_time = date('H:i:s');
-            if ($payment_type == 'CASH' || $payment_type == 'NETS') {
+            if ($payment_type == 'CASH' || $payment_type == 'NETS' || $payment_type == 'PSEA') {
 
                 $data = array(
                     'invoice_id' => $invoice_id,
