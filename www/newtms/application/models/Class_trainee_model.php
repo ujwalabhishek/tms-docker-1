@@ -5134,7 +5134,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         else
         {
               $order='DESC';
-              $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE'.'PSEA');
+              $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
         }
         $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
 
@@ -5159,7 +5159,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         }
 
         $result = $this->db->get()->result_object();
-echo $this->db->last_query();exit;exit;
+
         return $result;
     }
     ////////////////////////
