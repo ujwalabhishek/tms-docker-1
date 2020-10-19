@@ -1130,7 +1130,7 @@ function form_validate($retVal) {
             }
         }
     }
-    else if ($payment_type == 'CASH'  || $payment_type == 'NETS') {
+    else if ($payment_type == 'CASH'  || $payment_type == 'NETS' || $payment_type == 'PSEA') {
         remove_err('#payment_type');
         $cashpaid_on = $('#cashpaid_on').val();
         if ($cashpaid_on.length == 0) {
