@@ -14307,10 +14307,11 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
     }
     
     public function get_pymnt_rcvd_detailsforrpt($inv_id) {
-        $this->db->select('*,sum(amount_recd) as total');
+        $this->db->select('*');
         $this->db->from('enrol_paymnt_recd');
         $this->db->where('invoice_id', $inv_id);
-        $this->db->order_by('trigger_date');
+        $this->db->order_by('trigger_date','desc');
+        $this->db->limit('1');
         $qry = $this->db->get();
         $result = $qry->row();
         echo $this->db->last_query();exit;
