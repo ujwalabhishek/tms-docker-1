@@ -2216,6 +2216,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $company_invoice->trainees[$k]->amount_remain = round(($amount_paid - $amount_refund), 2);
         }
         $company_invoice->subsidy_type = $this->classtraineemodel->get_subsidy_type($this->tenant_id);
+        $company_invoice->tenant_id = $this->tenant_id;
         echo json_encode($company_invoice);
         exit();
     }
