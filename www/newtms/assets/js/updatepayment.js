@@ -515,7 +515,7 @@ $(document).ready(function() {
                 $('.companyamounts_display').show();
                 if (parseFloat($company_total) > 0) {
                     $('.common_pay').show();
-                    if(data.tenant_id=='T17'){
+                    if(data.tenant_id=='T17'){///added by shubhranshu for everest
                         $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="CHQ">Cheque</option>');
                     }else{
                         $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="GIRO">GIRO</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
@@ -807,7 +807,7 @@ $(document).ready(function() {
         $('#sfcato_div').hide();
         $val = $(this).val();
         if ($val.length > 0) {
-            if ($val == 'CASH' || $val == 'NETS') {
+            if ($val == 'CASH' || $val == 'NETS' || $val == 'PSEA') {
                 $('#row_dim3').show();
                 $('#row_dim31').hide();
                 $('#row_dim1').hide();
