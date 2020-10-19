@@ -5159,7 +5159,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         }
 
         $result = $this->db->get()->result_object();
-
+echo $this->db->last_query();exit;exit;
         return $result;
     }
     ////////////////////////
