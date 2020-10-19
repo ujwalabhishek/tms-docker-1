@@ -14314,7 +14314,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->limit('1');
         $qry = $this->db->get();
         $result = $qry->row();
-        echo $this->db->last_query();exit;
+        //echo $this->db->last_query();exit;
         return $result;
     }
     public function get_refund_rcvd_detailsforrpt($inv_id) {
