@@ -515,6 +515,7 @@ $(document).ready(function() {
                 $('.companyamounts_display').show();
                 if (parseFloat($company_total) > 0) {
                     $('.common_pay').show();
+                    $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="CHQ">Cheque</option>');
                 } else {
                     $('.common_pay').hide();
                 }
