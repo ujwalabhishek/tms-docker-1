@@ -14310,6 +14310,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->select('*,sum(amount_recd) as total');
         $this->db->from('enrol_paymnt_recd');
         $this->db->where('invoice_id', $inv_id);
+        $this->db->order_by('trigger_date');
         $qry = $this->db->get();
         $result = $qry->row();
         echo $this->db->last_query();exit;
