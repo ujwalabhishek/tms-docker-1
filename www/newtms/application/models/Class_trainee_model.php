@@ -14314,6 +14314,14 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $result = $qry->row();
         return $result;
     }
+    public function get_refund_rcvd_detailsforrpt($inv_id) {
+        $this->db->select('*,sum(amount_refund) as total');
+        $this->db->from('enrol_refund');
+        $this->db->where('invoice_id', $inv_id);
+        $qry = $this->db->get();
+        $result = $qry->row();
+        return $result;
+    }
 
 
 }
