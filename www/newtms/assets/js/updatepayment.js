@@ -518,7 +518,7 @@ $(document).ready(function() {
                     if(data.tenant_id=='T17'){///added by shubhranshu for everest
                         $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="CHQ">Cheque</option>');
                     }else{
-                        $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="GIRO">GIRO</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
+                        $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
                     }
                     
                 } else {
