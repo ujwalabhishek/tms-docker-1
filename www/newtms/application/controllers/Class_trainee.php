@@ -3491,7 +3491,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         //generate_payment_receipt($result);
         $tenant_id = $this->tenant_id;
         if($tenant_id =='T17'){
-            generate_payment_receipt_everest($result);
+            generate_payment_receipt($result);
         }else{
             generate_payment_receipt($result);
         }
