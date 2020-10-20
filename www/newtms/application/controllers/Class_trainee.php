@@ -3488,13 +3488,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         //$result = $this->get_payid_details($payid, 1);
          $result =  $this->get_payid_details_indv($payid,1);
         $this->load->helper('pdf_reports_helper');
-        //generate_payment_receipt($result);
-        $tenant_id = $this->tenant_id;
-        if($tenant_id =='T17'){
-            generate_payment_receipt($result);
-        }else{
-            generate_payment_receipt($result);
-        }
+        generate_payment_receipt($result);
     }
 
     /**
