@@ -3542,7 +3542,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         }
         $result['data']->total_paid = '$ ' . number_format($total_paid, 2, '.', '') . ' SGD';
         $this->load->helper('pdf_reports_helper');
-        //print_r($paid_arr);exit;
+        print_r($paid_arr);exit;
         generate_trainee_payment_recieved($result, $paid_arr, $trainee_det);
     }
 
