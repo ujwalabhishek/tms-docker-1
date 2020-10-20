@@ -5083,12 +5083,12 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         {
             $order='ASC';
             //$mop=array('SFC_ATO','SFC_SELF');
-            $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE');
+            $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
         }
         else
         {
               $order='DESC';
-              $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE');
+              $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
         }
         $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
 
