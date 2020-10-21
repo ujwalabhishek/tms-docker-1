@@ -8771,7 +8771,7 @@ echo $str_query;exit;
                 
              $result_set = $this->db->query($str_query1);
 
-        return $result_set->result()->subsidy_amount;   
+        return $result_set->result();   
     }
     
     public function get_remv_individual_enrol_trainees($tenant_id, $query = '') {
