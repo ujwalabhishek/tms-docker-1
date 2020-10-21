@@ -113,7 +113,7 @@ $(document).ready(function() {
                         {
                             $('#company_name_2').text(error.company_name);
                             $('#company_id').val(error.company_id);
-                            $('.no_invoice_div').show();
+                            $('.no_invoice_div').show();alert();
                             return false;
                         } 
                         else if (error.msg_status == "cannot_change") 
@@ -403,7 +403,7 @@ $(document).ready(function() {
                         } 
                         //added by prit
                         else if (data1 != null && data1 != "") 
-                        {alert('fff');
+                        {
                              
                             $('.remvind_div').show();
                             $('.no_invoice_div').hide();
@@ -433,7 +433,7 @@ $(document).ready(function() {
                             $('.remvind_div1').show();
                         }
                         else if (data != null && data != "") 
-                        {alert('d');
+                        {
                             $('.amountdetails_div').show();
                             $('.no_invoice_div').hide();
                             $('#comp_pymnt_due_id').val(data.pymnt_due_id);
