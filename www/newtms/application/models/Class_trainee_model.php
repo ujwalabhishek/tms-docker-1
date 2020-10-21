@@ -8692,7 +8692,7 @@ echo $str_query;exit;
 
             $payment_due_id = $result_set[1]->pymnt_due_id;
         }
-echo $this->db->last_query();exit;
+
         return $payment_due_id;
     }
 
