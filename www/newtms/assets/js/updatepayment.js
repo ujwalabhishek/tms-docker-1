@@ -512,7 +512,7 @@ $(document).ready(function() {
 
                     $('.c_current_due').html(parseFloat($company_total).toFixed(2));
                 }
-                $('.companyamounts_display').show();
+                $('.companyamounts_display').show();alert($company_total);
                 if (parseFloat($company_total) > 0) {
                     $('.common_pay').show();
                     if(data.tenant_id=='T17'){///added by shubhranshu for everest
