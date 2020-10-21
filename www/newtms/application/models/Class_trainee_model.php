@@ -8770,7 +8770,7 @@ echo $str_query;exit;
         $str_query1 = "select subsidy_amount from enrol_pymnt_due where pymnt_due_id='$pay_id' and user_id='$user_id'";
                 
              $result_set = $this->db->query($str_query1);
-echo $this->db->last_query();exit;
+
         return $result_set->result()->subsidy_amount;   
     }
     
