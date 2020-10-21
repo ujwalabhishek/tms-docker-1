@@ -9393,7 +9393,7 @@ echo $net_due;exit;
     private function net_fees_payable($unit_fees, $discount_amount, $subsidy_amount, $GSTRate, $GSTRule) {
 
         $discountedFees = round($unit_fees - $discount_amount, 2);//sk1
-
+echo $subsidy_amount;exit;
         if ($subsidy_amount != 0) {
 
             if ($GSTRule == 'GSTBSD') {
