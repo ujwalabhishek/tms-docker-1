@@ -4277,7 +4277,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $change_individual = $this->classtraineemodel->get_individual_enrol_trainees($tenant_id,$query);
             
             $add_subsidy = $this->classtraineemodel->get_individual_enrol_trainees_subsidy($tenant_id,$change_individual[0]->pymnt_due_id,$change_individual[0]->user_id);
-            echo print_r($add_subsidy);exit;
+            $change_individual[0]->subsidy = $add_subsidy[0]->subsidy_amount;
             $data['change_individual'] = $this->formate_change_individual($change_individual);
         } 
         else if($type=="remvind")
