@@ -9400,12 +9400,12 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
                 $GST_amount = round(($discountedFees * ($GSTRate / 100)), 2);//sk2
 
-                $net_due = round(($discountedFees + $GST_amount - $subsidyAmount), 2);//sk3
+                $net_due = round(($discountedFees + $GST_amount - $subsidy_amount), 2);//sk3
             }
 
             if ($GSTRule == 'GSTASD') {
 
-                $temp_net_due = round(($discountedFees - $subsidyAmount), 4);//sk4
+                $temp_net_due = round(($discountedFees - $subsidy_amount), 4);//sk4
 
                 $GST_amount = round(($temp_net_due * ($GSTRate / 100)), 2);//sk5
 
