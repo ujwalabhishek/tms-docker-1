@@ -8556,7 +8556,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
                     enrol.course_id ='" . $course_id . "' and enrol.class_id = '" . $class_id . "' "
                 . "and enrol.tenant_id='" . $tenant_id . "' and inv.company_id='" . $company_id . "' " . $query;
-
+echo $str_query;exit;
         return $this->db->query($str_query);
     }
     
@@ -9122,7 +9122,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $result_array = $this->net_fees_payable($unit_fees, $discount_amount, $subsidy_amount, $GSTRate, $GSTRule);
 
         $net_due = $result_array['net_due'];
-echo $net_due;exit;
+
         $GST_amount = $result_array['GST_amount'];
 
         $status = $this->update_enrol_pymnt_due($args['individual_payment_due_id'], $net_due, $discount_type, $discount_rate, $GST_amount, $args['individual_payment_due_id']);
@@ -9397,14 +9397,14 @@ echo $net_due;exit;
         if ($subsidy_amount != 0) {
 
             if ($GSTRule == 'GSTBSD') {
-echo $subsidy_amount.'-d';exit;
+
                 $GST_amount = round(($discountedFees * ($GSTRate / 100)), 2);//sk2
 
                 $net_due = round(($discountedFees + $GST_amount - $subsidy_amount), 2);//sk3
             }
 
             if ($GSTRule == 'GSTASD') {
-echo $subsidy_amount.'-r';exit;
+
                 $temp_net_due = round(($discountedFees - $subsidy_amount), 4);//sk4
 
                 $GST_amount = round(($temp_net_due * ($GSTRate / 100)), 2);//sk5
@@ -9412,7 +9412,7 @@ echo $subsidy_amount.'-r';exit;
                 $net_due = round(($temp_net_due + $GST_amount), 2);//sk6
             }
         } else {
-echo $subsidy_amount.'-t';exit;
+
             $GST_amount = round(($discountedFees * ($GSTRate / 100)), 2);//sk7
 
             $net_due = round(($discountedFees + $GST_amount), 2);//sk8
