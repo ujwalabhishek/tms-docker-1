@@ -4275,6 +4275,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             
             $query = $this->input->post('q');
             $change_individual = $this->classtraineemodel->get_individual_enrol_trainees($tenant_id,$query);
+            echo print_r($change_individual);exit;
             $add_subsidy = $this->classtraineemodel->get_individual_enrol_trainees_subsidy($tenant_id,$change_individual->pymnt_due_id,$change_individual->user_id);
             echo $add_subsidy;exit;
             $data['change_individual'] = $this->formate_change_individual($change_individual);
