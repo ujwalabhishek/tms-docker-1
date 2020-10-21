@@ -113,7 +113,7 @@ $(document).ready(function() {
                         {
                             $('#company_name_2').text(error.company_name);
                             $('#company_id').val(error.company_id);
-                            $('.no_invoice_div').show();alert();
+                            $('.no_invoice_div').show();
                             return false;
                         } 
                         else if (error.msg_status == "cannot_change") 

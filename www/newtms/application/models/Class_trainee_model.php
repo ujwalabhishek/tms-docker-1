@@ -8765,6 +8765,15 @@ echo $str_query;exit;
 
         return $result_set->result();
     }
+    
+    public function get_individual_enrol_trainees_subsidy($tenant_id,$pay_id,$user_id){
+        $str_query1 = "select subsidy_amount from enrol_pymnt_due where pymnt_due_id='$pay_id' and user_id='$user_id';
+                
+             $result_set = $this->db->query($str_query1);
+
+        return $result_set->result()->subsidy_amount;   
+    }
+    
     public function get_remv_individual_enrol_trainees($tenant_id, $query = '') {
 
         if (!empty($query)) {
