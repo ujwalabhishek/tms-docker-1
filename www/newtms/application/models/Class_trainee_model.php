@@ -9393,18 +9393,18 @@ echo $net_due;exit;
     private function net_fees_payable($unit_fees, $discount_amount, $subsidy_amount, $GSTRate, $GSTRule) {
 
         $discountedFees = round($unit_fees - $discount_amount, 2);//sk1
-echo $subsidy_amount;exit;
+
         if ($subsidy_amount != 0) {
 
             if ($GSTRule == 'GSTBSD') {
-
+echo $subsidy_amount.'-d';exit;
                 $GST_amount = round(($discountedFees * ($GSTRate / 100)), 2);//sk2
 
                 $net_due = round(($discountedFees + $GST_amount - $subsidy_amount), 2);//sk3
             }
 
             if ($GSTRule == 'GSTASD') {
-
+echo $subsidy_amount.'-r';exit;
                 $temp_net_due = round(($discountedFees - $subsidy_amount), 4);//sk4
 
                 $GST_amount = round(($temp_net_due * ($GSTRate / 100)), 2);//sk5
@@ -9412,7 +9412,7 @@ echo $subsidy_amount;exit;
                 $net_due = round(($temp_net_due + $GST_amount), 2);//sk6
             }
         } else {
-
+echo $subsidy_amount.'-t';exit;
             $GST_amount = round(($discountedFees * ($GSTRate / 100)), 2);//sk7
 
             $net_due = round(($discountedFees + $GST_amount), 2);//sk8
