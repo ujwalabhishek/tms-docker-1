@@ -3791,7 +3791,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         {
             $result = $this->classtraineemodel->get_enroll_invoice_details($course_id, $class_id, $company_id, $tenant_id, $opt_type, $payid,$user_id);                        
             $error = (array)$result;
-            print_r($result);exit;
+            //print_r($result);exit;
             if(empty($error['msg_status']))
             {
             $result->discount_label = rtrim($this->course->get_metadata_on_parameter_id($result->discount_type), ', ');
