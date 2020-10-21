@@ -9122,7 +9122,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $result_array = $this->net_fees_payable($unit_fees, $discount_amount, $subsidy_amount, $GSTRate, $GSTRule);
 
         $net_due = $result_array['net_due'];
-
+echo $net_due;exit;
         $GST_amount = $result_array['GST_amount'];
 
         $status = $this->update_enrol_pymnt_due($args['individual_payment_due_id'], $net_due, $discount_type, $discount_rate, $GST_amount, $args['individual_payment_due_id']);
