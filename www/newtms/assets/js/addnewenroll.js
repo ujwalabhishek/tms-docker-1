@@ -456,7 +456,7 @@ $(document).ready(function() {
                             $('.pay_subsidy_amount').html(data.total_inv_subsdy);
                             $('.invoice_date').html(data.inv_date);
                             $('#company_id').val(data.company_id);
-                            $('#subsidy_amount').val(data.subsidy_amount);
+                            $('#subsidy_amount').val(data.subsdy);
                             $('#company_name_1').text(data.company_name);
                         }
                         if (trainees != "" && $val == 'add_invoice') 

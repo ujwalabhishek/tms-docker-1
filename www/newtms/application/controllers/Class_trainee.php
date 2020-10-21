@@ -3780,7 +3780,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         {
         $result = $this->classtraineemodel->get_enroll_invoice_details($course_id, $class_id, $company_id, $tenant_id, $opt_type, $payid,$user_id);                        
         $error = (array)$result;
-       echo print_r($result);exit;
+       
              if(empty($error['msg_status']))
             {
                 $return_data['data1'] = $result;
@@ -3812,6 +3812,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $result->total_inv_discnt = number_format($result->total_inv_discnt, 2);
             $result->gst_rate = number_format($result->gst_rate, 2);
                 $result->gst_rate = $result->gst_rate;
+                $result->subsdy = 420;
             $return_data['data'] = $result;
                 $return_data['lock'] = $lock_status;
             $company_id = ($company_id=="" || $company_id == 0)?$result->company_id:$company_id;
