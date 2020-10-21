@@ -403,7 +403,7 @@ $(document).ready(function() {
                         } 
                         //added by prit
                         else if (data1 != null && data1 != "") 
-                        {
+                        {alert('fff');
                              
                             $('.remvind_div').show();
                             $('.no_invoice_div').hide();
@@ -433,7 +433,7 @@ $(document).ready(function() {
                             $('.remvind_div1').show();
                         }
                         else if (data != null && data != "") 
-                        {
+                        {alert('d');
                             $('.amountdetails_div').show();
                             $('.no_invoice_div').hide();
                             $('#comp_pymnt_due_id').val(data.pymnt_due_id);
@@ -456,7 +456,7 @@ $(document).ready(function() {
                             $('.pay_subsidy_amount').html(data.total_inv_subsdy);
                             $('.invoice_date').html(data.inv_date);
                             $('#company_id').val(data.company_id);
-                            $('#subsidy_amount').val(data.subsdy);
+                            $('#subsidy_amount').val(data.subsidy_amount);
                             $('#company_name_1').text(data.company_name);
                         }
                         if (trainees != "" && $val == 'add_invoice') 

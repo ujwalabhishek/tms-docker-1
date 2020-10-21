@@ -3812,7 +3812,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $result->total_inv_discnt = number_format($result->total_inv_discnt, 2);
             $result->gst_rate = number_format($result->gst_rate, 2);
                 $result->gst_rate = $result->gst_rate;
-                $result->subsdy = 420;
+               
             $return_data['data'] = $result;
                 $return_data['lock'] = $lock_status;
             $company_id = ($company_id=="" || $company_id == 0)?$result->company_id:$company_id;
