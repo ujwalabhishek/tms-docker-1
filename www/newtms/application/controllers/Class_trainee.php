@@ -4343,7 +4343,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $subsidy = $this->classtraineemodel->get_individual_enrol_trainees_subsidy($args['tenant_id'],$args['individual_payment_due_id'],$args['individual_user_id']);
         
     if($args['subsidy_amount']== 0 || $args['subsidy_amount']== null || $args['subsidy_amount']== ''){ $args['subsidy_amount'] = $subsidy[0]->subsidy_amount;}
-        print_r($args);exit;        
+            
         if ($opType == 'mergeInvoice') {
             $status = $this->classtraineemodel->merge_invoice($args);
             if ($status == FALSE) {
