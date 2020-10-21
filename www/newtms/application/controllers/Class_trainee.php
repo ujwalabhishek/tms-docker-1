@@ -4276,8 +4276,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $query = $this->input->post('q');
             $change_individual = $this->classtraineemodel->get_individual_enrol_trainees($tenant_id,$query);
             
-            $add_subsidy = $this->classtraineemodel->get_individual_enrol_trainees_subsidy($tenant_id,$change_individual[0]->pymnt_due_id,$change_individual[0]->user_id);
-            $change_individual[0]->subsidy = $add_subsidy[0]->subsidy_amount;
+            
             $data['change_individual'] = $this->formate_change_individual($change_individual);
         } 
         else if($type=="remvind")
@@ -4326,7 +4325,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      * @param type $opType
      */
     public function enrolment_type_change($opType) {
-        $args = array();
+        $args = array();      
         $args['tenant_id'] = $this->tenant_id;
         $args['logged_in_user_id'] = $this->user->user_id;
         $args['individual_user_id'] = $this->input->post('individual_user_id');
@@ -4340,6 +4339,10 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $args['comp_gst_rule'] = $this->input->post('comp_gst_rule');
         $args['course_id'] = $this->input->post('course_id');
         $args['class_id'] = $this->input->post('class_id');
+        
+        $subsidy = $this->classtraineemodel->get_individual_enrol_trainees_subsidy($args['tenant_id'],$args['individual_payment_due_id'],$args['individual_user_id']);
+        $args['subsidy_amount'] =$args['subsidy_amount'] ?? $subsidy[0]->subsidy_amount;
+        print_r($args);exit;        
         if ($opType == 'mergeInvoice') {
             $status = $this->classtraineemodel->merge_invoice($args);
             if ($status == FALSE) {
