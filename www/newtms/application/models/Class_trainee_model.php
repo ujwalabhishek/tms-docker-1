@@ -12901,7 +12901,28 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $invoice_id;
     }
+    
 
+//    private function generate_invoice_id($class_start_date) {
+//
+//        $date_array = explode("-",$class_start_date);
+//
+//        $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.");
+//
+//        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id");
+//
+//        $tenant_id = $this->tenant_id;
+//
+//        $invoice_id_tmp = get_max_lookup($lookup_table[$tenant_id]);
+//        
+//        if($tenant_id == 'T17'){
+//            $invoice_id = $pre_fix_array[$tenant_id] .'-'.$date_array[0].'-'.$date_array[1].substr($date_array[0],2).'-'. sprintf('%04d',$invoice_id_tmp);
+//        }else{
+//            $invoice_id = $pre_fix_array[$tenant_id] . $invoice_id_tmp;
+//        }
+//
+//        return $invoice_id;
+//    }
     /**
 
      * This method clean orphan data.
