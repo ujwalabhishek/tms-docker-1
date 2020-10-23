@@ -8556,7 +8556,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
                     enrol.course_id ='" . $course_id . "' and enrol.class_id = '" . $class_id . "' "
                 . "and enrol.tenant_id='" . $tenant_id . "' and inv.company_id='" . $company_id . "' " . $query;
-echo $str_query;exit;
+
         return $this->db->query($str_query);
     }
     
@@ -8765,7 +8765,7 @@ echo $str_query;exit;
 
         return $result_set->result();
     }
-    
+    /////added by shubhranshu for proper calculation
     public function get_individual_enrol_trainees_subsidy($tenant_id,$pay_id,$user_id){
         $str_query1 = "select subsidy_amount from enrol_pymnt_due where pymnt_due_id='$pay_id' and user_id='$user_id'";
                 
