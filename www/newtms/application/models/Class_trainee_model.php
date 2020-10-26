@@ -9426,7 +9426,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
             $net_due = round(($discountedFees + $GST_amount), 2);//sk8
         }
-echo $net_due.'---'.$subsidy_amount;exit;
+
         return array('net_due' => $net_due, "GST_amount" => $GST_amount);
     }
 
