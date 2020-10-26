@@ -14347,6 +14347,16 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->last_query();exit;
         return $result;
     }
+    public function get_pymnt_rcvd_detailsforrpt_all($inv_id) {
+        $this->db->select('*,sum(amount_recd) as total');
+        $this->db->from('enrol_paymnt_recd');
+        $this->db->where('invoice_id', $inv_id);
+        $this->db->order_by('trigger_date','desc');
+        $qry = $this->db->get();
+        $result = $qry->row();
+        //echo $this->db->last_query();exit;
+        return $result;
+    }
     public function get_refund_rcvd_detailsforrpt($inv_id) {
         $this->db->select('*,sum(amount_refund) as total');
         $this->db->from('enrol_refund');
