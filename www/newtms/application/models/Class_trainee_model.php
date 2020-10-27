@@ -12909,7 +12909,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.","T17" => "EVI");
 
-        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id");
+        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id","T17" => "ei_new_invoice_id");
 
         $tenant_id = $this->tenant_id;
 
