@@ -516,7 +516,12 @@ $(document).ready(function() {
                 if (parseFloat($company_total) > 0) {
                     $('.common_pay').show();
                     if(data.tenant_id=='T17'){///added by shubhranshu for everest
-                        $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="CHQ">Cheque</option>');
+                        if($('#account_type').val()=='company'){
+                            $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="CHQ">Cheque</option>');
+                        }else{
+                            $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
+                        }
+                        
                     }else{
                         $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
                     }
