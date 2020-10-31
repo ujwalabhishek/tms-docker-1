@@ -58,7 +58,7 @@ $CI->load->model('settings_model');
                                 'maxlength' => 100,
                                 'class' => 'upper_case alphanumeric',
                                 'onblur' => 'javascript:isunique_course(this.value,this.id);',
-                                 'style' => 'width:250px;',
+                                 'style' => 'width:550px;',
                             );
                             ?>
                             <?php echo form_input($course_details); ?>
