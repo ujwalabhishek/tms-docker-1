@@ -3448,11 +3448,24 @@ if (!empty($tenant_details->tenant_contact_num)) {
        //if($result->company_id!=""){
        if(($result->inv_type!="INVINDV") && (!empty($result->company_id))){
          $data=  json_decode($result->invoice_details);
-        generate_company_pdf_invoice_all($data);}
+          //added by shubhranshu to switch the pdf for verest
+        if($tenant_id =='T17'){
+            generate_company_pdf_invoice_everest($data);
+        }else{
+            generate_company_pdf_invoice_all($data);
+        }
+      
+        
+       }
         else{
            
             $data =  (array)json_decode($result->invoice_details);
-            generate_pdf_invoice($data);
+            //generate_pdf_invoice($data);
+            if($tenant_id =='T17'){
+                generate_pdf_invoice_everest($data);
+            }else{
+                generate_pdf_invoice($data);
+            }
         }
     }
     /**
