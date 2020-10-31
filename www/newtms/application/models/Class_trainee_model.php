@@ -9104,7 +9104,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $unit_fees = $args['unit_fees'];
         $subsidy_amount = $args['subsidy_amount'];////added by shubhranshu to calculate and add subsidy of previous invoice
-        $subsidy_amount = 0;
+        ////$subsidy_amount = 0;
 
         $net_due = 0;
 
