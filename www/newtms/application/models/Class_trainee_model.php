@@ -12902,7 +12902,6 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 //        return $invoice_id;
 //    }
     
-    ////added by shubhranshu for everest invoice id changes
     private function generate_invoice_id() {
 
         //$date_array = explode("-",$class_start_date);
@@ -12914,22 +12913,22 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $tenant_id = $this->tenant_id;
 
         $invoice_id_tmp = get_max_lookup($lookup_table[$tenant_id]);
-        
-        if(strlen($invoice_id_tmp)== 1){
-            $invoice_id_tmp = '0000'.$invoice_id_tmp;
-        }elseif(strlen($invoice_id_tmp)== 2){
-            $invoice_id_tmp = '000'.$invoice_id_tmp;
-        }elseif(strlen($invoice_id_tmp)== 3){
-            $invoice_id_tmp = '00'.$invoice_id_tmp;
-        }elseif(strlen($invoice_id_tmp)== 4){
-            $invoice_id_tmp = '0'.$invoice_id_tmp;
-        }elseif(strlen($invoice_id_tmp)== 5){
-            $invoice_id_tmp = $invoice_id_tmp;
-        }else{
-            $invoice_id_tmp = $invoice_id_tmp;
-        }
 
         if($tenant_id == 'T17'){
+            if(strlen($invoice_id_tmp)== 1){
+                $invoice_id_tmp = '0000'.$invoice_id_tmp;
+            }elseif(strlen($invoice_id_tmp)== 2){
+                $invoice_id_tmp = '000'.$invoice_id_tmp;
+            }elseif(strlen($invoice_id_tmp)== 3){
+                $invoice_id_tmp = '00'.$invoice_id_tmp;
+            }elseif(strlen($invoice_id_tmp)== 4){
+                $invoice_id_tmp = '0'.$invoice_id_tmp;
+            }elseif(strlen($invoice_id_tmp)== 5){
+                $invoice_id_tmp = $invoice_id_tmp;
+            }else{
+                $invoice_id_tmp = $invoice_id_tmp;
+            }
+            
             $invoice_id = $pre_fix_array[$tenant_id] .'-20'.date('y').'-'.$invoice_id_tmp;
         }else{
             $invoice_id = $pre_fix_array[$tenant_id] . $invoice_id_tmp;
@@ -14349,7 +14348,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $result = $qry->row();
         return $result->sfc_claim_id;
     }
-    
+    ///addded by shubhranshu for evrest pdf generation rcvd details all
     public function get_pymnt_rcvd_detailsforrpt($inv_id) {
         $this->db->select('*');
         $this->db->from('enrol_paymnt_recd');
@@ -14361,6 +14360,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->last_query();exit;
         return $result;
     }
+    ///addded by shubhranshu for evrest pdf generation rcvd details
     public function get_pymnt_rcvd_detailsforrpt_all($inv_id) {
         $this->db->select('*,sum(amount_recd) as total');
         $this->db->from('enrol_paymnt_recd');
@@ -14371,6 +14371,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->last_query();exit;
         return $result;
     }
+    ///addded by shubhranshu for evrest pdf generation refund details
     public function get_refund_rcvd_detailsforrpt($inv_id) {
         $this->db->select('*,sum(amount_refund) as total');
         $this->db->from('enrol_refund');
