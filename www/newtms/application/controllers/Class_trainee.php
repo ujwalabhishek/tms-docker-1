@@ -25,8 +25,8 @@ class Class_Trainee extends CI_Controller {
         $this->load->model('trainee_model', 'traineemodel'); 
         $this->load->model('activity_log_model', 'activitylog');
         $this->user = $this->session->userdata('userDetails');
-        $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;  
- 
+        $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;    
+      
     }
 
     /*
@@ -234,8 +234,7 @@ class Class_Trainee extends CI_Controller {
                             $wsq_courses_array = $this->config->item('wsq_courses'); // wsq courses modified by shubhranshu
                             $tenant_array = array('T02','T12'); // xp and xp2 
                             $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/'. $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
-
-                            //////added by shubhranshu for wablab TCS for all courses
+                            //////added by shubhranshu for wablab and everest TCS for all courses
                             if($tenant_id == 'T20' || $tenant_id == 'T17'){
                                 $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$row['course_id'].'/'. $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>';
 
@@ -245,6 +244,8 @@ class Class_Trainee extends CI_Controller {
                                    $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$row['course_id'].'/'. $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>'; 
                                 }
                             }
+                            
+                           
 
     //                        $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/' . $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
                         } 
@@ -286,7 +287,6 @@ class Class_Trainee extends CI_Controller {
         $data['main_content'] = 'classtrainee/classtraineelist';
         $this->load->view('layout', $data);
     }
-    
     ///by shubhranshu for client requirement for declaration data to save
     public function save_declaration_trainee_data(){
         $tenant_id = $this->tenant_id ?? TENANT_ID;
@@ -303,7 +303,6 @@ class Class_Trainee extends CI_Controller {
        $status=$this->classtraineemodel->save_declaration_data($tenant_id,$trainee_id,$class_id,$tax_code,$name,$type,$email,$mobile,$condition,$lesson_timing,$overseas);
        echo $status;
     }
-    
     
       /* This function loads the trainee list of public portal skm start */
     public function online_trainee()
@@ -786,8 +785,8 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 }else{
                      $li = "Report at center at 8:30 AM to register for class";
                 }
-                
-                 if($tenant_details->tenant_id == 'T02')
+            /* end */
+                if($tenant_details->tenant_id == 'T02')
                 {
                     $li2 = "<li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>";
                 } else {
@@ -808,7 +807,6 @@ if (!empty($tenant_details->tenant_contact_num)) {
                             '.$li2.'
                         </ol>';
             
-            
             /* skm end */
             
             $data = '<br><br>
@@ -816,21 +814,21 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 <tr>
                     <td>'.$tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: 
                     ' . $trainee . ' for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'<br><br>
-                    <strong>Class start date:</strong>
-                    ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
-                    <br>
-                    <br>
-                     <strong>Class end date:</strong>
-                    ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
-                    <br>
-                    <br>
-
-                    <strong>Location: </strong>
-                    ' . $ClassLoc . '<br><br>
-                    <strong>Contact Details: </strong>
-                    ' . $contact_details. '<br><br>
-                    <strong>Remark: </strong>
-                    ' . $message3.'</td>
+            <strong>Class start date:</strong>
+            ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
+            <br>
+            <br>
+             <strong>Class end date:</strong>
+            ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
+            <br>
+            <br>
+           
+            <strong>Location: </strong>
+            ' . $ClassLoc . '<br><br>
+            <strong>Contact Details: </strong>
+            ' . $contact_details. '<br><br>
+            <strong>Remark: </strong>
+            ' . $message3.'</td>
                 </tr>
             </table>';
         }
@@ -894,7 +892,6 @@ if (!empty($tenant_details->tenant_contact_num)) {
         if($tenant_details->tenant_id == 'T02')
         {
             $li2 = "<li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>";
-            
         } else {
             $li2 = '';
         } 
@@ -968,7 +965,6 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 </table>';
             }
         }
-        
         $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
         if ($booking_details) {
             $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
@@ -1688,7 +1684,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $course_id = $this->input->post('course');
         $class_id = $this->input->post('class');
         //$class_details = $this->class->get_class_details($tenant_id, $class_id);
-        $result = $this->class->get_class_salesexec($tenant_id, $course_id);
+        $result = $this->class->get_all_salesexec_course($tenant_id, $course_id);
         echo json_encode($result);
         exit();
     }
@@ -1896,7 +1892,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      */
     public function mark_attendance_update() 
     {
-       //$this->output->enable_profiler(TRUE);
+       $this->output->enable_profiler(TRUE);
         $data['sideMenuData'] = fetch_non_main_page_content();/////added by shubhranshu
         $tenant_id = $this->tenant_id;
         $course_id = $this->input->post('course_id');
@@ -2178,6 +2174,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         ///added by shubhranshu to disable the update payment dropdown for everest
         $company_invoice->tenant_id = $this->tenant_id;
         echo json_encode($company_invoice);
+        
         exit();
     }
 
@@ -2222,6 +2219,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $company_invoice->trainees[$k]->amount_remain = round(($amount_paid - $amount_refund), 2);
         }
         $company_invoice->subsidy_type = $this->classtraineemodel->get_subsidy_type($this->tenant_id);
+        
         echo json_encode($company_invoice);
         exit();
     }
@@ -2612,7 +2610,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             {
                 $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
                 $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ');
-                $other_mode = ($row->othr_mode_of_payment) ? '+'.$row->othr_mode_of_payment : '';// added by shubhranshu to display the other mode if exist 0n 19feb
+                 $other_mode = ($row->othr_mode_of_payment) ? '+'.$row->othr_mode_of_payment : '';// added by shubhranshu to display the other mode if exist 0n 19feb
                 $paid_arr[] = array(
                     'recd_on' => date('d/m/Y', strtotime($row->recd_on)),
                     'mode' => $mode . $mode_ext.$other_mode,
@@ -2657,8 +2655,10 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $trainee = ($trainee_name->gender == 'MALE') ? 'Mr.' . $name : 'Ms.' . $name;
             $invoice->recd_on_year = date('Y', strtotime($invoice->recd_on));
             $invoice->recd_on = date('d/m/Y', strtotime($invoice->recd_on));
+             
             $invoice->mode_of_pymnt = rtrim($this->course->get_metadata_on_parameter_id($invoice->mode_of_pymnt), ', ');
-             $sfc_claim_id = $this->classtraineemodel->get_sfc_claim_id($result->class_id, $result->user_id, $payid, $tenant_id); // addded by shubhranshu for sfc claim id
+            $sfc_claim_id = $this->classtraineemodel->get_sfc_claim_id($result->class_id, $result->user_id, $payid, $tenant_id); // addded by shubhranshu for sfc claim id
+
         } 
         else {
             $label = 'inactive';
@@ -2688,6 +2688,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $subsidy_type = $this->classtraineemodel->get_subsidy_type($this->tenant_id);
         $subsidy_type_label = $this->classtraineemodel->get_subsidy_type_label($this->tenant_id, $result->subsidy_type_id);
         $subsidy_type_label = empty($subsidy_type_label)? 'NA':$subsidy_type_label;
+       
         $res = array('data' => $result, 'recd' => $paid_arr, 'label' => $label, 'tenant' => $tenant_details,
             'invoice' => $invoice, 'trainee' => $trainee, 'subsidy_type' => $subsidy_type,'subsidy_type_label' => $subsidy_type_label);        
         if ($json_check == 0) {
@@ -2791,10 +2792,11 @@ if (!empty($tenant_details->tenant_contact_num)) {
         if (!empty($paid_details)) 
         {
             $label = 'active';
+          
             foreach ($paid_details as $row) 
             {
                 $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
-                $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ');
+                $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', '); 
                 $paid_arr[] = array(
                     'recd_on' => date('d/m/Y', strtotime($row->recd_on)),
                     'mode' => $mode . $mode_ext,
@@ -2844,11 +2846,12 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $invoice->recd_on = date('d/m/Y', strtotime($invoice->recd_on));
             $invoice->mode_of_pymnt = rtrim($this->course->get_metadata_on_parameter_id($invoice->mode_of_pymnt), ', ');
             $sfc_claim_id = $this->classtraineemodel->get_sfc_claim_id($result->class_id, $result->user_id, $payid, $tenant_id); // addded by shubhranshu for sfc claim id
+            
         } 
         else {
             $label = 'inactive';
         }
-         $result->sfc_claim_id = $sfc_claim_id; // added by shubhranshu
+        $result->sfc_claim_id = $sfc_claim_id; // added by shubhranshu
         $result->att_status;
         $result->enrolment_mode;
         if((($result->total_inv_amount + $refund_amount) - $total_paid) == 0){
@@ -2887,7 +2890,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      */
     public function export_classtrainee_full() {
          $tenant_id = $this->tenant_id;
-        $userid=$this->session->userdata('userDetails')->user_id;
+      
         $course = ($this->input->get('course')) ? $this->input->get('course') : '';
         $class = ($this->input->get('class')) ? $this->input->get('class') : '';
         $class_status = ($this->input->get('class_status')) ? $this->input->get('class_status') : '';
@@ -2899,7 +2902,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $company_id = $this->input->get('company_id');
         $result = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, '', '1', $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
         $this->load->helper('export_helper');
-        export_classtrainee_full($result, $tenant_id,$userid);
+        export_classtrainee_full($result, $tenant_id);
     }
 
     /**
@@ -3422,7 +3425,6 @@ if (!empty($tenant_details->tenant_contact_num)) {
          $result->payble_amount=$inv_amt+$refunded_amt-$received_amt;
 
         $this->load->helper('pdf_reports_helper');
-        //added by shubhranshu to switch the pdf for verest
         if($tenant_id =='T17'){
             generate_company_pdf_invoice_everest($result);
         }else{
@@ -3448,24 +3450,11 @@ if (!empty($tenant_details->tenant_contact_num)) {
        //if($result->company_id!=""){
        if(($result->inv_type!="INVINDV") && (!empty($result->company_id))){
          $data=  json_decode($result->invoice_details);
-          //added by shubhranshu to switch the pdf for verest
-        if($tenant_id =='T17'){
-            generate_company_pdf_invoice_everest($data);
-        }else{
-            generate_company_pdf_invoice_all($data);
-        }
-      
-        
-       }
+        generate_company_pdf_invoice_all($data);}
         else{
            
             $data =  (array)json_decode($result->invoice_details);
-            //generate_pdf_invoice($data);
-            if($tenant_id =='T17'){
-                generate_pdf_invoice_everest($data);
-            }else{
-                generate_pdf_invoice($data);
-            }
+            generate_pdf_invoice($data);
         }
     }
     /**
@@ -3481,13 +3470,13 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $result = $this->get_payid_details($id, 1);
         //print_r($result);exit;
         $this->load->helper('pdf_reports_helper');
-        ///added by shubhranshu to switch pdf code for everest
         $tenant_id = $this->tenant_id;
         if($tenant_id =='T17'){
             generate_pdf_invoice_everest($result);
         }else{
             generate_pdf_invoice($result);
         }
+       
     }
 
     /**
@@ -3709,6 +3698,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      * to get all taxcode
      */
     public function get_alltaxcode() {
+      
         $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
         $result = $this->classtraineemodel->get_alluser($this->tenant_id, '', $query_string);
         if ($result) {
@@ -3791,6 +3781,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         {
         $result = $this->classtraineemodel->get_enroll_invoice_details($course_id, $class_id, $company_id, $tenant_id, $opt_type, $payid,$user_id);                        
         $error = (array)$result;
+       
              if(empty($error['msg_status']))
             {
                 $return_data['data1'] = $result;
@@ -3802,6 +3793,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
         {
             $result = $this->classtraineemodel->get_enroll_invoice_details($course_id, $class_id, $company_id, $tenant_id, $opt_type, $payid,$user_id);                        
             $error = (array)$result;
+            //print_r($result);exit;
             if(empty($error['msg_status']))
             {
             $result->discount_label = rtrim($this->course->get_metadata_on_parameter_id($result->discount_type), ', ');
@@ -3821,6 +3813,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
             $result->total_inv_discnt = number_format($result->total_inv_discnt, 2);
             $result->gst_rate = number_format($result->gst_rate, 2);
                 $result->gst_rate = $result->gst_rate;
+               
             $return_data['data'] = $result;
                 $return_data['lock'] = $lock_status;
             $company_id = ($company_id=="" || $company_id == 0)?$result->company_id:$company_id;
@@ -4033,15 +4026,14 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 }else{
                     $li = "<li>Report at center at 8:30 AM to register for class</li>";
                 }
-                 ///////// below code added by shubhranshu for elearning class only for xp
+                
+                ///////// below code added by shubhranshu for elearning class only for xp
                 if($tenant_details->tenant_id == 'T02'){
                      if($course == 166 || $course== 167){
                          $li ='';
                      }
                 }
-                
                 /* end */
-                /////added by shubhranshu for wablab trainee feedback
                 if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
                     $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
                      for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
@@ -4086,9 +4078,10 @@ if (!empty($tenant_details->tenant_contact_num)) {
                                 <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Your NRIC, work permit or will be photocopied on the class date</li>
                                 <li>Trim finger nails and remove nail polish</li>
-                                '.$li.'
+                               '.$li.'
                             </ol>';
                 }
+                
                 $res['data'] = $data;
             } else {
                 $invoice = $this->classtraineemodel->get_invoice_for_class_trainee($class, $user_id);
@@ -4199,7 +4192,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
                 if ($company[0] == 'T') {
                     $company_details->company_name = $tenant_details->tenant_name;
                 }
-                ///// added by shubhranshu for wablab points
+                 ///// added by shubhranshu for wablab points
                 if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
                     $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
                     $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
@@ -4245,6 +4238,8 @@ if (!empty($tenant_details->tenant_contact_num)) {
                                 <li>'.$li.'</li>
                             </ol>';
                 }
+                
+                
             }
             $res['data'] = $data;
             $res['trainee_id'] = $trainee_id;
@@ -4271,7 +4266,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      *  This method gets the invoice drop down values based on the enrollment type selected.
      */
     public function get_select_box() {
-        $data['sideMenuData'] = fetch_non_main_page_content();
+         $data['sideMenuData'] = fetch_non_main_page_content();
         ini_set('memory_limit','256M');// added by shubhranshu since 500 error due to huge data
         $type = $this->input->post('type');
         $tenant_id = $this->tenant_id;
@@ -4281,6 +4276,8 @@ if (!empty($tenant_details->tenant_contact_num)) {
             
             $query = $this->input->post('q');
             $change_individual = $this->classtraineemodel->get_individual_enrol_trainees($tenant_id,$query);
+            
+            
             $data['change_individual'] = $this->formate_change_individual($change_individual);
         } 
         else if($type=="remvind")
@@ -4329,7 +4326,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
      * @param type $opType
      */
     public function enrolment_type_change($opType) {
-        $args = array();
+        $args = array();      
         $args['tenant_id'] = $this->tenant_id;
         $args['logged_in_user_id'] = $this->user->user_id;
         $args['individual_user_id'] = $this->input->post('individual_user_id');
