@@ -729,12 +729,12 @@ $(document).ready(function() {
                         $payrcd_table.append($html);
                     }
                     
-                   if(res.data.tenant_id='T17'){
-                       //$('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
+                   if(res.tenant.tenant_id='T17'){
+                       $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
                         //$('#payment_type1').html('<option value="" selected="selected">Select</option><option value="CASH1">Cash</option><option value="CHQ1">Cheque</option><option value="NETS1">NETS</option>');
                     }else{
                         //$('#payment_type1').html('<option value="" selected="selected">Select</option><option value="CASH1">Cash</option><option value="CHQ1">Cheque</option><option value="GIRO1">GIRO</option><option value="NETS1">NETS</option>');
-                      //$('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="GIRO">GIRO</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>'); 
+                      $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="GIRO">GIRO</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>'); 
                    }
                     
                     
