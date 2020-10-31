@@ -2171,6 +2171,7 @@ if (!empty($tenant_details->tenant_contact_num)) {
 //             $company_invoice->trainees[$k]->amount_remain = round(($row->total_amount_due - $amount_paid + $amt_refunded), 3);skm
         }
 //        print_r($company_invoice);
+        ///added by shubhranshu to disable the update payment dropdown for everest
         $company_invoice->tenant_id = $this->tenant_id;
         echo json_encode($company_invoice);
         

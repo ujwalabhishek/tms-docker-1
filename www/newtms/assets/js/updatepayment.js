@@ -726,6 +726,10 @@ $(document).ready(function() {
                         $html = '<tr><td class="error" colspan="3">There is no payment available.</td></tr>';
                         $payrcd_table.append($html);
                     }
+                    
+                   
+                    $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
+                    
                 }
             });
         }
