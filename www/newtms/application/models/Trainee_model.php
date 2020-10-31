@@ -821,6 +821,10 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             {
                     $taxcode_prefix = 'WB';
             }
+            if($this->user->tenant_id=='T17')
+            {
+                    $taxcode_prefix = 'EV';
+            }
         }
         
         if ($country_of_residence == 'USA') 
@@ -1175,6 +1179,8 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $user_name = "CD".$taxcode;
         }else if($this->user->tenant_id == 'T20'){
             $user_name = "WB".$taxcode;
+        }else if($this->user->tenant_id == 'T17'){
+            $user_name = "EV".$taxcode;
         } else {
             $user_name = $taxcode;
         }
@@ -1282,6 +1288,8 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $no_tax_tax_code = "CD".$user_id;
         }else if($this->user->tenant_id == 'T20'){
             $no_tax_tax_code = "WB".$user_id;
+        }else if($this->user->tenant_id == 'T17'){
+            $user_name = "EV".$user_id;
         } else {
             $no_tax_tax_code = $user_id;
         }
@@ -1451,6 +1459,9 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             if($this->user->tenant_id=='T20')
             {
                     $taxcode_prefix = 'WB';
+            }
+            if($this->user->tenant_id=='T17'){
+                    $taxcode_prefix = 'EV';
             }
         }
         if ($country_of_residence == 'USA')
