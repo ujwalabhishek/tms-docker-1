@@ -729,7 +729,7 @@ $(document).ready(function() {
                         $payrcd_table.append($html);
                     }
                     
-                   if(res.tenant.tenant_id='T17'){alert(res.tenant.tenant_id);
+                   if(res.tenant.tenant_id='T17'){alert(res.data.tenant_id);
                        $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="CHQ">Cheque</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
                         //$('#payment_type1').html('<option value="" selected="selected">Select</option><option value="CASH1">Cash</option><option value="CHQ1">Cheque</option><option value="NETS1">NETS</option>');
                     }else{
