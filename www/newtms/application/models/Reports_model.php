@@ -3266,7 +3266,6 @@ SELECT  {$calc_rows} c.crse_name,
         $query = "SELECT 
             tu.tax_code,
             ei.invoice_id,
-            tu.user_id,
             tup.first_name as name,
             cm.company_name,
             due.class_fees,
@@ -3309,7 +3308,6 @@ SELECT  {$calc_rows} c.crse_name,
             tu.tax_code,
             tu.user_id,
             ei.invoice_id,
-            ei.inv_date as Invoice_Date,
             tup.first_name as name,
             cm.company_name,
             due.class_fees,
@@ -3320,9 +3318,6 @@ SELECT  {$calc_rows} c.crse_name,
             ce.payment_status,
             ce.enrolment_mode,
             epr.mode_of_pymnt,
-            (CASE WHEN epr.mode_of_pymnt like '%CHQ%' THEN epr.cheque_number ELSE NULL END) as Payment_Reference,
-            (CASE WHEN epr.mode_of_pymnt like '%GIRO%' THEN epr.bank_name ELSE NULL END) as bank_name,
-            epr.recd_on as Payment_Rcvd_Date,
             cc.class_start_datetime,
             cc.class_end_datetime,
             cc.class_name,
@@ -3356,10 +3351,10 @@ SELECT  {$calc_rows} c.crse_name,
             SELECT tt.*
                                 FROM enrol_pymnt_brkup_dt tt
                                 JOIN
-                                    (SELECT `invoice_id`,user_id, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id ."' and user_id='".$user_id."' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id AND tt.trigger_date = gtt.Maxdate and tt.user_id=gtt.user_id order by trigger_date desc";
+                                    (SELECT `invoice_id`,user_id, MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id . "' and user_id='" . $user_id . "' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id AND tt.trigger_date = gtt.Maxdate and tt.user_id=gtt.user_id";
 
         $result = $this->db->query($query)->result();
-       
+
         return $result[0]->amount_recd;
     }
 
@@ -3368,26 +3363,12 @@ SELECT  {$calc_rows} c.crse_name,
         $query = "SELECT tt.*
                                 FROM enrol_pymnt_brkup_dt tt
                                 JOIN
-                                    (SELECT `invoice_id`, user_id,MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id ."' and user_id='".$user_id."' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id and tt.user_id=gtt.user_id order by trigger_date desc";
+                                    (SELECT `invoice_id`, user_id,MAX(`trigger_date`) AS Maxdate FROM enrol_pymnt_brkup_dt where invoice_id='" . $invoice_id . "' and user_id='" . $user_id . "' GROUP BY invoice_id) gtt ON tt.invoice_id = gtt.invoice_id and tt.user_id=gtt.user_id";
 
         $result = $this->db->query($query)->result();
-        //echo $this->db->last_query();exit;
+        //echo print_r($result,true);exit;
         return $result[0]->amount_recd;
     }
-    
-//    public function get_update_invoice_data($invoice_id, $user_id){
-//        $query = "SELECT epr.mode_of_pymnt,
-//            (CASE WHEN epr.mode_of_pymnt like '%CHQ%' THEN epr.cheque_number ELSE NULL END) as Payment_Reference,
-//            (CASE WHEN epr.mode_of_pymnt like '%GIRO%' THEN epr.bank_name ELSE NULL END) as bank_name,
-//            epr.recd_on as Payment_Rcvd_Date FROM enrol_pymnt_brkup_dt epbd
-//            JOIN enrol_paymnt_recd epr ON epr.invoice_id = epbd.invoice_id AND epr.recd_on = epbd.recd_on
-//            WHERE epbd.invoice_id='".$invoice_id."' and epbd.user_id='".$user_id."'
-//            order by epbd.trigger_date desc";
-//
-//        $result = $this->db->query($query)->result();
-//        //echo $this->db->last_query();exit;
-//        return $result[0];
-//    }
     
     public function tms_unpaid_report_count($tenant_id, $payment_status, $year, $month, $training_score) {
         $start_date = $year . '-' . $month . '-01';
@@ -3457,8 +3438,7 @@ SELECT  {$calc_rows} c.crse_name,
 
         return $result;
     }
-    
-     ///added by shubhranshu to fetch the compoay name by invoice id
+    ///added by shubhranshu to fetch the compoay name by invoice id
     public function fetch_company_name_by_invoice_id($invoice_id){
         $this->db->select('cm.company_name');
         $this->db->from('enrol_invoice ei');
@@ -3481,6 +3461,145 @@ SELECT  {$calc_rows} c.crse_name,
         
         return $comp;
         
+    }
+    
+    public function salesrep($tenant_id,$sales_executive_id,$start,$end){
+        if (!empty($start)) {
+            $sql_start_date = date('Y-m-d', strtotime($start));
+        }
+        if (!empty($end)) {
+            $sql_end_date = date('Y-m-d', strtotime($end));
+        }
+        $get_course_id_query ="SELECT 
+            DISTINCT(crse.course_id)
+            from class_enrol ce
+            left join course_class cc on cc.class_id=ce.class_id and cc.course_id=ce.course_id 
+            left join course crse on crse.course_id=ce.course_id 
+            where ce.tenant_id='$tenant_id' and ce.sales_executive_id='$sales_executive_id' and
+            date(ce.enrolled_on)>= '$sql_start_date' and date(ce.enrolled_on) <= '$sql_end_date' 
+            group by cc.course_id"; 
+        $get_course_ids = $this->db->query($get_course_id_query)->result();
+        
+        $final_data = array();
+        
+        foreach ($get_course_ids as $course){
+            $qury ="
+            SELECT 
+            crse.crse_name,      
+            cc.class_start_datetime,
+            ce.tenant_id as provider,
+            cc.class_fees as coursefee,
+            tup.first_name,
+            tu.tax_code,
+            ce.training_score
+            from class_enrol ce
+            left join course_class cc on cc.class_id=ce.class_id and cc.course_id=ce.course_id 
+            left join tms_users tu on tu.user_id =ce.user_id 
+            left join tms_users_pers tup on tup.user_id =ce.user_id 
+            left join course crse on crse.course_id=ce.course_id 
+            where ce.tenant_id='$tenant_id' and ce.sales_executive_id='$sales_executive_id' and ce.course_id='$course->course_id' and
+            date(ce.enrolled_on)>= '$sql_start_date' and date(ce.enrolled_on) <= '$sql_end_date' 
+            order by cc.course_id asc";
+            $result = $this->db->query($qury)->result();
+
+            $final_data[]= $result;
+         
+        }
+     
+        return $final_data;
+        
+    }
+    
+    public function get_sales_report_data_xls($tenant_id, $start_date, $end_date, $sales_exec){
+        if (!empty($start_date)) {
+            $sql_start_date = date('Y-m-d', strtotime($start_date));
+        }
+        if (!empty($end_date)) {
+            $sql_end_date = date('Y-m-d', strtotime($end_date));
+        }
+        $get_course_id_query ="SELECT 
+            DISTINCT(crse.course_id)
+            from class_enrol ce
+            left join course_class cc on cc.class_id=ce.class_id and cc.course_id=ce.course_id 
+            left join course crse on crse.course_id=ce.course_id 
+            where ce.tenant_id='$tenant_id' and ce.sales_executive_id='$sales_exec' and
+            date(ce.enrolled_on)>= '$sql_start_date' and date(ce.enrolled_on) <= '$sql_end_date' 
+            group by cc.course_id"; 
+        $get_course_ids = $this->db->query($get_course_id_query)->result();
+        
+        $final_data = array();
+        
+        foreach ($get_course_ids as $course){
+            $qury ="
+            SELECT 
+            crse.crse_name,      
+            cc.class_start_datetime,
+            ce.tenant_id as provider,
+            cc.class_fees as coursefee,
+            tup.first_name,
+            tu.tax_code,
+            ce.training_score
+            from class_enrol ce
+            left join course_class cc on cc.class_id=ce.class_id and cc.course_id=ce.course_id 
+            left join tms_users tu on tu.user_id =ce.user_id 
+            left join tms_users_pers tup on tup.user_id =ce.user_id 
+            left join course crse on crse.course_id=ce.course_id 
+            where ce.tenant_id='$tenant_id' and ce.sales_executive_id='$sales_exec' and ce.course_id='$course->course_id' and
+            date(ce.enrolled_on)>= '$sql_start_date' and date(ce.enrolled_on) <= '$sql_end_date' 
+            order by cc.course_id asc";
+            $result = $this->db->query($qury)->result();
+
+            $final_data[]= $result;
+         
+        }
+     
+        return $final_data;
+    }
+    
+    public function salessummary_monthwise($tenant_id,$yearVal,$monthVal) {
+        $start_date = $yearVal . '-' . $monthVal . '-01';
+        $end_date = $yearVal . '-' . $monthVal . '-31';
+
+        $query = "SELECT 
+            tu.tax_code,
+            tu.user_id,
+            ei.invoice_id,
+            ei.inv_date,
+            tup.first_name as name,
+            ei.total_inv_amount,
+            cm.company_name,
+            due.class_fees,
+            ceil((due.class_fees * due.discount_rate))/ 100 as discount_rate,
+            due.gst_amount,
+            due.total_amount_due,
+            ce.tg_number,
+            due.subsidy_amount,
+            ce.payment_status,
+            ce.enrolment_mode,
+            epr.mode_of_pymnt,
+            cc.class_start_datetime,
+            cc.class_end_datetime,
+            cc.class_name,
+            ce.training_score,
+            due.att_status
+                    FROM ( course_class cc) 
+                    JOIN course c ON c.course_id = cc.course_id 
+                    JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                    JOIN enrol_pymnt_due due ON ce.pymnt_due_id = due.pymnt_due_id and ce.user_id = due.user_id 
+                    join enrol_invoice ei on ei.pymnt_due_id and due.pymnt_due_id and ei.pymnt_due_id=ce.pymnt_due_id
+                    JOIN tms_users tu ON tu.user_id = ce.user_id 
+                    left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
+                    left join company_master cm on cm.company_id=ce.company_id
+                    LEFT JOIN(SELECT ttt.*
+                        FROM enrol_paymnt_recd ttt
+                        JOIN
+                        (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_paymnt_recd GROUP BY invoice_id) gttt ON ttt.invoice_id = gttt.invoice_id AND ttt.trigger_date = gttt.Maxdate) epr on epr.invoice_id=ei.invoice_id 
+                    WHERE cc . tenant_id = '" . $tenant_id . "' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
+                    AND date(cc.class_end_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
+
+        $result = $this->db->query($query)->result();
+
+        return $result;
     }
 
 }

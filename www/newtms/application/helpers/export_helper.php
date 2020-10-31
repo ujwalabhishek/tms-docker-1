@@ -1,15 +1,86 @@
 <?php
 /////added by shubhranshu to print the TMS Report
+function export_tms_report_sales_monthwise($result) {
+    $CI = & get_instance();
+    $tabledata = $result;
+    $CI->load->library('excel');
+    $CI->excel->setActiveSheetIndex(0);
+    $CI->excel->getActiveSheet()->setTitle('TMS Sales Report Month Wise');
+    $sheet = $CI->excel->getActiveSheet();
+    foreach (range('A', 'M') as $columnID) {
+        $CI->excel->getActiveSheet()->getColumnDimension($columnID)
+                ->setAutoSize(true);
+    }
+    $sheet->mergeCells('A1:G1');
+    $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->setCellValue('A1', 'TMS Sales MonthWise Report List as on ' . date('M j Y, l'));
+    $sheet->getStyle('A1:G1')->getFont()->setBold(true);
+    $sheet->setCellValue('A2', 'SL #');
+    $sheet->setCellValue('B2', 'Invoice No.');
+    $sheet->setCellValue('C2', 'Date Of Invoice');
+    $sheet->setCellValue('D2', 'Amount Before GST');
+    $sheet->setCellValue('E2', 'GST');
+    $sheet->setCellValue('F2', 'Amount After GST');
+    $sheet->setCellValue('G2', 'Customer Name');
+    $sheet->setCellValue('H2', 'Class Details');
+    $sheet->setCellValue('I2', 'Class Start Date');
+    $sheet->setCellValue('J2', 'Class End Date');
+    $sheet->setCellValue('K2', 'SSG Grant Amount');
+    $sheet->setCellValue('L2', 'Net Invoice Amount');
+    $sheet->setCellValue('M2', 'Payment Status');
+
+    $sheet->getStyle('A2:M2')->applyFromArray(
+            array('fill' => array(
+                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array('argb' => '2551920')
+                )
+            )
+    );
+    $sheet->getStyle('A2:S2')->getFont()->setBold(true);
+    $rn = 3;
+    $CI->load->model('Reports_Model', 'reports');
+    foreach ($tabledata as $row) {
+//        if ($row->enrolment_mode == 'SELF') {
+//           $inv_amt = $CI->reports->get_invoice_data_for_individual($row->invoice_id,$row->user_id);
+//        } else {
+//           $inv_amt = $CI->reports->get_invoice_data_for_comp($row->invoice_id,$row->user_id);
+//           
+//        }
+        $amt_bfr_gst = ($row->discount_rate ? (ceil($row->class_fees-$row->discount_rate)): $row->class_fees);
+        $amt_afr_gst = $amt_bfr_gst+$row->gst_amount;
+        $sheet->setCellValue('A' . $rn, $rn - 2);
+        $sheet->setCellValue('B' . $rn, $row->invoice_id);
+        $sheet->setCellValue('C' . $rn, $row->inv_date);
+        $sheet->setCellValue('D' . $rn, number_format($amt_bfr_gst, 2, '.', ''));
+        $sheet->setCellValue('E' . $rn, number_format($row->gst_amount, 2, '.', ''));
+        
+        $sheet->setCellValue('F' . $rn, number_format($amt_afr_gst, 2, '.', ''));
+        $sheet->setCellValue('G' . $rn, $row->name);
+        $sheet->setCellValue('H' . $rn, $row->class_name);
+        $sheet->setCellValue('I' . $rn, date('d/m/Y', strtotime($row->class_start_datetime)));
+        $sheet->setCellValue('J' . $rn, date('d/m/Y', strtotime($row->class_end_datetime)));
+        $sheet->setCellValue('K' . $rn, $row->subsidy_amount);
+        $sheet->setCellValue('L' . $rn, number_format((float)$row->total_amount_due, 2, '.', ''));
+        $sheet->setCellValue('M' . $rn, $row->payment_status);
+        $rn++;
+    }
+    $filename = 'Tms_Sales_Monthwise_Report_.xls';
+    ob_end_clean();
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment;filename="'.$filename.'"');
+    header('Cache-Control: max-age=0');
+    $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+    $objWriter->save('php://output');
+}
+/////added by shubhranshu to print the TMS Report
 function export_tms_report_page($result) {
     $CI = & get_instance();
     $tabledata = $result;
     $CI->load->library('excel');
     $CI->excel->setActiveSheetIndex(0);
     $CI->excel->getActiveSheet()->setTitle('TMS Report');
-    $user_id = $CI->session->userdata('userDetails')->user_id;
-    $tenant_id = $CI->session->userdata('userDetails')->tenant_id;
     $sheet = $CI->excel->getActiveSheet();
-    foreach (range('A', 'V') as $columnID) {
+    foreach (range('A', 'S') as $columnID) {
         $CI->excel->getActiveSheet()->getColumnDimension($columnID)
                 ->setAutoSize(true);
     }
@@ -36,11 +107,8 @@ function export_tms_report_page($result) {
     $sheet->setCellValue('Q2', 'Class Name');
     $sheet->setCellValue('R2', 'Training Score');
     $sheet->setCellValue('S2', 'Att Status');
-    $sheet->setCellValue('T2', 'Invoice Date');
-    $sheet->setCellValue('U2', 'Payment Ref');
-    $sheet->setCellValue('V2', 'Payment Rcvd Date');
 
-    $sheet->getStyle('A2:V2')->applyFromArray(
+    $sheet->getStyle('A2:S2')->applyFromArray(
             array('fill' => array(
                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
                     'color' => array('argb' => '2551920')
@@ -57,24 +125,8 @@ function export_tms_report_page($result) {
            $inv_amt = $CI->reports->get_invoice_data_for_comp($row->invoice_id,$row->user_id);
            
         }
-        //$inv_data = $CI->reports->get_update_invoice_data($row->invoice_id,$row->user_id);/////
-        
-        if($row->Payment_Reference !=''){
-            $pymnt_ref = $row->Payment_Reference;
-        }else if($row->bank_name !=''){
-            $pymnt_ref = $row->bank_name;
-        }else{
-            $pymnt_ref = '';
-        }
-        
-        
         $sheet->setCellValue('A' . $rn, $rn - 2);
-        if(($tenant_id == 'T02' && $user_id == '89788') || ($tenant_id == 'T12' && $user_id =='105312')){
-            $sheet->setCellValue('B' . $rn, $row->tax_code);
-        }else{
-            $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
-        }
-        
+        $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
         $sheet->setCellValue('C' . $rn, $row->user_id);
         $sheet->setCellValue('D' . $rn, $row->invoice_id);
         $sheet->setCellValue('E' . $rn, $row->name);
@@ -92,9 +144,6 @@ function export_tms_report_page($result) {
         $sheet->setCellValue('Q' . $rn, $row->class_name);
         $sheet->setCellValue('R' . $rn, $row->training_score);
         $sheet->setCellValue('S' . $rn, $row->att_status);
-        $sheet->setCellValue('T' . $rn, $row->Invoice_Date);
-        $sheet->setCellValue('U' . $rn, $pymnt_ref);
-        $sheet->setCellValue('V' . $rn, $row->Payment_Rcvd_Date);
         $rn++;
     }
     $filename = 'Tms_Report_'.ucfirst(strtolower($result[0]->payment_status)).'.xls';
@@ -105,7 +154,6 @@ function export_tms_report_page($result) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 function export_users_page($query) {
     $CI = & get_instance();
     $CI->load->model('Meta_Values', 'meta');
@@ -165,7 +213,6 @@ function export_users_page($query) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 function export_users_full($query) {
     $CI = & get_instance();
     $CI->load->model('Meta_Values', 'meta');
@@ -234,8 +281,8 @@ function export_users_full($query) {
         $sheet->setCellValue('I' . $rn, $row->registered_email_id);
         $sheet->setCellValue('J' . $rn, $row->personal_address_bldg . ' ' . $row->personal_address_city . ' ' . $meta_map[$row->personal_address_state] . ' ' . $meta_map[$row->personal_address_country] . ' ' . $row->personal_address_zip);
         $sheet->setCellValue('K' . $rn, $row->company_name);
-        $sheet->setCellValue('L' . $rn, ($row->doj) ? date('d/m/Y', strtotime($row->doj)) : '');
-        $sheet->setCellValue('M' . $rn, ($row->designation == 'OTHERS') ? $row->designation_others : $meta_map[$row->designation]);
+        $sheet->setCellValue('L' . $rn, ($row->doj)?date('d/m/Y', strtotime($row->doj)):'');
+        $sheet->setCellValue('M' . $rn, ($row->designation =='OTHERS')?$row->designation_others:$meta_map[$row->designation]);
         $sheet->setCellValue('N' . $rn, $row->off_email_id);
         $sheet->setCellValue('O' . $rn, $row->off_contact_number);
         $sheet->setCellValue('P' . $rn, $row->off_address_bldg . ' ' . $row->off_address_city . ' ' . $meta_map[$row->off_address_state] . ' ' . $meta_map[$row->off_address_country] . ' ' . $row->off_address_zip);
@@ -250,11 +297,9 @@ function export_users_full($query) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /*
  * for course page data exporting
  */
-
 function export_course_page($query) {
     $CI = & get_instance();
     $CI->load->model('course_model', 'course');
@@ -309,7 +354,6 @@ function export_course_page($query) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /**
  * course full data export
  */
@@ -379,9 +423,9 @@ function export_course_full($query) {
         $sheet->setCellValue('G' . $rn, get_param_values_from_map($meta_map, $row->language));
         $sheet->setCellValue('H' . $rn, $meta_map[$row->class_type]);
         $sheet->setCellValueExplicit('I' . $rn, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('I' . $rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->getStyle('I' .$rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
         $sheet->setCellValueExplicit('J' . $rn, $row->competency_code, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('J' . $rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->getStyle('J' .$rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT); 
         $sheet->setCellValue('K' . $rn, empty($row->crse_content_path) ? 'No' : 'Yes' );
         $sheet->setCellValue('L' . $rn, ($row->crse_cert_validity) ? 'Yes(' . $row->crse_cert_validity . ')' : 'No');
         $sheet->setCellValue('M' . $rn, $row->description);
@@ -443,10 +487,8 @@ function export_course_full($query) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /* Export all page fields
  */
-
 function export_company_page($query) {
     $CI = & get_instance();
     $CI->load->model('Meta_Values', 'meta');
@@ -494,7 +536,6 @@ function export_company_page($query) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 function export_trainee_page($result) {
     $CI = & get_instance();
     $CI->load->model('Meta_Values', 'meta');
@@ -529,17 +570,17 @@ function export_trainee_page($result) {
     $sheet->getStyle('A2:G2')->getFont()->setBold(true);
     $rn = 3;
     $tabledata = $data->result();
-    if (!isset($tabledata[0]->company_name)) {
+    if(! isset($tabledata[0]->company_name)){
         $CI->load->model('Trainee_Model', 'trainee');
-        foreach ($tabledata as $k => $tbldata) {
+        foreach($tabledata as $k=>$tbldata){
             $company_details = $CI->trainee->get_company_details($tbldata->user_id);
-            if ($company_details->num_rows()) {
+            if($company_details->num_rows()){
                 $company_data = $company_details->row();
                 $tabledata[$k]->company_name = $company_data->company_name;
                 $tabledata[$k]->company_id = $company_data->company_id;
             }
         }
-    }
+    }    
     foreach ($tabledata as $row) {
         if ($row->company_id != NULL && $row->company_id != '') {
             $ACCOUNTTYPE = $row->company_name . ' (Company)';
@@ -563,11 +604,9 @@ function export_trainee_page($result) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /*
  * Excel Export (Can be reused)
  */
-
 function export_trainee_full($query) {
     $CI = & get_instance();
     $CI->load->model('Meta_Values', 'meta');
@@ -663,16 +702,16 @@ function export_trainee_full($query) {
     $rn = 4;
     $rown = 1;
     $tabledata = $data->result();
-    if (!isset($tabledata[0]->company_name)) {
-        foreach ($tabledata as $k => $tbldata) {
+    if(! isset($tabledata[0]->company_name)){
+        foreach($tabledata as $k=>$tbldata){
             $company_details = $CI->trainee->get_company_details($tbldata->user_id);
-            if ($company_details->num_rows()) {
+            if($company_details->num_rows()){
                 $company_data = $company_details->row();
                 $tabledata[$k]->company_name = $company_data->company_name;
                 $tabledata[$k]->company_id = $company_data->company_id;
             }
         }
-    }
+    }   
     foreach ($tabledata as $row) {
         $sheet->setCellValue('A' . $rn, $rown);
         $sheet->setCellValue('B' . $rn, $meta_map[$row->tax_code_type] . '-' . mask_format($row->tax_code));
@@ -795,11 +834,9 @@ function export_trainee_full($query) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /*
  * Excel Export (Can be reused)
  */
-
 function export_page_fields($titles, $data, $filename, $sheetname = "", $main_heading = "") {
     $CI = & get_instance();
     $CI->load->library('excel');
@@ -850,11 +887,9 @@ function export_page_fields($titles, $data, $filename, $sheetname = "", $main_he
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /*
  * Excel Export. Currently used for company all page fields export
  */
-
 function export_all_fields($titles, $sub_titles, $data, $sub_data, $filename, $sheetname = "", $main_heading = "") {
     $CI = & get_instance();
     $CI->load->library('excel');
@@ -939,141 +974,156 @@ function export_all_fields($titles, $sub_titles, $data, $sub_data, $filename, $s
 /*
  * for mark attendance page
  */
-
-function export_attendance($results, $class_details, $start, $end, $class_schedule_data = '') {
-    $data = PAX_PER_SHEET;
-    $num_of_sheets = ceil(count($results) / $data);
-    $j = 0;
-    $i = 1;
-    while ($i <= $num_of_sheets) {
-        $arr[$i] = array_slice($results, $j, $data); //0 - 5, 5- 10, 
-        $i++;
-        $j = $j + $data;
-    }
-    $results = $arr1;
-    $ci = & get_instance();
-    $ci->load->model('class_trainee_model', 'classtraineemodel');
-    $class_id = $class_details->class_id;  // skm1
-    $course_id = $class_details->course_id; // skm2
-    $tenant_id = $class_details->tenant_id; // skm2
-    $check_attendance = $ci->classtraineemodel->check_attendance_row($tenant_id, $course_id, $class_id);
+function export_attendance($results, $class_details, $start, $end, $class_schedule_data='') 
+{       
+        $data=PAX_PER_SHEET;
+        $num_of_sheets=ceil(count($results)/$data);
+        $j=0;
+        $i=1;
+        while($i<=$num_of_sheets)
+        {
+            $arr[$i] = array_slice($results,$j,$data);//0 - 5, 5- 10, 
+            $i++;
+            $j=$j+$data;
+        }
+        $results=$arr1;
+        $ci = & get_instance();
+        $ci->load->model('class_trainee_model', 'classtraineemodel');
+        $class_id = $class_details->class_id;  // skm1
+        $course_id = $class_details->course_id; // skm2
+        $tenant_id = $class_details->tenant_id; // skm2
+        $check_attendance=$ci->classtraineemodel->check_attendance_row($tenant_id,$course_id,$class_id);
 //        echo $ci->db->last_query();
 //        echo 'check_att='.$check_attendance;
 //        exit();
-    $interval = date_diff($start, $end);
-    $total_days = $interval->format('%a');
-    if (count($class_schedule_data) > 0 or $total_days == 0) {
-        if ($total_days != 0) {
-            $count = count($class_schedule_data);
-            $total_days = ($count - 1);
-        } else {
-            $total_days = $interval->format('%a');
-        }
+        $interval = date_diff($start, $end);
+        $total_days = $interval->format('%a');
+        if(count($class_schedule_data)>0 or $total_days==0)
+        {
+            if($total_days!=0){
+                  $count = count($class_schedule_data);
+                  $total_days = ($count-1);
+              }
+              else 
+              {
+                  $total_days = $interval->format('%a');
+              }
 
-        $CI = & get_instance();
+            $CI = & get_instance();
+            
+            $CI->load->library('excel');
+            $i=1;
+            while($i<=$num_of_sheets)
+            {
+                //$a="arr".$i;
+                $results=$arr[$i];
+                $CI->excel->createSheet();
+                $CI->excel->setActiveSheetIndex($i);
+                $CI->excel->getActiveSheet()->setTitle("Attendance Sheet".$i);
 
-        $CI->load->library('excel');
-        $i = 1;
-        while ($i <= $num_of_sheets) {
-            //$a="arr".$i;
-            $results = $arr[$i];
-            $CI->excel->createSheet();
-            $CI->excel->setActiveSheetIndex($i);
-            $CI->excel->getActiveSheet()->setTitle("Attendance Sheet" . $i);
+                $sheet = $CI->excel->getActiveSheet();
+                $CI->excel->getActiveSheet()->getRowDimension('3')->setRowHeight(50);
+                $column_index = PHPExcel_Cell::columnIndexFromString('D');
+                $adjusted_column_index = $column_index + $total_days;
+                $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
+                $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index+1);        
+                $sheet->mergeCells('A1:' . $assmnt_sign_column . '1');
+                $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $period = ($start->format("d M Y") == $end->format("d M Y")) ? "'. Period: " . $start->format("d M Y") : "'. Period: " . $start->format("d M Y") . " - " . $end->format("d M Y");
+                $sheet->setCellValue('A1', "Attendance Sheet for '" . $class_details->crse_name . "-" . $class_details->class_name.$period);
+                $sheet->setCellValue('A2', 'Sl #');
+                $sheet->setCellValue('B2', 'NRIC/FIN No.');
+                $sheet->setCellValue('C2', 'Trainee Name');
+                $sheet->setCellValue('D2', '');
+                $sheet->setCellValue('E2', 'Attendance for the period:' . $period);
+                $sheet->getStyle('E2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->mergeCells('E2:' . $assmnt_sign_column . '2');
+                $sheet->setCellValue($assmnt_sign_column.'3','Assmnt. Sign.');
+                $sheet->mergeCells('A3:C3');
+                $sheet->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->setCellValue('D3', 'Session');
+                $sheet->getColumnDimension('B')->setWidth(20);
+                $sheet->getColumnDimension('C')->setWidth(20);
 
-            $sheet = $CI->excel->getActiveSheet();
-            $CI->excel->getActiveSheet()->getRowDimension('3')->setRowHeight(50);
-            $column_index = PHPExcel_Cell::columnIndexFromString('D');
-            $adjusted_column_index = $column_index + $total_days;
-            $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
-            $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index + 1);
-            $sheet->mergeCells('A1:' . $assmnt_sign_column . '1');
-            $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $period = ($start->format("d M Y") == $end->format("d M Y")) ? "'. Period: " . $start->format("d M Y") : "'. Period: " . $start->format("d M Y") . " - " . $end->format("d M Y");
-            $sheet->setCellValue('A1', "Attendance Sheet for '" . $class_details->crse_name . "-" . $class_details->class_name . $period);
-            $sheet->setCellValue('A2', 'Sl #');
-            $sheet->setCellValue('B2', 'NRIC/FIN No.');
-            $sheet->setCellValue('C2', 'Trainee Name');
-            $sheet->setCellValue('D2', '');
-            $sheet->setCellValue('E2', 'Attendance for the period:' . $period);
-            $sheet->getStyle('E2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $sheet->mergeCells('E2:' . $assmnt_sign_column . '2');
-            $sheet->setCellValue($assmnt_sign_column . '3', 'Assmnt. Sign.');
-            $sheet->mergeCells('A3:C3');
-            $sheet->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $sheet->setCellValue('D3', 'Session');
-            $sheet->getColumnDimension('B')->setWidth(20);
-            $sheet->getColumnDimension('C')->setWidth(20);
+                $days = array();
 
-            $days = array();
-
-            $current_date = $start;
-            while ($current_date < $end || compare_dates_without_time($current_date, $end)) {
-                $days[] = $current_date;
-                $next_day = DateTime::createFromFormat('U', strtotime("tomorrow 12:00:00", $current_date->getTimestamp()));
-                $current_date = $next_day;
-            }
-            $sheet->getStyle('A2:' . $assmnt_sign_column . '3')->applyFromArray(
-                    array(
-                        'fill' => array(
-                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                            'color' => array('argb' => 'FFCCCCCC')
+                $current_date = $start;
+                while ($current_date < $end || compare_dates_without_time($current_date, $end)) {
+                    $days[] = $current_date;
+                    $next_day = DateTime::createFromFormat('U', strtotime("tomorrow 12:00:00", $current_date->getTimestamp()));
+                    $current_date = $next_day;
+                }
+                $sheet->getStyle('A2:' . $assmnt_sign_column . '3')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                                'color' => array('argb' => 'FFCCCCCC')
+                            )
                         )
-                    )
-            );
+                );
 
-            if ($total_days != 0) {
-                $weeks = create_week_days_array($start, $end, $class_schedule_data);
-            } else {
-                $weeks = array($start);
-            }
-            $rn = 3;
-            $cell = 4;
-            $is_two_sessions = $class_details->class_session_day == 2;
-            foreach ($weeks as $day) {
-                $session_time = "\n " . $class_schedule_data[$day->format('d/m/y')][1];
-                if ($is_two_sessions) {
-                    $session_time2 = $class_schedule_data[$day->format('d/m/y')][2];
-                    if ($session_time2) {
-                        $session_time .= "\n " . $session_time2;
+                if($total_days != 0)
+                { 
+                    $weeks = create_week_days_array($start ,$end, $class_schedule_data);
+                }
+                else
+                {
+                 $weeks = array($start);
+                }
+                $rn = 3;
+                $cell = 4;
+                $is_two_sessions = $class_details->class_session_day == 2;
+                foreach ($weeks as $day) 
+                {
+                    $session_time = "\n " . $class_schedule_data[$day->format('d/m/y')][1];
+                    if ($is_two_sessions) {
+                        $session_time2 = $class_schedule_data[$day->format('d/m/y')][2];
+                        if ($session_time2) {
+                            $session_time .= "\n " . $session_time2;
+                        }
+                    }
+                    if($class_schedule_data[$day->format('d/m/y')][1])
+                    {
+                      // $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time); previious code
+                        $sk = explode("to",$session_time);
+                        $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $sk[0]);
+                        $cell++;
+                    }
+                    elseif($total_days == 0)
+                    {
+                        $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $sk[0]);
                     }
                 }
-                if ($class_schedule_data[$day->format('d/m/y')][1]) {
-                    // $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time); previious code
-                    $sk = explode("to", $session_time);
-                    $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $sk[0]);
-                    $cell++;
-                } elseif ($total_days == 0) {
-                    $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $sk[0]);
-                }
-            }
 
-            $row = 4;
-            $index = 1;
-            foreach ($results as $res) {
-                if ($is_two_sessions) {
-                    $sheet->mergeCells('A' . $row . ':A' . ($row + 1));
-                    $sheet->mergeCells('B' . $row . ':B' . ($row + 1));
-                    $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
-                }
-                $sheet->setCellValue('A' . $row, $index);
-                $sheet->setCellValue('B' . $row, mask_format($res['record']['tax_code']));
-                $sheet->setCellValue('C' . $row, $res['record']['name']);
+                $row = 4;
+                $index = 1;
+                foreach ($results as $res) 
+                {
+                    if ($is_two_sessions) {
+                        $sheet->mergeCells('A' . $row . ':A' . ($row + 1));
+                        $sheet->mergeCells('B' . $row . ':B' . ($row + 1));
+                        $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
+                    }
+                    $sheet->setCellValue('A' . $row, $index);
+                    $sheet->setCellValue('B' . $row, mask_format($res['record']['tax_code']));
+                    $sheet->setCellValue('C' . $row, $res['record']['name']);
 
-                $sheet->setCellValue('D' . $row, 'Session1:');
-                if ($is_two_sessions) {
-                    $sheet->setCellValue('D' . ($row + 1), 'Session2:');
-                }
+                    $sheet->setCellValue('D' . $row, 'Session1:');
+                    if ($is_two_sessions) {
+                        $sheet->setCellValue('D' . ($row + 1), 'Session2:');
+                    }
+                   
 
+                    $cell = 4;
+                    foreach ($weeks as $day) 
+                    {
+                        $formatted_day = $day->format('Y-m-d'); //echo "<br/>";
+                        $ses1 = '';
+                        $ses2 = '';
 
-                $cell = 4;
-                foreach ($weeks as $day) {
-                    $formatted_day = $day->format('Y-m-d'); //echo "<br/>";
-                    $ses1 = '';
-                    $ses2 = '';
-
-                    if ($class_schedule_data[$day->format('d/m/y')]) {
-                        if (isset($res[$formatted_day])) {
+                        if($class_schedule_data[$day->format('d/m/y')])
+                        {   
+                            if (isset($res[$formatted_day])) {
                             $day_visit = $res[$formatted_day]; //print_r($day_visit);exit;
                             if (isset($day_visit['session_01']) && $day_visit['session_01'] == '1') {
                                 $ses1 = 'P';
@@ -1081,251 +1131,267 @@ function export_attendance($results, $class_details, $start, $end, $class_schedu
                             if ($is_two_sessions && isset($day_visit['session_02']) && $day_visit['session_02'] == '1') {
                                 $ses2 = 'P';
                             }
-                        }
-                        $session_presnet = $ci->classtraineemodel->scheduled_session_count($class_id, $course_id, $formatted_day); //skm3
-                        if ($ses1 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
-                            $ses1 = 'AB';
-                        }
-                        if ($session_presnet != 2 and $session_presnet != 3) { // skm4 st
-                            if ($ses2 == '' && $day_visit['session_02'] == '') { // this code check that session two is created or not 
-                                $ses2 = '';
                             }
-                        } //skm4 ed
-                        elseif ($ses2 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
-                            $ses2 = 'AB';
+                            $session_presnet = $ci->classtraineemodel->scheduled_session_count($class_id,$course_id,$formatted_day); //skm3
+                            if ($ses1 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
+                                $ses1 = 'AB';
+                            }
+                            if($session_presnet!=2 and $session_presnet!=3) // skm4 st
+                            {
+                                if($ses2=='' && $day_visit['session_02'] == '') // this code check that session two is created or not 
+                                {
+                                    $ses2 ='';
+                                }
+                            } //skm4 ed
+                            elseif ($ses2 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
+                                $ses2 = 'AB';
+                            }
+                            
+                             if($check_attendance<=0){
+                                $ses1='P';
+                                $ses2='P';
+                             }
+                            $sheet->setCellValueByColumnAndRow($cell, $row, $ses1);
+                            if ($is_two_sessions) {
+                                $sheet->setCellValueByColumnAndRow($cell, $row + 1, $ses2);
+                            }
+                            $cell++;
                         }
+                        elseif($total_days == 0)
+                        {
+                            if (isset($res[$formatted_day])) {
+                            $day_visit = $res[$formatted_day];
+                            if (isset($day_visit['session_01']) && $day_visit['session_01'] == '1') {
+                                $ses1 = 'P';
+                            }
+                            if ($is_two_sessions && isset($day_visit['session_02']) && $day_visit['session_02'] == '1') {
+                                $ses2 = 'P';
+                            }
+                            }
+                            if ($ses1 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
+                                $ses1 = 'AB';
+                            }
+                            if ($ses2 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
+                                $ses2 = 'AB';
+                            }
 
-                        if ($check_attendance <= 0) {
-                            $ses1 = 'P';
-                            $ses2 = 'P';
+                             if($check_attendance<=0){
+                                $ses1='P';
+                                $ses2='P';
+                             }
+                            $sheet->setCellValueByColumnAndRow($cell, $row, $ses1);
+                            if ($is_two_sessions) {
+                                $sheet->setCellValueByColumnAndRow($cell, $row + 1, $ses2);
+                            }
+                       }
+                    }
+
+                    $row += ($is_two_sessions) ? 2 : 1;
+                    $index++;
+                }
+
+                $sheet->getStyle('A4:C' . $row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('A3:A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+                $styleArray = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => 'FF000000'),
+                        ),
+                    ),
+                );
+
+
+                $sheet->getStyle(
+                        'A1:' . $sheet->getHighestColumn() . ($sheet->getHighestRow() - 1)
+                )->applyFromArray($styleArray);
+                $i++;
+                
+            }
+            ob_end_clean();
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="Attendance.xls"');
+            header('Cache-Control: max-age=0');
+
+            $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+            $objWriter->save('php://output');
+      
+      
+        }
+        else 
+        {   // if condition on line no :830
+            $CI = & get_instance();
+            $CI->load->library('excel');
+            $i=1;
+            while($i<=$num_of_sheets)
+            {
+                //$a="arr".$i;
+                $results=$arr[$i];
+                $CI->excel->createSheet();
+                $CI->excel->setActiveSheetIndex($i);
+                $CI->excel->getActiveSheet()->setTitle("Attendance Sheet".$i);
+
+                $sheet = $CI->excel->getActiveSheet();
+                $CI->excel->getActiveSheet()->getRowDimension('3')->setRowHeight(50);
+                $column_index = PHPExcel_Cell::columnIndexFromString('D');
+                $adjusted_column_index = $column_index + $total_days;
+                $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
+                $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index+1);        
+                $sheet->mergeCells('A1:' . $assmnt_sign_column . '1');
+                $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $period = ($start->format("d M Y") == $end->format("d M Y")) ? "'. Period: " . $start->format("d M Y") : "'. Period: " . $start->format("d M Y") . " - " . $end->format("d M Y");
+                $sheet->setCellValue('A1', "Attendance Sheet for '" . $class_details->crse_name . "-" . $class_details->class_name.$period);
+                $sheet->setCellValue('A2', 'Sl #');
+                $sheet->setCellValue('B2', 'NRIC/FIN No.');
+                $sheet->setCellValue('C2', 'Trainee Name');
+                $sheet->setCellValue('D2', '');
+                $sheet->setCellValue('E2', 'Attendance for the period:' . $period);
+                $sheet->getStyle('E2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->mergeCells('E2:' . $assmnt_sign_column . '2');
+                $sheet->setCellValue($assmnt_sign_column.'3','Assmnt. Sign.');
+                $sheet->mergeCells('A3:C3');
+                $sheet->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->setCellValue('D3', 'Session');
+                $sheet->getColumnDimension('B')->setWidth(20);
+                $sheet->getColumnDimension('C')->setWidth(20);
+
+                $days = array();
+
+                $current_date = $start;
+                while ($current_date < $end || compare_dates_without_time($current_date, $end)) {
+                    $days[] = $current_date;
+                    $next_day = DateTime::createFromFormat('U', strtotime("tomorrow 12:00:00", $current_date->getTimestamp()));
+                    $current_date = $next_day;
+                }
+                $sheet->getStyle('A2:' . $assmnt_sign_column . '3')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                                'color' => array('argb' => 'FFCCCCCC')
+                            )
+                        )
+                );
+
+                $rn = 3;
+                $cell = 4;
+                $is_two_sessions = $class_details->class_session_day == 2;
+                foreach ($days as $day) {
+                    $session_time = "\n " . $class_schedule_data[$day->format('d/m/y')][1];
+                    if ($is_two_sessions) {
+                        $session_time2 = $class_schedule_data[$day->format('d/m/y')][2];
+                        if ($session_time2) {
+                            $session_time .= "\n " . $session_time2;
                         }
+                    }
+                    $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time);
+                    $cell++;
+                }
+
+                $row = 4;
+                $index = 1;
+                foreach ($results as $res) {
+                    if ($is_two_sessions) {
+                        $sheet->mergeCells('A' . $row . ':A' . ($row + 1));
+                        $sheet->mergeCells('B' . $row . ':B' . ($row + 1));
+                        $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
+                    }
+                    $sheet->setCellValue('A' . $row, $index);
+                    $sheet->setCellValue('B' . $row, mask_format($res['record']['tax_code']));
+                    $sheet->setCellValue('C' . $row, $res['record']['name']);
+
+                    $sheet->setCellValue('D' . $row, 'Session1:');
+                    if ($is_two_sessions) {
+                        $sheet->setCellValue('D' . ($row + 1), 'Session2:');
+                    }
+                  
+                    
+                    $cell = 4;
+                    foreach ($days as $day) {
+                        $formatted_day = $day->format('Y-m-d');
+                        $ses1 = '';
+                        $ses2 = '';
+                        if($check_attendance>0)
+                        {
+                            if (isset($res[$formatted_day])) 
+                            {
+                                $day_visit = $res[$formatted_day];
+                                if (isset($day_visit['session_01']) && $day_visit['session_01'] == '1') {
+                                    $ses1 = 'P';
+                                }
+                                if ($is_two_sessions && isset($day_visit['session_02']) && $day_visit['session_02'] == '1') {
+                                    $ses2 = 'P';
+                                }
+                            }
+                            if ($ses1 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
+                                $ses1 = 'AB';
+                            }
+                            if ($ses2 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
+                                $ses2 = 'AB';
+                            }
+                        }
+                        else{
+                            if (isset($res[$formatted_day])) 
+                            {
+                                $day_visit = $res[$formatted_day];
+                                if (isset($day_visit['session_01']) && $day_visit['session_01'] == '1') {
+                                    $ses1 = 'P';
+                                }
+                                if ($is_two_sessions && isset($day_visit['session_02']) && $day_visit['session_02'] == '1') {
+                                    $ses2 = 'P';
+                                }
+                            }
+                            if ($ses1 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
+                                $ses1 = 'P';
+                            }
+                            if ($ses2 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
+                                $ses2 = 'P';
+                            }
+                        }
+                        if($check_attendance<=0){
+                                $ses1='P';
+                                $ses2='P';
+                             }
                         $sheet->setCellValueByColumnAndRow($cell, $row, $ses1);
                         if ($is_two_sessions) {
                             $sheet->setCellValueByColumnAndRow($cell, $row + 1, $ses2);
                         }
                         $cell++;
-                    } elseif ($total_days == 0) {
-                        if (isset($res[$formatted_day])) {
-                            $day_visit = $res[$formatted_day];
-                            if (isset($day_visit['session_01']) && $day_visit['session_01'] == '1') {
-                                $ses1 = 'P';
-                            }
-                            if ($is_two_sessions && isset($day_visit['session_02']) && $day_visit['session_02'] == '1') {
-                                $ses2 = 'P';
-                            }
-                        }
-                        if ($ses1 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
-                            $ses1 = 'AB';
-                        }
-                        if ($ses2 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
-                            $ses2 = 'AB';
-                        }
-
-                        if ($check_attendance <= 0) {
-                            $ses1 = 'P';
-                            $ses2 = 'P';
-                        }
-                        $sheet->setCellValueByColumnAndRow($cell, $row, $ses1);
-                        if ($is_two_sessions) {
-                            $sheet->setCellValueByColumnAndRow($cell, $row + 1, $ses2);
-                        }
                     }
+
+                    $row += ($is_two_sessions) ? 2 : 1;
+                    $index++;
                 }
 
-                $row += ($is_two_sessions) ? 2 : 1;
-                $index++;
-            }
+                $sheet->getStyle('A4:C' . $row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('A3:A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-            $sheet->getStyle('A4:C' . $row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('A3:A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-            $styleArray = array(
-                'borders' => array(
-                    'allborders' => array(
-                        'style' => PHPExcel_Style_Border::BORDER_THIN,
-                        'color' => array('argb' => 'FF000000'),
+                $styleArray = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => 'FF000000'),
+                        ),
                     ),
-                ),
-            );
+                );
 
 
-            $sheet->getStyle(
-                    'A1:' . $sheet->getHighestColumn() . ($sheet->getHighestRow() - 1)
-            )->applyFromArray($styleArray);
-            $i++;
+                $sheet->getStyle(
+                        'A1:' . $sheet->getHighestColumn() . ($sheet->getHighestRow() - 1)
+                )->applyFromArray($styleArray);
+                $i++;
+            }
+            ob_end_clean();
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="Attendance.xls"');
+            header('Cache-Control: max-age=0');
+
+            $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+            $objWriter->save('php://output'); 
         }
-        ob_end_clean();
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="Attendance.xls"');
-        header('Cache-Control: max-age=0');
-
-        $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
-        $objWriter->save('php://output');
-    } else {   // if condition on line no :830
-        $CI = & get_instance();
-        $CI->load->library('excel');
-        $i = 1;
-        while ($i <= $num_of_sheets) {
-            //$a="arr".$i;
-            $results = $arr[$i];
-            $CI->excel->createSheet();
-            $CI->excel->setActiveSheetIndex($i);
-            $CI->excel->getActiveSheet()->setTitle("Attendance Sheet" . $i);
-
-            $sheet = $CI->excel->getActiveSheet();
-            $CI->excel->getActiveSheet()->getRowDimension('3')->setRowHeight(50);
-            $column_index = PHPExcel_Cell::columnIndexFromString('D');
-            $adjusted_column_index = $column_index + $total_days;
-            $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
-            $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index + 1);
-            $sheet->mergeCells('A1:' . $assmnt_sign_column . '1');
-            $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $period = ($start->format("d M Y") == $end->format("d M Y")) ? "'. Period: " . $start->format("d M Y") : "'. Period: " . $start->format("d M Y") . " - " . $end->format("d M Y");
-            $sheet->setCellValue('A1', "Attendance Sheet for '" . $class_details->crse_name . "-" . $class_details->class_name . $period);
-            $sheet->setCellValue('A2', 'Sl #');
-            $sheet->setCellValue('B2', 'NRIC/FIN No.');
-            $sheet->setCellValue('C2', 'Trainee Name');
-            $sheet->setCellValue('D2', '');
-            $sheet->setCellValue('E2', 'Attendance for the period:' . $period);
-            $sheet->getStyle('E2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $sheet->mergeCells('E2:' . $assmnt_sign_column . '2');
-            $sheet->setCellValue($assmnt_sign_column . '3', 'Assmnt. Sign.');
-            $sheet->mergeCells('A3:C3');
-            $sheet->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $sheet->setCellValue('D3', 'Session');
-            $sheet->getColumnDimension('B')->setWidth(20);
-            $sheet->getColumnDimension('C')->setWidth(20);
-
-            $days = array();
-
-            $current_date = $start;
-            while ($current_date < $end || compare_dates_without_time($current_date, $end)) {
-                $days[] = $current_date;
-                $next_day = DateTime::createFromFormat('U', strtotime("tomorrow 12:00:00", $current_date->getTimestamp()));
-                $current_date = $next_day;
-            }
-            $sheet->getStyle('A2:' . $assmnt_sign_column . '3')->applyFromArray(
-                    array(
-                        'fill' => array(
-                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                            'color' => array('argb' => 'FFCCCCCC')
-                        )
-                    )
-            );
-
-            $rn = 3;
-            $cell = 4;
-            $is_two_sessions = $class_details->class_session_day == 2;
-            foreach ($days as $day) {
-                $session_time = "\n " . $class_schedule_data[$day->format('d/m/y')][1];
-                if ($is_two_sessions) {
-                    $session_time2 = $class_schedule_data[$day->format('d/m/y')][2];
-                    if ($session_time2) {
-                        $session_time .= "\n " . $session_time2;
-                    }
-                }
-                $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time);
-                $cell++;
-            }
-
-            $row = 4;
-            $index = 1;
-            foreach ($results as $res) {
-                if ($is_two_sessions) {
-                    $sheet->mergeCells('A' . $row . ':A' . ($row + 1));
-                    $sheet->mergeCells('B' . $row . ':B' . ($row + 1));
-                    $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
-                }
-                $sheet->setCellValue('A' . $row, $index);
-                $sheet->setCellValue('B' . $row, mask_format($res['record']['tax_code']));
-                $sheet->setCellValue('C' . $row, $res['record']['name']);
-
-                $sheet->setCellValue('D' . $row, 'Session1:');
-                if ($is_two_sessions) {
-                    $sheet->setCellValue('D' . ($row + 1), 'Session2:');
-                }
-
-
-                $cell = 4;
-                foreach ($days as $day) {
-                    $formatted_day = $day->format('Y-m-d');
-                    $ses1 = '';
-                    $ses2 = '';
-                    if ($check_attendance > 0) {
-                        if (isset($res[$formatted_day])) {
-                            $day_visit = $res[$formatted_day];
-                            if (isset($day_visit['session_01']) && $day_visit['session_01'] == '1') {
-                                $ses1 = 'P';
-                            }
-                            if ($is_two_sessions && isset($day_visit['session_02']) && $day_visit['session_02'] == '1') {
-                                $ses2 = 'P';
-                            }
-                        }
-                        if ($ses1 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
-                            $ses1 = 'AB';
-                        }
-                        if ($ses2 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
-                            $ses2 = 'AB';
-                        }
-                    } else {
-                        if (isset($res[$formatted_day])) {
-                            $day_visit = $res[$formatted_day];
-                            if (isset($day_visit['session_01']) && $day_visit['session_01'] == '1') {
-                                $ses1 = 'P';
-                            }
-                            if ($is_two_sessions && isset($day_visit['session_02']) && $day_visit['session_02'] == '1') {
-                                $ses2 = 'P';
-                            }
-                        }
-                        if ($ses1 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
-                            $ses1 = 'P';
-                        }
-                        if ($ses2 == '' && strtotime($formatted_day) <= strtotime(date('Y-m-d'))) {
-                            $ses2 = 'P';
-                        }
-                    }
-                    if ($check_attendance <= 0) {
-                        $ses1 = 'P';
-                        $ses2 = 'P';
-                    }
-                    $sheet->setCellValueByColumnAndRow($cell, $row, $ses1);
-                    if ($is_two_sessions) {
-                        $sheet->setCellValueByColumnAndRow($cell, $row + 1, $ses2);
-                    }
-                    $cell++;
-                }
-
-                $row += ($is_two_sessions) ? 2 : 1;
-                $index++;
-            }
-
-            $sheet->getStyle('A4:C' . $row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('A3:A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-            $styleArray = array(
-                'borders' => array(
-                    'allborders' => array(
-                        'style' => PHPExcel_Style_Border::BORDER_THIN,
-                        'color' => array('argb' => 'FF000000'),
-                    ),
-                ),
-            );
-
-
-            $sheet->getStyle(
-                    'A1:' . $sheet->getHighestColumn() . ($sheet->getHighestRow() - 1)
-            )->applyFromArray($styleArray);
-            $i++;
-        }
-        ob_end_clean();
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="Attendance.xls"');
-        header('Cache-Control: max-age=0');
-
-        $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
-        $objWriter->save('php://output');
-    }
+    
 }
+
 
 //end export attendance
 /*
@@ -1366,11 +1432,14 @@ function export_trainee_feedback($results, $class_details) {
     $rn = 3;
     foreach ($results as $row) {
         $sheet->setCellValue('A' . $rn, mask_format($row['tax_code']));
-        $sheet->setCellValue('B' . $rn, $row['first_name'] . ' ' . $row['last_name']);
-        $sheet->setCellValue('C' . $rn, ($row['trainer_fdbck_on']) ? date('d/m/Y', strtotime($row['trainer_fdbck_on'])) : '');
-        if ($row['training_score'] != "ABS") {
-            $sheet->setCellValue('D' . $rn, $row['trainee_feedback_rating']);
-        } else {
+        $sheet->setCellValue('B' . $rn, $row['first_name']. ' ' .$row['last_name']);
+        $sheet->setCellValue('C' . $rn, ($row['trainer_fdbck_on']) ? date('d/m/Y',strtotime($row['trainer_fdbck_on'])) : '');
+        if($row['training_score']!="ABS")
+        {
+             $sheet->setCellValue('D' . $rn, $row['trainee_feedback_rating']);
+        }
+        else
+        {
             $sheet->setCellValue('D' . $rn, $row['training_score']);
         }
 
@@ -1389,7 +1458,6 @@ function export_trainee_feedback($results, $class_details) {
 /*
  * Export WDA report
  */
-
 function export_wda_report($query) {
     $CI = & get_instance();
     $CI->load->model('Meta_Values', 'meta');
@@ -1443,7 +1511,6 @@ function export_wda_report($query) {
 /*
  * Export Payment Recevied report
  */
-
 function export_pymnt_report($query) {
     $CI = & get_instance();
     $CI->load->library('excel');
@@ -1504,11 +1571,9 @@ function export_pymnt_report($query) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /*
  * Export Refunds report
  */
-
 function export_refunds_report($query) {
     $CI = & get_instance();
     $CI->load->library('excel');
@@ -1570,7 +1635,6 @@ function export_refunds_report($query) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /**
  * function to create XLS for Certifications
  */
@@ -1634,7 +1698,6 @@ function export_cert_report($query) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 function export_invoice_report($query) {
     $CI = & get_instance();
     $CI->load->model('Meta_Values', 'meta');
@@ -1709,11 +1772,9 @@ function export_invoice_report($query) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /*
  * Export enrol report
  */
-
 function export_report_enroll($results, $sales_details) {
     $CI = & get_instance();
     $CI->load->library('excel');
@@ -1722,7 +1783,7 @@ function export_report_enroll($results, $sales_details) {
     $CI->excel->setActiveSheetIndex(0);
     $CI->excel->getActiveSheet()->setTitle("Enrollment Report Sheet");
     $sheet = $CI->excel->getActiveSheet();
-    $sheet->mergeCells('A1:G1');
+   $sheet->mergeCells('A1:G1');
     $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     $info = 'Enrollment Report for Sales Executive ' . $sales_details->first_name . ' ' . $sales_details->last_name .
             '[' . $sales_details->tax_code . '/' . $meta_map[$sales_details->tax_code_type] . '] Contact Detail:' . $sales_details->contact_number . ', ' . $sales_details->off_email_id;
@@ -1779,7 +1840,6 @@ function export_report_enroll($results, $sales_details) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /**
  * function to export class page fields
  */
@@ -1848,9 +1908,9 @@ function export_class_page($result) {
         $sheet->setCellValue('C' . $rn, $course->crse_name);
         $sheet->setCellValue('D' . $rn, rtrim($CI->course->get_managers($course->crse_manager), ', '));
         $sheet->setCellValueExplicit('E' . $rn, $course->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('E' . $rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->getStyle('E' .$rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
         $sheet->setCellValueExplicit('F' . $rn, $course->competency_code, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('F' . $rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->getStyle('F' .$rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT); 
         $sheet->setCellValue('G' . $rn, $CI->course->get_metadata_on_parameter_id($course->certi_level));
         $sheet->setCellValue('H' . $rn, $row->class_id);
         $sheet->setCellValue('I' . $rn, $row->class_name);
@@ -1873,7 +1933,6 @@ function export_class_page($result) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /**
  * function to export class all fields
  */
@@ -1941,7 +2000,7 @@ function export_class_full($result) {
     $sheet->setCellValue('Q3', 'Classroom Trainer');
     $sheet->setCellValue('R3', 'Lab Trainer');
     $sheet->setCellValue('S3', 'Assessor');
-    $sheet->setCellValue('T3', 'Training Aide');
+   $sheet->setCellValue('T3', 'Training Aide');
     $sheet->setCellValue('U3', 'Language');
     $sheet->setCellValue('V3', 'Classroom Location');
     $sheet->setCellValue('W3', 'Lab Location');
@@ -2014,9 +2073,9 @@ function export_class_full($result) {
         $sheet->setCellValue('C' . $rn, $course->crse_name);
         $sheet->setCellValue('D' . $rn, rtrim($CI->course->get_managers($course->crse_manager), ', '));
         $sheet->setCellValueExplicit('E' . $rn, $course->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('E' . $rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->getStyle('E' .$rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
         $sheet->setCellValueExplicit('F' . $rn, $course->competency_code, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('F' . $rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->getStyle('F' .$rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT); 
         $sheet->setCellValue('G' . $rn, $CI->course->get_metadata_on_parameter_id($course->certi_level));
         $sheet->setCellValue('H' . $rn, $row->class_id);
         $sheet->setCellValue('I' . $rn, $row->class_name);
@@ -2079,7 +2138,6 @@ function export_class_full($result) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /**
  * function to export course class all fields
  */
@@ -2182,9 +2240,9 @@ function export_course_class_full($result) {
         $sheet->setCellValue('H' . $rn, $CI->course->get_metadata_on_parameter_id($course->language));
         $sheet->setCellValue('I' . $rn, $CI->course->get_metadata_on_parameter_id($course->class_type));
         $sheet->setCellValueExplicit('J' . $rn, $course->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('J' . $rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->getStyle('J' .$rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
         $sheet->setCellValueExplicit('K' . $rn, $course->competency_code, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('K' . $rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->getStyle('K' .$rn)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT); 
 
         $sheet->setCellValue('L' . $rn, empty($course->crse_content_path) ? 'No' : 'Yes' );
         $sheet->setCellValue('M' . $rn, ($course->crse_cert_validity) ? 'Yes(' . $course->crse_cert_validity . ')' : 'No');
@@ -2227,7 +2285,6 @@ function export_course_class_full($result) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /**
  * function to export all booked seats for a class
  */
@@ -2340,7 +2397,6 @@ function export_booked_seats($result, $class, $course, $totalbooked, $tenant_id)
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /**
  * for class trainee page field
  */
@@ -2386,8 +2442,8 @@ function export_classtrainee_page($result, $tenant_id) {
     foreach ($result as $row) {
         $enr_mod = 'Individual';
         if ($row['enrolment_mode'] == 'COMPSPON') {
-            if ($row['company_id'][0] == 'T') {
-                $tenant_details = fetch_tenant_details($row['company_id']);
+            if($row['company_id'][0] == 'T') {
+                $tenant_details = fetch_tenant_details($row['company_id']);                
                 $enr_mod = 'Company (' . $tenant_details->tenant_name . ')';
             } else {
                 $company = $CI->company->get_company_details($tenant_id, $row['company_id']);
@@ -2400,8 +2456,8 @@ function export_classtrainee_page($result, $tenant_id) {
         $sheet->setCellValue('D' . $rn, $row['crse_name'] . ' - ' . $row['class_name']);
         $sheet->setCellValue('E' . $rn, date('d/m/Y', strtotime($row['class_start_datetime'])) . ' - ' . date('d/m/Y', strtotime($row['class_end_datetime'])));
         $sheet->setCellValue('F' . $rn, $enr_mod);
-        $sheet->setCellValue('G' . $rn, !empty($row['certificate_coll_on']) ? date('d/m/Y', strtotime($row['certificate_coll_on'])) : '');
-        $result_text = !empty($row['feedback_answer']) ? ' (Result: ' . $row['feedback_answer'] . ')' : '';
+        $sheet->setCellValue('G' . $rn, !empty($row['certificate_coll_on']) ? date('d/m/Y',  strtotime($row['certificate_coll_on'])):'');
+        $result_text = !empty($row['feedback_answer']) ? ' (Result: ' . $row['feedback_answer'].')' : '';
         $sheet->setCellValue('H' . $rn, $CI->class->get_class_status($row['class_id'], '') . $result_text);
         $sheet->setCellValue('I' . $rn, rtrim($CI->course->get_metadata_on_parameter_id($row['payment_status']), ', ')
         );
@@ -2415,12 +2471,10 @@ function export_classtrainee_page($result, $tenant_id) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /**
  * for class trainee full
  */
-function export_classtrainee_full($result, $tenant_id, $userid) {
-
+function export_classtrainee_full($result, $tenant_id) {
     $CI = & get_instance();
     $CI->load->model('course_model', 'course');
     $CI->load->model('class_model', 'class');
@@ -2506,8 +2560,8 @@ function export_classtrainee_full($result, $tenant_id, $userid) {
 
         $enr_mod = 'Individual';
         if ($row['enrolment_mode'] == 'COMPSPON') {
-            if ($row['company_id'][0] == 'T') {
-                $tenant_details = fetch_tenant_details($row['company_id']);
+            if($row['company_id'][0] == 'T') {
+                $tenant_details = fetch_tenant_details($row['company_id']);                
                 $enr_mod = 'Company (' . $tenant_details->tenant_name . ')';
             } else {
                 $company = $CI->company->get_company_details($tenant_id, $row['company_id']);
@@ -2534,17 +2588,10 @@ function export_classtrainee_full($result, $tenant_id, $userid) {
         $sheet->setCellValue('L' . $rn, rtrim($CI->course->get_metadata_on_parameter_id($row['class_language']), ', '));
         $sheet->setCellValue('M' . $rn, rtrim($CI->course->get_metadata_on_parameter_id($row['class_type']), ', '));
         $sheet->setCellValue('N' . $rn, rtrim($class_loc, ', '));
-        $sheet->setCellValue('O' . $rn, !empty($row['certificate_coll_on']) ? date('d/m/Y', strtotime($row['certificate_coll_on'])) : '');
-        $result_text = !empty($row['feedback_answer']) ? ' (Result: ' . $row['feedback_answer'] . ')' : '';
-        $sheet->setCellValue('P' . $rn, $CI->class->get_class_status($row['class_id'], '') . $result_text);
-        ////////COT TEAM REQUIREMENT CHANGED BY SHUBHRANSHU ON 06-01-2020 (ONly Dhanush USERID NOT MASKING)////
-        if (($tenant_id == 'T02' && $userid == '140490') || ($tenant_id == 'T02' && $userid == '94679')) {
-            $sheet->setCellValue('Q' . $rn, $row['tax_code']);
-        } else {
-            $sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
-        }
-        ///////////////////////////////////////////////////////////
-        //$sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
+        $sheet->setCellValue('O' . $rn, !empty($row['certificate_coll_on']) ? date('d/m/Y',  strtotime($row['certificate_coll_on'])):'');
+        $result_text = !empty($row['feedback_answer']) ? ' (Result: ' . $row['feedback_answer'].')' : '';
+        $sheet->setCellValue('P' . $rn, $CI->class->get_class_status($row['class_id'], '').$result_text);
+        $sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
         $sheet->setCellValue('R' . $rn, $row['first_name'] . ' ' . $row['last_name']);
         $sheet->setCellValue('S' . $rn, $enr_mod);
         $sheet->setCellValue('T' . $rn, empty($row['enrolled_on']) ? '' : date('d/m/Y', strtotime($row['enrolled_on'])));
@@ -2564,7 +2611,6 @@ function export_classtrainee_full($result, $tenant_id, $userid) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /**
  * function to create XLS for Sales Assignment and Commission
  */
@@ -2611,7 +2657,6 @@ function export_sales_report($query) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /**
  * function to create XLS for Payment due
  */
@@ -2691,7 +2736,6 @@ function export_payments_due_report($query) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 function write_import_status($data, $uid) {
     $CI = & get_instance();
     $CI->load->library('excel');
@@ -2790,7 +2834,6 @@ function write_import_enroll_status($data, $company_id) {
     $writer->save($filepath);
     return $file_name;
 }
-
 function write_import_enroll_statussuccess($data, $company_id) {
     unset($data['invoice_id']);
     $CI = & get_instance();
@@ -2838,7 +2881,6 @@ function write_import_enroll_statussuccess($data, $company_id) {
     $writer->save($filepath);
     return $file_name;
 }
-
 function write_import_enroll_statusfailure($data, $company_id) {
     unset($data['invoice_id']);
     $CI = & get_instance();
@@ -2887,7 +2929,6 @@ function write_import_enroll_statusfailure($data, $company_id) {
     $writer->save($filepath);
     return $file_name;
 }
-
 /**
  * This methods generates the SOA XLS report output
  * @param type $tabledata
@@ -2901,12 +2942,12 @@ function generate_soa_report_xls($tabledata, $metadata) {
     $CI->excel->getActiveSheet()->setTitle('SOA Report');
     $sheet = $CI->excel->getActiveSheet();
     foreach (range('A', 'Z') as $columnID) {
-        $CI->excel->getActiveSheet()->getColumnDimension($columnID)
+$CI->excel->getActiveSheet()->getColumnDimension($columnID)
                 ->setAutoSize(true);
     }
     foreach (range('A', 'C') as $columnID) {
         $var = 'A';
-        $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
+$CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
                 ->setAutoSize(true);
     }
     $column_names = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -2936,23 +2977,24 @@ function generate_soa_report_xls($tabledata, $metadata) {
     $r = 2;
     $CI->load->model('reports_model', 'reportsmodel');
     $data_arr = array();
-    foreach ($tabledata as $row) {
+    foreach ($tabledata as $row) 
+    {
+
         $assment_det = $CI->reportsmodel->get_assessment_details($row->class_id, $row->user_id);
         $crse_manager = explode(',', $row->crse_manager);
         $manager = $CI->reportsmodel->get_user_taxcode($crse_manager);
         $manager_text = '';
         foreach ($manager as $man) {
             $manager_text .= $man->tax_code . ', ';
-            break;
+            //break;
         }
         $manager_text = rtrim($manager_text, ', ');
         $classroom_trainer = explode(',', $row->classroom_trainer);
         $trainer = $CI->reportsmodel->get_user_taxcode($classroom_trainer);
-        
         $trainer_text = '';
         foreach ($trainer as $train) {
             $trainer_text .= $train->tax_code . '; ';
-            
+         
         }
         $trainer_text = rtrim($trainer_text, '; ');
         $classroom_assessor = explode(',', $assment_det->assessor_id);
@@ -2960,151 +3002,195 @@ function generate_soa_report_xls($tabledata, $metadata) {
         $assessor_text = '';
         foreach ($assessor as $assess) {
             $assessor_text .= $assess->tax_code . '; ';
-            
+            //break;
         }
+        //echo $assessor_text;exit;
         $assessor_text = rtrim($assessor_text, '; ');
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
         $row->tax_code_type;
         //new update
-        $ci = & get_instance();
-        $ci->load->database();
+        $ci =& get_instance(); 
+        $ci->load->database(); 
         $data = $ci->db->select('category_name as code_type')
+                ->from('metadata_values')
+                ->where('parameter_id', $row->tax_code_type)
+                 ->get()->row(0);
+        $tax_code_type= $data->code_type;
+        
+        if($row->nationality=="KP")
+        {
+            $nationality="KOREAN, NORTH";
+        }
+        else if($row->nationality=="KR")
+        {
+            $nationality="KOREAN, SOUTH";
+        }
+        else
+        {
+                $data = $ci->db->select('category_name as nationality')
                         ->from('metadata_values')
-                        ->where('parameter_id', $row->tax_code_type)
-                        ->get()->row(0);
-        $tax_code_type = $data->code_type;
+                        ->where('parameter_id', $row->nationality)
+                         ->get()->row(0);
 
-        if ($row->nationality == "KP") {
-            $nationality = "KOREAN, NORTH";
-        } else if ($row->nationality == "KR") {
-            $nationality = "KOREAN, SOUTH";
-        } else {
-            $data = $ci->db->select('category_name as nationality')
-                            ->from('metadata_values')
-                            ->where('parameter_id', $row->nationality)
-                            ->get()->row(0);
-
-            if ($data->nationality == "MALAY") {
-                $nationality = "MALAYSIAN";
-            } else {
-                $nationality = $data->nationality;
-                if ($nationality == "BURMESE") {
-                    $nationality = "MYANMAR";
+                if($data->nationality=="MALAY")
+                {
+                    $nationality="MALAYSIAN";
                 }
-            }
+                else
+                {
+                   $nationality= $data->nationality;
+                    if($nationality=="BURMESE")
+                   {
+                       $nationality="MYANMAR";
+                   }
+                }
+               
         }
-        if ($row->race != "") {
+        if($row->race!="")
+        {
             $data = $ci->db->select('category_name as race')
-                            ->from('metadata_values')
-                            ->where('parameter_id', $row->race)
-                            ->get()->row(0);
-            $race = $data->race;
-        } else {
-            $race = $row->race;
+                ->from('metadata_values')
+                ->where('parameter_id', $row->race)
+                ->get()->row(0);
+            $race= $data->race;
         }
-        //exit();
+        else
+        {
+            $race=$row->race;
+        }
+       //exit();
         $designation = '';
-        if ($row->account_type == 'INTUSR' && $row->designation != 'OTHERS') {
+        if($row->account_type == 'INTUSR' && $row->designation != 'OTHERS') 
+        {
             $strlength = strpos($row->designation, '_');
             $designation = empty($strlength) ? $row->designation : substr($row->designation, $strlength + 1);
-            if ($row->designation != "") {
+            if($row->designation!="") {
                 $data = $ci->db->select('category_name as designation')
-                                ->from('metadata_values')
-                                ->where('parameter_id', $row->designation)
-                                ->get()->row(0);
-                $designation = $data->designation;
-            } else {
-                $designation = $row->designation;
+                    ->from('metadata_values')
+                    ->where('parameter_id', $row->designation)
+                    ->get()->row(0);
+                $designation= $data->designation;
             }
-        } else if ($row->account_type == 'TRAINE') {
+            else {
+                $designation=$row->designation;
+            }
+            
+        } else if($row->account_type == 'TRAINE'){
             $strlength = strpos($row->occupation_code, '_');
             $designation = empty($strlength) ? $row->occupation_code : substr($row->occupation_code, $strlength + 1);
-            if ($row->occupation_code != "") {
+            if($row->occupation_code!="") {
                 $data = $ci->db->select('category_name as occupation_code')
-                                ->from('metadata_values')
-                                ->where('parameter_id', $row->occupation_code)
-                                ->get()->row(0);
-                $designation = $data->occupation_code;
-            } else {
-                $designation = $row->occupation_code;
+                    ->from('metadata_values')
+                    ->where('parameter_id', $row->occupation_code)
+                    ->get()->row(0);
+                $designation= $data->occupation_code;
+            }
+            else {
+                $designation=$row->occupation_code;
             }
         }
         $strlength = strpos($row->class_language, '_');
         $class_language = empty($strlength) ? $row->class_language : substr($row->class_language, $strlength + 1);
         $data = $ci->db->select('category_name as class_language')
-                        ->from('metadata_values')
-                        ->where('parameter_id', $row->class_language)
-                        ->get()->row(0);
-        $class_language = $data->class_language;
-
-
+                ->from('metadata_values')
+                ->where('parameter_id', $row->class_language)
+                 ->get()->row(0);
+        $class_language= $data->class_language;
+        
+        
         $strlength = strpos($row->highest_educ_level, '_');
         $highest_educ_level = empty($strlength) ? $row->highest_educ_level : substr($row->highest_educ_level, $strlength + 1);
-        if ($row->highest_educ_level != "") {
-            $data = $ci->db->select('category_name as highest_educ_level')
-                            ->from('metadata_values')
-                            ->where('parameter_id', $row->highest_educ_level)
-                            ->get()->row(0);
-            $highest_educ_level = $data->highest_educ_level;
-        } else {
-            $highest_educ_level = $row->highest_educ_level;
-        }
-
+        if($row->highest_educ_level!="") {
+                $data = $ci->db->select('category_name as highest_educ_level')
+                    ->from('metadata_values')
+                    ->where('parameter_id', $row->highest_educ_level)
+                    ->get()->row(0);
+                $highest_educ_level= $data->highest_educ_level;
+            }
+            else {
+                $highest_educ_level=$row->highest_educ_level;
+            }
+        
         $strlength = strpos($row->salary_range, '_');
         $row->salary_range;
-
+       
         $salary_range = empty($strlength) ? $row->salary_range : substr($row->salary_range, $strlength + 1);
-        if ($row->salary_range != "") {
-            $data = $ci->db->select('category_name as salary_range1')
-                            ->from('metadata_values')
-                            ->where('parameter_id', $row->salary_range)
-                            ->get()->row(0);
-            $salary_range = $data->salary_range1;
-
-            if ($row->salary_range != "BL1000_01") {
-                if ($row->salary_range != "3500_07") {
-                    $salary = explode("to", $salary_range);
-                    if (str_replace(' ', '', $salary[0]) != "UNEMPLOYED") {
-                        $sal = explode(".", $salary[0]);
-                        $sal1 = explode(".", $salary[1]);
-                        $salary_range = str_replace(' ', '', $sal[0]) . " - $" . str_replace(' ', '', $sal1[0]);
+        if($row->salary_range!="") 
+        {
+                $data = $ci->db->select('category_name as salary_range1')
+                    ->from('metadata_values')
+                    ->where('parameter_id', $row->salary_range)
+                    ->get()->row(0);
+                $salary_range= $data->salary_range1;
+               
+                if($row->salary_range!="BL1000_01")
+                {
+                    if($row->salary_range!="3500_07")
+                    {
+                        $salary=explode("to",$salary_range);
+                        if(str_replace(' ', '', $salary[0])!="UNEMPLOYED")
+                        {
+                            $sal=explode(".",$salary[0]);
+                            $sal1=explode(".",$salary[1]);
+                            $salary_range=  str_replace(' ', '', $sal[0])." - $".str_replace(' ', '', $sal1[0]);
+                        }
                     }
-                } else {
-                    $salary_range = "$3,500 and Above";
+                    else
+                    {
+                        $salary_range="$3,500 and Above";
+                    }
                 }
-            } else {
-
-                $salary_range = "Below $1,000";
-                //$salary_range= $data->salary_range1;
-            }
-        } else {
-            $salary_range = $row->salary_range;
+                else
+                {
+                    
+                    $salary_range="Below $1,000";
+                    //$salary_range= $data->salary_range1;
+                }
+        }
+        else 
+        {
+                $salary_range=$row->salary_range;
         }
         $gender_arr = array('MALE' => 'MALE', 'FEMALE' => 'FEMALE');
-        if ($row->company_id[0] == 'T') {
-            $tenant_details = fetch_tenant_details($row->company_id);
-            $row->company_name = $tenant_details->tenant_name;
-            $row->comp_email = $tenant_details->tenant_email_id;
+        if($row->company_id[0] == 'T') {           
+            $tenant_details = fetch_tenant_details($row->company_id);            
+            $row->company_name = $tenant_details->tenant_name; 
+            $row->comp_email = $tenant_details->tenant_email_id;            
         }
-        if ($row->training_score) {
-            if ($row->training_score == "C") {
-                $score = "Competent";
-            } else if ($row->training_score == "ABS") {
-                $score = "Absent";
-            } else if ($row->training_score == "NYC") {
-                $score = "Not Yet Competent";
-            } else if ($row->training_score == "EX") {
-                $score = "Exempted";
-            } else if ($row->training_score == "2NYC") {
-                $score = "Twice Not Competent";
-            } else {
-                $score = $row->training_score;
+        if($row->training_score)
+        {
+            if($row->training_score=="C")
+            {
+                $score="Competent";
             }
-        } else {
-            $score = $row->training_score;
+            else if($row->training_score=="ABS")
+            {
+                $score="Absent";
+            }
+            else if($row->training_score=="NYC")
+            {
+                $score="Not Yet Competent";
+            }
+            else if($row->training_score=="EX")
+            {
+                $score="Exempted";
+            }
+            
+            else if($row->training_score=="2NYC")
+            {
+                $score="Twice Not Competent";
+            }
+            else
+            {
+                $score=$row->training_score;
+            }
         }
-        $course_code = rtrim($CI->course_model->get_metadata_on_parameter_id($row->certi_level), ', '); //sk2
+        else
+        {
+             $score=$row->training_score;
+        }
+        $course_code =  rtrim($CI->course_model->get_metadata_on_parameter_id($row->certi_level), ', '); //sk2
         $sheet->setCellValue('A' . $r, $tax_code_type);
         $sheet->setCellValue('B' . $r, $row->tax_code);
         $sheet->setCellValue('C' . $r, $row->first_name);
@@ -3130,18 +3216,18 @@ function generate_soa_report_xls($tabledata, $metadata) {
         $sheet->setCellValueExplicit('Q' . $r, date('dmY', strtotime($row->class_start_datetime)), PHPExcel_Cell_DataType::TYPE_STRING);
         $sheet->getStyle('Q' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
         $sheet->setCellValueExplicit('R' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('R' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->getStyle('R' .$r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
         $sheet->setCellValueExplicit('S' . $r, $row->competency_code, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('S' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->getStyle('S' .$r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT); 
 //        $sheet->setCellValue('T' . $r, $row->certi_level);
-        $sheet->setCellValue('T' . $r, $course_code); //sk3
+         $sheet->setCellValue('T' . $r, $course_code);//sk3
         $sheet->setCellValue('U' . $r, 'NEW');
-        $sheet->setCellValueExplicit('V' . $r, (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY', strtotime($row->class_end_datetime)), PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('V' . $r, (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)), PHPExcel_Cell_DataType::TYPE_STRING);
         $sheet->getStyle('V' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
         $sheet->setCellValue('W' . $r, $score);
         $sheet->setCellValue('X' . $r, $trainer_text);
         $sheet->setCellValue('Y' . $r, $assessor_text);
-        $sheet->setCellValue('Z' . $r, 'Yes');
+        $sheet->setCellValue('Z' . $r, 'No');
         $r++;
     }
 
@@ -3154,6 +3240,7 @@ function generate_soa_report_xls($tabledata, $metadata) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
+
 
 /**
  * This methods generates the SOA XLS report output
@@ -3342,268 +3429,6 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
     $objWriter->save('php://output');
 }
 
-function generate_traqom_report_xls($tabledata, $metadata) {
-    $total_data = count($tabledata);
-
-    $CI = & get_instance();
-    $CI->load->library('excel');
-    $CI->excel->setActiveSheetIndex(0);
-    $CI->excel->getActiveSheet()->setTitle('TRAQOM  Report');
-    $sheet = $CI->excel->getActiveSheet();
-    foreach (range('A', 'Z') as $columnID) {
-        $CI->excel->getActiveSheet()->getColumnDimension($columnID)
-                ->setAutoSize(true);
-    }
-    foreach (range('A', 'C') as $columnID) {
-        $var = 'A';
-        $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
-                ->setAutoSize(true);
-    }
-    /* skm code st */
-    $course_end_time_filename = date('His', strtotime($tabledata[0]->class_end_datetime));
-    $course_end_date_filename = date('Ymd', strtotime($tabledata[0]->class_end_datetime));
-
-    $filename = $tabledata[0]->comp_reg_no . "_" . $course_end_date_filename . "_" . $course_end_time_filename . ".xls";
-    $sheet->setCellValueExplicit('A1', 'H');
-    $sheet->setCellValueExplicit('B1', $filename);
-    $sheet->setCellValueExplicit('C1', $total_data);
-
-    $sheet->setCellValueExplicit('A2', 'H');
-    $sheet->setCellValueExplicit('B2', 'Scenario');
-    $sheet->setCellValueExplicit('C2', 'Outcome');
-    /* skm code end */
-    $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3', 'J3', 'K3', 'L3', 'M3', 'N3', 'O3', 'P3', 'Q3', 'R3', 'S3', 'T3');
-    $column_title = array('H',
-        'Trainee Name', 'Trainee ID', 'ID Type', 'Date Of Birth', 'Email', 'Mobile', 'TP Alias', 'Course Title', 'Area of Training',
-        'Course Reference Number', 'Course Run Reference Number',
-        'Course Start Date', 'Course End Date', 'Postel Code', 'Floor', 'Unit', 'Room', 'Full Qualification', 'Trainer Name'
-    );
-    for ($i = 0; $i < count($column_title); $i++) {
-        $sheet->setCellValue($column_names[$i], $column_title[$i]);
-    }
-
-//            $sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->applyFromArray(
-//                    array('fill' => array(
-//                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-//                            'color' => array('argb' => 'FFCCCCCC')
-//                        )
-//                    )
-//            );
-    $sheet->getStyle('A3:K3')->applyFromArray(
-            array('fill' => array(
-                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                    'color' => array('argb' => 'FFCCCCCC')
-                )
-            )
-    );
-
-//            echo count($column_title); echo"<br/>";
-//            print_r($sheet);
-//            exit();
-//            
-    //$sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->getFont()->setBold(true);
-    $sheet->getStyle('A3:T3')->getFont()->setBold(true);
-    $r = 4;
-    $CI->load->model('reports_model', 'reportsmodel');
-    $data_arr = array();
-    foreach ($tabledata as $row) {
-
-        $strlength = strpos($row->tax_code_type, '_');
-        $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
-        $row->tax_code_type;
-        //new update
-        $ci = & get_instance();
-        $ci->load->database();
-        $data = $ci->db->select('category_name as code_type')
-                        ->from('metadata_values')
-                        ->where('parameter_id', $row->tax_code_type)
-                        ->get()->row(0);
-        $tax_code_type = $data->code_type;
-        if ($tax_code_type == 'NRIC') {
-            $tax_code_type = 'SP';
-        } else if ($tax_code_type == 'FIN') {
-            $tax_code_type = 'SO';
-        } else {
-            $tax_code_type = 'OT';
-        }
-        /* skm code for new style email which is the combination of taxocde and class name intials st */
-        $pattern = "/[_,-]/";
-        $string = $row->class_name;
-        $class_name = preg_split($pattern, $string);
-        $trainee_classname = $class_name[0];
-        $trainee_taxcode = substr($row->tax_code, -4);
-
-        $CI->load->model('class_model', 'class_Model');
-        $trainer_name = $CI->class_Model->get_trainer_names($row->classroom_trainer);
-
-        //$trainee_email = $row->tax_code.'@yopmail.com';
-//                $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
-        $trainee_email = $trainee_taxcode . $trainee_classname . '@yopmail.com';
-        /* end */
-        $course_start_time = date('His', strtotime($row->class_start_datetime));
-        $course_start_date = date('Ymd', strtotime($row->class_start_datetime));
-        $dob = str_replace('-', '', $row->dob);
-
-        $course_end_time = date('His', strtotime($row->class_end_datetime));
-        $course_end_date = date('Ymd', strtotime($row->class_end_datetime));
-        $enrollment_date = date('Y-m-d', strtotime($row->enrolled_on));
-
-        $sheet->setCellValueExplicit('A' . $r, 'I');
-        $sheet->setCellValue('B' . $r, $row->first_name);
-        $sheet->setCellValue('C' . $r, $row->tax_code);
-        $sheet->setCellValue('D' . $r, $tax_code_type);
-        $sheet->setCellValue('E' . $r, $dob);
-        $sheet->setCellValue('F' . $r, $trainee_email);
-        $sheet->setCellValueExplicit('G' . $r, $row->contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('H' . $r, $row->tenant_name);
-        $sheet->setCellValue('I' . $r, $row->crse_name);
-        $sheet->setCellValue('J' . $r, '');
-        $sheet->setCellValueExplicit('K' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->setCellValue('L' . $r, '');
-        $sheet->setCellValueExplicit('M' . $r, $course_start_date);
-        $sheet->setCellValueExplicit('N' . $r, $course_end_date);
-        $sheet->setCellValue('O' . $r, '');
-        $sheet->setCellValue('P' . $r, '');
-        $sheet->setCellValue('Q' . $r, '');
-        $sheet->setCellValue('R' . $r, '');
-        $sheet->setCellValue('S' . $r, '');
-        $sheet->setCellValue('T' . $r, $trainer_name);
-        $r++;
-    }
-    ob_end_clean();
-    $filename = $row->comp_reg_no . "_" . $course_end_date . "_" . $course_end_time . ".xls";
-    header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment;filename=' . $filename);
-    header('Cache-Control: max-age=0');
-    $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
-    $objWriter->save('php://output');
-}
-
-function generate_traqom_report_xls_old($tabledata, $metadata) {
-    $total_data = count($tabledata);
-
-    $CI = & get_instance();
-    $CI->load->library('excel');
-    $CI->excel->setActiveSheetIndex(0);
-    $CI->excel->getActiveSheet()->setTitle('TRAQOM  Report');
-    $sheet = $CI->excel->getActiveSheet();
-    foreach (range('A', 'Z') as $columnID) {
-        $CI->excel->getActiveSheet()->getColumnDimension($columnID)
-                ->setAutoSize(true);
-    }
-    foreach (range('A', 'C') as $columnID) {
-        $var = 'A';
-        $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
-                ->setAutoSize(true);
-    }
-    /* skm code st */
-    $course_end_time_filename = date('His', strtotime($tabledata[0]->class_end_datetime));
-    $course_end_date_filename = date('Ymd', strtotime($tabledata[0]->class_end_datetime));
-
-    $filename = $tabledata[0]->comp_reg_no . "_" . $course_end_date_filename . "_" . $course_end_time_filename . ".xls";
-    $sheet->setCellValueExplicit('A1', 'H');
-    $sheet->setCellValueExplicit('B1', $filename);
-    $sheet->setCellValueExplicit('C1', $total_data);
-
-    $sheet->setCellValueExplicit('A2', 'H');
-    $sheet->setCellValueExplicit('B2', 'Scenario');
-    $sheet->setCellValueExplicit('C2', 'Outcome');
-    /* skm code end */
-    $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3', 'J3', 'K3');
-    $column_title = array('H',
-        'Course Reference Number',
-        'Course Start Date', 'Course End Date', 'TP UEN', 'NRIC/Passport', 'ID Type', 'Full Name',
-        'Mobile',
-        'Email',
-        'Enrollment Date'
-    );
-    for ($i = 0; $i < count($column_title); $i++) {
-        $sheet->setCellValue($column_names[$i], $column_title[$i]);
-    }
-
-//            $sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->applyFromArray(
-//                    array('fill' => array(
-//                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-//                            'color' => array('argb' => 'FFCCCCCC')
-//                        )
-//                    )
-//            );
-    $sheet->getStyle('A3:K3')->applyFromArray(
-            array('fill' => array(
-                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                    'color' => array('argb' => 'FFCCCCCC')
-                )
-            )
-    );
-
-//            echo count($column_title); echo"<br/>";
-//            print_r($sheet);
-//            exit();
-//            
-    //$sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->getFont()->setBold(true);
-    $sheet->getStyle('A3:K3')->getFont()->setBold(true);
-    $r = 4;
-    $CI->load->model('reports_model', 'reportsmodel');
-    $data_arr = array();
-    foreach ($tabledata as $row) {
-
-        $strlength = strpos($row->tax_code_type, '_');
-        $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
-        $row->tax_code_type;
-        //new update
-        $ci = & get_instance();
-        $ci->load->database();
-        $data = $ci->db->select('category_name as code_type')
-                        ->from('metadata_values')
-                        ->where('parameter_id', $row->tax_code_type)
-                        ->get()->row(0);
-        $tax_code_type = $data->code_type;
-        if ($tax_code_type == 'NRIC') {
-            $tax_code_type = 'SP';
-        } else if ($tax_code_type == 'FIN') {
-            $tax_code_type = 'SO';
-        } else {
-            $tax_code_type = 'OT';
-        }
-        /* skm code for new style email which is the combination of taxocde and class name intials st */
-        $pattern = "/[_,-]/";
-        $string = $row->class_name;
-        $class_name = preg_split($pattern, $string);
-        $trainee_classname = $class_name[0];
-        $trainee_taxcode = substr($row->tax_code, -4);
-
-        //$trainee_email = $row->tax_code.'@yopmail.com';
-//                $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
-        $trainee_email = $trainee_taxcode . $trainee_classname . '@yopmail.com';
-        /* end */
-        $course_start_time = date('His', strtotime($row->class_start_datetime));
-        $course_start_date = date('Ymd', strtotime($row->class_start_datetime));
-
-        $course_end_time = date('His', strtotime($row->class_end_datetime));
-        $course_end_date = date('Ymd', strtotime($row->class_end_datetime));
-        $enrollment_date = date('Y-m-d', strtotime($row->enrolled_on));
-
-        $sheet->setCellValueExplicit('A' . $r, 'I');
-        $sheet->setCellValueExplicit('B' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('C' . $r, $course_start_date);
-        $sheet->setCellValueExplicit('D' . $r, $course_end_date);
-        $sheet->setCellValue('E' . $r, $row->comp_reg_no);
-        $sheet->setCellValue('F' . $r, $row->tax_code);
-        $sheet->setCellValue('G' . $r, $tax_code_type);
-        $sheet->setCellValue('H' . $r, $row->first_name);
-        $sheet->setCellValueExplicit('I' . $r, $row->contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->setCellValue('J' . $r, $trainee_email);
-        $sheet->setCellValue('K' . $r, $enrollment_date);
-        $r++;
-    }
-    ob_end_clean();
-    $filename = $row->comp_reg_no . "_" . $course_end_date . "_" . $course_end_time . ".xls";
-    header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment;filename=' . $filename);
-    header('Cache-Control: max-age=0');
-    $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
-    $objWriter->save('php://output');
-}
 function generate_traqom_report_xls_wablab($tabledata, $metadata) 
 {
     $total_data = count($tabledata);
@@ -3736,167 +3561,456 @@ function generate_traqom_report_xls_wablab($tabledata, $metadata)
             $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
             $objWriter->save('php://output');
 }
-function generate_traqom_report_xls_pritam($tabledata, $metadata) {
-    $CI = & get_instance();
-    $CI->load->library('excel');
-    $CI->excel->setActiveSheetIndex(0);
-    $CI->excel->getActiveSheet()->setTitle('TRAQOM  Report');
-    $sheet = $CI->excel->getActiveSheet();
-    foreach (range('A', 'Z') as $columnID) {
-        $CI->excel->getActiveSheet()->getColumnDimension($columnID)
-                ->setAutoSize(true);
-    }
-    foreach (range('A', 'C') as $columnID) {
-        $var = 'A';
-        $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
-                ->setAutoSize(true);
-    }
-    $column_names = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H');
-    $column_title = array(
-        'Course Reference Number',
-        'Course End Date', 'TP UEN', 'NRIC/FIN/OTHER', 'ID Type', 'Full Name',
-        'Mobile',
-        'Email'
-    );
-    for ($i = 0; $i < count($column_title); $i++) {
-        $sheet->setCellValue($column_names[$i] . '1', $column_title[$i]);
-    }
-    $sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->applyFromArray(
-            array('fill' => array(
-                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                    'color' => array('argb' => 'FFCCCCCC')
-                )
-            )
-    );
-    $sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->getFont()->setBold(true);
-    $r = 2;
-    $CI->load->model('reports_model', 'reportsmodel');
-    $data_arr = array();
-    foreach ($tabledata as $row) {
 
-        $strlength = strpos($row->tax_code_type, '_');
-        $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
-        $row->tax_code_type;
-        //new update
-        $ci = & get_instance();
-        $ci->load->database();
-        $data = $ci->db->select('category_name as code_type')
+function generate_traqom_report_xls($tabledata, $metadata) 
+{
+    $total_data = count($tabledata);
+
+            $CI = & get_instance();
+            $CI->load->library('excel');
+            $CI->excel->setActiveSheetIndex(0);
+            $CI->excel->getActiveSheet()->setTitle('TRAQOM  Report');
+            $sheet = $CI->excel->getActiveSheet();
+            foreach (range('A', 'Z') as $columnID) 
+            {
+                    $CI->excel->getActiveSheet()->getColumnDimension($columnID)
+                                ->setAutoSize(true);
+            }
+            foreach (range('A', 'C') as $columnID) 
+            {
+                $var = 'A';
+                $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
+                        ->setAutoSize(true);
+            }
+            /* skm code st*/
+            $course_end_time_filename=date('His',strtotime($tabledata[0]->class_end_datetime));
+            $course_end_date_filename=date('Ymd',strtotime($tabledata[0]->class_end_datetime));
+            
+            $filename=$tabledata[0]->comp_reg_no."_".$course_end_date_filename."_".$course_end_time_filename.".xls";
+            $sheet->setCellValueExplicit('A1' , 'H');
+            $sheet->setCellValueExplicit('B1' , $filename);
+            $sheet->setCellValueExplicit('C1' , $total_data);
+            
+            $sheet->setCellValueExplicit('A2' , 'H');
+            $sheet->setCellValueExplicit('B2' , 'Scenario');
+            $sheet->setCellValueExplicit('C2' , 'Outcome');
+            /* skm code end */
+            $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3','H3','I3','J3','K3','L3','M3','N3','O3','P3','Q3','R3','S3','T3');
+            $column_title = array('H',
+                'Trainee Name','Trainee ID','ID Type','Date Of Birth','Email','Mobile','TP Alias','Course Title','Area of Training',
+                'Course Reference Number','Course Run Reference Number',
+                'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','Trainer Name'
+               
+                );
+            for ($i = 0; $i < count($column_title); $i++) 
+            {
+                $sheet->setCellValue($column_names[$i] , $column_title[$i]);
+            }
+            
+//            $sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->applyFromArray(
+//                    array('fill' => array(
+//                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+//                            'color' => array('argb' => 'FFCCCCCC')
+//                        )
+//                    )
+//            );
+             $sheet->getStyle('A3:K3')->applyFromArray(
+                array('fill' => array(
+                        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                        'color' => array('argb' => 'FFCCCCCC')
+                                )
+                    )
+            );
+            
+//            echo count($column_title); echo"<br/>";
+//            print_r($sheet);
+//            exit();
+//            
+            //$sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->getFont()->setBold(true);
+            $sheet->getStyle('A3:T3')->getFont()->setBold(true);
+            $r = 4;
+            $CI->load->model('reports_model', 'reportsmodel');
+            $data_arr = array();
+            foreach ($tabledata as $row) 
+            {
+                
+                $strlength = strpos($row->tax_code_type, '_');
+                $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
+                $row->tax_code_type;
+                //new update
+                $ci =& get_instance(); 
+                $ci->load->database(); 
+                $data = $ci->db->select('category_name as code_type')
                         ->from('metadata_values')
                         ->where('parameter_id', $row->tax_code_type)
-                        ->get()->row(0);
-        $tax_code_type = $data->code_type;
-        if ($tax_code_type == 'NRIC') {
-            $tax_code_type = 'SP';
-        } else if ($tax_code_type == 'FIN') {
-            $tax_code_type = 'SO';
-        } else {
-            $tax_code_type = 'OT';
-        }
-        // sk code start for email id
-        $pattern = "/[-_ ]+/";
-        $string = $row->class_name;
-        $class_name = preg_split($pattern, $string);
-        $trainee_classname = $class_name[0];
-        $trainee_taxcode = substr($row->tax_code, -4);
-        $trainee_email = $trainee_classname . $trainee_taxcode . '@yopmail.com';
-        //sk code end for email id
-//                $trainee_email = $row->tax_code.'@yopmail.com';
-        $course_end_time = date('His', strtotime($row->class_end_datetime));
-        $course_end_date = date('Ymd', strtotime($row->class_end_datetime));
-        $sheet->setCellValueExplicit('A' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('B' . $r, $course_end_date);
-        $sheet->setCellValue('C' . $r, $row->comp_reg_no);
-        $sheet->setCellValue('D' . $r, $row->tax_code);
-        $sheet->setCellValue('E' . $r, $tax_code_type);
-        $sheet->setCellValue('F' . $r, $row->first_name);
-        $sheet->setCellValueExplicit('G' . $r, $row->contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->setCellValue('H' . $r, $trainee_email);
-        $r++;
-    }
-    ob_end_clean();
-    $filename = $row->comp_reg_no . "_" . $course_end_date . "_" . $course_end_time . ".xls";
-    header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment;filename=' . $filename);
-    header('Cache-Control: max-age=0');
-    $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
-    $objWriter->save('php://output');
+                         ->get()->row(0);
+                $tax_code_type= $data->code_type;
+                if($tax_code_type == 'NRIC')
+                {
+                    $tax_code_type='SP';
+                }else if($tax_code_type == 'FIN'){
+                    $tax_code_type='SO';
+                }
+                else{
+                    $tax_code_type='OT';
+                }
+                /* skm code for new style email which is the combination of taxocde and class name intials st*/
+                $pattern = "/[_,-]/";
+                $string = $row->class_name;
+                $class_name = preg_split($pattern, $string);
+                $trainee_classname = $class_name[0];
+                $trainee_taxcode = substr($row->tax_code, -4);
+                
+                 $CI->load->model('class_model', 'class_Model');              
+                 $trainer_name = $CI->class_Model->get_trainer_names($row->classroom_trainer);
+               
+                //$trainee_email = $row->tax_code.'@yopmail.com';
+//                $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
+                 $trainee_email = $trainee_taxcode.$trainee_classname.'@yopmail.com';
+                /*end */
+                $course_start_time=date('His',strtotime($row->class_start_datetime));
+                $course_start_date=date('Ymd',strtotime($row->class_start_datetime));
+                $dob = str_replace('-','',$row->dob);
+                
+                $course_end_time=date('His',strtotime($row->class_end_datetime));
+                $course_end_date=date('Ymd',strtotime($row->class_end_datetime));
+                $enrollment_date = date('Y-m-d',strtotime($row->enrolled_on));
+                
+                $sheet->setCellValueExplicit('A' . $r, 'I');
+                $sheet->setCellValue('B' . $r, $row->first_name);
+                $sheet->setCellValue('C' . $r, $row->tax_code);
+                $sheet->setCellValue('D' . $r, $tax_code_type);
+                $sheet->setCellValue('E' . $r, $dob);
+                $sheet->setCellValue('F' . $r, $trainee_email);
+                $sheet->setCellValueExplicit('G' . $r, $row->contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
+                $sheet->setCellValueExplicit('H' . $r, $row->tenant_name);
+                $sheet->setCellValue('I' . $r, $row->crse_name);
+                $sheet->setCellValue('J' . $r, '');
+                $sheet->setCellValueExplicit('K' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
+                $sheet->setCellValue('L' . $r, '');                
+                $sheet->setCellValueExplicit('M' . $r, $course_start_date);
+                $sheet->setCellValueExplicit('N' . $r, $course_end_date);                
+                $sheet->setCellValue('O' . $r, '');
+                $sheet->setCellValue('P' . $r, '');
+                $sheet->setCellValue('Q' . $r, '');
+                $sheet->setCellValue('R' . $r, '');
+                $sheet->setCellValue('S' . $r, '');
+                $sheet->setCellValue('T' . $r, $trainer_name);
+                $r++;
+            }
+            ob_end_clean();
+            $filename=$row->comp_reg_no."_".$course_end_date."_".$course_end_time.".xls";
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename='.$filename);
+            header('Cache-Control: max-age=0');
+            $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+            $objWriter->save('php://output');
 }
 
+function generate_traqom_report_xls_old($tabledata, $metadata) 
+{
+    $total_data = count($tabledata);
+
+            $CI = & get_instance();
+            $CI->load->library('excel');
+            $CI->excel->setActiveSheetIndex(0);
+            $CI->excel->getActiveSheet()->setTitle('TRAQOM  Report');
+            $sheet = $CI->excel->getActiveSheet();
+            foreach (range('A', 'Z') as $columnID) 
+            {
+                    $CI->excel->getActiveSheet()->getColumnDimension($columnID)
+                                ->setAutoSize(true);
+            }
+            foreach (range('A', 'C') as $columnID) 
+            {
+                $var = 'A';
+                $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
+                        ->setAutoSize(true);
+            }
+            /* skm code st*/
+            $course_end_time_filename=date('His',strtotime($tabledata[0]->class_end_datetime));
+            $course_end_date_filename=date('Ymd',strtotime($tabledata[0]->class_end_datetime));
+            
+            $filename=$tabledata[0]->comp_reg_no."_".$course_end_date_filename."_".$course_end_time_filename.".xls";
+            $sheet->setCellValueExplicit('A1' , 'H');
+            $sheet->setCellValueExplicit('B1' , $filename);
+            $sheet->setCellValueExplicit('C1' , $total_data);
+            
+            $sheet->setCellValueExplicit('A2' , 'H');
+            $sheet->setCellValueExplicit('B2' , 'Scenario');
+            $sheet->setCellValueExplicit('C2' , 'Outcome');
+            /* skm code end */
+            $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3','H3','I3','J3','K3');
+            $column_title = array('H',
+                'Course Reference Number',
+                 'Course Start Date','Course End Date','TP UEN','NRIC/Passport', 'ID Type', 'Full Name',
+                'Mobile',
+                'Email',
+                'Enrollment Date'
+                );
+            for ($i = 0; $i < count($column_title); $i++) 
+            {
+                $sheet->setCellValue($column_names[$i] , $column_title[$i]);
+            }
+            
+//            $sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->applyFromArray(
+//                    array('fill' => array(
+//                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+//                            'color' => array('argb' => 'FFCCCCCC')
+//                        )
+//                    )
+//            );
+             $sheet->getStyle('A3:K3')->applyFromArray(
+                array('fill' => array(
+                        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                        'color' => array('argb' => 'FFCCCCCC')
+                                )
+                    )
+            );
+            
+//            echo count($column_title); echo"<br/>";
+//            print_r($sheet);
+//            exit();
+//            
+            //$sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->getFont()->setBold(true);
+            $sheet->getStyle('A3:K3')->getFont()->setBold(true);
+            $r = 4;
+            $CI->load->model('reports_model', 'reportsmodel');
+            $data_arr = array();
+            foreach ($tabledata as $row) 
+            {
+                
+                $strlength = strpos($row->tax_code_type, '_');
+                $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
+                $row->tax_code_type;
+                //new update
+                $ci =& get_instance(); 
+                $ci->load->database(); 
+                $data = $ci->db->select('category_name as code_type')
+                        ->from('metadata_values')
+                        ->where('parameter_id', $row->tax_code_type)
+                         ->get()->row(0);
+                $tax_code_type= $data->code_type;
+                if($tax_code_type == 'NRIC')
+                {
+                    $tax_code_type='SP';
+                }else if($tax_code_type == 'FIN'){
+                    $tax_code_type='SO';
+                }
+                else{
+                    $tax_code_type='OT';
+                }
+                /* skm code for new style email which is the combination of taxocde and class name intials st*/
+                $pattern = "/[_,-]/";
+                $string = $row->class_name;
+                $class_name = preg_split($pattern, $string);
+                $trainee_classname = $class_name[0];
+                $trainee_taxcode = substr($row->tax_code, -4);
+                
+                //$trainee_email = $row->tax_code.'@yopmail.com';
+//                $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
+                 $trainee_email = $trainee_taxcode.$trainee_classname.'@yopmail.com';
+                /*end */
+                $course_start_time=date('His',strtotime($row->class_start_datetime));
+                $course_start_date=date('Ymd',strtotime($row->class_start_datetime));
+                
+                $course_end_time=date('His',strtotime($row->class_end_datetime));
+                $course_end_date=date('Ymd',strtotime($row->class_end_datetime));
+                $enrollment_date = date('Y-m-d',strtotime($row->enrolled_on));
+                
+                $sheet->setCellValueExplicit('A' . $r, 'I');
+                $sheet->setCellValueExplicit('B' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
+                $sheet->setCellValueExplicit('C' . $r, $course_start_date);
+                $sheet->setCellValueExplicit('D' . $r, $course_end_date);
+                $sheet->setCellValue('E' . $r, $row->comp_reg_no);
+                $sheet->setCellValue('F' . $r, $row->tax_code);
+                $sheet->setCellValue('G' . $r, $tax_code_type);
+                $sheet->setCellValue('H' . $r, $row->first_name);
+                $sheet->setCellValueExplicit('I' . $r, $row->contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
+                $sheet->setCellValue('J' . $r, $trainee_email);
+                $sheet->setCellValue('K' . $r, $enrollment_date);
+                $r++;
+            }
+            ob_end_clean();
+            $filename=$row->comp_reg_no."_".$course_end_date."_".$course_end_time.".xls";
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename='.$filename);
+            header('Cache-Control: max-age=0');
+            $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+            $objWriter->save('php://output');
+}
+
+function generate_traqom_report_xls_pritam($tabledata, $metadata) 
+{
+            $CI = & get_instance();
+            $CI->load->library('excel');
+            $CI->excel->setActiveSheetIndex(0);
+            $CI->excel->getActiveSheet()->setTitle('TRAQOM  Report');
+            $sheet = $CI->excel->getActiveSheet();
+            foreach (range('A', 'Z') as $columnID) 
+            {
+                    $CI->excel->getActiveSheet()->getColumnDimension($columnID)
+                                ->setAutoSize(true);
+            }
+            foreach (range('A', 'C') as $columnID) 
+            {
+                $var = 'A';
+                $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
+                        ->setAutoSize(true);
+            }
+            $column_names = array('A', 'B', 'C', 'D', 'E', 'F', 'G','H');
+            $column_title = array(
+                'Course Reference Number',
+                'Course End Date','TP UEN','NRIC/FIN/OTHER', 'ID Type', 'Full Name',
+                'Mobile',
+                'Email'
+                );
+            for ($i = 0; $i < count($column_title); $i++) 
+            {
+                $sheet->setCellValue($column_names[$i] . '1', $column_title[$i]);
+            }
+            $sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->applyFromArray(
+                    array('fill' => array(
+                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                            'color' => array('argb' => 'FFCCCCCC')
+                        )
+                    )
+            );
+            $sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->getFont()->setBold(true);
+            $r = 2;
+            $CI->load->model('reports_model', 'reportsmodel');
+            $data_arr = array();
+            foreach ($tabledata as $row) 
+            {
+                
+                $strlength = strpos($row->tax_code_type, '_');
+                $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
+                $row->tax_code_type;
+                //new update
+                $ci =& get_instance(); 
+                $ci->load->database(); 
+                $data = $ci->db->select('category_name as code_type')
+                        ->from('metadata_values')
+                        ->where('parameter_id', $row->tax_code_type)
+                         ->get()->row(0);
+                $tax_code_type= $data->code_type;
+                if($tax_code_type == 'NRIC')
+                {
+                    $tax_code_type='SP';
+                }else if($tax_code_type == 'FIN'){
+                    $tax_code_type='SO';
+                }
+                else{
+                    $tax_code_type='OT';
+                }
+                // sk code start for email id
+                $pattern = "/[-_ ]+/";
+                $string = $row->class_name;
+                $class_name = preg_split($pattern, $string);
+                $trainee_classname = $class_name[0];
+                $trainee_taxcode = substr($row->tax_code, -4);
+                $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
+                //sk code end for email id
+//                $trainee_email = $row->tax_code.'@yopmail.com';
+                $course_end_time=date('His',strtotime($row->class_end_datetime));
+                $course_end_date=date('Ymd',strtotime($row->class_end_datetime));
+                $sheet->setCellValueExplicit('A' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
+                $sheet->setCellValueExplicit('B' . $r, $course_end_date);
+                $sheet->setCellValue('C' . $r, $row->comp_reg_no);
+                $sheet->setCellValue('D' . $r, $row->tax_code);
+                $sheet->setCellValue('E' . $r, $tax_code_type);
+                $sheet->setCellValue('F' . $r, $row->first_name);
+                $sheet->setCellValueExplicit('G' . $r, $row->contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
+                $sheet->setCellValue('H' . $r, $trainee_email);
+                $r++;
+            }
+            ob_end_clean();
+            $filename=$row->comp_reg_no."_".$course_end_date."_".$course_end_time.".xls";
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename='.$filename);
+            header('Cache-Control: max-age=0');
+            $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+            $objWriter->save('php://output');
+}
 /**
  * This method generates the SOA CSV Report
  * @param type $tabledata
  * @param type $metadata
  * @return type
  */
+
 function generate_traqom2_report_csv($tabledata, $metadata) {
     $CI = & get_instance();
-
-    /* skm code st */
+    
+    /* skm code st*/
     $total_data = count($tabledata);
-    $course_end_time_filename = date('His', strtotime($tabledata[0]->class_end_datetime));
-    $course_end_date_filename = date('Ymd', strtotime($tabledata[0]->class_end_datetime));
-    $filename = $tabledata[0]->comp_reg_no . "_" . $course_end_date_filename . "_" . $course_end_time_filename . ".csv";
+    $course_end_time_filename=date('His',strtotime($tabledata[0]->class_end_datetime));
+    $course_end_date_filename=date('Ymd',strtotime($tabledata[0]->class_end_datetime));
+    $filename=$tabledata[0]->comp_reg_no."_".$course_end_date_filename."_".$course_end_time_filename.".csv";
     $column_title_first_row = array('H', $filename, $total_data);
-    $column_title_second_row = array('H', 'Scenario', 'Outcome');
+    $column_title_second_row = array('H','Scenario', 'Outcome');
     /* skm code end */
-
-
+    
+    
     $column_title = array('H',
-        'Trainee Name', 'Trainee ID', 'ID Type', 'Email', 'Mobile Country Code', 'Mobile Area Code', 'Mobile', 'TP Alias', 'Course Title', 'Area of Training',
-        'Course Reference Number', 'Course Run Reference Number',
-        'Course Start Date', 'Course End Date', 'Postel Code', 'Floor', 'Unit', 'Room', 'Full Qualification', 'Trainer Name'
-    );
+        'Trainee Name','Trainee ID','ID Type','Email','Mobile Country Code','Mobile Area Code','Mobile','TP Alias','Course Title','Area of Training',
+        'Course Reference Number','Course Run Reference Number',
+        'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','Trainer Name'
 
-
+        );
+    
+    
     $data_arr = array();
-    foreach ($tabledata as $row) {
+    foreach ($tabledata as $row) 
+    {
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
         $row->tax_code_type;
         //new update
-        $ci = & get_instance();
-        $ci->load->database();
+        $ci =& get_instance(); 
+        $ci->load->database(); 
         $data = $ci->db->select('category_name as code_type')
-                        ->from('metadata_values')
-                        ->where('parameter_id', $row->tax_code_type)
-                        ->get()->row(0);
-        $tax_code_type = $data->code_type;
+                ->from('metadata_values')
+                ->where('parameter_id', $row->tax_code_type)
+                 ->get()->row(0);
+        $tax_code_type= $data->code_type;
         //$trainee_email = $row->tax_code.'@yopmail.com';
-        $course_start_time = date('His', strtotime($row->class_start_datetime));
-        $course_start_date = date('Ymd', strtotime($row->class_start_datetime));
-
-        $course_end_time = date('His', strtotime($row->class_end_datetime));
-        $course_end_date = date('Ymd', strtotime($row->class_end_datetime));
-        $enrollment_date = date('Y-m-d', strtotime($row->enrolled_on));
-
-        $dob = str_replace('-', '', $row->dob);
-
-        $CI->load->model('class_model', 'class_Model');
+        $course_start_time=date('His',strtotime($row->class_start_datetime));
+        $course_start_date=date('Ymd',strtotime($row->class_start_datetime));
+        
+        $course_end_time=date('His',strtotime($row->class_end_datetime));
+        $course_end_date=date('Ymd',strtotime($row->class_end_datetime));
+        $enrollment_date = date('Y-m-d',strtotime($row->enrolled_on));
+        
+         $dob = str_replace('-','',$row->dob);
+	
+	$CI->load->model('class_model', 'class_Model');              
         $trainer_name = $CI->class_Model->get_trainer_names($row->classroom_trainer);
-
-        /* skm code for new style email which is the combination of taxocde and class name intials st */
-        $pattern = "/[_,-]/";
-        $string = $row->class_name;
-        $class_name = preg_split($pattern, $string);
-        $trainee_classname = $class_name[0];
-        $trainee_taxcode = substr($row->tax_code, -4);
-
-        //$trainee_email = $row->tax_code.'@yopmail.com';
+        
+        /* skm code for new style email which is the combination of taxocde and class name intials st*/
+                $pattern = "/[_,-]/";
+                $string = $row->class_name;
+                $class_name = preg_split($pattern, $string);
+                $trainee_classname = $class_name[0];
+                $trainee_taxcode = substr($row->tax_code, -4);
+                
+                //$trainee_email = $row->tax_code.'@yopmail.com';
 //                $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
-        $trainee_email = $trainee_taxcode . $trainee_classname . '@yopmail.com';
-        /* end */
+                $trainee_email = $trainee_taxcode.$trainee_classname.'@yopmail.com';
+                /*end */
         $i = 'I';
         $data_arr[] = array(
-            $i,
-            $row->first_name, $row->tax_code, $tax_code_type, $trainee_email, '', '', $row->contact_number, $row->tenant_name, $row->crse_name, '',
-            $row->reference_num, '', course_start_date, $course_end_date, '', '', '', '', '', $trainer_name
+           $i,
+           $row->first_name,$row->tax_code,$tax_code_type,$trainee_email,'','',$row->contact_number,$row->tenant_name,$row->crse_name,'',
+            $row->reference_num,'',course_start_date,$course_end_date,'','','','','',$trainer_name
+           
         );
     }
-    $filename = $row->comp_reg_no . "_" . $course_end_date . "_" . $course_end_time . ".csv";
+    $filename=$row->comp_reg_no."_".$course_end_date."_".$course_end_time.".csv";
     header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename=' . $filename);
+    header('Content-Disposition: attachment; filename='.$filename);
     $output = fopen('php://output', 'w');
-
+    
     fputcsv($output, $column_title_first_row);
     fputcsv($output, $column_title_second_row);
     fputcsv($output, $column_title);
@@ -3912,73 +4026,76 @@ function generate_traqom2_report_csv($tabledata, $metadata) {
 
 function generate_traqom_report_csv($tabledata, $metadata) {
     $CI = & get_instance();
-
-    /* skm code st */
+    
+    /* skm code st*/
     $total_data = count($tabledata);
-    $course_end_time_filename = date('His', strtotime($tabledata[0]->class_end_datetime));
-    $course_end_date_filename = date('Ymd', strtotime($tabledata[0]->class_end_datetime));
-    $filename = $tabledata[0]->comp_reg_no . "_" . $course_end_date_filename . "_" . $course_end_time_filename . ".csv";
+    $course_end_time_filename=date('His',strtotime($tabledata[0]->class_end_datetime));
+    $course_end_date_filename=date('Ymd',strtotime($tabledata[0]->class_end_datetime));
+    $filename=$tabledata[0]->comp_reg_no."_".$course_end_date_filename."_".$course_end_time_filename.".csv";
     $column_title_first_row = array('H', $filename, $total_data);
-    $column_title_second_row = array('H', 'Scenario', 'Outcome');
+    $column_title_second_row = array('H','Scenario', 'Outcome');
     /* skm code end */
-
-
+    
+    
     $column_title = array('H',
-        'Trainee Name', 'Trainee ID', 'ID Type', 'Date Of Birth', 'Email', 'Mobile', 'TP Alias', 'Course Title', 'Area of Training',
-        'Course Reference Number', 'Course Run Reference Number',
-        'Course Start Date', 'Course End Date', 'Postel Code', 'Floor', 'Unit', 'Room', 'Full Qualification', 'Trainer Name'
-    );
+        'Trainee Name','Trainee ID','ID Type','Date Of Birth','Email','Mobile','TP Alias','Course Title','Area of Training',
+        'Course Reference Number','Course Run Reference Number',
+        'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','Trainer Name'
 
-
+        );
+    
+    
     $data_arr = array();
-    foreach ($tabledata as $row) {
+    foreach ($tabledata as $row) 
+    {
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
         $row->tax_code_type;
         //new update
-        $ci = & get_instance();
-        $ci->load->database();
+        $ci =& get_instance(); 
+        $ci->load->database(); 
         $data = $ci->db->select('category_name as code_type')
-                        ->from('metadata_values')
-                        ->where('parameter_id', $row->tax_code_type)
-                        ->get()->row(0);
-        $tax_code_type = $data->code_type;
+                ->from('metadata_values')
+                ->where('parameter_id', $row->tax_code_type)
+                 ->get()->row(0);
+        $tax_code_type= $data->code_type;
         //$trainee_email = $row->tax_code.'@yopmail.com';
-        $course_start_time = date('His', strtotime($row->class_start_datetime));
-        $course_start_date = date('Ymd', strtotime($row->class_start_datetime));
-
-        $course_end_time = date('His', strtotime($row->class_end_datetime));
-        $course_end_date = date('Ymd', strtotime($row->class_end_datetime));
-        $enrollment_date = date('Y-m-d', strtotime($row->enrolled_on));
-
-        $dob = str_replace('-', '', $row->dob);
-
-        $CI->load->model('class_model', 'class_Model');
+        $course_start_time=date('His',strtotime($row->class_start_datetime));
+        $course_start_date=date('Ymd',strtotime($row->class_start_datetime));
+        
+        $course_end_time=date('His',strtotime($row->class_end_datetime));
+        $course_end_date=date('Ymd',strtotime($row->class_end_datetime));
+        $enrollment_date = date('Y-m-d',strtotime($row->enrolled_on));
+        
+         $dob = str_replace('-','',$row->dob);
+	
+	$CI->load->model('class_model', 'class_Model');              
         $trainer_name = $CI->class_Model->get_trainer_names($row->classroom_trainer);
-
-        /* skm code for new style email which is the combination of taxocde and class name intials st */
-        $pattern = "/[_,-]/";
-        $string = $row->class_name;
-        $class_name = preg_split($pattern, $string);
-        $trainee_classname = $class_name[0];
-        $trainee_taxcode = substr($row->tax_code, -4);
-
-        //$trainee_email = $row->tax_code.'@yopmail.com';
+        
+        /* skm code for new style email which is the combination of taxocde and class name intials st*/
+                $pattern = "/[_,-]/";
+                $string = $row->class_name;
+                $class_name = preg_split($pattern, $string);
+                $trainee_classname = $class_name[0];
+                $trainee_taxcode = substr($row->tax_code, -4);
+                
+                //$trainee_email = $row->tax_code.'@yopmail.com';
 //                $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
-        $trainee_email = $trainee_taxcode . $trainee_classname . '@yopmail.com';
-        /* end */
+                $trainee_email = $trainee_taxcode.$trainee_classname.'@yopmail.com';
+                /*end */
         $i = 'I';
         $data_arr[] = array(
-            $i,
-            $row->first_name, $row->tax_code, $tax_code_type, $dob, $trainee_email, $row->contact_number, $row->tenant_name, $row->crse_name, '',
-            $row->reference_num, '', course_start_date, $course_end_date, '', '', '', '', '', $trainer_name
+           $i,
+           $row->first_name,$row->tax_code,$tax_code_type,$dob,$trainee_email,$row->contact_number,$row->tenant_name,$row->crse_name,'',
+            $row->reference_num,'',course_start_date,$course_end_date,'','','','','',$trainer_name
+           
         );
     }
-    $filename = $row->comp_reg_no . "_" . $course_end_date . "_" . $course_end_time . ".csv";
+    $filename=$row->comp_reg_no."_".$course_end_date."_".$course_end_time.".csv";
     header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename=' . $filename);
+    header('Content-Disposition: attachment; filename='.$filename);
     $output = fopen('php://output', 'w');
-
+    
     fputcsv($output, $column_title_first_row);
     fputcsv($output, $column_title_second_row);
     fputcsv($output, $column_title);
@@ -3994,65 +4111,66 @@ function generate_traqom_report_csv($tabledata, $metadata) {
 
 function generate_traqom_report_csv_old($tabledata, $metadata) {
     $CI = & get_instance();
-
-    /* skm code st */
+    
+    /* skm code st*/
     $total_data = count($tabledata);
-    $course_end_time_filename = date('His', strtotime($tabledata[0]->class_end_datetime));
-    $course_end_date_filename = date('Ymd', strtotime($tabledata[0]->class_end_datetime));
-    $filename = $tabledata[0]->comp_reg_no . "_" . $course_end_date_filename . "_" . $course_end_time_filename . ".csv";
+    $course_end_time_filename=date('His',strtotime($tabledata[0]->class_end_datetime));
+    $course_end_date_filename=date('Ymd',strtotime($tabledata[0]->class_end_datetime));
+    $filename=$tabledata[0]->comp_reg_no."_".$course_end_date_filename."_".$course_end_time_filename.".csv";
     $column_title_first_row = array('H', $filename, $total_data);
-    $column_title_second_row = array('H', 'Scenario', 'Outcome');
+    $column_title_second_row = array('H','Scenario', 'Outcome');
     /* skm code end */
-
-
+    
+    
     $column_title = array(
         'H',
         'Course Reference Number',
-        'Course Start Date', 'Course End Date', 'TP UEN', 'NRIC/Passport', 'ID Type', 'Full Name',
-        'Mobile',
-        'Email', 'Enrollment Date');
+                'Course Start Date','Course End Date','TP UEN','NRIC/Passport', 'ID Type', 'Full Name',
+                'Mobile',
+                'Email','Enrollment Date');
     $data_arr = array();
-    foreach ($tabledata as $row) {
+    foreach ($tabledata as $row) 
+    {
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
         $row->tax_code_type;
         //new update
-        $ci = & get_instance();
-        $ci->load->database();
+        $ci =& get_instance(); 
+        $ci->load->database(); 
         $data = $ci->db->select('category_name as code_type')
-                        ->from('metadata_values')
-                        ->where('parameter_id', $row->tax_code_type)
-                        ->get()->row(0);
-        $tax_code_type = $data->code_type;
+                ->from('metadata_values')
+                ->where('parameter_id', $row->tax_code_type)
+                 ->get()->row(0);
+        $tax_code_type= $data->code_type;
         //$trainee_email = $row->tax_code.'@yopmail.com';
-        $course_start_time = date('His', strtotime($row->class_start_datetime));
-        $course_start_date = date('Ymd', strtotime($row->class_start_datetime));
-
-        $course_end_time = date('His', strtotime($row->class_end_datetime));
-        $course_end_date = date('Ymd', strtotime($row->class_end_datetime));
-        $enrollment_date = date('Y-m-d', strtotime($row->enrolled_on));
-
-        /* skm code for new style email which is the combination of taxocde and class name intials st */
-        $pattern = "/[_,-]/";
-        $string = $row->class_name;
-        $class_name = preg_split($pattern, $string);
-        $trainee_classname = $class_name[0];
-        $trainee_taxcode = substr($row->tax_code, -4);
-
-        //$trainee_email = $row->tax_code.'@yopmail.com';
+        $course_start_time=date('His',strtotime($row->class_start_datetime));
+        $course_start_date=date('Ymd',strtotime($row->class_start_datetime));
+        
+        $course_end_time=date('His',strtotime($row->class_end_datetime));
+        $course_end_date=date('Ymd',strtotime($row->class_end_datetime));
+        $enrollment_date = date('Y-m-d',strtotime($row->enrolled_on));
+        
+        /* skm code for new style email which is the combination of taxocde and class name intials st*/
+                $pattern = "/[_,-]/";
+                $string = $row->class_name;
+                $class_name = preg_split($pattern, $string);
+                $trainee_classname = $class_name[0];
+                $trainee_taxcode = substr($row->tax_code, -4);
+                
+                //$trainee_email = $row->tax_code.'@yopmail.com';
 //                $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
-        $trainee_email = $trainee_taxcode . $trainee_classname . '@yopmail.com';
-        /* end */
+                $trainee_email = $trainee_taxcode.$trainee_classname.'@yopmail.com';
+                /*end */
         $i = 'I';
         $data_arr[] = array(
-            $i, $row->reference_num, $course_start_date, $course_end_date, $row->comp_reg_no, $row->tax_code, $tax_code_type, $row->first_name, $row->contact_number, $trainee_email, $enrollment_date
+           $i,$row->reference_num,$course_start_date,$course_end_date,$row->comp_reg_no, $row->tax_code,$tax_code_type,$row->first_name,$row->contact_number,$trainee_email,$enrollment_date
         );
     }
-    $filename = $row->comp_reg_no . "_" . $course_end_date . "_" . $course_end_time . ".csv";
+    $filename=$row->comp_reg_no."_".$course_end_date."_".$course_end_time.".csv";
     header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename=' . $filename);
+    header('Content-Disposition: attachment; filename='.$filename);
     $output = fopen('php://output', 'w');
-
+    
     fputcsv($output, $column_title_first_row);
     fputcsv($output, $column_title_second_row);
     fputcsv($output, $column_title);
@@ -4070,40 +4188,42 @@ function generate_traqom_report_csv_pritam($tabledata, $metadata) {
     $CI = & get_instance();
     $column_title = array(
         'Course Reference Number',
-        'Course End Date', 'TP UEN', 'NRIC/FIN/OTHER', 'ID Type', 'Full Name',
-        'Mobile',
-        'Email');
+                'Course End Date','TP UEN','NRIC/FIN/OTHER', 'ID Type', 'Full Name',
+                'Mobile',
+                'Email');
     $data_arr = array();
-    foreach ($tabledata as $row) {
+    foreach ($tabledata as $row) 
+    {
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
         $row->tax_code_type;
         //new update
-        $ci = & get_instance();
-        $ci->load->database();
+        $ci =& get_instance(); 
+        $ci->load->database(); 
         $data = $ci->db->select('category_name as code_type')
-                        ->from('metadata_values')
-                        ->where('parameter_id', $row->tax_code_type)
-                        ->get()->row(0);
-        $tax_code_type = $data->code_type;
+                ->from('metadata_values')
+                ->where('parameter_id', $row->tax_code_type)
+                 ->get()->row(0);
+        $tax_code_type= $data->code_type;
         // sk code start for email id
         $pattern = "/[-_ ]+/";
         $string = $row->class_name;
         $class_name = preg_split($pattern, $string);
         $trainee_classname = $class_name[0];
         $trainee_taxcode = substr($row->tax_code, -4);
-        $trainee_email = $trainee_classname . $trainee_taxcode . '@yopmail.com';
+        $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
         //sk code end for email id
+        
 //        $trainee_email = $row->tax_code.'@yopmail.com';
-        $course_end_time = date('His', strtotime($row->class_end_datetime));
-        $course_end_date = date('Ymd', strtotime($row->class_end_datetime));
+        $course_end_time=date('His',strtotime($row->class_end_datetime));
+        $course_end_date=date('Ymd',strtotime($row->class_end_datetime));
         $data_arr[] = array(
-            $row->reference_num, $course_end_date, $row->comp_reg_no, $row->tax_code, $tax_code_type, $row->first_name, $row->contact_number, $trainee_email
+           $row->reference_num,$course_end_date,$row->comp_reg_no, $row->tax_code,$tax_code_type,$row->first_name,$row->contact_number,$trainee_email
         );
     }
-    $filename = $row->comp_reg_no . "_" . $course_end_date . "_" . $course_end_time . ".csv";
+    $filename=$row->comp_reg_no."_".$course_end_date."_".$course_end_time.".csv";
     header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename=' . $filename);
+    header('Content-Disposition: attachment; filename='.$filename);
     $output = fopen('php://output', 'w');
     fputcsv($output, $column_title);
     foreach ($data_arr as $data) {
@@ -4167,10 +4287,10 @@ function generate_soa_report_csv($tabledata, $metadata) {
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
         $designation = '';
-        if ($row->account_type == 'INTUSR' && $row->designation != 'OTHERS') {
+        if($row->account_type == 'INTUSR' && $row->designation != 'OTHERS') {
             $strlength = strpos($row->designation, '_');
             $designation = empty($strlength) ? $row->designation : substr($row->designation, $strlength + 1);
-        } else if ($row->account_type == 'TRAINE') {
+        } else if($row->account_type == 'TRAINE'){
             $strlength = strpos($row->occupation_code, '_');
             $designation = empty($strlength) ? $row->occupation_code : substr($row->occupation_code, $strlength + 1);
         }
@@ -4181,12 +4301,12 @@ function generate_soa_report_csv($tabledata, $metadata) {
         $strlength = strpos($row->salary_range, '_');
         $salary_range = empty($strlength) ? $row->salary_range : substr($row->salary_range, $strlength + 1);
         $gender_arr = array('MALE' => 'M', 'FEMALE' => 'F');
-        if ($row->company_id[0] == 'T') {
-            $tenant_details = fetch_tenant_details($row->company_id);
+        if($row->company_id[0] == 'T') {           
+            $tenant_details = fetch_tenant_details($row->company_id);            
             $row->company_name = $tenant_details->tenant_name;
             $row->comp_email = $tenant_details->tenant_email_id;
         }
-        $course_code = rtrim($CI->course_model->get_metadata_on_parameter_id($row->certi_level), ', '); //sk2
+        $course_code =  rtrim($CI->course_model->get_metadata_on_parameter_id($row->certi_level), ', '); //sk2
         $data_arr[] = array(
             $tax_code_type, $row->tax_code, $row->first_name, $gender_arr[$row->gender], $row->nationality,
             (!empty($row->dob)) ? date('dmY', strtotime($row->dob)) : '', $row->race, $row->contact_number,
@@ -4195,23 +4315,23 @@ function generate_soa_report_csv($tabledata, $metadata) {
             $highest_educ_level, $salary_range, ($assment_det->assmnt_venue == 'OTH') ? 'Others (' . $assment_det->assmnt_venue_oth . ')' : $metadata[$assment_det->assmnt_venue],
             date('dmY', strtotime($row->class_start_datetime)), $row->reference_num, $row->competency_code,
             $course_code, 'N',
-            (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY', strtotime($row->class_end_datetime)),
-            $row->training_score, $trainer_text, $assessor_text, 'Yes'
+            (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)),
+            $row->training_score, $trainer_text, $assessor_text, 'No'
         );
     }
-    header('Content-Type: text/csv; charset=utf-8');
+   header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename=SOA_Report.csv');
     $output = fopen('php://output', 'w');
     fputcsv($output, $column_title);
     foreach ($data_arr as $data) {
         foreach ($data as $key => $value) {
-            if (!empty($value)) {
+            if (!empty($value)){
                 $data[$key] = '"' . $value . '"';
             }
         }
         fputcsv($output, $data);
     }
-    exit;
+   exit;
     //return; commented by shubhranshu since html are coming in csv file
 }
 
@@ -4220,7 +4340,7 @@ function generate_soa_report_csv($tabledata, $metadata) {
  * @param type $query
  */
 function export_credit_note($result_set) {
-    $CI = & get_instance();
+    $CI = & get_instance();   
     $data = $result_set;
     $CI->load->library('excel');
     $CI->excel->setActiveSheetIndex(0);
@@ -4252,13 +4372,13 @@ function export_credit_note($result_set) {
     );
     $sheet->getStyle('A2:I2')->getFont()->setBold(true);
     $rn = 3;
-    foreach ($data as $row) {
+    foreach ($data as $row) {        
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, $row->credit_note_number);
         $sheet->setCellValue('C' . $rn, date('d-m-Y', strtotime($row->credit_note_date)));
-        $sheet->setCellValue('D' . $rn, $row->ori_invoice_number);
+        $sheet->setCellValue('D' . $rn, $row->ori_invoice_number);        
         $sheet->setCellValue('E' . $rn, date('d-m-Y', strtotime($row->ori_invoice_date)));
-        $sheet->setCellValue('F' . $rn, "$ " . number_format($row->credit_note_amount, 2));
+        $sheet->setCellValue('F' . $rn, "$ ".number_format($row->credit_note_amount, 2));
         $sheet->setCellValue('G' . $rn, $row->credit_note_issued_by);
         $sheet->setCellValue('H' . $rn, $row->credit_note_issue_reason);
         $sheet->setCellValue('I' . $rn, $row->tg_ref_number);
@@ -4272,559 +4392,590 @@ function export_credit_note($result_set) {
     $objWriter->save('php://output');
 }
 
+
 // start create week days
-function create_week_days_array(DateTime $start_date, DateTime $end_date, $class_schedule_data) {
+function create_week_days_array(DateTime $start_date, DateTime $end_date , $class_schedule_data) {
     $days = array();
     $current_date = clone $start_date;
 
-    do {
-        if ($class_schedule_data[$current_date->format('d/m/y')][1] || $class_schedule_data[$current_date->format('d/m/y')][2]) {
-            $days[] = clone $current_date;
-        } elseif ($start_date == $end_date) {
-            $days[] = clone $current_date;
-        }
+            do {
+                 if($class_schedule_data[$current_date->format('d/m/y')][1] || $class_schedule_data[$current_date->format('d/m/y')][2])
+                       {
+                            $days[] = clone $current_date; 
+                       }
+                   elseif($start_date == $end_date)
+                   {
+                       $days[] = clone $current_date; 
+                   }
 
-        $current_date->add(new DateInterval('P1D'));
-    } while ($current_date->format('Y-m-d') <= $end_date->format('Y-m-d'));
-
-    return array_filter($days);
+                $current_date->add(new DateInterval('P1D'));
+            } while ($current_date->format('Y-m-d') <= $end_date->format('Y-m-d'));
+  
+  return array_filter($days);
 }
-
-function generate_class_attendance_sheet_xls($results, $class_details, $start, $end, $tenant, $class_schedule_data) {
+function generate_class_attendance_sheet_xls($results, $class_details,$start, $end, $tenant, $class_schedule_data) 
+{
     $statment = 'I understand that the training provider will not be held responsible to resubmit the results should the Name and ID number was found incorrect after the course date.';
-    $data = PAX_PER_SHEET;
-    $num_of_sheets = ceil(count($results) / $data);
-    $j = 0;
-    $i = 1;
-    while ($i <= $num_of_sheets) {
-        $arr[$i] = array_slice($results, $j, $data); //0 - 5, 5- 10, 
-        $i++;
-        $j = $j + $data;
-    }
-    $results = $arr1;
-    $interval = date_diff($start, $end);
-    $total_days = $interval->format('%a');
-    if (count($class_schedule_data) > 0 or $total_days == 0) {  // else condition on line no :3447
-        if ($total_days != 0) {
-            $count = count($class_schedule_data);
-            $total_days = ($count - 1);
-        } else {
-            $total_days = $interval->format('%a');
+        $data=PAX_PER_SHEET;
+        $num_of_sheets=ceil(count($results)/$data);
+        $j=0;
+        $i=1;
+        while($i<=$num_of_sheets)
+        {
+            $arr[$i] = array_slice($results,$j,$data);//0 - 5, 5- 10, 
+            $i++;
+            $j=$j+$data;
         }
-        $CI = & get_instance();
-        $CI->load->model('trainee_model', 'traineemodel');
-        $className = $class_details->class_name;
-        $courseName = $class_details->crse_name;
-        $class_start_date_formatted = date_format_singapore($class_details->class_start_datetime) . " " . time_format_singapore($class_details->class_start_datetime);
-        $class_end_date_formatted = date_format_singapore($class_details->class_end_datetime) . " " . time_format_singapore($class_details->class_end_datetime);
-        $CI->load->library('excel');
-        $i = 1;
-        while ($i <= $num_of_sheets) {
-            //$a="arr".$i;
-            $results = $arr[$i];
-            $CI->excel->createSheet();
-            $CI->excel->setActiveSheetIndex($i);
-            $CI->excel->getActiveSheet()->setTitle("Attendance List" . $i);
-            $sheet = $CI->excel->getActiveSheet();
-            $CI->excel->getActiveSheet()->getRowDimension('13')->setRowHeight(50);
-            $column_index = PHPExcel_Cell::columnIndexFromString('I');
-            $adjusted_column_index = $column_index + $total_days;
-            $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
-            $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index + 1);
-            $sheet->mergeCells('A1:' . $assmnt_sign_column . '1');
-            $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->getStyle('A1')->getFont()->setSize(13)->setBold(true);
-            $sheet->setCellValue('A1', "Attendance List" . $i);
-            $sheet->mergeCells('A2:' . $assmnt_sign_column . '2');
-            $sheet->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A2', "");
-            $sheet->mergeCells('A3:' . $assmnt_sign_column . '3');
-            $sheet->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A3', "Course Title: $courseName");
-            $sheet->mergeCells('A4:' . $assmnt_sign_column . '4');
-            $sheet->getStyle('A4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A4', "Name of Training: $className");
-            $sheet->mergeCells('A5:' . $assmnt_sign_column . '5');
-            $sheet->getStyle('A5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A5', "Training Duration: " . $class_start_date_formatted . ' To ' . $class_end_date_formatted);
-            $sheet->mergeCells('A6:' . $assmnt_sign_column . '6');
-            $sheet->getStyle('A6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A6', "Trainer: " . $class_details->classroom_trainer);
-            $sheet->mergeCells('A7:' . $assmnt_sign_column . '7');
-            $sheet->getStyle('A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A7', "Assessor: " . $class_details->assessor);
-            $sheet->mergeCells('A8:' . $assmnt_sign_column . '8');
-            $sheet->getStyle('A8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A8', "Company: " . $class_details->company_name);
-            $sheet->mergeCells('A9:' . $assmnt_sign_column . '9');
-            $sheet->getStyle('A9')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A9', "Class ID: " . $class_details->class_id);
-            $sheet->mergeCells('A10:' . $assmnt_sign_column . '10');
-            $sheet->getStyle('A10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A10', "Training Hrs: " . ($class_details->total_classroom_duration + $class_details->total_lab_duration));
-            $sheet->mergeCells('A11:' . $assmnt_sign_column . '11');
-            $sheet->getStyle('A11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A11', "Assessment Hrs: " . $class_details->assmnt_duration);
-            $sheet->setCellValue('A12', 'Sl #');
-            $sheet->setCellValue('B12', 'Name');
-            $sheet->setCellValue('C12', 'NRIC/FIN No.');
-            $sheet->setCellValue('D12', 'Comp Id');
-            $sheet->setCellValue('E12', 'Country');
-            $sheet->setCellValue('F12', 'Class Start Date');
-            $sheet->setCellValue('G12', 'Assmnt. Dt.');
-            $sheet->setCellValue('H12', 'A/P');
-            $sheet->setCellValue('I12', '');
-            $sheet->setCellValue('J12', "Trainees' Attendance Sign-in");
-            $sheet->getStyle('J12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $sheet->mergeCells('J12:' . $assmnt_sign_column . '12');
-            $sheet->setCellValue($assmnt_sign_column . '13', 'Assmnt. Sign.');
-            $sheet->mergeCells('A13:H13');
-            $sheet->getStyle('A13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $sheet->setCellValue('I13', 'Session');
-
-            $sheet->getColumnDimension('B')->setWidth(20);
-            $sheet->getColumnDimension('C')->setWidth(20);
-            $sheet->getColumnDimension('F')->setWidth(15);
-            $sheet->getColumnDimension('G')->setWidth(10);
-            $sheet->getColumnDimension('H')->setWidth(5);
-            $sheet->getColumnDimension('I')->setWidth(15);
-
-            $days = array();
-
-            $current_date = $start;
-            while ($current_date < $end || compare_dates_without_time($current_date, $end)) {
-                $days[] = $current_date;
-                $next_day = DateTime::createFromFormat('U', strtotime("tomorrow 12:00:00", $current_date->getTimestamp()));
-                $current_date = $next_day;
+        $results=$arr1;
+        $interval = date_diff($start, $end);
+        $total_days = $interval->format('%a');
+        if(count($class_schedule_data)>0 or $total_days == 0)  // else condition on line no :3447
+        {
+            if($total_days!=0)
+            {
+                $count = count($class_schedule_data);
+                $total_days = ($count-1);
             }
-
-            // echo "<pre>";
-            if ($total_days != 0) {
-                $weeks = create_week_days_array($start, $end, $class_schedule_data);
-            } else {
-                $weeks = array($start);
+            else
+            {
+                $total_days = $interval->format('%a');
             }
-            $sheet->getStyle('A12:' . $assmnt_sign_column . '13')->applyFromArray(
-                    array(
-                        'fill' => array(
-                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                            'color' => array('argb' => 'FFCCCCCC')
+            $CI = & get_instance();
+            $CI->load->model('trainee_model', 'traineemodel');
+            $className = $class_details->class_name;
+            $courseName = $class_details->crse_name;
+            $class_start_date_formatted = date_format_singapore($class_details->class_start_datetime) . " " . time_format_singapore($class_details->class_start_datetime);
+            $class_end_date_formatted = date_format_singapore($class_details->class_end_datetime) . " " . time_format_singapore($class_details->class_end_datetime);
+            $CI->load->library('excel');
+            $i=1;
+            while($i<=$num_of_sheets)
+            {
+                //$a="arr".$i;
+                $results=$arr[$i];
+                $CI->excel->createSheet();
+                $CI->excel->setActiveSheetIndex($i);
+                $CI->excel->getActiveSheet()->setTitle("Attendance List".$i);
+                $sheet = $CI->excel->getActiveSheet();
+                $CI->excel->getActiveSheet()->getRowDimension('13')->setRowHeight(50);
+                $column_index = PHPExcel_Cell::columnIndexFromString('I');
+                $adjusted_column_index = $column_index + $total_days;
+                $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
+                $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index+1);        
+                $sheet->mergeCells('A1:' . $assmnt_sign_column . '1');
+                $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->getStyle('A1')->getFont()->setSize(13)->setBold(true);
+                $sheet->setCellValue('A1', "Attendance List".$i);
+                $sheet->mergeCells('A2:' . $assmnt_sign_column . '2');
+                $sheet->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A2', "");
+                $sheet->mergeCells('A3:' . $assmnt_sign_column . '3');
+                $sheet->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A3', "Course Title: $courseName");
+                $sheet->mergeCells('A4:' . $assmnt_sign_column . '4');
+                $sheet->getStyle('A4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A4', "Name of Training: $className");
+                $sheet->mergeCells('A5:' . $assmnt_sign_column . '5');
+                $sheet->getStyle('A5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A5', "Training Duration: ".$class_start_date_formatted . ' To ' . $class_end_date_formatted);
+                $sheet->mergeCells('A6:' . $assmnt_sign_column . '6');
+                $sheet->getStyle('A6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A6', "Trainer: ".$class_details->classroom_trainer);
+                $sheet->mergeCells('A7:' . $assmnt_sign_column . '7');
+                $sheet->getStyle('A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A7', "Assessor: ".$class_details->assessor);
+                $sheet->mergeCells('A8:' . $assmnt_sign_column . '8');
+                $sheet->getStyle('A8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A8', "Company: ".$class_details->company_name);
+                $sheet->mergeCells('A9:' . $assmnt_sign_column . '9');
+                $sheet->getStyle('A9')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A9', "Class ID: ".$class_details->class_id);
+                $sheet->mergeCells('A10:' . $assmnt_sign_column . '10');
+                $sheet->getStyle('A10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A10', "Training Hrs: ".($class_details->total_classroom_duration + $class_details->total_lab_duration));
+                $sheet->mergeCells('A11:' . $assmnt_sign_column . '11');
+                $sheet->getStyle('A11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A11', "Assessment Hrs: ".$class_details->assmnt_duration);
+                $sheet->setCellValue('A12', 'Sl #');
+                $sheet->setCellValue('B12', 'Name');
+                $sheet->setCellValue('C12', 'NRIC/FIN No.');
+                $sheet->setCellValue('D12', 'Comp Id');
+                $sheet->setCellValue('E12', 'Country');
+                $sheet->setCellValue('F12', 'Class Start Date');
+                $sheet->setCellValue('G12', 'Assmnt. Dt.');
+                $sheet->setCellValue('H12', 'A/P');
+                $sheet->setCellValue('I12', '');
+                $sheet->setCellValue('J12', "Trainees' Attendance Sign-in");
+                $sheet->getStyle('J12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->mergeCells('J12:' . $assmnt_sign_column . '12');
+                $sheet->setCellValue($assmnt_sign_column.'13','Assmnt. Sign.');
+                $sheet->mergeCells('A13:H13');
+                $sheet->getStyle('A13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->setCellValue('I13', 'Session');
+
+                $sheet->getColumnDimension('B')->setWidth(20);
+                $sheet->getColumnDimension('C')->setWidth(20);
+                $sheet->getColumnDimension('F')->setWidth(15);
+                $sheet->getColumnDimension('G')->setWidth(10);
+                $sheet->getColumnDimension('H')->setWidth(5);
+                $sheet->getColumnDimension('I')->setWidth(15);
+
+                $days = array();
+
+                $current_date = $start;
+                while ($current_date < $end || compare_dates_without_time($current_date, $end)) 
+                {
+                    $days[] = $current_date;
+                    $next_day = DateTime::createFromFormat('U', strtotime("tomorrow 12:00:00", $current_date->getTimestamp()));
+                    $current_date = $next_day;
+                }
+
+                // echo "<pre>";
+                if($total_days != 0)
+                { 
+                    $weeks = create_week_days_array($start ,$end, $class_schedule_data);
+                }
+                else
+                {
+                  $weeks = array($start);
+                }
+                $sheet->getStyle('A12:' . $assmnt_sign_column . '13')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                                'color' => array('argb' => 'FFCCCCCC')
+                            )
                         )
-                    )
-            );
+                );
 
-            $rn = 13;
-            $cell = 9;
-            $is_two_sessions = $class_details->class_session_day == 2;
-            foreach ($weeks as $day) {
-                $session_time = "\n " . $class_schedule_data[$day->format('d/m/y')][1];
-                if ($is_two_sessions) {
-                    $session_time2 = $class_schedule_data[$day->format('d/m/y')][2];
-                    if ($session_time2) {
-                        $session_time .= "\n " . $session_time2;
-                    }
-                }
-                if ($class_schedule_data[$day->format('d/m/y')]) {
-                    $sk = explode("to", $session_time);
-                    $sk[0];
-                    //$sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time); previous code
-                    $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $sk[0]);
-                    $cell++;
-                } elseif ($total_days == 0) {
-
-                    //$sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time); previous code
-                    $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $sk[0]);
-                }
-            }
-
-            $row = 14;
-            $index = 1;
-            $footer_text = array();
-            //print_r($results);
-            //exit;
-            foreach ($results as $res) {
-                if ($is_two_sessions) {
-                    $sheet->mergeCells('A' . $row . ':A' . ($row + 1));
-                    $sheet->mergeCells('B' . $row . ':B' . ($row + 1));
-                    $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
-                    $sheet->mergeCells('D' . $row . ':D' . ($row + 1));
-                    $sheet->mergeCells('E' . $row . ':E' . ($row + 1));
-                    $sheet->mergeCells('F' . $row . ':F' . ($row + 1));
-                    $sheet->mergeCells('G' . $row . ':G' . ($row + 1));
-                    $sheet->mergeCells('H' . $row . ':H' . ($row + 1));
-                }
-                $sheet->setCellValue('A' . $row, $index);
-                $sheet->setCellValue('B' . $row, $res['record']['name']);
-                $sheet->setCellValue('C' . $row, mask_format($res['record']['tax_code']));
-                $res['record']['company_id'] = ($res['record']['company_id'] == 0) ? '' : $res['record']['company_id'];
-                $sheet->setCellValue('D' . $row, $res['record']['company_id']);
-                if (!empty($res['record']['company_id'])) {
-                    if ($res['record']['company_id'][0] == 'T') {
-                        $footer_text[$res['record']['company_id']] = $tenant->tenant_name;
-                    } else {
-                        $footer_text[$res['record']['company_id']] = $res['record']['company_name'];
-                    }
-                }
-                $sheet->setCellValue('E' . $row, $res['record']['nationality']);
-                $sheet->setCellValue('F' . $row, date('d/m/Y', strtotime($class_details->class_start_datetime)));
-                $assmnt_date = $CI->traineemodel->get_assessment_date($res['record']['class_id'], $res['record']['user_id']);
-                $formatd_assmnt_date = empty($assmnt_date) ? '' : date('d/m/Y', strtotime($assmnt_date));
-                $sheet->setCellValue('G' . $row, $formatd_assmnt_date);
-                // PRESENT AND ABSENT CODE START 
-                if ($res['record']['att'] == 1) {
-                    $sheet->setCellValue('H' . $row, 'P');
-                } else {
-                    $sheet->setCellValue('H' . $row, 'A');
-                }
-                // PRESENT AND ABSENT CODE END 
-
-                $sheet->setCellValue('I' . $row, 'Session1:');
-                if ($is_two_sessions) {
-                    $sheet->setCellValue('I' . ($row + 1), 'Session2:');
-                }
-
+                $rn = 13;
                 $cell = 9;
+                $is_two_sessions = $class_details->class_session_day == 2;
                 foreach ($weeks as $day) {
-                    $formatted_day = $day->format('Y-m-d');
-                    $ses1 = '';
-                    $ses2 = '';
-
-                    $sheet->setCellValueByColumnAndRow($cell, $row, $ses1);
+                    $session_time = "\n " . $class_schedule_data[$day->format('d/m/y')][1];
                     if ($is_two_sessions) {
-                        $sheet->setCellValueByColumnAndRow($cell, $row + 1, $ses2);
+                        $session_time2 = $class_schedule_data[$day->format('d/m/y')][2];
+                        if ($session_time2) {
+                            $session_time .= "\n " . $session_time2;
+                        }
                     }
+                    if($class_schedule_data[$day->format('d/m/y')])
+                    {
+                         $sk =  explode("to",$session_time);
+                         $sk[0];
+                     //$sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time); previous code
+                       $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y'). $sk[0]);
                     $cell++;
+                    }
+                    elseif($total_days == 0)
+                    {
+
+                    //$sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time); previous code
+                        $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y'). $sk[0]);
+                    }
                 }
 
-                $row += ($is_two_sessions) ? 2 : 1;
-                $index++;
-            }
-            $row_update_start_assmntsign = $row;
-            $sheet->mergeCells('A' . $row . ':G' . $row);
-            $sheet->setCellValue('I' . $row, 'Absent');
-            $row++;
-            $sheet->mergeCells('A' . $row . ':G' . $row);
-            $sheet->setCellValue('I' . $row, 'Present');
-            $row++;
-            $sheet->mergeCells('A' . $row . ':G' . $row);
-            $sheet->setCellValue('I' . $row, 'Total');
-            $cell = 9;
-            $total_users = --$index;
-            /* foreach ($days as $day) {
-              $sheet->setCellValueByColumnAndRow($cell, $row, $total_users);
-              $cell++;
-              } */
-            $row++;
-            $sheet->mergeCells('A' . $row . ':G' . $row);
-            $sheet->setCellValue('I' . $row, 'Trainer Sign-in');
-            $sheet->mergeCells($assmnt_sign_column . $row_update_start_assmntsign . ':' . $assmnt_sign_column . $row);
+                $row = 14;
+                $index = 1;
+                $footer_text = array();
+                //print_r($results);
+                //exit;
+                foreach ($results as $res) 
+                {
+                    if ($is_two_sessions) 
+                    {
+                        $sheet->mergeCells('A' . $row . ':A' . ($row + 1));
+                        $sheet->mergeCells('B' . $row . ':B' . ($row + 1));
+                        $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
+                        $sheet->mergeCells('D' . $row . ':D' . ($row + 1));
+                        $sheet->mergeCells('E' . $row . ':E' . ($row + 1));
+                        $sheet->mergeCells('F' . $row . ':F' . ($row + 1));
+                        $sheet->mergeCells('G' . $row . ':G' . ($row + 1));
+                        $sheet->mergeCells('H' . $row . ':H' . ($row + 1));
+                    }
+                    $sheet->setCellValue('A' . $row, $index);
+                    $sheet->setCellValue('B' . $row, $res['record']['name']);
+                    $sheet->setCellValue('C' . $row, mask_format($res['record']['tax_code']));
+                    $res['record']['company_id'] = ($res['record']['company_id'] == 0)? '': $res['record']['company_id'];
+                    $sheet->setCellValue('D' . $row, $res['record']['company_id']);
+                    if(!empty($res['record']['company_id']))
+                    {
+                            if($res['record']['company_id'][0]== 'T'){
+                                $footer_text[$res['record']['company_id']] = $tenant->tenant_name;
+                            }else {
+                                $footer_text[$res['record']['company_id']] = $res['record']['company_name'];
+                            }
+                    }
+                    $sheet->setCellValue('E' . $row, $res['record']['nationality']);
+                    $sheet->setCellValue('F' . $row, date('d/m/Y',  strtotime($class_details->class_start_datetime)));
+                    $assmnt_date = $CI->traineemodel->get_assessment_date($res['record']['class_id'], $res['record']['user_id']);
+                    $formatd_assmnt_date = empty($assmnt_date) ? '' : date('d/m/Y', strtotime($assmnt_date));
+                    $sheet->setCellValue('G' . $row, $formatd_assmnt_date);
+                   // PRESENT AND ABSENT CODE START 
+                    if($res['record']['att']==1)
+                    {
+                      $sheet->setCellValue('H' .$row,'P');  
+                    }
+                    else
+                    {
+                      $sheet->setCellValue('H' .$row,'A');  
+                    }
+                   // PRESENT AND ABSENT CODE END 
 
-            $sheet->getStyle('A14:G' . $row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('A13:A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $row++;
-            $row_after_table = $row + 1;
-            $sheet->mergeCells('A' . $row . ':' . $assmnt_sign_column . $row);
-            $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A' . $row, 'Name of Company: ' . $class_details->company_name);
-            $row++;
-            $sheet->mergeCells('A' . $row . ':' . $assmnt_sign_column . $row);
-            $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A' . $row, 'Full Name & Designation of Director:');
-            $row++;
+                    $sheet->setCellValue('I' . $row, 'Session1:');
+                    if ($is_two_sessions) {
+                        $sheet->setCellValue('I' . ($row + 1), 'Session2:');
+                    }
 
-            $sheet->mergeCells('A' . $row . ':' . $assmnt_sign_column . $row);
-            $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A' . $row, $statment);
-            $row++;
+                    $cell = 9;
+                    foreach ($weeks as $day) 
+                    {
+                        $formatted_day = $day->format('Y-m-d');
+                        $ses1 = '';
+                        $ses2 = '';
 
+                        $sheet->setCellValueByColumnAndRow($cell, $row, $ses1);
+                        if ($is_two_sessions) 
+                        {
+                            $sheet->setCellValueByColumnAndRow($cell, $row + 1, $ses2);
+                        }
+                        $cell++;
+                    }
 
-            foreach ($footer_text as $k => $v) {
-                $sheet->mergeCells('A' . $row . ':' . $assmnt_sign_column . $row);
-                $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-                $sheet->setCellValue('A' . $row, '** ' . $k . ' - ' . $v);
+                    $row += ($is_two_sessions) ? 2 : 1;
+                    $index++;
+                }
+                $row_update_start_assmntsign = $row;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('I'.$row, 'Absent');
                 $row++;
-            }
-            $styleArray = array(
-                'borders' => array(
-                    'allborders' => array(
-                        'style' => PHPExcel_Style_Border::BORDER_THIN,
-                        'color' => array('argb' => 'FF000000'),
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('I'.$row, 'Present');
+                $row++;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('I'.$row, 'Total');
+                $cell = 9;
+                $total_users = --$index;
+                /*foreach ($days as $day) {
+                    $sheet->setCellValueByColumnAndRow($cell, $row, $total_users);
+                    $cell++;
+                }*/
+                $row++;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('I'.$row, 'Trainer Sign-in');
+                $sheet->mergeCells($assmnt_sign_column.$row_update_start_assmntsign.':'.$assmnt_sign_column.$row);
+
+                $sheet->getStyle('A14:G' . $row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('A13:A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $row++;
+                $row_after_table = $row+1;
+                $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A'.$row, 'Name of Company: '.$class_details->company_name);
+                $row++;
+                $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A'.$row, 'Full Name & Designation of Director:');
+                $row++;
+                
+                $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A'.$row, $statment);
+                $row++;
+                
+                
+                foreach($footer_text as $k=>$v)
+                {
+                    $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                    $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                    $sheet->setCellValue('A'.$row, '** '.$k.' - '.$v);
+                    $row++;
+                }
+                $styleArray = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => 'FF000000'),
+                        ),
                     ),
-                ),
-            );
-            $sheet->getStyle(
-                    'A1:' . $sheet->getHighestColumn() . ($sheet->getHighestRow() - 1)
-            )->applyFromArray($styleArray);
-            $style2Array = array(
-                'borders' => array(
-                    'allborders' => array(
-                        'style' => PHPExcel_Style_Border::BORDER_THIN,
-                        'color' => array('argb' => 'FFFFFFFF'),
+                );
+                $sheet->getStyle(
+                        'A1:' . $sheet->getHighestColumn() . ($sheet->getHighestRow()-1)
+                )->applyFromArray($styleArray);
+                $style2Array = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => 'FFFFFFFF'),
+                        ),
                     ),
-                ),
-            );
-            $sheet->getStyle('A3:A11')->applyFromArray($style2Array);
-            $sheet->getStyle(
-                    'A' . $row_after_table . ':' . $sheet->getHighestColumn() . ($sheet->getHighestRow() - 1)
-            )->applyFromArray($style2Array);
+                );
+                $sheet->getStyle('A3:A11')->applyFromArray($style2Array);
+                $sheet->getStyle(
+                        'A'.$row_after_table.':' . $sheet->getHighestColumn() . ($sheet->getHighestRow()-1)
+                )->applyFromArray($style2Array);
 
             $i++;
-        }
-        ob_end_clean();
-
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="Attendance.xls"');
-        header('Cache-Control: max-age=0');
-
-        $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
-        $objWriter->save('php://output');
-    } else {  // if condition on line no 3191
-        $CI = & get_instance();
-        $CI->load->model('trainee_model', 'traineemodel');
-        $className = $class_details->class_name;
-        $courseName = $class_details->crse_name;
-        $class_start_date_formatted = date_format_singapore($class_details->class_start_datetime) . " " . time_format_singapore($class_details->class_start_datetime);
-        $class_end_date_formatted = date_format_singapore($class_details->class_end_datetime) . " " . time_format_singapore($class_details->class_end_datetime);
-        $CI->load->library('excel');
-        $i = 1;
-        while ($i <= $num_of_sheets) {
-            //$a="arr".$i;
-            $results = $arr[$i];
-            $CI->excel->createSheet();
-            $CI->excel->setActiveSheetIndex($i);
-            $CI->excel->getActiveSheet()->setTitle("Attendance List" . $i);
-            $sheet = $CI->excel->getActiveSheet();
-            $CI->excel->getActiveSheet()->getRowDimension('13')->setRowHeight(50);
-            $column_index = PHPExcel_Cell::columnIndexFromString('H');
-            $adjusted_column_index = $column_index + $total_days;
-            $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
-            $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index + 1);
-            $sheet->mergeCells('A1:' . $assmnt_sign_column . '1');
-            $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->getStyle('A1')->getFont()->setSize(13)->setBold(true);
-            $sheet->setCellValue('A1', "Attendance List1.");
-            $sheet->mergeCells('A2:' . $assmnt_sign_column . '2');
-            $sheet->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A2', "");
-            $sheet->mergeCells('A3:' . $assmnt_sign_column . '3');
-            $sheet->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A3', "Course Title: $courseName");
-            $sheet->mergeCells('A4:' . $assmnt_sign_column . '4');
-            $sheet->getStyle('A4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A4', "Name of Training: $className");
-            $sheet->mergeCells('A5:' . $assmnt_sign_column . '5');
-            $sheet->getStyle('A5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A5', "Training Duration: " . $class_start_date_formatted . ' To ' . $class_end_date_formatted);
-            $sheet->mergeCells('A6:' . $assmnt_sign_column . '6');
-            $sheet->getStyle('A6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A6', "Trainer: " . $class_details->classroom_trainer);
-            $sheet->mergeCells('A7:' . $assmnt_sign_column . '7');
-            $sheet->getStyle('A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A7', "Assessor: " . $class_details->assessor);
-            $sheet->mergeCells('A8:' . $assmnt_sign_column . '8');
-            $sheet->getStyle('A8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A8', "Company: " . $class_details->company_name);
-            $sheet->mergeCells('A9:' . $assmnt_sign_column . '9');
-            $sheet->getStyle('A9')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A9', "Class ID: " . $class_details->class_id);
-            $sheet->mergeCells('A10:' . $assmnt_sign_column . '10');
-            $sheet->getStyle('A10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A10', "Training Hrs: " . ($class_details->total_classroom_duration + $class_details->total_lab_duration));
-            $sheet->mergeCells('A11:' . $assmnt_sign_column . '11');
-            $sheet->getStyle('A11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A11', "Assessment Hrs: " . $class_details->assmnt_duration);
-            $sheet->setCellValue('A12', 'Sl #');
-            $sheet->setCellValue('B12', 'Name');
-            $sheet->setCellValue('C12', 'NRIC/FIN No.');
-            $sheet->setCellValue('D12', 'Comp Id');
-            $sheet->setCellValue('E12', 'Country');
-            $sheet->setCellValue('F12', 'Class Start Date');
-            $sheet->setCellValue('G12', 'Assmnt. Dt.');
-            $sheet->setCellValue('H12', '');
-            $sheet->setCellValue('I12', "Trainees' Attendance Sign-in");
-            $sheet->getStyle('I12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $sheet->mergeCells('I12:' . $assmnt_sign_column . '12');
-            $sheet->setCellValue($assmnt_sign_column . '13', 'Assmnt. Sign.');
-            $sheet->mergeCells('A13:G13');
-            $sheet->getStyle('A13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $sheet->setCellValue('H13', 'Session');
-
-            $sheet->getColumnDimension('B')->setWidth(20);
-            $sheet->getColumnDimension('C')->setWidth(20);
-            $sheet->getColumnDimension('F')->setWidth(15);
-            $sheet->getColumnDimension('G')->setWidth(10);
-            $sheet->getColumnDimension('H')->setWidth(15);
-
-            $days = array();
-
-            $current_date = $start;
-            while ($current_date < $end || compare_dates_without_time($current_date, $end)) {
-                $days[] = $current_date;
-                $next_day = DateTime::createFromFormat('U', strtotime("tomorrow 12:00:00", $current_date->getTimestamp()));
-                $current_date = $next_day;
             }
-            $sheet->getStyle('A12:' . $assmnt_sign_column . '13')->applyFromArray(
-                    array(
-                        'fill' => array(
-                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                            'color' => array('argb' => 'FFCCCCCC')
+            ob_end_clean();
+        
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="Attendance.xls"');
+            header('Cache-Control: max-age=0');
+
+            $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+            $objWriter->save('php://output');
+        }
+        else 
+        {  // if condition on line no 3191
+           
+            $CI = & get_instance();
+            $CI->load->model('trainee_model', 'traineemodel');
+            $className = $class_details->class_name;
+            $courseName = $class_details->crse_name;
+            $class_start_date_formatted = date_format_singapore($class_details->class_start_datetime) . " " . time_format_singapore($class_details->class_start_datetime);
+            $class_end_date_formatted = date_format_singapore($class_details->class_end_datetime) . " " . time_format_singapore($class_details->class_end_datetime);
+            $CI->load->library('excel');
+            $i=1;
+            while($i<=$num_of_sheets)
+            {
+                 //$a="arr".$i;
+                $results=$arr[$i];
+                $CI->excel->createSheet();
+                $CI->excel->setActiveSheetIndex($i);
+                $CI->excel->getActiveSheet()->setTitle("Attendance List".$i);
+                $sheet = $CI->excel->getActiveSheet();
+                $CI->excel->getActiveSheet()->getRowDimension('13')->setRowHeight(50);
+                $column_index = PHPExcel_Cell::columnIndexFromString('H');
+                $adjusted_column_index = $column_index + $total_days;
+                $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
+                $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index+1);        
+                $sheet->mergeCells('A1:' . $assmnt_sign_column . '1');
+                $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->getStyle('A1')->getFont()->setSize(13)->setBold(true);
+                $sheet->setCellValue('A1', "Attendance List1.");
+                $sheet->mergeCells('A2:' . $assmnt_sign_column . '2');
+                $sheet->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A2', "");
+                $sheet->mergeCells('A3:' . $assmnt_sign_column . '3');
+                $sheet->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A3', "Course Title: $courseName");
+                $sheet->mergeCells('A4:' . $assmnt_sign_column . '4');
+                $sheet->getStyle('A4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A4', "Name of Training: $className");
+                $sheet->mergeCells('A5:' . $assmnt_sign_column . '5');
+                $sheet->getStyle('A5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A5', "Training Duration: ".$class_start_date_formatted . ' To ' . $class_end_date_formatted);
+                $sheet->mergeCells('A6:' . $assmnt_sign_column . '6');
+                $sheet->getStyle('A6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A6', "Trainer: ".$class_details->classroom_trainer);
+                $sheet->mergeCells('A7:' . $assmnt_sign_column . '7');
+                $sheet->getStyle('A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A7', "Assessor: ".$class_details->assessor);
+                $sheet->mergeCells('A8:' . $assmnt_sign_column . '8');
+                $sheet->getStyle('A8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A8', "Company: ".$class_details->company_name);
+                $sheet->mergeCells('A9:' . $assmnt_sign_column . '9');
+                $sheet->getStyle('A9')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A9', "Class ID: ".$class_details->class_id);
+                $sheet->mergeCells('A10:' . $assmnt_sign_column . '10');
+                $sheet->getStyle('A10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A10', "Training Hrs: ".($class_details->total_classroom_duration + $class_details->total_lab_duration));
+                $sheet->mergeCells('A11:' . $assmnt_sign_column . '11');
+                $sheet->getStyle('A11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A11', "Assessment Hrs: ".$class_details->assmnt_duration);
+                $sheet->setCellValue('A12', 'Sl #');
+                $sheet->setCellValue('B12', 'Name');
+                $sheet->setCellValue('C12', 'NRIC/FIN No.');
+                $sheet->setCellValue('D12', 'Comp Id');
+                $sheet->setCellValue('E12', 'Country');
+                $sheet->setCellValue('F12', 'Class Start Date');
+                $sheet->setCellValue('G12', 'Assmnt. Dt.');
+                $sheet->setCellValue('H12', '');
+                $sheet->setCellValue('I12', "Trainees' Attendance Sign-in");
+                $sheet->getStyle('I12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->mergeCells('I12:' . $assmnt_sign_column . '12');
+                $sheet->setCellValue($assmnt_sign_column.'13','Assmnt. Sign.');
+                $sheet->mergeCells('A13:G13');
+                $sheet->getStyle('A13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->setCellValue('H13', 'Session');
+
+                $sheet->getColumnDimension('B')->setWidth(20);
+                $sheet->getColumnDimension('C')->setWidth(20);
+                $sheet->getColumnDimension('F')->setWidth(15);
+                $sheet->getColumnDimension('G')->setWidth(10);
+                $sheet->getColumnDimension('H')->setWidth(15);
+
+                $days = array();
+
+                $current_date = $start;
+                while ($current_date < $end || compare_dates_without_time($current_date, $end)) 
+                {
+                    $days[] = $current_date;
+                    $next_day = DateTime::createFromFormat('U', strtotime("tomorrow 12:00:00", $current_date->getTimestamp()));
+                    $current_date = $next_day;
+                }
+                $sheet->getStyle('A12:' . $assmnt_sign_column . '13')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                                'color' => array('argb' => 'FFCCCCCC')
+                            )
                         )
-                    )
-            );
+                );
 
-            $rn = 13;
-            $cell = 8;
-            $is_two_sessions = $class_details->class_session_day == 2;
-            foreach ($days as $day) {
-                $session_time = "\n " . $class_schedule_data[$day->format('d/m/y')][1];
-                if ($is_two_sessions) {
-                    $session_time2 = $class_schedule_data[$day->format('d/m/y')][2];
-                    if ($session_time2) {
-                        $session_time .= "\n " . $session_time2;
-                    }
-                }
-                $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time);
-                $cell++;
-            }
-
-            $row = 14;
-            $index = 1;
-            $footer_text = array();
-            foreach ($results as $res) {
-                if ($is_two_sessions) {
-                    $sheet->mergeCells('A' . $row . ':A' . ($row + 1));
-                    $sheet->mergeCells('B' . $row . ':B' . ($row + 1));
-                    $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
-                    $sheet->mergeCells('D' . $row . ':D' . ($row + 1));
-                    $sheet->mergeCells('E' . $row . ':E' . ($row + 1));
-                    $sheet->mergeCells('F' . $row . ':F' . ($row + 1));
-                    $sheet->mergeCells('G' . $row . ':G' . ($row + 1));
-                }
-                $sheet->setCellValue('A' . $row, $index);
-                $sheet->setCellValue('B' . $row, $res['record']['name']);
-                $sheet->setCellValue('C' . $row, mask_format($res['record']['tax_code']));
-                $res['record']['company_id'] = ($res['record']['company_id'] == 0) ? '' : $res['record']['company_id'];
-                $sheet->setCellValue('D' . $row, $res['record']['company_id']);
-                if (!empty($res['record']['company_id'])) {
-                    if ($res['record']['company_id'][0] == 'T') {
-                        $footer_text[$res['record']['company_id']] = $tenant->tenant_name;
-                    } else {
-                        $footer_text[$res['record']['company_id']] = $res['record']['company_name'];
-                    }
-                }
-                $sheet->setCellValue('E' . $row, $res['record']['nationality']);
-                $sheet->setCellValue('F' . $row, date('d/m/Y', strtotime($class_details->class_start_datetime)));
-                $assmnt_date = $CI->traineemodel->get_assessment_date($res['record']['class_id'], $res['record']['user_id']);
-                $formatd_assmnt_date = empty($assmnt_date) ? '' : date('d/m/Y', strtotime($assmnt_date));
-                $sheet->setCellValue('G' . $row, $formatd_assmnt_date);
-
-                $sheet->setCellValue('H' . $row, 'Session1:');
-                if ($is_two_sessions) {
-                    $sheet->setCellValue('H' . ($row + 1), 'Session2:');
-                }
-
+                $rn = 13;
                 $cell = 8;
+                $is_two_sessions = $class_details->class_session_day == 2;
                 foreach ($days as $day) {
-                    $formatted_day = $day->format('Y-m-d');
-                    $ses1 = '';
-                    $ses2 = '';
-
-                    $sheet->setCellValueByColumnAndRow($cell, $row, $ses1);
+                    $session_time = "\n " . $class_schedule_data[$day->format('d/m/y')][1];
                     if ($is_two_sessions) {
-                        $sheet->setCellValueByColumnAndRow($cell, $row + 1, $ses2);
+                        $session_time2 = $class_schedule_data[$day->format('d/m/y')][2];
+                        if ($session_time2) {
+                            $session_time .= "\n " . $session_time2;
+                        }
                     }
+                    $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time);
                     $cell++;
                 }
 
-                $row += ($is_two_sessions) ? 2 : 1;
-                $index++;
-            }
-            $row_update_start_assmntsign = $row;
-            $sheet->mergeCells('A' . $row . ':G' . $row);
-            $sheet->setCellValue('H' . $row, 'Absent');
-            $row++;
-            $sheet->mergeCells('A' . $row . ':G' . $row);
-            $sheet->setCellValue('H' . $row, 'Present');
-            $row++;
-            $sheet->mergeCells('A' . $row . ':G' . $row);
-            $sheet->setCellValue('H' . $row, 'Total');
-            $cell = 8;
-            $total_users = --$index;
-            foreach ($days as $day) {
-                $sheet->setCellValueByColumnAndRow($cell, $row, $total_users);
-                $cell++;
-            }
-            $row++;
-            $sheet->mergeCells('A' . $row . ':G' . $row);
-            $sheet->setCellValue('H' . $row, 'Trainer Sign-in');
-            $sheet->mergeCells($assmnt_sign_column . $row_update_start_assmntsign . ':' . $assmnt_sign_column . $row);
+                $row = 14;
+                $index = 1;
+                $footer_text = array();
+                foreach ($results as $res) {
+                    if ($is_two_sessions) {
+                        $sheet->mergeCells('A' . $row . ':A' . ($row + 1));
+                        $sheet->mergeCells('B' . $row . ':B' . ($row + 1));
+                        $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
+                        $sheet->mergeCells('D' . $row . ':D' . ($row + 1));
+                        $sheet->mergeCells('E' . $row . ':E' . ($row + 1));
+                        $sheet->mergeCells('F' . $row . ':F' . ($row + 1));
+                        $sheet->mergeCells('G' . $row . ':G' . ($row + 1));
+                    }
+                    $sheet->setCellValue('A' . $row, $index);
+                    $sheet->setCellValue('B' . $row, $res['record']['name']);
+                    $sheet->setCellValue('C' . $row, mask_format($res['record']['tax_code']));
+                    $res['record']['company_id'] = ($res['record']['company_id'] == 0)? '': $res['record']['company_id'];
+                    $sheet->setCellValue('D' . $row, $res['record']['company_id']);
+                    if(!empty($res['record']['company_id'])){
+                            if($res['record']['company_id'][0]== 'T'){
+                                $footer_text[$res['record']['company_id']] = $tenant->tenant_name;
+                            }else {
+                                $footer_text[$res['record']['company_id']] = $res['record']['company_name'];
+                            }
+                    }
+                    $sheet->setCellValue('E' . $row, $res['record']['nationality']);
+                    $sheet->setCellValue('F' . $row, date('d/m/Y',  strtotime($class_details->class_start_datetime)));
+                    $assmnt_date = $CI->traineemodel->get_assessment_date($res['record']['class_id'], $res['record']['user_id']);
+                    $formatd_assmnt_date = empty($assmnt_date) ? '' : date('d/m/Y', strtotime($assmnt_date));
+                    $sheet->setCellValue('G' . $row, $formatd_assmnt_date);
 
-            $sheet->getStyle('A14:G' . $row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('A13:A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $row++;
-            $row_after_table = $row + 1;
-            $sheet->mergeCells('A' . $row . ':' . $assmnt_sign_column . $row);
-            $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A' . $row, 'Name of Company: ' . $class_details->company_name);
-            $row++;
-            $sheet->mergeCells('A' . $row . ':' . $assmnt_sign_column . $row);
-            $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A' . $row, 'Full Name & Designation of Director:');
-            $row++;
+                    $sheet->setCellValue('H' . $row, 'Session1:');
+                    if ($is_two_sessions) {
+                        $sheet->setCellValue('H' . ($row + 1), 'Session2:');
+                    }
 
-            $sheet->mergeCells('A' . $row . ':' . $assmnt_sign_column . $row);
-            $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-            $sheet->setCellValue('A' . $row, $statment);
-            $row++;
+                    $cell = 8;
+                    foreach ($days as $day) {
+                        $formatted_day = $day->format('Y-m-d');
+                        $ses1 = '';
+                        $ses2 = '';
 
-            foreach ($footer_text as $k => $v) {
-                $sheet->mergeCells('A' . $row . ':' . $assmnt_sign_column . $row);
-                $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-                $sheet->setCellValue('A' . $row, '** ' . $k . ' - ' . $v);
+                        $sheet->setCellValueByColumnAndRow($cell, $row, $ses1);
+                        if ($is_two_sessions) {
+                            $sheet->setCellValueByColumnAndRow($cell, $row + 1, $ses2);
+                        }
+                        $cell++;
+                    }
+
+                    $row += ($is_two_sessions) ? 2 : 1;
+                    $index++;
+                }
+                $row_update_start_assmntsign = $row;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('H'.$row, 'Absent');
                 $row++;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('H'.$row, 'Present');
+                $row++;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('H'.$row, 'Total');
+                $cell = 8;
+                $total_users = --$index;
+                foreach ($days as $day) {
+                    $sheet->setCellValueByColumnAndRow($cell, $row, $total_users);
+                    $cell++;
+                }
+                $row++;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('H'.$row, 'Trainer Sign-in');
+                $sheet->mergeCells($assmnt_sign_column.$row_update_start_assmntsign.':'.$assmnt_sign_column.$row);
+
+                $sheet->getStyle('A14:G' . $row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('A13:A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $row++;
+                $row_after_table = $row+1;
+                $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A'.$row, 'Name of Company: '.$class_details->company_name);
+                $row++;
+                $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A'.$row, 'Full Name & Designation of Director:');
+                $row++;
+                
+                $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A'.$row, $statment);
+                $row++;
+                
+                foreach($footer_text as $k=>$v){
+                    $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                    $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                    $sheet->setCellValue('A'.$row, '** '.$k.' - '.$v);
+                    $row++;
+                }
+
+                $styleArray = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => 'FF000000'),
+                        ),
+                    ),
+                );
+
+
+                $sheet->getStyle(
+                        'A1:' . $sheet->getHighestColumn() . ($sheet->getHighestRow()-1)
+                )->applyFromArray($styleArray);
+                $style2Array = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => 'FFFFFFFF'),
+                        ),
+                    ),
+                );
+                $sheet->getStyle('A3:A11')->applyFromArray($style2Array);
+                $sheet->getStyle(
+                        'A'.$row_after_table.':' . $sheet->getHighestColumn() . ($sheet->getHighestRow()-1)
+                )->applyFromArray($style2Array);
+                 $i++;
             }
+            ob_end_clean();
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="Attendance.xls"');
+            header('Cache-Control: max-age=0');
 
-            $styleArray = array(
-                'borders' => array(
-                    'allborders' => array(
-                        'style' => PHPExcel_Style_Border::BORDER_THIN,
-                        'color' => array('argb' => 'FF000000'),
-                    ),
-                ),
-            );
-
-
-            $sheet->getStyle(
-                    'A1:' . $sheet->getHighestColumn() . ($sheet->getHighestRow() - 1)
-            )->applyFromArray($styleArray);
-            $style2Array = array(
-                'borders' => array(
-                    'allborders' => array(
-                        'style' => PHPExcel_Style_Border::BORDER_THIN,
-                        'color' => array('argb' => 'FFFFFFFF'),
-                    ),
-                ),
-            );
-            $sheet->getStyle('A3:A11')->applyFromArray($style2Array);
-            $sheet->getStyle(
-                    'A' . $row_after_table . ':' . $sheet->getHighestColumn() . ($sheet->getHighestRow() - 1)
-            )->applyFromArray($style2Array);
-            $i++;
+            $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+            $objWriter->save('php://output');
         }
-        ob_end_clean();
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="Attendance.xls"');
-        header('Cache-Control: max-age=0');
-
-        $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
-        $objWriter->save('php://output');
-    }
+    
 }
-
 /**
  * function added to import posted data in trainer feedback
  */
-function write_trainer_feedback_status($data, $trainer, $status = '') {
+function write_trainer_feedback_status($data, $trainer, $status='') {
     $CI = & get_instance();
     $CI->load->library('excel');
     $spreadsheet = new PHPExcel();
@@ -4851,7 +5002,7 @@ function write_trainer_feedback_status($data, $trainer, $status = '') {
     );
     $sheet->getStyle('A2:F2')->getFont()->setBold(true);
     $rn = 3;
-    if ($status == 'success') {
+    if ($status == 'success'){
         foreach ($data as $key => $row) {
             if ($row['status'] != 'FAILED') {
                 $sheet->setCellValue('A' . $rn, $rn - 2);
@@ -4863,7 +5014,7 @@ function write_trainer_feedback_status($data, $trainer, $status = '') {
                 $rn++;
             }
         }
-    } elseif ($status == 'failed') {
+    } elseif ($status == 'failed'){
         foreach ($data as $key => $row) {
             if ($row['status'] == 'FAILED') {
                 $sheet->setCellValue('A' . $rn, $rn - 2);
@@ -4893,8 +5044,7 @@ function write_trainer_feedback_status($data, $trainer, $status = '') {
     return $file_name;
 }
 
-/* skm start */
-
+/* skm start*/
 function export__tenant_page_fields($titles, $data, $filename, $sheetname = "", $main_heading = "") {
     $CI = & get_instance();
     $CI->load->library('excel');
@@ -4996,24 +5146,22 @@ function export__total_tenant_page_fields($titles, $data, $filename, $sheetname 
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
 /* skm end */
 
-/* shubhranshu  start: replace nric first 5 character with mas */
-
-function mask_format($nric) {
-    if (is_numeric($nric) == 1) {
+/*shubhranshu  start: replace nric first 5 character with mas */
+function mask_format($nric) {  
+    if(is_numeric($nric) == 1){
         return $nric;
-    } else {
-        $new_nric = substr_replace($nric, 'XXXXX', 0, 5);
+    }else{
+        $new_nric = substr_replace($nric,'XXXXX',0,5);   
         //$new_nric = substr_replace($nric,'XXXX',5);        
         return $new_nric;
-    }
+    }   
 }
-
 /* shubhranshu end */
 
-function export_archive_trainee($data, $course_name, $class_name) {
+
+function export_archive_trainee($data,$course_name,$class_name) {
     $CI = & get_instance();
     $CI->load->model('Meta_Values', 'meta');
     $meta_map = $CI->meta->get_param_map();
@@ -5029,7 +5177,7 @@ function export_archive_trainee($data, $course_name, $class_name) {
     }
     $sheet->mergeCells('A1:C1');
     $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-    $sheet->setCellValue('A1', 'Trainee Acrhive Records ' . '-' . $course_name . '-' . $class_name);
+    $sheet->setCellValue('A1', 'Trainee Acrhive Records ' .'-'. $course_name .'-'.$class_name);
     $sheet->getStyle('A1:C1')->getFont()->setBold(true);
     $sheet->setCellValue('A2', 'Sl #');
     $sheet->setCellValue('B2', 'NRIC/FIN No.');
@@ -5045,10 +5193,10 @@ function export_archive_trainee($data, $course_name, $class_name) {
     $sheet->getStyle('A2:C2')->getFont()->setBold(true);
     $rn = 3;
     foreach ($data as $row) {
-
-        $sheet->setCellValue('A' . $rn, $rn - 2);
-        $sheet->setCellValue('B' . $rn, mask_format($row['taxcode']));
-        $sheet->setCellValue('C' . $rn, $row['first_name']);
+       
+         $sheet->setCellValue('A' . $rn, $rn - 2);
+         $sheet->setCellValue('B' . $rn, mask_format($row['taxcode']));
+         $sheet->setCellValue('C' . $rn, $row['first_name']); 
         $rn++;
     }
     ob_end_clean();
@@ -5058,3 +5206,115 @@ function export_archive_trainee($data, $course_name, $class_name) {
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
+
+function export_sales_report_xls($tabledata) {
+    $total_data = count($tabledata);
+
+    $CI = & get_instance();
+    $CI->load->library('excel');
+    $CI->excel->setActiveSheetIndex(0);
+    $CI->excel->getActiveSheet()->setTitle('Sales  Report');
+    $sheet = $CI->excel->getActiveSheet();
+    foreach (range('A', 'Z') as $columnID) {
+        $CI->excel->getActiveSheet()->getColumnDimension($columnID)
+                ->setAutoSize(true);
+    }
+    foreach (range('A', 'C') as $columnID) {
+        $var = 'A';
+        $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
+                ->setAutoSize(true);
+    }
+    
+        
+    $sheet->mergeCells('A1:J1');
+    $sheet->getStyle('A1:J1')->applyFromArray(
+            array('fill' => array(
+                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array('rgb' => '#FF0000')
+                )
+            )
+    );
+    $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->setCellValue('A1', 'CUMULATIVE REPORT AS ON ' . date('M j Y, l'));
+    $sheet->getStyle('A1:G1')->getFont()->setBold(true);
+
+     //$sheet->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    //$sheet->setCellValueExplicit('B2', 'Total Courses: '.count($tabledata));
+
+    $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3','J3');
+    $column_title = array('SL #',
+        'COURSE NAME','COURSE DATE','TRAINNING PROVIDER','COURSE FEE','NO. OF PAX','TOTAL SALES','TRAINEE NAME','NRIC NO','STATUS'
+    );
+    for ($i = 0; $i < count($column_title); $i++) {
+        $sheet->setCellValue($column_names[$i], $column_title[$i]);
+    }
+    
+    $sheet->getStyle('A3:J3')->applyFromArray(
+            array('fill' => array(
+                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array('argb' => 'FFCCCCCC')
+                )
+            )
+    );
+
+    $sheet->getStyle('A3:J3')->getFont()->setBold(true);
+    $r = 4;
+    $CI->load->model('reports_model', 'reportsmodel');
+    $data_arr = array();
+    $duplicate_mobile_arry = array();
+    //$start_row = 'B4';
+    //$count = 4;
+    foreach ($tabledata as $dat) {
+        
+       
+        
+        foreach ($dat as $row) {
+            //$start_row = $continue? $continue:$start_row;
+            //$merge_row= $start_row.":B".($count+count($dat));
+        //$sheet->mergeCells($merge_row);   
+        //author: added by shubhranshu as per client requirement on 11/03/2020
+        if($row->provider == 'T02'){
+           $provider = 'Xprienz';
+        }else if($row->provider == 'T17'){
+            $provider = 'Wablab';
+        }
+        else if($row->provider == 'T13'){
+            $provider = 'Everest';
+        }else{
+            $provider = 'Test';
+        }
+       
+        
+        /* skm code for new style email which is the combination of taxocde and class name intials st */
+
+        $CI->load->model('class_model', 'class_Model');
+        $trainer_name = $CI->class_Model->get_trainer_names($row->classroom_trainer);
+
+      
+        $enrollment_date = date('Y-m-d', strtotime($row->class_start_datetime));
+
+        $sheet->setCellValueExplicit('A' . $r, $r - 3);
+        $sheet->setCellValue('B' . $r, $row->crse_name);
+        $sheet->setCellValue('C' . $r, $enrollment_date);
+        $sheet->setCellValue('D' . $r, $provider);
+        $sheet->setCellValue('E' . $r, $row->coursefee);
+        $sheet->setCellValue('F' . $r, count($dat));
+        $sheet->setCellValue('G' . $r, (count($dat)*$row->coursefee));
+        $sheet->setCellValue('H' . $r, $row->first_name);
+        $sheet->setCellValue('I' . $r, $row->tax_code);
+        $sheet->setCellValue('J' . $r, $row->training_score);
+        
+        $r++;
+        //$count=$count+count($dat);
+        //$continue = 'B'.$count;
+        }
+    }
+    ob_end_clean();
+    $filename = "Sales_Report_ ".date('H-i-s').".xls";
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment;filename=' . $filename);
+    header('Cache-Control: max-age=0');
+    $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+    $objWriter->save('php://output');
+}
+
