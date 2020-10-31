@@ -4,7 +4,7 @@
     $tenant_id ='<?php echo $this->session->userdata('userDetails')->tenant_id; ?>';
 </script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment.js?v=2"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment.js?v=5.3"></script>
 <!--<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment_all_tenant.js"></script>-->
 <div class="col-md-10 right-minheight">
     <?php
@@ -338,7 +338,491 @@
         <div class="red">**: All amounts are in SGD</div>
     </div>
     <div style="clear:both;"></div><br>
-    <div class="amountdetails_div companyamounts_display common_pay" style="display: none;">
+    <?php if($tenant_id == 'T17'){//everest code company case modified by shubhranshu?>
+         <div class="amountdetails_div companyamounts_display common_pay" style="display: none;">
+        <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> Payment Details </h2>
+       
+        <table class="table table-striped ">
+            <tbody>
+                <tr>
+                    <td width="16%" class="td_heading">Mode of Payment:<span class="required">*</span></td>
+                        <td width="84%">
+
+                            <?php
+
+//                            $type_options = array('' => 'Select', 'CASH' => 'Cash', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
+                             
+                            $type_options = array('' => 'Select', 'CASH' => 'Cash', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','PSEA' => 'PSEA','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
+                            
+                            
+                            $type_js = 'id="payment_type"';
+                            echo form_dropdown('payment_type', $type_options, $this->input->get('payment_type'), $type_js);
+                            $data = array(
+                                'id' => 'payment_due_id',
+                                'name' => 'payment_due_id',
+                                'value' => '',
+                                'type' => 'hidden'
+                            );
+                            echo form_input($data);
+                            ?>
+                            <span id="payment_type_err"></span>
+                        </td>
+                 </tr>
+                <tr class="sfc_clm" style="display: none;">
+                        
+                        <td width="25%"> <span id="sfc_claim_err"></span></td>
+                </tr>
+                   
+                   
+            </tbody>
+        </table>
+       
+        
+        <br>
+        <div id="row_dim" style="display:none;">
+               <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td width="16%" class="td_heading">Recd. On:<span class="required">*</span></td>
+                            <td width="19%">
+                                <?php
+                                $paid_on = array(
+                                    'name' => 'paid_on',
+                                    'id' => 'paid_on',
+                                    'readonly' => 'readonly',
+                                    'value' => $this->input->post('paid_on'),
+                                );
+                                echo form_input($paid_on);
+                                ?>
+                                <span id="paid_on_err"></span>
+                            </td>
+                            <td width="14%" class="td_heading">Cheque Number:<span class="required">*</span></td>
+                            <td width="18%">
+                                <?php
+                                $cheque_number = array(
+                                    'name' => 'cheque_number',
+                                    'id' => 'cheque_number',
+                                    'value' => $this->input->post('cheque_number'),
+                                    'maxlength' => 20
+                                );
+                                echo form_input($cheque_number);
+                                ?>
+                                <span id="cheque_number_err"></span>
+                            </td>
+                            <td width="14%" class="td_heading">Cheque Amount:<span class="required">*</span></td>
+                            <td width="19%">$ <?php
+                                $cheque_amount = array(
+                                    'name' => 'cheque_amount',
+                                    'id' => 'cheque_amount',
+                                    'value' => $this->input->post('cheque_amount'),
+                                );
+                                echo form_input($cheque_amount);
+                                ?>
+                                <span id="cheque_amount_err"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_heading">Cheque Date:<span class="required">*</span></td>
+                            <td>
+                                <?php
+                                $cheque_date = array(
+                                    'name' => 'cheque_date',
+                                    'id' => 'cheque_date',
+                                    'readonly' => 'readonly',
+                                    'value' => $this->input->post('cheque_date'),
+                                );
+                                echo form_input($cheque_date);
+                                ?>
+                                <span id="cheque_date_err"></span>
+                            </td>
+                            <td class="td_heading">Bank Drawn On:<span class="required">*</span></td>
+                            <td colspan="3">
+                                <?php
+                                $bank_name = array(
+                                    'name' => 'bank_name',
+                                    'id' => 'bank_name',
+                                    'value' => $this->input->post('bank_name'),
+                                    'maxlength' => 50
+                                );
+                                echo form_input($bank_name);
+                                ?>
+                                <span id="bank_name_err"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="row_dim3" style="display:none;">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td width="16%" class="td_heading">Recd. On:<span class="required">*</span></td>
+                            <td width="19%">
+                                <?php
+                                $cashpaid_on = array(
+                                    'name' => 'cashpaid_on',
+                                    'id' => 'cashpaid_on',
+                                    'readonly' => 'readonly',
+                                    'value' => $this->input->post('cashpaid_on'),
+                                );
+                                echo form_input($cashpaid_on);
+                                ?>
+                                <span id="cashpaid_on_err"></span>
+                            </td>
+                            <td width="14%" class="td_heading">Amount:<span class="required">*</span></td>
+                            <td width="51%">$ <?php
+                                $cash_amount = array(
+                                    'name' => 'cash_amount',
+                                    'id' => 'cash_amount',
+                                    'value' => $this->input->post('cash_amount'),
+                                );
+                                echo form_input($cash_amount);
+                                ?>
+                                <span id="cash_amount_err"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="giro_div" style="display:none;">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td width="14%" class="td_heading">Transaction Date:<span class="required">*</span></td>
+                            <td width="18%">
+                                <?php
+                                $transc_on = array(
+                                    'name' => 'transc_on',
+                                    'id' => 'transc_on',
+                                    'readonly' => 'readonly',
+                                    'value' => $this->input->post('transc_on'),
+                                );
+                                echo form_input($transc_on);
+                                ?>
+                                <span id="transc_on_err"></span>
+                            </td>
+                            <td width="14%" class="td_heading">Bank Name:<span class="required">*</span></td>
+                            <td width="19%"><?php
+                                $gbank_name = array(
+                                    'name' => 'gbank_name',
+                                    'id' => 'gbank_name',
+                                    'value' => $this->input->post('gbank_name'),
+                                    'style' => 'width:200px',
+                                    'maxlength' => '50',
+                                );
+                                echo form_input($gbank_name);
+                                ?>
+                                <span id="gbank_name_err"></span>
+                            </td>
+                            <td width="14%" class="td_heading">GIRO Amount:<span class="required">*</span></td>
+                            <td width="19%">$ <?php
+                                $giro_amount = array(
+                                    'name' => 'giro_amount',
+                                    'id' => 'giro_amount',
+                                    'value' => $this->input->post('giro_amount'),
+                                );
+                                echo form_input($giro_amount);
+                                ?>
+                                <span id="giro_amount_err"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- SFC starts -->
+        <div id="sfc_div" style="display:none;">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td width="14%" class="td_heading">SFC Claimed On:<span class="required">*</span></td>
+                            <td width="18%">
+                                <?php
+                                $sfcclaim_on = array(
+                                    'name' => 'sfcclaim_on',
+                                    'id' => 'sfcclaim_on',
+                                    'readonly' => 'readonly',
+                                    'value' => $this->input->post('sfcclaim_on'),
+                                );
+                                echo form_input($sfcclaim_on);
+                                ?>
+                                <span id="sfcclaim_on_err"></span>
+                            </td>
+                           <td width="14%" class="td_heading">SFC(SELF) Amount:<span class="required">*</span></td>
+                            <td width="19%">$ <?php
+                                $sfc_amount = array(
+                                    'name' => 'sfc_amount',
+                                    'id' => 'sfc_amount',
+                                    'class'  =>'sfc_amount',
+                                    'value' => $this->input->post('sfc_amount'),
+                                );
+                                echo form_input($sfc_amount);
+                                ?>
+                                <span id="sfc_amount_err"></span>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="sfcato_div" style="display:none;">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td width="14%" class="td_heading">SFC Claimed On:<span class="required">*</span></td>
+                            <td width="18%">
+                                <?php
+                                $sfcatoclaim_on = array(
+                                    'name' => 'sfcatoclaim_on',
+                                    'id' => 'sfcatoclaim_on',
+                                    'readonly' => 'readonly',
+                                    'value' => $this->input->post('sfcatoclaim_on'),
+                                );
+                                echo form_input($sfcatoclaim_on);
+                                ?>
+                                <span id="sfcatoclaim_on_err"></span>
+                            </td>
+                           <td width="14%" class="td_heading">SFC(ATO) Amount:<span class="required">*</span></td>
+                            <td width="19%">$ <?php
+                                $sfcato_amount = array(
+                                    'name' => 'sfcato_amount',
+                                    'id' => 'sfcato_amount',
+                                    'class'  =>'sfcato_amount',
+                                    'value' => $this->input->post('sfcato_amount'),
+                                );
+                                echo form_input($sfcato_amount);
+                                ?>
+                                <span id="sfcato_amount_err"></span>
+                            </td>
+                        </tr>
+                        <!--added by shubhranshu for client requirement-->
+                        <tr id='sfc_ato_divv'>
+                            <td class="td_heading">SFC(ATO) Claim ID:<span class="required"></span></td>
+                            <td>
+                                <?php
+                                $sfc_ato_claim_id = array(
+                                    'name' => 'sfc_ato_claim_id',
+                                    'id' => 'sfc_ato_claim_id',
+                                    'class' => 'sfc_ato_claim_id',
+                                    'type' => 'text',
+                                    'value' => $this->input->post('$sfc_ato_claim_id'),
+                                );
+                                echo form_input($sfc_ato_claim_id);
+                                ?> 
+                                <span id="sfc_ato_claim_id_err"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- SFC Ends -->
+        
+        <br>
+        
+         <!-- other payment for SFC -->
+    <div class="other_payment" id="other_payment" style="display:none;">
+        <table class="table table-striped ">
+            <tbody>
+                <tr>
+                    <td width="16%" class="td_heading">Other Mode of Payment:<span class="required">*</span></td>
+                    <td width="84%">
+                        <?php
+                        if($tenant_id == 'T01' || $tenant_id == 'T02' || $tenant_id == 'T12')
+                        {
+                           $type_options1 = array('' => 'Select', 'CASH1' => 'Cash', 'CHQ1' => 'Cheque', 'GIRO1' => 'GIRO', 'NETS1'=> 'NETS'); 
+                        }else{
+                          $type_options1 = array('' => 'Select', 'CASH1' => 'Cash', 'CHQ1' => 'Cheque', 'GIRO1' => 'GIRO');  
+                        }
+                       // $type_options1 = array('' => 'Select', 'CASH1' => 'Cash', 'CHQ1' => 'Cheque', 'GIRO1' => 'GIRO');
+                        $type_js = 'id="payment_type1"';
+                        echo form_dropdown('payment_type1', $type_options1, $this->input->get('payment_type1'), $type_js);
+                        $data = array(
+                            'id' => 'payment_due_id1',
+                            'name' => 'payment_due_id1',
+                            'value' => '',
+                            'type' => 'hidden'
+                        );
+                        echo form_input($data);
+                        ?>
+                        <span id="payment_type_err"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+          <div id="row_dim1" style="display:none;">
+               <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td width="16%" class="td_heading">Cheque Recd. On:<span class="required">*</span></td>
+                            <td width="19%">
+                                <?php
+                                $paid_on1 = array(
+                                    'name' => 'paid_on1',
+                                    'id' => 'paid_on1',
+                                    'readonly' => 'readonly',
+                                    'value' => $this->input->post('paid_on1'),
+                                );
+                                echo form_input($paid_on1);
+                                ?>
+                                <span id="paid_on1_err"></span>
+                            </td>
+                            <td width="14%" class="td_heading">Cheque Number:<span class="required">*</span></td>
+                            <td width="18%">
+                                <?php
+                                $cheque_number1 = array(
+                                    'name' => 'cheque_number1',
+                                    'id' => 'cheque_number1',
+                                    'value' => $this->input->post('cheque_number1'),
+                                    'maxlength' => 20
+                                );
+                                echo form_input($cheque_number1);
+                                ?>
+                                <span id="cheque_number1_err"></span>
+                            </td>
+                            <td width="14%" class="td_heading">Cheque Amount:<span class="required">*</span></td>
+                            <td width="19%">$ <?php
+                                $cheque_amount1 = array(
+                                    'name' => 'cheque_amount1',
+                                    'id' => 'cheque_amount1',
+                                    'value' => $this->input->post('cheque_amount1'),
+                                );
+                                echo form_input($cheque_amount1);
+                                ?>
+                                <span id="cheque_amount1_err"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_heading">Cheque Date:<span class="required">*</span></td>
+                            <td>
+                                <?php
+                                $cheque_date1 = array(
+                                    'name' => 'cheque_date1',
+                                    'id' => 'cheque_date1',
+                                    'readonly' => 'readonly',
+                                    'value' => $this->input->post('cheque_date1'),
+                                );
+                                echo form_input($cheque_date1);
+                                ?>
+                                <span id="cheque_date1_err"></span>
+                            </td>
+                            <td class="td_heading">Bank Drawn On:<span class="required">*</span></td>
+                            <td colspan="3">
+                                <?php
+                                $bank_name1 = array(
+                                    'name' => 'bank_name1',
+                                    'id' => 'bank_name1',
+                                    'value' => $this->input->post('bank_name1'),
+                                    'maxlength' => 50
+                                );
+                                echo form_input($bank_name1);
+                                ?>
+                                <span id="bank_name1_err"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="row_dim31" style="display:none;">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td width="16%" class="td_heading">Cash Recd. On:<span class="required">*</span></td>
+                            <td width="19%">
+                                <?php
+                                $cashpaid_on1 = array(
+                                    'name' => 'cashpaid_on1',
+                                    'id' => 'cashpaid_on1',
+                                    'readonly' => 'readonly',
+                                    'value' => $this->input->post('cashpaid_on1'),
+                                );
+                                echo form_input($cashpaid_on1);
+                                ?>
+                                <span id="cashpaid_on1_err"></span>
+                            </td>
+                            <td width="14%" class="td_heading">Cash Amount:<span class="required">*</span></td>
+                            <td width="51%">$ <?php
+                                $cash_amount1 = array(
+                                    'name' => 'cash_amount1',
+                                    'id' => 'cash_amount1',
+                                    'value' => $this->input->post('cash_amount1'),
+                                );
+                                echo form_input($cash_amount1);
+                                ?>
+                                <span id="cash_amount1_err"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="giro_div1" style="display:none;">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td width="14%" class="td_heading">Transaction Date:<span class="required">*</span></td>
+                            <td width="18%">
+                                <?php
+                                $transc_on1 = array(
+                                    'name' => 'transc_on1',
+                                    'id' => 'transc_on1',
+                                    'readonly' => 'readonly',
+                                    'value' => $this->input->post('transc_on1'),
+                                );
+                                echo form_input($transc_on1);
+                                ?>
+                                <span id="transc_on1_err"></span>
+                            </td>
+                            <td width="14%" class="td_heading">Bank Name:<span class="required">*</span></td>
+                            <td width="19%"><?php
+                                $gbank_name1 = array(
+                                    'name' => 'gbank_name1',
+                                    'id' => 'gbank_name1',
+                                    'value' => $this->input->post('gbank_name1'),
+                                    'style' => 'width:200px',
+                                    'maxlength' => '50',
+                                );
+                                echo form_input($gbank_name1);
+                                ?>
+                                <span id="gbank_name1_err"></span>
+                            </td>
+                            <td width="14%" class="td_heading">GIRO Amount:<span class="required">*</span></td>
+                            <td width="19%">$ <?php
+                                $giro_amount1 = array(
+                                    'name' => 'giro_amount1',
+                                    'id' => 'giro_amount1',
+                                    'value' => $this->input->post('giro_amount1'),
+                                );
+                                echo form_input($giro_amount1);
+                                ?>
+                                <span id="giro_amount1_err"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <!-- ends other payment -->
+        <span class="required required_i">* Required Fields</span>
+        <div class="button_class99">
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update Payment Details</button> &nbsp; &nbsp; 
+        </div>
+    </div>
+    <?php }else{?>
+         <div class="amountdetails_div companyamounts_display common_pay" style="display: none;">
         <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> Payment Details </h2>
        
         <table class="table table-striped ">
@@ -627,7 +1111,9 @@
             </div>
         </div>
         <!-- SFC Ends -->
+        
         <br>
+        
          <!-- other payment for SFC -->
     <div class="other_payment" id="other_payment" style="display:none;">
         <table class="table table-striped ">
@@ -821,6 +1307,8 @@
             <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update Payment Details</button> &nbsp; &nbsp; 
         </div>
     </div>
+    <?php } ?>
+   
    
     <?php echo form_close(); ?>
 </div>

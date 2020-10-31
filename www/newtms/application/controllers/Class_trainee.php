@@ -3420,8 +3420,13 @@ if (!empty($tenant_details->tenant_contact_num)) {
          $result->payble_amount=$inv_amt+$refunded_amt-$received_amt;
 
         $this->load->helper('pdf_reports_helper');
+        //added by shubhranshu to switch the pdf for verest
+        if($tenant_id =='T17'){
+            generate_company_pdf_invoice_everest($result);
+        }else{
+            generate_company_pdf_invoice_all($result);
+        }
         
-        generate_company_pdf_invoice_all($result);
     }
     public function export_old_generate_invoice($id,$inv) 
     {  
@@ -3461,7 +3466,13 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $result = $this->get_payid_details($id, 1);
         //print_r($result);exit;
         $this->load->helper('pdf_reports_helper');
-        generate_pdf_invoice($result);
+        ///added by shubhranshu to switch pdf code for everest
+        $tenant_id = $this->tenant_id;
+        if($tenant_id =='T17'){
+            generate_pdf_invoice_everest($result);
+        }else{
+            generate_pdf_invoice($result);
+        }
     }
 
     /**
@@ -4317,6 +4328,10 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $args['comp_gst_rule'] = $this->input->post('comp_gst_rule');
         $args['course_id'] = $this->input->post('course_id');
         $args['class_id'] = $this->input->post('class_id');
+        ///addded by shubhranshu since the subsidy is not coming during form post to apply the subsidy during invoice cretion
+        $subsidy = $this->classtraineemodel->get_individual_enrol_trainees_subsidy($args['tenant_id'],$args['individual_payment_due_id'],$args['individual_user_id']);
+        $args['subsidy_amount'] = $subsidy[0]->subsidy_amount;
+        ////end --------
         if ($opType == 'mergeInvoice') {
             $status = $this->classtraineemodel->merge_invoice($args);
             if ($status == FALSE) {

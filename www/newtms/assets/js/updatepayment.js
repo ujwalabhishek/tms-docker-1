@@ -515,6 +515,12 @@ $(document).ready(function() {
                 $('.companyamounts_display').show();
                 if (parseFloat($company_total) > 0) {
                     $('.common_pay').show();
+                    if(data.tenant_id=='T17'){///added by shubhranshu for everest
+                        $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="CHQ">Cheque</option>');
+                    }else{
+                        $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
+                    }
+                    
                 } else {
                     $('.common_pay').hide();
                 }
@@ -801,7 +807,7 @@ $(document).ready(function() {
         $('#sfcato_div').hide();
         $val = $(this).val();
         if ($val.length > 0) {
-            if ($val == 'CASH' || $val == 'NETS') {
+            if ($val == 'CASH' || $val == 'NETS' || $val == 'PSEA') {
                 $('#row_dim3').show();
                 $('#row_dim31').hide();
                 $('#row_dim1').hide();
@@ -857,14 +863,15 @@ $(document).ready(function() {
                
                 if($comp=="company")
                 {
+                   
                     $msg="SFC can not be claimed for company.";
                     disp_err('#sfc_claim', $msg);
-                $('#sfcato_div').hide();
-                $('#row_dim31').hide();
-                $('#row_dim1').hide();
-                $('#giro_div1').hide();
-                $('.other_payment').hide();
-                 $('.sfc_clm').show();
+                    $('#sfcato_div').hide();
+                    $('#row_dim31').hide();
+                    $('#row_dim1').hide();
+                    $('#giro_div1').hide();
+                    $('.other_payment').hide();
+                     $('.sfc_clm').show();
                 }
                 else
                 {
@@ -875,7 +882,6 @@ $(document).ready(function() {
                     $('#giro_div1').hide();
                     $('.other_payment').hide();
                     $('.sfc_clm').hide();
-                    /////added by shubhranshu for wablab not to display sfc id blok
                     if($tenant_id == 'T20'){
                         $('#sfc_ato_divv').hide();
                     }else{
@@ -1124,7 +1130,7 @@ function form_validate($retVal) {
             }
         }
     }
-    else if ($payment_type == 'CASH'  || $payment_type == 'NETS') {
+    else if ($payment_type == 'CASH'  || $payment_type == 'NETS' || $payment_type == 'PSEA') {
         remove_err('#payment_type');
         $cashpaid_on = $('#cashpaid_on').val();
         if ($cashpaid_on.length == 0) {
