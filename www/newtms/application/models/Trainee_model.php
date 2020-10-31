@@ -7,12 +7,13 @@
 class Trainee_Model extends CI_Model {
 
     private $user;
-
+    
     public function __construct() {
         parent::__construct();
         $this->load->library('bcrypt');
         $this->load->helper('common');
         $this->user = $this->session->userdata('userDetails');
+        
     }
 
     /**
@@ -814,7 +815,8 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             {
                     $taxcode_prefix = 'FL';
             }
-            if($this->user->tenant_id=='T22'){
+            if($this->user->tenant_id=='T22')
+            {
                     $taxcode_prefix = 'CD';
             }
             if($this->user->tenant_id=='T20')
@@ -1192,7 +1194,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         $check_username_unique = $this->is_username_unique($user_name);
         
         if($check_username_unique >0){
-           $user_name = $user_name.date('is');
+            $user_name = $user_name.date('is');
         }////////////////////////////////////ssp end///////////////////////////////////
         $tms_users_data = array(
             'tenant_id' => $this->user->tenant_id,
@@ -1278,7 +1280,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         );
         $this->db->insert('tms_users_pers', $tms_users_pers_data);
         //// added by shubhranshu to update the tax code and other identi code as taxcode on 03/12/2018//////
-         if($this->user->tenant_id == 'T02') {
+        if($this->user->tenant_id == 'T02') {
             $no_tax_tax_code = "XPZ".$user_id;
         } else if($this->user->tenant_id == 'T03'){
             $no_tax_tax_code = "CAI".$user_id;
@@ -1289,7 +1291,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         }else if($this->user->tenant_id == 'T20'){
             $no_tax_tax_code = "WB".$user_id;
         }else if($this->user->tenant_id == 'T17'){
-            $user_name = "EV".$user_id;
+            $no_tax_tax_code = "EV".$user_id;
         } else {
             $no_tax_tax_code = $user_id;
         }
@@ -1334,9 +1336,9 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         
         $tenant_id = $this->user->tenant_id;
         $user_id = $this->input->post('userid');
-        $company_id = $this->input->post('hiddencompanyid');
         $reason_for_deactivation = $this->input->post('reason_for_deactivation');
         $other_reason_for_deactivation = $this->input->post('other_reason_for_deactivation');
+        $company_id = $this->input->post('hiddencompanyid');
         //$this->db->trans_start();
         if (!empty($company_id)) {
             $deactive = array(
@@ -1363,9 +1365,10 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $this->db->update('tms_users', $deactive);
         }
         //$this->db->trans_complete();
+        //echo $this->db->last_query();exit;
         //if ($this->db->trans_status() === FALSE) {
             //return FALSE;
-        //} else {
+       // } else {
             return TRUE;
         //}
     }
@@ -1444,7 +1447,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             }
             if( $this->user->tenant_id=='T02')
             {
-                    $taxcode_prefix = 'XPR';
+                    $taxcode_prefix = 'XP';
             }
             if($this->user->tenant_id=='T03')
             {
@@ -1456,8 +1459,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             if($this->user->tenant_id=='T22'){
                     $taxcode_prefix = 'CD';
             }
-            if($this->user->tenant_id=='T20')
-            {
+            if($this->user->tenant_id=='T20'){
                     $taxcode_prefix = 'WB';
             }
             if($this->user->tenant_id=='T17'){
@@ -1542,6 +1544,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $new_array = array('account_status' => 'ACTIVE', 'acc_activation_type' => 'EMACRQ');
         }
         $date = date('Y-m-d H:i:s');
+        
         $data = array(
             'country_of_residence' => $country_of_residence,
             'tax_code_type' => $tax_code_type,
@@ -1553,6 +1556,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             'last_modified_by' => $this->user->user_id,
             'last_modified_on' => $date,
                 ) + $new_array;
+        //print_r($data);exit;
         $this->db->trans_start();
         $user_id = $this->input->post('userid');
         $this->db->where('user_id', $user_id);
