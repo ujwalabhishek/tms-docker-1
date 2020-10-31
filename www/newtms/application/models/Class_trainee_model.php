@@ -4914,7 +4914,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
     }
     //// below function was added by shubhranshu to fix the sfc issue while giving the backdate
     public function get_invoice_paid_details_indv_new($invoice_id, $user_id = 0) {
-                $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE');
+                $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
                 $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
                 epr.mode_of_pymnt,epr.othr_mode_of_payment, epr.cheque_number,epr.sfc_claimed,epr.other_amount_recd,epr.cheque_date,
                 tup.first_name, tup.last_name, tup.gender');
@@ -4949,12 +4949,12 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         {
             $order='ASC';
             //$mop=array('SFC_ATO','SFC_SELF');
-            $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE');
+            $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
         }
         else
         {
               $order='DESC';
-              $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE');
+              $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
         }
         $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
 
@@ -4995,12 +4995,12 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         {
             $order='ASC';
             //$mop=array('SFC_ATO','SFC_SELF');
-            $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE');
+            $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
         }
         else
         {
               $order='DESC';
-              $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE');
+              $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
         }
         $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
 
@@ -5793,7 +5793,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         if (!empty($invoice_id)) {
             $cur_time = date('H:i:s');
-            if ($payment_type == 'CASH' || $payment_type == 'NETS') {
+            if ($payment_type == 'CASH' || $payment_type == 'NETS' || $payment_type == 'PSEA') {
 
                 $data = array(
                     'invoice_id' => $invoice_id,
