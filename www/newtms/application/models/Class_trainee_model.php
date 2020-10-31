@@ -8738,6 +8738,15 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $final;
     }
+    
+    /////added by shubhranshu for proper calculation
+    public function get_individual_enrol_trainees_subsidy($tenant_id,$pay_id,$user_id){
+        $str_query1 = "select subsidy_amount from enrol_pymnt_due where pymnt_due_id='$pay_id' and user_id='$user_id'";
+                
+             $result_set = $this->db->query($str_query1);
+
+        return $result_set->result();   
+    }
     /*autocpmlete company invoice to move traine from one invoice to other invoice
      * added by pritam
      * 
