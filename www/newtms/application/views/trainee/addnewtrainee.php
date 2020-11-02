@@ -302,7 +302,17 @@ if (!empty($tax_error)) {
                         <?php
                         $occupation = fetch_metavalues_by_category_id(Meta_Values::OCCUPATION);
                         $occupation_options[''] = 'Select';
-                        foreach ($occupation as $item):
+                        if(TENANT_ID=='T17'){
+                            foreach ($occupation as $item):
+                             if($item['parameter_id']=='CLWRK_04' || $item['parameter_id']=='SWASAM_05'){
+                           
+                                    }else{
+                                         $occupation_options[$item['parameter_id']] = $item['category_name'];
+                                    }
+                            //$occupation_options[$item['parameter_id']] = $item['category_name'];
+                        endforeach;
+                        }else{
+                            foreach ($occupation as $item):
                              if($item['parameter_id']=='WNCLBO_10' || $item['parameter_id']=='CLWRK_04' || 
                                      $item['parameter_id']=='SWASAM_05'){
                            
@@ -311,6 +321,8 @@ if (!empty($tax_error)) {
                                     }
                             //$occupation_options[$item['parameter_id']] = $item['category_name'];
                         endforeach;
+                        }
+                        
                         ?>
                         <td colspan="3">
                             <?php echo form_dropdown('occupation', $occupation_options, set_value('occupation'), 'id="occupation" style="width:170px"'); ?>
