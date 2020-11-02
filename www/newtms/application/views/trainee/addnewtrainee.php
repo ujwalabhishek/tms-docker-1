@@ -304,11 +304,9 @@ if (!empty($tax_error)) {
                         $occupation_options[''] = 'Select';
                         if(TENANT_ID=='T17'){
                             foreach ($occupation as $item):
-                             if($item['parameter_id']=='CLWRK_04' || $item['parameter_id']=='SWASAM_05'){
-                           
-                                    }else{
-                                         $occupation_options[$item['parameter_id']] = $item['category_name'];
-                                    }
+                             
+                                $occupation_options[$item['parameter_id']] = $item['category_name'];
+                                    
                             //$occupation_options[$item['parameter_id']] = $item['category_name'];
                         endforeach;
                         }else{
