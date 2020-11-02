@@ -1558,7 +1558,7 @@ class Reports_finance extends CI_Controller {
         $data['main_content'] = 'reports/sales_reports';
         $this->load->view('layout', $data);
     }
-    
+    ///added by shubhranshu to fetch sales report monthwise
     public function sales_report_export_xls() {
 
         //Read page parameter to display report
@@ -1573,7 +1573,7 @@ class Reports_finance extends CI_Controller {
         
         export_sales_report_xls($tabledata);
     }
-    
+    ///added by shubhranshu to fetch sales report monthwise
     public function sales_summary_monthwise(){
         if (!empty($_POST)) {
             $yearVal = $this->input->post('yearVal');
@@ -1588,7 +1588,7 @@ class Reports_finance extends CI_Controller {
         $data['export_url'] = '?yearVal=' . $yearVal.'&monthVal='.$monthVal;
         $this->load->view('layout', $data);
     }
-    
+    ///added by shubhranshu to fetch sales report monthwise
     public function export_sales_monthwise(){
         $tenant_id = $this->tenant_id;
         $yearVal = $this->input->get('yearVal');
