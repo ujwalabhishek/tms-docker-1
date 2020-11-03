@@ -2439,7 +2439,7 @@ function export_classtrainee_page($result, $tenant_id) {
     ));
     $sheet->getStyle('A2:I2')->getFont()->setBold(true);
     $rn = 4;
-  echo TENANT_ID.'--'$CI->session->userdata('userDetails')->user_id;exit;
+  echo TENANT_ID.'--'.$CI->session->userdata('userDetails')->user_id;exit;
     foreach ($result as $row) {
         $enr_mod = 'Individual';
         if ($row['enrolment_mode'] == 'COMPSPON') {
