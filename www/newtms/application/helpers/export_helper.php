@@ -2439,7 +2439,7 @@ function export_classtrainee_page($result, $tenant_id) {
     ));
     $sheet->getStyle('A2:I2')->getFont()->setBold(true);
     $rn = 4;
-  
+  echo TENANT_ID;exit;
     foreach ($result as $row) {
         $enr_mod = 'Individual';
         if ($row['enrolment_mode'] == 'COMPSPON') {
@@ -2597,7 +2597,12 @@ function export_classtrainee_full($result, $tenant_id) {
         $sheet->setCellValue('O' . $rn, !empty($row['certificate_coll_on']) ? date('d/m/Y',  strtotime($row['certificate_coll_on'])):'');
         $result_text = !empty($row['feedback_answer']) ? ' (Result: ' . $row['feedback_answer'].')' : '';
         $sheet->setCellValue('P' . $rn, $CI->class->get_class_status($row['class_id'], '').$result_text);
-        $sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
+        if((TENANT_ID == 'T02'  && $CI->session->userdata('userDetails')->user_id == '140490') || (TENANT_ID == 'T12'  && $CI->session->userdata('userDetails')->user_id == '173804')){
+            $sheet->setCellValue('Q' . $rn, $row['tax_code']);
+        }else{
+            $sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
+        }
+        
         $sheet->setCellValue('R' . $rn, $row['first_name'] . ' ' . $row['last_name']);
         $sheet->setCellValue('S' . $rn, $enr_mod);
         $sheet->setCellValue('T' . $rn, empty($row['enrolled_on']) ? '' : date('d/m/Y', strtotime($row['enrolled_on'])));
