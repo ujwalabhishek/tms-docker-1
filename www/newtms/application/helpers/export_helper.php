@@ -2452,7 +2452,7 @@ function export_classtrainee_page($result, $tenant_id) {
             }
         }
         $sheet->setCellValue('A' . $rn, $rn - 3);
-        if((TENANT_ID == 'T02'  && $CI->session->userdata('userDetails')->user_id == '140490') || (TENANT_ID == 'T12'  && $CI->session->userdata('userDetails')->user_id == '173804')){
+        if((TENANT_ID == 'T02' && $CI->session->userdata('userDetails')->user_id == '140490') || (TENANT_ID == 'T12' && $CI->session->userdata('userDetails')->user_id == '173804')){
             $sheet->setCellValue('B' . $rn, $row['tax_code']);
         }else{
             $sheet->setCellValue('B' . $rn, mask_format($row['tax_code']));
