@@ -2973,7 +2973,7 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
         'Cert Code', 'Submission Type', 'Date Of Assessment (DDMMYYYY)', 'Result',
         'Trainer ID (For NRIC/FIN/Other ID only,Names should not be included)',
         'Assessor ID (For NRIC/FIN/Other ID only,Names should not be included)',
-        'Printing of SOA/ Generating of e-Cert');
+        'Printing of SOA/ Generating of e-Cert','Class Name');
     for ($i = 0; $i < count($column_title); $i++) {
         $sheet->setCellValue($column_names[$i] . '1', $column_title[$i]);
     }
