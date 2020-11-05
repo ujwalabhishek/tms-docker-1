@@ -3239,6 +3239,7 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
         $sheet->setCellValue('X' . $r, $trainer_text);
         $sheet->setCellValue('Y' . $r, $assessor_text);
         $sheet->setCellValue('Z' . $r, 'No');
+        $sheet->setCellValue('AA' . $r, $row->class_name);
         $r++;
     }
 
