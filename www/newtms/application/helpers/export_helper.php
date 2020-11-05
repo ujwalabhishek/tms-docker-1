@@ -4267,7 +4267,7 @@ function generate_soa_report_csv($tabledata, $metadata) {
         'Cert Code', 'Submission Type', 'Date Of Assessment (DDMMYYYY)', 'Result',
         'Trainer ID (For NRIC/FIN/Other ID only,Names should not be included)',
         'Assessor ID (For NRIC/FIN/Other ID only,Names should not be included)',
-        'Printing of SOA/ Generating of e-Cert');
+        'Printing of SOA/ Generating of e-Cert','Class Name');
     $CI->load->model('reports_model', 'reportsmodel');
     $data_arr = array();
     foreach ($tabledata as $row) {
@@ -4328,10 +4328,10 @@ function generate_soa_report_csv($tabledata, $metadata) {
             date('dmY', strtotime($row->class_start_datetime)), $row->reference_num, $row->competency_code,
             $course_code, 'N',
             (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)),
-            $row->training_score, $trainer_text, $assessor_text, 'No'
+            $row->training_score, $trainer_text, $assessor_text, 'No',$row->class_name
         );
     }
-   header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename=SOA_Report.csv');
     $output = fopen('php://output', 'w');
     fputcsv($output, $column_title);
