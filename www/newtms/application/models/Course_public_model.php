@@ -5580,7 +5580,7 @@ class Course_Public_Model extends CI_Model {
         }else{
             $invoice_id = $pre_fix_array[$tenant_id] . $invoice_id_tmp;
         }
-echo $invoice_id.'-----'.$tenant_id;exit;
+
         return $invoice_id;
     }
 
