@@ -5557,7 +5557,7 @@ class Course_Public_Model extends CI_Model {
 
         $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id","T17" => "ei_new_invoice_id");
 
-        $tenant_id = $this->tenant_id;
+        $tenant_id = $this->tenant_id ?? TENANT_ID;
 
         $invoice_id_tmp = get_max_lookup($lookup_table[$tenant_id]);
 
