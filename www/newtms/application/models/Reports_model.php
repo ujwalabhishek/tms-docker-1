@@ -2530,7 +2530,7 @@ SELECT  {$calc_rows} c.crse_name,
         $generateby = $this->input->post('generateby');
         $cur_date = date('Y-m-d');
 
-        $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id');
+        $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id,cc.class_name');
         $this->db->select('c.reference_num, c.competency_code, c.certi_level,c.crse_manager');
         $this->db->select('cc.class_language, cc.classroom_trainer, cc.assessor, cc.class_start_datetime, cc.class_end_datetime');
         $this->db->select('tu.tax_code_type, tu.tax_code, tu.other_identi_type, tu.other_identi_code, tu.registered_email_id, tu.account_type'); // account_type added by dummy for internal staff enrollment On 08 Dec 2014.
@@ -2593,7 +2593,7 @@ SELECT  {$calc_rows} c.crse_name,
         }
         // add 3 days to date
 
-        $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id,ce.tenant_id,ce.enrolled_on');
+        $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id,ce.tenant_id,ce.enrolled_on,cc.class_name');
         $this->db->select('c.reference_num, c.competency_code, c.certi_level,c.crse_manager');
         $this->db->select('cc.class_language, cc.class_name, cc.classroom_trainer, cc.assessor, cc.class_start_datetime, cc.class_end_datetime');
         $this->db->select('tu.tax_code_type, tu.tax_code, tu.other_identi_type, tu.other_identi_code, tu.registered_email_id, tu.account_type'); // account_type added by dummy for internal staff enrollment On 08 Dec 2014.
