@@ -1,5 +1,5 @@
 <?php if(TENANT_ID == 'T20' || TENANT_ID == 'T17'){?>
-<div class="modal modal1_5551" id="ex6" style="height:600px; max-height: 600px !important;">
+<div class="modal modal1_5551" id="ex6" style="height:600px; max-height: 600px !important;overflow: scroll !important;">
     <?php  
         $atr = 'id="feedbackForm" name="validate_form"';
         echo form_open('trainings/save_feedback',$atr);
@@ -114,7 +114,7 @@
 
 <?php }else{?>
 
-<div class="modal1_555" id="ex6">
+<div class="modal1_555" id="ex6" style="overflow: scroll !important;">
     <?php  
         $atr = 'id="feedbackForm" name="validate_form"';
         echo form_open('trainings/save_feedback',$atr);
