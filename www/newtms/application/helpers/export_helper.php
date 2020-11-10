@@ -3492,7 +3492,7 @@ function generate_traqom_report_xls_wablab($tabledata, $metadata)
 //                        )
 //                    )
 //            );
-             $sheet->getStyle('A3:K3')->applyFromArray(
+             $sheet->getStyle('A3:L3')->applyFromArray(
                 array('fill' => array(
                         'type' => PHPExcel_Style_Fill::FILL_SOLID,
                         'color' => array('argb' => 'FFCCCCCC')
@@ -3505,7 +3505,7 @@ function generate_traqom_report_xls_wablab($tabledata, $metadata)
 //            exit();
 //            
             //$sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->getFont()->setBold(true);
-            $sheet->getStyle('A3:K3')->getFont()->setBold(true);
+            $sheet->getStyle('A3:L3')->getFont()->setBold(true);
             $r = 4;
             $CI->load->model('reports_model', 'reportsmodel');
             $data_arr = array();
@@ -3572,7 +3572,6 @@ function generate_traqom_report_xls_wablab($tabledata, $metadata)
             $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
             $objWriter->save('php://output');
 }
-
 function generate_traqom_report_xls($tabledata, $metadata) 
 {
     $total_data = count($tabledata);
@@ -3625,7 +3624,7 @@ function generate_traqom_report_xls($tabledata, $metadata)
 //                        )
 //                    )
 //            );
-             $sheet->getStyle('A3:K3')->applyFromArray(
+             $sheet->getStyle('A3:U3')->applyFromArray(
                 array('fill' => array(
                         'type' => PHPExcel_Style_Fill::FILL_SOLID,
                         'color' => array('argb' => 'FFCCCCCC')
