@@ -497,7 +497,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                             <tr class="rowdim">
                                 <td class="td_heading" width="20%">TG#:</td>
                                 <td  width="20%"><?php
-                                    echo form_input('tg_number', $this->input->post('tg_number'), ' id="tg_number" maxlength="20"');
+                                    echo form_input('tg_number', $this->input->post('tg_number'), ' id="tg_number" maxlength="40"');
                                     ?></td>
                                 <td class="td_heading"  width="20%">Subsidy Type.:</td> 
                                 <td>
