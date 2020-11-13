@@ -2452,9 +2452,9 @@ function export_classtrainee_page($result, $tenant_id) {
         }
         $sheet->setCellValue('A' . $rn, $rn - 3);
         if((TENANT_ID == 'T02' && $CI->session->userdata('userDetails')->user_id == '140490') || (TENANT_ID == 'T02' && $CI->session->userdata('userDetails')->user_id == '94679') || (TENANT_ID == 'T12' && $CI->session->userdata('userDetails')->user_id == '173804') || (TENANT_ID == 'T12' && $CI->session->userdata('userDetails')->user_id == '105310')){
-            $sheet->setCellValue('Q' . $rn, $row['tax_code']);
+            $sheet->setCellValue('B' . $rn, $row['tax_code']);
         }else{
-            $sheet->setCellValue('Q' . $rn, mask_format($row['tax_code']));
+            $sheet->setCellValue('B' . $rn, mask_format($row['tax_code']));
         }
         $sheet->setCellValue('C' . $rn, $row['first_name'] . ' ' . $row['last_name']);
         $sheet->setCellValue('D' . $rn, $row['crse_name'] . ' - ' . $row['class_name']);
