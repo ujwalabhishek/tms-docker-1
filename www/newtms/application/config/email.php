@@ -22,15 +22,15 @@ $config['protocol'] = 'smtp';
 //$config['smtp_user'] = 'biipbytedns@gmail.com';
 //$config['smtp_pass'] = 'qwertyuiop@123';
 
-//$config['smtp_host'] = 'ssl://smtp.gmail.com';
-//$config['smtp_port'] = '465';
-//$config['smtp_user'] = 'biipmisg2020@gmail.com';
-//$config['smtp_pass'] = 'biipmisupport@123';
-
 $config['smtp_host'] = 'ssl://smtp.gmail.com';
 $config['smtp_port'] = '465';
-$config['smtp_user'] = 'payments@xprienz.com';
-$config['smtp_pass'] = 'biipmiSG2016';
+$config['smtp_user'] = 'biipmisg2020@gmail.com';
+$config['smtp_pass'] = 'biipmisupport@123';
+
+//$config['smtp_host'] = 'ssl://smtp.gmail.com';
+//$config['smtp_port'] = '465';
+//$config['smtp_user'] = 'payments@xprienz.com';
+//$config['smtp_pass'] = 'biipmiSG2016';
 
 //$config['smtp_host'] = 'ssl://mail.biipmi.co';
 //$config['smtp_port'] = '465';
