@@ -3302,7 +3302,11 @@ if (!empty($tenant_details->tenant_contact_num)) {
         $result->payment_due_details = $res;
 
         $this->load->helper('pdf_reports_helper');
-        generate_company_pdf_invoice_all($result);
+        if($tenant_id == 'T17'){
+            generate_company_pdf_invoice_everest($result);
+        }else{
+            generate_company_pdf_invoice_all($result);
+        }
     }
     /**
      * function export company generate invoice
