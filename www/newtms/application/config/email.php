@@ -21,7 +21,7 @@ $config['protocol'] = 'smtp';
 //$config['smtp_port'] = '465';
 //$config['smtp_user'] = 'biipbytedns@gmail.com';
 //$config['smtp_pass'] = 'qwertyuiop@123';
-
+///////currently added smtp detaiks for gmail by shubhranshu
 $config['smtp_host'] = 'ssl://smtp.gmail.com';
 $config['smtp_port'] = '465';
 $config['smtp_user'] = 'biipmisg2020@gmail.com';
