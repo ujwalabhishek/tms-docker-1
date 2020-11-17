@@ -302,6 +302,7 @@ if (!empty($tax_error)) {
                         <?php
                         $occupation = fetch_metavalues_by_category_id(Meta_Values::OCCUPATION);
                         $occupation_options[''] = 'Select';
+                        echo TENANT_ID;exit;
                         if(TENANT_ID=='T17' || TENANT_ID=='T20'){
                             foreach ($occupation as $item):
                              if($item['parameter_id']=='CLWRK_04' || $item['parameter_id']=='SWASAM_05'){
