@@ -7,7 +7,7 @@ if (!defined('BASEPATH'))
  * This is the controller class for course listing based  on different  parameters. 
  */
 
-class Course_public extends CI_Controller {
+class course_public extends CI_Controller {
 
     public function __construct() {
 
@@ -20,7 +20,7 @@ class Course_public extends CI_Controller {
         $this->load->model('meta_values');
         $this->load->model('manage_tenant_model', 'manage_tenant');
         $host=$_SERVER['HTTP_HOST'];
-        if($host != 'biipmi.co'){
+        if($host != 'xprienz.net'){
             $tenent_details = $this->course_model->get_tenant_details();
         }
         $this->session->set_userdata('public_tenant_details', $tenent_details);
@@ -31,13 +31,12 @@ class Course_public extends CI_Controller {
     /*
      * This function loads the initial list view page for courses.
      */
-
     public function index() {
        
         ////////////added by shubhranshu to show the landing page for all tenants////////////
 
         $host=$_SERVER['HTTP_HOST'];
-        if($host == 'biipmi.co'){
+        if($host == 'xprienz.net'){
             $data['page_title'] = 'BIIPMI Training Management Portal';
             $data['tenants'] = $this->manage_tenant->list_all_tenants_for_landing_page();
             $this->load->view('landing_page', $data);
@@ -194,12 +193,16 @@ class Course_public extends CI_Controller {
 
             $status_lookup_location[$value['parameter_id']] = $value['category_name'];
         }
+        
         foreach ($data['tabledata'] as $key => $cl) {
+            
             $data['class_count'][$cl['class_id']] = $booked = $this->course_model->get_course_class_count($course_id, $cl['class_id']);
             $available = $cl['total_seats'] - $booked;
             $available = ($available < 0) ? 0 : $available;
             $data['tabledata'][$key]['available'] = $available;
+           
         }
+       
         foreach ($data['tabledata'] as $key => $cl) {
             $data['tabledata'][$key]['crse_manager'] = $this->course_model->get_managers($cl['training_aide']);
         }
@@ -207,6 +210,7 @@ class Course_public extends CI_Controller {
             $data['tabledata'][$key]['classroom_trainer'] = $this->course_model->get_trainers($cl['classroom_trainer']);
         }
         $data['status_lookup_language'] = $status_lookup_language;
+        
         $data['status_lookup_location'] = $status_lookup_location;
         $data['course_name'] = $this->course_model->get_course_name($course_id);
         $data['main_content'] = 'course_public/course_class_schedule';
@@ -563,6 +567,8 @@ class Course_public extends CI_Controller {
 
         $this->load->view('layout_public', $data);
     }
+    
+    
 
 //end
 //  skm code for check nric is present in db or not start    
@@ -610,6 +616,7 @@ class Course_public extends CI_Controller {
      */
 
     public function referral_credentials1($course_id=0, $class_id=0) {
+        extract($_POST);
          ////////////added by shubhranshu to move to admin page if the user is not a trainee////////////
         $user_role = $this->session->userdata('userDetails')->role_id ?? '';
         if($user_role != ''){
@@ -620,6 +627,7 @@ class Course_public extends CI_Controller {
         ////////////////////////////////////////////////////////////////////////////////////////
         unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file'));// added by shubhranshu to delete the captcha file
         $session_user_id = $this->session->userdata('userDetails')->user_id;
+    
         if (!empty($session_user_id)) {
             redirect('register_enroll/' . $course_id . '/' . $class_id);
         } else {
@@ -638,9 +646,12 @@ class Course_public extends CI_Controller {
 
                 $data['post'] = 1;
                 $submit = $this->input->post('submit');
-
+                $enrolment = $this->input->post('enrolment');
                 $this->load->library('form_validation');
+                
                 $this->_refer_friend_server_validation(1, 1);
+                
+                
 
                 if ($this->form_validation->run() == TRUE) {
                     $this->session->unset_userdata('captcha_key');
@@ -676,7 +687,7 @@ class Course_public extends CI_Controller {
 //                    }
                 }
             }
-            $flag;
+            
             if ($flag == 0) {
                 $data['course_id'] = $course_id;
                 $data['class_id'] = $class_id;
@@ -3590,8 +3601,6 @@ class Course_public extends CI_Controller {
         return $this->load->view('layout_public', $data);
     }
     
-    
-    
     public function all_course_class()
     {
         $data['page_title'] = 'Course Schedule List';
@@ -3650,13 +3659,11 @@ class Course_public extends CI_Controller {
         $data['main_content'] = 'course_public/all_course_class_schedule';
         $this->load->view('layout_public', $data);
     }
-    
-    
     ///////////added by shubhranshu for new requirement for elearning
     
     public function class_member_check_elearning($course_id = null, $class_id = null) {
        $SGPTIME = date('H');
-       
+       $SGPTIME =9;
        if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
         
          $data['page_title'] = 'Enrollment';
@@ -3686,7 +3693,7 @@ class Course_public extends CI_Controller {
 
          $this->load->view('layout_public_new', $data);
        }else{
-            echo "<div style='font-size: 24px;border: 5px solid grey;padding: 100px;text-align: center;color: red;'>Sorry ! This page is Available Only Between 8:00AM to 10:00 AM SGT.<div style='padding:18px;color:black'>".date('Y-m-d H:i:s')." SGT</div></div><br>";exit;
+            echo "<div style='font-size: 24px;border: 5px solid grey;padding: 100px;text-align: center;color: red;'>Sorry ! This page is only Available During 8:00AM to 10:00 AM Only.<div style='padding:18px;color:black'>".date('Y-m-d H:i:s')."SGT</div></div><br>";exit;
        }
     }
     
@@ -3881,7 +3888,7 @@ class Course_public extends CI_Controller {
             redirect('course_public/class_member_check_elearning');
         }
         $SGPTIME = date('H');
-        
+        $SGPTIME =9;
         if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
             $data['page_title'] = 'Trainee registration';
 
@@ -3900,7 +3907,7 @@ class Course_public extends CI_Controller {
             redirect('course_public/class_member_check_elearning');
         }
          $SGPTIME = date('H');
-         
+         $SGPTIME =9;
         if ($SGPTIME >= 8 && $SGPTIME < 10) {  /////site will be only available during 8 to 10am
             $data['page_title'] = 'Update Trainee';
 
@@ -4013,15 +4020,6 @@ class Course_public extends CI_Controller {
             redirect('course_public/class_member_check_elearning');
         }
     }
-
 }
-
-/*
-
-     * End  of  the File
-
-     * Location:application/controllers/courses
-
-     */
 
     
