@@ -249,7 +249,7 @@ if (isset($_COOKIE['remember_me'])) {
                         <!--<button type="button" class="cancelbtn">Cancel</button>-->
                         <center>
                         <?php 
-                        if($class_id!='' && $course_id!='' && TENANT_ID == 'T02')
+                        if($class_id!='' && $course_id!='')
                         {
                         ?> 
                         <a href="<?php echo site_url();?>course_public/register_enroll/<?php echo $course_id; ?>/<?php echo $class_id; ?>"><button type="button" style='font-size: 18px!important;' class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>Dont Have an Account? Click On </button></a>
