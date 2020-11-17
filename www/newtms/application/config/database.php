@@ -76,7 +76,7 @@ $dynamic_db_data = fetch_dynamic_db_details();
 //print_r($dynamic_db_data);exit;
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '172.19.0.3',
+	'hostname' => '172.19.0.2',
 	'username' => $dynamic_db_data->tenant_db_user,
 	'password' => base64_decode($dynamic_db_data->tenant_db_password),
 //	'username' => 'biipmico_tms',
