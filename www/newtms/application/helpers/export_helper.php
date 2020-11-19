@@ -5385,13 +5385,12 @@ function export_enrolment_report_for_tpg_full($result, $tenant_id) {
     );
     $sheet->getStyle('A2:Y2')->getFont()->setBold(true);
     $sheet->setCellValue('A2', 'Sl#');
-    $sheet->mergeCells('B3:P3');
     $sheet->getStyle('B3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment ::HORIZONTAL_CENTER);
-    $rn = 4;
+    $rn = 3;
     foreach ($result as $row) {
         
 
-        $sheet->setCellValue('A' . $rn, $rn - 3);
+        $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, $row->TraineeIDType);
         $sheet->setCellValue('C' . $rn, $row->TraineeID);
         $sheet->setCellValue('D' . $rn, $row->DateofBirth);
