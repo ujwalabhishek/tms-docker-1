@@ -96,24 +96,24 @@
                 <thead>
                    
                     <tr>
-                        <th width="5%" class="th_header">Trainee ID Type</th>
-                        <th width="5%" class="th_header">Trainee ID</th>
-                        <th width="5%" class="th_header">Date Of Birth</th>
-                        <th width="5%" class="th_header">Trainee Name</th>
-                        <th width="5%" class="th_header">Course Run</th>
+                        <th width="5%" class="">Trainee ID Type</th>
+                        <th width="5%" class="">Trainee ID</th>
+                        <th width="5%" class="">Date Of Birth</th>
+                        <th width="5%" class="">Trainee Name</th>
+                        <th width="5%" class="">Course Run</th>
                         <!--<th width="5%" class="th_header">Trainee Email</th>-->
-                        <th width="5%" class="th_header">Trainee Phone Country Code</th>
-                        <th width="5%" class="th_header">Trainee Phone Area Code</th>
-                        <th width="5%" class="th_header">Trainee Phone</th>
-                        <th width="5%" class="th_header">Sponsorship Type</th>
+                        <th width="5%" class="">Trainee Phone Country Code</th>
+                        <th width="5%" class="">Trainee Phone Area Code</th>
+                        <th width="5%" class="">Trainee Phone</th>
+                        <th width="5%" class="">Sponsorship Type</th>
                         
-                        <th width="5%" class="th_header">Employer UEN</th>
-                        <th width="5%" class="th_header">Employer Contact Name</th>
-                        <th width="5%" class="th_header">Employer Phone Country Code</th>
-                        <th width="5%" class="th_header">Employer Phone Area Code</th>
-                        <th width="5%" class="th_header">Employer Phone</th>
+                        <th width="5%" class="">Employer UEN</th>
+                        <th width="5%" class="">Employer Contact Name</th>
+                        <th width="5%" class="">Employer Phone Country Code</th>
+                        <th width="5%" class="">Employer Phone Area Code</th>
+                        <th width="5%" class="">Employer Phone</th>
                         <!--<th width="15%" class="th_header">Employer Contact Email</th>-->
-                        <th width="5%" class="th_header">Course Fee Discount Amount</th>
+                        <th width="5%" class="">Course Fee Discount Amount</th>
                         <!--<th width="5%" class="th_header">Fee Collection Status</th>-->
                     </tr>
                 </thead>
