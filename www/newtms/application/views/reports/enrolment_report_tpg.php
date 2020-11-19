@@ -119,10 +119,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    $err_msg = 'There are no trainees enrolled to any class currently.';
-                    if (!empty($_GET)) {
-                        $err_msg = 'No data available for the search criteria entered.';
-                    }
+                   
                     if (!empty($tabledata)) 
                     {
                         foreach ($tabledata as $row) 
@@ -152,7 +149,7 @@
                     } 
                     else 
                     {
-                        $err_msg=$error_msg ? $error_msg : $err_msg;/// added by shubhranshu to remove the classtrainee list on 26/11/2018
+                        $err_msg=$error_msg;/// added by shubhranshu to remove the classtrainee list on 26/11/2018
                         echo '<tr><td colspan="17" class="error" style="text-align: center">' . $err_msg . '</td></tr>';
                     }
                     ?>
