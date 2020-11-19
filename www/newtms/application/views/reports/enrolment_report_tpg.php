@@ -32,7 +32,7 @@
             <tbody>
                 <tr>
                     <td class="td_heading">Course Name:</td>
-                    <td colspan="3">
+                    <td colspan="4">
                         <?php
                         $options = array();
                         $options[''] = 'Select';
