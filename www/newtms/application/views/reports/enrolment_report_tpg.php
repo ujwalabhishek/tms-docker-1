@@ -44,6 +44,7 @@
                         $js = 'id="course" ';
                         echo form_dropdown('course', $options, $this->input->get('course'), $js);
                         ?>
+                        <span class="course_err"></span>
                     </td>                    
                 </tr>                
                 <tr>
@@ -58,10 +59,11 @@
                         $js = 'id="class" ';
                         echo form_dropdown('class', $options, $this->input->get('class'), $js);
                         ?>
+                        <span class="class_err"></span>
                     </td>
                     <td>
                     <span class="pull-right">
-                            <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
+                            <button type="button" value="Search" class="srch_btn btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
                         </span>
                     </td>
                 </tr>
@@ -74,15 +76,12 @@
         <div class="table-responsive">
             
 
-            <?php if (count($tabledata) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['CLTRAINE'])) { ?>                    
+            <?php if (count($tabledata) > 0) { ?>                    
                 <div class="add_button98 pull-right">
-                    <a href="<?php echo base_url(); ?>class_trainee/export_classtrainee_page<?php echo $export_url; ?>" class="small_text1" onclick="return exportValidate()">
-                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export Page Fields</span>
+                    <a href="<?php echo base_url(); ?>reports/export_enrolment_report_for_tpg<?php echo $export_url; ?>" class="small_text1" onclick="return exportValidate()">
+                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export To XLS</span>
                     </a> &nbsp;&nbsp; 
-                    <a href="<?php echo base_url(); ?>class_trainee/export_classtrainee_full<?php echo $export_url; ?>" class="small_text1" onclick="return exportValidate()><span class="label label-default black-btn">
-                   
-                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export All Fields</span>
-                    </a>
+                    
                 </div>                  
             <?php } ?>
         </div>
@@ -167,3 +166,43 @@
     </div>
 </div>
 </div>
+
+<script>
+      $('#search_form').on('submit',function() {
+        form_check = 1;
+        //alert("form click");
+        var status=form_validate(true);//alert(status);
+        if(status){
+        var self = $(this),
+        button = self.find('input[type="submit"],button'),
+        submitValue = button.data('submit-value');
+        button.attr('disabled','disabled').html('Please Wait..');
+        return true;
+       }else{
+           return false;
+       }
+    });  
+    
+    $('.srch_btn').click(function(){
+        if($('#course').val()== ''){
+            $('.course_err').html('required');
+            $status = 0;
+        }else{
+            $('.course_err').html('');
+            $status = 1;
+        }
+        if($('#class').val()== ''){
+             $('.class_err').html('required');
+             $status = 0;
+        }else{
+            $('.class_err').html('');
+            $status = 1;
+        }
+        
+        if($status == 1){
+            $('#search_form').submit();
+        }
+    });
+    
+ </script>
+    
