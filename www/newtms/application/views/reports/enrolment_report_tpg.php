@@ -63,7 +63,7 @@
                     </td>
                     <td>
                     <span class="pull-right">
-                            <button type="button" value="Search" class="srch_btn btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
+                            <button type="submit" value="Search" class="srch_btn btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
                         </span>
                     </td>
                 </tr>
@@ -183,25 +183,23 @@
        }
     });  
     
-    $('.srch_btn').click(function(){
+    function form_validate(){
         if($('#course').val()== ''){
             $('.course_err').html('<span style="color:red">[required]</span>');
-            $status = 0;
+            $status = false;
         }else{
             $('.course_err').html('');
-            $status = 1;
+            $status = true;
         }
         if($('#class').val()== ''){
              $('.class_err').html('<span style="color:red">[required]</span>');
-             $status = 0;
+             $status = false;
         }else{
             $('.class_err').html('');
-            $status = 1;
+            $status = true;
         }
         
-        if($status == 1){
-            $('#search_form').submit();
-        }
+        return $status;
     });
     
  </script>
