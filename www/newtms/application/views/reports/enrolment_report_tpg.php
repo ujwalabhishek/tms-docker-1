@@ -112,7 +112,7 @@
                         <th width="5%" class="th_header">Employer Phone Country Code</th>
                         <th width="5%" class="th_header">Employer Phone Area Code</th>
                         <th width="5%" class="th_header">Employer Phone</th>
-                        <th width="15%" class="th_header">Employer Contact Email</th>
+                        <!--<th width="15%" class="th_header">Employer Contact Email</th>-->
                         <th width="5%" class="th_header">Course Fee Discount Amount</th>
                         <!--<th width="5%" class="th_header">Fee Collection Status</th>-->
                     </tr>
@@ -141,9 +141,9 @@
                             <td><?php echo $row->EmployerPhoneCountryCode;?></td>
                             <td><?php echo $row->EmployerPhoneAreaCode;?></td>
                             <td><?php echo $row->EmployerPhone;?></td>
-                            <td><?php echo $row->EmployerContactEmail;?></td>
+                            <!--<td><?php //echo $row->EmployerContactEmail;?></td>-->
                             <td><?php echo $row->CourseFeeDiscountAmount;?></td>
-                            <!--<td><?php //echo $row['Fee Collection Status'] ;?></td>-->
+                            <!--<td><?php //echo $row->FeeCollectionStatus;?></td>-->
                         </tr>
                        <?php }
                     } 
