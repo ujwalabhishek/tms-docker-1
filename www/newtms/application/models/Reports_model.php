@@ -3649,10 +3649,9 @@ SELECT  {$calc_rows} c.crse_name,
         JOIN tms_users tu ON tu.user_id = ce.user_id 
         left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
         left join company_master cm on cm.company_id=ce.company_id
-        WHERE cc . tenant_id = 'T02' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT')                    
+        WHERE cc . tenant_id = '$tenant_id' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT')                    
         AND c.course_id ='$course_id'
-        AND cc.class_id = '$class_id'
-        AND ce.tenant_id='$tenant_id'";
+        AND cc.class_id = '$class_id'";
         $result = $this->db->query($query)->result();
 
         return $result;
