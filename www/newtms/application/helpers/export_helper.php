@@ -5355,7 +5355,7 @@ function export_enrolment_report_for_tpg_full($result, $tenant_id) {
     $sheet->getStyle('B1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment:: HORIZONTAL_LEFT);
     $sheet->setCellValue('B1', 'List of all Enrolment Report As On ' . date('M j Y, l'));
     $sheet->getStyle('A1:Y1')->getFont()->setBold(true);
-    $sheet->setCellValue('A2', '');
+    $sheet->setCellValue('A2', 'Sl#');
     $sheet->setCellValue('B2', 'Trainee ID Type');
     $sheet->setCellValue('C2', 'Trainee ID');
     $sheet->setCellValue('D2', 'Date of Birth');
@@ -5374,8 +5374,6 @@ function export_enrolment_report_for_tpg_full($result, $tenant_id) {
     $sheet->setCellValue('Q2', 'Employer Contact Email');
     $sheet->setCellValue('R2', 'Course Fee Discount Amount');
     $sheet->setCellValue('S2', 'Fee Collection Status');
-    $sheet->mergeCells('Q2:Y2');
-    $sheet->getStyle('Q2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
     $sheet->getStyle('A2:Y2')->applyFromArray(
             array('fill' => array(
@@ -5384,8 +5382,7 @@ function export_enrolment_report_for_tpg_full($result, $tenant_id) {
             )
     );
     $sheet->getStyle('A2:Y2')->getFont()->setBold(true);
-    $sheet->setCellValue('A2', 'Sl#');
-    $sheet->getStyle('B3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment ::HORIZONTAL_CENTER);
+
     $rn = 3;
     foreach ($result as $row) {
         
