@@ -185,14 +185,14 @@
     
     $('.srch_btn').click(function(){
         if($('#course').val()== ''){
-            $('.course_err').html('required');
+            $('.course_err').html('<span style="color:red">required</span>');
             $status = 0;
         }else{
             $('.course_err').html('');
             $status = 1;
         }
         if($('#class').val()== ''){
-             $('.class_err').html('required');
+             $('.class_err').html('<span style="color:red">required</span>');
              $status = 0;
         }else{
             $('.class_err').html('');
