@@ -101,7 +101,7 @@
                         <th width="5%" class="th_header">Date Of Birth</th>
                         <th width="5%" class="th_header">Trainee Name</th>
                         <th width="5%" class="th_header">Course Run</th>
-                        <th width="5%" class="th_header">Trainee Email</th>
+                        <!--<th width="5%" class="th_header">Trainee Email</th>-->
                         <th width="5%" class="th_header">Trainee Phone Country Code</th>
                         <th width="5%" class="th_header">Trainee Phone Area Code</th>
                         <th width="5%" class="th_header">Trainee Phone</th>
@@ -134,7 +134,7 @@
                             <td><?php echo $row->DateofBirth;?></td>
                             <td><?php echo $row->TraineeName ;?></td>
                             <td><?php echo $row->CourseRun ;?></td>
-                            <td><?php echo $row->TraineeEmail ;?></td>
+                            <!--<td><?php //echo $row->TraineeEmail ;?></td>-->
                             <td><?php echo $row->TraineePhoneCountryCode;?></td>
                             <td><?php echo $row->TraineePhoneAreaCode;?></td>
                             <td><?php echo $row->TraineePhone;?></td>
@@ -185,14 +185,14 @@
     
     $('.srch_btn').click(function(){
         if($('#course').val()== ''){
-            $('.course_err').html('<span style="color:red">required</span>');
+            $('.course_err').html('<span style="color:red">[required]</span>');
             $status = 0;
         }else{
             $('.course_err').html('');
             $status = 1;
         }
         if($('#class').val()== ''){
-             $('.class_err').html('<span style="color:red">required</span>');
+             $('.class_err').html('<span style="color:red">[required]</span>');
              $status = 0;
         }else{
             $('.class_err').html('');
