@@ -23,7 +23,7 @@
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class-trainee.png"/> Enrolment Report TPG</h2>
     <?php
     $atr = 'id="search_form" name="search_form" method="get"';
-    echo form_open("class_trainee", $atr);
+    echo form_open("reports/enrolment_report_for_tpg", $atr);
     ?>  
     <div class="table-responsive">
         <h5  class="sub_panel_heading_style"><span class="glyphicon glyphicon-search"></span> Search By</h5>
@@ -58,6 +58,11 @@
                         $js = 'id="class" ';
                         echo form_dropdown('class', $options, $this->input->get('class'), $js);
                         ?>
+                    </td>
+                    <td>
+                    <span class="pull-right">
+                            <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
+                        </span>
                     </td>
                 </tr>
                
