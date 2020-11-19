@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js"></script>
+
 <style>
     table td{
         font-size: 11px;
@@ -201,6 +201,30 @@
         
         return $status;
     }
+    
+    $('#course').change(function() {
+        $class = $('#class');
+        $.ajax({
+            type: 'post',
+            url: $baseurl + 'classes/get_course_classes_json',
+            data: {course_id: $('#course').val()},
+            dataType: "json",
+            beforeSend: function() {
+                $class.html('<option value="">Select</option>');
+            },
+            success: function(res) {
+                if (res != '') {
+                    $class.html('<option value="">All</option>');
+                    $class.removeAttr('disabled');
+                } else {
+                    $class.html('<option value="">Select</option>');
+                    $class.attr('disabled', 'disabled');
+                }
+                $.each(res, function(i, item) {
+                    $class.append('<option value="' + item.key + '">' + item.value + '</option>');
+                });
+            }
+        });
     
  </script>
     
