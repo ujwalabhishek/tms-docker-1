@@ -3610,36 +3610,36 @@ SELECT  {$calc_rows} c.crse_name,
 	 WHEN tu.tax_code_type like '%SNG_2%' THEN 'FIN' 
 	 WHEN tu.tax_code_type like '%SNG_3%' THEN 'Others'
 	 WHEN tu.tax_code_type like '%SNG_4%' THEN 'Others' ELSE NULL END
-	) as 'Trainee ID Type',
-        tu.tax_code as 'Trainee ID',
-        DATE_FORMAT(tup.dob,'%d-%m-%Y') as 'Date of Birth',
-        tup.first_name as 'Trainee Name',
-        cc.class_name as 'Course Run',
-        tu.registered_email_id as 'Trainee Email',
-        '65' as 'Trainee Phone Country Code',            
-        ' ' as 'Trainee Phone Area Code',
-        tup.contact_number as 'Trainee Phone',			
+	) as 'TraineeIDType',
+        tu.tax_code as 'TraineeID',
+        DATE_FORMAT(tup.dob,'%d-%m-%Y') as 'DateofBirth',
+        tup.first_name as 'TraineeName',
+        cc.class_name as 'CourseRun',
+        tu.registered_email_id as 'TraineeEmail',
+        '65' as 'TraineePhoneCountryCode',            
+        ' ' as 'TraineePhoneAreaCode',
+        tup.contact_number as 'TraineePhone',			
         (CASE 
         WHEN ei.inv_type like '%INVINDV%' THEN 'Individual' 
         WHEN ei.inv_type like '%INVCOMALL%' THEN 'Employer' 
         ELSE NULL END
-        ) as 'Sponsorship Type',
-        COALESCE(cm.comp_regist_num,'') as 'Employer UEN',
-        COALESCE(cm.comp_attn,'') as 'Employer Contact Name',
+        ) as 'SponsorshipType',
+        COALESCE(cm.comp_regist_num,'') as 'EmployerUEN',
+        COALESCE(cm.comp_attn,'') as 'EmployerContactName',
         (CASE 
         WHEN ei.inv_type like '%INVINDV%' THEN ' ' 
         WHEN ei.inv_type like '%INVCOMALL%' THEN '65' 
         ELSE NULL END
-        ) as 'Employer Phone Country Code',
-        ' ' as 'Employer Phone Area Code',
-        COALESCE(cm.comp_phone,'') as 'Employer Phone',
-        COALESCE(cm.comp_email,'') as 'Employer Contact Email',
-        ceil((due.class_fees * due.discount_rate)) DIV 100 as 'Course Fee Discount Amount',
+        ) as 'EmployerPhoneCountryCode',
+        ' ' as 'EmployerPhoneAreaCode',
+        COALESCE(cm.comp_phone,'') as 'EmployerPhone',
+        COALESCE(cm.comp_email,'') as 'EmployerContactEmail',
+        ceil((due.class_fees * due.discount_rate)) DIV 100 as 'CourseFeeDiscountAmount',
         (CASE 
          WHEN ce.payment_status like 'PARTPAID' THEN 'Partial Payment' 
          WHEN ce.payment_status like 'PAID' THEN 'Full Payment' 
          WHEN ce.payment_status like 'NOTPAID' THEN 'Pending Payment' ELSE NULL END
-        ) as 'Fee Collection Status'
+        ) as 'FeeCollectionStatus'
 
         FROM ( course_class cc)
         JOIN course c ON c.course_id = cc.course_id 
@@ -3654,7 +3654,7 @@ SELECT  {$calc_rows} c.crse_name,
         AND cc.class_id = '$class_id'
         AND ce.tenant_id='$tenant_id'";
         $result = $this->db->query($query)->result();
-print_r($result);exit;
+
         return $result;
     }
 

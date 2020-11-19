@@ -140,23 +140,23 @@
                         foreach ($tabledata as $row) 
                         {   
                             ?>
-                   <td><?php echo $row['Trainee ID Type'] ;?></td>
-                   <td><?php echo $row['Trainee ID'] ;?></td>
-                   <td><?php echo $row['Date of Birth'] ;?></td>
-                   <td><?php echo $row['Trainee Name'] ;?></td>
-                   <td><?php echo $row['Course Run'] ;?></td>
-                   <td><?php echo $row['Trainee Email'] ;?></td>
-                   <td><?php echo $row['Trainee Phone Country Code'] ;?></td>
-                   <td><?php echo $row['Trainee Phone Area Code'] ;?></td>
-                   <td><?php echo $row['Trainee Phone'] ;?></td>
-                   <td><?php echo $row['Sponsorship Type'] ;?></td>
-                   <td><?php echo $row['Employer UEN'] ;?></td>
-                   <td><?php echo $row['Employer Contact Name'] ;?></td>
-                   <td><?php echo $row['Employer Phone Country Code'] ;?></td>
-                   <td><?php echo $row['Employer Phone Area Code'] ;?></td>
-                   <td><?php echo $row['Employer Phone'] ;?></td>
-                   <td><?php echo $row['Employer Contact Email'] ;?></td>
-                   <td><?php echo $row['Course Fee Discount Amount'] ;?></td>
+                   <td><?php echo $row->TraineeIDType;?></td>
+                   <td><?php echo $row->TraineeID ;?></td>
+                   <td><?php echo $row->DateofBirth;?></td>
+                   <td><?php echo $row->TraineeName ;?></td>
+                   <td><?php echo $row->CourseRun ;?></td>
+                   <td><?php echo $row->TraineeEmail ;?></td>
+                   <td><?php echo $row->TraineePhoneCountryCode;?></td>
+                   <td><?php echo $row->TraineePhoneAreaCode;?></td>
+                   <td><?php echo $row->TraineePhone;?></td>
+                   <td><?php echo $row->SponsorshipType;?></td>
+                   <td><?php echo $row->EmployerUEN;?></td>
+                   <td><?php echo $row->EmployerContactName;?></td>
+                   <td><?php echo $row->EmployerPhoneCountryCode;?></td>
+                   <td><?php echo $row->EmployerPhoneAreaCode;?></td>
+                   <td><?php echo $row->EmployerPhone;?></td>
+                   <td><?php echo $row->EmployerContactEmail;?></td>
+                   <td><?php echo $row->CourseFeeDiscountAmount;?></td>
                    <!--<td><?php //echo $row['Fee Collection Status'] ;?></td>-->
                    
                        <?php }
