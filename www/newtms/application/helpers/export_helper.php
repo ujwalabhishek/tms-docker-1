@@ -5376,7 +5376,6 @@ function export_enrolment_report_for_tpg_full($result, $tenant_id) {
     $sheet->setCellValue('S2', 'Fee Collection Status');
     $sheet->mergeCells('Q2:Y2');
     $sheet->getStyle('Q2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-    $sheet->setCellValue('Y2', 'Trainee Details');
 
     $sheet->getStyle('A2:Y2')->applyFromArray(
             array('fill' => array(
@@ -5388,15 +5387,6 @@ function export_enrolment_report_for_tpg_full($result, $tenant_id) {
     $sheet->setCellValue('A2', 'Sl#');
     $sheet->mergeCells('B3:P3');
     $sheet->getStyle('B3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment ::HORIZONTAL_CENTER);
-
-
-    $sheet->getStyle('A3:Y3')->applyFromArray(
-            array('fill' => array(
-                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                    'color' => array('argb' => 'FFCCCCFF'))
-            )
-    );
-    $sheet->getStyle('A3:Y3')->getFont()->setBold(true);
     $rn = 4;
     foreach ($result as $row) {
         
