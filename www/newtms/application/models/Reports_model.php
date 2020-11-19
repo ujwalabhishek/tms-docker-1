@@ -3654,7 +3654,7 @@ SELECT  {$calc_rows} c.crse_name,
         AND cc.class_id = '$class_id'
         AND ce.tenant_id='$tenant_id'";
         $result = $this->db->query($query)->result();
-
+print_r($result);exit;
         return $result;
     }
 
