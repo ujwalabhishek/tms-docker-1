@@ -121,7 +121,7 @@
                         <th width="5%" class="th_header">Employer Phone</th>
                         <th width="15%" class="th_header">Employer Contact Email</th>
                         <th width="5%" class="th_header">Course Fee Discount Amount</th>
-                        <th width="5%" class="th_header">Fee Collection Status</th>
+                        <!--<th width="5%" class="th_header">Fee Collection Status</th>-->
                     </tr>
                 </thead>
                 <tbody>
@@ -152,14 +152,14 @@
                    <td><?php echo $row['Employer Phone'] ;?></td>
                    <td><?php echo $row['Employer Contact Email'] ;?></td>
                    <td><?php echo $row['Course Fee Discount Amount'] ;?></td>
-                   <td><?php echo $row['Fee Collection Status'] ;?></td>
+                   <!--<td><?php //echo $row['Fee Collection Status'] ;?></td>-->
                    
                        <?php }
                     } 
                     else 
                     {
                         $err_msg=$error_msg ? $error_msg : $err_msg;/// added by shubhranshu to remove the classtrainee list on 26/11/2018
-                        echo '<tr><td colspan="10" class="error" style="text-align: center">' . $err_msg . '</td></tr>';
+                        echo '<tr><td colspan="17" class="error" style="text-align: center">' . $err_msg . '</td></tr>';
                     }
                     ?>
                 </tbody>
