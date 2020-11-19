@@ -5332,7 +5332,7 @@ function export_sales_report_xls($tabledata) {
     $objWriter->save('php://output');
 }
 
-
+/////added by shubhranshu for new enrolment report tpg xls on 19.11.2020
 function export_enrolment_report_for_tpg_full($result, $tenant_id) {
     $CI = & get_instance();
     $CI->load->model('course_model', 'course');

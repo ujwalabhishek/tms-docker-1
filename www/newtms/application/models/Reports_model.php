@@ -3601,7 +3601,7 @@ SELECT  {$calc_rows} c.crse_name,
 
         return $result;
     }
-    
+    /////added by shubhranshu for new enrolment report tpg on 19.11.2020
     public function enrolment_report_tpg_fetchdata($tenant_id,$class_id,$course_id) {
 
         $query = "SELECT
