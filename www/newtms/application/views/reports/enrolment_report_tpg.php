@@ -72,18 +72,7 @@
     </div><br>
     <div class="bs-example">
         <div class="table-responsive">
-            <?php
-            if (!empty($tabledata) || !empty($class_status)) { ?>
-                <strong>Filter by Class Status:</strong>
-                <?php
-                $cls_status_options[''] = 'All';
-                $cls_status = fetch_metavalues_by_category_id(Meta_Values::CLASS_TRAINEE_FILTER);
-                foreach ($cls_status as $val):
-                    $cls_status_options[$val['parameter_id']] = $val['category_name'];
-                endforeach;
-                echo form_dropdown('class_status', $cls_status_options, $this->input->get('class_status'), 'id="class_status"');
-            }
-            ?> 
+            
 
             <?php if (count($tabledata) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['CLTRAINE'])) { ?>                    
                 <div class="add_button98 pull-right">
@@ -140,25 +129,26 @@
                         foreach ($tabledata as $row) 
                         {   
                             ?>
-                   <td><?php echo $row->TraineeIDType;?></td>
-                   <td><?php echo $row->TraineeID ;?></td>
-                   <td><?php echo $row->DateofBirth;?></td>
-                   <td><?php echo $row->TraineeName ;?></td>
-                   <td><?php echo $row->CourseRun ;?></td>
-                   <td><?php echo $row->TraineeEmail ;?></td>
-                   <td><?php echo $row->TraineePhoneCountryCode;?></td>
-                   <td><?php echo $row->TraineePhoneAreaCode;?></td>
-                   <td><?php echo $row->TraineePhone;?></td>
-                   <td><?php echo $row->SponsorshipType;?></td>
-                   <td><?php echo $row->EmployerUEN;?></td>
-                   <td><?php echo $row->EmployerContactName;?></td>
-                   <td><?php echo $row->EmployerPhoneCountryCode;?></td>
-                   <td><?php echo $row->EmployerPhoneAreaCode;?></td>
-                   <td><?php echo $row->EmployerPhone;?></td>
-                   <td><?php echo $row->EmployerContactEmail;?></td>
-                   <td><?php echo $row->CourseFeeDiscountAmount;?></td>
-                   <!--<td><?php //echo $row['Fee Collection Status'] ;?></td>-->
-                   
+                        <tr>
+                            <td><?php echo $row->TraineeIDType;?></td>
+                            <td><?php echo $row->TraineeID ;?></td>
+                            <td><?php echo $row->DateofBirth;?></td>
+                            <td><?php echo $row->TraineeName ;?></td>
+                            <td><?php echo $row->CourseRun ;?></td>
+                            <td><?php echo $row->TraineeEmail ;?></td>
+                            <td><?php echo $row->TraineePhoneCountryCode;?></td>
+                            <td><?php echo $row->TraineePhoneAreaCode;?></td>
+                            <td><?php echo $row->TraineePhone;?></td>
+                            <td><?php echo $row->SponsorshipType;?></td>
+                            <td><?php echo $row->EmployerUEN;?></td>
+                            <td><?php echo $row->EmployerContactName;?></td>
+                            <td><?php echo $row->EmployerPhoneCountryCode;?></td>
+                            <td><?php echo $row->EmployerPhoneAreaCode;?></td>
+                            <td><?php echo $row->EmployerPhone;?></td>
+                            <td><?php echo $row->EmployerContactEmail;?></td>
+                            <td><?php echo $row->CourseFeeDiscountAmount;?></td>
+                            <!--<td><?php //echo $row['Fee Collection Status'] ;?></td>-->
+                        </tr>
                        <?php }
                     } 
                     else 
