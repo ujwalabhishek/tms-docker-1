@@ -40,18 +40,23 @@ function getDecryptedPwd($password) {
  * @return boolean TRUE if success Else Returns FALSE on failure
  */
 function send_mail($to_email_id, $cc_email_id, $mail_subject, $mail_body) {
-    $CI = & get_instance();
-    $CI->load->library('email');
-    $CI->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
-    $CI->email->to($to_email_id);
-    $CI->email->cc($cc_email_id);
-    $CI->email->subject($mail_subject);
-    $CI->email->message($mail_body);
-    if ($CI->email->send()) {
-        return true;
-    } else {
+    if(TENANT_ID == 'T20' || TENANT_ID == 'T17'){////dont sent mail for wab and Everest
         return false;
+    }else{
+        $CI = & get_instance();
+        $CI->load->library('email');
+        $CI->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
+        $CI->email->to($to_email_id);
+        $CI->email->cc($cc_email_id);
+        $CI->email->subject($mail_subject);
+        $CI->email->message($mail_body);
+        if ($CI->email->send()) {
+            return true;
+        } else {
+            return false;
+        }
     }
+    
 }
 
 /**
