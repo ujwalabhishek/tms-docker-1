@@ -17,11 +17,11 @@ $config['protocol'] = 'smtp';
 //$config['smtp_pass'] = 'noreplySG@2019';
 
 //
-//
-$config['smtp_host'] = 'ssl://smtp.gmail.com';
-$config['smtp_port'] = '465';
-$config['smtp_user'] = 'biipmisg2020@gmail.com';
-$config['smtp_pass'] = 'biipmisupport@123';
+////
+//$config['smtp_host'] = 'ssl://smtp.gmail.com';
+//$config['smtp_port'] = '465';
+//$config['smtp_user'] = 'biipmisg2020@gmail.com';
+//$config['smtp_pass'] = 'biipmisupport@123';
 
 $config['mailtype'] = 'html';
 $config['charset'] = 'utf-8';
