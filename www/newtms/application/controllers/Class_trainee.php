@@ -4087,7 +4087,7 @@ class Class_Trainee extends CI_Controller {
                             <ol>
                                 <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Trim finger nails and remove nail polish</li>
-                                <li>Report at center at 8:30 AM to register for class</li>
+                                 '.$li.'
                                 <li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc),
 Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>
                                  <li>Dress code : Covered shoes</li>
@@ -4270,7 +4270,7 @@ Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist 
                             <ol>
                                 <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Trim finger nails and remove nail polish</li>
-                                <li>Report at center at 8:30 AM to register for class</li>
+                                 '.$li.'
                                 <li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc),
 Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>
                                  <li>Dress code : Covered shoes</li>
