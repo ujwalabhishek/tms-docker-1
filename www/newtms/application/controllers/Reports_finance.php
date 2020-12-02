@@ -1359,7 +1359,7 @@ class Reports_finance extends CI_Controller {
 
         $data['tenant'] = $tenant_id;
 
-        
+        $data['err']='Choose Filter To Display The Data';
         
         if (!empty($module)) {//added by shubhranshu due to memory limit issue
             
@@ -1372,9 +1372,11 @@ class Reports_finance extends CI_Controller {
             $totalrows = $this->activitylog->get_activity_log_count_by_tenant_id($tenant_id, $module, $user_id, $com_id, $invid, $user_id, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass);
         
         
-        $this->db->cache_off();
+            $this->db->cache_off();
 
-        $data['tabledata'] = $tabledata;
+            $data['tabledata'] = $tabledata;
+
+            $data['err']='No Activity Available';
         
         }
         
