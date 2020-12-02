@@ -4249,6 +4249,31 @@ Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist 
                                 <li>Trim finger nails and remove nail polish</li>
                                 <li>'.$li.'</li>
                             </ol>';
+                }elseif($tenant_details->tenant_id == 'T02'){
+                        $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
+                         for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
+                        <strong>Class start date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
+                        <br><br>
+                         <strong>Class end date:</strong>
+                        ' . date('M d, Y h:i A', strtotime($classes->class_end_datetime)) . '
+
+                    <br>
+                    <br>
+                        <strong>Location:</strong>
+                        ' . $ClassLoc . '<br><br>
+                        <strong>Contact Details: </strong>
+                        ' . $contact_details . ' <br>
+                    <br>
+                        <strong>Remark *: </strong>
+                            <ol>
+                                <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
+                                <li>Trim finger nails and remove nail polish</li>
+                                <li>Report at center at 8:30 AM to register for class</li>
+                                <li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc),
+Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>
+                                 <li>Dress code : Covered shoes</li>
+                            </ol>';
                 }else{
                    $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
                     $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
