@@ -1271,7 +1271,7 @@ class Reports_finance extends CI_Controller {
 
     public function activity_log() {
         //$this->output->enable_profiler(true);
-        ini_set('memory_limit', '256M');
+        ini_set('memory_limit', '512M');
         $data['sideMenuData'] = fetch_non_main_page_content();
 
 
@@ -1359,19 +1359,25 @@ class Reports_finance extends CI_Controller {
 
         $data['tenant'] = $tenant_id;
 
-        $this->db->cache_on();
-
-        $tabledata = $this->activitylog->get_activity_list_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $module, $user_id, $com_id, $invid, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass);
+        
+        
+        if (!empty($_GET)) {
+            
+            $this->db->cache_on();
+            $tabledata = $this->activitylog->get_activity_list_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $module, $user_id, $com_id, $invid, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass);
 
 
         //$tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
 
-        $totalrows = $this->activitylog->get_activity_log_count_by_tenant_id($tenant_id, $module, $user_id, $com_id, $invid, $user_id, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass);
-
+            $totalrows = $this->activitylog->get_activity_log_count_by_tenant_id($tenant_id, $module, $user_id, $com_id, $invid, $user_id, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass);
+        
+        
         $this->db->cache_off();
 
         $data['tabledata'] = $tabledata;
-
+        
+        }
+        
         $data['sort_order'] = $order_by;
 
         $data['controllerurl'] = 'reports_finance/activity_log/';
