@@ -327,7 +327,7 @@ $ci->load->model('Activity_Log_Model', 'activitylog');
                             <?php
                         }
                     }else {
-                        echo "<tr class='danger'><td colspan='8' style='text-align:center'><label>No Acitivity Available.</label></td></tr>";
+                        echo "<tr class='danger'><td colspan='8' style='text-align:center'><label>".$err."</label></td></tr>";
                     }
                     ?>      
                 </tbody>      
