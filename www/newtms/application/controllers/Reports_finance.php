@@ -1361,7 +1361,7 @@ class Reports_finance extends CI_Controller {
 
         
         
-        if (!empty($_GET)) {
+        if (!empty($module)) {
             
             $this->db->cache_on();
             $tabledata = $this->activitylog->get_activity_list_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $module, $user_id, $com_id, $invid, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass);
