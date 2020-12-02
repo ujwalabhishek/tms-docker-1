@@ -1358,6 +1358,8 @@ class Reports_finance extends CI_Controller {
         $offset = ($pageno * $records_per_page);
 
         $data['tenant'] = $tenant_id;
+        
+        $data['err']='Choose Filter To Display The Data';
 
         if (!empty($module)) {//added by shubhranshu due to memory limit issue
             
