@@ -1325,7 +1325,7 @@ class Reports_finance extends CI_Controller {
 
         $user_id = ($this->input->get('user_id')) ? $this->input->get('user_id') : '';
         
-        $crse_id = ($this->input->get('$crse_id')) ? $this->input->get('$crse_id') : '';
+        $crse_id = ($this->input->get('crse_id')) ? $this->input->get('crse_id') : '';
 
         $com_id = ($this->input->get('com_id')) ? $this->input->get('com_id') : '';
 
