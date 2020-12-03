@@ -1,4 +1,4 @@
-activity<?php
+<?php
 
 class Reports_finance extends CI_Controller {
 
