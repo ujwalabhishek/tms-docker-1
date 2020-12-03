@@ -189,11 +189,11 @@ class Activity_Log_Model extends CI_Model {
             }
             else if($pass!=''){ // when search for reset password
                 $this->db->where('at.act_on',$pass);
-            }
-            
-            if($crse_id !=''){
+            }else if($crse_id !=''){
                 $this->db->where('at.act_on',$crse_id);
             }
+            
+            
             
 
             if ($sort_by) {
