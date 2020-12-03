@@ -1,4 +1,4 @@
-<?php
+activity<?php
 
 class Reports_finance extends CI_Controller {
 
@@ -1324,6 +1324,8 @@ class Reports_finance extends CI_Controller {
         $module = ($this->input->get('module')) ? $this->input->get('module') : '';
 
         $user_id = ($this->input->get('user_id')) ? $this->input->get('user_id') : '';
+        
+        $crse_id = ($this->input->get('$crse_id')) ? $this->input->get('$crse_id') : '';
 
         $com_id = ($this->input->get('com_id')) ? $this->input->get('com_id') : '';
 
@@ -1364,12 +1366,12 @@ class Reports_finance extends CI_Controller {
         if (!empty($module)) {//added by shubhranshu due to memory limit issue
             
             $this->db->cache_on();
-            $tabledata = $this->activitylog->get_activity_list_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $module, $user_id, $com_id, $invid, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass);
+            $tabledata = $this->activitylog->get_activity_list_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $module, $user_id, $com_id, $invid, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass,$crse_id);
 
 
             //$tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
 
-            $totalrows = $this->activitylog->get_activity_log_count_by_tenant_id($tenant_id, $module, $user_id, $com_id, $invid, $user_id, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass);
+            $totalrows = $this->activitylog->get_activity_log_count_by_tenant_id($tenant_id, $module, $user_id, $com_id, $invid, $user_id, $inv_taxcode, $crs, $cls_id, $cls_name, $account_type, $pass,$crse_id);
         
         
             $this->db->cache_off();
