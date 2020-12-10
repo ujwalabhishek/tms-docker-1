@@ -1520,6 +1520,12 @@
         }
     });
        
+    if($tenant_id == 'T02'){
+        $('.claimidcls').html('*');
+    }else{
+        $('.claimidcls').html('');
+    }
+       
     });
     
 </script>
