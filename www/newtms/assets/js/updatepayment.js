@@ -1345,7 +1345,7 @@ function form_validate($retVal) {
                 } 
                 else 
                 {
-                    $retVal=true;
+                    //$retVal=true;
                     
                     remove_err('#cash_amount1');
                     remove_err('#sfc_amount');
@@ -1409,7 +1409,7 @@ function form_validate($retVal) {
                     disp_err('#cheque_amount1', $msg);
                    
                 } else {
-                    $retVal=true;
+                    //$retVal=true;
                     remove_err('#cheque_amount1');
                    
                 }
@@ -1473,7 +1473,7 @@ function form_validate($retVal) {
                     $retVal = false;
                     disp_err('#giro_amount1', $msg);
                 } else {
-                     $retVal=true;
+                     //$retVal=true;
                     remove_err('#giro_amount1');
                    
                    
