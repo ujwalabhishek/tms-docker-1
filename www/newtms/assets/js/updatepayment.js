@@ -1096,7 +1096,7 @@ function form_validate($retVal) {
         }
         $sfcato_amount = $.trim($('#sfcato_amount').val());
         
-        $p_paid = parseFloat($sfcato_amount);
+        $p_paid = parseFloat($sfcato_amount);alert($retVal);
         $remaining_amt=$chk_amount - parseFloat($sfcato_amount);
         $remaining_amt=parseFloat($remaining_amt).toFixed(2);
         if ($sfcato_amount.length == 0) 
@@ -1290,6 +1290,7 @@ function form_validate($retVal) {
         }
     }
     //payment options for SFC 
+    alert($retVal);
     if ($payment_type1 == 'CASH1' || $payment_type1 == 'NETS1') 
     {
        
@@ -1354,6 +1355,7 @@ function form_validate($retVal) {
                 }
             }
         }
+        alert($retVal);
          // check sfc claimed on start
         if($payment_type =='SFC_ATO')
         {
