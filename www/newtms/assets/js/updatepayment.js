@@ -1086,7 +1086,14 @@ function form_validate($retVal) {
 //        }
         /////end of the code
         
-        
+        if($tenant_id == 'T02'){//////below code added by shubhranshu to check if it is xp and sfcid should mandatory  on 10/12/2020
+                if($('#sfc_ato_claim_id').val().length == 0 ){
+                    $retVal = false;
+                    disp_err('#sfc_ato_claim_id');
+                }else{
+                    remove_err('#sfc_ato_claim_id');
+                }
+            }
         $sfcato_amount = $.trim($('#sfcato_amount').val());
         
         $p_paid = parseFloat($sfcato_amount);
