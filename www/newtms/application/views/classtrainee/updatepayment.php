@@ -4,7 +4,7 @@
     $tenant_id ='<?php echo $this->session->userdata('userDetails')->tenant_id; ?>';
 </script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment.js?v=1.15"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment.js?v=1.16"></script>
 <!--<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment_all_tenant.js"></script>-->
 <div class="col-md-10 right-minheight">
     <?php
@@ -1519,7 +1519,7 @@
             });
         }
     });
-       
+       //////below code added by shubhranshu to show the star mark mandatory for sfc claim id  on 10/12/2020
     if($tenant_id == 'T02'){
         $('.claimidcls').html('*');
     }else{
