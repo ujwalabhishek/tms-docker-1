@@ -67,7 +67,7 @@ class accounting extends CI_Controller {
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $this->load->library('form_validation');
             $this->form_validation->set_rules('payment_type', 'Payment Type', 'required');
-            $payment_type = $this->input->post('payment_type');echo $payment_type." ss";exit;
+            $payment_type = $this->input->post('payment_type');
             if ($payment_type == 'CHQ') {
                 $this->form_validation->set_rules('paid_on', 'Paid on', 'required');
                 $this->form_validation->set_rules('cheque_number', 'Cheque number', 'required');
