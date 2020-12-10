@@ -64,10 +64,10 @@ class accounting extends CI_Controller {
          $data['tenant_id'] = $tenant_id;
         $data['companies'] = $this->classTraineeModel->get_notpaid_invoice_company($tenant_id);
         //$data['invoices'] = $this->get_notpaid_invoice(1); ///commented by shubhranshu
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {echo $payment_type." ss";exit;
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $this->load->library('form_validation');
             $this->form_validation->set_rules('payment_type', 'Payment Type', 'required');
-            $payment_type = $this->input->post('payment_type');
+            $payment_type = $this->input->post('payment_type');echo $payment_type." ss";exit;
             if ($payment_type == 'CHQ') {
                 $this->form_validation->set_rules('paid_on', 'Paid on', 'required');
                 $this->form_validation->set_rules('cheque_number', 'Cheque number', 'required');
