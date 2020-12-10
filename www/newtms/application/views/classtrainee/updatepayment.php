@@ -4,7 +4,7 @@
     $tenant_id ='<?php echo $this->session->userdata('userDetails')->tenant_id; ?>';
 </script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment.js?v=1.14"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment.js?v=1.24"></script>
 <!--<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment_all_tenant.js"></script>-->
 <div class="col-md-10 right-minheight">
     <?php
@@ -1091,7 +1091,7 @@
                         </tr>
                         <!--added by shubhranshu for client requirement-->
                         <tr id='sfc_ato_divv'>
-                            <td class="td_heading">SFC(ATO) Claim ID:<span class="required"></span></td>
+                            <td class="td_heading">SFC(ATO) Claim ID:<span class="required claimidcls"></span></td>
                             <td>
                                 <?php
                                 $sfc_ato_claim_id = array(
@@ -1519,6 +1519,12 @@
             });
         }
     });
+       //////below code added by shubhranshu to show the star mark mandatory for sfc claim id  on 10/12/2020
+    if($tenant_id == 'T02'){
+        $('.claimidcls').html('*');
+    }else{
+        $('.claimidcls').html('');
+    }
        
     });
     
