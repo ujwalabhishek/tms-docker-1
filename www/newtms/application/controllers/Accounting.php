@@ -82,7 +82,7 @@ class accounting extends CI_Controller {
                 $this->form_validation->set_rules('gbank_name', 'Bank Name', 'required');
                 $this->form_validation->set_rules('giro_amount', 'Giro Amount', 'required');
             }
-            else if ($payment_type == 'SFC') {
+            else if ($payment_type == 'SFC_ATO') {
                 $this->form_validation->set_rules('sfcclaim_on', 'SFC Claimed', 'required');
                 $this->form_validation->set_rules('sfc_amount', 'SFC Amount', 'required');
                 if($tenant_id == 'T02'){////added by shubhranshu to check if xp mandatory sfc id
