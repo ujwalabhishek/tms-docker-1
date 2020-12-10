@@ -64,7 +64,7 @@ class accounting extends CI_Controller {
          $data['tenant_id'] = $tenant_id;
         $data['companies'] = $this->classTraineeModel->get_notpaid_invoice_company($tenant_id);
         //$data['invoices'] = $this->get_notpaid_invoice(1); ///commented by shubhranshu
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {echo $payment_type." ss";exit;
             $this->load->library('form_validation');
             $this->form_validation->set_rules('payment_type', 'Payment Type', 'required');
             $payment_type = $this->input->get('payment_type');
@@ -82,7 +82,7 @@ class accounting extends CI_Controller {
                 $this->form_validation->set_rules('gbank_name', 'Bank Name', 'required');
                 $this->form_validation->set_rules('giro_amount', 'Giro Amount', 'required');
             }
-            else if ($payment_type == 'SFC_ATO') {echo $payment_type." ss";exit;
+            else if ($payment_type == 'SFC_ATO') {
                 $this->form_validation->set_rules('sfcclaim_on', 'SFC Claimed', 'required');
                 $this->form_validation->set_rules('sfc_amount', 'SFC Amount', 'required');
                 if($tenant_id == 'T02'){////added by shubhranshu to check if xp mandatory sfc id
