@@ -1086,17 +1086,10 @@ function form_validate($retVal) {
 //        }
         /////end of the code
         
-        if($tenant_id == 'T02'){//////below code added by shubhranshu to check if it is xp and sfcid should mandatory  on 10/12/2020
-            if($('#sfc_ato_claim_id').val().length == 0 ){
-                $retVal = false;
-                disp_err('#sfc_ato_claim_id');
-            }else{
-                remove_err('#sfc_ato_claim_id');
-            }
-        }
+        
         $sfcato_amount = $.trim($('#sfcato_amount').val());
         
-        $p_paid = parseFloat($sfcato_amount);alert($retVal);
+        $p_paid = parseFloat($sfcato_amount);
         $remaining_amt=$chk_amount - parseFloat($sfcato_amount);
         $remaining_amt=parseFloat($remaining_amt).toFixed(2);
         if ($sfcato_amount.length == 0) 
@@ -1290,7 +1283,7 @@ function form_validate($retVal) {
         }
     }
     //payment options for SFC 
-    alert($retVal);
+    
     if ($payment_type1 == 'CASH1' || $payment_type1 == 'NETS1') 
     {
        
@@ -1346,7 +1339,7 @@ function form_validate($retVal) {
                 } 
                 else 
                 {
-                    //$retVal=true;
+                    $retVal=true;
                     
                     remove_err('#cash_amount1');
                     remove_err('#sfc_amount');
@@ -1355,7 +1348,7 @@ function form_validate($retVal) {
                 }
             }
         }
-        alert($retVal);
+       
          // check sfc claimed on start
         if($payment_type =='SFC_ATO')
         {
@@ -1365,6 +1358,16 @@ function form_validate($retVal) {
                 disp_err('#sfcatoclaim_on');
             } else {   
                 remove_err('#sfcatoclaim_on');
+            }
+            
+            
+            if($tenant_id == 'T02'){//////below code added by shubhranshu to check if it is xp and sfcid should mandatory  on 10/12/2020
+                if($('#sfc_ato_claim_id').val().length == 0 ){
+                    $retVal = false;
+                    disp_err('#sfc_ato_claim_id');
+                }else{
+                    remove_err('#sfc_ato_claim_id');
+                }
             }
         }
         // end
@@ -1411,7 +1414,7 @@ function form_validate($retVal) {
                     disp_err('#cheque_amount1', $msg);
                    
                 } else {
-                    //$retVal=true;
+                    $retVal=true;
                     remove_err('#cheque_amount1');
                    
                 }
@@ -1475,7 +1478,7 @@ function form_validate($retVal) {
                     $retVal = false;
                     disp_err('#giro_amount1', $msg);
                 } else {
-                     //$retVal=true;
+                     $retVal=true;
                     remove_err('#giro_amount1');
                    
                    
@@ -1497,7 +1500,7 @@ function form_validate($retVal) {
     }
     if($retVal == true){
         $('.button_class99 button[type=submit]').css('display','none');
-    }alert($retVal);
+    }
     return $retVal;
 }
 function disp_err($id, $text) {
