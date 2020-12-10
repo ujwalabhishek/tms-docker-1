@@ -517,8 +517,10 @@ $(document).ready(function() {
                     $('.common_pay').show();
                     if(data.tenant_id=='T17'){///added by shubhranshu for everest
                         $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="CHQ">Cheque</option>');
+                        
                     }else{
-                        $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
+                        
+                        $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="GIRO">GIRO</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
                     }
                     
                 } else {
@@ -727,8 +729,14 @@ $(document).ready(function() {
                         $payrcd_table.append($html);
                     }
                     
-                   
-                    $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
+                   if(res.data.tenant_id=='T17'){
+                       $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="PSEA">PSEA</option><option value="CHQ">Cheque</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
+                        $('#payment_type1').html('<option value="" selected="selected">Select</option><option value="CASH1">Cash</option><option value="CHQ1">Cheque</option>');
+                    }else{
+                        $('#payment_type1').html('<option value="" selected="selected">Select</option><option value="CASH1">Cash</option><option value="CHQ1">Cheque</option><option value="GIRO1">GIRO</option><option value="NETS1">NETS</option>');
+                      $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="GIRO">GIRO</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>'); 
+                   }
+                    
                     
                 }
             });
@@ -1078,7 +1086,14 @@ function form_validate($retVal) {
 //        }
         /////end of the code
         
-        
+        if($tenant_id == 'T02'){
+            if($('#sfc_ato_claim_id').val().length == 0 ){
+                $retVal = false;
+                disp_err('#sfc_ato_claim_id');
+            }else{
+                remove_err('#sfc_ato_claim_id');
+            }
+        }
         $sfcato_amount = $.trim($('#sfcato_amount').val());
         
         $p_paid = parseFloat($sfcato_amount);

@@ -4,7 +4,7 @@
     $tenant_id ='<?php echo $this->session->userdata('userDetails')->tenant_id; ?>';
 </script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment.js?v=5.4"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment.js?v=1.15"></script>
 <!--<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/updatepayment_all_tenant.js"></script>-->
 <div class="col-md-10 right-minheight">
     <?php
@@ -1091,7 +1091,7 @@
                         </tr>
                         <!--added by shubhranshu for client requirement-->
                         <tr id='sfc_ato_divv'>
-                            <td class="td_heading">SFC(ATO) Claim ID:<span class="required"></span></td>
+                            <td class="td_heading">SFC(ATO) Claim ID:<span class="required claimidcls"></span></td>
                             <td>
                                 <?php
                                 $sfc_ato_claim_id = array(
