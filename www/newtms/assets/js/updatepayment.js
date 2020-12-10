@@ -1495,7 +1495,7 @@ function form_validate($retVal) {
     }
     if($retVal == true){
         $('.button_class99 button[type=submit]').css('display','none');
-    }
+    }alert($retVal);
     return $retVal;
 }
 function disp_err($id, $text) {
