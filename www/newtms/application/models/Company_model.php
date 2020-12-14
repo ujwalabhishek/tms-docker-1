@@ -96,7 +96,7 @@ class Company_Model extends CI_Model {
             $this->db->limit($limit, $limitvalue);
         }
        $query = $this->db->get();
-       echo $this->db->last_query();exit;
+      
         return $query->result_array();
     }
 
