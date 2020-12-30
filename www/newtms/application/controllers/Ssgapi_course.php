@@ -49,7 +49,7 @@ class ssgapi_course extends CI_Controller {
         $query_string = htmlspecialchars($_GET['query'], ENT_QUOTES, 'UTF-8');
 
         //$encr = base64_encode('c0d3cf1102b248a097846d7232d6ad8f:YTlkNzgyN2YtMjEyNi00ZjU0LWIxMTctMTlhMGMzODY4YWJm');
-        $encr = base64_encode('169c2189236a48cf939f8ec4ffddbb4b:MDUwODQyZTAtYTVlNC00NmVhLWI1ODgtMjBjZjkzMTk2Mjcw');
+        $encr = base64_encode('c785f2331e314192a886bafcc8cd99b4:OTc1NTNlYjUtNmM5ZC00ZjNlLTg2ODMtNGExNWFiZGM2ODA3');
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -122,7 +122,7 @@ class ssgapi_course extends CI_Controller {
     public function course_details(){
         $query_string = $this->input->get('course_code_id');
 
-        $encr = base64_encode('c0d3cf1102b248a097846d7232d6ad8f:YTlkNzgyN2YtMjEyNi00ZjU0LWIxMTctMTlhMGMzODY4YWJm');
+        $encr = base64_encode('c785f2331e314192a886bafcc8cd99b4:OTc1NTNlYjUtNmM5ZC00ZjNlLTg2ODMtNGExNWFiZGM2ODA3');
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
