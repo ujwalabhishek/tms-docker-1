@@ -3450,7 +3450,7 @@ class Class_Trainee extends CI_Controller {
         }
 
         $result = $this->classtraineemodel->get_enroll_old_invoice($id,$inv);
-
+print_r($result);exit;
         $result->company_id;
         $result->inv_type;
        
@@ -3459,7 +3459,9 @@ class Class_Trainee extends CI_Controller {
        //if($result->company_id!=""){
        if(($result->inv_type!="INVINDV") && (!empty($result->company_id))){
             $data=  json_decode($result->invoice_details);
-            generate_company_pdf_invoice_all($data);}
+            generate_company_pdf_invoice_all($data);
+            
+       }
         else{
            
             $data =  (array)json_decode($result->invoice_details);

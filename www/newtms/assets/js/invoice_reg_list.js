@@ -89,7 +89,7 @@ $(document).ready(function() {
             if($count>1){
                 location.replace($baseurl + 'class_trainee/export_company_generate_invoice/' + $pdi);
             }else{
-                 location.replace($baseurl + 'class_trainee/export_generate_invoice/' + $pdi +'/' + $inv);
+                location.replace($baseurl + 'class_trainee/export_old_generate_invoice/' + $pdi +'/' + $inv);
             }
         
        
