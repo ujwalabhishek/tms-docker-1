@@ -329,7 +329,7 @@
                                  } else{
                               ?>
                                <a href="javascript:;" class="print_new_invoice" data-invoice="<?php echo $row->regen_inv_id ;?>" 
-                                            data-pdi="<?php echo $payid11=str_replace(' ', '', $row->pymnt_due_id) ;?> "><?php echo $row->regen_inv_id;?>
+                                            data-pdi="<?php echo $row->pymnt_due_id;?>"><?php echo $row->regen_inv_id;?>
                             </a>
                            <?php }  ?>
                             </td>
