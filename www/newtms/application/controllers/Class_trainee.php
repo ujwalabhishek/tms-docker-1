@@ -3450,7 +3450,7 @@ class Class_Trainee extends CI_Controller {
         }
 
         $result = $this->classtraineemodel->get_enroll_old_invoice($id,$inv);
-print_r($result);exit;
+        //print_r($result);exit;
         $result->company_id;
         $result->inv_type;
        
@@ -3465,11 +3465,7 @@ print_r($result);exit;
         else{
            
             $data =  (array)json_decode($result->invoice_details);
-            if($tenant_id =='T17'){
-                generate_pdf_invoice_everest($data);
-            }else{
-                generate_pdf_invoice($data);
-            }
+            generate_pdf_invoice($data);
         }
     }
     /**
