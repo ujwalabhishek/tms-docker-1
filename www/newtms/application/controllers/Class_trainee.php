@@ -3458,16 +3458,12 @@ class Class_Trainee extends CI_Controller {
         
        //if($result->company_id!=""){
        if(($result->inv_type!="INVINDV") && (!empty($result->company_id))){
-         $data=  json_decode($result->invoice_details);
-        generate_company_pdf_invoice_all($data);}
+            $data=  json_decode($result->invoice_details);
+            generate_company_pdf_invoice_all($data);}
         else{
            
             $data =  (array)json_decode($result->invoice_details);
-            if($tenant_id =='T17'){
-                generate_pdf_invoice_everest($data);
-            }else{
-                generate_pdf_invoice($data);
-            }
+            generate_pdf_invoice($data);
         }
     }
     /**
