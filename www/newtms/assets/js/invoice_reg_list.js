@@ -86,10 +86,10 @@ $(document).ready(function() {
                     $count = res;
                 }
             });
-            if($count>1){
-                location.replace($baseurl + 'class_trainee/export_company_generate_invoice/'+$pdi);
+            if($count>0){
+                location.replace($baseurl + 'class_trainee/export_company_generate_invoice/' + $pdi);
             }else{
-                location.replace($baseurl + 'class_trainee/export_old_generate_invoice/'+$pdi+'/'+$inv);
+                 location.replace($baseurl + 'class_trainee/export_old_generate_invoice/' + $pdi +'/' + $inv);
             }
         
        
@@ -100,7 +100,7 @@ $(document).ready(function() {
         $inv = $(this).data('old_invoice_id');
         $pdi = $(this).data('pdi');
        // alert($pdi);
-        location.replace($baseurl + 'class_trainee/export_old_generate_invoice/'+$pdi+'/'+$inv);
+        location.replace($baseurl + 'class_trainee/export_old_generate_invoice/' + $pdi +'/' + $inv);
        
        
     });
