@@ -319,7 +319,7 @@
                             <tr>
                             <td>
                                 <a href="javascript:;" class="print_old_invoice" data-old_invoice_id="<?php echo $row->invoice_id;?>"
-                                                                             data-pdi="<?php echo $payid12=str_replace(' ', '', $row->pymnt_due_id);?>">
+                                                                             data-pdi="<?php echo $row->pymnt_due_id;?>">
                                     <?php echo $row->invoice_id;?>
                                 </a>
                             </td>
