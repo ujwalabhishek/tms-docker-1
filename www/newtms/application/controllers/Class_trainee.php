@@ -3464,9 +3464,9 @@ class Class_Trainee extends CI_Controller {
            
             $data =  (array)json_decode($result->invoice_details);
             if($tenant_id =='T17'){
-                generate_pdf_invoice_everest($result);
+                generate_pdf_invoice_everest($data);
             }else{
-                generate_pdf_invoice($result);
+                generate_pdf_invoice($data);
             }
         }
     }
