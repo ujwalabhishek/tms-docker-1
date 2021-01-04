@@ -3442,7 +3442,7 @@ class Class_Trainee extends CI_Controller {
         
     }
     public function export_old_generate_invoice($id,$inv) 
-    {  echo $id.'--'.$inv;exit;
+    {  //echo $id.'--'.$inv;exit;
         $id=$this->input->get('class_status');
         $inv=$this->input->get('class_status');
         $tenant_id = $this->tenant_id;
@@ -3452,7 +3452,7 @@ class Class_Trainee extends CI_Controller {
         }
 
         $result = $this->classtraineemodel->get_enroll_old_invoice($id,$inv);
-print_r($result);exit;
+//print_r($result);exit;
         $result->company_id;
         $result->inv_type;
        
