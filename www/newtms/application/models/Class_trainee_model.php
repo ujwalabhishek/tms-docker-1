@@ -11020,7 +11020,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $status;
     }
-     public function get_enroll_old_invoice($id,$inv)
+    public function get_enroll_old_invoice($id,$inv)
     {
                 $tenant_id=  $this->tenant_id;
                 $this->db->select('*');
@@ -11031,6 +11031,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 $results=  $this->db->get()->row();
                 return $results;
     }
+    
     
      public function check_paid_refund_invoice($invoice_id,$user_id)
     {
@@ -14380,6 +14381,16 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $result = $qry->row();
         return $result;
     }
-
+    ////added by shubhranshu to get the invoice details whether comp or ind
+    public function check_enrol_invoice_compind($id,$inv)
+    {
+        $tenant_id=  $this->tenant_id;
+        $this->db->select('*');
+        $this->db->from('enrol_invoice');
+        $this->db->where('invoice_id',$inv);
+        $this->db->where('pymnt_due_id',$id);
+        $results=  $this->db->get()->row();
+        return $results;
+    }
 
 }

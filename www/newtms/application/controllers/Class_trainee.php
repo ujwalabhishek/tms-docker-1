@@ -3441,6 +3441,40 @@ class Class_Trainee extends CI_Controller {
         }
         
     }
+    ///////below function has been introduce by shubhranshu to fix the report finance regenerated deleted invoice
+    public function export_old_generate_invoice_new($id,$inv) 
+    {  //echo $id.'--'.$inv;exit;
+        $tenant_id = $this->tenant_id;
+        if (empty($id)) 
+        {
+            return show_404();
+        }
+
+        $result = $this->classtraineemodel->get_enroll_old_invoice($id,$inv);
+        //print_r($result);exit;
+       
+        $this->load->helper('pdf_reports_helper');
+        if(empty($result)){///for enrol invoice table data
+            $res = $this->classtraineemodel->check_enrol_invoice_compind($id,$inv);
+            if($result->inv_type == "INVINDV"){
+                $this->export_generate_invoice($id);
+            }else{
+                $this->export_company_generate_invoice($id);
+            }
+        }else{////for view table data deleted invoice
+            if(($result->inv_type!="INVINDV") && (!empty($result->company_id))){
+                $data=  json_decode($result->invoice_details);
+                generate_company_pdf_invoice_all($data);
+            }
+             else{
+                $data =  (array)json_decode($result->invoice_details);
+                generate_pdf_invoice($data);
+             }
+        }
+      
+       
+    }
+    
     public function export_old_generate_invoice($id,$inv) 
     {  //echo $id.'--'.$inv;exit;
         $tenant_id = $this->tenant_id;
@@ -3451,8 +3485,7 @@ class Class_Trainee extends CI_Controller {
 
         $result = $this->classtraineemodel->get_enroll_old_invoice($id,$inv);
         //print_r($result);exit;
-        $result->company_id;
-        $result->inv_type;
+     
        
         $this->load->helper('pdf_reports_helper');
         
