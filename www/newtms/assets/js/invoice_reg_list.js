@@ -75,7 +75,7 @@ $(document).ready(function() {
         $inv = $(this).data('invoice');
         $pdi = $(this).data('pdi');
         
-        location.replace($baseurl + 'class_trainee/export_old_generate_invoice_new/' + $pdi +'/' + $inv);
+        location.replace($baseurl + 'class_trainee/export_current_invoice_new/' + $pdi +'/' + $inv);
        // alert($pdi);
     /*    $.ajax({
                 url: $baseurl + "class_trainee/get_count_invoice",
@@ -103,7 +103,7 @@ $(document).ready(function() {
         $pdi = $(this).data('pdi');
        // alert($pdi);
 //        location.replace($baseurl + 'class_trainee/export_old_generate_invoice/' + $pdi +'/' + $inv);
-       location.replace($baseurl + 'class_trainee/export_old_generate_invoice_new/' + $pdi +'/' + $inv);
+       location.replace($baseurl + 'class_trainee/export_previous_generate_invoice/' + $pdi +'/' + $inv);
        
     });
      

@@ -3442,7 +3442,33 @@ class Class_Trainee extends CI_Controller {
         
     }
     ///////below function has been introduce by shubhranshu to fix the report finance regenerated deleted invoice
-    public function export_old_generate_invoice_new($id,$inv) 
+    /// function to fetch the current invoice details
+    public function export_current_invoice_new($id,$inv) 
+    {  //echo $id.'--'.$inv;exit;
+        $tenant_id = $this->tenant_id;
+        if (empty($id)) 
+        {
+            return show_404();
+        }
+
+        $res = $this->classtraineemodel->check_enrol_invoice_compind($id,$inv);
+        //print_r($result);exit;
+       
+        $this->load->helper('pdf_reports_helper');
+        ///for enrol invoice table data current invoice
+            //echo "A ".$id.'--'.$inv;print_r($result);exit;exit;
+            
+        if($res->inv_type == "INVINDV"){
+            $this->export_generate_invoice($id);
+        }else{
+            $this->export_company_generate_invoice($id);
+        }
+  
+    }
+    
+    ////added by shubhranshu
+    //function to fetch the previous invoice details
+    public function export_previous_generate_invoice($id,$inv) 
     {  //echo $id.'--'.$inv;exit;
         $tenant_id = $this->tenant_id;
         if (empty($id)) 
@@ -3452,31 +3478,21 @@ class Class_Trainee extends CI_Controller {
 
         $result = $this->classtraineemodel->get_enroll_old_invoice_new($id,$inv);
         //print_r($result);exit;
-       
+        
         $this->load->helper('pdf_reports_helper');
-        if(empty($result)){///for enrol invoice table data
-            //echo "A ".$id.'--'.$inv;print_r($result);exit;exit;
-            $res = $this->classtraineemodel->check_enrol_invoice_compind($id,$inv);
-            if($res->inv_type == "INVINDV"){
-                $this->export_generate_invoice($id);
-            }else{
-                $this->export_company_generate_invoice($id);
-            }
-        }else{////for view table data deleted invoice
+        ////for view table data previous invoice
             //echo "B ".$id.'--'.$inv;print_r($result);exit;
-            if(($result->inv_type!="INVINDV") && (!empty($result->company_id))){
-                $data=  json_decode($result->invoice_details);
-                //generate_company_pdf_invoice_all($data);
-                $this->export_company_generate_invoice($id);
-            }
-             else{
-                $data =  (array)json_decode($result->invoice_details);
-                //generate_pdf_invoice($data);
-                $this->export_generate_invoice($id);
-             }
+        if(($result->inv_type!="INVINDV") && (!empty($result->company_id))){
+            $data=  json_decode($result->invoice_details);
+            //generate_company_pdf_invoice_all($data);
+            $this->export_company_generate_invoice($id);
         }
-      
-       
+         else{
+            $data =  (array)json_decode($result->invoice_details);
+            //generate_pdf_invoice($data);
+            $this->export_generate_invoice($id);
+         }
+  
     }
     
     public function export_old_generate_invoice($id,$inv) 
