@@ -3452,7 +3452,7 @@ class Class_Trainee extends CI_Controller {
 
         $result = $this->classtraineemodel->get_enroll_old_invoice($id,$inv);
         //print_r($result);exit;
-       echo $this->this->db->last_query();exit;
+       
         $this->load->helper('pdf_reports_helper');
         if(empty($result) || $result=''){///for enrol invoice table data
             echo "A ".$id.'--'.$inv;print_r($result);exit;exit;
