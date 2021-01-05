@@ -3455,7 +3455,7 @@ class Class_Trainee extends CI_Controller {
        
         $this->load->helper('pdf_reports_helper');
         if(empty($result)){///for enrol invoice table data
-            echo "A ".$id.'--'.$inv;print_r($result);exit;exit;
+            //echo "A ".$id.'--'.$inv;print_r($result);exit;exit;
             $res = $this->classtraineemodel->check_enrol_invoice_compind($id,$inv);
             if($res->inv_type == "INVINDV"){
                 $this->export_generate_invoice($id);
@@ -3463,14 +3463,16 @@ class Class_Trainee extends CI_Controller {
                 $this->export_company_generate_invoice($id);
             }
         }else{////for view table data deleted invoice
-            echo "B ".$id.'--'.$inv;print_r($result);exit;
+            //echo "B ".$id.'--'.$inv;print_r($result);exit;
             if(($result->inv_type!="INVINDV") && (!empty($result->company_id))){
                 $data=  json_decode($result->invoice_details);
-                generate_company_pdf_invoice_all($data);
+                //generate_company_pdf_invoice_all($data);
+                $this->export_company_generate_invoice($id);
             }
              else{
                 $data =  (array)json_decode($result->invoice_details);
-                generate_pdf_invoice($data);
+                //generate_pdf_invoice($data);
+                $this->export_generate_invoice($id);
              }
         }
       
