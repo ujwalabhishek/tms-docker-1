@@ -3463,7 +3463,7 @@ class Class_Trainee extends CI_Controller {
                 $this->export_company_generate_invoice($id);
             }
         }else{////for view table data deleted invoice
-            echo "B";exit;
+            print_r($result);exit;
             if(($result->inv_type!="INVINDV") && (!empty($result->company_id))){
                 $data=  json_decode($result->invoice_details);
                 generate_company_pdf_invoice_all($data);
