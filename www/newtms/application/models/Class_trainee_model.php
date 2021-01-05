@@ -11028,7 +11028,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 $this->db->where('invoice_id',$inv);
                 $this->db->where('pymnt_due_id',$id);
                 $this->db->where('tenant_id',$tenant_id);
-                $results=  $this->db->get()->row();echo $this->db->last_query();exit;
+                $results=  $this->db->get()->row();
                 return $results;
     }
     
@@ -14389,6 +14389,18 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->from('enrol_invoice');
         $this->db->where('invoice_id',$inv);
         $this->db->where('pymnt_due_id',$id);
+        $results=  $this->db->get()->row();
+        return $results;
+    }
+    
+    public function get_enroll_old_invoice_new($id,$inv)
+    {
+        $tenant_id=  $this->tenant_id;
+        $this->db->select('*');
+        $this->db->from('enrol_invoice_view');
+        //$this->db->where('invoice_id',$inv);
+        $this->db->where('pymnt_due_id',$id);
+        $this->db->where('tenant_id',$tenant_id);
         $results=  $this->db->get()->row();
         return $results;
     }

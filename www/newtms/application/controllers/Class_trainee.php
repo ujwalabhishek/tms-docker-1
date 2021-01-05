@@ -3450,7 +3450,7 @@ class Class_Trainee extends CI_Controller {
             return show_404();
         }
 
-        $result = $this->classtraineemodel->get_enroll_old_invoice($id,$inv);
+        $result = $this->classtraineemodel->get_enroll_old_invoice_new($id,$inv);
         //print_r($result);exit;
        
         $this->load->helper('pdf_reports_helper');
