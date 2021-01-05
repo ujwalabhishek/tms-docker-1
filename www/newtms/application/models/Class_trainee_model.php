@@ -14389,7 +14389,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->from('enrol_invoice');
         $this->db->where('invoice_id',$inv);
         $this->db->where('pymnt_due_id',$id);
-        $results=  $this->db->get()->row();echo $this->this->db->last_query();exit;
+        $results=  $this->db->get()->row();echo $this->->db->last_query();exit;
         return $results;
     }
 
