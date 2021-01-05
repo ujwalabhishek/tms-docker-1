@@ -3455,9 +3455,9 @@ class Class_Trainee extends CI_Controller {
        
         $this->load->helper('pdf_reports_helper');
         if(empty($result)){///for enrol invoice table data
-            echo "A";exit;
+            echo "A ".$id.'--'.$inv;print_r($result);exit;exit;
             $res = $this->classtraineemodel->check_enrol_invoice_compind($id,$inv);
-            if($result->inv_type == "INVINDV"){
+            if($res->inv_type == "INVINDV"){
                 $this->export_generate_invoice($id);
             }else{
                 $this->export_company_generate_invoice($id);
