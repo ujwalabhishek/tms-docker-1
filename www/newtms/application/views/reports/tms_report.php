@@ -36,7 +36,8 @@
                             '' => '--Select Year--',
                             '2018' => '2018',
                             '2019' => '2019',
-                            '2020' => '2020'
+                            '2020' => '2020',
+                            '2021' => '2021'
                         );
                          $attr = 'id="gYear" name="yearVal"';
                         echo form_dropdown('yearVal', $yearVal_options, $this->input->post('yearVal'), $attr);
