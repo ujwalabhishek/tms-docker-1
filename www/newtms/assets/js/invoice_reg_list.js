@@ -75,9 +75,9 @@ $(document).ready(function() {
         $inv = $(this).data('invoice');
         $pdi = $(this).data('pdi');
         ///added by shubhranshu to fix the current invoice issue
-        location.replace($baseurl + 'class_trainee/export_current_invoice_new/' + $pdi +'/' + $inv);
+       // location.replace($baseurl + 'class_trainee/export_current_invoice_new/' + $pdi +'/' + $inv);
        // alert($pdi);
-    /*    $.ajax({
+        $.ajax({
                 url: $baseurl + "class_trainee/get_count_invoice",
                 type: "post",
                 async: false,
@@ -87,12 +87,12 @@ $(document).ready(function() {
                 success: function(res) {
                     $count = res;
                 }
-            });*/
-//            if($count>0){
-//                location.replace($baseurl + 'class_trainee/export_company_generate_invoice/' + $pdi);
-//            }else{
-//                 location.replace($baseurl + 'class_trainee/export_old_generate_invoice/' + $pdi +'/' + $inv);
-//            }
+            });
+            if($count>0){
+                location.replace($baseurl + 'class_trainee/export_company_generate_invoice/' + $pdi);
+            }else{
+                 location.replace($baseurl + 'class_trainee/export_old_generate_invoice/' + $pdi +'/' + $inv);
+            }
         
        
        
@@ -102,9 +102,9 @@ $(document).ready(function() {
         $inv = $(this).data('old_invoice_id');
         $pdi = $(this).data('pdi');
        // alert($pdi);
-//        location.replace($baseurl + 'class_trainee/export_old_generate_invoice/' + $pdi +'/' + $inv);
+        location.replace($baseurl + 'class_trainee/export_old_generate_invoice/' + $pdi +'/' + $inv);
         ///added by shubhranshu to fix the previous invoice issue
-       location.replace($baseurl + 'class_trainee/export_previous_generate_invoice/' + $pdi +'/' + $inv);
+       //location.replace($baseurl + 'class_trainee/export_previous_generate_invoice/' + $pdi +'/' + $inv);
        
     });
      
