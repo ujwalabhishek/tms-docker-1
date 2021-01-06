@@ -14398,7 +14398,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $tenant_id=  $this->tenant_id;
         $this->db->select('*');
         $this->db->from('enrol_invoice_view');
-        //$this->db->where('invoice_id',$inv);
+        $this->db->where('invoice_id',$inv);
         $this->db->where('pymnt_due_id',$id);
         $this->db->where('tenant_id',$tenant_id);
         $results=  $this->db->get()->row();

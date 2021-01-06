@@ -74,7 +74,7 @@ $(document).ready(function() {
        
         $inv = $(this).data('invoice');
         $pdi = $(this).data('pdi');
-        
+        ///added by shubhranshu to fix the current invoice issue
         location.replace($baseurl + 'class_trainee/export_current_invoice_new/' + $pdi +'/' + $inv);
        // alert($pdi);
     /*    $.ajax({
@@ -103,6 +103,7 @@ $(document).ready(function() {
         $pdi = $(this).data('pdi');
        // alert($pdi);
 //        location.replace($baseurl + 'class_trainee/export_old_generate_invoice/' + $pdi +'/' + $inv);
+        ///added by shubhranshu to fix the previous invoice issue
        location.replace($baseurl + 'class_trainee/export_previous_generate_invoice/' + $pdi +'/' + $inv);
        
     });

@@ -3441,7 +3441,7 @@ class Class_Trainee extends CI_Controller {
         }
         
     }
-    ///////below function has been introduce by shubhranshu to fix the report finance regenerated deleted invoice
+    ///////below 2 function has been introduce by shubhranshu to fix the report finance regenerated deleted invoice
     /// function to fetch the current invoice details
     public function export_current_invoice_new($id,$inv) 
     {  //echo $id.'--'.$inv;exit;
