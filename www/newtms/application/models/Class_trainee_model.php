@@ -14407,10 +14407,10 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
     
     ///addded by shubhranshu for evrest pdf generation rcvd details
     public function get_ind_trainee_pymnt_rcvd_amt($inv_id,$trn_id) {
-        $this->db->select('*,sum(amount_recd) as total');
+        $this->db->select('sum(amount_recd) as total');
         $this->db->from('enrol_pymnt_brkup_dt');
         $this->db->where('invoice_id', $inv_id);
-        $this->db->where('invoice_id', $trn_id);
+        $this->db->where('user_id', $trn_id);
         $qry = $this->db->get();
         $result = $qry->row();
         //echo $this->db->last_query();exit;
