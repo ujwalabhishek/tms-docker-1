@@ -14416,5 +14416,16 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->last_query();exit;
         return $result;
     }
+    
+    public function fetch_absent_trainees($pay_due) {
+        $this->db->select('*');
+        $this->db->from('enrol_pymnt_due');
+        $this->db->where('pymnt_due_id', $pay_due);
+        $this->db->where('att_status', '0');
+        $qry = $this->db->get();
+        $result = $qry->result();
+        //echo $this->db->last_query();exit;
+        return $result;
+    }
 
 }
