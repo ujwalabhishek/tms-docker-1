@@ -14405,7 +14405,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         return $results;
     }
     
-    ///addded by shubhranshu for evrest pdf generation rcvd details
+    ///addded by shubhranshu for evrest pdf generation individual rcvd details
     public function get_ind_trainee_pymnt_rcvd_amt($inv_id,$trn_id) {
         $this->db->select('sum(amount_recd) as total');
         $this->db->from('enrol_pymnt_brkup_dt');
