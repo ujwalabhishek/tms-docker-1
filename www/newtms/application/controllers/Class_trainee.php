@@ -907,7 +907,7 @@ class Class_Trainee extends CI_Controller {
         
         
         $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
-        $company_details = $this->classtraineemodel->get_company_name($booking_details->invoice_id,$trainee_id, $class_id);
+        $company_details = $this->classtraineemodel->get_company_name($booking_details->invoice_id,$trainee_id, $class_id,$tenant_id);
         if ($booking_details) {
             $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
             $booking_date = date('d/m/Y', strtotime($booking_details->inv_date));
