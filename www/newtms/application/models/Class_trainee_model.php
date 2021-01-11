@@ -14427,5 +14427,28 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->last_query();exit;
         return $result;
     }
+    
+    public function get_company_name($invoice_id,$trainee_id, $tenant_id) {
+
+        $this->db->select('cm.company_name')
+                ->from('class_enrol ce')
+                ->join('company_master cm', 'cm.company_id=ce.company_id')
+                ->where('ce.tenant_id', $tenant_id);
+
+        if (!empty($invoice_id)) {
+
+            $this->db->join('enrol_invoice ei', 'ei.pymnt_due_id=ce.pymnt_due_id');
+
+            $this->db->where('ei.invoice_id', $invoice_id);
+        }
+        
+        if ($trainee_id) {
+            
+            $this->db->where('ce.user_id', $trainee_id);
+ 
+        }
+
+        return $this->db->get()->row();
+    }
 
 }

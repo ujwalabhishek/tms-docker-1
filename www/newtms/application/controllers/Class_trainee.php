@@ -905,11 +905,22 @@ class Class_Trainee extends CI_Controller {
         }
         
         
+        
+        $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
+        $company_details = $this->classtraineemodel->get_company_name($booking_details->invoice_id,$trainee_id, $class_id);
+        if ($booking_details) {
+            $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
+            $booking_date = date('d/m/Y', strtotime($booking_details->inv_date));
+        } else {
+            $booking_no = date('Y') . ' ' . $trainee_id;
+            $booking_date = date('d/m/Y');
+        }
+        
         $data = '<br><br>
             <table style="font-size:15px">
                 <tr>
                     <td>Your seat has been booked. Please pay the class fees on or before the class start date.
-                        Booking for <strong>' . $trainee . '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
+                        Booking for <strong>' . $trainee . '(Company Name:'.$company_details->company_name.')</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
                         <strong>Class start date:</strong>
                         ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
                         <br><br>
@@ -966,14 +977,7 @@ class Class_Trainee extends CI_Controller {
                 </table>';
             }
         }
-        $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
-        if ($booking_details) {
-            $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
-            $booking_date = date('d/m/Y', strtotime($booking_details->inv_date));
-        } else {
-            $booking_no = date('Y') . ' ' . $trainee_id;
-            $booking_date = date('d/m/Y');
-        }
+        
         $this->load->helper('pdf_reports_helper');
         generate_booking_acknowledge_pdf($data, $tenant_details, $booking_no, $booking_date);
     }
