@@ -14434,7 +14434,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 ->from('class_enrol ce')
                 ->join('company_master cm', 'cm.company_id=ce.company_id')
                 ->where('ce.tenant_id', $tenant_id)
-                ->and('ce.class_id', $class_id);
+                ->where('ce.class_id', $class_id);
 
         if (!empty($invoice_id)) {
 
