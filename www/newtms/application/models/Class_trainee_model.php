@@ -14448,9 +14448,8 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
             $this->db->where('ce.user_id', $trainee_id);
  
         }
-$this->db->get()->row();
-echo $this->db->last_query();;exit;
-        //return $this->db->get()->row();
+
+        return $this->db->get()->row();
     }
 
 }
