@@ -818,11 +818,14 @@ class Class_Trainee extends CI_Controller {
                         </ol>';
             
             /* skm end */
-            
+              $comp_var='';
+            if(!empty($company_details1) && $tenant_id =='T02'){
+                $comp_var= $company_details->company_name;
+            }
             $data = '<br><br>
             <table style="font-size:15px">
                 <tr>
-                    <td>'.$tr_count . ' Seats for your company ' . $company_details1->company_name . ' has been booked. Booking details for your employees: 
+                    <td>'.$tr_count . ' Seats for your company ' . $comp_var . ' has been booked. Booking details for your employees: 
                     ' . $trainee . ' for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'<br><br>
             <strong>Class start date:</strong>
             ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
@@ -918,7 +921,7 @@ class Class_Trainee extends CI_Controller {
             $booking_date = date('d/m/Y');
         }
         $comp_var='';
-        if(!empty($company_details)){
+        if(!empty($company_details) && $tenant_id =='T02'){
             $comp_var='(Company Name:'.$company_details->company_name.')';
         }
             
