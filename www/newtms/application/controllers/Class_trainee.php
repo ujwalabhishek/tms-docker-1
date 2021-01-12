@@ -755,6 +755,16 @@ class Class_Trainee extends CI_Controller {
         $tenant_details->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($tenant_details->tenant_country), ', ');
         $courseLevel = rtrim($this->course->get_metadata_on_parameter_id($courses->certi_level), ', ');
         $data = ''; 
+        $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
+        $company_details1 = $this->classtraineemodel->get_company_name($booking_details->invoice_id,$trainee_id, $class_id,$tenant_id);//added by shubhranshu to fetch the company name
+        if ($booking_details) {
+            $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
+            $booking_date = date('d/m/Y', strtotime($booking_details->inv_date));
+        } else {
+            $booking_no = date('Y') . ' ' . $trainee_id;
+            $booking_date = date('d/m/Y');
+        }
+        
         if ($tr_count > 0) {
             $contact_details = '';
            if($tenant_details->tenant_id =='T12')
@@ -812,7 +822,7 @@ class Class_Trainee extends CI_Controller {
             $data = '<br><br>
             <table style="font-size:15px">
                 <tr>
-                    <td>'.$tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: 
+                    <td>'.$tr_count . ' Seats for your company ' . $company_details1->company_name . ' has been booked. Booking details for your employees: 
                     ' . $trainee . ' for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'<br><br>
             <strong>Class start date:</strong>
             ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
@@ -832,14 +842,7 @@ class Class_Trainee extends CI_Controller {
                 </tr>
             </table>';
         }
-        $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
-        if ($booking_details) {
-            $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
-            $booking_date = date('d/m/Y', strtotime($booking_details->inv_date));
-        } else {
-            $booking_no = date('Y') . ' ' . $trainee_id;
-            $booking_date = date('d/m/Y');
-        }
+        
         $this->load->helper('pdf_reports_helper');
         generate_booking_acknowledge_pdf($data, $tenant_details, $booking_no, $booking_date);
     }
@@ -904,10 +907,9 @@ class Class_Trainee extends CI_Controller {
             $li_first ="All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.";
         }
         
-        
-        
+
         $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
-        $company_details = $this->classtraineemodel->get_company_name($booking_details->invoice_id,$trainee_id, $class_id,$tenant_id);
+        $company_details = $this->classtraineemodel->get_company_name($booking_details->invoice_id,$trainee_id, $class_id,$tenant_id);//added by shubhranshu to fetch the company name
         if ($booking_details) {
             $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
             $booking_date = date('d/m/Y', strtotime($booking_details->inv_date));
