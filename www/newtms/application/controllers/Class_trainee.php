@@ -4218,7 +4218,7 @@ Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist 
         $tenant_id = $this->tenant_id;
         $curuser_id = $this->session->userdata('userDetails')->user_id;
         extract($_POST);
-        $company_details = $this->company->get_company_details($tenant_id, $company);
+        $company_details = $this->company->get_company_details($tenant_id, $company);print_r($company_details);exit;
         $classes = $this->class->get_class_details($tenant_id, $class);
         $totalbooked = $this->class->get_class_booked($course, $class, $tenant_id);
         $available = ($classes->total_seats - $totalbooked);
