@@ -4218,7 +4218,7 @@ Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist 
         $tenant_id = $this->tenant_id;
         $curuser_id = $this->session->userdata('userDetails')->user_id;
         extract($_POST);
-        $company_details = $this->company->get_company_details($tenant_id, $company);print_r($company_details);exit;
+        $company_details = $this->company->get_company_details($tenant_id, $company);
         $classes = $this->class->get_class_details($tenant_id, $class);
         $totalbooked = $this->class->get_class_booked($course, $class, $tenant_id);
         $available = ($classes->total_seats - $totalbooked);
@@ -4302,7 +4302,7 @@ Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist 
                 }
                  ///// added by shubhranshu for wablab points
                 if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
-                    $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
+                    $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details[0]->company_name . ' has been booked. Booking details for your employees: ';
                     $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
                         <strong>Class start date:</strong>
                         ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
