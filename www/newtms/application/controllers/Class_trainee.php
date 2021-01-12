@@ -958,7 +958,7 @@ class Class_Trainee extends CI_Controller {
                 <table style="font-size:15px">
                     <tr>
                         <td>Your seat has been booked. Please pay the class fees on or before the class start date.
-                            Booking for <strong>' . $trainee . '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
+                            Booking for <strong>' . $trainee .$comp_var. '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
                             <strong>Class start date:</strong>
                             ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
                             <br><br>
