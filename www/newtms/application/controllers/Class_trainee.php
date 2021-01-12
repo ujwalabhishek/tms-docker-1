@@ -4300,6 +4300,9 @@ Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist 
                 if ($company[0] == 'T') {
                     $company_details->company_name = $tenant_details->tenant_name;
                 }
+                if(!empty($company_details[0]->company_name)){
+                    $company_val = '(Company Name:'.$company_details[0]->company_name.')';
+                }
                  ///// added by shubhranshu for wablab points
                 if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
                     $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details[0]->company_name . ' has been booked. Booking details for your employees: ';
@@ -4325,7 +4328,7 @@ Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist 
                             </ol>';
                 }elseif($tenant_details->tenant_id == 'T02'){
                         $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
-                         for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
+                         for <strong>' . $trainee .$company_val. '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
                         <strong>Class start date:</strong>
                         ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
                         <br><br>
