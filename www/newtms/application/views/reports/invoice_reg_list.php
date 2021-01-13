@@ -6,7 +6,7 @@
 
 </script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/invoice_reg_list.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/invoice_reg_list.js?1.0"></script>
 
 <div class="col-md-10">
 
