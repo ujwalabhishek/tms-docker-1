@@ -755,6 +755,16 @@ class Class_Trainee extends CI_Controller {
         $tenant_details->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($tenant_details->tenant_country), ', ');
         $courseLevel = rtrim($this->course->get_metadata_on_parameter_id($courses->certi_level), ', ');
         $data = ''; 
+        $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
+        $company_details1 = $this->classtraineemodel->get_company_name($booking_details->invoice_id,$trainee_id, $class_id,$tenant_id);//added by shubhranshu to fetch the company name
+        if ($booking_details) {
+            $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
+            $booking_date = date('d/m/Y', strtotime($booking_details->inv_date));
+        } else {
+            $booking_no = date('Y') . ' ' . $trainee_id;
+            $booking_date = date('d/m/Y');
+        }
+        
         if ($tr_count > 0) {
             $contact_details = '';
            if($tenant_details->tenant_id =='T12')
@@ -808,11 +818,14 @@ class Class_Trainee extends CI_Controller {
                         </ol>';
             
             /* skm end */
-            
+              $comp_var='';
+            if(!empty($company_details1) && $tenant_id =='T02'){
+                $comp_var= $company_details->company_name;
+            }
             $data = '<br><br>
             <table style="font-size:15px">
                 <tr>
-                    <td>'.$tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: 
+                    <td>'.$tr_count . ' Seats for your company ' . $comp_var . ' has been booked. Booking details for your employees: 
                     ' . $trainee . ' for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'<br><br>
             <strong>Class start date:</strong>
             ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
@@ -832,14 +845,7 @@ class Class_Trainee extends CI_Controller {
                 </tr>
             </table>';
         }
-        $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
-        if ($booking_details) {
-            $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
-            $booking_date = date('d/m/Y', strtotime($booking_details->inv_date));
-        } else {
-            $booking_no = date('Y') . ' ' . $trainee_id;
-            $booking_date = date('d/m/Y');
-        }
+        
         $this->load->helper('pdf_reports_helper');
         generate_booking_acknowledge_pdf($data, $tenant_details, $booking_no, $booking_date);
     }
@@ -892,7 +898,7 @@ class Class_Trainee extends CI_Controller {
         if($tenant_details->tenant_id == 'T02')
         {
             $li2 = "<li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>
-                <li>Dress code : Covered shoes</li>";
+                    <li>Dress code : Covered shoes</li>";
         } else {
             $li2 = '';
         } 
@@ -904,12 +910,26 @@ class Class_Trainee extends CI_Controller {
             $li_first ="All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.";
         }
         
-        
+
+        $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
+        $company_details = $this->classtraineemodel->get_company_name($booking_details->invoice_id,$trainee_id, $class_id,$tenant_id);//added by shubhranshu to fetch the company name
+        if ($booking_details) {
+            $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
+            $booking_date = date('d/m/Y', strtotime($booking_details->inv_date));
+        } else {
+            $booking_no = date('Y') . ' ' . $trainee_id;
+            $booking_date = date('d/m/Y');
+        }
+        $comp_var='';
+        if(!empty($company_details) && $tenant_id =='T02'){
+            $comp_var='(Company Name:'.$company_details->company_name.')';
+        }
+            
         $data = '<br><br>
             <table style="font-size:15px">
                 <tr>
                     <td>Your seat has been booked. Please pay the class fees on or before the class start date.
-                        Booking for <strong>' . $trainee . '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
+                        Booking for <strong>' . $trainee .$comp_var. '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
                         <strong>Class start date:</strong>
                         ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
                         <br><br>
@@ -941,7 +961,7 @@ class Class_Trainee extends CI_Controller {
                 <table style="font-size:15px">
                     <tr>
                         <td>Your seat has been booked. Please pay the class fees on or before the class start date.
-                            Booking for <strong>' . $trainee . '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
+                            Booking for <strong>' . $trainee .$comp_var. '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
                             <strong>Class start date:</strong>
                             ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
                             <br><br>
@@ -966,14 +986,7 @@ class Class_Trainee extends CI_Controller {
                 </table>';
             }
         }
-        $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
-        if ($booking_details) {
-            $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
-            $booking_date = date('d/m/Y', strtotime($booking_details->inv_date));
-        } else {
-            $booking_no = date('Y') . ' ' . $trainee_id;
-            $booking_date = date('d/m/Y');
-        }
+        
         $this->load->helper('pdf_reports_helper');
         generate_booking_acknowledge_pdf($data, $tenant_details, $booking_no, $booking_date);
     }
@@ -4290,9 +4303,12 @@ Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist 
                 if ($company[0] == 'T') {
                     $company_details->company_name = $tenant_details->tenant_name;
                 }
+                if(!empty($company_details[0]->company_name)){
+                    $company_val = '(Company Name:'.$company_details[0]->company_name.')';
+                }
                  ///// added by shubhranshu for wablab points
                 if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
-                    $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
+                    $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details[0]->company_name . ' has been booked. Booking details for your employees: ';
                     $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
                         <strong>Class start date:</strong>
                         ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
@@ -4315,7 +4331,7 @@ Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist 
                             </ol>';
                 }elseif($tenant_details->tenant_id == 'T02'){
                         $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
-                         for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
+                         for <strong>' . $trainee .$company_val. '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
                         <strong>Class start date:</strong>
                         ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
                         <br><br>
