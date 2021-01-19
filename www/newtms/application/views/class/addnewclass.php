@@ -229,7 +229,7 @@ echo form_open("classes/add_new_class", $atr);
                                 'width' => '300px',
                                 "class" => 'upper_case'
                             );
-                            echo form_input($class_name);
+                            echo form_input($tpg_course_run_id);
                             ?>
                             </span>
                             <br>
