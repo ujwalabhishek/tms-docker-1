@@ -1009,6 +1009,7 @@ class Class_Model extends CI_Model {
         $data_class = array(
             'tenant_id' => $tenantId,
             'class_name' => strtoupper($class_name),
+            'tpg_course_run_id' => strtoupper($tpg_course_run_id),
             'class_start_datetime' => $start_date_timestamp,
             'class_end_datetime' => $end_date_timestamp,
             'total_seats' => $total_seats,
