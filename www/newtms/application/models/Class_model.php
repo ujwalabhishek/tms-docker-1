@@ -1532,6 +1532,7 @@ class Class_Model extends CI_Model {
             'tenant_id' => $tenantId,
             'course_id' => $class_course,
             'class_name' => $class_name,
+            'tpg_course_run_id' => $tpg_course_run_id,
             'class_start_datetime' => $start_date_timestamp,
             'class_end_datetime' => $end_date_timestamp,
             'total_seats' => $total_seats,

@@ -217,6 +217,24 @@ echo form_open("classes/add_new_class", $atr);
                             &nbsp;</td>
                     </tr>
                     <tr>
+                        <td class="td_heading">TPG Gateway Course Run ID:</td>
+                        <td colspan="5">
+                            <?php
+                            $tpg_course_run_id = array(
+                                'name' => 'tpg_course_run_id',
+                                'id' => 'tpg_course_run_id',
+                                'value' => $this->input->post('tpg_course_run_id'),
+                                'maxlength' => 60,
+                                "class" => 'upper_case'
+                            );
+                            echo form_input($class_name);
+                            ?>
+                            </span>
+                            <br>
+                            <span id="tpg_crse_err" class="tpg_crse_err"></span>
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="2" class="td_heading">  
                             <?php
                             $display_class = array(

@@ -14392,7 +14392,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $results=  $this->db->get()->row();
         return $results;
     }
-    
+    ///added by shubhranshu to get old invoice 
     public function get_enroll_old_invoice_new($id,$inv)
     {
         $tenant_id=  $this->tenant_id;
@@ -14416,7 +14416,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->last_query();exit;
         return $result;
     }
-    
+    ////added by shubhranshu to fetch traineee who are absent
     public function fetch_absent_trainees($pay_due) {
         $this->db->select('*');
         $this->db->from('enrol_pymnt_due');
@@ -14427,7 +14427,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->last_query();exit;
         return $result;
     }
-    
+    //// added by shubhranshu to get company name for acknowledgement
     public function get_company_name($invoice_id,$trainee_id,$class_id, $tenant_id) {
 
         $this->db->select('cm.company_name')
