@@ -216,6 +216,7 @@ echo form_open("classes/add_new_class", $atr);
                             ?>
                             &nbsp;</td>
                     </tr>
+                    <?php if($tenant_id=='T02'){ ?>
                     <tr>
                         <td class="td_heading">TPG Gateway Course Run ID:</td>
                         <td colspan="5">
@@ -235,6 +236,7 @@ echo form_open("classes/add_new_class", $atr);
                             <span id="tpg_crse_err" class="tpg_crse_err"></span>
                         </td>
                     </tr>
+                    <?php } ?>
                     <tr>
                         <td colspan="2" class="td_heading">  
                             <?php
