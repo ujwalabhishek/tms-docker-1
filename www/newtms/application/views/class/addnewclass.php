@@ -225,6 +225,7 @@ echo form_open("classes/add_new_class", $atr);
                                 'id' => 'tpg_course_run_id',
                                 'value' => $this->input->post('tpg_course_run_id'),
                                 'maxlength' => 60,
+                                'width' => '300px',
                                 "class" => 'upper_case'
                             );
                             echo form_input($class_name);
