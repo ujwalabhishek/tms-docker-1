@@ -4654,7 +4654,92 @@ function generate_traqom2_report_csv($tabledata, $metadata) {
         $data_arr[] = array(
            $i,
            $row->first_name,$row->tax_code,$tax_code_type,$trainee_email,'','',$row->contact_number,$row->tenant_name,$row->crse_name,'',
-            $row->reference_num,'',course_start_date,$course_end_date,'','','','','',$trainer_name,$row->class_name
+            $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$trainer_name,$row->class_name
+           
+        );
+    }
+    $filename=$row->comp_reg_no."_".$course_end_date."_".$course_end_time.".csv";
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename='.$filename);
+    $output = fopen('php://output', 'w');
+    
+    fputcsv($output, $column_title_first_row);
+    fputcsv($output, $column_title_second_row);
+    fputcsv($output, $column_title);
+    foreach ($data_arr as $data) {
+        foreach ($data as $key => $value) {
+            if (!empty($value))
+                $data[$key] = '"' . $value . '"';
+        }
+        fputcsv($output, $data);
+    }
+    return;
+}
+
+function generate_traqom2_report_csv_xp($tabledata, $metadata) {
+    $CI = & get_instance();
+    
+    /* skm code st*/
+    $total_data = count($tabledata);
+    $course_end_time_filename=date('His',strtotime($tabledata[0]->class_end_datetime));
+    $course_end_date_filename=date('Ymd',strtotime($tabledata[0]->class_end_datetime));
+    $filename=$tabledata[0]->comp_reg_no."_".$course_end_date_filename."_".$course_end_time_filename.".csv";
+    $column_title_first_row = array('H', $filename, $total_data);
+    $column_title_second_row = array('H','Scenario', 'Outcome');
+    /* skm code end */
+    
+    
+    $column_title = array('H',
+        'Trainee Name','Trainee ID','ID Type','Email','Mobile Country Code','Mobile Area Code','Mobile','TP Alias','Course Title','Area of Training',
+        'Course Reference Number','Course Run Reference Number',
+        'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','Trainer Name','TPGateway Course Run ID'
+
+        );
+    
+    
+    $data_arr = array();
+    foreach ($tabledata as $row) 
+    {
+        $strlength = strpos($row->tax_code_type, '_');
+        $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
+        $row->tax_code_type;
+        //new update
+        $ci =& get_instance(); 
+        $ci->load->database(); 
+        $data = $ci->db->select('category_name as code_type')
+                ->from('metadata_values')
+                ->where('parameter_id', $row->tax_code_type)
+                 ->get()->row(0);
+        $tax_code_type= $data->code_type;
+        //$trainee_email = $row->tax_code.'@yopmail.com';
+        $course_start_time=date('His',strtotime($row->class_start_datetime));
+        $course_start_date=date('Ymd',strtotime($row->class_start_datetime));
+        
+        $course_end_time=date('His',strtotime($row->class_end_datetime));
+        $course_end_date=date('Ymd',strtotime($row->class_end_datetime));
+        $enrollment_date = date('Y-m-d',strtotime($row->enrolled_on));
+        
+         $dob = str_replace('-','',$row->dob);
+	
+	$CI->load->model('class_model', 'class_Model');              
+        $trainer_name = $CI->class_Model->get_trainer_names($row->classroom_trainer);
+        
+        /* skm code for new style email which is the combination of taxocde and class name intials st*/
+                $pattern = "/[_,-]/";
+                $string = $row->class_name;
+                $class_name = preg_split($pattern, $string);
+                $trainee_classname = $class_name[0];
+                $trainee_taxcode = substr($row->tax_code, -4);
+                
+                //$trainee_email = $row->tax_code.'@yopmail.com';
+//                $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
+                $trainee_email = $trainee_taxcode.$trainee_classname.'@yopmail.com';
+                /*end */
+        $i = 'I';
+        $data_arr[] = array(
+           $i,
+           $row->first_name,$row->tax_code,$tax_code_type,$trainee_email,'','',$row->contact_number,$row->tenant_name,$row->crse_name,'',
+            $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$trainer_name,$row->tpg_course_run_id
            
         );
     }
