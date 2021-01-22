@@ -6133,13 +6133,13 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 }
                 $row_update_start_assmntsign = $row;
                 $sheet->mergeCells('A'.$row.':G'.$row);
-                $sheet->setCellValue('I'.$row, 'Absent');
+                $sheet->setCellValue('H'.$row, 'Absent');
                 $row++;
                 $sheet->mergeCells('A'.$row.':G'.$row);
-                $sheet->setCellValue('I'.$row, 'Present');
+                $sheet->setCellValue('H'.$row, 'Present');
                 $row++;
                 $sheet->mergeCells('A'.$row.':G'.$row);
-                $sheet->setCellValue('I'.$row, 'Total');
+                $sheet->setCellValue('H'.$row, 'Total');
                 $cell = 9;
                 $total_users = --$index;
                 /*foreach ($days as $day) {
@@ -6148,7 +6148,7 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 }*/
                 $row++;
                 $sheet->mergeCells('A'.$row.':G'.$row);
-                $sheet->setCellValue('I'.$row, 'Trainer Sign-in');
+                $sheet->setCellValue('H'.$row, 'Trainer Sign-in');
                 $sheet->mergeCells($assmnt_sign_column.$row_update_start_assmntsign.':'.$assmnt_sign_column.$row);
 
                 $sheet->getStyle('A14:G' . $row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
