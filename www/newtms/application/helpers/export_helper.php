@@ -5981,8 +5981,8 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 //$sheet->setCellValue('H12', 'A/P');
                 $sheet->setCellValue('H12', '');
                 $sheet->setCellValue('I12', "Trainees' Attendance Sign-in");
-                $sheet->getStyle('I12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $sheet->mergeCells('J13:' . $assmnt_sign_column . '12');
+                //$sheet->getStyle('I12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                //$sheet->mergeCells('J13:' . $assmnt_sign_column . '12');
                 $sheet->setCellValue($assmnt_sign_column.'13','Assmnt. Sign.');
                 $sheet->mergeCells('A13:H13');
                 $sheet->getStyle('A13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
