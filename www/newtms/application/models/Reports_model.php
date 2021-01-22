@@ -2597,7 +2597,7 @@ SELECT  {$calc_rows} c.crse_name,
         }
         // add 3 days to date
         if(TENANT_ID == 'T02'){
-            $this->db->select('cc.class_language, cc.class_name, cc.classroom_trainer, cc.assessor, cc.class_start_datetime, cc.class_end_datetime','cc.tpg_course_run_id');
+            $this->db->select('cc.class_language, cc.class_name, cc.classroom_trainer, cc.assessor, cc.class_start_datetime, cc.class_end_datetime,cc.tpg_course_run_id');
         }else{
             $this->db->select('cc.class_language, cc.class_name, cc.classroom_trainer, cc.assessor, cc.class_start_datetime, cc.class_end_datetime');
         }
