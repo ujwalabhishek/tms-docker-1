@@ -5144,7 +5144,7 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
             $row->alternate_contact_number, empty($row->registered_email_id) ? $row->comp_email : $row->registered_email_id,
             empty($row->company_name) ? 'NA' : $row->company_name, $designation, $class_language,
             $highest_educ_level, $salary_range, ($assment_det->assmnt_venue == 'OTH') ? 'Others (' . $assment_det->assmnt_venue_oth . ')' : $metadata[$assment_det->assmnt_venue],
-            $row->tpg_course_run_id,
+            
             date('dmY', strtotime($row->class_start_datetime)), $row->reference_num, $row->competency_code,
             $course_code, 'N',
             (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)),
