@@ -1766,7 +1766,12 @@ class Class_Trainee extends CI_Controller {
                     return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data,$mark_count); // removed mark count by shubhranshu
                     
                 } else if ($export == 'pdf_week') {
-                    return generate_class_attendance_sheet_pdf($results, $class_details, $tenant_details, $class_schedule_data);
+                    if(TENANT_ID =='T02'){
+                        return generate_class_attendance_sheet_pdf_xp($results, $class_details, $tenant_details, $class_schedule_data);
+                    }else{
+                        return generate_class_attendance_sheet_pdf($results, $class_details, $tenant_details, $class_schedule_data);
+                    }
+                    
                 }
             }
            
