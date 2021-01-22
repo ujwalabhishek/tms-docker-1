@@ -4824,7 +4824,7 @@ function generate_traqom_report_csv_xp($tabledata, $metadata) {
         $data_arr[] = array(
            $i,
            $row->first_name,$row->tax_code,$tax_code_type,$dob,$trainee_email,$row->contact_number,$row->tenant_name,$row->crse_name,'',
-            $row->reference_num,'',course_start_date,$course_end_date,'','','','','',$trainer_name,$row->tpg_course_run_id
+            $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$trainer_name,$row->tpg_course_run_id
            
         );
     }
