@@ -8,7 +8,7 @@
                 <img class="logo" src="<?php echo base_url()?>logos/<?php echo TENANT_LOGO;?>" border="0">
                 </a>
             </div>
-            <div class="col-sm-10 header-ttl"><p>TRAINING MANAGEMENT SYSTEM</p></div>
+            <div class="col-sm-10 header-ttl"><p>Training Management as a Service (TMaaS)</p></div>
             
         </div>
     </div>

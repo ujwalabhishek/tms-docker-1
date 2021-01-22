@@ -2945,6 +2945,316 @@ function write_import_enroll_statusfailure($data, $company_id) {
  * @param type $tabledata
  * @param type $metadata
  */
+function generate_soa_report_xls_xp($tabledata, $metadata) {
+    $CI = & get_instance();
+    $CI->load->library('excel');
+    $CI->load->model('course_model');
+    $CI->excel->setActiveSheetIndex(0);
+    $CI->excel->getActiveSheet()->setTitle('SOA Report');
+    $sheet = $CI->excel->getActiveSheet();
+    foreach (range('A', 'Z') as $columnID) {
+$CI->excel->getActiveSheet()->getColumnDimension($columnID)
+                ->setAutoSize(true);
+    }
+    foreach (range('A', 'C') as $columnID) {
+        $var = 'A';
+$CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
+                ->setAutoSize(true);
+    }
+    $column_names = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+        'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'BB', 'CC');
+    $column_title = array(
+        'ID Type', 'ID Number', 'Name (As in NRIC)', 'Gender', 'Nationality',
+        'Date of Birth (DDMMYYYY)', 'Race', 'Trainee Contact No(Mobile)',
+        'Trainee Contact No (Others)', 'Trainee Email Address', 'Company Name (Key in NA if not applicable)',
+        'Designation', 'Medium of Assessment', 'Education Level', 'Salary Range',
+        'Assessment Venue', 'Course Run ID','Course Start Date (DDMMYYYY)', 'Course Reference Number (Refer to Course Listing in SkillsConnect)',
+        'Competency Standard Code (Refer to Course Listing in SkillsConnect)',
+        'Cert Code', 'Submission Type', 'Date Of Assessment (DDMMYYYY)', 'Result',
+        'Trainer ID (For NRIC/FIN/Other ID only,Names should not be included)',
+        'Assessor ID (For NRIC/FIN/Other ID only,Names should not be included)',
+        'Printing of SOA/ Generating of e-Cert','Class Name');
+    for ($i = 0; $i < count($column_title); $i++) {
+        $sheet->setCellValue($column_names[$i] . '1', $column_title[$i]);
+    }
+    $sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->applyFromArray(
+            array('fill' => array(
+                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array('argb' => 'FFCCCCCC')
+                )
+            )
+    );
+    $sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->getFont()->setBold(true);
+    $r = 2;
+    $CI->load->model('reports_model', 'reportsmodel');
+    $data_arr = array();
+    foreach ($tabledata as $row) 
+    {
+
+        $assment_det = $CI->reportsmodel->get_assessment_details($row->class_id, $row->user_id);
+        $crse_manager = explode(',', $row->crse_manager);
+        $manager = $CI->reportsmodel->get_user_taxcode($crse_manager);
+        $manager_text = '';
+        foreach ($manager as $man) {
+            $manager_text .= $man->tax_code . ', ';
+            //break;
+        }
+        $manager_text = rtrim($manager_text, ', ');
+        $classroom_trainer = explode(',', $row->classroom_trainer);
+        $trainer = $CI->reportsmodel->get_user_taxcode($classroom_trainer);
+        $trainer_text = '';
+        foreach ($trainer as $train) {
+            $trainer_text .= $train->tax_code . '; ';
+         
+        }
+        $trainer_text = rtrim($trainer_text, '; ');
+        $classroom_assessor = explode(',', $assment_det->assessor_id);
+        $assessor = $CI->reportsmodel->get_user_taxcode($classroom_assessor);
+        $assessor_text = '';
+        foreach ($assessor as $assess) {
+            $assessor_text .= $assess->tax_code . '; ';
+            //break;
+        }
+        //echo $assessor_text;exit;
+        $assessor_text = rtrim($assessor_text, '; ');
+        $strlength = strpos($row->tax_code_type, '_');
+        $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
+        $row->tax_code_type;
+        //new update
+        $ci =& get_instance(); 
+        $ci->load->database(); 
+        $data = $ci->db->select('category_name as code_type')
+                ->from('metadata_values')
+                ->where('parameter_id', $row->tax_code_type)
+                 ->get()->row(0);
+        $tax_code_type= $data->code_type;
+        
+        if($row->nationality=="KP")
+        {
+            $nationality="KOREAN, NORTH";
+        }
+        else if($row->nationality=="KR")
+        {
+            $nationality="KOREAN, SOUTH";
+        }
+        else
+        {
+                $data = $ci->db->select('category_name as nationality')
+                        ->from('metadata_values')
+                        ->where('parameter_id', $row->nationality)
+                         ->get()->row(0);
+
+                if($data->nationality=="MALAY")
+                {
+                    $nationality="MALAYSIAN";
+                }
+                else
+                {
+                   $nationality= $data->nationality;
+                    if($nationality=="BURMESE")
+                   {
+                       $nationality="MYANMAR";
+                   }
+                }
+               
+        }
+        if($row->race!="")
+        {
+            $data = $ci->db->select('category_name as race')
+                ->from('metadata_values')
+                ->where('parameter_id', $row->race)
+                ->get()->row(0);
+            $race= $data->race;
+        }
+        else
+        {
+            $race=$row->race;
+        }
+       //exit();
+        $designation = '';
+        if($row->account_type == 'INTUSR' && $row->designation != 'OTHERS') 
+        {
+            $strlength = strpos($row->designation, '_');
+            $designation = empty($strlength) ? $row->designation : substr($row->designation, $strlength + 1);
+            if($row->designation!="") {
+                $data = $ci->db->select('category_name as designation')
+                    ->from('metadata_values')
+                    ->where('parameter_id', $row->designation)
+                    ->get()->row(0);
+                $designation= $data->designation;
+            }
+            else {
+                $designation=$row->designation;
+            }
+            
+        } else if($row->account_type == 'TRAINE'){
+            $strlength = strpos($row->occupation_code, '_');
+            $designation = empty($strlength) ? $row->occupation_code : substr($row->occupation_code, $strlength + 1);
+            if($row->occupation_code!="") {
+                $data = $ci->db->select('category_name as occupation_code')
+                    ->from('metadata_values')
+                    ->where('parameter_id', $row->occupation_code)
+                    ->get()->row(0);
+                $designation= $data->occupation_code;
+            }
+            else {
+                $designation=$row->occupation_code;
+            }
+        }
+        $strlength = strpos($row->class_language, '_');
+        $class_language = empty($strlength) ? $row->class_language : substr($row->class_language, $strlength + 1);
+        $data = $ci->db->select('category_name as class_language')
+                ->from('metadata_values')
+                ->where('parameter_id', $row->class_language)
+                 ->get()->row(0);
+        $class_language= $data->class_language;
+        
+        
+        $strlength = strpos($row->highest_educ_level, '_');
+        $highest_educ_level = empty($strlength) ? $row->highest_educ_level : substr($row->highest_educ_level, $strlength + 1);
+        if($row->highest_educ_level!="") {
+                $data = $ci->db->select('category_name as highest_educ_level')
+                    ->from('metadata_values')
+                    ->where('parameter_id', $row->highest_educ_level)
+                    ->get()->row(0);
+                $highest_educ_level= $data->highest_educ_level;
+            }
+            else {
+                $highest_educ_level=$row->highest_educ_level;
+            }
+        
+        $strlength = strpos($row->salary_range, '_');
+        $row->salary_range;
+       
+        $salary_range = empty($strlength) ? $row->salary_range : substr($row->salary_range, $strlength + 1);
+        if($row->salary_range!="") 
+        {
+                $data = $ci->db->select('category_name as salary_range1')
+                    ->from('metadata_values')
+                    ->where('parameter_id', $row->salary_range)
+                    ->get()->row(0);
+                $salary_range= $data->salary_range1;
+               
+                if($row->salary_range!="BL1000_01")
+                {
+                    if($row->salary_range!="3500_07")
+                    {
+                        $salary=explode("to",$salary_range);
+                        if(str_replace(' ', '', $salary[0])!="UNEMPLOYED")
+                        {
+                            $sal=explode(".",$salary[0]);
+                            $sal1=explode(".",$salary[1]);
+                            $salary_range=  str_replace(' ', '', $sal[0])." - $".str_replace(' ', '', $sal1[0]);
+                        }
+                    }
+                    else
+                    {
+                        $salary_range="$3,500 and Above";
+                    }
+                }
+                else
+                {
+                    
+                    $salary_range="Below $1,000";
+                    //$salary_range= $data->salary_range1;
+                }
+        }
+        else 
+        {
+                $salary_range=$row->salary_range;
+        }
+        $gender_arr = array('MALE' => 'MALE', 'FEMALE' => 'FEMALE');
+        if($row->company_id[0] == 'T') {           
+            $tenant_details = fetch_tenant_details($row->company_id);            
+            $row->company_name = $tenant_details->tenant_name; 
+            $row->comp_email = $tenant_details->tenant_email_id;            
+        }
+        if($row->training_score)
+        {
+            if($row->training_score=="C")
+            {
+                $score="Competent";
+            }
+            else if($row->training_score=="ABS")
+            {
+                $score="Absent";
+            }
+            else if($row->training_score=="NYC")
+            {
+                $score="Not Yet Competent";
+            }
+            else if($row->training_score=="EX")
+            {
+                $score="Exempted";
+            }
+            
+            else if($row->training_score=="2NYC")
+            {
+                $score="Twice Not Competent";
+            }
+            else
+            {
+                $score=$row->training_score;
+            }
+        }
+        else
+        {
+             $score=$row->training_score;
+        }
+        $course_code =  rtrim($CI->course_model->get_metadata_on_parameter_id($row->certi_level), ', '); //sk2
+        $sheet->setCellValue('A' . $r, $tax_code_type);
+        $sheet->setCellValue('B' . $r, $row->tax_code);
+        $sheet->setCellValue('C' . $r, $row->first_name);
+        $sheet->setCellValue('D' . $r, $gender_arr[$row->gender]);
+        $sheet->setCellValue('E' . $r, $nationality);
+        $sheet->setCellValueExplicit('F' . $r, (!empty($row->dob)) ? date('dmY', strtotime($row->dob)) : '', PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('F' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->setCellValue('G' . $r, $race);
+        $sheet->setCellValueExplicit('H' . $r, $row->contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('H' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->setCellValueExplicit('I' . $r, $row->alternate_contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('I' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->setCellValue('J' . $r, empty($row->registered_email_id) ? $row->comp_email : $row->registered_email_id);
+        $sheet->setCellValue('K' . $r, empty($row->company_name) ? 'NA' : $row->company_name);
+        $sheet->setCellValueExplicit('L' . $r, $designation, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('L' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->setCellValue('M' . $r, $class_language);
+        $sheet->setCellValueExplicit('N' . $r, $highest_educ_level, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('N' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->setCellValueExplicit('O' . $r, $salary_range, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('O' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->setCellValue('P' . $r, ($assment_det->assmnt_venue == 'OTH') ? 'Others (' . $assment_det->assmnt_venue_oth . ')' : $metadata[$assment_det->assmnt_venue]);
+        $sheet->setCellValueExplicit('Q' . $r, date('dmY', strtotime($row->class_start_datetime)), PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('R' . $r, $row->tpg_course_run_id, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('Q' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->setCellValueExplicit('S' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('S' .$r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->setCellValueExplicit('T' . $r, $row->competency_code, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('T' .$r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT); 
+//        $sheet->setCellValue('T' . $r, $row->certi_level);
+         $sheet->setCellValue('U' . $r, $course_code);//sk3
+        $sheet->setCellValue('V' . $r, 'NEW');
+        $sheet->setCellValueExplicit('W' . $r, (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)), PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('W' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->setCellValue('X' . $r, $score);
+        $sheet->setCellValue('Y' . $r, $trainer_text);
+        $sheet->setCellValue('Z' . $r, $assessor_text);
+        $sheet->setCellValue('AA' . $r, 'No');
+        //$sheet->setCellValue('BB' . $r, $row->class_name);
+        $r++;
+    }
+
+    ob_end_clean();
+
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment;filename="SOA_Report.xls"');
+    header('Cache-Control: max-age=0');
+
+    $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+    $objWriter->save('php://output');
+}
+
+///added by shubhranshu for xp SOA report
 function generate_soa_report_xls($tabledata, $metadata) {
     $CI = & get_instance();
     $CI->load->library('excel');
@@ -3252,8 +3562,6 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
     $objWriter->save('php://output');
 }
-
-
 /**
  * This methods generates the SOA XLS report output
  * @param type $tabledata
@@ -3431,6 +3739,189 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
         $sheet->setCellValue('T' . $r, '');
         $sheet->setCellValue('U' . $r, $trainer_name);
         $sheet->setCellValue('V' . $r, $row->class_name);
+        $r++;
+    }
+    ob_end_clean();
+    $filename = $row->comp_reg_no . "_" . $course_end_date . "_" . $course_end_time . ".xls";
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment;filename=' . $filename);
+    header('Cache-Control: max-age=0');
+    $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+    $objWriter->save('php://output');
+}
+
+function generate_traqom2_report_xls_xp($tabledata, $metadata) {
+    $total_data = count($tabledata);
+
+    $CI = & get_instance();
+    $CI->load->library('excel');
+    $CI->excel->setActiveSheetIndex(0);
+    $CI->excel->getActiveSheet()->setTitle('TRAQOM  Report');
+    $sheet = $CI->excel->getActiveSheet();
+    foreach (range('A', 'Z') as $columnID) {
+        $CI->excel->getActiveSheet()->getColumnDimension($columnID)
+                ->setAutoSize(true);
+    }
+    foreach (range('A', 'C') as $columnID) {
+        $var = 'A';
+        $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
+                ->setAutoSize(true);
+    }
+    
+        
+    $sheet->mergeCells('A1:G1');
+    $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->setCellValue('A1', 'TRAQAM-2 REPORT As ON ' . date('M j Y, l'));
+    $sheet->getStyle('A1:G1')->getFont()->setBold(true);
+    
+    /* skm code st */
+    $course_end_time_filename = date('His', strtotime($tabledata[0]->class_end_datetime));
+    $course_end_date_filename = date('Ymd', strtotime($tabledata[0]->class_end_datetime));
+
+    $filename = $tabledata[0]->comp_reg_no . "_" . $course_end_date_filename . "_" . $course_end_time_filename . ".xls";
+//    $sheet->setCellValueExplicit('A1', '');
+//    $sheet->setCellValueExplicit('B1', 'TRAQAM-2 REPORT');
+//    $sheet->setCellValueExplicit('C1', 'Total Trainees: '.$total_data);
+
+    //$sheet->setCellValueExplicit('A2', '');
+     $sheet->getStyle('D2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->setCellValueExplicit('D2', 'Total Trainees: '.$total_data);
+    //$sheet->setCellValueExplicit('C2', $total_data);
+    /* skm code end */
+    $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3', 'J3', 'K3', 'L3', 'M3', 'N3', 'O3', 'P3', 'Q3', 'R3', 'S3', 'T3', 'U3','V3');
+    $column_title = array('SL #',
+        'Trainee Name', 'Trainee ID', 'ID Type', 'Email', 'Mobile Country Code', 'Mobile Area Code', 'Mobile', 'TP Alias', 'Course Title', 'Area of Training',
+        'Course Reference Number', 'Course Run Reference Number',
+        'Course Start Date', 'Course End Date', 'Postal Code', 'Floor', 'Unit', 'Room', 'Full Qualification', 'Trainer Name','TPGateway Course Run ID'
+    );
+    for ($i = 0; $i < count($column_title); $i++) {
+        $sheet->setCellValue($column_names[$i], $column_title[$i]);
+    }
+
+//            $sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->applyFromArray(
+//                    array('fill' => array(
+//                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+//                            'color' => array('argb' => 'FFCCCCCC')
+//                        )
+//                    )
+//            );
+    $sheet->getStyle('A3:V3')->applyFromArray(
+            array('fill' => array(
+                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array('argb' => 'FFCCCCCC')
+                )
+            )
+    );
+
+//            echo count($column_title); echo"<br/>";
+//            print_r($sheet);
+//            exit();
+//            
+    //$sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->getFont()->setBold(true);
+    $sheet->getStyle('A3:V3')->getFont()->setBold(true);
+    $r = 4;
+    $CI->load->model('reports_model', 'reportsmodel');
+    $data_arr = array();
+    $duplicate_mobile_arry = array();
+    foreach ($tabledata as $row) {
+        //////////////////start of code added by shubhranshu for removing duplicate mobile no/////////////
+        if(in_array($row->contact_number,$duplicate_mobile_arry)){
+            $remove_duplicate_contact_number = '';
+        }else{
+            $duplicate_mobile_arry[] = $row->contact_number;
+            $remove_duplicate_contact_number = $row->contact_number;
+        }
+        
+        //////////////////end of code added by shubhranshu for removing duplicate mobile no/////////////
+        $strlength = strpos($row->tax_code_type, '_');
+        $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
+        $row->tax_code_type;
+        //new update
+        $ci = & get_instance();
+        $ci->load->database();
+        $data = $ci->db->select('category_name as code_type')
+                        ->from('metadata_values')
+                        ->where('parameter_id', $row->tax_code_type)
+                        ->get()->row(0);
+        $tax_code_type = $data->code_type;
+        //author: added by shubhranshu as per client requirement on 11/03/2020
+        if(TENANT_ID == 'T02' || TENANT_ID == 'T12'){
+            if($tax_code_type == 'NRIC')
+            {
+            ///author: added by shubhranshu as per client requirement on 11/03/2020
+            //Singapore PR
+                if($row->nationality == 'NS'){
+                    $tax_code_type='Singapore Blue Identification Card';
+                }else if($row->nationality == 'SG'){//Singapore Citizen
+                    $tax_code_type='Singapore Pink Identification Card';
+                }else{
+                    $tax_code_type='Others';
+                }
+
+            }else if($tax_code_type == 'FIN'){
+                //$tax_code_type='SO';
+               $tax_code_type= 'FIN/Work Permit/SAF 11B';
+            }
+            else{
+                $tax_code_type='Others';
+            }
+        }else{
+            if($tax_code_type == 'NRIC')
+            {
+                $tax_code_type='SP';
+
+            }else if($tax_code_type == 'FIN'){
+                $tax_code_type='SO';
+            }
+            else{
+                 $tax_code_type='OT';
+            }
+        }
+        
+        /* skm code for new style email which is the combination of taxocde and class name intials st */
+        $pattern = "/[_,-]/";
+        $string = $row->class_name;
+        $class_name = preg_split($pattern, $string);
+        $trainee_classname = $class_name[0];
+        $trainee_taxcode = substr($row->tax_code, -4);
+
+        $CI->load->model('class_model', 'class_Model');
+        $trainer_name = $CI->class_Model->get_trainer_names($row->classroom_trainer);
+
+        //$trainee_email = $row->tax_code.'@yopmail.com';
+//                $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
+        $trainee_email = $trainee_taxcode . $trainee_classname . '@yopmail.com';
+        /* end */
+        $course_start_time = date('His', strtotime($row->class_start_datetime));
+        $course_start_date = date('Ymd', strtotime($row->class_start_datetime));
+        $dob = str_replace('-', '', $row->dob);
+
+        $course_end_time = date('His', strtotime($row->class_end_datetime));
+        $course_end_date = date('Ymd', strtotime($row->class_end_datetime));
+        $enrollment_date = date('Y-m-d', strtotime($row->enrolled_on));
+
+        $sheet->setCellValueExplicit('A' . $r, $r - 3);
+        $sheet->setCellValue('B' . $r, $row->first_name);
+        $sheet->setCellValue('C' . $r, $row->tax_code);
+        $sheet->setCellValue('D' . $r, $tax_code_type);
+        $sheet->setCellValue('E' . $r, $row->registered_email_id);
+        $sheet->setCellValue('F' . $r, '');
+        $sheet->setCellValue('G' . $r, '');
+        $sheet->setCellValueExplicit('H' . $r, $remove_duplicate_contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('I' . $r, $row->tenant_name);
+        $sheet->setCellValue('J' . $r, $row->crse_name);
+        $sheet->setCellValue('K' . $r, '');
+        $sheet->setCellValueExplicit('L' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->setCellValue('M' . $r, '');
+        $sheet->setCellValueExplicit('N' . $r, $course_start_date);
+        $sheet->setCellValueExplicit('O' . $r, $course_end_date);
+        $sheet->setCellValue('P' . $r, '');
+        $sheet->setCellValue('Q' . $r, '');
+        $sheet->setCellValue('R' . $r, '');
+        $sheet->setCellValue('S' . $r, '');
+        $sheet->setCellValue('T' . $r, '');
+        $sheet->setCellValue('U' . $r, $trainer_name);
+        $sheet->setCellValue('V' . $r, $row->tpg_course_run_id);
         $r++;
     }
     ob_end_clean();
@@ -3710,6 +4201,153 @@ function generate_traqom_report_xls($tabledata, $metadata)
                 $sheet->setCellValue('S' . $r, '');
                 $sheet->setCellValue('T' . $r, $trainer_name);
                 $sheet->setCellValue('U' . $r, $row->class_name);
+                $r++;
+            }
+            ob_end_clean();
+            $filename=$row->comp_reg_no."_".$course_end_date."_".$course_end_time.".xls";
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename='.$filename);
+            header('Cache-Control: max-age=0');
+            $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+            $objWriter->save('php://output');
+}
+
+///added by shubhranshu for traqam report xls only for XP course run id
+function generate_traqom_report_xls_xp($tabledata, $metadata) 
+{
+    $total_data = count($tabledata);
+
+            $CI = & get_instance();
+            $CI->load->library('excel');
+            $CI->excel->setActiveSheetIndex(0);
+            $CI->excel->getActiveSheet()->setTitle('TRAQOM  Report');
+            $sheet = $CI->excel->getActiveSheet();
+            foreach (range('A', 'Z') as $columnID) 
+            {
+                    $CI->excel->getActiveSheet()->getColumnDimension($columnID)
+                                ->setAutoSize(true);
+            }
+            foreach (range('A', 'C') as $columnID) 
+            {
+                $var = 'A';
+                $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
+                        ->setAutoSize(true);
+            }
+            /* skm code st*/
+            $course_end_time_filename=date('His',strtotime($tabledata[0]->class_end_datetime));
+            $course_end_date_filename=date('Ymd',strtotime($tabledata[0]->class_end_datetime));
+            
+            $filename=$tabledata[0]->comp_reg_no."_".$course_end_date_filename."_".$course_end_time_filename.".xls";
+            $sheet->setCellValueExplicit('A1' , 'H');
+            $sheet->setCellValueExplicit('B1' , $filename);
+            $sheet->setCellValueExplicit('C1' , $total_data);
+            
+            $sheet->setCellValueExplicit('A2' , 'H');
+            $sheet->setCellValueExplicit('B2' , 'Scenario');
+            $sheet->setCellValueExplicit('C2' , 'Outcome');
+            /* skm code end */
+            $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3','H3','I3','J3','K3','L3','M3','N3','O3','P3','Q3','R3','S3','T3','U3');
+            $column_title = array('H',
+                'Trainee Name','Trainee ID','ID Type','Date Of Birth','Email','Mobile','TP Alias','Course Title','Area of Training',
+                'Course Reference Number','Course Run Reference Number',
+                'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','Trainer Name','TPGateway Course Run ID'
+               
+                );
+            for ($i = 0; $i < count($column_title); $i++) 
+            {
+                $sheet->setCellValue($column_names[$i] , $column_title[$i]);
+            }
+            
+//            $sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->applyFromArray(
+//                    array('fill' => array(
+//                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+//                            'color' => array('argb' => 'FFCCCCCC')
+//                        )
+//                    )
+//            );
+             $sheet->getStyle('A3:U3')->applyFromArray(
+                array('fill' => array(
+                        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                        'color' => array('argb' => 'FFCCCCCC')
+                                )
+                    )
+            );
+            
+//            echo count($column_title); echo"<br/>";
+//            print_r($sheet);
+//            exit();
+//            
+            //$sheet->getStyle('A1:' . $column_names[count($column_title) - 1] . '1')->getFont()->setBold(true);
+            $sheet->getStyle('A3:U3')->getFont()->setBold(true);
+            $r = 4;
+            $CI->load->model('reports_model', 'reportsmodel');
+            $data_arr = array();
+            foreach ($tabledata as $row) 
+            {
+                
+                $strlength = strpos($row->tax_code_type, '_');
+                $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
+                $row->tax_code_type;
+                //new update
+                $ci =& get_instance(); 
+                $ci->load->database(); 
+                $data = $ci->db->select('category_name as code_type')
+                        ->from('metadata_values')
+                        ->where('parameter_id', $row->tax_code_type)
+                         ->get()->row(0);
+                $tax_code_type= $data->code_type;
+                if($tax_code_type == 'NRIC')
+                {
+                    $tax_code_type='SP';
+                }else if($tax_code_type == 'FIN'){
+                    $tax_code_type='SO';
+                }
+                else{
+                    $tax_code_type='OT';
+                }
+                /* skm code for new style email which is the combination of taxocde and class name intials st*/
+                $pattern = "/[_,-]/";
+                $string = $row->class_name;
+                $class_name = preg_split($pattern, $string);
+                $trainee_classname = $class_name[0];
+                $trainee_taxcode = substr($row->tax_code, -4);
+                
+                 $CI->load->model('class_model', 'class_Model');              
+                 $trainer_name = $CI->class_Model->get_trainer_names($row->classroom_trainer);
+               
+                //$trainee_email = $row->tax_code.'@yopmail.com';
+//                $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
+                 $trainee_email = $trainee_taxcode.$trainee_classname.'@yopmail.com';
+                /*end */
+                $course_start_time=date('His',strtotime($row->class_start_datetime));
+                $course_start_date=date('Ymd',strtotime($row->class_start_datetime));
+                $dob = str_replace('-','',$row->dob);
+                
+                $course_end_time=date('His',strtotime($row->class_end_datetime));
+                $course_end_date=date('Ymd',strtotime($row->class_end_datetime));
+                $enrollment_date = date('Y-m-d',strtotime($row->enrolled_on));
+                
+                $sheet->setCellValueExplicit('A' . $r, 'I');
+                $sheet->setCellValue('B' . $r, $row->first_name);
+                $sheet->setCellValue('C' . $r, $row->tax_code);
+                $sheet->setCellValue('D' . $r, $tax_code_type);
+                $sheet->setCellValue('E' . $r, $dob);
+                $sheet->setCellValue('F' . $r, $trainee_email);
+                $sheet->setCellValueExplicit('G' . $r, $row->contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
+                $sheet->setCellValueExplicit('H' . $r, $row->tenant_name);
+                $sheet->setCellValue('I' . $r, $row->crse_name);
+                $sheet->setCellValue('J' . $r, '');
+                $sheet->setCellValueExplicit('K' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
+                $sheet->setCellValue('L' . $r, '');                
+                $sheet->setCellValueExplicit('M' . $r, $course_start_date);
+                $sheet->setCellValueExplicit('N' . $r, $course_end_date);                
+                $sheet->setCellValue('O' . $r, '');
+                $sheet->setCellValue('P' . $r, '');
+                $sheet->setCellValue('Q' . $r, '');
+                $sheet->setCellValue('R' . $r, '');
+                $sheet->setCellValue('S' . $r, '');
+                $sheet->setCellValue('T' . $r, $trainer_name);
+                $sheet->setCellValue('U' . $r, $row->tpg_course_run_id);
                 $r++;
             }
             ob_end_clean();
@@ -4349,6 +4987,100 @@ function generate_soa_report_csv($tabledata, $metadata) {
     //return; commented by shubhranshu since html are coming in csv file
 }
 
+/////added by shubhranshu soa report csv only for XP
+function generate_soa_report_csv_xp($tabledata, $metadata) {
+    $CI = & get_instance();
+    $CI->load->model('course_model');
+    $column_title = array(
+        'ID Type', 'ID Number', 'Name (As in NRIC)', 'Gender', 'Nationality',
+        'Date of Birth (DDMMYYYY)', 'Race', 'Trainee Contact No(Mobile)',
+        'Trainee Contact No (Others)', 'Trainee Email Address', 'Company Name (Key in NA if not applicable)',
+        'Designation', 'Medium of Assessment', 'Education Level', 'Salary Range',
+        'Assessment Venue', 'Course Run ID','Course Start Date (DDMMYYYY)', 'Course Reference Number (Refer to Course Listing in SkillsConnect)',
+        'Competency Standard Code (Refer to Course Listing in SkillsConnect)',
+        'Cert Code', 'Submission Type', 'Date Of Assessment (DDMMYYYY)', 'Result',
+        'Trainer ID (For NRIC/FIN/Other ID only,Names should not be included)',
+        'Assessor ID (For NRIC/FIN/Other ID only,Names should not be included)',
+        'Printing of SOA/ Generating of e-Cert','Class Name');
+    $CI->load->model('reports_model', 'reportsmodel');
+    $data_arr = array();
+    foreach ($tabledata as $row) {
+        $assment_det = $CI->reportsmodel->get_assessment_details($row->class_id, $row->user_id);
+        $crse_manager = explode(',', $row->crse_manager);
+        $manager = $CI->reportsmodel->get_user_taxcode($crse_manager);
+        $manager_text = '';
+        foreach ($manager as $man) {
+            $manager_text .= $man->tax_code . ', ';
+            break;
+        }
+        $manager_text = rtrim($manager_text, ', ');
+        $classroom_trainer = explode(',', $row->classroom_trainer);
+        $trainer = $CI->reportsmodel->get_user_taxcode($classroom_trainer);
+        $trainer_text = '';
+        foreach ($trainer as $train) {
+            $trainer_text .= $train->tax_code . ', ';
+            break;
+        }
+        $trainer_text = rtrim($trainer_text, ', ');
+        $classroom_assessor = explode(',', $assment_det->assessor_id);
+        $assessor = $CI->reportsmodel->get_user_taxcode($classroom_assessor);
+        $assessor_text = '';
+        foreach ($assessor as $assess) {
+            $assessor_text .= $assess->tax_code . ', ';
+            break;
+        }
+        $assessor_text = rtrim($assessor_text, ', ');
+        $strlength = strpos($row->tax_code_type, '_');
+        $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
+        $designation = '';
+        if($row->account_type == 'INTUSR' && $row->designation != 'OTHERS') {
+            $strlength = strpos($row->designation, '_');
+            $designation = empty($strlength) ? $row->designation : substr($row->designation, $strlength + 1);
+        } else if($row->account_type == 'TRAINE'){
+            $strlength = strpos($row->occupation_code, '_');
+            $designation = empty($strlength) ? $row->occupation_code : substr($row->occupation_code, $strlength + 1);
+        }
+        $strlength = strpos($row->class_language, '_');
+        $class_language = empty($strlength) ? $row->class_language : substr($row->class_language, $strlength + 1);
+        $strlength = strpos($row->highest_educ_level, '_');
+        $highest_educ_level = empty($strlength) ? $row->highest_educ_level : substr($row->highest_educ_level, $strlength + 1);
+        $strlength = strpos($row->salary_range, '_');
+        $salary_range = empty($strlength) ? $row->salary_range : substr($row->salary_range, $strlength + 1);
+        $gender_arr = array('MALE' => 'M', 'FEMALE' => 'F');
+        if($row->company_id[0] == 'T') {           
+            $tenant_details = fetch_tenant_details($row->company_id);            
+            $row->company_name = $tenant_details->tenant_name;
+            $row->comp_email = $tenant_details->tenant_email_id;
+        }
+        $course_code =  rtrim($CI->course_model->get_metadata_on_parameter_id($row->certi_level), ', '); //sk2
+        $data_arr[] = array(
+            $tax_code_type, $row->tax_code, $row->first_name, $gender_arr[$row->gender], $row->nationality,
+            (!empty($row->dob)) ? date('dmY', strtotime($row->dob)) : '', $row->race, $row->contact_number,
+            $row->alternate_contact_number, empty($row->registered_email_id) ? $row->comp_email : $row->registered_email_id,
+            empty($row->company_name) ? 'NA' : $row->company_name, $designation, $class_language,
+            $highest_educ_level, $salary_range, ($assment_det->assmnt_venue == 'OTH') ? 'Others (' . $assment_det->assmnt_venue_oth . ')' : $metadata[$assment_det->assmnt_venue],
+            $row->tpg_course_run_id,
+            date('dmY', strtotime($row->class_start_datetime)), $row->reference_num, $row->competency_code,
+            $course_code, 'N',
+            (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)),
+            $row->training_score, $trainer_text, $assessor_text, 'No',$row->class_name
+        );
+    }
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename=SOA_Report.csv');
+    $output = fopen('php://output', 'w');
+    fputcsv($output, $column_title);
+    foreach ($data_arr as $data) {
+        foreach ($data as $key => $value) {
+            if (!empty($value)){
+                $data[$key] = '"' . $value . '"';
+            }
+        }
+        fputcsv($output, $data);
+    }
+   exit;
+    //return; commented by shubhranshu since html are coming in csv file
+}
 /**
  * This function export credit notes to xl.
  * @param type $query

@@ -2529,8 +2529,12 @@ SELECT  {$calc_rows} c.crse_name,
     public function get_soa_data($tenant, $course, $class, $from, $to) {
         $generateby = $this->input->post('generateby');
         $cur_date = date('Y-m-d');
-
-        $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id,cc.class_name');
+        if(TENANT_ID=='T02'){/// added by shubhranshu due to client requirentment for xp course run id
+            $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id,cc.class_name,cc.tpg_course_run_id');
+        }else{
+            $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id,cc.class_name');
+        }
+        
         $this->db->select('c.reference_num, c.competency_code, c.certi_level,c.crse_manager');
         $this->db->select('cc.class_language, cc.classroom_trainer, cc.assessor, cc.class_start_datetime, cc.class_end_datetime');
         $this->db->select('tu.tax_code_type, tu.tax_code, tu.other_identi_type, tu.other_identi_code, tu.registered_email_id, tu.account_type'); // account_type added by dummy for internal staff enrollment On 08 Dec 2014.
@@ -2620,7 +2624,13 @@ SELECT  {$calc_rows} c.crse_name,
         if ($generateby == 1) {
             $this->db->where('date(cc.class_end_datetime)', $traqom_date);
         } elseif ($generateby == 2) {
-            $this->db->where('ce.training_score', 'C');
+            if(TENANT_ID=='T02'){
+                $ar = array('C','NYC');
+                $this->db->where_in('ce.training_score', $ar);
+            }else{
+                $this->db->where('ce.training_score', 'C');
+            }
+           
             $this->db->where('date(cc.class_end_datetime)', $traqom_date);
         }
         return $this->db->get()->result();
