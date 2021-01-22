@@ -4214,7 +4214,7 @@ function generate_traqom_report_xls($tabledata, $metadata)
 
 ///added by shubhranshu for traqam report xls only for XP course run id
 function generate_traqom_report_xls_xp($tabledata, $metadata) 
-{
+{print_r($tabledata);exit;
     $total_data = count($tabledata);
 
             $CI = & get_instance();
