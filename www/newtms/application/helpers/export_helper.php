@@ -5979,14 +5979,14 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 $sheet->setCellValue('F12', 'Class Start Date');
                 $sheet->setCellValue('G12', 'Assmnt. Dt.');
                 //$sheet->setCellValue('H12', 'A/P');
-                //$sheet->setCellValue('H12', '');
-                $sheet->setCellValue('H12', "Trainees' Attendance Sign-in");
+                $sheet->setCellValue('H12', 'SESSION');
+                $sheet->setCellValue('I12', "Trainees' Attendance Sign-in");
                 $sheet->getStyle('I12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $sheet->mergeCells('J12:' . $assmnt_sign_column . '12');
+                $sheet->mergeCells('I12:' . $assmnt_sign_column . '12');
                 $sheet->setCellValue($assmnt_sign_column.'13','Assmnt. Sign.');
                 $sheet->mergeCells('A13:H13');
                 $sheet->getStyle('A13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $sheet->setCellValue('I13', 'Session');
+                $sheet->setCellValue('H13', 'Session');
 
                 $sheet->getColumnDimension('B')->setWidth(20);
                 $sheet->getColumnDimension('C')->setWidth(20);
