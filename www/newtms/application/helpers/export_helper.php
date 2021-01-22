@@ -5888,6 +5888,569 @@ function generate_class_attendance_sheet_xls($results, $class_details,$start, $e
         }
     
 }
+
+function generate_class_attendance_sheet_xls_xp($results, $class_details,$start, $end, $tenant, $class_schedule_data) 
+{
+    $statment = 'I understand that the training provider will not be held responsible to resubmit the results should the Name and ID number was found incorrect after the course date.';
+        $data=PAX_PER_SHEET;
+        $num_of_sheets=ceil(count($results)/$data);
+        $j=0;
+        $i=1;
+        while($i<=$num_of_sheets)
+        {
+            $arr[$i] = array_slice($results,$j,$data);//0 - 5, 5- 10, 
+            $i++;
+            $j=$j+$data;
+        }
+        $results=$arr1;
+        $interval = date_diff($start, $end);
+        $total_days = $interval->format('%a');
+        if(count($class_schedule_data)>0 or $total_days == 0)  // else condition on line no :3447
+        {
+            if($total_days!=0)
+            {
+                $count = count($class_schedule_data);
+                $total_days = ($count-1);
+            }
+            else
+            {
+                $total_days = $interval->format('%a');
+            }
+            $CI = & get_instance();
+            $CI->load->model('trainee_model', 'traineemodel');
+            $className = $class_details->class_name;
+            $courseName = $class_details->crse_name;
+            $class_start_date_formatted = date_format_singapore($class_details->class_start_datetime) . " " . time_format_singapore($class_details->class_start_datetime);
+            $class_end_date_formatted = date_format_singapore($class_details->class_end_datetime) . " " . time_format_singapore($class_details->class_end_datetime);
+            $CI->load->library('excel');
+            $i=1;
+            while($i<=$num_of_sheets)
+            {
+                //$a="arr".$i;
+                $results=$arr[$i];
+                $CI->excel->createSheet();
+                $CI->excel->setActiveSheetIndex($i);
+                $CI->excel->getActiveSheet()->setTitle("Attendance List".$i);
+                $sheet = $CI->excel->getActiveSheet();
+                $CI->excel->getActiveSheet()->getRowDimension('13')->setRowHeight(50);
+                $column_index = PHPExcel_Cell::columnIndexFromString('I');
+                $adjusted_column_index = $column_index + $total_days;
+                $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
+                $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index+1);        
+                $sheet->mergeCells('A1:' . $assmnt_sign_column . '1');
+                $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->getStyle('A1')->getFont()->setSize(13)->setBold(true);
+                $sheet->setCellValue('A1', "Attendance List".$i);
+                $sheet->mergeCells('A2:' . $assmnt_sign_column . '2');
+                $sheet->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A2', "");
+                $sheet->mergeCells('A3:' . $assmnt_sign_column . '3');
+                $sheet->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A3', "Course Title: $courseName");
+                $sheet->mergeCells('A4:' . $assmnt_sign_column . '4');
+                $sheet->getStyle('A4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A4', "Name of Training: $className");
+                $sheet->mergeCells('A5:' . $assmnt_sign_column . '5');
+                $sheet->getStyle('A5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A5', "Training Duration: ".$class_start_date_formatted . ' To ' . $class_end_date_formatted);
+                $sheet->mergeCells('A6:' . $assmnt_sign_column . '6');
+                $sheet->getStyle('A6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A6', "Trainer: ".$class_details->classroom_trainer);
+                $sheet->mergeCells('A7:' . $assmnt_sign_column . '7');
+                $sheet->getStyle('A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A7', "Assessor: ".$class_details->assessor);
+                $sheet->mergeCells('A8:' . $assmnt_sign_column . '8');
+                $sheet->getStyle('A8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A8', "Company: ".$class_details->company_name);
+                $sheet->mergeCells('A9:' . $assmnt_sign_column . '9');
+                $sheet->getStyle('A9')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A9', "Class ID: ".$class_details->class_id);
+                $sheet->mergeCells('A10:' . $assmnt_sign_column . '10');
+                $sheet->getStyle('A10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A10', "Training Hrs: ".($class_details->total_classroom_duration + $class_details->total_lab_duration));
+                $sheet->mergeCells('A11:' . $assmnt_sign_column . '11');
+                $sheet->getStyle('A11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A11', "Assessment Hrs: ".$class_details->assmnt_duration);
+                $sheet->setCellValue('A12', 'Sl #');
+                $sheet->setCellValue('B12', 'Name');
+                $sheet->setCellValue('C12', 'NRIC/FIN No.');
+                $sheet->setCellValue('D12', 'Comp Id');
+                $sheet->setCellValue('E12', 'Country');
+                $sheet->setCellValue('F12', 'Class Start Date');
+                $sheet->setCellValue('G12', 'Assmnt. Dt.');
+                //$sheet->setCellValue('H12', 'A/P');
+                $sheet->setCellValue('H12', '');
+                $sheet->setCellValue('I12', "Trainees' Attendance Sign-in");
+                $sheet->getStyle('I12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->mergeCells('J12:' . $assmnt_sign_column . '12');
+                $sheet->setCellValue($assmnt_sign_column.'13','Assmnt. Sign.');
+                $sheet->mergeCells('A13:H13');
+                $sheet->getStyle('A13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->setCellValue('I13', 'Session');
+
+                $sheet->getColumnDimension('B')->setWidth(20);
+                $sheet->getColumnDimension('C')->setWidth(20);
+                $sheet->getColumnDimension('F')->setWidth(15);
+                $sheet->getColumnDimension('G')->setWidth(10);
+                $sheet->getColumnDimension('H')->setWidth(5);
+                $sheet->getColumnDimension('I')->setWidth(15);
+
+                $days = array();
+
+                $current_date = $start;
+                while ($current_date < $end || compare_dates_without_time($current_date, $end)) 
+                {
+                    $days[] = $current_date;
+                    $next_day = DateTime::createFromFormat('U', strtotime("tomorrow 12:00:00", $current_date->getTimestamp()));
+                    $current_date = $next_day;
+                }
+
+                // echo "<pre>";
+                if($total_days != 0)
+                { 
+                    $weeks = create_week_days_array($start ,$end, $class_schedule_data);
+                }
+                else
+                {
+                  $weeks = array($start);
+                }
+                $sheet->getStyle('A12:' . $assmnt_sign_column . '13')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                                'color' => array('argb' => 'FFCCCCCC')
+                            )
+                        )
+                );
+
+                $rn = 13;
+                $cell = 9;
+                $is_two_sessions = $class_details->class_session_day == 2;
+                foreach ($weeks as $day) {
+                    $session_time = "\n " . $class_schedule_data[$day->format('d/m/y')][1];
+                    if ($is_two_sessions) {
+                        $session_time2 = $class_schedule_data[$day->format('d/m/y')][2];
+                        if ($session_time2) {
+                            $session_time .= "\n " . $session_time2;
+                        }
+                    }
+                    if($class_schedule_data[$day->format('d/m/y')])
+                    {
+                         $sk =  explode("to",$session_time);
+                         $sk[0];
+                     //$sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time); previous code
+                       $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y'). $sk[0]);
+                    $cell++;
+                    }
+                    elseif($total_days == 0)
+                    {
+
+                    //$sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time); previous code
+                        $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y'). $sk[0]);
+                    }
+                }
+
+                $row = 14;
+                $index = 1;
+                $footer_text = array();
+                //print_r($results);
+                //exit;
+                foreach ($results as $res) 
+                {
+                    if ($is_two_sessions) 
+                    {
+                        $sheet->mergeCells('A' . $row . ':A' . ($row + 1));
+                        $sheet->mergeCells('B' . $row . ':B' . ($row + 1));
+                        $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
+                        $sheet->mergeCells('D' . $row . ':D' . ($row + 1));
+                        $sheet->mergeCells('E' . $row . ':E' . ($row + 1));
+                        $sheet->mergeCells('F' . $row . ':F' . ($row + 1));
+                        $sheet->mergeCells('G' . $row . ':G' . ($row + 1));
+                        $sheet->mergeCells('H' . $row . ':H' . ($row + 1));
+                    }
+                    $sheet->setCellValue('A' . $row, $index);
+                    $sheet->setCellValue('B' . $row, $res['record']['name']);
+                    $sheet->setCellValue('C' . $row, mask_format($res['record']['tax_code']));
+                    $res['record']['company_id'] = ($res['record']['company_id'] == 0)? '': $res['record']['company_id'];
+                    $sheet->setCellValue('D' . $row, $res['record']['company_id']);
+                    if(!empty($res['record']['company_id']))
+                    {
+                            if($res['record']['company_id'][0]== 'T'){
+                                $footer_text[$res['record']['company_id']] = $tenant->tenant_name;
+                            }else {
+                                $footer_text[$res['record']['company_id']] = $res['record']['company_name'];
+                            }
+                    }
+                    $sheet->setCellValue('E' . $row, $res['record']['nationality']);
+                    $sheet->setCellValue('F' . $row, date('d/m/Y',  strtotime($class_details->class_start_datetime)));
+                    $assmnt_date = $CI->traineemodel->get_assessment_date($res['record']['class_id'], $res['record']['user_id']);
+                    $formatd_assmnt_date = empty($assmnt_date) ? '' : date('d/m/Y', strtotime($assmnt_date));
+                    $sheet->setCellValue('G' . $row, $formatd_assmnt_date);
+                   // PRESENT AND ABSENT CODE START 
+//                    if($res['record']['att']==1)
+//                    {
+//                      $sheet->setCellValue('H' .$row,'P');  
+//                    }
+//                    else
+//                    {
+//                      $sheet->setCellValue('H' .$row,'A');  
+//                    }
+                   // PRESENT AND ABSENT CODE END 
+
+                    $sheet->setCellValue('I' . $row, 'Session1:');
+                    if ($is_two_sessions) {
+                        $sheet->setCellValue('I' . ($row + 1), 'Session2:');
+                    }
+
+                    $cell = 9;
+                    foreach ($weeks as $day) 
+                    {
+                        $formatted_day = $day->format('Y-m-d');
+                        $ses1 = '';
+                        $ses2 = '';
+
+                        $sheet->setCellValueByColumnAndRow($cell, $row, $ses1);
+                        if ($is_two_sessions) 
+                        {
+                            $sheet->setCellValueByColumnAndRow($cell, $row + 1, $ses2);
+                        }
+                        $cell++;
+                    }
+
+                    $row += ($is_two_sessions) ? 2 : 1;
+                    $index++;
+                }
+                $row_update_start_assmntsign = $row;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('I'.$row, 'Absent');
+                $row++;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('I'.$row, 'Present');
+                $row++;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('I'.$row, 'Total');
+                $cell = 9;
+                $total_users = --$index;
+                /*foreach ($days as $day) {
+                    $sheet->setCellValueByColumnAndRow($cell, $row, $total_users);
+                    $cell++;
+                }*/
+                $row++;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('I'.$row, 'Trainer Sign-in');
+                $sheet->mergeCells($assmnt_sign_column.$row_update_start_assmntsign.':'.$assmnt_sign_column.$row);
+
+                $sheet->getStyle('A14:G' . $row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('A13:A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $row++;
+                $row_after_table = $row+1;
+                $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A'.$row, 'Name of Company: '.$class_details->company_name);
+                $row++;
+                $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A'.$row, 'Full Name & Designation of Director:');
+                $row++;
+                
+                $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A'.$row, $statment);
+                $row++;
+                
+                
+                foreach($footer_text as $k=>$v)
+                {
+                    $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                    $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                    $sheet->setCellValue('A'.$row, '** '.$k.' - '.$v);
+                    $row++;
+                }
+                $styleArray = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => 'FF000000'),
+                        ),
+                    ),
+                );
+                $sheet->getStyle(
+                        'A1:' . $sheet->getHighestColumn() . ($sheet->getHighestRow()-1)
+                )->applyFromArray($styleArray);
+                $style2Array = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => 'FFFFFFFF'),
+                        ),
+                    ),
+                );
+                $sheet->getStyle('A3:A11')->applyFromArray($style2Array);
+                $sheet->getStyle(
+                        'A'.$row_after_table.':' . $sheet->getHighestColumn() . ($sheet->getHighestRow()-1)
+                )->applyFromArray($style2Array);
+
+            $i++;
+            }
+            ob_end_clean();
+        
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="Attendance.xls"');
+            header('Cache-Control: max-age=0');
+
+            $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+            $objWriter->save('php://output');
+        }
+        else 
+        {  // if condition on line no 3191
+           
+            $CI = & get_instance();
+            $CI->load->model('trainee_model', 'traineemodel');
+            $className = $class_details->class_name;
+            $courseName = $class_details->crse_name;
+            $class_start_date_formatted = date_format_singapore($class_details->class_start_datetime) . " " . time_format_singapore($class_details->class_start_datetime);
+            $class_end_date_formatted = date_format_singapore($class_details->class_end_datetime) . " " . time_format_singapore($class_details->class_end_datetime);
+            $CI->load->library('excel');
+            $i=1;
+            while($i<=$num_of_sheets)
+            {
+                 //$a="arr".$i;
+                $results=$arr[$i];
+                $CI->excel->createSheet();
+                $CI->excel->setActiveSheetIndex($i);
+                $CI->excel->getActiveSheet()->setTitle("Attendance List".$i);
+                $sheet = $CI->excel->getActiveSheet();
+                $CI->excel->getActiveSheet()->getRowDimension('13')->setRowHeight(50);
+                $column_index = PHPExcel_Cell::columnIndexFromString('H');
+                $adjusted_column_index = $column_index + $total_days;
+                $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
+                $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index+1);        
+                $sheet->mergeCells('A1:' . $assmnt_sign_column . '1');
+                $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->getStyle('A1')->getFont()->setSize(13)->setBold(true);
+                $sheet->setCellValue('A1', "Attendance List1.");
+                $sheet->mergeCells('A2:' . $assmnt_sign_column . '2');
+                $sheet->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A2', "");
+                $sheet->mergeCells('A3:' . $assmnt_sign_column . '3');
+                $sheet->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A3', "Course Title: $courseName");
+                $sheet->mergeCells('A4:' . $assmnt_sign_column . '4');
+                $sheet->getStyle('A4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A4', "Name of Training: $className");
+                $sheet->mergeCells('A5:' . $assmnt_sign_column . '5');
+                $sheet->getStyle('A5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A5', "Training Duration: ".$class_start_date_formatted . ' To ' . $class_end_date_formatted);
+                $sheet->mergeCells('A6:' . $assmnt_sign_column . '6');
+                $sheet->getStyle('A6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A6', "Trainer: ".$class_details->classroom_trainer);
+                $sheet->mergeCells('A7:' . $assmnt_sign_column . '7');
+                $sheet->getStyle('A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A7', "Assessor: ".$class_details->assessor);
+                $sheet->mergeCells('A8:' . $assmnt_sign_column . '8');
+                $sheet->getStyle('A8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A8', "Company: ".$class_details->company_name);
+                $sheet->mergeCells('A9:' . $assmnt_sign_column . '9');
+                $sheet->getStyle('A9')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A9', "Class ID: ".$class_details->class_id);
+                $sheet->mergeCells('A10:' . $assmnt_sign_column . '10');
+                $sheet->getStyle('A10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A10', "Training Hrs: ".($class_details->total_classroom_duration + $class_details->total_lab_duration));
+                $sheet->mergeCells('A11:' . $assmnt_sign_column . '11');
+                $sheet->getStyle('A11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A11', "Assessment Hrs: ".$class_details->assmnt_duration);
+                $sheet->setCellValue('A12', 'Sl #');
+                $sheet->setCellValue('B12', 'Name');
+                $sheet->setCellValue('C12', 'NRIC/FIN No.');
+                $sheet->setCellValue('D12', 'Comp Id');
+                $sheet->setCellValue('E12', 'Country');
+                $sheet->setCellValue('F12', 'Class Start Date');
+                $sheet->setCellValue('G12', 'Assmnt. Dt.');
+                $sheet->setCellValue('H12', '');
+                $sheet->setCellValue('I12', "Trainees' Attendance Sign-in");
+                $sheet->getStyle('I12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->mergeCells('I12:' . $assmnt_sign_column . '12');
+                $sheet->setCellValue($assmnt_sign_column.'13','Assmnt. Sign.');
+                $sheet->mergeCells('A13:G13');
+                $sheet->getStyle('A13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->setCellValue('H13', 'Session');
+
+                $sheet->getColumnDimension('B')->setWidth(20);
+                $sheet->getColumnDimension('C')->setWidth(20);
+                $sheet->getColumnDimension('F')->setWidth(15);
+                $sheet->getColumnDimension('G')->setWidth(10);
+                $sheet->getColumnDimension('H')->setWidth(15);
+
+                $days = array();
+
+                $current_date = $start;
+                while ($current_date < $end || compare_dates_without_time($current_date, $end)) 
+                {
+                    $days[] = $current_date;
+                    $next_day = DateTime::createFromFormat('U', strtotime("tomorrow 12:00:00", $current_date->getTimestamp()));
+                    $current_date = $next_day;
+                }
+                $sheet->getStyle('A12:' . $assmnt_sign_column . '13')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                                'color' => array('argb' => 'FFCCCCCC')
+                            )
+                        )
+                );
+
+                $rn = 13;
+                $cell = 8;
+                $is_two_sessions = $class_details->class_session_day == 2;
+                foreach ($days as $day) {
+                    $session_time = "\n " . $class_schedule_data[$day->format('d/m/y')][1];
+                    if ($is_two_sessions) {
+                        $session_time2 = $class_schedule_data[$day->format('d/m/y')][2];
+                        if ($session_time2) {
+                            $session_time .= "\n " . $session_time2;
+                        }
+                    }
+                    $sheet->setCellValueByColumnAndRow($cell, $rn, $day->format('d/m/y') . $session_time);
+                    $cell++;
+                }
+
+                $row = 14;
+                $index = 1;
+                $footer_text = array();
+                foreach ($results as $res) {
+                    if ($is_two_sessions) {
+                        $sheet->mergeCells('A' . $row . ':A' . ($row + 1));
+                        $sheet->mergeCells('B' . $row . ':B' . ($row + 1));
+                        $sheet->mergeCells('C' . $row . ':C' . ($row + 1));
+                        $sheet->mergeCells('D' . $row . ':D' . ($row + 1));
+                        $sheet->mergeCells('E' . $row . ':E' . ($row + 1));
+                        $sheet->mergeCells('F' . $row . ':F' . ($row + 1));
+                        $sheet->mergeCells('G' . $row . ':G' . ($row + 1));
+                    }
+                    $sheet->setCellValue('A' . $row, $index);
+                    $sheet->setCellValue('B' . $row, $res['record']['name']);
+                    $sheet->setCellValue('C' . $row, mask_format($res['record']['tax_code']));
+                    $res['record']['company_id'] = ($res['record']['company_id'] == 0)? '': $res['record']['company_id'];
+                    $sheet->setCellValue('D' . $row, $res['record']['company_id']);
+                    if(!empty($res['record']['company_id'])){
+                            if($res['record']['company_id'][0]== 'T'){
+                                $footer_text[$res['record']['company_id']] = $tenant->tenant_name;
+                            }else {
+                                $footer_text[$res['record']['company_id']] = $res['record']['company_name'];
+                            }
+                    }
+                    $sheet->setCellValue('E' . $row, $res['record']['nationality']);
+                    $sheet->setCellValue('F' . $row, date('d/m/Y',  strtotime($class_details->class_start_datetime)));
+                    $assmnt_date = $CI->traineemodel->get_assessment_date($res['record']['class_id'], $res['record']['user_id']);
+                    $formatd_assmnt_date = empty($assmnt_date) ? '' : date('d/m/Y', strtotime($assmnt_date));
+                    $sheet->setCellValue('G' . $row, $formatd_assmnt_date);
+
+                    $sheet->setCellValue('H' . $row, 'Session1:');
+                    if ($is_two_sessions) {
+                        $sheet->setCellValue('H' . ($row + 1), 'Session2:');
+                    }
+
+                    $cell = 8;
+                    foreach ($days as $day) {
+                        $formatted_day = $day->format('Y-m-d');
+                        $ses1 = '';
+                        $ses2 = '';
+
+                        $sheet->setCellValueByColumnAndRow($cell, $row, $ses1);
+                        if ($is_two_sessions) {
+                            $sheet->setCellValueByColumnAndRow($cell, $row + 1, $ses2);
+                        }
+                        $cell++;
+                    }
+
+                    $row += ($is_two_sessions) ? 2 : 1;
+                    $index++;
+                }
+                $row_update_start_assmntsign = $row;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('H'.$row, 'Absent');
+                $row++;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('H'.$row, 'Present');
+                $row++;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('H'.$row, 'Total');
+                $cell = 8;
+                $total_users = --$index;
+                foreach ($days as $day) {
+                    $sheet->setCellValueByColumnAndRow($cell, $row, $total_users);
+                    $cell++;
+                }
+                $row++;
+                $sheet->mergeCells('A'.$row.':G'.$row);
+                $sheet->setCellValue('H'.$row, 'Trainer Sign-in');
+                $sheet->mergeCells($assmnt_sign_column.$row_update_start_assmntsign.':'.$assmnt_sign_column.$row);
+
+                $sheet->getStyle('A14:G' . $row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('A13:A' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $row++;
+                $row_after_table = $row+1;
+                $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A'.$row, 'Name of Company: '.$class_details->company_name);
+                $row++;
+                $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A'.$row, 'Full Name & Designation of Director:');
+                $row++;
+                
+                $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $sheet->setCellValue('A'.$row, $statment);
+                $row++;
+                
+                foreach($footer_text as $k=>$v){
+                    $sheet->mergeCells('A'.$row.':'.$assmnt_sign_column.$row);
+                    $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                    $sheet->setCellValue('A'.$row, '** '.$k.' - '.$v);
+                    $row++;
+                }
+
+                $styleArray = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => 'FF000000'),
+                        ),
+                    ),
+                );
+
+
+                $sheet->getStyle(
+                        'A1:' . $sheet->getHighestColumn() . ($sheet->getHighestRow()-1)
+                )->applyFromArray($styleArray);
+                $style2Array = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => 'FFFFFFFF'),
+                        ),
+                    ),
+                );
+                $sheet->getStyle('A3:A11')->applyFromArray($style2Array);
+                $sheet->getStyle(
+                        'A'.$row_after_table.':' . $sheet->getHighestColumn() . ($sheet->getHighestRow()-1)
+                )->applyFromArray($style2Array);
+                 $i++;
+            }
+            ob_end_clean();
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="Attendance.xls"');
+            header('Cache-Control: max-age=0');
+
+            $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+            $objWriter->save('php://output');
+        }
+    
+}
+
+
+
 /**
  * function added to import posted data in trainer feedback
  */

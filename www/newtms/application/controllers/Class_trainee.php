@@ -1757,7 +1757,12 @@ class Class_Trainee extends CI_Controller {
                 
                 if ($export == 'xls_week'){
                     $this->load->helper('export_helper');
-                    return generate_class_attendance_sheet_xls($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
+                    if(TENANT_ID =='T02'){
+                        return generate_class_attendance_sheet_xls_xp($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
+                    }else{
+                        return generate_class_attendance_sheet_xls($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
+                    }
+                    
                 }
                 $this->load->helper('pdf_reports_helper');
                 if ($export == 'pdf') {
