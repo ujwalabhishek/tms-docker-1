@@ -4332,7 +4332,7 @@ function generate_traqom_report_xls_xp($tabledata, $metadata)
                 $sheet->setCellValue('C' . $r, $row->tax_code);
                 $sheet->setCellValue('D' . $r, $tax_code_type);
                 $sheet->setCellValue('E' . $r, $dob);
-                $sheet->setCellValue('F' . $r, $trainee_email);
+                $sheet->setCellValue('F' . $r, $row->registered_email_id);
                 $sheet->setCellValueExplicit('G' . $r, $row->contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
                 $sheet->setCellValueExplicit('H' . $r, $row->tenant_name);
                 $sheet->setCellValue('I' . $r, $row->crse_name);
