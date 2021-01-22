@@ -2968,12 +2968,12 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
         'Date of Birth (DDMMYYYY)', 'Race', 'Trainee Contact No(Mobile)',
         'Trainee Contact No (Others)', 'Trainee Email Address', 'Company Name (Key in NA if not applicable)',
         'Designation', 'Medium of Assessment', 'Education Level', 'Salary Range',
-        'Assessment Venue', 'Course Run ID','Course Start Date (DDMMYYYY)', 'Course Reference Number (Refer to Course Listing in SkillsConnect)',
+        'Assessment Venue','Course Start Date (DDMMYYYY)', 'Course Reference Number (Refer to Course Listing in SkillsConnect)',
         'Competency Standard Code (Refer to Course Listing in SkillsConnect)',
         'Cert Code', 'Submission Type', 'Date Of Assessment (DDMMYYYY)', 'Result',
         'Trainer ID (For NRIC/FIN/Other ID only,Names should not be included)',
         'Assessor ID (For NRIC/FIN/Other ID only,Names should not be included)',
-        'Printing of SOA/ Generating of e-Cert','Class Name');
+        'Printing of SOA/ Generating of e-Cert','TPGateway Course Run ID');
     for ($i = 0; $i < count($column_title); $i++) {
         $sheet->setCellValue($column_names[$i] . '1', $column_title[$i]);
     }
@@ -3225,21 +3225,21 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
         $sheet->getStyle('O' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
         $sheet->setCellValue('P' . $r, ($assment_det->assmnt_venue == 'OTH') ? 'Others (' . $assment_det->assmnt_venue_oth . ')' : $metadata[$assment_det->assmnt_venue]);
         $sheet->setCellValueExplicit('Q' . $r, date('dmY', strtotime($row->class_start_datetime)), PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('R' . $r, $row->tpg_course_run_id, PHPExcel_Cell_DataType::TYPE_STRING);
+      
         $sheet->getStyle('Q' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
-        $sheet->setCellValueExplicit('S' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('S' .$r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
-        $sheet->setCellValueExplicit('T' . $r, $row->competency_code, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('T' .$r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT); 
+        $sheet->setCellValueExplicit('R' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('R' .$r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->setCellValueExplicit('S' . $r, $row->competency_code, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('S' .$r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT); 
 //        $sheet->setCellValue('T' . $r, $row->certi_level);
-         $sheet->setCellValue('U' . $r, $course_code);//sk3
-        $sheet->setCellValue('V' . $r, 'NEW');
-        $sheet->setCellValueExplicit('W' . $r, (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)), PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->getStyle('W' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
-        $sheet->setCellValue('X' . $r, $score);
-        $sheet->setCellValue('Y' . $r, $trainer_text);
-        $sheet->setCellValue('Z' . $r, $assessor_text);
-        $sheet->setCellValue('AA' . $r, 'No');
+         $sheet->setCellValue('T' . $r, $course_code);//sk3
+        $sheet->setCellValue('U' . $r, 'NEW');
+        $sheet->setCellValueExplicit('V' . $r, (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)), PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->getStyle('V' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->setCellValue('W' . $r, $score);
+        $sheet->setCellValue('X' . $r, $trainer_text);
+        $sheet->setCellValue('Y' . $r, $assessor_text);
+        $sheet->setCellValue('Z' . $r, 'No');
         //$sheet->setCellValue('BB' . $r, $row->class_name);
         $r++;
     }
