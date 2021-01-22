@@ -5889,6 +5889,7 @@ function generate_class_attendance_sheet_xls($results, $class_details,$start, $e
     
 }
 
+
 function generate_class_attendance_sheet_xls_xp($results, $class_details,$start, $end, $tenant, $class_schedule_data) 
 {
     $statment = 'I understand that the training provider will not be held responsible to resubmit the results should the Name and ID number was found incorrect after the course date.';
@@ -5981,13 +5982,12 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 //$sheet->setCellValue('H12', 'A/P');
                 $sheet->setCellValue('H12', '');
                 $sheet->setCellValue('I12', "Trainees' Attendance Sign-in");
-                //$sheet->getStyle('I12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                //$sheet->mergeCells('J13:' . $assmnt_sign_column . '12');
+                $sheet->getStyle('I12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->mergeCells('I12:' . $assmnt_sign_column . '12');
                 $sheet->setCellValue($assmnt_sign_column.'13','Assmnt. Sign.');
                 $sheet->mergeCells('A13:H13');
                 $sheet->getStyle('A13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 $sheet->setCellValue('H13', 'Session');
-                
                 
 //                $sheet->setCellValue('H12', 'A/P');
 //                $sheet->setCellValue('I12', '');
@@ -6108,9 +6108,9 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
 //                    }
                    // PRESENT AND ABSENT CODE END 
 
-                    $sheet->setCellValue('I' . $row, 'Session1:');
+                    $sheet->setCellValue('H' . $row, 'Session1:');
                     if ($is_two_sessions) {
-                        $sheet->setCellValue('I' . ($row + 1), 'Session2:');
+                        $sheet->setCellValue('H' . ($row + 1), 'Session2:');
                     }
 
                     $cell = 9;
@@ -6459,7 +6459,6 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
         }
     
 }
-
 
 
 /**
