@@ -5081,12 +5081,12 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
         'Date of Birth (DDMMYYYY)', 'Race', 'Trainee Contact No(Mobile)',
         'Trainee Contact No (Others)', 'Trainee Email Address', 'Company Name (Key in NA if not applicable)',
         'Designation', 'Medium of Assessment', 'Education Level', 'Salary Range',
-        'Assessment Venue', 'Course Run ID','Course Start Date (DDMMYYYY)', 'Course Reference Number (Refer to Course Listing in SkillsConnect)',
+        'Assessment Venue','Course Start Date (DDMMYYYY)', 'Course Reference Number (Refer to Course Listing in SkillsConnect)',
         'Competency Standard Code (Refer to Course Listing in SkillsConnect)',
         'Cert Code', 'Submission Type', 'Date Of Assessment (DDMMYYYY)', 'Result',
         'Trainer ID (For NRIC/FIN/Other ID only,Names should not be included)',
         'Assessor ID (For NRIC/FIN/Other ID only,Names should not be included)',
-        'Printing of SOA/ Generating of e-Cert','Class Name');
+        'Printing of SOA/ Generating of e-Cert','TPGateway Course Run ID');
     $CI->load->model('reports_model', 'reportsmodel');
     $data_arr = array();
     foreach ($tabledata as $row) {
@@ -5148,7 +5148,7 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
             date('dmY', strtotime($row->class_start_datetime)), $row->reference_num, $row->competency_code,
             $course_code, 'N',
             (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)),
-            $row->training_score, $trainer_text, $assessor_text, 'No',$row->class_name
+            $row->training_score, $trainer_text, $assessor_text, 'No',$row->tpg_course_run_id
         );
     }
     header('Content-Type: text/csv; charset=utf-8');
