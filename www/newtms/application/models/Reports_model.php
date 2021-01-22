@@ -2636,7 +2636,9 @@ SELECT  {$calc_rows} c.crse_name,
            
             $this->db->where('date(cc.class_end_datetime)', $traqom_date);
         }
-        return $this->db->get()->result();
+        //return 
+        $this->db->get()->result();
+        echo $this->db->last_query();exit;
     }
 
     /**
