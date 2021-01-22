@@ -2638,7 +2638,7 @@ SELECT  {$calc_rows} c.crse_name,
         }
         //return 
         $this->db->get()->result();
-        echo $this->db->last_query();exit;
+        echo $this->db->last_query().'-'.TENANT_ID;exit;
     }
 
     /**
