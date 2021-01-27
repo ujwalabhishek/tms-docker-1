@@ -3916,7 +3916,7 @@ function generate_traqom2_report_xls_xp($tabledata, $metadata) {
         $sheet->setCellValue('C' . $r, $row->tax_code);
         $sheet->setCellValue('D' . $r, $tax_code_type);
         $sheet->setCellValue('E' . $r, $row->registered_email_id);
-        $sheet->setCellValue('F' . $r, '');
+        $sheet->setCellValue('F' . $r, '+65');
         $sheet->setCellValue('G' . $r, '');
         $sheet->setCellValueExplicit('H' . $r, $remove_duplicate_contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
         $sheet->setCellValueExplicit('I' . $r, $row->tenant_name);
@@ -4754,12 +4754,13 @@ function generate_traqom2_report_csv_xp($tabledata, $metadata) {
                 //$trainee_email = $row->tax_code.'@yopmail.com';
 //                $trainee_email = $trainee_classname.$trainee_taxcode.'@yopmail.com';
                 $trainee_email = $trainee_taxcode.$trainee_classname.'@yopmail.com';
+                
                 /*end */
         $i = 'I';
        
         $data_arr[] = array(
            $i,
-           $row->first_name,$row->tax_code,$tax_code_type,$row->registered_email_id,'','',$row->contact_number,$row->tenant_name,$row->crse_name,'',
+           $row->first_name,$row->tax_code,$tax_code_type,$row->registered_email_id,'','+65',$row->contact_number,$row->tenant_name,$row->crse_name,'',
             $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$trainer_name,$tpg_id
            
         );
