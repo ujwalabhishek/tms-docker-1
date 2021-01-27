@@ -4347,7 +4347,7 @@ function generate_traqom_report_xls_xp($tabledata, $metadata)
                 $sheet->setCellValue('R' . $r, '');
                 $sheet->setCellValue('S' . $r, '');
                 $sheet->setCellValue('T' . $r, $trainer_name);
-                $sheet->setCellValue('U' . $r, $row->tpg_course_run_id);
+                $sheet->setCellValue('U' . $r, ($row->tpg_course_run_id?? $row->class_name));
                 $r++;
             }
             ob_end_clean();
@@ -4736,10 +4736,11 @@ function generate_traqom2_report_csv_xp($tabledata, $metadata) {
                 $trainee_email = $trainee_taxcode.$trainee_classname.'@yopmail.com';
                 /*end */
         $i = 'I';
+        $tpg_id = $row->tpg_course_run_id ?? $row->class_name;
         $data_arr[] = array(
            $i,
            $row->first_name,$row->tax_code,$tax_code_type,$row->registered_email_id,'','',$row->contact_number,$row->tenant_name,$row->crse_name,'',
-            $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$trainer_name,$row->tpg_course_run_id
+            $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$trainer_name,$tpg_id
            
         );
     }
@@ -4906,10 +4907,11 @@ function generate_traqom_report_csv_xp($tabledata, $metadata) {
                 $trainee_email = $trainee_taxcode.$trainee_classname.'@yopmail.com';
                 /*end */
         $i = 'I';
+        $tpg_id = $row->tpg_course_run_id ?? $row->class_name;
         $data_arr[] = array(
            $i,
            $row->first_name,$row->tax_code,$tax_code_type,$dob,$row->registered_email_id,$row->contact_number,$row->tenant_name,$row->crse_name,'',
-            $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$trainer_name,$row->tpg_course_run_id
+            $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$trainer_name,$tpg_id
            
         );
     }
