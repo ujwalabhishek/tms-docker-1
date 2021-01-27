@@ -3921,7 +3921,7 @@ function generate_traqom2_report_xls_xp($tabledata, $metadata) {
         $sheet->setCellValue('S' . $r, '');
         $sheet->setCellValue('T' . $r, '');
         $sheet->setCellValue('U' . $r, $trainer_name);
-        $sheet->setCellValue('V' . $r, $row->tpg_course_run_id);
+        $sheet->setCellValue('V' . $r, ($row->tpg_course_run_id ?? $row->class_name));
         $r++;
     }
     ob_end_clean();
