@@ -3832,6 +3832,11 @@ function generate_traqom2_report_xls_xp($tabledata, $metadata) {
             $remove_duplicate_contact_number = $row->contact_number;
         }
         
+        if($row->tpg_course_run_id == ''){
+            $tpg_id =$row->class_name;
+        }else{
+            $tpg_id=$row->tpg_course_run_id;
+        }
         //////////////////end of code added by shubhranshu for removing duplicate mobile no/////////////
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
@@ -3921,7 +3926,7 @@ function generate_traqom2_report_xls_xp($tabledata, $metadata) {
         $sheet->setCellValue('S' . $r, '');
         $sheet->setCellValue('T' . $r, '');
         $sheet->setCellValue('U' . $r, $trainer_name);
-        $sheet->setCellValue('V' . $r, ($row->tpg_course_run_id ?? $row->class_name));
+        $sheet->setCellValue('V' . $r, $tpg_id);
         $r++;
     }
     ob_end_clean();
@@ -4704,6 +4709,11 @@ function generate_traqom2_report_csv_xp($tabledata, $metadata) {
     $data_arr = array();
     foreach ($tabledata as $row) 
     {
+        if($row->tpg_course_run_id == ''){
+            $tpg_id =$row->class_name;
+        }else{
+            $tpg_id=$row->tpg_course_run_id;
+        }
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
         $row->tax_code_type;
@@ -4740,7 +4750,7 @@ function generate_traqom2_report_csv_xp($tabledata, $metadata) {
                 $trainee_email = $trainee_taxcode.$trainee_classname.'@yopmail.com';
                 /*end */
         $i = 'I';
-        $tpg_id = $row->tpg_course_run_id ?? $row->class_name;
+       
         $data_arr[] = array(
            $i,
            $row->first_name,$row->tax_code,$tax_code_type,$row->registered_email_id,'','',$row->contact_number,$row->tenant_name,$row->crse_name,'',
@@ -4875,6 +4885,11 @@ function generate_traqom_report_csv_xp($tabledata, $metadata) {
     $data_arr = array();
     foreach ($tabledata as $row) 
     {
+         if($row->tpg_course_run_id == ''){
+            $tpg_id =$row->class_name;
+        }else{
+            $tpg_id=$row->tpg_course_run_id;
+        }
         $strlength = strpos($row->tax_code_type, '_');
         $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
         $row->tax_code_type;
@@ -4911,7 +4926,7 @@ function generate_traqom_report_csv_xp($tabledata, $metadata) {
                 $trainee_email = $trainee_taxcode.$trainee_classname.'@yopmail.com';
                 /*end */
         $i = 'I';
-        $tpg_id = $row->tpg_course_run_id ?? $row->class_name;
+      
         $data_arr[] = array(
            $i,
            $row->first_name,$row->tax_code,$tax_code_type,$dob,$row->registered_email_id,$row->contact_number,$row->tenant_name,$row->crse_name,'',
