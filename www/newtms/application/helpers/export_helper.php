@@ -3796,9 +3796,9 @@ function generate_traqom2_report_xls_xp($tabledata, $metadata) {
     /* skm code end */
     $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3', 'J3', 'K3', 'L3', 'M3', 'N3', 'O3', 'P3', 'Q3', 'R3', 'S3', 'T3', 'U3','V3');
     $column_title = array('SL #',
-        'Trainee Name', 'Trainee ID', 'ID Type', 'Email', 'Mobile Country Code', 'Mobile Area Code', 'Mobile', 'TP Alias', 'Course Title', 'Area of Training',
+        'Trainee Name', 'Trainee ID', 'ID Type', 'Email', 'Mobile Country Code', 'Mobile Area Code', 'Mobile',  'Course Title', 'Area of Training',
         'Course Reference Number', 'Course Run Reference Number',
-        'Course Start Date', 'Course End Date', 'Postal Code', 'Floor', 'Unit', 'Room', 'Full Qualification', 'Trainer Name','TPGateway Course Run ID'
+        'Course Start Date', 'Course End Date', 'Postal Code', 'Floor', 'Unit', 'Room', 'Full Qualification', 'TP Alias','Trainer Name','TPGateway Course Run ID'
     );
     for ($i = 0; $i < count($column_title); $i++) {
         $sheet->setCellValue($column_names[$i], $column_title[$i]);
@@ -3919,18 +3919,19 @@ function generate_traqom2_report_xls_xp($tabledata, $metadata) {
         $sheet->setCellValue('F' . $r, '+65');
         $sheet->setCellValue('G' . $r, '');
         $sheet->setCellValueExplicit('H' . $r, $remove_duplicate_contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('I' . $r, $row->tenant_name);
-        $sheet->setCellValue('J' . $r, $row->crse_name);
-        $sheet->setCellValue('K' . $r, '');
-        $sheet->setCellValueExplicit('L' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
-        $sheet->setCellValue('M' . $r, '');
-        $sheet->setCellValueExplicit('N' . $r, $course_start_date);
-        $sheet->setCellValueExplicit('O' . $r, $course_end_date);
+        
+        $sheet->setCellValue('I' . $r, $row->crse_name);
+        $sheet->setCellValue('J' . $r, '');
+        $sheet->setCellValueExplicit('K' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->setCellValue('L' . $r, '');
+        $sheet->setCellValueExplicit('M' . $r, $course_start_date);
+        $sheet->setCellValueExplicit('N' . $r, $course_end_date);
+        $sheet->setCellValue('O' . $r, '');
         $sheet->setCellValue('P' . $r, '');
         $sheet->setCellValue('Q' . $r, '');
         $sheet->setCellValue('R' . $r, '');
         $sheet->setCellValue('S' . $r, '');
-        $sheet->setCellValue('T' . $r, '');
+        $sheet->setCellValueExplicit('T' . $r, $row->tenant_name);
         $sheet->setCellValue('U' . $r, $trainer_name);
         $sheet->setCellValue('V' . $r, $tpg_id);
         $r++;
@@ -4349,18 +4350,19 @@ function generate_traqom_report_xls_xp($tabledata, $metadata)
                 $sheet->setCellValue('E' . $r, $dob);
                 $sheet->setCellValue('F' . $r, $row->registered_email_id);
                 $sheet->setCellValueExplicit('G' . $r, $row->contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
-                $sheet->setCellValueExplicit('H' . $r, $row->tenant_name);
-                $sheet->setCellValue('I' . $r, $row->crse_name);
-                $sheet->setCellValue('J' . $r, '');
-                $sheet->setCellValueExplicit('K' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
-                $sheet->setCellValue('L' . $r, '');                
-                $sheet->setCellValueExplicit('M' . $r, $course_start_date);
-                $sheet->setCellValueExplicit('N' . $r, $course_end_date);                
+                
+                $sheet->setCellValue('H' . $r, $row->crse_name);
+                $sheet->setCellValue('I' . $r, '');
+                $sheet->setCellValueExplicit('J' . $r, $row->reference_num, PHPExcel_Cell_DataType::TYPE_STRING);
+                $sheet->setCellValue('K' . $r, '');                
+                $sheet->setCellValueExplicit('L' . $r, $course_start_date);
+                $sheet->setCellValueExplicit('M' . $r, $course_end_date);                
+                $sheet->setCellValue('N' . $r, '');
                 $sheet->setCellValue('O' . $r, '');
                 $sheet->setCellValue('P' . $r, '');
                 $sheet->setCellValue('Q' . $r, '');
                 $sheet->setCellValue('R' . $r, '');
-                $sheet->setCellValue('S' . $r, '');
+                $sheet->setCellValueExplicit('S' . $r, $row->tenant_name);
                 $sheet->setCellValue('T' . $r, $trainer_name);
                 $sheet->setCellValue('U' . $r, $tpg_id);
                 $r++;
