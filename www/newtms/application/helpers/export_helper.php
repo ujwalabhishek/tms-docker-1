@@ -4281,7 +4281,7 @@ function generate_traqom_report_xls_xp($tabledata, $metadata)
             $sheet->getStyle('A3:U3')->getFont()->setBold(true);
             $r = 4;
             $CI->load->model('reports_model', 'reportsmodel');
-            $data_arr = array();
+            $data_arr = array();print_r($tabledata);exit;
             foreach ($tabledata as $row) 
             {
                 
