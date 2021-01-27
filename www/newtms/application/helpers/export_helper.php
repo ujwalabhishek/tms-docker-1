@@ -3796,7 +3796,7 @@ function generate_traqom2_report_xls_xp($tabledata, $metadata) {
     /* skm code end */
     $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3', 'H3', 'I3', 'J3', 'K3', 'L3', 'M3', 'N3', 'O3', 'P3', 'Q3', 'R3', 'S3', 'T3', 'U3','V3');
     $column_title = array('SL #',
-        'Trainee Name', 'Trainee ID', 'ID Type', 'Email', 'Mobile Country Code', 'Mobile Area Code', 'Mobile',  'Course Title', 'Area of Training',
+        'Trainee ID','Trainee Name', 'ID Type', 'Email', 'Mobile Country Code', 'Mobile Area Code', 'Mobile',  'Course Title', 'Area of Training',
         'Course Reference Number', 'Course Run Reference Number',
         'Course Start Date', 'Course End Date', 'Postal Code', 'Floor', 'Unit', 'Room', 'Full Qualification', 'TP Alias','Trainer Name','TPGateway Course Run ID'
     );
@@ -3912,8 +3912,9 @@ function generate_traqom2_report_xls_xp($tabledata, $metadata) {
         $enrollment_date = date('Y-m-d', strtotime($row->enrolled_on));
 
         $sheet->setCellValueExplicit('A' . $r, $r - 3);
-        $sheet->setCellValue('B' . $r, $row->first_name);
-        $sheet->setCellValue('C' . $r, $row->tax_code);
+        $sheet->setCellValue('B' . $r, $row->tax_code);
+        $sheet->setCellValue('C' . $r, $row->first_name);
+        
         $sheet->setCellValue('D' . $r, $tax_code_type);
         $sheet->setCellValue('E' . $r, $row->registered_email_id);
         $sheet->setCellValue('F' . $r, '+65');
@@ -4260,7 +4261,7 @@ function generate_traqom_report_xls_xp($tabledata, $metadata)
             /* skm code end */
             $column_names = array('A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3','H3','I3','J3','K3','L3','M3','N3','O3','P3','Q3','R3','S3','T3','U3');
             $column_title = array('H',
-                'Trainee Name','Trainee ID','ID Type','Date Of Birth','Email','Mobile','Course Title','Area of Training',
+                'Trainee ID','Trainee Name','ID Type','Date Of Birth','Email','Mobile','Course Title','Area of Training',
                 'Course Reference Number','Course Run Reference Number',
                 'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','TP Alias','Trainer Name','TPGateway Course Run ID'
                
@@ -4344,8 +4345,9 @@ function generate_traqom_report_xls_xp($tabledata, $metadata)
                 $enrollment_date = date('Y-m-d',strtotime($row->enrolled_on));
                 
                 $sheet->setCellValueExplicit('A' . $r, 'I');
-                $sheet->setCellValue('B' . $r, $row->first_name);
-                $sheet->setCellValue('C' . $r, $row->tax_code);
+                $sheet->setCellValue('B' . $r, $row->tax_code);
+                $sheet->setCellValue('C' . $r, $row->first_name);
+                
                 $sheet->setCellValue('D' . $r, $tax_code_type);
                 $sheet->setCellValue('E' . $r, $dob);
                 $sheet->setCellValue('F' . $r, $row->registered_email_id);
@@ -4707,7 +4709,7 @@ function generate_traqom2_report_csv_xp($tabledata, $metadata) {
     
     
     $column_title = array('H',
-        'Trainee Name','Trainee ID','ID Type','Email','Mobile Country Code','Mobile Area Code','Mobile','Course Title','Area of Training',
+        'Trainee ID','Trainee Name','ID Type','Email','Mobile Country Code','Mobile Area Code','Mobile','Course Title','Area of Training',
         'Course Reference Number','Course Run Reference Number',
         'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','TP Alias','Trainer Name','TPGateway Course Run ID'
 
@@ -4762,7 +4764,7 @@ function generate_traqom2_report_csv_xp($tabledata, $metadata) {
        
         $data_arr[] = array(
            $i,
-           $row->first_name,$row->tax_code,$tax_code_type,$row->registered_email_id,'','+65',$row->contact_number,$row->crse_name,'',
+           $row->tax_code,$row->first_name,$tax_code_type,$row->registered_email_id,'','+65',$row->contact_number,$row->crse_name,'',
             $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$row->tenant_name,$trainer_name,$tpg_id
            
         );
@@ -4884,7 +4886,7 @@ function generate_traqom_report_csv_xp($tabledata, $metadata) {
     
     
     $column_title = array('H',
-        'Trainee Name','Trainee ID','ID Type','Date Of Birth','Email','Mobile','Course Title','Area of Training',
+        'Trainee ID','Trainee Name','ID Type','Date Of Birth','Email','Mobile','Course Title','Area of Training',
         'Course Reference Number','Course Run Reference Number',
         'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','TP Alias','Trainer Name','TPGateway Course Run ID'
 
@@ -4938,7 +4940,7 @@ function generate_traqom_report_csv_xp($tabledata, $metadata) {
       
         $data_arr[] = array(
            $i,
-           $row->first_name,$row->tax_code,$tax_code_type,$dob,$row->registered_email_id,$row->contact_number,$row->crse_name,'',
+           $row->tax_code,$row->first_name,$tax_code_type,$dob,$row->registered_email_id,$row->contact_number,$row->crse_name,'',
             $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$row->tenant_name,$trainer_name,$tpg_id
            
         );
