@@ -3201,6 +3201,12 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
         {
              $score=$row->training_score;
         }
+        
+        if($row->tpg_course_run_id == ''){
+            $tpg_id =$row->class_name;
+        }else{
+            $tpg_id=$row->tpg_course_run_id;
+        }
         $course_code =  rtrim($CI->course_model->get_metadata_on_parameter_id($row->certi_level), ', '); //sk2
         $sheet->setCellValue('A' . $r, $tax_code_type);
         $sheet->setCellValue('B' . $r, $row->tax_code);
@@ -3240,7 +3246,7 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
         $sheet->setCellValue('X' . $r, $trainer_text);
         $sheet->setCellValue('Y' . $r, $assessor_text);
         $sheet->setCellValue('Z' . $r, 'No');
-        $sheet->setCellValue('AA' . $r, $row->tpg_course_run_id);
+        $sheet->setCellValue('AA' . $r, $tpg_id);
         $r++;
     }
 
@@ -5244,6 +5250,11 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
             $row->comp_email = $tenant_details->tenant_email_id;
         }
         $course_code =  rtrim($CI->course_model->get_metadata_on_parameter_id($row->certi_level), ', '); //sk2
+        if($row->tpg_course_run_id == ''){
+            $tpg_id =$row->class_name;
+        }else{
+            $tpg_id=$row->tpg_course_run_id;
+        }
         $data_arr[] = array(
             $tax_code_type, $row->tax_code, $row->first_name, $gender_arr[$row->gender], $row->nationality,
             (!empty($row->dob)) ? date('dmY', strtotime($row->dob)) : '', $row->race, $row->contact_number,
@@ -5254,7 +5265,7 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
             date('dmY', strtotime($row->class_start_datetime)), $row->reference_num, $row->competency_code,
             $course_code, 'N',
             (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)),
-            $row->training_score, $trainer_text, $assessor_text, 'No',$row->tpg_course_run_id
+            $row->training_score, $trainer_text, $assessor_text, 'No',$tpg_id
         );
     }
     header('Content-Type: text/csv; charset=utf-8');
