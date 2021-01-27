@@ -4284,7 +4284,11 @@ function generate_traqom_report_xls_xp($tabledata, $metadata)
             $data_arr = array();
             foreach ($tabledata as $row) 
             {
-                $tpg_id = if($row->tpg_course_run_id == ''){ $tpg_id =$row->class_name;}else{$tpg_id=$row->tpg_course_run_id;}
+                if($row->tpg_course_run_id == ''){
+                    $tpg_id =$row->class_name;
+                }else{
+                    $tpg_id=$row->tpg_course_run_id;
+                }
                 $strlength = strpos($row->tax_code_type, '_');
                 $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
                 $row->tax_code_type;
