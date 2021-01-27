@@ -4281,10 +4281,10 @@ function generate_traqom_report_xls_xp($tabledata, $metadata)
             $sheet->getStyle('A3:U3')->getFont()->setBold(true);
             $r = 4;
             $CI->load->model('reports_model', 'reportsmodel');
-            $data_arr = array();print_r($tabledata);exit;
+            $data_arr = array();
             foreach ($tabledata as $row) 
             {
-                
+                $tpg_id = if($row->tpg_course_run_id == ''){ $tpg_id =$row->class_name}else{$tpg_id=$row->tpg_course_run_id};
                 $strlength = strpos($row->tax_code_type, '_');
                 $tax_code_type = empty($strlength) ? $row->tax_code_type : substr($row->tax_code_type, $strlength + 1);
                 $row->tax_code_type;
@@ -4347,7 +4347,7 @@ function generate_traqom_report_xls_xp($tabledata, $metadata)
                 $sheet->setCellValue('R' . $r, '');
                 $sheet->setCellValue('S' . $r, '');
                 $sheet->setCellValue('T' . $r, $trainer_name);
-                $sheet->setCellValue('U' . $r, ($row->tpg_course_run_id?? $row->class_name));
+                $sheet->setCellValue('U' . $r, $tpg_id);
                 $r++;
             }
             ob_end_clean();
