@@ -5971,7 +5971,7 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 $CI->excel->getActiveSheet()->setTitle("Attendance List".$i);
                 $sheet = $CI->excel->getActiveSheet();
                 $CI->excel->getActiveSheet()->getRowDimension('13')->setRowHeight(50);
-                $column_index = PHPExcel_Cell::columnIndexFromString('G');
+                $column_index = PHPExcel_Cell::columnIndexFromString('H');
                 $adjusted_column_index = $column_index + $total_days;
                 $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
                 $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index+1);        
