@@ -5975,7 +5975,7 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 $adjusted_column_index = $column_index + $total_days;
                 $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
                 $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index+1);    
-                echo $assmnt_sign_column;exit;
+               
                 $sheet->mergeCells('A1:' . $assmnt_sign_column . '1');
                 $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
                 $sheet->getStyle('A1')->getFont()->setSize(13)->setBold(true);
@@ -6063,7 +6063,7 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 );
 
                 $rn = 13;
-                $cell = 9;
+                $cell = 8;
                 $is_two_sessions = $class_details->class_session_day == 2;
                 foreach ($weeks as $day) {
                     $session_time = "\n " . $class_schedule_data[$day->format('d/m/y')][1];
