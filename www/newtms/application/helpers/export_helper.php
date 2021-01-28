@@ -6228,7 +6228,7 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                         'A'.$row_after_table.':' . $sheet->getHighestColumn() . ($sheet->getHighestRow()-1)
                 )->applyFromArray($style2Array);
                 
-                $sheet->removeColumn('H');
+                $sheet->getActiveSheet()->removeColumn('H');
 
             $i++;
             }
