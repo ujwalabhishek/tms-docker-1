@@ -6016,21 +6016,21 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 $sheet->setCellValue('E12', 'Country');
                 $sheet->setCellValue('F12', 'Class Start Date');
                 $sheet->setCellValue('G12', 'Assmnt. Dt.');
-                //$sheet->setCellValue('H12', 'A/P');
-                $sheet->setCellValue('H12', '');
-                $sheet->setCellValue('I12', "Trainees' Attendance Sign-in");
-                $sheet->getStyle('I12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $sheet->mergeCells('I12:' . $assmnt_sign_column . '12');
+                $sheet->setCellValue('H12', 'A/P');
+                $sheet->setCellValue('I12', '');
+                $sheet->setCellValue('J12', "Trainees' Attendance Sign-in");
+                $sheet->getStyle('J12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $sheet->mergeCells('J12:' . $assmnt_sign_column . '12');
                 $sheet->setCellValue($assmnt_sign_column.'13','Assmnt. Sign.');
-                $sheet->mergeCells('A13:G13');
+                $sheet->mergeCells('A13:H13');
                 $sheet->getStyle('A13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $sheet->setCellValue('H13', 'Session');
+                $sheet->setCellValue('I13', 'Session');
 
                 $sheet->getColumnDimension('B')->setWidth(20);
                 $sheet->getColumnDimension('C')->setWidth(20);
                 $sheet->getColumnDimension('F')->setWidth(15);
                 $sheet->getColumnDimension('G')->setWidth(10);
-                $sheet->getColumnDimension('H')->setWidth(10);
+                $sheet->getColumnDimension('H')->setWidth(5);
                 $sheet->getColumnDimension('I')->setWidth(15);
 
                 $days = array();
@@ -6125,19 +6125,19 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                     $formatd_assmnt_date = empty($assmnt_date) ? '' : date('d/m/Y', strtotime($assmnt_date));
                     $sheet->setCellValue('G' . $row, $formatd_assmnt_date);
                    // PRESENT AND ABSENT CODE START 
-//                    if($res['record']['att']==1)
-//                    {
-//                      $sheet->setCellValue('H' .$row,'P');  
-//                    }
-//                    else
-//                    {
-//                      $sheet->setCellValue('H' .$row,'A');  
-//                    }
+                    if($res['record']['att']==1)
+                    {
+                      $sheet->setCellValue('H' .$row,'P');  
+                    }
+                    else
+                    {
+                      $sheet->setCellValue('H' .$row,'A');  
+                    }
                    // PRESENT AND ABSENT CODE END 
 
-                    $sheet->setCellValue('H' . $row, 'Session1:');
+                    $sheet->setCellValue('I' . $row, 'Session1:');
                     if ($is_two_sessions) {
-                        $sheet->setCellValue('H' . ($row + 1), 'Session2:');
+                        $sheet->setCellValue('I' . ($row + 1), 'Session2:');
                     }
 
                     $cell = 9;
@@ -6160,10 +6160,10 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 }
                 $row_update_start_assmntsign = $row;
                 $sheet->mergeCells('A'.$row.':G'.$row);
-                $sheet->setCellValue('H'.$row, 'Absent');
+                $sheet->setCellValue('I'.$row, 'Absent');
                 $row++;
                 $sheet->mergeCells('A'.$row.':G'.$row);
-                $sheet->setCellValue('H'.$row, 'Present');
+                $sheet->setCellValue('I'.$row, 'Present');
                 $row++;
                 $sheet->mergeCells('A'.$row.':G'.$row);
                 $sheet->setCellValue('I'.$row, 'Total');
@@ -6175,7 +6175,7 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 }*/
                 $row++;
                 $sheet->mergeCells('A'.$row.':G'.$row);
-                $sheet->setCellValue('H'.$row, 'Trainer Sign-in');
+                $sheet->setCellValue('I'.$row, 'Trainer Sign-in');
                 $sheet->mergeCells($assmnt_sign_column.$row_update_start_assmntsign.':'.$assmnt_sign_column.$row);
 
                 $sheet->getStyle('A14:G' . $row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
@@ -6227,6 +6227,8 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 $sheet->getStyle(
                         'A'.$row_after_table.':' . $sheet->getHighestColumn() . ($sheet->getHighestRow()-1)
                 )->applyFromArray($style2Array);
+                
+                $sheet->removeColumn('H');
 
             $i++;
             }
