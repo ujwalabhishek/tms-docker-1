@@ -6022,25 +6022,15 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 $sheet->getStyle('I12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 $sheet->mergeCells('I12:' . $assmnt_sign_column . '12');
                 $sheet->setCellValue($assmnt_sign_column.'13','Assmnt. Sign.');
-                $sheet->mergeCells('A13:H13');
+                $sheet->mergeCells('A13:G13');
                 $sheet->getStyle('A13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 $sheet->setCellValue('H13', 'Session');
-                
-//                $sheet->setCellValue('H12', 'A/P');
-//                $sheet->setCellValue('I12', '');
-//                $sheet->setCellValue('J12', "Trainees' Attendance Sign-in");
-//                $sheet->getStyle('J12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-//                $sheet->mergeCells('J12:' . $assmnt_sign_column . '12');
-//                $sheet->setCellValue($assmnt_sign_column.'13','Assmnt. Sign.');
-//                $sheet->mergeCells('A13:H13');
-//                $sheet->getStyle('A13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-//                $sheet->setCellValue('I13', 'Session');
 
                 $sheet->getColumnDimension('B')->setWidth(20);
                 $sheet->getColumnDimension('C')->setWidth(20);
                 $sheet->getColumnDimension('F')->setWidth(15);
                 $sheet->getColumnDimension('G')->setWidth(10);
-                $sheet->getColumnDimension('H')->setWidth(5);
+                $sheet->getColumnDimension('H')->setWidth(10);
                 $sheet->getColumnDimension('I')->setWidth(15);
 
                 $days = array();
@@ -6176,7 +6166,7 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 $sheet->setCellValue('H'.$row, 'Present');
                 $row++;
                 $sheet->mergeCells('A'.$row.':G'.$row);
-                $sheet->setCellValue('H'.$row, 'Total');
+                $sheet->setCellValue('I'.$row, 'Total');
                 $cell = 9;
                 $total_users = --$index;
                 /*foreach ($days as $day) {
