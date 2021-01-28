@@ -6031,9 +6031,9 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 $sheet->getColumnDimension('C')->setWidth(20);
                 $sheet->getColumnDimension('F')->setWidth(15);
                 $sheet->getColumnDimension('G')->setWidth(10);
-                $sheet->getColumnDimension('H')->setWidth(5);
-                $sheet->getColumnDimension('I')->setWidth(15);
-
+                $sheet->getColumnDimension('H')->setWidth(10);
+                $sheet->getColumnDimension('I')->setWidth(25);
+                $sheet->getColumnDimension('J')->setWidth(10);
                 $days = array();
 
                 $current_date = $start;
