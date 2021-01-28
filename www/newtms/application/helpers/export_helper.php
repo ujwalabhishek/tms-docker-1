@@ -5963,7 +5963,7 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
             $CI->load->library('excel');
             $i=1;
             while($i<=$num_of_sheets)
-            {
+            { 
                 //$a="arr".$i;
                 $results=$arr[$i];
                 $CI->excel->createSheet();
@@ -5974,7 +5974,8 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                 $column_index = PHPExcel_Cell::columnIndexFromString('H');
                 $adjusted_column_index = $column_index + $total_days;
                 $last_column_name = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index);
-                $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index+1);        
+                $assmnt_sign_column = PHPExcel_Cell::stringFromColumnIndex($adjusted_column_index+1);    
+                echo $assmnt_sign_column;exit;
                 $sheet->mergeCells('A1:' . $assmnt_sign_column . '1');
                 $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
                 $sheet->getStyle('A1')->getFont()->setSize(13)->setBold(true);
