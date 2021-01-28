@@ -6104,7 +6104,7 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                         $sheet->mergeCells('E' . $row . ':E' . ($row + 1));
                         $sheet->mergeCells('F' . $row . ':F' . ($row + 1));
                         $sheet->mergeCells('G' . $row . ':G' . ($row + 1));
-                        $sheet->mergeCells('H' . $row . ':H' . ($row + 1));
+                        //$sheet->mergeCells('H' . $row . ':H' . ($row + 1));
                     }
                     $sheet->setCellValue('A' . $row, $index);
                     $sheet->setCellValue('B' . $row, $res['record']['name']);
@@ -6125,19 +6125,19 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                     $formatd_assmnt_date = empty($assmnt_date) ? '' : date('d/m/Y', strtotime($assmnt_date));
                     $sheet->setCellValue('G' . $row, $formatd_assmnt_date);
                    // PRESENT AND ABSENT CODE START 
-                    if($res['record']['att']==1)
-                    {
-                      $sheet->setCellValue('H' .$row,'P');  
-                    }
-                    else
-                    {
-                      $sheet->setCellValue('H' .$row,'A');  
-                    }
+//                    if($res['record']['att']==1)
+//                    {
+//                      $sheet->setCellValue('H' .$row,'P');  
+//                    }
+//                    else
+//                    {
+//                      $sheet->setCellValue('H' .$row,'A');  
+//                    }
                    // PRESENT AND ABSENT CODE END 
 
-                    $sheet->setCellValue('I' . $row, 'Session1:');
+                    $sheet->setCellValue('H' . $row, 'Session1:');
                     if ($is_two_sessions) {
-                        $sheet->setCellValue('I' . ($row + 1), 'Session2:');
+                        $sheet->setCellValue('H' . ($row + 1), 'Session2:');
                     }
 
                     $cell = 9;
@@ -6228,7 +6228,7 @@ function generate_class_attendance_sheet_xls_xp($results, $class_details,$start,
                         'A'.$row_after_table.':' . $sheet->getHighestColumn() . ($sheet->getHighestRow()-1)
                 )->applyFromArray($style2Array);
                 
-                $sheet->getActiveSheet()->removeColumn('H');
+               
 
             $i++;
             }
