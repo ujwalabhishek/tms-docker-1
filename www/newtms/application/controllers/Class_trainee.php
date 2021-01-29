@@ -1757,7 +1757,12 @@ class Class_Trainee extends CI_Controller {
                 
                 if ($export == 'xls_week'){
                     $this->load->helper('export_helper');
-                    return generate_class_attendance_sheet_xls($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
+                    if(TENANT_ID =='T02'){
+                        return generate_class_attendance_sheet_xls_xp($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
+                    }else{
+                        return generate_class_attendance_sheet_xls($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
+                    }
+                    
                 }
                 $this->load->helper('pdf_reports_helper');
                 if ($export == 'pdf') {
@@ -1766,7 +1771,12 @@ class Class_Trainee extends CI_Controller {
                     return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data,$mark_count); // removed mark count by shubhranshu
                     
                 } else if ($export == 'pdf_week') {
-                    return generate_class_attendance_sheet_pdf($results, $class_details, $tenant_details, $class_schedule_data);
+                    if(TENANT_ID =='T02'){
+                        return generate_class_attendance_sheet_pdf_xp($results, $class_details, $tenant_details, $class_schedule_data);
+                    }else{
+                        return generate_class_attendance_sheet_pdf($results, $class_details, $tenant_details, $class_schedule_data);
+                    }
+                    
                 }
             }
            
@@ -4120,7 +4130,7 @@ class Class_Trainee extends CI_Controller {
                      }
                 }
                 /* end */
-                 if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
+                if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
                     $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
                      for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
                     <strong>Class start date:</strong>
@@ -4163,7 +4173,7 @@ class Class_Trainee extends CI_Controller {
                             <ol>
                                 <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Trim finger nails and remove nail polish</li>
-                                 '.$li.'
+                                '.$li.'
                                 <li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc),
 Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>
                                  <li>Dress code : Covered shoes</li>

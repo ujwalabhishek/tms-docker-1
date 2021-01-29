@@ -2529,8 +2529,12 @@ SELECT  {$calc_rows} c.crse_name,
     public function get_soa_data($tenant, $course, $class, $from, $to) {
         $generateby = $this->input->post('generateby');
         $cur_date = date('Y-m-d');
-
-        $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id,cc.class_name');
+        if(TENANT_ID=='T02'){/// added by shubhranshu due to client requirentment for xp course run id
+            $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id,cc.class_name,cc.tpg_course_run_id');
+        }else{
+            $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id,cc.class_name');
+        }
+        
         $this->db->select('c.reference_num, c.competency_code, c.certi_level,c.crse_manager');
         $this->db->select('cc.class_language, cc.classroom_trainer, cc.assessor, cc.class_start_datetime, cc.class_end_datetime');
         $this->db->select('tu.tax_code_type, tu.tax_code, tu.other_identi_type, tu.other_identi_code, tu.registered_email_id, tu.account_type'); // account_type added by dummy for internal staff enrollment On 08 Dec 2014.
@@ -2592,10 +2596,13 @@ SELECT  {$calc_rows} c.crse_name,
             $traqom_date = date('Y-m-d', strtotime($start_date2));
         }
         // add 3 days to date
-
-        $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id,ce.tenant_id,ce.enrolled_on,cc.class_name');
+        if(TENANT_ID == 'T02'){
+            $this->db->select('cc.class_language, cc.class_name, cc.classroom_trainer, cc.assessor, cc.class_start_datetime, cc.class_end_datetime,cc.tpg_course_run_id');
+        }else{
+            $this->db->select('cc.class_language, cc.class_name, cc.classroom_trainer, cc.assessor, cc.class_start_datetime, cc.class_end_datetime');
+        }
         $this->db->select('c.reference_num, c.competency_code, c.certi_level,c.crse_manager');
-        $this->db->select('cc.class_language, cc.class_name, cc.classroom_trainer, cc.assessor, cc.class_start_datetime, cc.class_end_datetime');
+        
         $this->db->select('tu.tax_code_type, tu.tax_code, tu.other_identi_type, tu.other_identi_code, tu.registered_email_id, tu.account_type'); // account_type added by dummy for internal staff enrollment On 08 Dec 2014.
         $this->db->select('tup.first_name,  tup.nationality, tup.dob, tup.race, tup.occupation_code, emp.designation');
         $this->db->select('tup.highest_educ_level, tup.salary_range, tup.contact_number, tup.alternate_contact_number');
@@ -2620,10 +2627,17 @@ SELECT  {$calc_rows} c.crse_name,
         if ($generateby == 1) {
             $this->db->where('date(cc.class_end_datetime)', $traqom_date);
         } elseif ($generateby == 2) {
-            $this->db->where('ce.training_score', 'C');
+            if(TENANT_ID=='T02'){
+                $ar = array('C','NYC');
+                $this->db->where_in('ce.training_score', $ar);
+            }else{
+                $this->db->where('ce.training_score', 'C');
+            }
+           
             $this->db->where('date(cc.class_end_datetime)', $traqom_date);
         }
         return $this->db->get()->result();
+        
     }
 
     /**
@@ -3601,7 +3615,6 @@ SELECT  {$calc_rows} c.crse_name,
 
         return $result;
     }
-    
     /////added by shubhranshu for new enrolment report tpg on 19.11.2020
     public function enrolment_report_tpg_fetchdata($tenant_id,$class_id,$course_id) {
 
@@ -3650,7 +3663,7 @@ SELECT  {$calc_rows} c.crse_name,
         JOIN tms_users tu ON tu.user_id = ce.user_id 
         left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
         left join company_master cm on cm.company_id=ce.company_id
-        WHERE cc . tenant_id ='$tenant_id'  AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT')                    
+        WHERE cc . tenant_id = '$tenant_id' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT')                    
         AND c.course_id ='$course_id'
         AND cc.class_id = '$class_id'";
         $result = $this->db->query($query)->result();

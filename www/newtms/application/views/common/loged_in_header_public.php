@@ -7,7 +7,7 @@
                 <img class="logo" src="<?php echo base_url()?>logos/t01.png" border="0">
                 </a>
             </div>
-            <div class="col-sm-7 header-ttl"><p>TRAINING MANAGEMENT SYSTEM</p></div>
+            <div class="col-sm-7 header-ttl"><p>Training Management as a Service (TMaaS)</p></div>
             <div class="col-sm-3">
                 <div class="right_dates">
                     <table class="pull-right">
