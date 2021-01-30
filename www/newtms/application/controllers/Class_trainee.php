@@ -1758,7 +1758,7 @@ class Class_Trainee extends CI_Controller {
                 if ($export == 'xls_week'){
                     $this->load->helper('export_helper');
                     if(TENANT_ID =='T02'){
-                        return generate_class_attendance_sheet_xls($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
+                        return generate_class_attendance_sheet_xls_xp($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
                     }else{
                         return generate_class_attendance_sheet_xls($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
                     }
@@ -1772,7 +1772,7 @@ class Class_Trainee extends CI_Controller {
                     
                 } else if ($export == 'pdf_week') {
                     if(TENANT_ID =='T02'){
-                        return generate_class_attendance_sheet_pdf($results, $class_details, $tenant_details, $class_schedule_data);
+                        return generate_class_attendance_sheet_pdf_xp($results, $class_details, $tenant_details, $class_schedule_data);
                     }else{
                         return generate_class_attendance_sheet_pdf($results, $class_details, $tenant_details, $class_schedule_data);
                     }
