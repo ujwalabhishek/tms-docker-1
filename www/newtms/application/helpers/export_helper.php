@@ -5269,7 +5269,7 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
             
             date('dmY', strtotime($row->class_start_datetime)), $row->reference_num, $row->competency_code,
             $course_code, 'N',
-            (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)),
+            (!empty($assment_det->assmnt_date)) ? date('d-m-Y', strtotime($assment_det->assmnt_date)) : date('d-m-Y',strtotime($row->class_end_datetime)),
             $row->training_score, $trainer_text, $assessor_text, 'No',$tpg_id
         );
     }
