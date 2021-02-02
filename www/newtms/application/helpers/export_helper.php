@@ -5106,7 +5106,7 @@ function generate_soa_report_csv($tabledata, $metadata) {
         'Designation', 'Medium of Assessment', 'Education Level', 'Salary Range',
         'Assessment Venue', 'Course Start Date (DDMMYYYY)', 'Course Reference Number (Refer to Course Listing in SkillsConnect)',
         'Competency Standard Code (Refer to Course Listing in SkillsConnect)',
-        'Cert Code', 'Submission Type', 'Date Of Assessment (DDMMYYYY)', 'Result',
+        'Cert Code', 'Submission Type', 'Date Of Assessment (DD-MM-YYYY)', 'Result',
         'Trainer ID (For NRIC/FIN/Other ID only,Names should not be included)',
         'Assessor ID (For NRIC/FIN/Other ID only,Names should not be included)',
         'Printing of SOA/ Generating of e-Cert','Class Name');
@@ -5200,7 +5200,7 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
         'Designation', 'Medium of Assessment', 'Education Level', 'Salary Range',
         'Assessment Venue','Course Start Date (DDMMYYYY)', 'Course Reference Number (Refer to Course Listing in SkillsConnect)',
         'Competency Standard Code (Refer to Course Listing in SkillsConnect)',
-        'Cert Code', 'Submission Type', 'Date Of Assessment (DDMMYYYY)', 'Result',
+        'Cert Code', 'Submission Type', 'Date Of Assessment (DD-MM-YYYY)', 'Result',
         'Trainer ID (For NRIC/FIN/Other ID only,Names should not be included)',
         'Assessor ID (For NRIC/FIN/Other ID only,Names should not be included)',
         'Printing of SOA/ Generating of e-Cert','TPGateway Course Run ID');
