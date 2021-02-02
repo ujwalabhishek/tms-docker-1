@@ -2970,7 +2970,7 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
         'Designation', 'Medium of Assessment', 'Education Level', 'Salary Range',
         'Assessment Venue','Course Start Date (DDMMYYYY)', 'Course Reference Number (Refer to Course Listing in SkillsConnect)',
         'Competency Standard Code (Refer to Course Listing in SkillsConnect)',
-        'Cert Code', 'Submission Type', 'Date Of Assessment (DDMMYYYY)', 'Result',
+        'Cert Code', 'Submission Type', 'Date Of Assessment (DD-MM-YYYY)', 'Result',
         'Trainer ID (For NRIC/FIN/Other ID only,Names should not be included)',
         'Assessor ID (For NRIC/FIN/Other ID only,Names should not be included)',
         'Printing of SOA/ Generating of e-Cert','TPGateway Course Run ID');
@@ -3240,7 +3240,7 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
 //        $sheet->setCellValue('T' . $r, $row->certi_level);
          $sheet->setCellValue('T' . $r, $course_code);//sk3
         $sheet->setCellValue('U' . $r, 'NEW');
-        $sheet->setCellValueExplicit('V' . $r, (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)), PHPExcel_Cell_DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('V' . $r, (!empty($assment_det->assmnt_date)) ? date('d-m-Y', strtotime($assment_det->assmnt_date)) : date('d-m-Y',strtotime($row->class_end_datetime)), PHPExcel_Cell_DataType::TYPE_STRING);
         $sheet->getStyle('V' . $r)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
         $sheet->setCellValue('W' . $r, $score);
         $sheet->setCellValue('X' . $r, $trainer_text);
@@ -5200,7 +5200,7 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
         'Designation', 'Medium of Assessment', 'Education Level', 'Salary Range',
         'Assessment Venue','Course Start Date (DDMMYYYY)', 'Course Reference Number (Refer to Course Listing in SkillsConnect)',
         'Competency Standard Code (Refer to Course Listing in SkillsConnect)',
-        'Cert Code', 'Submission Type', 'Date Of Assessment (DDMMYYYY)', 'Result',
+        'Cert Code', 'Submission Type', 'Date Of Assessment (DD-MM-YYYY)', 'Result',
         'Trainer ID (For NRIC/FIN/Other ID only,Names should not be included)',
         'Assessor ID (For NRIC/FIN/Other ID only,Names should not be included)',
         'Printing of SOA/ Generating of e-Cert','TPGateway Course Run ID');
@@ -5269,7 +5269,7 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
             
             date('dmY', strtotime($row->class_start_datetime)), $row->reference_num, $row->competency_code,
             $course_code, 'N',
-            (!empty($assment_det->assmnt_date)) ? date('dmY', strtotime($assment_det->assmnt_date)) : date('dmY',strtotime($row->class_end_datetime)),
+            (!empty($assment_det->assmnt_date)) ? date('d-m-Y', strtotime($assment_det->assmnt_date)) : date('d-m-Y',strtotime($row->class_end_datetime)),
             $row->training_score, $trainer_text, $assessor_text, 'No',$tpg_id
         );
     }
