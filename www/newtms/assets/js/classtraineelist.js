@@ -537,13 +537,7 @@ $(document).ready(function() {
                         $('#skm').hide();
                         $('#tbl').show();
                     }
-                    ///////below code was added by shubhranshu for xp2 for attrition option start-----
-                    if((res.att_percentage <= 0.50) && (res.att_percentage = !null)){
-                        $('#COMYTCOM_ATTRITION').prop('disabled', false);
-                    }else{
-                        $('#COMYTCOM_ATTRITION').prop('disabled', true);
-                    }
-                    ////below code was added by shubhranshu for xp2 for attrition option end-----
+                    
                     if (item.training_score == null){
                         
                         $('#COMYTCOM_C').prop('disabled', false);
@@ -551,6 +545,7 @@ $(document).ready(function() {
                         $('#COMYTCOM_EX').prop('disabled', false);
                         $('#COMYTCOM_NYC').prop('disabled', false);
                         $('#COMYTCOM_2NYC').prop('disabled', false);
+                        $('#COMYTCOM_ATTRITION').prop('disabled', false);
                         $('#skm').hide();
                         $('#tbl').show();
                     }
@@ -573,12 +568,23 @@ $(document).ready(function() {
                             $('#COMYTCOM_ABS').prop('checked', true);
                         }else if(item.feedback_answer == '2NYC') {
                             $('#COMYTCOM_2NYC').prop('checked', true);
-                        }else if(item.feedback_answer == 'ATR') {
-                            $('#COMYTCOM_ATTRITION').prop('checked', true);
                         }    
                          $('#skm').hide();
                          $('#tbl').show();
                     }
+                    
+                    ///////below code was added by shubhranshu for xp2 for attrition option start-----
+                    if((res.att_percentage <= 0.50) && (res.att_percentage = !null)){
+                        $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                        $('#COMYTCOM_C').prop('disabled', true);
+                        $('#COMYTCOM_NYC').prop('disabled', true);     
+                        $('#COMYTCOM_EX').prop('disabled', true);
+                        $('#COMYTCOM_2NYC').prop('disabled', true);
+                        $('#COMYTCOM_ABS').prop('disabled', false);
+                    }else{
+                        $('#COMYTCOM_ATTRITION').prop('disabled', true);
+                    }
+                    ////below code was added by shubhranshu for xp2 for attrition option end-----
                    
                 });
                 $.each(trainee, function(i, item) {
