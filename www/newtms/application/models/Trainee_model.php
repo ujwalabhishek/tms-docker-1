@@ -2173,6 +2173,18 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             if(empty($result['trainee'])){
                 $result['trainee'] = 0;
             }
+            
+            if(TENANT_ID=='T02'){
+                $qr ="select att.user_id as user_id,SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) / (select count(cs.class_id) 
+                    from class_schld cs where cs.course_id='$course' and cs.class_id='$class' and cs.tenant_id='T02' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
+                    from class_attendance att
+                    join course_class cc on cc.class_id='$class' and cc.course_id='$course' and cc.tenant_id='T02'
+                    where att.class_id='$class' and att.course_id='$course' and att.user_id='$user'
+                    group by att.user_id,att.class_id
+                    having attendence <= 0.50";
+                $att_percentage=$qr->result_array()[0];
+            }
+            echo print_r($att_percentage);exit;
             return $result;
         }
         else 
@@ -2233,6 +2245,18 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             if(empty($result['trainee'])){
                 $result['trainee'] = 0;
             }
+            
+            if(TENANT_ID=='T02'){
+                $qr ="select att.user_id as user_id,SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) / (select count(cs.class_id) 
+                    from class_schld cs where cs.course_id='$course' and cs.class_id='$class' and cs.tenant_id='T02' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
+                    from class_attendance att
+                    join course_class cc on cc.class_id='$class' and cc.course_id='$course' and cc.tenant_id='T02'
+                    where att.class_id='$class' and att.course_id='$course' and att.user_id='$user'
+                    group by att.user_id,att.class_id
+                    having attendence <= 0.50";
+                $att_percentage=$qr->result_array()[0];
+            }
+            echo print_r($att_percentage);exit;
             return $result;
         }
     }
