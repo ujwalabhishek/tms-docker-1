@@ -568,7 +568,9 @@ $(document).ready(function() {
                             $('#COMYTCOM_ABS').prop('checked', true);
                         }else if(item.feedback_answer == '2NYC') {
                             $('#COMYTCOM_2NYC').prop('checked', true);
-                        }    
+                        }else if(item.feedback_answer == 'ATR') {
+                            $('#COMYTCOM_ATTRITION').prop('checked', true);
+                        }     
                          $('#skm').hide();
                          $('#tbl').show();
                     }
