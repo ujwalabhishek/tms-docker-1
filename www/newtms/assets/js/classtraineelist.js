@@ -538,7 +538,7 @@ $(document).ready(function() {
                         $('#tbl').show();
                     }
                     
-                    if(res.att_percentage <= 0.50){
+                    if((res.att_percentage <= 0.50) && (res.att_percentage = !null)){
                         $('#COMYTCOM_ATTRITION').prop('disabled', false);
                     }else{
                         $('#COMYTCOM_ATTRITION').prop('disabled', true);
