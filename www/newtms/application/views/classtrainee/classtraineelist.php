@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.0000001"></script>
 <style>
     table td{
         font-size: 11px;
@@ -595,12 +595,18 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                         'id' => 'COMYTCOM_2NYC',
                         'value' => '2NYC',
                     );
+                    $COMYTCOM_ATTRITION = array(
+                        'name' => 'COMYTCOM',
+                        'id' => 'COMYTCOM_ATTRITION',
+                        'value' => 'ATTRITION',
+                    );
                     ?>              
                       <?php echo form_radio($COMYTCOM_C); ?> Competent <br/>
                     <?php echo form_radio($COMYTCOM_NYC); ?> Not Yet Competent <br/>
                   
                     <?php echo form_radio($COMYTCOM_EX); ?> Exempted <br/>                    
                     <?php echo form_radio($COMYTCOM_ABS); ?> Absent<br/>
+                     <?php echo form_radio($COMYTCOM_ATTRITION); ?> Attrition <br/>
                     <?php echo form_radio($COMYTCOM_2NYC); ?> Twice Not Competent
                 </td>
                

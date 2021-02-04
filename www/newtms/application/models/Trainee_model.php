@@ -2182,9 +2182,9 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                     where att.class_id='$class' and att.course_id='$course' and att.user_id='$user'
                     group by att.user_id,att.class_id
                     having attendence <= 0.50");
-                $att_percentage=$qr->result_array();
+                $result['att_percentage'] =$qr->result_array()[0][attendence];
             }
-            echo print_r($att_percentage);exit;
+            
             return $result;
         }
         else 
@@ -2254,9 +2254,9 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                     where att.class_id='$class' and att.course_id='$course' and att.user_id='$user'
                     group by att.user_id,att.class_id
                     having attendence <= 0.50");
-                $att_percentage=$qr->result_array();
+                $result['att_percentage'] =$qr->result_array()[0][attendence];
             }
-            echo print_r($att_percentage);exit;
+            
             return $result;
         }
     }

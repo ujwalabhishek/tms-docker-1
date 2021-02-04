@@ -537,6 +537,13 @@ $(document).ready(function() {
                         $('#skm').hide();
                         $('#tbl').show();
                     }
+                    
+                    if(res.att_percentage <= 0.50){
+                        $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                    }else{
+                        $('#COMYTCOM_ATTRITION').prop('disabled', true);
+                    }
+                    
                     if (item.training_score == null){
                         
                         $('#COMYTCOM_C').prop('disabled', false);
