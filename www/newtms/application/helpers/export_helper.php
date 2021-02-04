@@ -3192,6 +3192,10 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
             {
                 $score="Twice Not Competent";
             }
+            else if($row->training_score=="ATR")
+            {
+                $score="Attrition";
+            }
             else
             {
                 $score=$row->training_score;
@@ -5260,6 +5264,44 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
         }else{
             $tpg_id=$row->tpg_course_run_id;
         }
+        
+        if($row->training_score)
+        {
+            if($row->training_score=="C")
+            {
+                $score="Competent";
+            }
+            else if($row->training_score=="ABS")
+            {
+                $score="Absent";
+            }
+            else if($row->training_score=="NYC")
+            {
+                $score="Not Yet Competent";
+            }
+            else if($row->training_score=="EX")
+            {
+                $score="Exempted";
+            }
+            
+            else if($row->training_score=="2NYC")
+            {
+                $score="Twice Not Competent";
+            }
+            else if($row->training_score=="ATR")
+            {
+                $score="Attrition";
+            }
+            else
+            {
+                $score=$row->training_score;
+            }
+        }
+        else
+        {
+             $score=$row->training_score;
+        }
+        
         $data_arr[] = array(
             $tax_code_type, $row->tax_code, $row->first_name, $gender_arr[$row->gender], $row->nationality,
             (!empty($row->dob)) ? date('dmY', strtotime($row->dob)) : '', $row->race, $row->contact_number,
@@ -5270,7 +5312,7 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
             date('dmY', strtotime($row->class_start_datetime)), $row->reference_num, $row->competency_code,
             $course_code, 'N',
             (!empty($assment_det->assmnt_date)) ? date('d-m-Y', strtotime($assment_det->assmnt_date)) : date('d-m-Y',strtotime($row->class_end_datetime)),
-            $row->training_score, $trainer_text, $assessor_text, 'No',$tpg_id
+            $score, $trainer_text, $assessor_text, 'No',$tpg_id
         );
     }
     header('Content-Type: text/csv; charset=utf-8');
