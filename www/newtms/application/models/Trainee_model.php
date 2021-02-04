@@ -2184,7 +2184,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                     having attendence <= 0.50");
                 $att_percentage=$qr->result_array();
             }
-            //echo print_r($att_percentage);exit;
+            echo print_r($att_percentage);exit;
             return $result;
         }
         else 
@@ -2256,7 +2256,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                     having attendence <= 0.50");
                 $att_percentage=$qr->result_array();
             }
-            //echo print_r($att_percentage);exit;
+            echo print_r($att_percentage);exit;
             return $result;
         }
     }
