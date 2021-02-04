@@ -537,13 +537,13 @@ $(document).ready(function() {
                         $('#skm').hide();
                         $('#tbl').show();
                     }
-                    
+                    ///////below code was added by shubhranshu for xp2 for attrition option start-----
                     if((res.att_percentage <= 0.50) && (res.att_percentage = !null)){
                         $('#COMYTCOM_ATTRITION').prop('disabled', false);
                     }else{
                         $('#COMYTCOM_ATTRITION').prop('disabled', true);
                     }
-                    
+                    ////below code was added by shubhranshu for xp2 for attrition option end-----
                     if (item.training_score == null){
                         
                         $('#COMYTCOM_C').prop('disabled', false);

@@ -598,7 +598,7 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                     $COMYTCOM_ATTRITION = array(
                         'name' => 'COMYTCOM',
                         'id' => 'COMYTCOM_ATTRITION',
-                        'value' => 'ATTRITION',
+                        'value' => 'ATR',
                     );
                     ?>              
                       <?php echo form_radio($COMYTCOM_C); ?> Competent <br/>
@@ -607,7 +607,7 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                     <?php echo form_radio($COMYTCOM_EX); ?> Exempted <br/>                    
                     <?php echo form_radio($COMYTCOM_ABS); ?> Absent<br/>
                      <?php 
-                     if(TENANT_ID == 'T02'){
+                     if(TENANT_ID == 'T02'){/////below code was added by shubhranshu for xp2 for attrition option start-----
                          echo form_radio($COMYTCOM_ATTRITION); echo "Attrition <br/>";
                      }
                      ?> 
