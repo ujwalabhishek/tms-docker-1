@@ -561,6 +561,7 @@ $(document).ready(function() {
                         $('#COMYTCOM_EX').prop('disabled', false);
                         $('#COMYTCOM_2NYC').prop('disabled', false);
                         $('#COMYTCOM_ABS').prop('disabled', true);
+                        $('#COMYTCOM_ATTRITION').prop('disabled', true);
                         if (item.feedback_answer == 'C') {
                             $('#COMYTCOM_C').prop('checked', true);
                         } else if(item.feedback_answer == 'NYC'){
@@ -572,7 +573,9 @@ $(document).ready(function() {
                             $('#COMYTCOM_ABS').prop('checked', true);
                         }else if(item.feedback_answer == '2NYC') {
                             $('#COMYTCOM_2NYC').prop('checked', true);
-                        }   
+                        }else if(item.feedback_answer == 'ATR') {
+                            $('#COMYTCOM_ATTRITION').prop('checked', true);
+                        }    
                          $('#skm').hide();
                          $('#tbl').show();
                     }
