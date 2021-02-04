@@ -574,7 +574,7 @@ $(document).ready(function() {
                     }
                     
                     ///////below code was added by shubhranshu for xp2 for attrition option start-----
-                    if((res.att_percentage <= 0.50) && (res.att_percentage = !null)){
+                    if((res.att_percentage <= 0.50) && (res.att_percentage !==null)){
                         $('#COMYTCOM_ATTRITION').prop('disabled', false);
                         $('#COMYTCOM_C').prop('disabled', true);
                         $('#COMYTCOM_NYC').prop('disabled', true);     
