@@ -2173,7 +2173,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             if(empty($result['trainee'])){
                 $result['trainee'] = 0;
             }
-            
+            //////below code was added by shubhranshu for xp2 for attrition option start-----
             if(TENANT_ID=='T02'){
                 $qr =$this->db->query("select att.user_id as user_id,SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) / (select count(cs.class_id) 
                     from class_schld cs where cs.course_id='$course' and cs.class_id='$class' and cs.tenant_id='T02' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
@@ -2184,7 +2184,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                     having attendence <= 0.50");
                 $result['att_percentage'] =$qr->result_array()[0][attendence];
             }
-            
+            //////below code was added by shubhranshu for xp2 for attrition option end-----
             return $result;
         }
         else 
@@ -2246,6 +2246,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                 $result['trainee'] = 0;
             }
             
+            //////below code was added by shubhranshu for xp2 for attrition option start-----
             if(TENANT_ID=='T02'){
                 $qr =$this->db->query("select att.user_id as user_id,SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) / (select count(cs.class_id) 
                     from class_schld cs where cs.course_id='$course' and cs.class_id='$class' and cs.tenant_id='T02' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
@@ -2256,6 +2257,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                     having attendence <= 0.50");
                 $result['att_percentage'] =$qr->result_array()[0][attendence];
             }
+            //////below code was added by shubhranshu for xp2 for attrition option end-----
             
             return $result;
         }

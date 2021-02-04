@@ -606,7 +606,11 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                   
                     <?php echo form_radio($COMYTCOM_EX); ?> Exempted <br/>                    
                     <?php echo form_radio($COMYTCOM_ABS); ?> Absent<br/>
-                     <?php echo form_radio($COMYTCOM_ATTRITION); ?> Attrition <br/>
+                     <?php 
+                     if(TENANT_ID == 'T02'){
+                         echo form_radio($COMYTCOM_ATTRITION); echo "Attrition <br/>";
+                     }
+                     ?> 
                     <?php echo form_radio($COMYTCOM_2NYC); ?> Twice Not Competent
                 </td>
                
