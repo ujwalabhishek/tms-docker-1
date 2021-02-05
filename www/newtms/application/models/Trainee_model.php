@@ -2185,6 +2185,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                 $result['att_percentage'] =$qr->result_array()[0][attendence];
             }
             //////below code was added by shubhranshu for xp2 for attrition option end-----
+            echo print_r($result);exit;
             return $result;
         }
         else 
