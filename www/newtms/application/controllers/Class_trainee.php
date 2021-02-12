@@ -4244,7 +4244,7 @@ Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist 
             exit();
         } 
         $result = $this->classtraineemodel->company_enrollment_db_update($tenant_id, $curuser_id, $company_details,$discount_changed);
-		echo print_r($result, true);  exit;
+		//echo print_r($result, true);  exit;
         $res['status'] = $result['status'];
         if ($result['status'] == TRUE) {
             $result['err'] = array();
