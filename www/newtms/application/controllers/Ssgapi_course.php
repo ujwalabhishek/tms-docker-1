@@ -231,7 +231,8 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_SSLCERT => $pemfile,
         CURLOPT_SSLCERTTYPE => 'PEM',
-        CURLOPT_SSLKEY => $keyfile    
+        CURLOPT_SSLKEY => $keyfile,
+        CURLOPT_SSL_VERIFYHOST => 'https://uat-api.ssg-wsg.sg'
       ));
          $response = curl_exec($curl);
 
