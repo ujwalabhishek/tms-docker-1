@@ -197,7 +197,7 @@ class ssgapi_course extends CI_Controller {
         $keyfile = base_url()."assets/certificates/key.key";
         $url = "https://uat-api.ssg-wsg.sg/courses/runs/$query_string";
         $requestXml = "requestData";
-
+echo $url;exit;
         $ch = curl_init(); 
         curl_setopt($ch, CURLOPT_URL, $url); 
         curl_setopt($ch, CURLOPT_VERBOSE, 1); 
