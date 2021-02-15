@@ -13,7 +13,7 @@
     <div class="table-responsive">  
         <?php
         $atr = 'id="search_form" name="search_form" method="GET" autocomplete="off"';
-        echo form_open("ssgapi_course/course_details", $atr);
+        echo form_open("ssgapi_course/course_details_by_run_id", $atr);
         ?>
         <table class="table table-striped">
             <tbody>
@@ -40,7 +40,26 @@
                     <td width="13%" align="center">
                         <button title="Search" value="Search" type="submit" class="btn btn-xs btn-primary no-mar"><span class="glyphicon glyphicon-search"></span> Search</button>
                     </td>
-                </tr
+                </tr>
+                 <tr>
+                    <td width="15%">
+                        <?php
+                        $course_run_radio = array(
+                            'name' => 'course_run_radio',
+                            'id' => 'course_run_radio',
+                            'value' => '',
+                            'checked' => ($this->input->get('course_run_radio') == 'course_run_radio') ? TRUE : TRUE,
+                            'class' => 'search'
+                        );
+                        ?>
+                        <?php echo form_radio(course_run_radio); ?>&nbsp;&nbsp;&nbsp;
+                        <span class="td_heading">Course Run ID:&nbsp;&nbsp;</span>                        
+                    </td>
+                    
+                    <td width="13%" align="center">
+                        <button title="Search" value="Search" type="submit" class="btn btn-xs btn-primary no-mar"><span class="glyphicon glyphicon-search"></span> Search</button>
+                    </td>
+                </tr>
                 <?php if ($this->data['user']->role_id != 'COMPACT') { ?>
                     <tr>
                         <td class="td_heading">Filter by Status:</td>
