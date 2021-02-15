@@ -191,7 +191,7 @@ class ssgapi_course extends CI_Controller {
     
     
     private function course_details_by_run_id(){
-        $query_string = $this->input->get('course_run_radio');
+        $query_string = $this->input->get('course_run_id');
         
         $pemfile = base_url()."assets/certificates/cert.pem";
         $keyfile = base_url()."assets/certificates/key.key";

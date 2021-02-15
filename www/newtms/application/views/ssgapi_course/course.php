@@ -55,7 +55,9 @@
                         <?php echo form_radio(course_run_radio); ?>&nbsp;&nbsp;&nbsp;
                         <span class="td_heading">Course Run ID:&nbsp;&nbsp;</span>                        
                     </td>
-                    
+                    <td>
+                        <input type="text" value="<?php echo $this->input->get('course_run_id'); ?>" name="course_run_id" id="course_code_ssg_api" style="width: 400px;">
+                    </td>
                     <td width="13%" align="center">
                         <button title="Search" value="Search" type="submit" class="btn btn-xs btn-primary no-mar"><span class="glyphicon glyphicon-search"></span> Search</button>
                     </td>
