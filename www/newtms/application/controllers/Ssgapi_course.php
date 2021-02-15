@@ -198,44 +198,22 @@ class ssgapi_course extends CI_Controller {
         $url = "https://uat-api.ssg-wsg.sg/courses/runs/$query_string";
         $requestXml = "requestData";
 echo $url;exit;
-        $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL, $url); 
-        curl_setopt($ch, CURLOPT_VERBOSE, 1); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1); 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1); 
-        curl_setopt($ch, CURLOPT_FAILONERROR, 1); 
-        curl_setopt($ch, CURLOPT_SSLCERT, $pemfile); 
-        curl_setopt($ch, CURLOPT_SSLCERTTYPE, 'PEM'); 
-        curl_setopt($ch, CURLOPT_SSLKEY, $keyfile); 
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
-        //curl_setopt($ch, CURLOPT_POSTFIELDS, $requestXml);
-        print_r($ch);exit;
-        $ret = curl_exec($ch);
-        print_r($ret);exit;
-        
-        
-        
-//        $curl = curl_init();
-//
-//        curl_setopt_array($curl, array(
-//        CURLOPT_URL => "https://uat-api.ssg-wsg.sg/courses/runs/$query_string",
-//        CURLOPT_RETURNTRANSFER => true,
-//        CURLOPT_ENCODING => "",
-//        CURLOPT_POST =>1,
-//        CURLOPT_POSTFIELDS => "grant_type=client_credentials",
-//        CURLOPT_MAXREDIRS => 10,
-//        CURLOPT_TIMEOUT => 0,
-//        CURLOPT_FOLLOWLOCATION => true,
-//        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-//        CURLOPT_CUSTOMREQUEST => "POST",
-//        CURLOPT_HTTPHEADER => array(
-//       "Authorization: Basic $encr",
-//       "Cache-Control: no-cache",
-//       "Content-Type: application/x-www-form-urlencoded"
-//       
-//        ),
-//      ));
+//        $ch = curl_init(); 
+//        curl_setopt($ch, CURLOPT_URL, $url); 
+//        curl_setopt($ch, CURLOPT_VERBOSE, 1); 
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1); 
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1); 
+//        curl_setopt($ch, CURLOPT_FAILONERROR, 1); 
+//        curl_setopt($ch, CURLOPT_SSLCERT, $pemfile); 
+//        curl_setopt($ch, CURLOPT_SSLCERTTYPE, 'PEM'); 
+//        curl_setopt($ch, CURLOPT_SSLKEY, $keyfile); 
+//        curl_setopt($ch, CURLOPT_POST, 1);
+//        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+//        //curl_setopt($ch, CURLOPT_POSTFIELDS, $requestXml);
+//        print_r($ch);exit;
+//        $ret = curl_exec($ch);
+//        print_r($ret);exit;
+
     }
 }
