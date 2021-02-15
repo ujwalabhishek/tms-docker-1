@@ -228,11 +228,17 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_SSLCERT => $pemfile,
         CURLOPT_SSLCERTTYPE => 'PEM',
         CURLOPT_SSLKEY => $keyfile,
-        CURLOPT_SSL_VERIFYHOST => 'https://uat-api.ssg-wsg.sg'
+        CURLOPT_SSL_VERIFYHOST => 'https://uat-api.ssg-wsg.sg',
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+       
+       "Cache-Control: no-cache",
+       "Content-Type: application/x-www-form-urlencoded",
+       
+        ), 
       ));
          $response = curl_exec($curl);
 
