@@ -211,7 +211,7 @@
         
         
         //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////
-    $('#search_form').on('submit',function(){
+    $('#search_form1').on('submit',function(){
         var status=form_validates();
         if(status){
         var self = $(this),
