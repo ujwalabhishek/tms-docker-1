@@ -358,7 +358,7 @@ class ssgapi_course extends CI_Controller {
             ),
         );
 
-        $dat=json_encode($dat);echo $dat;exit;
+        $dat=json_encode($dat);
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.pem";
         
