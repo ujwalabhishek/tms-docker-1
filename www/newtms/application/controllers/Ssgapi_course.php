@@ -192,10 +192,107 @@ class ssgapi_course extends CI_Controller {
     
     public function course_details_by_run_id(){
         $query_string = $this->input->get('course_run_id');
-        
+        $dat ='{
+  "course": {
+    "courseReferenceNumber": "TGS-2020002052",
+    "trainingProvider": {
+      "uen": "201000372W"
+    },
+    "runs": [
+      {
+        "sequenceNumber": 0,
+        "modeOfTraining": "1",
+        "registrationDates": {
+          "opening": 20211024,
+          "closing": 20211024 
+        },
+        "courseDates": {
+          "start": 20211024,
+          "end": 20211024
+        },
+        "scheduleInfoType": {
+          "code": "01",
+          "description": "Description"
+        },
+        "scheduleInfo": "04Mar : Sat / 5 Sats / 9am - 6pm",
+        "venue": {
+          "block": "",
+          "street": "",
+          "floor": "1",
+          "unit": "1",
+          "building": "",
+          "postalCode": 760635,
+          "room": "1",
+          "wheelChairAccess": true
+        },
+        "intakeSize": 70,
+        "courseVacancy": {
+          "code": "L",
+          "description": "Limited Vacancy"
+        },
+        "file": {
+          "Name": "",
+          "content": ""
+        },
+        "sessions": [
+          {
+            "startDate": "20211024",
+            "endDate": "20211024",
+            "startTime": "11:00",
+            "modeOfTraining": "3",
+            "endTime": "17:30",
+            "venue": {
+              "block": "112A",
+              "street": "Street ABC",
+              "floor": "1",
+              "unit": "1",
+              "building": "",
+              "postalCode": 760635,
+              "room": "24",
+              "wheelChairAccess": true,
+              "primaryVenue": true
+            }
+          }
+        ],
+        "linkCourseRunTrainer": [
+          {
+            "trainer": {
+              "indexNumber": 0,
+              "id": "FE9DA6F2-103D-4E2A-8AD1-D8E246E002155",
+              "name": "ww",
+              "inTrainingProviderProfile": true,
+              "domainAreaOfPractice": "Testing Management in Computer Application and Diploma in Computer Application",
+              "experience": "Testing ABC",
+              "linkedInURL": "https://sg.linkedin.com/company/linkedin/abc",
+              "salutationId": 1,
+              "photo": {
+                "name": "",
+                "content": ""
+              },
+              "email": "abc@test.com",
+              "trainerType": {
+                "code": "2",
+                "description": "New"
+              },
+              "linkedSsecEQAs": [
+                {
+                  "description": "EQA test 4",
+                  "ssecEQA": {
+                    "code": "12"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}';
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.pem";
-        $url = "https://uat-api.ssg-wsg.sg/courses/runs/$query_string";
+        //$url = "https://uat-api.ssg-wsg.sg/courses/runs/$query_string";
+        $url = "https://uat-api.ssg-wsg.sg/courses/runs";
         //$requestXml =  file_get_contents("net.xml");
         $headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';
         $headers[] = 'Connection: Keep-Alive';
@@ -213,11 +310,11 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_SSLCERT => $pemfile,
         CURLOPT_SSLCERTTYPE => 'PEM', 
         CURLOPT_SSLKEY => $keyfile, 
-           
+        CURLOPT_POSTFIELDS, $dat, 
         CURLOPT_HTTPHEADER => array(
        "Authorization:  ",
        "Cache-Control: no-cache",
@@ -225,6 +322,11 @@ class ssgapi_course extends CI_Controller {
       
         ),
       ));
+        
+        
+        
+        
+        
         
         
          $response = curl_exec($curl);
