@@ -258,10 +258,10 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_SSLKEY => $keyfile, 
            
         CURLOPT_HTTPHEADER => array(
-       "Authorization: Bearer ",
+       "Authorization:  ",
        "Cache-Control: no-cache",
-       "Content-Type: application/x-www-form-urlencoded",
-       "grant_type=client_credentials"
+       "Content-Type: application/x-www-form-urlencoded"
+      
         ),
       ));
         
