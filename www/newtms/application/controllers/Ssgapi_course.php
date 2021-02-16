@@ -260,7 +260,7 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_HTTPHEADER => array(
        "Authorization:  ",
        "Cache-Control: no-cache",
-       "Content-Type: application/x-www-form-urlencoded"
+       "Content-Type: application/json"
       
         ),
       ));
