@@ -192,7 +192,7 @@ class ssgapi_course extends CI_Controller {
     
     public function course_details_by_run_id(){
         $query_string = $this->input->get('course_run_id');
-        $dat ='{
+        $dat ={
   "course": {
     "courseReferenceNumber": "TGS-2020002052",
     "trainingProvider": {
@@ -288,7 +288,7 @@ class ssgapi_course extends CI_Controller {
       }
     ]
   }
-}';
+};
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.pem";
         //$url = "https://uat-api.ssg-wsg.sg/courses/runs/$query_string";
