@@ -209,7 +209,8 @@ class ssgapi_course extends CI_Controller {
         curl_setopt($curl, CURLOPT_SSLCERTTYPE, 'PEM'); 
         curl_setopt($curl, CURLOPT_SSLKEY, $keyfile); 
         curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Cache-Control: no-cache','Host: uat-api.ssg-wsg.sg'));
         curl_setopt($curl, CURLOPT_POSTFIELDS, $requestXml);
     
       
