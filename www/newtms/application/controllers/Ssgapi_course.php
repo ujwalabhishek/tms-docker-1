@@ -236,7 +236,7 @@ class ssgapi_course extends CI_Controller {
        
        "Cache-Control: no-cache",
        "Content-Type: application/json",
-       "Host: uat-api.ssg-wsg.sg"
+       "Host: https://uat-api.ssg-wsg.sg"
         ), 
       ));
          $response = curl_exec($curl);
