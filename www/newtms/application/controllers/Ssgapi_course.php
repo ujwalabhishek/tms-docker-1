@@ -196,52 +196,12 @@ class ssgapi_course extends CI_Controller {
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.pem";
         $url = "https://uat-api.ssg-wsg.sg/courses/runs/$query_string";
-        $requestXml = "requestData";
+        //$requestXml =  file_get_contents("net.xml");
         $headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';
         $headers[] = 'Connection: Keep-Alive';
         $headers[] = 'Content-type: application/x-www-form-urlencoded;charset=UTF-8';
         $user_agent = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.0.3705; .NET CLR 1.1.4322; Media Center PC 4.0)';
-//        $curl = curl_init(); 
-//        curl_setopt($curl, CURLOPT_URL, $url); 
-//        curl_setopt($curl, CURLOPT_VERBOSE, 1); 
-//        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); 
-//        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 1); 
-//        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1); 
-//        curl_setopt($curl, CURLOPT_FAILONERROR, 1); 
-//        curl_setopt($curl, CURLOPT_SSLCERT, $pemfile); 
-//        curl_setopt($curl, CURLOPT_SSLCERTTYPE, 'PEM'); 
-//        curl_setopt($curl, CURLOPT_SSLKEY, $keyfile); 
-//        curl_setopt($curl, CURLOPT_USERAGENT, $user_agent);
-//        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-//        curl_setopt($curl, CURLOPT_POST, 1);
-//        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
-//        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Cache-Control: no-cache','Host: uat-api.ssg-wsg.sg'));
-//        curl_setopt($curl, CURLOPT_POSTFIELDS, $requestXml);
-//    
-//      
-        
-        
-//        
-//        $curl = curl_init();
-//
-//        curl_setopt_array($curl, array(
-//        CURLOPT_URL => $url,
-//        CURLOPT_RETURNTRANSFER => true,
-//        CURLOPT_ENCODING => "",
-//        CURLOPT_MAXREDIRS => 10,
-//        CURLOPT_TIMEOUT => 0,
-//        CURLOPT_FOLLOWLOCATION => true,
-//        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-//        CURLOPT_SSLCERT => $pemfile,
-//        CURLOPT_SSLCERTTYPE => 'PEM',
-//        CURLOPT_SSLKEY => $keyfile,
-//        CURLOPT_SSL_VERIFYHOST => 'https://uat-api.ssg-wsg.sg',
-//        CURLOPT_USERAGENT => $user_agent,
-//        CURLOPT_HTTPHEADER => $headers,
-//        CURLOPT_CUSTOMREQUEST => "GET"
-//        
-//      ));
-        
+ 
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
