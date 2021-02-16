@@ -254,7 +254,8 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_SSLCERT => $pemfile,
-        CURLOPT_SSLKEY => $keyfile,   
+        CURLOPT_SSLKEY => $keyfile, 
+        CURLOPT_SSLCERTTYPE => 'PEM',    
         CURLOPT_HTTPHEADER => array(
        "Authorization: Bearer ",
        "Cache-Control: no-cache",
