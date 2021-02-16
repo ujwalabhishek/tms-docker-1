@@ -255,13 +255,13 @@ class ssgapi_course extends CI_Controller {
                         'modeOfTraining' => '1',
                         'registrationDates' =>
                         array(
-                            'opening' => 20211024,
-                            'closing' => 20211024,
+                            'opening' => 20211124,
+                            'closing' => 20211124,
                         ),
                         'courseDates' =>
                         array(
-                            'start' => 20211024,
-                            'end' => 20211024,
+                            'start' => 20211124,
+                            'end' => 20211124,
                         ),
                         'scheduleInfoType' =>
                         array(
@@ -295,8 +295,8 @@ class ssgapi_course extends CI_Controller {
                         array(
                             0 =>
                             array(
-                                'startDate' => '20211024',
-                                'endDate' => '20211024',
+                                'startDate' => '20211124',
+                                'endDate' => '20211124',
                                 'startTime' => '11:00',
                                 'modeOfTraining' => '3',
                                 'endTime' => '17:30',
@@ -321,7 +321,7 @@ class ssgapi_course extends CI_Controller {
                                 'trainer' =>
                                 array(
                                     'indexNumber' => 0,
-                                    'id' => 'FE9DA6F2-103D-4E2A-8AD1-D8E246E002155',
+                                    'id' => 'FE9DA6F2-103D-4E2A-8AD1-D8E2464533',
                                     'name' => 'ww',
                                     'inTrainingProviderProfile' => true,
                                     'domainAreaOfPractice' => 'Testing Management in Computer Application and Diploma in Computer Application',
@@ -364,12 +364,7 @@ class ssgapi_course extends CI_Controller {
         
         $url = "https://uat-api.ssg-wsg.sg/courses/runs";
         //$requestXml =  file_get_contents("net.xml");
-        $headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';
-        $headers[] = 'Connection: Keep-Alive';
-        $headers[] = 'x-api-version: v1.2';
-        $headers[] = 'Content-type: application/x-www-form-urlencoded;charset=UTF-8';
-        $user_agent = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.0.3705; .NET CLR 1.1.4322; Media Center PC 4.0)';
- 
+       
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -384,7 +379,7 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_SSLCERT => $pemfile,
         CURLOPT_SSLCERTTYPE => 'PEM', 
         CURLOPT_SSLKEY => $keyfile, 
-        CURLOPT_POSTFIELDS, $data, 
+        CURLOPT_POSTFIELDS, $dat, 
         CURLOPT_HTTPHEADER => array(
        "Authorization:  ",
        "Cache-Control: no-cache",
