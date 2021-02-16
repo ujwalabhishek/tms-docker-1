@@ -198,47 +198,47 @@ class ssgapi_course extends CI_Controller {
         $url = "https://uat-api.ssg-wsg.sg/courses/runs/$query_string";
         $requestXml = "requestData";
 
-        $curl = curl_init(); 
-        curl_setopt($curl, CURLOPT_URL, $url); 
-        curl_setopt($curl, CURLOPT_VERBOSE, 1); 
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); 
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 1); 
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1); 
-        curl_setopt($curl, CURLOPT_FAILONERROR, 1); 
-        curl_setopt($curl, CURLOPT_SSLCERT, $pemfile); 
-        curl_setopt($curl, CURLOPT_SSLCERTTYPE, 'PEM'); 
-        curl_setopt($curl, CURLOPT_SSLKEY, $keyfile); 
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Cache-Control: no-cache','Host: uat-api.ssg-wsg.sg'));
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $requestXml);
-    
-      
+//        $curl = curl_init(); 
+//        curl_setopt($curl, CURLOPT_URL, $url); 
+//        curl_setopt($curl, CURLOPT_VERBOSE, 1); 
+//        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); 
+//        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 1); 
+//        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1); 
+//        curl_setopt($curl, CURLOPT_FAILONERROR, 1); 
+//        curl_setopt($curl, CURLOPT_SSLCERT, $pemfile); 
+//        curl_setopt($curl, CURLOPT_SSLCERTTYPE, 'PEM'); 
+//        curl_setopt($curl, CURLOPT_SSLKEY, $keyfile); 
+//        curl_setopt($curl, CURLOPT_POST, 1);
+//        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
+//        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Cache-Control: no-cache','Host: uat-api.ssg-wsg.sg'));
+//        curl_setopt($curl, CURLOPT_POSTFIELDS, $requestXml);
+//    
+//      
         
         
         
-//        $curl = curl_init();
-//
-//        curl_setopt_array($curl, array(
-//        CURLOPT_URL => $url,
-//        CURLOPT_RETURNTRANSFER => true,
-//        CURLOPT_ENCODING => "",
-//        CURLOPT_MAXREDIRS => 10,
-//        CURLOPT_TIMEOUT => 0,
-//        CURLOPT_FOLLOWLOCATION => true,
-//        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-//        CURLOPT_SSLCERT => $pemfile,
-//        CURLOPT_SSLCERTTYPE => 'PEM',
-//        CURLOPT_SSLKEY => $keyfile,
-//        CURLOPT_SSL_VERIFYHOST => 'https://uat-api.ssg-wsg.sg',
-//        CURLOPT_CUSTOMREQUEST => "GET",
-//        CURLOPT_HTTPHEADER => array(
-//       
-//       "Cache-Control: no-cache",
-//       "Content-Type: application/x-www-form-urlencoded",
-//       
-//        ), 
-//      ));
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_SSLCERT => $pemfile,
+        CURLOPT_SSLCERTTYPE => 'PEM',
+        CURLOPT_SSLKEY => $keyfile,
+        CURLOPT_SSL_VERIFYHOST => 'https://uat-api.ssg-wsg.sg',
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+       
+       "Cache-Control: no-cache",
+       "Content-Type: application/json",
+       "Host: uat-api.ssg-wsg.sg"
+        ), 
+      ));
          $response = curl_exec($curl);
 
         curl_close($curl);
