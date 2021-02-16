@@ -192,6 +192,53 @@ class ssgapi_course extends CI_Controller {
     
     public function course_details_by_run_id(){
         $query_string = $this->input->get('course_run_id');
+        
+        $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/key.pem";
+        $url = "https://uat-api.ssg-wsg.sg/courses/runs/$query_string";
+        //$requestXml =  file_get_contents("net.xml");
+        $headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';
+        $headers[] = 'Connection: Keep-Alive';
+        $headers[] = 'x-api-version: v1.2';
+        $headers[] = 'Content-type: application/x-www-form-urlencoded;charset=UTF-8';
+        $user_agent = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.0.3705; .NET CLR 1.1.4322; Media Center PC 4.0)';
+ 
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_SSLCERT => $pemfile,
+        CURLOPT_SSLCERTTYPE => 'PEM', 
+        CURLOPT_SSLKEY => $keyfile, 
+        //CURLOPT_POSTFIELDS, $requestXml, 
+        CURLOPT_HTTPHEADER => array(
+       "Authorization:  ",
+       "Cache-Control: no-cache",
+       "Content-Type: application/json"
+      
+        ),
+      ));
+
+         $response = curl_exec($curl);
+         if($response === false){
+             print_r(curl_error($curl));exit;
+         }else{
+             print_r(json_decode($response));exit;
+         }
+        curl_close($curl);
+
+        
+    }
+    
+    public function course_details_entry(){
+        $query_string = $this->input->get('course_run_id');
         $dat =array (
   'course' => 
   array (
