@@ -193,8 +193,8 @@ class ssgapi_course extends CI_Controller {
     public function course_details_by_run_id(){
         $query_string = $this->input->get('course_run_id');
         
-        $pemfile = base_url()."assets/certificates/cert.pem";
-        $keyfile = base_url()."assets/certificates/key.key";
+        $pemfile = __DIR__."assets/certificates/cert.pem";
+        $keyfile = __DIR__."assets/certificates/key.key";
         $url = "https://uat-api.ssg-wsg.sg/courses/runs/$query_string";
         $requestXml = "requestData";
         $headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';
