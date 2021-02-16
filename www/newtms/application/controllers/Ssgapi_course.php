@@ -242,7 +242,7 @@ class ssgapi_course extends CI_Controller {
         $dat =array (
   'course' => 
   array (
-    'courseReferenceNumber' => 'TGS-2020002052',
+    'courseReferenceNumber' => 'TGS-2020002106',
     'trainingProvider' => 
     array (
       'uen' => '201000372W',
