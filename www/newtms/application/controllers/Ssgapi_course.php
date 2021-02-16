@@ -211,8 +211,8 @@ class ssgapi_course extends CI_Controller {
 //        curl_setopt($curl, CURLOPT_SSLCERT, $pemfile); 
 //        curl_setopt($curl, CURLOPT_SSLCERTTYPE, 'PEM'); 
 //        curl_setopt($curl, CURLOPT_SSLKEY, $keyfile); 
-//        curl_setopt($process, CURLOPT_USERAGENT, $user_agent);
-//        curl_setopt($process, CURLOPT_HTTPHEADER, $headers);
+//        curl_setopt($curl, CURLOPT_USERAGENT, $user_agent);
+//        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 //        curl_setopt($curl, CURLOPT_POST, 1);
 //        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
 //        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Cache-Control: no-cache','Host: uat-api.ssg-wsg.sg'));
@@ -221,26 +221,47 @@ class ssgapi_course extends CI_Controller {
 //      
         
         
+//        
+//        $curl = curl_init();
+//
+//        curl_setopt_array($curl, array(
+//        CURLOPT_URL => $url,
+//        CURLOPT_RETURNTRANSFER => true,
+//        CURLOPT_ENCODING => "",
+//        CURLOPT_MAXREDIRS => 10,
+//        CURLOPT_TIMEOUT => 0,
+//        CURLOPT_FOLLOWLOCATION => true,
+//        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//        CURLOPT_SSLCERT => $pemfile,
+//        CURLOPT_SSLCERTTYPE => 'PEM',
+//        CURLOPT_SSLKEY => $keyfile,
+//        CURLOPT_SSL_VERIFYHOST => 'https://uat-api.ssg-wsg.sg',
+//        CURLOPT_USERAGENT => $user_agent,
+//        CURLOPT_HTTPHEADER => $headers,
+//        CURLOPT_CUSTOMREQUEST => "GET"
+//        
+//      ));
         
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => $url,
+        CURLOPT_URL => "https://uat-api.ssg-wsg.sg/courses/directory/$query_string",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_SSLCERT => $pemfile,
-        CURLOPT_SSLCERTTYPE => 'PEM',
-        CURLOPT_SSLKEY => $keyfile,
-        CURLOPT_SSL_VERIFYHOST => 'https://uat-api.ssg-wsg.sg',
-        CURLOPT_USERAGENT => $user_agent,
-        CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_CUSTOMREQUEST => "GET"
-        
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+       "Authorization: Bearer ",
+       "Cache-Control: no-cache",
+       "Content-Type: application/x-www-form-urlencoded",
+       "grant_type=client_credentials"
+        ),
       ));
+        
+        
          $response = curl_exec($curl);
 
         curl_close($curl);
