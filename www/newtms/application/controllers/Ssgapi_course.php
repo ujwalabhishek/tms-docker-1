@@ -193,7 +193,7 @@ class ssgapi_course extends CI_Controller {
     public function course_details_by_run_id(){
         $query_string = $this->input->get('course_run_id');
         
-        $pemfile = "/var/www/newtms/assets/certificates/cert.pem";echo $pemfile;exit;
+        $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.key";
         $url = "https://uat-api.ssg-wsg.sg/courses/runs/$query_string";
         $requestXml = "requestData";
