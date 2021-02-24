@@ -284,7 +284,7 @@ class Internal_user extends CI_Controller {
         $user_list_values = $this->internaluser->get_user_details($tenant_id, $edit_user_id);
 		
 		$user_details = explode('(', $edit_user_id);
-        $edit_user_id1 = rtrim($user_details[1], ')');			
+        $edit_user_id1 = rtrim($user_details[1], ')');	
         
 		$data['edit_user_id'] = $edit_user_id;
         $data['user_list_values'] = $user_list_values;
