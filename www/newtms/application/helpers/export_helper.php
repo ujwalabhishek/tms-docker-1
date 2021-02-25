@@ -3192,6 +3192,10 @@ $CI->excel->getActiveSheet()->getColumnDimension($var . $columnID)
             {
                 $score="Twice Not Competent";
             }
+            else if($row->training_score=="ATR")
+            {
+                $score="Attrition";
+            }
             else
             {
                 $score=$row->training_score;
@@ -3798,7 +3802,7 @@ function generate_traqom2_report_xls_xp($tabledata, $metadata) {
     $column_title = array('SL #',
         'Trainee ID','Trainee Name', 'ID Type', 'Email', 'Mobile Country Code', 'Mobile Area Code', 'Mobile',  'Course Title', 'Area of Training',
         'Course Reference Number', 'Course Run Reference Number',
-        'Course Start Date', 'Course End Date', 'Postal Code', 'Floor', 'Unit', 'Room', 'Full Qualification', 'TP Alias','Trainer Name','TPGateway Course Run ID'
+        'Course Start Date', 'Course End Date', 'Postal Code', 'Floor', 'Unit', 'Room', 'Full Qualification', 'TP Alias', 'Trainer Name', 'Class Name'
     );
     for ($i = 0; $i < count($column_title); $i++) {
         $sheet->setCellValue($column_names[$i], $column_title[$i]);
@@ -3917,7 +3921,7 @@ function generate_traqom2_report_xls_xp($tabledata, $metadata) {
         
         $sheet->setCellValue('D' . $r, $tax_code_type);
         $sheet->setCellValue('E' . $r, $row->registered_email_id);
-        $sheet->setCellValue('F' . $r, '+65');
+        $sheet->setCellValue('F' . $r, '65');
         $sheet->setCellValue('G' . $r, '');
         $sheet->setCellValueExplicit('H' . $r, $remove_duplicate_contact_number, PHPExcel_Cell_DataType::TYPE_STRING);
         
@@ -3934,7 +3938,7 @@ function generate_traqom2_report_xls_xp($tabledata, $metadata) {
         $sheet->setCellValue('S' . $r, '');
         $sheet->setCellValueExplicit('T' . $r, $row->tenant_name);
         $sheet->setCellValue('U' . $r, $trainer_name);
-        $sheet->setCellValue('V' . $r, $tpg_id);
+        $sheet->setCellValue('V' . $r, $row->class_name);
         $r++;
     }
     ob_end_clean();
@@ -4263,7 +4267,7 @@ function generate_traqom_report_xls_xp($tabledata, $metadata)
             $column_title = array('H',
                 'Trainee ID','Trainee Name','ID Type','Date Of Birth','Email','Mobile','Course Title','Area of Training',
                 'Course Reference Number','Course Run Reference Number',
-                'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','TP Alias','Trainer Name','TPGateway Course Run ID'
+                'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','TP Alias','Trainer Name','Class Name'
                
                 );
             for ($i = 0; $i < count($column_title); $i++) 
@@ -4366,7 +4370,7 @@ function generate_traqom_report_xls_xp($tabledata, $metadata)
                 $sheet->setCellValue('R' . $r, '');
                 $sheet->setCellValueExplicit('S' . $r, $row->tenant_name);
                 $sheet->setCellValue('T' . $r, $trainer_name);
-                $sheet->setCellValue('U' . $r, $tpg_id);
+                $sheet->setCellValue('U' . $r, $row->class_name);
                 $r++;
             }
             ob_end_clean();
@@ -4711,7 +4715,7 @@ function generate_traqom2_report_csv_xp($tabledata, $metadata) {
     $column_title = array('H',
         'Trainee ID','Trainee Name','ID Type','Email','Mobile Country Code','Mobile Area Code','Mobile','Course Title','Area of Training',
         'Course Reference Number','Course Run Reference Number',
-        'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','TP Alias','Trainer Name','TPGateway Course Run ID'
+        'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','TP Alias','Trainer Name','Class Name'
 
         );
     
@@ -4764,8 +4768,8 @@ function generate_traqom2_report_csv_xp($tabledata, $metadata) {
        
         $data_arr[] = array(
            $i,
-           $row->tax_code,$row->first_name,$tax_code_type,$row->registered_email_id,'','+65',$row->contact_number,$row->crse_name,'',
-            $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$row->tenant_name,$trainer_name,$tpg_id
+           $row->tax_code,$row->first_name,$tax_code_type,$row->registered_email_id,'','65',$row->contact_number,$row->crse_name,'',
+            $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$row->tenant_name,$trainer_name,$row->class_name
            
         );
     }
@@ -4888,7 +4892,7 @@ function generate_traqom_report_csv_xp($tabledata, $metadata) {
     $column_title = array('H',
         'Trainee ID','Trainee Name','ID Type','Date Of Birth','Email','Mobile','Course Title','Area of Training',
         'Course Reference Number','Course Run Reference Number',
-        'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','TP Alias','Trainer Name','TPGateway Course Run ID'
+        'Course Start Date','Course End Date','Postel Code','Floor','Unit','Room','Full Qualification','TP Alias','Trainer Name','Class Name'
 
         );
     
@@ -4941,7 +4945,7 @@ function generate_traqom_report_csv_xp($tabledata, $metadata) {
         $data_arr[] = array(
            $i,
            $row->tax_code,$row->first_name,$tax_code_type,$dob,$row->registered_email_id,$row->contact_number,$row->crse_name,'',
-            $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$row->tenant_name,$trainer_name,$tpg_id
+            $row->reference_num,'',$course_start_date,$course_end_date,'','','','','',$row->tenant_name,$trainer_name,$row->class_name
            
         );
     }
@@ -5260,6 +5264,44 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
         }else{
             $tpg_id=$row->tpg_course_run_id;
         }
+        
+        if($row->training_score)
+        {
+            if($row->training_score=="C")
+            {
+                $score="Competent";
+            }
+            else if($row->training_score=="ABS")
+            {
+                $score="Absent";
+            }
+            else if($row->training_score=="NYC")
+            {
+                $score="Not Yet Competent";
+            }
+            else if($row->training_score=="EX")
+            {
+                $score="Exempted";
+            }
+            
+            else if($row->training_score=="2NYC")
+            {
+                $score="Twice Not Competent";
+            }
+            else if($row->training_score=="ATR")
+            {
+                $score="Attrition";
+            }
+            else
+            {
+                $score=$row->training_score;
+            }
+        }
+        else
+        {
+             $score=$row->training_score;
+        }
+        
         $data_arr[] = array(
             $tax_code_type, $row->tax_code, $row->first_name, $gender_arr[$row->gender], $row->nationality,
             (!empty($row->dob)) ? date('dmY', strtotime($row->dob)) : '', $row->race, $row->contact_number,
@@ -5270,7 +5312,7 @@ function generate_soa_report_csv_xp($tabledata, $metadata) {
             date('dmY', strtotime($row->class_start_datetime)), $row->reference_num, $row->competency_code,
             $course_code, 'N',
             (!empty($assment_det->assmnt_date)) ? date('d-m-Y', strtotime($assment_det->assmnt_date)) : date('d-m-Y',strtotime($row->class_end_datetime)),
-            $row->training_score, $trainer_text, $assessor_text, 'No',$tpg_id
+            $score, $trainer_text, $assessor_text, 'No',$tpg_id
         );
     }
     header('Content-Type: text/csv; charset=utf-8');
