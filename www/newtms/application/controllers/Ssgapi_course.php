@@ -404,4 +404,56 @@ class ssgapi_course extends CI_Controller {
 
         
     }
+    
+    
+    public function session_attendace_upload(){
+        //$query_string = $this->input->get('course_run_id');
+        $dat = "NMKIMzLMLpcTdmLHTX5ShfrnM00GYz2s4cL9QiJ0nGU2H7SbHxhwFPXuVY+hBlJba1EAfZ4MCR4eahxG+mTnfQqTayLkqjbZbcAVXoCA+H6XMBmOvo/sG20qISZPoY3Bs9Kg4aLr6zAAMHhVP8a2rSyAwRjoHIru9mdm1iNphRFoKxdfddKYKD3CouMijcMjhZLsvs5Vxin6n6Z02MylJcpXJmY/GAoojNbMnRkwp0z1RZGox6KURB5LodcUpqXUHbcpwpgw5yRmCy+LYP09esN5XYkRAFxrg1XD2Yj8MPjj76ldN/gyApMPUQIm74vnS8Iaqvn98Rq1ij3AVwvsXRG1t5GBbmq+ODEBk4nAVMD+nb+okCnT818lkd+aYcuzInGozvH9ATw6kUMpNfcvPI5aAsOzYLDKvaXs3KDTrNK3S3JxYeEaCfj6wD3od3YNozxPAMou5QwVqeN70x1v9w36EF9qPxtWfWKapEDksXCgB1YM8Awl9+ydPhdMxFY7jDBGRMScsHW6QGmX1tmlzWmxc8Xpkd/hXmdCxQrRZ4Z9JjYllSLIXrC20aWSh5oUhfvdIS9v4Jbm7TSoqsp3c6HpukUMxMDY+x1pveP2ciZOibIyzN9xOS6FOxJMGspHWkI20UqaM7x3uHpT+2HxYYeipvNgFaqR+QjlXLIup9JBeZOazr+JLkJYFhaMabv0pT7JjtrgB7/lh7S/H+i0GP9tWpkKDhP7YczDlVT+Nw102wFrbPWlCl3kNVniF0xoqL9QFcdDsqUKuIDYU+9erCuqrP3VnkDjkkD1rCQzs5Q=";
+
+        $dat=json_encode($dat);
+        $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/key.pem";
+        
+        $url = "https://uat-api.ssg-wsg.sg/courses/runs/50793/sessions/attendance";
+        //$requestXml =  file_get_contents("net.xml");
+       
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_SSLCERT => $pemfile,
+        CURLOPT_SSLCERTTYPE => 'PEM', 
+        CURLOPT_SSLKEY => $keyfile, 
+        CURLOPT_POSTFIELDS => $dat, 
+        CURLOPT_HTTPHEADER => array(
+       "Authorization:  ",
+       "Cache-Control: no-cache",
+       "Content-Type: application/json",
+       "x-api-version: v1.3"
+        ),
+      ));
+        
+        
+        
+        
+        
+        
+        
+         $response = curl_exec($curl);
+         if($response === false){
+             print_r(curl_error($curl));exit;
+         }else{
+             print_r(json_decode($response));exit;
+         }
+        curl_close($curl);
+
+        
+    }
 }
