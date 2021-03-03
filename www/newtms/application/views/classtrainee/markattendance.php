@@ -101,8 +101,8 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
 
                         <td colspan='3'>
                             <?php
-                            $attr_js = 'id="select_class_id"';
-                            echo form_dropdown('class_id', $classes, set_value('class_id'), $attr_js);
+                            $attr_js_n = 'id="select_class_id"';
+                            echo form_dropdown('class_id', $classes, set_value('class_id'), $attr_js_n);
                             ?>
                         </td>
                     </tr>
