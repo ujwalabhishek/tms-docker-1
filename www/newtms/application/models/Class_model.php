@@ -1902,8 +1902,8 @@ class Class_Model extends CI_Model {
      * role based access for salesexec
      */
     private function traineelist_querychange_copy() {
-		$this->db->join("course_sales_exec sales", " cc.course_id=sales.course_id");
-		$this->db->like('sales.user_id', $this->user->user_id);
+		$this->db->join("course_sales_exec sales", " cc.course_id=sales.course_id");		
+		$this->db->where("sales.user_id", $this->user->user_id);
     }
 	
 	/**
