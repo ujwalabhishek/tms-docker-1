@@ -840,7 +840,7 @@ class Class_Model extends CI_Model {
         $this->db->order_by("DATE(class_start_datetime)", "DESC"); // added for class start date based sorting on Nov 24 2014.
         $query = $this->db->get();   
         
-		echo $this->db->last_query();
+		echo $this->db->last_query(); exit;
 		
 		
 		
