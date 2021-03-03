@@ -831,19 +831,20 @@ class Class_Model extends CI_Model {
         if (empty($is_allclass)) {
              $this->db->where('class_status !=', 'INACTIV');
         }
-       
+        if ($this->sess_user->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
+            $this->traineelist_querychange();
+        }
          if ($this->sess_user->role_id == 'TRAINER') {
             $this->db->where("FIND_IN_SET(" . $this->sess_user->user_id . ",classroom_trainer) !=", 0);
         }
         $this->db->order_by("DATE(class_start_datetime)", "DESC"); // added for class start date based sorting on Nov 24 2014.
-		 if ($this->sess_user->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
-            $this->traineelist_querychange();
-        }
-		
         $query = $this->db->get();   
         
-		//$this->db->last_query(); 
-					
+		$str = $this->db->last_query();
+		echo $str;
+		
+		exit;
+		
         $result = array();
         foreach ($query->result() as $row) {
             $result[$row->class_id] = $row->class_name;
@@ -1906,7 +1907,7 @@ class Class_Model extends CI_Model {
      * role based access for salesexec
      */
     private function traineelist_querychange() {
-        $this->db->like('sales_executive', $this->sess_user->user_id, 'both');
+        $this->db->like('sales_executive', $this->user->user_id, 'both');
     }
     
     /**
