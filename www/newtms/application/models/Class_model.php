@@ -1907,7 +1907,7 @@ class Class_Model extends CI_Model {
      * role based access for salesexec
      */
     private function traineelist_querychange() {
-        $this->db->like('sales_executive', $this->user->user_id, 'both');
+        $this->db->like('sales_executive', $this->user->user_id);
     }
     
     /**
