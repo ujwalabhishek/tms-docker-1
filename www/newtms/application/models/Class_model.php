@@ -831,9 +831,9 @@ class Class_Model extends CI_Model {
         if (empty($is_allclass)) {
              $this->db->where('class_status !=', 'INACTIV');
         }
-        if ($this->sess_user->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
-            $this->traineelist_querychange();
-        }
+        //if ($this->sess_user->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
+        //    $this->traineelist_querychange();
+       // }
          if ($this->sess_user->role_id == 'TRAINER') {
             $this->db->where("FIND_IN_SET(" . $this->sess_user->user_id . ",classroom_trainer) !=", 0);
         }
