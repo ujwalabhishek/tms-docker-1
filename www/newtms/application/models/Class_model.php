@@ -824,20 +824,20 @@ class Class_Model extends CI_Model {
      */
     public function get_course_class($tenantId, $courseId, $mark_attendance = NULL, $is_allclass = 0,$classTrainee=0) {
         
-        $this->db->select('class_id,class_name');
-        $this->db->from('course_class');
-        $this->db->where('tenant_id', $tenantId);
-        $this->db->where('course_id', $courseId);
+        $this->db->select('cc.class_id,cc.class_name');
+        $this->db->from('course_class cc');
+        $this->db->where('cc.tenant_id', $tenantId);
+        $this->db->where('cc.course_id', $courseId);
         if (empty($is_allclass)) {
-             $this->db->where('class_status !=', 'INACTIV');
+             $this->db->where('cc.class_status !=', 'INACTIV');
         }
         if ($this->sess_user->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
-            $this->traineelist_querychange();
+            $this->traineelist_querychange_copy();
         }
          if ($this->sess_user->role_id == 'TRAINER') {
-            $this->db->where("FIND_IN_SET(" . $this->sess_user->user_id . ",classroom_trainer) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->sess_user->user_id . ",cc.classroom_trainer) !=", 0);
         }
-        $this->db->order_by("DATE(class_start_datetime)", "DESC"); // added for class start date based sorting on Nov 24 2014.
+        $this->db->order_by("DATE(cc.class_start_datetime)", "DESC"); // added for class start date based sorting on Nov 24 2014.
         $query = $this->db->get();   
         
         $result = array();
@@ -1901,7 +1901,15 @@ class Class_Model extends CI_Model {
     /**
      * role based access for salesexec
      */
-    private function traineelist_querychange() {
+    private function traineelist_querychange_copy() {
+		$this->db->join("course_sales_exec sales", " cc.course_id=sales.course_id");		
+		$this->db->where("sales.user_id", $this->user->user_id);
+    }
+	
+	/**
+     * role based access for salesexec
+     */
+    private function traineelist_querychange() {		
         $this->db->like('sales_executive', $this->user->user_id, 'both');
     }
     
