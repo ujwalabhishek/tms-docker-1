@@ -97,7 +97,7 @@
                                 <div class="col-sm-4 col-desg">
                                     <a href="<?php echo 'http://'.$client['tenant_url'];?>">
                                         <p class="col-desg-tlt"><?php echo $client['tenant_name'];?></p>
-                                        <img src="<?php echo base_url()?>logos/<?php echo $client['tenant_logo'];?>"  alt="Image">
+                                        <img src="<?php echo base_url()?>logos/<?php echo $client['tenant_logo'];?>" width='132px' alt="Image">
                                     </a>
                                 </div>
                         <?php } ?>
@@ -113,7 +113,7 @@
                 <div class="container-fluid bg-4 text-center"> 
                     <div class="container bg-3 text-center">
                         <div class="row">
-                            <div class="col-sm-8"><h5  style="text-align: right;color: #999393;">Copyright © BIIPMI 2015-2019, All Rights Reserved.</h5></div>
+                            <div class="col-sm-8"><h5  style="text-align: right;color: #999393;">Copyright © BIIPMI 2015-2021, All Rights Reserved.</h5></div>
                             <div class="col-sm-4"><h6 style="text-align: right;color: #999393;">powered by biipmi Pte Ltd</h6></div>
 
                         </div>
