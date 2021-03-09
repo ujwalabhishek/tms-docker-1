@@ -798,7 +798,7 @@ class Class_Trainee extends CI_Controller {
             /* end */
                 if($tenant_details->tenant_id == 'T02')
                 {
-                    $li2 = "<li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li><li>Dress code : Covered shoes</li>";
+                    $li2 = "<li>Cash payment to 'Paynow/Paylah/GIRO'</li><li>Dress code : Covered shoes</li>";
                 } else {
                     $li2 = '';
                 } 
@@ -897,7 +897,7 @@ class Class_Trainee extends CI_Controller {
         /* end */
         if($tenant_details->tenant_id == 'T02')
         {
-            $li2 = "<li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc), Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>
+            $li2 = "<li>Cash payment to 'Paynow/Paylah/GIRO'.</li>
                     <li>Dress code : Covered shoes</li>";
         } else {
             $li2 = '';
@@ -4171,12 +4171,11 @@ class Class_Trainee extends CI_Controller {
                     <br>
                         <strong>Remark *: </strong>
                             <ol>
-                                <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
-                                <li>Trim finger nails and remove nail polish</li>
+                                <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
+                                <li>Trim finger nails and remove nail polish.</li>
                                 '.$li.'
-                                <li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc),
-Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>
-                                 <li>Dress code : Covered shoes</li>
+                                <li>Cash payment to "Paynow/Paylah/GIRO".</li>
+                                 <li>Dress code : Covered shoes.</li>
                             </ol>';
                 }else{
                     $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
@@ -4244,6 +4243,7 @@ Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist 
             exit();
         } 
         $result = $this->classtraineemodel->company_enrollment_db_update($tenant_id, $curuser_id, $company_details,$discount_changed);
+		//echo print_r($result, true);  exit;
         $res['status'] = $result['status'];
         if ($result['status'] == TRUE) {
             $result['err'] = array();
@@ -4357,12 +4357,11 @@ Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist 
                     <br>
                         <strong>Remark *: </strong>
                             <ol>
-                                <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
-                                <li>Trim finger nails and remove nail polish</li>
+                                <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
+                                <li>Trim finger nails and remove nail polish.</li>
                                  '.$li.'
-                                <li>In the event of unforeseen circumstances (example: SkillsFuture Credit website is down for maintenance, etc),
-Cash payment has to be collected from Candidate and Xprienz Pte Ltd will assist in making the appeal for them.</li>
-                                 <li>Dress code : Covered shoes</li>
+                                <li>Cash payment to "Paynow/Paylah/GIRO".</li>
+                                 <li>Dress code : Covered shoes.</li>
                             </ol>';
                 }else{
                    $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
