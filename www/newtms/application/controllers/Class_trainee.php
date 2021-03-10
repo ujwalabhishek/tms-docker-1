@@ -798,7 +798,7 @@ class Class_Trainee extends CI_Controller {
             /* end */
                 if($tenant_details->tenant_id == 'T02')
                 {
-                    $li2 = "<li>Cash payment to 'Paynow/Paylah/GIRO'</li><li>Dress code : Covered shoes</li>";
+                    $li2 = "<li>Payment via Paynow/Paylah or GIRO</li><li>Dress code : Covered shoes</li>";
                 } else {
                     $li2 = '';
                 } 
@@ -897,7 +897,7 @@ class Class_Trainee extends CI_Controller {
         /* end */
         if($tenant_details->tenant_id == 'T02')
         {
-            $li2 = "<li>Cash payment to 'Paynow/Paylah/GIRO'.</li>
+            $li2 = "<li>Payment via Paynow/Paylah or GIRO.</li>
                     <li>Dress code : Covered shoes</li>";
         } else {
             $li2 = '';
@@ -4174,7 +4174,7 @@ class Class_Trainee extends CI_Controller {
                                 <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Trim finger nails and remove nail polish.</li>
                                 '.$li.'
-                                <li>Cash payment to "Paynow/Paylah/GIRO".</li>
+                                <li>Payment via Paynow/Paylah or GIRO.</li>
                                  <li>Dress code : Covered shoes.</li>
                             </ol>';
                 }else{
@@ -4360,7 +4360,7 @@ class Class_Trainee extends CI_Controller {
                                 <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Trim finger nails and remove nail polish.</li>
                                  '.$li.'
-                                <li>Cash payment to "Paynow/Paylah/GIRO".</li>
+                                <li>Payment via Paynow/Paylah or GIRO.</li>
                                  <li>Dress code : Covered shoes.</li>
                             </ol>';
                 }else{
