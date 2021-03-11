@@ -216,7 +216,7 @@ echo form_open("classes/add_new_class", $atr);
                             ?>
                             &nbsp;</td>
                     </tr>
-                    <?php if(TENANT_ID=='T02'){ ?>
+                    <?php if(TENANT_ID=='T02' || TENANT_ID=='T24'){ ?>
                     <tr>
                         <td class="td_heading">TPGateway Course Run ID:</td>
                         <td colspan="5">

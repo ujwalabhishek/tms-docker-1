@@ -1005,7 +1005,7 @@ class Class_Model extends CI_Model {
         $control_4 = empty($control_4) ? NULL : $control_4;
         $classroom_venue_oth = empty($classroom_venue_oth) ? NULL : strtoupper($classroom_venue_oth);
         $lab_venue_oth = empty($lab_venue_oth) ? NULL : strtoupper($lab_venue_oth);
-        if(TENANT_ID=='T02'){
+        if(TENANT_ID=='T02' || TENANT_ID=='T24'){
             $data_class = array(
             'tenant_id' => $tenantId,
             'class_name' => strtoupper($class_name),
@@ -1567,7 +1567,7 @@ class Class_Model extends CI_Model {
         $control_4 = empty($control_4) ? NULL : $control_4;
         $classroom_venue_oth = empty($classroom_venue_oth) ? NULL : strtoupper($classroom_venue_oth);
         $lab_venue_oth = empty($lab_venue_oth) ? NULL : strtoupper($lab_venue_oth);     
-        if(TENANT_ID=='T02'){
+        if(TENANT_ID=='T02' || TENANT_ID=='T24'){
             $data = array(
             'tenant_id' => $tenantId,
             'course_id' => $class_course,

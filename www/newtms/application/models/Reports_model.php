@@ -2529,7 +2529,7 @@ SELECT  {$calc_rows} c.crse_name,
     public function get_soa_data($tenant, $course, $class, $from, $to) {
         $generateby = $this->input->post('generateby');
         $cur_date = date('Y-m-d');
-        if(TENANT_ID=='T02'){/// added by shubhranshu due to client requirentment for xp course run id
+        if(TENANT_ID=='T02' || TENANT_ID=='T24'){/// added by shubhranshu due to client requirentment for xp course run id
             $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id,cc.class_name,cc.tpg_course_run_id');
         }else{
             $this->db->select('ce.training_score, ce.class_id, ce.user_id,ce.class_id,cc.class_name');
@@ -2596,7 +2596,7 @@ SELECT  {$calc_rows} c.crse_name,
             $traqom_date = date('Y-m-d', strtotime($start_date2));
         }
         // add 3 days to date
-        if(TENANT_ID == 'T02'){
+        if(TENANT_ID == 'T02' || TENANT_ID=='T24'){
             $this->db->select('cc.class_language, cc.class_name, cc.classroom_trainer, cc.assessor, cc.class_start_datetime, cc.class_end_datetime,cc.tpg_course_run_id');
         }else{
             $this->db->select('cc.class_language, cc.class_name, cc.classroom_trainer, cc.assessor, cc.class_start_datetime, cc.class_end_datetime');
