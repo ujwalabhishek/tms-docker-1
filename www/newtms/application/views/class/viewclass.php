@@ -84,7 +84,7 @@ $role_array = array("COMPACT");
                                 }
                                 ?></label></td>
                     </tr>
-                    <?php if(TENANT_ID=='T02'){ ?>
+                    <?php if(TENANT_ID=='T02' || TENANT_ID=='T24'){ ?>
                     <tr>
                         <td class="td_heading">TPGateway Course Run ID:</td>
                         <td colspan="5"><label class="label_font"><?php echo $class->tpg_course_run_id; ?></label></td>
