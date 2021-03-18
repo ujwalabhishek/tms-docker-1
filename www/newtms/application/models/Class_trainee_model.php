@@ -2244,7 +2244,9 @@ class Class_Trainee_Model extends CI_Model {
 
             $this->db->where('pymnt_due_id', $payid);
 
-            $this->db->where('user_id', $user_id);
+            $this->db->where('user_id', $user);
+            
+            $this->db->where('user_id', $class);
 
             $this->db->update('class_enrol', $data);
         }
