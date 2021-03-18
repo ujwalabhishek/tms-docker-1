@@ -7187,10 +7187,10 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
         $this->db->select('c.course_id , c.crse_name, 
  cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
- ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode,ce.referral_details, ce.company_id, ce.certificate_coll_on, ce.payment_status,ce.eid_number,  
+ ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode,ce.referral_details, ce.company_id, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
 tu . user_id ,tu.tenant_id, tu. account_type, tu.tax_code, tu.account_status,
-tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number, ce.sales_executive_id');
+tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number, ce.sales_executive_id');
 
         $this->db->from('course_class cc');
 
@@ -13102,7 +13102,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
  ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode, ce.company_id,ce.referral_details, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
 tu . user_id ,tu.tenant_id, tu. account_type, tu.tax_code, tu.account_status,
-tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,cc.sales_executive');
+tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number,cc.sales_executive');
 
         $this->db->from('course_class cc');
 
