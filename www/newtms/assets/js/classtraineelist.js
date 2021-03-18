@@ -260,7 +260,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(i) {
                 if (i != '') {
-                    $('#eid_number').val(i.tg_number);
+                    $('#eid_number').val(i.eid_number);
                 } else {
                     $('#eid_number').val('');
                 }

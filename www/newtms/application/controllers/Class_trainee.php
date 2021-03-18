@@ -228,7 +228,7 @@ class Class_Trainee extends CI_Controller {
                             $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> '.$TGAMT.' </span> </a><br/>';
                         }
                         //////add by shubhranshu to save enrollment id on 18/03/2021
-                         $linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">'. $EIDNO .' </span> </a>';
+                         $linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">'. $EIDNO .' </span> </a><br/>';
 
                        // if($check_attendance<=0 || $check_competent>0)
                          if($check_competent>0)
