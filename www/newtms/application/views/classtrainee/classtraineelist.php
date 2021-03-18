@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.01"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.000000000000000000000002"></script>
 <style>
     table td{
         font-size: 11px;
@@ -379,6 +379,40 @@
     <span class="required required_i">* Required Fields</span>
     <div class="popup_cance89">
         <span href="#ex9" rel="modal:close"><button class="btn btn-primary subsidy_save" type="button">Save</button></span>
+    </div>
+</div>
+<div class="modal1_0001" id="exeid" style="display:none;height:200px;min-height: 200px;">
+    <h2 class="panel_heading_style">Update EID#</h2>
+    <table class="table table-striped">
+        <tbody>
+            <?php
+            $data = array(
+                'id' => 'eid_class',
+                'type' => 'hidden',
+                'name' => 'eid_class',
+            );
+            echo form_input($data);
+            $data = array(
+                'id' => 'eid_user',
+                'type' => 'hidden',
+                'name' => 'eid_user',
+            );
+            echo form_input($data);
+            ?>
+            <tr>
+                <td class="td_heading">EID#:</td>
+                <td>
+                    <?php
+                        echo form_input('eid_number', $this->input->post('eid_number'), ' id="eid_number"');
+                    ?>
+                <span id="eid_number_err"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <span class="required required_i">* Required Fields</span>
+    <div class="popup_cance89">
+        <span href="#exeid" rel="modal:close"><button class="btn btn-primary subsidy_save" type="button">Save</button></span>
     </div>
 </div>
 <div class="modal_3" id="ex8" style="display:none;">

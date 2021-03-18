@@ -2231,6 +2231,33 @@ class Class_Trainee_Model extends CI_Model {
 
         return TRUE;
     }
+    
+    public function update_eidnumber($tenant_id, $class, $user, $eid_number, $payid) {
+
+        $this->db->trans_start();
+
+        if (!empty($eid_number)) {
+
+            $data = array('eid_number' => strtoupper($eid_number));
+
+            $this->db->where('tenant_id', $tenant_id);
+
+            $this->db->where('pymnt_due_id', $payid);
+
+            $this->db->where('user_id', $user_id);
+
+            $this->db->update('class_enrol', $data);
+        }
+
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+
+            return FALSE;
+        }
+
+        return TRUE;
+    }
 
     /**
 
@@ -6309,6 +6336,14 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         ->where('class_id', $class)->get()->row()->pymnt_due_id;
 
         return $payid;
+    }
+     //to get eid by shubhranshu
+    public function get_eid_for_class_user($class, $user) {
+
+        $eid = $this->db->select('eid_number')->from('class_enrol')->where('user_id', $user)
+                        ->where('class_id', $class)->get()->row()->eid_number;
+
+        return $eid;
     }
 
     /**

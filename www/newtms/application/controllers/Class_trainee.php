@@ -226,7 +226,8 @@ class Class_Trainee extends CI_Controller {
 
                             $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> '.$TGAMT.' </span> </a><br/>';
                         }
-
+                        //////add by shubhranshu to save enrollment id on 18/03/2021
+                         $linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
 
                        // if($check_attendance<=0 || $check_competent>0)
                          if($check_competent>0)
@@ -1082,6 +1083,24 @@ class Class_Trainee extends CI_Controller {
         exit();
     }
 
+       public function update_eidnumber() {
+        $tenant_id = $this->tenant_id;
+        extract($_POST);
+        $payid = $this->classtraineemodel->get_payid_for_class_user($class, $user);
+        $result = $this->classtraineemodel->update_tgnumber($tenant_id, $class, $user, $eid_number,$payid);
+        if ($result == TRUE) {
+             if($tg != ''){
+               $data = array('eid_number'=>$eid_number,'class_id'=>$class,'payment_due_id'=>$payid);
+                $previous_data =  json_encode($data);
+                user_activity(18, $user, $previous_data);
+            }
+            $this->db->cache_delete_all();
+            echo 'success';
+        } else {
+            echo 'Fail';
+        }
+        exit();
+    }
     /**
      * calculate gst for subsidy
      */
@@ -3830,6 +3849,17 @@ class Class_Trainee extends CI_Controller {
         $get_subsidy_tg_data = $this->classtraineemodel->get_enrol_payment_due($payid, $user);
         $get_subsidy_tg_data->subsidy_recd_date = ($get_subsidy_tg_data->subsidy_recd_date == '0000-00-00' || $get_subsidy_tg_data->subsidy_recd_date == '1970-01-01' || $get_subsidy_tg_data->subsidy_recd_date == NULL) ? '' : date('d-m-Y', strtotime($get_subsidy_tg_data->subsidy_recd_date));
         $get_subsidy_tg_data->subsidy_percentage = (($get_subsidy_tg_data->subsidy_amount * 100) / $get_subsidy_tg_data->class_fees);
+        echo json_encode($get_subsidy_tg_data);
+        exit();
+    }
+    
+    /**
+     * function to get eid by shubhranshu
+     */
+    public function get_eid_data() {
+        $class = $this->input->post('class');
+        $user = $this->input->post('user');
+        $payid = $this->classtraineemodel->get_eid_for_class_user($class, $user);
         echo json_encode($get_subsidy_tg_data);
         exit();
     }

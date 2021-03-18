@@ -55,6 +55,19 @@ $(document).ready(function() {
             trigger_ajax();
         }
     });
+    $('.eid_save').click(function() {
+        $retVal = true;
+        $eid_number = $('#eid_number').val();
+        if ($eid_number.length == 0 || parseFloat($eid_number) == 0) {
+            disp_err('#$eid_number');
+            $retVal = false;
+        } else {
+            remove_err('#$eid_number');
+        }
+        if ($retVal == true) {
+            eid_trigger_ajax();
+        }
+    });
     /////////////////////added by shubhranshu for search validate on 26/11/2018///////////////////////////
     function exportValidate(){
         if(form_validates()){
@@ -189,6 +202,30 @@ $(document).ready(function() {
             }
         });
     }
+    
+    function eid_trigger_ajax() {
+        $eid_number = $('#eid_number').val();
+        $class = $('#eid_class').val();
+        $user = $('#eid_user').val();
+        $.ajax({
+            url: $baseurl + 'class_trainee/update_eidnumber',
+            type: 'post',
+            data: {class: $class, user: $user, eid_number: $eid_number},
+            success: function(i) {
+                if (i != '') {
+                    label_alert = false;
+                    alert('EID# updated successfully!');
+                    $('#eid_number').val();
+                    $('#eid_class').val();
+                    $('#eid_user').val();
+                    $('.close-modal').trigger('click');
+                } else {
+                    alert('Unable to Update EID#.');
+                    return false;
+                }
+            }
+        });
+    }
     $('.get_update').click(function() {
         $this = $(this);
         $class = $this.data('class');
@@ -210,6 +247,28 @@ $(document).ready(function() {
         $('#h_user').val($user);
         $('#h_class').val($class);
         $('#ex9').modal();
+    });
+    $('.get_update_eid').click(function() {
+        $this = $(this);
+        $class = $this.data('class');
+        $user = $this.data('user');
+        $.ajax({
+            url: $baseurl + 'class_trainee/get_eid_data',
+            type: 'post',
+            data: {class: $class, user: $user},
+            async: false,
+            dataType: 'json',
+            success: function(i) {
+                if (i != '') {
+                    $('#eid_number').val(i.tg_number);
+                } else {
+                    $('#eid_number').val('');
+                }
+            }
+        });
+        $('#eid_user').val($user);
+        $('#eid_class').val($class);
+        $('#exeid').modal();
     });
     $('#subsidy_amount').change(function() {
         $subsidy = $(this).val();
