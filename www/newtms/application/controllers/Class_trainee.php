@@ -178,6 +178,7 @@ class Class_Trainee extends CI_Controller {
                 $new_tabledata[$k]['subsidy'] = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">Update</a>';
                 $TGAMT = !empty($row['subsidy_amount']) ? "$".$row['subsidy_amount'] : "NA";
                 $TGNO = !empty($row['tg_number']) ? $row['tg_number'] : "NA";
+                $EIDNO = !empty($row['eid_number']) ? $row['eid_number'] : "NA";
                 $TGNOBR= !empty($row['tg_number']) ? "<br>": "";
                 $data['trainee_feedback'] = $this->reportsModel->get_trainee_feedback_by_user_id($tenant_id, $new_tabledata[$k]['course_id'], $new_tabledata[$k]['class_id'], $new_tabledata[$k]['user_id']); 
                 $linkStr = '';
@@ -227,7 +228,7 @@ class Class_Trainee extends CI_Controller {
                             $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> '.$TGAMT.' </span> </a><br/>';
                         }
                         //////add by shubhranshu to save enrollment id on 18/03/2021
-                         $linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
+                         $linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">'. $EIDNO .' </span> </a>';
 
                        // if($check_attendance<=0 || $check_competent>0)
                          if($check_competent>0)
