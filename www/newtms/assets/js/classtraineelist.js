@@ -59,10 +59,10 @@ $(document).ready(function() {
         $retVal = true;
         $eid_number = $('#eid_number').val();
         if ($eid_number.length == 0 || parseFloat($eid_number) == 0) {
-            disp_err('#$eid_number');
+            disp_err('#eid_number');
             $retVal = false;
         } else {
-            remove_err('#$eid_number');
+            remove_err('#eid_number');
         }
         if ($retVal == true) {
             eid_trigger_ajax();
