@@ -2250,7 +2250,7 @@ class Class_Trainee_Model extends CI_Model {
 
             $this->db->update('class_enrol', $data);
         }
-echo $this->db->last_query();exit;
+
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {
