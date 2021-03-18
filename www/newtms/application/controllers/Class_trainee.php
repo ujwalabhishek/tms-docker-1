@@ -1088,7 +1088,7 @@ class Class_Trainee extends CI_Controller {
         $tenant_id = $this->tenant_id;
         extract($_POST);
         $payid = $this->classtraineemodel->get_payid_for_class_user($class, $user);
-        $result = $this->classtraineemodel->update_tgnumber($tenant_id, $class, $user, $eid_number,$payid);
+        $result = $this->classtraineemodel->update_eidnumber($tenant_id, $class, $user, $eid_number,$payid);
         if ($result == TRUE) {
              if($tg != ''){
                $data = array('eid_number'=>$eid_number,'class_id'=>$class,'payment_due_id'=>$payid);
