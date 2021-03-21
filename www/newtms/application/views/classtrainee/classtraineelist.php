@@ -138,7 +138,7 @@
                 <tr>
                     <?php if ($this->data['user']->role_id != 'COMPACT') { ?>
                     <td class="td_heading" width="15%"> Company Name:</td>
-                    <td colspan="4" width="47%">
+                    <td colspan="2" width="47%">
                         <?php
                         $company = array(
                             'name' => 'company_name',
@@ -150,6 +150,31 @@
                         );
                         echo form_input($company);
                         echo form_hidden('company_id', $this->input->get('company_id'), $id='company_id');
+                        ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
+                        <span id="company_name_err"></span>
+                    <?php } else { ?>
+                        <td colspan="5">
+                    <?php } ?>
+                        <span class="pull-right">
+                            <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
+                        </span>
+                    </td>
+                    
+                    <?php if ($this->data['user']->role_id != 'COMPACT') { ?>
+                    <td class="td_heading" width="15%"> Enrolment ID:</td>
+                    <td colspan="2" width="47%">
+                        <?php
+                        $enrol = array(
+                            'name' => 'eid',
+                            'id' => 'eid',
+                            'value' => $this->input->get('eid'),
+                            'style'=>'width:200px;',
+                            'class'=>'upper_case',
+                            'autocomplete'=>'off'
+                        );
+                        echo form_input($enrol);
+                        
                         ?>
                         <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="company_name_err"></span>
