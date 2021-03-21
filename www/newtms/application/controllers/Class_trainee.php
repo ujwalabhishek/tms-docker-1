@@ -4828,7 +4828,7 @@ class Class_Trainee extends CI_Controller {
         exit();
     }
     
-    public function get_eid_json(){
+    public function get_eid_json1(){
         $eid_arr = array();
         $eid = $this->input->post('q');
          if(!empty($eid)){
