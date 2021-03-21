@@ -4831,7 +4831,7 @@ class Class_Trainee extends CI_Controller {
         $eid_arr = array();
         $eid = $this->input->post('q');
          if(!empty($eid)){
-            $eid_arr =  internal_eid_list_autocomplete($eid);
+            $eid_arr =  $this->classtraineemodel->internal_eid_list_autocomplete($eid);
          }
          echo json_encode($eid_arr);
         exit();
