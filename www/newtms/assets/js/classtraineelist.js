@@ -480,7 +480,7 @@ $(document).ready(function() {
     });
     $("#eid").autocomplete({
         source: function(request, response) {
-            $('#eid').val('');
+            //$('#eid').val('');
             if (request.term.trim().length > 3) {
                 $.ajax({
                     url: $siteurl + "class_trainee/get_eid_json",
