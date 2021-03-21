@@ -14495,7 +14495,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $user = $this->session->userdata('userDetails');
         $results = array();
         if (!empty($name_startsWith)) {
-            $this->db->select('eid_number');
+            $this->db->select('eid_number,user_id');
             $this->db->from('class_enrol');
             $this->db->where('tenant_id', $user->tenant_id);
             $this->db->like('eid_number', $name_startsWith, 'both');
@@ -14503,6 +14503,14 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
             $this->db->limit(200);
             $results = $this->db->get()->result();
             //echo $this->db->last_query();exit;
+        }
+        
+        foreach ($results as $k => $v) {
+            $output[] = array(
+                'key' => $v->user_id,
+                'value' => $v->eid_number,
+                'label' => $v->eid_number,
+            );
         }
 
         return $results;
