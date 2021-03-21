@@ -14513,7 +14513,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
             );
         }
 
-        return $results;
+        return $output;
     }
 
 }
