@@ -14488,5 +14488,24 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
         return $this->db->get()->row();
     }
+    
+    
+    public function internal_eid_list_autocomplete($name_startsWith) {
+        $name_startsWith = trim($name_startsWith);
+        $user = $this->session->userdata('userDetails');
+        $results = array();
+        if (!empty($name_startsWith)) {
+            $this->db->select('eid_number');
+            $this->db->from('class_enrol');
+            $this->db->where('tenant_id', $user->tenant_id);
+            $this->db->like('eid_number', $name_startsWith, 'both');
+            $this->db->order_by('eid_number', 'ASC');
+            $this->db->limit(200);
+            $results = $this->db->get()->result();
+            //echo $this->db->last_query();exit;
+        }
+
+        return $results;
+    }
 
 }

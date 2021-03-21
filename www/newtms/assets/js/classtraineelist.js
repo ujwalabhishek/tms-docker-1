@@ -478,6 +478,33 @@ $(document).ready(function() {
         },
         minLength:0
     });
+    $("#eid").autocomplete({
+        source: function(request, response) {
+            $('#eid').val('');
+            if (request.term.trim().length > 3) {
+                $.ajax({
+                    url: $siteurl + "class_trainee/get_eid_json",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        q: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            } else {
+                var d;
+                response(d);
+            }
+        },
+        select: function(event, ui) {
+            var id = ui.item.key;
+            $('#eid').val(id);
+        },
+        minLength:0
+    });
+    
     $('#taxcode').attr('disabled', 'disabled');
     $('#trainee').attr('disabled', 'disabled');
     $val = $('.search_select:checked').val();
