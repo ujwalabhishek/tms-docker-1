@@ -74,6 +74,7 @@ class Class_Trainee extends CI_Controller {
             $search_select = ($this->input->get('search_select')) ? $this->input->get('search_select') : '';
             $taxcode_id = ($this->input->get('taxcode_id')) ? $this->input->get('taxcode_id') : '';
             $trainee_id = ($this->input->get('trainee_id')) ? $this->input->get('trainee_id') : '';
+            $eid = ($this->input->get('eid')) ? $this->input->get('eid') : '';
             $field = ($this->input->get('f')) ? $this->input->get('f') : 'ce.pymnt_due_id';
             $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'desc';
 
@@ -85,9 +86,9 @@ class Class_Trainee extends CI_Controller {
             $data['tenant'] = $tenant_id;
             $company_id = $this->input->get('company_id');
             $this->db->cache_on();
-            $tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
+            $tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id,$eid);
 
-            $totalrows = $this->classtraineemodel->get_all_classtrainee_count_by_tenant_id($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
+            $totalrows = $this->classtraineemodel->get_all_classtrainee_count_by_tenant_id($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id,$eid);
 
             $new_tabledata = array();
             $role_array = array("TRAINER", "COMPACT", "SLEXEC");
