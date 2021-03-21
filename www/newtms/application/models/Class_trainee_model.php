@@ -7311,7 +7311,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         }
 
         $query3 = $this->db->query("(" . $query1 . ") UNION (" . $query2 . ") order by $union_sort_by $sort_order $union_limit");
-
+echo $query3;exit;
         return $query3->result_array();
     }
 
