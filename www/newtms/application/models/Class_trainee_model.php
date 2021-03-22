@@ -6340,10 +6340,10 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         return $payid;
     }
      //to get eid by shubhranshu
-    public function get_eid_for_class_user($class, $user) {
+    public function get_eid_for_class_user($course,$class, $user) {
 
         $eid = $this->db->select('eid_number')->from('class_enrol')->where('user_id', $user)
-                        ->where('class_id', $class)->get()->row()->eid_number;
+                        ->where('class_id', $class)->where('course_id', $course)->get()->row()->eid_number;
 
         return $eid;
     }

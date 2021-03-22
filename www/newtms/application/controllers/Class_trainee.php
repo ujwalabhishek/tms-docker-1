@@ -3860,8 +3860,9 @@ class Class_Trainee extends CI_Controller {
      */
     public function get_eid_data() {
         $class = $this->input->post('class');
+        $course = $this->input->post('course');
         $user = $this->input->post('user');
-        $eid = $this->classtraineemodel->get_eid_for_class_user($class, $user);
+        $eid = $this->classtraineemodel->get_eid_for_class_user($course,$class, $user);
         echo json_encode($eid);
         exit();
     }
