@@ -508,7 +508,7 @@ $(document).ready(function() {
         },
         select: function(event, ui) {
             var id = ui.item.key;
-            $('#eid').val(id);
+            $('#eid').val(ui.item.value);
         },
         minLength:0
     });
