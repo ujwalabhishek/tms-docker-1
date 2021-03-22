@@ -156,7 +156,7 @@ $(document).ready(function() {
         } else {
             remove_err('#eid');
         }
-        if(crse == '' && comp == '' && ($('.search_select:checked').val() == undefined)){
+        if(crse == '' && comp == '' && $eid == '' && ($('.search_select:checked').val() == undefined)){
                 
                 $('#company_name_err').addClass('error').text('Oops!Please select atleast one filter to perform search operation');
                 $retval = false;
