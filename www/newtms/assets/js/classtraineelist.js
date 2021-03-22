@@ -125,6 +125,7 @@ $(document).ready(function() {
     function form_validate($retval) {
         var crse = $('#course').val();
         var comp = $('#company_name').val();
+        var eid = $('#eidbox').val();
         $taxcode = $('#taxcode').val();
         $taxcode_id = $('#taxcode_id').val();
         if ($taxcode.length > 0 && $taxcode_id.length == 0) {
@@ -156,7 +157,7 @@ $(document).ready(function() {
         } else {
             remove_err('#eid');
         }
-        if(crse == '' && comp == '' && $eid == '' && ($('.search_select:checked').val() == undefined)){
+        if(crse == '' && comp == '' && eid == '' && ($('.search_select:checked').val() == undefined)){
                 
                 $('#company_name_err').addClass('error').text('Oops!Please select atleast one filter to perform search operation');
                 $retval = false;
