@@ -149,6 +149,13 @@ $(document).ready(function() {
         } else {
             remove_err('#company_name');
         }
+        $eid = $('#eid').val();
+        if ($eid.length > 0 && $eid.length == 0 && $role_check != 'COMPACT') {
+            disp_err('#eid', '[Select EID from auto-help]');
+            $retval = false;
+        } else {
+            remove_err('#eid');
+        }
         if(crse == '' && comp == '' && ($('.search_select:checked').val() == undefined)){
                 
                 $('#company_name_err').addClass('error').text('Oops!Please select atleast one filter to perform search operation');
@@ -478,9 +485,9 @@ $(document).ready(function() {
         },
         minLength:0
     });
-    $("#eid").autocomplete({
+    $("#eidbox").autocomplete({
         source: function(request, response) {
-            //$('#eid').val('');
+            $('#eid').val('');
             if (request.term.trim().length > 3) {
                 $.ajax({
                     url: $siteurl + "class_trainee/get_eid_json",

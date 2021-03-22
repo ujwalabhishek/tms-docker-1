@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.0000000000000000000000000000000000002"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.000000000000000000000000000000000000002"></script>
 <style>
     table td{
         font-size: 11px;
@@ -164,18 +164,18 @@
                     <td colspan="" width="30%">
                         <?php
                         $enrol = array(
-                            'name' => 'eid',
-                            'id' => 'eid',
+                            'name' => 'eidbox',
+                            'id' => 'eidbox',
                             'value' => $this->input->get('eid'),
                             'style'=>'width:200px;',
                             'class'=>'upper_case',
                             'autocomplete'=>'off'
                         );
                         echo form_input($enrol);
-                        
+                        echo form_hidden('eid', $this->input->get('eid'), $id='eid');
                         ?>
                         <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
-                        <span id="company_name_err"></span>
+                        <span id="eid_err"></span>
                     <?php }  ?>
                         <span class="pull-right">
                             <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
