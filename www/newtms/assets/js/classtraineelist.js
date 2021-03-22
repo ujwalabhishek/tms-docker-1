@@ -151,7 +151,7 @@ $(document).ready(function() {
             remove_err('#company_name');
         }
         $eid = $('#eid').val();
-        if ($eid.length > 0 && $eid.length == 0 && $role_check != 'COMPACT') {
+        if (eid.length > 0 && $eid.length == 0 && $role_check != 'COMPACT') {
             disp_err('#eid', '[Select EID from auto-help]');
             $retval = false;
         } else {
