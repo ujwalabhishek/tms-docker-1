@@ -55,6 +55,19 @@ $(document).ready(function() {
             trigger_ajax();
         }
     });
+    $('.eid_save').click(function() {
+        $retVal = true;
+        $eid_number = $('#eid_number').val();
+        if ($eid_number.length == 0 || parseFloat($eid_number) == 0) {
+            disp_err('#eid_number');
+            $retVal = false;
+        } else {
+            remove_err('#eid_number');
+        }
+        if ($retVal == true) {
+            eid_trigger_ajax();
+        }
+    });
     /////////////////////added by shubhranshu for search validate on 26/11/2018///////////////////////////
     function exportValidate(){
         if(form_validates()){
@@ -112,6 +125,7 @@ $(document).ready(function() {
     function form_validate($retval) {
         var crse = $('#course').val();
         var comp = $('#company_name').val();
+        var eid = $('#eidbox').val();
         $taxcode = $('#taxcode').val();
         $taxcode_id = $('#taxcode_id').val();
         if ($taxcode.length > 0 && $taxcode_id.length == 0) {
@@ -136,7 +150,14 @@ $(document).ready(function() {
         } else {
             remove_err('#company_name');
         }
-        if(crse == '' && comp == '' && ($('.search_select:checked').val() == undefined)){
+        $eid = $('#eid').val();
+        if (eid.length > 0 && $eid.length == 0 && $role_check != 'COMPACT') {
+            disp_err('#eid', '[Select EID from auto-help]');
+            $retval = false;
+        } else {
+            remove_err('#eid');
+        }
+        if(crse == '' && comp == '' && eid == '' && ($('.search_select:checked').val() == undefined)){
                 
                 $('#company_name_err').addClass('error').text('Oops!Please select atleast one filter to perform search operation');
                 $retval = false;
@@ -189,6 +210,30 @@ $(document).ready(function() {
             }
         });
     }
+    
+    function eid_trigger_ajax() {
+        $eid_number = $('#eid_number').val();
+        $class = $('#eid_class').val();
+        $user = $('#eid_user').val();
+        $.ajax({
+            url: $baseurl + 'class_trainee/update_eidnumber',
+            type: 'post',
+            data: {class: $class, user: $user, eid_number: $eid_number},
+            success: function(i) {
+                if (i != '') {
+                    label_alert = false;
+                    alert('EID# updated successfully!');
+                    $('#eid_number').val();
+                    $('#eid_class').val();
+                    $('#eid_user').val();
+                    $('.close-modal').trigger('click');
+                } else {
+                    alert('Unable to Update EID#.');
+                    return false;
+                }
+            }
+        });
+    }
     $('.get_update').click(function() {
         $this = $(this);
         $class = $this.data('class');
@@ -210,6 +255,28 @@ $(document).ready(function() {
         $('#h_user').val($user);
         $('#h_class').val($class);
         $('#ex9').modal();
+    });
+    $('.get_update_eid').click(function() {
+        $this = $(this);
+        $class = $this.data('class');
+        $user = $this.data('user');
+        $.ajax({
+            url: $baseurl + 'class_trainee/get_eid_data',
+            type: 'post',
+            data: {class: $class, user: $user},
+            async: false,
+            dataType: 'json',
+            success: function(i) {
+                if (i != '') {
+                    $('#eid_number').val(i);
+                } else {
+                    $('#eid_number').val('');
+                }
+            }
+        });
+        $('#eid_user').val($user);
+        $('#eid_class').val($class);
+        $('#exeid').modal();
     });
     $('#subsidy_amount').change(function() {
         $subsidy = $(this).val();
@@ -295,6 +362,7 @@ $(document).ready(function() {
                     $('.sfc_claim_id').html("");
                     $('#sfc_claim_id_tr').hide();
                 }
+                
                 $('.r_class_fees').html(parseFloat(res.data.class_fees).toFixed(2))
                 $('.r_net_due').html(parseFloat(res.invoice.amount_recd).toFixed(2));
                 $('.r_dis_label').html(res.data.discount_label);
@@ -418,6 +486,33 @@ $(document).ready(function() {
         },
         minLength:0
     });
+    $("#eidbox").autocomplete({
+        source: function(request, response) {
+            $('#eid').val('');
+            if (request.term.trim().length > 3) {
+                $.ajax({
+                    url: $siteurl + "class_trainee/get_eid_json",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        q: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            } else {
+                var d;
+                response(d);
+            }
+        },
+        select: function(event, ui) {
+            var id = ui.item.key;
+            $('#eid').val(ui.item.value);
+        },
+        minLength:0
+    });
+    
     $('#taxcode').attr('disabled', 'disabled');
     $('#trainee').attr('disabled', 'disabled');
     $val = $('.search_select:checked').val();
@@ -536,6 +631,7 @@ $(document).ready(function() {
                         $('#skm').hide();
                         $('#tbl').show();
                     }
+                    
                     if (item.training_score == null){
                         
                         $('#COMYTCOM_C').prop('disabled', false);
@@ -543,6 +639,7 @@ $(document).ready(function() {
                         $('#COMYTCOM_EX').prop('disabled', false);
                         $('#COMYTCOM_NYC').prop('disabled', false);
                         $('#COMYTCOM_2NYC').prop('disabled', false);
+                        $('#COMYTCOM_ATTRITION').prop('disabled', false);
                         $('#skm').hide();
                         $('#tbl').show();
                     }
@@ -553,6 +650,7 @@ $(document).ready(function() {
                         $('#COMYTCOM_EX').prop('disabled', false);
                         $('#COMYTCOM_2NYC').prop('disabled', false);
                         $('#COMYTCOM_ABS').prop('disabled', true);
+                        $('#COMYTCOM_ATTRITION').prop('disabled', true);
                         if (item.feedback_answer == 'C') {
                             $('#COMYTCOM_C').prop('checked', true);
                         } else if(item.feedback_answer == 'NYC'){
@@ -564,10 +662,26 @@ $(document).ready(function() {
                             $('#COMYTCOM_ABS').prop('checked', true);
                         }else if(item.feedback_answer == '2NYC') {
                             $('#COMYTCOM_2NYC').prop('checked', true);
-                        }   
+                        }else if(item.feedback_answer == 'ATR') {
+                            $('#COMYTCOM_ATTRITION').prop('checked', true);
+                        }     
                          $('#skm').hide();
                          $('#tbl').show();
                     }
+                    
+                    ///////below code was added by shubhranshu for xp2 for attrition option start-----
+                    if((res.att_percentage <= 0.50) && (res.att_percentage !==null) && (res.att_percentage > 0)){
+                        $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                        $('#COMYTCOM_C').prop('disabled', true);
+                        $('#COMYTCOM_NYC').prop('disabled', true);     
+                        $('#COMYTCOM_EX').prop('disabled', true);
+                        $('#COMYTCOM_2NYC').prop('disabled', true);
+                        $('#COMYTCOM_ABS').prop('disabled', false);
+                    }else{
+                        $('#COMYTCOM_ATTRITION').prop('disabled', true);
+                    }
+
+                    ////below code was added by shubhranshu for xp2 for attrition option end-----
                    
                 });
                 $.each(trainee, function(i, item) {

@@ -74,6 +74,7 @@ class Class_Trainee extends CI_Controller {
             $search_select = ($this->input->get('search_select')) ? $this->input->get('search_select') : '';
             $taxcode_id = ($this->input->get('taxcode_id')) ? $this->input->get('taxcode_id') : '';
             $trainee_id = ($this->input->get('trainee_id')) ? $this->input->get('trainee_id') : '';
+            $eid = ($this->input->get('eid')) ? $this->input->get('eid') : '';
             $field = ($this->input->get('f')) ? $this->input->get('f') : 'ce.pymnt_due_id';
             $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'desc';
 
@@ -85,9 +86,9 @@ class Class_Trainee extends CI_Controller {
             $data['tenant'] = $tenant_id;
             $company_id = $this->input->get('company_id');
             $this->db->cache_on();
-            $tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
+            $tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id,$eid);
 
-            $totalrows = $this->classtraineemodel->get_all_classtrainee_count_by_tenant_id($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
+            $totalrows = $this->classtraineemodel->get_all_classtrainee_count_by_tenant_id($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id,$eid);
 
             $new_tabledata = array();
             $role_array = array("TRAINER", "COMPACT", "SLEXEC");
@@ -178,6 +179,7 @@ class Class_Trainee extends CI_Controller {
                 $new_tabledata[$k]['subsidy'] = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">Update</a>';
                 $TGAMT = !empty($row['subsidy_amount']) ? "$".$row['subsidy_amount'] : "NA";
                 $TGNO = !empty($row['tg_number']) ? $row['tg_number'] : "NA";
+                $EIDNO = !empty($row['eid_number']) ? $row['eid_number'] : "NA";
                 $TGNOBR= !empty($row['tg_number']) ? "<br>": "";
                 $data['trainee_feedback'] = $this->reportsModel->get_trainee_feedback_by_user_id($tenant_id, $new_tabledata[$k]['course_id'], $new_tabledata[$k]['class_id'], $new_tabledata[$k]['user_id']); 
                 $linkStr = '';
@@ -226,7 +228,8 @@ class Class_Trainee extends CI_Controller {
 
                             $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> '.$TGAMT.' </span> </a><br/>';
                         }
-
+                        //////add by shubhranshu to save enrollment id on 18/03/2021
+                         $linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">'. $EIDNO .' </span> </a><br/>';
 
                        // if($check_attendance<=0 || $check_competent>0)
                          if($check_competent>0)
@@ -1082,6 +1085,24 @@ class Class_Trainee extends CI_Controller {
         exit();
     }
 
+       public function update_eidnumber() {
+        $tenant_id = $this->tenant_id;
+        extract($_POST);
+        $payid = $this->classtraineemodel->get_payid_for_class_user($class, $user);
+        $result = $this->classtraineemodel->update_eidnumber($tenant_id, $class, $user, $eid_number,$payid);
+        if ($result == TRUE) {
+             if($tg != ''){
+               $data = array('eid_number'=>$eid_number,'class_id'=>$class,'payment_due_id'=>$payid);
+                $previous_data =  json_encode($data);
+                user_activity(18, $user, $previous_data);
+            }
+            $this->db->cache_delete_all();
+            echo 'success';
+        } else {
+            echo 'Fail';
+        }
+        exit();
+    }
     /**
      * calculate gst for subsidy
      */
@@ -3833,6 +3854,18 @@ class Class_Trainee extends CI_Controller {
         echo json_encode($get_subsidy_tg_data);
         exit();
     }
+    
+    /**
+     * function to get eid by shubhranshu
+     */
+    public function get_eid_data() {
+        $class = $this->input->post('class');
+        $course = $this->input->post('course');
+        $user = $this->input->post('user');
+        $eid = $this->classtraineemodel->get_eid_for_class_user($class, $user);
+        echo json_encode($eid);
+        exit();
+    }
 
     /**
      * function to get classroom location for others
@@ -4793,6 +4826,16 @@ class Class_Trainee extends CI_Controller {
             $company_arr =  common_companies_autocomplete($company);
          }
          echo json_encode($company_arr);
+        exit();
+    }
+    
+    public function get_eid_json(){
+        $eid_arr = array();
+        $eid = $this->input->post('q');
+         if(!empty($eid)){
+            $eid_arr =  $this->classtraineemodel->internal_eid_list_autocomplete($eid);
+         }
+         echo json_encode($eid_arr);
         exit();
     }
     

@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?v=2"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.2"></script>
 <style>
     table td{
         font-size: 11px;
@@ -138,7 +138,7 @@
                 <tr>
                     <?php if ($this->data['user']->role_id != 'COMPACT') { ?>
                     <td class="td_heading" width="15%"> Company Name:</td>
-                    <td colspan="4" width="47%">
+                    <td colspan="" width="30%">
                         <?php
                         $company = array(
                             'name' => 'company_name',
@@ -156,6 +156,27 @@
                     <?php } else { ?>
                         <td colspan="5">
                     <?php } ?>
+                        
+                    </td>
+                    
+                    <?php if ($this->data['user']->role_id != 'COMPACT') { ?>
+                    <td class="td_heading" width="15%"> Enrolment ID:</td>
+                    <td colspan="" width="30%">
+                        <?php
+                        $enrol = array(
+                            'name' => 'eidbox',
+                            'id' => 'eidbox',
+                            'value' => $this->input->get('eid'),
+                            'style'=>'width:200px;',
+                            'class'=>'upper_case',
+                            'autocomplete'=>'off'
+                        );
+                        echo form_input($enrol);
+                        echo form_hidden('eid', $this->input->get('eid'), $id='eid');
+                        ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
+                        <span id="eid_err"></span>
+                    <?php }  ?>
                         <span class="pull-right">
                             <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
                         </span>
@@ -381,6 +402,40 @@
         <span href="#ex9" rel="modal:close"><button class="btn btn-primary subsidy_save" type="button">Save</button></span>
     </div>
 </div>
+<div class="modal1_0001" id="exeid" style="display:none;height:200px;min-height: 200px;">
+    <h2 class="panel_heading_style">Update EID#</h2>
+    <table class="table table-striped">
+        <tbody>
+            <?php
+            $data = array(
+                'id' => 'eid_class',
+                'type' => 'hidden',
+                'name' => 'eid_class',
+            );
+            echo form_input($data);
+            $data = array(
+                'id' => 'eid_user',
+                'type' => 'hidden',
+                'name' => 'eid_user',
+            );
+            echo form_input($data);
+            ?>
+            <tr>
+                <td class="td_heading">EID#:</td>
+                <td>
+                    <?php
+                        echo form_input('eid_number', $this->input->post('eid_number'), ' id="eid_number"');
+                    ?>
+                <span id="eid_number_err"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <span class="required required_i">* Required Fields</span>
+    <div class="popup_cance89">
+        <span href="#exeid" rel="modal:close"><button class="btn btn-primary eid_save" type="button">Save</button></span>
+    </div>
+</div>
 <div class="modal_3" id="ex8" style="display:none;">
     <h2 class="panel_heading_style">Total Payment Received Details</h2>
     <table class="no_border_table">
@@ -393,7 +448,6 @@
                 <td class="td_heading">Mode of Payment:</td>
                 <td><span class="r_mode"></span></td>
             </tr>
-            <!--added by shubhranshu for sfc claim id-->
             <tr style='display:none' id='sfc_claim_id_tr'>
                 <td class="td_heading">SFC Claim ID:</td>
                 <td><span class="sfc_claim_id"></span></td>
@@ -596,12 +650,22 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                         'id' => 'COMYTCOM_2NYC',
                         'value' => '2NYC',
                     );
+                    $COMYTCOM_ATTRITION = array(
+                        'name' => 'COMYTCOM',
+                        'id' => 'COMYTCOM_ATTRITION',
+                        'value' => 'ATR',
+                    );
                     ?>              
                       <?php echo form_radio($COMYTCOM_C); ?> Competent <br/>
                     <?php echo form_radio($COMYTCOM_NYC); ?> Not Yet Competent <br/>
                   
                     <?php echo form_radio($COMYTCOM_EX); ?> Exempted <br/>                    
                     <?php echo form_radio($COMYTCOM_ABS); ?> Absent<br/>
+                     <?php 
+                     if(TENANT_ID == 'T02'){/////below code was added by shubhranshu for xp2 for attrition option start-----
+                         echo form_radio($COMYTCOM_ATTRITION); echo "Attrition <br/>";
+                     }
+                     ?> 
                     <?php echo form_radio($COMYTCOM_2NYC); ?> Twice Not Competent
                 </td>
                
@@ -657,6 +721,7 @@ echo form_hidden('page', $this->uri->segment(2));
         <br/>                       
 </div>
 </div>
+
 <?php 
 if($tenant_id == 'T20' || $tenant_id == 'T17'){
 ?>

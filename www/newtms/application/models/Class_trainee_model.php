@@ -2231,6 +2231,35 @@ class Class_Trainee_Model extends CI_Model {
 
         return TRUE;
     }
+    
+    public function update_eidnumber($tenant_id, $class, $user, $eid_number, $payid) {
+
+        $this->db->trans_start();
+
+        if (!empty($eid_number)) {
+
+            $data = array('eid_number' => strtoupper($eid_number));
+
+            $this->db->where('tenant_id', $tenant_id);
+
+            $this->db->where('pymnt_due_id', $payid);
+
+            $this->db->where('user_id', $user);
+            
+            $this->db->where('class_id', $class);
+
+            $this->db->update('class_enrol', $data);
+        }
+
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+
+            return FALSE;
+        }
+
+        return TRUE;
+    }
 
     /**
 
@@ -6310,6 +6339,14 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         return $payid;
     }
+     //to get eid by shubhranshu
+    public function get_eid_for_class_user($class, $user) {
+
+        $eid = $this->db->select('eid_number')->from('class_enrol')->where('user_id', $user)
+                        ->where('class_id', $class)->get()->row()->eid_number;
+
+        return $eid;
+    }
 
     /**
 
@@ -7127,7 +7164,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
      * @return type
 
      */
-    public function list_all_classtrainee_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0) {
+    public function list_all_classtrainee_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0, $eid=0) {
 
         $user_id = '';
 
@@ -7145,15 +7182,15 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
             return;
         }
-        $query2 = $this->list_all_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit, $offset, $sort_by, $sort_order, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
+        $query2 = $this->list_all_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit, $offset, $sort_by, $sort_order, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id,$eid);
 
         //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
         $this->db->select('c.course_id , c.crse_name, 
  cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
- ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode,ce.referral_details, ce.company_id, ce.certificate_coll_on, ce.payment_status,  
+ ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode,ce.referral_details,ce.eid_number, ce.company_id, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
 tu . user_id ,tu.tenant_id, tu. account_type, tu.tax_code, tu.account_status,
-tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number, ce.sales_executive_id');
+tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number, ce.sales_executive_id');
 
         $this->db->from('course_class cc');
 
@@ -7186,6 +7223,11 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         if (!empty($class_id)) {
 
             $this->db->where('cc.class_id', $class_id);
+        }
+        
+        if (!empty($eid)) {
+
+            $this->db->where('ce.eid_number', $eid);
         }
         if (!empty($class_status)) {
 
@@ -11020,7 +11062,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $status;
     }
-     public function get_enroll_old_invoice($id,$inv)
+    public function get_enroll_old_invoice($id,$inv)
     {
                 $tenant_id=  $this->tenant_id;
                 $this->db->select('*');
@@ -11031,6 +11073,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 $results=  $this->db->get()->row();
                 return $results;
     }
+    
     
      public function check_paid_refund_invoice($invoice_id,$user_id)
     {
@@ -12906,9 +12949,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         //$date_array = explode("-",$class_start_date);
 
-        $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.","T17" => "EVI","T20" => "WABLAB");
+        $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.","T17" => "EVI","T20" => "WABLAB", "T23" => "DEMO", "T24" => "RLIS");
 
-        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id","T17" => "ei_new_invoice_id","T20" => "wablab_invoice_id");
+        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id","T17" => "ei_new_invoice_id","T20" => "wablab_invoice_id","T23" => "demo_invoice_id", "T24" => "rlis_invoice_id");
 
         $tenant_id = $this->tenant_id;
 
@@ -13039,7 +13082,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * @return type
 
      */
-    public function list_all_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0) {
+    public function list_all_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0,$eid=0) {
 
         $user_id = '';
 
@@ -13061,10 +13104,10 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
         $this->db->select('c.course_id , c.crse_name, 
  cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
- ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode, ce.company_id,ce.referral_details, ce.certificate_coll_on, ce.payment_status,  
+ ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode, ce.company_id,ce.referral_details,ce.eid_number, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
 tu . user_id ,tu.tenant_id, tu. account_type, tu.tax_code, tu.account_status,
-tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,cc.sales_executive');
+tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number,cc.sales_executive');
 
         $this->db->from('course_class cc');
 
@@ -13096,6 +13139,11 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         if (!empty($class_id)) {
 
             $this->db->where('cc.class_id', $class_id);
+        }
+        
+        if (!empty($eid)) {
+
+            $this->db->where('ce.eid_number', $eid);
         }
 
         if (!empty($class_status)) {
@@ -14380,7 +14428,6 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $result = $qry->row();
         return $result;
     }
-    
     ////added by shubhranshu to get the invoice details whether comp or ind
     public function check_enrol_invoice_compind($id,$inv)
     {
@@ -14450,6 +14497,33 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         }
 
         return $this->db->get()->row();
+    }
+    
+    
+    public function internal_eid_list_autocomplete($name_startsWith) {
+        $name_startsWith = trim($name_startsWith);
+        $user = $this->session->userdata('userDetails');
+        $results = array();
+        if (!empty($name_startsWith)) {
+            $this->db->select('eid_number,user_id');
+            $this->db->from('class_enrol');
+            $this->db->where('tenant_id', $user->tenant_id);
+            $this->db->like('eid_number', $name_startsWith, 'both');
+            $this->db->order_by('eid_number', 'ASC');
+            $this->db->limit(200);
+            $results = $this->db->get()->result();
+            //echo $this->db->last_query();exit;
+        }
+        
+        foreach ($results as $k => $v) {
+            $output[] = array(
+                'key' => $v->user_id,
+                'value' => $v->eid_number,
+                'label' => $v->eid_number,
+            );
+        }
+
+        return $output;
     }
 
 }
