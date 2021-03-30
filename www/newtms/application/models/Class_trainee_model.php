@@ -12972,7 +12972,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 $invoice_id_tmp = $invoice_id_tmp;
             }
             
-            $invoice_id = $pre_fix_array[$tenant_id] .'-20'.date('y').'-'.$invoice_id_tmp;
+            $invoice_id = $pre_fix_array[$tenant_id] .'-20'.date('y').'-'.date('m').$invoice_id_tmp;
         }else{
             $invoice_id = $pre_fix_array[$tenant_id] . $invoice_id_tmp;
         }
