@@ -3668,7 +3668,7 @@ SELECT  {$calc_rows} c.crse_name,
         AND c.course_id ='$course_id'
         AND cc.class_id = '$class_id'";
         $result = $this->db->query($query)->result();
-
+echo $this->db->last_query();exit;
         return $result;
     }
 
