@@ -100,7 +100,7 @@
                         <th width="5%" class="">Trainee ID</th>
                         <th width="5%" class="">Date Of Birth</th>
                         <th width="5%" class="">Trainee Name</th>
-                        <th width="5%" class="">Course Run</th>
+                        <th width="5%" class="">TPG Course Run ID</th>
                         <!--<th width="5%" class="th_header">Trainee Email</th>-->
                         <th width="5%" class="">Trainee Phone Country Code</th>
                         <th width="5%" class="">Trainee Phone Area Code</th>
@@ -130,7 +130,7 @@
                             <td><?php echo $row->TraineeID ;?></td>
                             <td><?php echo $row->DateofBirth;?></td>
                             <td><?php echo $row->TraineeName ;?></td>
-                            <td><?php echo $row->CourseRun ;?></td>
+                            <td><?php echo ($row->CourseRunid ? $row->CourseRunid : 'NA');?></td>
                             <!--<td><?php //echo $row->TraineeEmail ;?></td>-->
                             <td><?php echo $row->TraineePhoneCountryCode;?></td>
                             <td><?php echo $row->TraineePhoneAreaCode;?></td>
