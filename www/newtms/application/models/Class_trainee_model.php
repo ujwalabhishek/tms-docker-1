@@ -12959,14 +12959,12 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         if($tenant_id == 'T17'){
             if(strlen($invoice_id_tmp)== 1){
-                $invoice_id_tmp = '0000'.$invoice_id_tmp;
-            }elseif(strlen($invoice_id_tmp)== 2){
                 $invoice_id_tmp = '000'.$invoice_id_tmp;
-            }elseif(strlen($invoice_id_tmp)== 3){
+            }elseif(strlen($invoice_id_tmp)== 2){
                 $invoice_id_tmp = '00'.$invoice_id_tmp;
-            }elseif(strlen($invoice_id_tmp)== 4){
+            }elseif(strlen($invoice_id_tmp)== 3){
                 $invoice_id_tmp = '0'.$invoice_id_tmp;
-            }elseif(strlen($invoice_id_tmp)== 5){
+            }elseif(strlen($invoice_id_tmp)== 4){
                 $invoice_id_tmp = $invoice_id_tmp;
             }else{
                 $invoice_id_tmp = $invoice_id_tmp;
