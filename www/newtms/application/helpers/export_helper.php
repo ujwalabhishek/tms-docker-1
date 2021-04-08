@@ -6907,7 +6907,7 @@ function export_enrolment_report_for_tpg_full($result, $tenant_id) {
     $sheet->setCellValue('C2', 'Trainee ID');
     $sheet->setCellValue('D2', 'Date of Birth');
     $sheet->setCellValue('E2', 'Trainee Name');
-    $sheet->setCellValue('F2', 'Course Run');
+    $sheet->setCellValue('F2', 'TPG Course Run ID');
     $sheet->setCellValue('G2', 'Trainee Email');
     $sheet->setCellValue('H2', 'Trainee Phone Country Code');
     $sheet->setCellValue('I2', 'Trainee Phone Area Code');
@@ -6939,7 +6939,7 @@ function export_enrolment_report_for_tpg_full($result, $tenant_id) {
         $sheet->setCellValue('C' . $rn, $row->TraineeID);
         $sheet->setCellValue('D' . $rn, $row->DateofBirth);
         $sheet->setCellValue('E' . $rn, $row->TraineeName);
-        $sheet->setCellValue('F' . $rn, $row->CourseRun);
+        $sheet->setCellValue('F' . $rn, $row->CourseRunid);
         $sheet->setCellValue('G' . $rn, $row->TraineeEmail);
         $sheet->setCellValue('H' . $rn, $row->TraineePhoneCountryCode);
         $sheet->setCellValue('I' . $rn, $row->TraineePhoneAreaCode);
