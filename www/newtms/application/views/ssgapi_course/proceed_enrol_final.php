@@ -55,7 +55,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <select name="change_taxcode" id='change_taxcode' style="width:700px;">
                             <option value="">Please Select</option>
                         </select>                    
-                        <b>Search by NRIC/FIN No.:</b> <input type="text" name="change_taxcode_autocomplete" id="change_taxcode_autocomplete" style="width: 700px;"/>
+                        <b>Search by NRIC/FIN No.:</b> <input type="text" name="change_taxcode_autocomplete" id="change_taxcode_autocomplete" style="width: 700px;" val='<?php echo $_POST['taxcode']?>'/>
                         <span id="change_taxcode_err"></span>
                     </td> 
                 </tr>
@@ -274,7 +274,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     <td class="td_heading" width="15%">Discount Amount:<span class="required">*</span></td>
                     <td colspan="3">
                        
-                       <input type="number" name="discount_amount" id="discount_amount" />
+                       <input type="number" name="discount_amount" id="discount_amount" val='<?php echo $_POST['discount_amount']?>'/>
                         <span id="discount_amount_err"></span>
                     </td>
                 </tr>
@@ -293,7 +293,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     <td class="td_heading" width="15%">Enrollment Date:<span class="required">*</span></td>
                     <td colspan="3">
                        
-                      <input type="date" name="enrolment_date" id="enrolment_date" />
+                      <input type="date" name="enrolment_date" id="enrolment_date" val='<?php echo $_POST['enrolment_date']?>'/>
                         <span id="enrolment_date_err"></span>
                     </td>
                 </tr>
