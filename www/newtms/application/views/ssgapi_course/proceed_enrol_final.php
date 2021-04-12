@@ -49,25 +49,23 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
 
                 
                 <tr class="change_span" style="">
-                    <td  colspan="2" >
-                                            
-                        <b>NRIC/FIN No.:</b> <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['taxcode'];?>'/>
-                        <span id="change_taxcode_err"></span>
-                    </td> 
+                    <td>                    
+                        <b>NRIC/FIN No.:</b> 
+                    </td>   
                     <td>
-                       <b>Full Name.:</b> <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['first_name'];?>'/>
-                    </td>
-                </tr>
-                <tr class="change_span" style="">
-                    <td  colspan="2" >
-                                            
-                        <b>Trainee DOB.:</b> <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['taxcode'];?>'/>
-                        <span id="change_taxcode_err"></span>
+                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['taxcode']; ?>'/>
+                         <span id="change_taxcode_err"></span>
                     </td> 
-                    <td colspan="2">
-                       <b>Contact No.:</b> <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['first_name'];?>'/>
+
+                    <td>
+                        <b>Full Name.:</b> 
+                     </td>
+                    <td> 
+                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['first_name']; ?>'/>
                     </td>
                 </tr>
+                
+                
        
                 
                 
