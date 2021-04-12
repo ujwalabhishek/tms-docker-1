@@ -784,7 +784,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
             $("#decryptedString").val(decrypted);
       }
       
-      $(".search_button").onclick(function(){
+      $(".search_button").click(function(){
         encrypt();alert();
         //$("search_form2").submit();
       });
