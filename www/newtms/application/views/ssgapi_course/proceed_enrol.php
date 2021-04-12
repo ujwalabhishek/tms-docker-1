@@ -255,7 +255,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     <td class="td_heading" width="15%">Discount Amount:<span class="required">*</span></td>
                     <td colspan="3">
                        
-                       <input type="text" name="discount_amount" id="discount_amount" />
+                       <input type="number" name="discount_amount" id="discount_amount" />
                         <span id="discount_amount_err"></span>
                     </td>
                 </tr>
