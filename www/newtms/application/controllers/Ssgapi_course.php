@@ -598,6 +598,8 @@ class ssgapi_course extends CI_Controller {
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
         echo " <div id='out'></div>
+            
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
             <script>
             decrypt();
             function decrypt() {
