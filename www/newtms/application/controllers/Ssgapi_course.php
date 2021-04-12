@@ -41,8 +41,8 @@ class ssgapi_course extends CI_Controller {
         
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.pem";
-        $encrypted = $this->encrypting($data, "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=");
-        print_r($encrypted);exit;
+        $encrypted = 'd6fBB0zRop3dB66hz9BuxPV997AKosKzb6yiKiwQ0rWz3dv81l5pgQgJ4IMT/o4SKjf3pEQ4qBTtqOy1ahgLAGvXGp+mip3eGjxSr492RwlxU46S5P6ZDfJlDq1Sc+05IFDo5tnVDHngW3WXXniF3soL2QdRm/7OkPuQKNtzKFp8sbh1rMmL5Nre33l/S+PQLxjkxilMG7UcnavCuBU1P6UY6wz+JbxhIXx+hV97dhoTKNi3Z6AAeWa+rME6lJ5wM1p1Ul8YBEJV7NeOvzYghmnKS376OgjcmymmqoFuxIFQWyPrqk6h9g4AkChoxQu7ymLMPk6B8Fc7XnL5E+Jhkeu1wZEWifVfQD/eEMqJ7sLn7BO7NdhezRKXp++s5wpiDlcLO1V9AcA5iNnMVRTQCfDA2RyUGopaAY9BLO49/GdMMLO8pQScmrNSlWTYmJNlo0qEsSpvPx8FU9wFrx8kFOMtXGsgdVBlsJCVTX/iMmD/eqoKFjQHjwd02PTHaMkf6weacWOhYxIoQbuMD48aOkoKmuRHz1FQblx1fvw1X4FzE0ldSzOaetqB8snat9wVGqu7ZlViyYlgx1mP/OIjdRK+5yQPJj92HUIihHrOKVZfPJdZ+sZH+Kxjnduz72LdsIpF+sC77NMw22YU93YO6jhiwhhQ6rlVqLC1PgUsGu72ZqA/i68ai6wblfUMwYAgpXU0t3hgEQqvbr5dupP93UHmeMyqmAEgU8sdn5ZHqmCCTzrKBNz6NRhpK7RYg81+IUFUhFDPsO0k9TazMXTa9vODBBncZGakHSESeOclLJUUcxJ0oR9wvlNpGUiZyBBaKcaos0ucMF6Ym6Ns6kRB5/Q3s28zz1TZE4bmdVQ/dmSHwPuJ87RvxpE8EFG8nUy1QWb21glntaJJakV9cGQVPQtJQT0ijn5LysPMgUtgyAKA4C4wIFb0VubSVrizAi/u';
+        //print_r($encrypted);exit;
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -611,7 +611,7 @@ class ssgapi_course extends CI_Controller {
         
         
         $data=json_encode($data);
-        print_r($data);exit;
+        //print_r($data);exit;
         
 
         
