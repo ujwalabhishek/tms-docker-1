@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/multiselectdropdown.css" />
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/multiselectdropdown.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/multidropdown.js"></script><script>
@@ -691,9 +690,3 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
         </div>
     </div>
     <!---------- /*  added by shubhranshu for client requirement on 21/03/2019 */-->
-<script>
-    $(document).ready(function(){
-       return enrollment_type_change(); 
-    });
-    
-</script>
