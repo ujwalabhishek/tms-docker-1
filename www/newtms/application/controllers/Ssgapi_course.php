@@ -473,7 +473,7 @@ class ssgapi_course extends CI_Controller {
         $discount_amount = $this->input->get('discount_amount');
         $collection_status = $this->input->get('collection_status');
         $enrolment_date = $this->input->get('enrolment_date');
-        
+        echo $trainee_id;exit;
         $traine = $this->classTraineeModel->get_full_trainee_details($trainee_id);
         print_r($traine);exit;
         $data['sideMenuData'] = fetch_non_main_page_content();
