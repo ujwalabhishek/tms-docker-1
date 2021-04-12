@@ -4,6 +4,7 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.ui.timepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/jquery.ui.timepicker.css" />
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
 <script>
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
@@ -11,14 +12,14 @@
     
 $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/addnewenroll.js"></script>
+
 <div class="col-md-10 right-minheight">
     <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
     <h2 class="panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> TPG Trainee Enrollment</h2>
     <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Enrollment Details</h2>
     <div class="table-responsive">
         <?php
-        $atr = 'id="search_form2" name="search_form2" method="post" onsubmit="encrypt();" onkeypress="return event.keyCode != 13"';
+        $atr = 'id="tpg_form" name="tpg_form" method="post" onkeypress="return event.keyCode != 13"';
         echo form_open("ssgapi_course/proceed_enrol_final_to_tpg", $atr);
          $tenant_id = $this->session->userdata('userDetails')->tenant_id;//added by shubhranshu
         ?>  
@@ -26,7 +27,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
             <tbody>
                 <tr>
                     <td colspan="4">
-                        <input type="hidden" id='tpg_data' name="tpg_data" value="<?php echo $tpg_data;?>">
+                        <textarea type="hidden" id='tpg_data' name="tpg_data" value="<?php echo $tpg_data;?>"></textarea>
                         <input type="hidden" name="privilage" value="<?php echo $privilage;?>"><!--added  by shubhranshu-->
                         <input type="hidden" id='restriction_flag' name="restriction_flag" value="">
                         <?php
@@ -324,7 +325,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                 <tr class="new_span">
                     <td colspan="4" class="no-bg">
                         <div class="push_right">
-                            <button type="submit" id='enrol_now_tpg' class="search_button btn btn-xs btn-primary no-mar">
+                            <button type="button" id='enrol_now_tpg' class="search_button btn btn-xs btn-primary no-mar">
                                 <span class="glyphicon glyphicon-retweet"></span>
                                 Enroll Now
                             </button>
@@ -753,6 +754,12 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
     <!---------- /*  added by shubhranshu for client requirement on 21/03/2019 */-->
 <script>
     
+
+    $(document).ready(function(){
+     
+       
+       
+       
     function encrypt() {
             var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
             var cipher = CryptoJS.AES.encrypt(
@@ -767,27 +774,10 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
             $('#tpg_data').val(encrypted);
             return false;
       }
-    $(document).ready(function(){
-       return enrollment_type_change(); 
-       
-       
-       
-
-      function decrypt() {
-            var key = $("#key").val();
-            var cipher = CryptoJS.AES.decrypt(
-                    $("#encryptedString").val(),
-                    CryptoJS.enc.Base64.parse(key), {
-                      iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
-                      mode: CryptoJS.mode.CBC,
-                      keySize: 256 / 32,
-                      padding: CryptoJS.pad.Pkcs7
-                    });
-            var decrypted = cipher.toString(CryptoJS.enc.Utf8);
-            $("#decryptedString").val(decrypted);
-      }
       
-     
+     $('#enrol_now_tpg').click(function(){
+         encrypt();
+     })
       
       
     });
