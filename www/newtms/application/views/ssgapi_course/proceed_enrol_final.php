@@ -324,7 +324,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                 <tr class="new_span">
                     <td colspan="4" class="no-bg">
                         <div class="push_right">
-                            <button type="button" class="search_button btn btn-xs btn-primary no-mar">
+                            <button type="submit" id='enrol_now_tpg' class="search_button btn btn-xs btn-primary no-mar">
                                 <span class="glyphicon glyphicon-retweet"></span>
                                 Enroll Now
                             </button>
@@ -786,7 +786,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
             $("#decryptedString").val(decrypted);
       }
       
-      $(".search_button").click(function(){
+      $("#search_form2").submit(function(){
         encrypt();alert();
         //$("search_form2").submit();
       });
