@@ -19,7 +19,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
     <div class="table-responsive">
         <?php
         $atr = 'id="search_form" name="search_form" method="post" onkeypress="return event.keyCode != 13;"';
-        echo form_open("class_trainee/enrollment_view_page", $atr);
+        echo form_open("ssgapi_course/proceed_enrol_final", $atr);
          $tenant_id = $this->session->userdata('userDetails')->tenant_id;//added by shubhranshu
         ?>  
         <table class="table table-striped">
@@ -263,7 +263,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         //$js = 'id="class" ';
                         //echo form_dropdown('class', $options, $this->input->post('class'), $js);
                         ?>
-                        <select name="class" id="carss">
+                        <select name="courserunid" id="carss">
                             <option value="52204">52204</option>
                            
                         </select>
