@@ -274,18 +274,8 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     <td class="td_heading" width="15%">Enrollment Date:<span class="required">*</span></td>
                     <td colspan="3">
                        
-                      <?php
-                            $start_date = array(
-                                'name' => 'start_date',
-                                'id' => 'start_date',
-                                'readonly' => 'readonly',
-                                'style' => 'width:45%',
-                                'placeholder' => 'dd/mm/yyyy',
-                                'value' => $this->input->post('start_date'),
-                            );
-                            echo form_input($start_date);
-                            ?>
-                        <span id="discount_amount_err"></span>
+                      <input type="date" name="enrolment_date" id="enrolment_date" style="width: 700px;"/>
+                        <span id="enrolment_date_err"></span>
                     </td>
                 </tr>
                 <tr class="company_tr" style="display:none;">
