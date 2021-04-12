@@ -326,7 +326,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <div class="push_right">
                             <button type="submit" class="search_button btn btn-xs btn-primary no-mar">
                                 <span class="glyphicon glyphicon-retweet"></span>
-                                Enroll Now
+                                Proceed Next
                             </button>
                         </div>
                     </td>
