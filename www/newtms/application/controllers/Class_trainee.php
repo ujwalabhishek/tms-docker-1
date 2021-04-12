@@ -4232,7 +4232,7 @@ class Class_Trainee extends CI_Controller {
         }
         $data['page_title'] = 'Class Trainee';
         $data['main_content'] = 'classtrainee/enrollpayment';
-        $data['sideMenuData'] = fetch_non_main_page_content();
+        //$data['sideMenuData'] = fetch_non_main_page_content();
         $this->load->view('layout', $data);
 //        }
     }
