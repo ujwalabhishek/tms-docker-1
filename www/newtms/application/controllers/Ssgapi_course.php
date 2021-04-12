@@ -41,6 +41,8 @@ class ssgapi_course extends CI_Controller {
         
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.pem";
+        $encrypted = $this->encrypting($data, "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=");
+            
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -55,7 +57,7 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_SSLCERT => $pemfile,
         CURLOPT_SSLCERTTYPE => 'PEM', 
         CURLOPT_SSLKEY => $keyfile, 
-        CURLOPT_POSTFIELDS => base64_encode($data), 
+        CURLOPT_POSTFIELDS => $encrypted, 
         CURLOPT_HTTPHEADER => array(
        "Authorization:  ",
        "Cache-Control: no-cache",
@@ -71,6 +73,19 @@ class ssgapi_course extends CI_Controller {
              print_r(json_decode($response));exit;
          }
         curl_close($curl);
+    }
+    
+
+    function encrypting($string, $key) 
+    {
+       $result = '';
+       for($i=0; $i<strlen($string); $i++) {
+         $char = substr($string, $i, 1);
+         $keychar = substr($key, ($i % strlen($key))-1, 1);
+         $char = chr(ord($char)+ord($keychar));
+         $result.=$char;
+       }
+       return base64_encode($result);
     }
 
 
