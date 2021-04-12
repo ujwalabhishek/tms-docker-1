@@ -692,13 +692,117 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
          encrypt();
          
          if(validation()){
+             $('#tpg_form').submit();
          }
-         $('#tpg_form').submit();
+         
      });
      
-    function validation(){
-        
-    }
+        function validation(){
+           $retval = true;
+            $nric = $('#nric').val();
+            if ($nric.length == 0) {
+                disp_err('#$nric');
+                $retval = false;
+            } else {
+                remove_err('#$nric');
+            } 
+            $fullname = $('#fullname').val();
+            if ($fullname.length == 0) {
+                disp_err('#fullname');
+                $retval = false;
+            } else {
+                remove_err('#fullname');
+            }
+            $dob = $('#dob').val();
+            if ($dob.length == 0) {
+                disp_err('#dob');
+                $retval = false;
+            } else {
+                remove_err('#dob');
+            }
+
+            $temail = $('#temail').val();
+            if ($temail.length == 0) {
+                disp_err('#temail');
+                $retval = false;
+            } else {
+                remove_err('#temail');
+            }
+
+            $tpuen = $('#tpuen').val();
+            if ($tpuen.length == 0) {
+                disp_err('#tpuen');
+                $retval = false;
+            } else {
+                remove_err('#tpuen');
+            }
+
+             $tpcode = $('#tpcode').val();
+            if ($tpcode.length == 0) {
+                disp_err('#tpcode');
+                $retval = false;
+            } else {
+                remove_err('#tpcode');
+            }
+
+             $crefno = $('#crefno').val();
+            if ($crefno.length == 0) {
+                disp_err('#crefno');
+                $retval = false;
+            } else {
+                remove_err('#crefno');
+            }
+
+            $crunid = $('#crunid').val();
+            if ($crunid.length == 0) {
+                disp_err('#crunid');
+                $retval = false;
+            } else {
+                remove_err('#crunid');
+            }
+
+            $discount_amount = $('#discount_amount').val();
+            if ($discount_amount.length == 0) {
+                disp_err('#discount_amount');
+                $retval = false;
+            } else {
+                remove_err('#discount_amount');
+            }
+
+             $collection_status = $('#collection_status').val();
+            if ($collection_status.length == 0) {
+                disp_err('#collection_status');
+                $retval = false;
+            } else {
+                remove_err('#collection_status');
+            }
+            $enrolment_date = $('#enrolment_date').val();
+            if ($enrolment_date.length == 0) {
+                disp_err('#enrolment_date');
+                $retval = false;
+            } else {
+                remove_err('#enrolment_date');
+            }
+
+            $tenant_email_id = $('#tenant_email_id').val();
+            if ($tenant_email_id.length == 0) {
+                disp_err('#tenant_email_id');
+                $retval = false;
+            } else {
+                remove_err('#tenant_email_id');
+            }
+
+            $tenant_contact_num = $('#tenant_contact_num').val();
+            if ($tenant_contact_num.length == 0) {
+                disp_err('#tenant_contact_num');
+                $retval = false;
+            } else {
+                remove_err('#tenant_contact_num');
+            }
+
+            return $retval;
+
+        }
       
     });
     
