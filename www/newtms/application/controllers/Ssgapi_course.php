@@ -37,11 +37,10 @@ class ssgapi_course extends CI_Controller {
         $this->load->view('layout', $data);
     }
     
-    public function curl_request($mode,$url,$data,$api_version){
+    public function curl_request($mode,$url,$encrypted_data,$api_version){
         
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.pem";
-        $encrypted = 'ggrR1uwMpea4GWQbhu6+iZ/KZvwhlblrRspkqEg9dVszEjqIiDKnWe4u6PfsD/ntzFfbazfu1I6YmomjmsaCCXPEdJ6sPmrVDyxgVvnScrn6XhZXRQMRpXCSwC5PUh0SXEyr/jw0HtsOFT0JseoJ7nxj8qM/rKv4e9OhNmrIysykBlfEAZ3MsCfnZL9O7kpsVvi2yANJfNoVYBSAs6hUdHc5jlvn2tmLf7kKMNiaP/x7rjB4+XGnWbXfTxQXZLO7wf9fZctrqWIJwqU32PkQEgKgkSWwEVDqh0rzS4zQTd6oYJTyd+psdoU8LHNpCP0Qs21iSYYLJAQNDzLOeXP6ijOCGDe93cdzgA0DIWQoCo4C7rtC0Se12YPQLpwb6W6EG1OpFkPlXqn4+cer88Fn4n0m87xdnmUfTizFFokvLdSbXNim5ipe5wW0lvwIKPreUwsi6okX6Cg+wXR1U4CjDfwgkMujkIE8P9sXspqI6p3t8LutLbVIm/U85kfmPMLTVS6vEiwaAmGlKR6Q7/v4Hly5j8EZufXbDvIwNEMNdNO+imkHOeZw6wfM5lCrM2SeRCCE22oIwhMMmYt8eXQf8yYspAMX7OqI9zXGXchfh5q5Vtpshj0HPxMowgjO5UXBCLmixbaEChA1Er+xjdXuv+UQthYGChntrM04wtEM3KiMNT0Pq98VE9gUimdFu8VspgKbgpBua0jFIEi8g7rDkHLqKaTbU2aiCyDnR4VXOHIpiQ1kl3mKdxvbNftWA5tdCqoplu0bdGoe2MD0FIxipO+J28JA8EYphMn+o2nClp3Q/O9iQCcwd+rkF/6aQyNQ0beMs9KlWzzVfWDRsgRrRQ==';
         //print_r($data);exit;
         $curl = curl_init();
 
@@ -57,7 +56,7 @@ class ssgapi_course extends CI_Controller {
         CURLOPT_SSLCERT => $pemfile,
         CURLOPT_SSLCERTTYPE => 'PEM', 
         CURLOPT_SSLKEY => $keyfile, 
-        CURLOPT_POSTFIELDS => $encrypted, 
+        CURLOPT_POSTFIELDS => $encrypted_data, 
         CURLOPT_HTTPHEADER => array(
        "Authorization:  ",
        "Cache-Control: no-cache",
@@ -581,29 +580,22 @@ class ssgapi_course extends CI_Controller {
             )
           );
        
-       
-       
+            
         
         $object=json_encode($object);
         //print_r($data);exit;
         
-
-        
-        $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
-        //$requestXml =  file_get_contents("net.xml");
-       
-        $api_version = 'v1';
-         
-        //$response = $this->curl_request('POST',$url,$data,$api_version);
-        
-        
-        
-        
-        
-         $data['tpg_data'] = $object;
+        $data['tpg_data'] = $object;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'TPG NEW TRAINEE ENROL';
         $data['main_content'] = 'ssgapi_course/proceed_enrol_final';
         $this->load->view('layout', $data);
+    }
+    
+    public function proceed_enrol_toTpg(){
+        $encrypted_data = $this->input->post('tpg_data');
+        $api_version = 'v1';
+        $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
+        $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
     }
 }

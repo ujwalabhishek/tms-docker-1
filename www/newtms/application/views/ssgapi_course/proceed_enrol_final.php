@@ -20,7 +20,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
     <div class="table-responsive">
         <?php
         $atr = 'id="tpg_form" name="tpg_form" method="post" onkeypress="return event.keyCode != 13"';
-        echo form_open("ssgapi_course/proceed_enrol_final_to_tpg", $atr);
+        echo form_open("ssgapi_course/proceed_enrol_toTpg", $atr);
          $tenant_id = $this->session->userdata('userDetails')->tenant_id;//added by shubhranshu
         ?>  
         <table class="table table-striped">
