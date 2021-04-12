@@ -50,7 +50,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                 
                 <tr class="change_span" style="">
                     <td>                    
-                        <b>NRIC/FIN No.:</b> 
+                        <b>NRIC/FIN No.:<span class="required">*</span></b> 
                     </td>   
                     <td>
                         <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['tax_code']; ?>'/>
@@ -58,7 +58,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td> 
 
                     <td>
-                        <b>Full Name.:</b> 
+                        <b>Full Name.:<span class="required">*</span></b> 
                      </td>
                     <td> 
                         <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['first_name']; ?>'/>
@@ -67,7 +67,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                 
                 <tr class="change_span" style="">
                     <td>                    
-                        <b>Trainee DOB.:</b> 
+                        <b>Trainee DOB.:<span class="required">*</span></b> 
                     </td>   
                     <td>
                         <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['dob']; ?>'/>
@@ -75,7 +75,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td> 
 
                     <td>
-                        <b>Trainee Cont. No.:</b> 
+                        <b>Trainee Cont. No.:<span class="required">*</span></b> 
                      </td>
                     <td> 
                         <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['contact_number']; ?>'/>
@@ -84,7 +84,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
        
                  <tr class="change_span" style="">
                     <td>                    
-                        <b>Trainee Email.:</b> 
+                        <b>Trainee Email.:<span class="required">*</span></b> 
                     </td>   
                     <td>
                         <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['registered_email_id']; ?>'/>
@@ -92,7 +92,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td> 
 
                     <td>
-                        <b>Trainee Cont. No.:</b> 
+                        <b>Trainee Cont. No.:<span class="required">*</span></b> 
                      </td>
                     <td> 
                         <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['contact_number']; ?>'/>
@@ -130,14 +130,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                        // $js = 'id="course" ';
                         //echo form_dropdown('course', $options, $this->input->post('course'), $js);
                         ?>
-                        <select name="course" id="cars">
-                            <option value="TGS-2020002106">TGS-2020002106</option>
-                            <option value="TGS-2020002108">TGS-2020002108</option>
-                            <option value="TGS-2020002104">TGS-2020002104</option>
-                            <option value="TGS-2020002096">TGS-2020002096</option>
-                            <option value="TGS-2020002095">TGS-2020002095</option>
-                            <option value="TGS-2020002051">TGS-2020002051</option>
-                        </select>
+                         <input type="text" name="course" id="" style="" value='<?php echo $course; ?>'/>
                         <span id="course_err"></span>
                     </td>
                 </tr>
@@ -150,10 +143,8 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         //$js = 'id="class" ';
                         //echo form_dropdown('class', $options, $this->input->post('class'), $js);
                         ?>
-                        <select name="courserunid" id="carss">
-                            <option value="52204">52204</option>
-                           
-                        </select>
+                        <input type="text" name="courserunid" id="" style="" value='<?php echo $courserunid; ?>'/>
+                       
                         <span id="class_err"></span>
                     </td>
                 </tr>
@@ -168,11 +159,8 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Collection Status:<span class="required">*</span></td>
                     <td colspan="3">
-                       
-                      <select name="collection_status" id="collection_status">
-                            <option value="Part Payment">Part Payment</option>
-                           <option value="Full Payment">Full Payment</option>
-                        </select>
+                       <input type="number" name="collection_status" id="collection_status" value='<?php echo $_POST['collection_status']?>'/>
+                     
                         <span id="discount_amount_err"></span>
                     </td>
                 </tr>
