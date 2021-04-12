@@ -171,7 +171,11 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td>
                 </tr>
                 
-                <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Employer Details</h2>
+                <tr>
+                    <td colspan="4">
+                        <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Employer Details</h2>
+                    </td>
+                </tr>
                 
                 
                 
