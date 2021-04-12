@@ -28,7 +28,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                 <tr>
                     <td colspan="4">
                         
-                        <textarea type="hidden" style="visibility:hidden;" id='tpg_data' name="tpg_data" ></textarea>
+                        <textarea type="hidden" style="display:none;" id='tpg_data' name="tpg_data" ></textarea>
                         <input type="hidden" name="privilage" value="<?php echo $privilage;?>"><!--added  by shubhranshu-->
                         <input type="hidden" id='restriction_flag' name="restriction_flag" value="">
                         <?php
