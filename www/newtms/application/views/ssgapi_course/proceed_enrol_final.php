@@ -774,7 +774,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     });
             var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
             $('#tpg_data').val(encrypted);
-            return false;
+           
       }
       
      $('#enrol_now_tpg').click(function(){

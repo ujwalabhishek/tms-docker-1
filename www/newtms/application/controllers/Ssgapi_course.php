@@ -70,7 +70,7 @@ class ssgapi_course extends CI_Controller {
              print_r(curl_error($curl));exit;
          }else{
              //print_r(json_decode($response));exit;
-             print_r($response);exit;
+             return $response;
          }
         curl_close($curl);
     }
@@ -597,5 +597,21 @@ class ssgapi_course extends CI_Controller {
         $api_version = 'v1';
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
+        echo " <div id='out'></div>
+            <script>
+            decrypt();
+            function decrypt() {
+				var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+				var cipher = CryptoJS.AES.decrypt(
+					".$response.",
+					CryptoJS.enc.Base64.parse(key), {
+					  iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+					  mode: CryptoJS.mode.CBC,
+					  keySize: 256 / 32,
+					  padding: CryptoJS.pad.Pkcs7
+					});
+				var decrypted = cipher.toString(CryptoJS.enc.Utf8);
+				$('#out').html(decrypted);
+			  }</script>";
     }
 }
