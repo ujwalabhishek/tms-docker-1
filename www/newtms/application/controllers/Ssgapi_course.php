@@ -603,7 +603,7 @@ class ssgapi_course extends CI_Controller {
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         //$requestXml =  file_get_contents("net.xml");
        
-        $api_version = 'v1.2';
+        $api_version = 'v1';
         
         $response = $this->curl_request('POST',$url,$data,$api_version);
         
