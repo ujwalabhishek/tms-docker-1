@@ -34,21 +34,10 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                             'checked' => TRUE
                         );
                         echo form_radio($data);
-                        ?>&nbsp;&nbsp;<label style="color:blue;font-weight:bold">New enrollment(s)</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <?php
-                        if($this->session->userdata('userDetails')->role_id == 'ADMN' || $this->session->userdata('userDetails')->role_id == 'CRSEMGR') {  //Modified by dummy 12-03-2015. Reason: Permission only for crsemgr.
-                            $data = array(
-                                'id' => 'enrollment_mode_change',
-                                'class' => 'enrollment_type',
-                                'name' => 'enrollment_mode',
-                                'value' => 'change',
-                                'checked' => FALSE
-                            );
-                            echo form_radio($data);
-                            ?>
-                            &nbsp;&nbsp;
+                        ?>&nbsp;&nbsp;<label style="color:blue;font-weight:bold">Individual enrollment</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      
                            
-                        <?php } ?>
+                    
                     </td>                                       
                 </tr>
 
