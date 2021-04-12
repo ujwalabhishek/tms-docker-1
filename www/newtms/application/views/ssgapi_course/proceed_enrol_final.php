@@ -53,7 +53,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>NRIC/FIN No.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['tax_code']; ?>'/>
+                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['tax_code']; ?>' disabled="disabled"/>
                          <span id="change_taxcode_err"></span>
                     </td> 
 
@@ -61,7 +61,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Full Name.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['first_name']; ?>'/>
+                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['first_name']; ?>' disabled="disabled"/>
                     </td>
                 </tr>
                 
@@ -70,7 +70,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Trainee DOB.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['dob']; ?>'/>
+                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['dob']; ?>' disabled="disabled"/>
                          <span id="change_taxcode_err"></span>
                     </td> 
 
@@ -78,7 +78,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Trainee Cont. No.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['contact_number']; ?>'/>
+                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['contact_number']; ?>' disabled="disabled"/>
                     </td>
                 </tr>
        
@@ -87,7 +87,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Trainee Email.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['registered_email_id']; ?>'/>
+                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['registered_email_id']; ?>' disabled="disabled"/>
                          <span id="change_taxcode_err"></span>
                     </td> 
 
@@ -95,7 +95,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Trainee Cont. No.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['contact_number']; ?>'/>
+                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['contact_number']; ?>' disabled="disabled"/>
                     </td>
                 </tr>
                 
@@ -105,13 +105,13 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                  <tr class="new_span">
                     <td class="td_heading" width="15%">Trainning Partner Code:<span class="required">*</span></td>
                     <td>
-                        <input type="text" name="tpcode" id="" style="" value='<?php echo $_POST['tpcode']; ?>'/>
+                        <input type="text" name="tpcode" id="" style="" value='<?php echo $_POST['tpcode']; ?>' disabled="disabled"/>
                        
                     <span id="tpcode_err"></span>
                     </td>
                     <td class="td_heading" width="15%">Trainning Partner UEN:<span class="required">*</span></td>
                       <td>
-                          <input type="text" name="tpuen" id="" style="" value='<?php echo $_POST['tpuen']; ?>'/>
+                          <input type="text" name="tpuen" id="" style="" value='<?php echo $_POST['tpuen']; ?>' disabled="disabled"/>
                           
                       <span id="tpuen_err"></span>
                       </td> 
@@ -128,7 +128,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                        // $js = 'id="course" ';
                         //echo form_dropdown('course', $options, $this->input->post('course'), $js);
                         ?>
-                         <input type="text" name="course" id="" style="" value='<?php echo $_POST['course']; ?>'/>
+                         <input type="text" name="course" id="" style="" value='<?php echo $_POST['course']; ?>' disabled="disabled"/>
                         <span id="course_err"></span>
                     </td>
                 </tr>
@@ -141,7 +141,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         //$js = 'id="class" ';
                         //echo form_dropdown('class', $options, $this->input->post('class'), $js);
                         ?>
-                        <input type="text" name="courserunid" id="" style="" value='<?php echo $_POST['courserunid']; ?>'/>
+                        <input type="text" name="courserunid" id="" style="" value='<?php echo $_POST['courserunid']; ?>' disabled="disabled"/>
                        
                         <span id="class_err"></span>
                     </td>
@@ -150,14 +150,14 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     <td class="td_heading" width="15%">Discount Amount:<span class="required">*</span></td>
                     <td colspan="3">
                        
-                       <input type="number" name="discount_amount" id="discount_amount" value='<?php echo $_POST['discount_amount']?>'/>
+                       <input type="number" name="discount_amount" id="discount_amount" value='<?php echo $_POST['discount_amount']?>' disabled="disabled"/>
                         <span id="discount_amount_err"></span>
                     </td>
                 </tr>
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Collection Status:<span class="required">*</span></td>
                     <td colspan="3">
-                       <input type="text" name="collection_status" id="collection_status" value='<?php echo $_POST['collection_status'];?>'/>
+                       <input type="text" name="collection_status" id="collection_status" value='<?php echo $_POST['collection_status'];?>' disabled="disabled"/>
                      
                         <span id="discount_amount_err"></span>
                     </td>
@@ -166,7 +166,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     <td class="td_heading" width="15%">Enrollment Date:<span class="required">*</span></td>
                     <td colspan="3">
                        
-                      <input type="date" name="enrolment_date" id="enrolment_date" value='<?php echo $_POST['enrolment_date']?>'/>
+                      <input type="date" name="enrolment_date" id="enrolment_date" value='<?php echo $_POST['enrolment_date']?>' disabled="disabled"/>
                         <span id="enrolment_date_err"></span>
                     </td>
                 </tr>
