@@ -38,7 +38,7 @@ class ssgapi_course extends CI_Controller {
     }
     
     public function curl_request($mode,$url,$encrypted_data,$api_version){
-        
+        echo $encrypted_data;exit;
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.pem";
         //print_r($data);exit;
