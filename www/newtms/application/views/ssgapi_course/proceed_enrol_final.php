@@ -47,12 +47,8 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td>                                       
                 </tr>
 
-                <tr class="change_span" style="display:none">
-                    <td  colspan="2">
-                        <b>Select Individual Enrolled:</b>
-                    </td>
-                </tr>
-                <tr class="change_span" style="display:none">
+                
+                <tr class="change_span" style="">
                     <td  colspan="2" >
                                             
                         <b>NRIC/FIN No.:</b> <input type="text" name="change_taxcode_autocomplete" id="" style="width: 700px;" value='<?php echo $trainee['taxcode'];?>'/>
@@ -62,162 +58,22 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                        <b>Full Name.:</b> <input type="text" name="fullname" id="" style="width: 700px;" value='<?php echo $trainee['first_name'];?>'/>
                     </td>
                 </tr>
-                <tr class="change_span1" style="display:none">
+                <tr class="change_span" style="">
                     <td  colspan="2" >
-                        <select name="change_taxcode1" id='change_taxcode1' style="width:700px;">
-                            <option value="">Please Select</option>
-                        </select>                    
-                        <b>Search by NRIC/FIN No.:</b> <input type="text" name="change_taxcode_autocomplete1" id="change_taxcode_autocomplete1" style="width: 700px;"/>
+                                            
+                        <b>Trainee DOB.:</b> <input type="text" name="change_taxcode_autocomplete" id="" style="width: 700px;" value='<?php echo $trainee['taxcode'];?>'/>
                         <span id="change_taxcode_err"></span>
                     </td> 
-                </tr>
-                
-                <!-- step wise remove enrollment from company invoice st -->
-                
-                <tr class="remove_company_span" style="display:none">
-                    <td  colspan="2">
-                        <b>Select Company :</b>
-                    </td>
-                    <td colspan="2">  
-                      
-                        <?php  
-                        $comp[''] = 'Select';
-                        foreach ($companies as $company):
-                             $comp[$company['company_id']] = $company['company_name'];
-                       
-                        endforeach;
-                        $attr_js = 'id="companies" style="width:50%"';
-                        echo form_dropdown('comp', $comp, $this->input->get('companies'), $attr_js);
-                        
-                    
-                        
-                        ?>
+                    <td colspan="2">
+                       <b>Contact No.:</b> <input type="text" name="fullname" id="" style="width: 700px;" value='<?php echo $trainee['first_name'];?>'/>
                     </td>
                 </tr>
-                <tr class="remove_company_span" style="display:none">
-                    
-                    <td colspan="2" ><b> Invoice No./ Receipt No.:</b></td>
-                    <td  colspan="2">  
-                        <?php
-                            $options = array(
-                                '' => 'Select',
-                            );
-                            foreach ($company_invoices as $row) {
-                                $options[$row['value']] = $row['label'];
-                            }
-                            $js = 'id="company_invoice_id" style="width:250px;"';
-                            echo form_dropdown('company_invoice_id', $options, '', $js);
-                        ?>
-                        <span id="company_invoice_err"></span>
-                    </td> 
-                    
-                </tr>
-                <!-- end -->
+       
                 
                 
-                <tr class="move_company_span" style="display:none">
-                    <td  colspan="2">
-                        <select name="move_company_select" id='move_company_select' style="width:700px;">
-                            <option value="">Please Select</option>
-                        </select>
-                        <b>Search by Company :</b> <input type="text" name="move_company_autocomplete" id="move_company_autocomplete" style="width: 850px;"/>
-                        <span id="move_company_select_err"></span>
-                    </td> 
-                </tr>
-                <tr class="new_span">
-                    <td width="17%" class="td_heading">Enrollment Type:<span class="required">*</span></td>
-                    <td colspan="3">
-                        <?php
-                        $options = array();
-                        $options[''] = 'Select';
-                        $options['individual'] = 'Individual';
-                        $options['company'] = 'Company';
-                        $val = '';
-                        if ($this->data['user']->role_id == 'COMPACT') {
-                            $options = array('' => 'Select', 'company' => 'Company');
-                            $val = 'company';
-                        }
-
-                        $js = ' id="account_type"';
-                        echo form_dropdown('account_type', $options, $val, $js);
-                        ?>   
-                        <span id="main_err"></span>
-                    </td>
-                </tr>
-                <tr class="individual_tr new_span" style="display:none;">
-                    <td class="td_heading">
-                        <?php
-                        $checked = TRUE;
-                        $check = $this->input->post('search_select');
-                        if ($check) {
-                            $checked = ( $check == 1) ? TRUE : FALSE;
-                        }
-                        $data = array(
-                            'id' => 'search_select',
-                            'class' => 'search_select',
-                            'name' => 'search_select',
-                            'value' => 1,
-                            'checked' => $checked
-                        );
-                        echo form_radio($data);
-                        ?>
-                        &nbsp;&nbsp; NRIC/FIN No.:
-                    </td>
-                    <td width="32%">
-                        <?php
-                        $data = array(
-                            'id' => 'taxcode',
-                            'name' => 'taxcode',
-                            'class'=>'upper_case',
-                            'value' => $this->input->post('taxcode'),
-                            'style' => 'width:200px'
-                        );
-                        echo form_input($data);
-                        $data = array(
-                            'id' => 'taxcode_id',
-                            'name' => 'taxcode_id',
-                            'value' => $this->input->post('taxcode_id'),
-                            'type' => 'hidden'
-                        );
-                        echo form_input($data);
-                        ?>
-                        <br>
-                        <span id="taxcode_err"></span>
-                    </td>
-                    <td width="15%" class="td_heading">
-                        <?php
-                        $checked = ($this->input->post('search_select') == 2) ? TRUE : FALSE;
-                        $data = array(
-                            'id' => 'search_select',
-                            'class' => 'search_select',
-                            'name' => 'search_select',
-                            'value' => 2,
-                            'checked' => $checked
-                        );
-                        echo form_radio($data);
-                        ?>
-                        &nbsp;&nbsp; 
-                        Trainee Name:</td>
-                    <td><?php
-                        $data = array(
-                            'id' => 'trainee',
-                            'name' => 'trainee',
-                            'value' => $this->input->post('trainee'),
-                            'style' => 'width:250px',
-                        );
-                        echo form_input($data);
-                        $data = array(
-                            'id' => 'trainee_id',
-                            'name' => 'trainee_id',
-                            'value' => $this->input->post('trainee_id'),
-                            'type' => 'hidden'
-                        );
-                        echo form_input($data);
-                        ?>
-                        <br>
-                        <span id="trainee_err"></span>
-                    </td>
-                </tr>
+               
+                
+              
                  <tr class="new_span">
                     <td class="td_heading" width="15%">Trainning Partner Code:<span class="required">*</span></td>
                     <td><select name="tpcode" id="cars">
