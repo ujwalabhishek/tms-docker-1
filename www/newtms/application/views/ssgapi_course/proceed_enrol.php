@@ -25,23 +25,93 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         
                         <input type="hidden" name="privilage" value="<?php echo $privilage;?>"><!--added  by shubhranshu-->
                         <input type="hidden" id='restriction_flag' name="restriction_flag" value="">
-                       
-                        
-                      
+                        <?php
+                        $data = array(
+                            'id' => 'enrollment_mode_new',
+                            'class' => 'enrollment_type',
+                            'name' => 'enrollment_mode',
+                            'value' => 'new',
+                            'checked' => TRUE
+                        );
+                        echo form_radio($data);
+                        ?>&nbsp;&nbsp;<label style="color:blue;font-weight:bold">New enrollment(s)</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <?php
+                        if($this->session->userdata('userDetails')->role_id == 'ADMN' || $this->session->userdata('userDetails')->role_id == 'CRSEMGR') {  //Modified by dummy 12-03-2015. Reason: Permission only for crsemgr.
+                            $data = array(
+                                'id' => 'enrollment_mode_change',
+                                'class' => 'enrollment_type',
+                                'name' => 'enrollment_mode',
+                                'value' => 'change',
+                                'checked' => FALSE
+                            );
+                            echo form_radio($data);
+                            ?>
+                            &nbsp;&nbsp;
+                            <label style="color:blue;font-weight:bold">Change individual enrollment to company enrollment</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                            $data = array(
+                                'id' => 'remove_company_invoice',
+                                'class' => 'enrollment_type',
+                                'name' => 'enrollment_mode',
+                                'value' => 'remove_invoice',
+                                'checked' => FALSE
+                            );
+                            echo form_radio($data);
+                            ?>
+                            &nbsp;&nbsp;<label style="color:blue;font-weight:bold">Remove enrollments from company invoice</label>
+                        <?php } ?>
                     </td>                                       
                 </tr>
-                <?php
-                if ($this->session->userdata('userDetails')->role_id == 'ADMN' || $this->session->userdata('userDetails')->role_id == 'CRSEMGR') {  //Modified by dummy 12-03-2015. Reason: Permission only for crsemgr.
-                    $data = array(
-                        'id' => 'enrollment_mode_new',
-                        'class' => 'enrollment_type',
-                        'name' => 'enrollment_mode',
-                        'value' => 'new',
-                        'checked' => TRUE
-                    );
-                    echo form_radio($data);
-                    ?>&nbsp;&nbsp;<label style="color:blue;font-weight:bold">Individual enrollment</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   
+                <?php if($this->session->userdata('userDetails')->role_id == 'ADMN' || $this->session->userdata('userDetails')->role_id == 'CRSEMGR') {  //Modified by dummy 12-03-2015. Reason: Permission only for crsemgr. ?>
+                <tr>
+                    <td colspan="4">
+                        <?php
+                        $data = array(
+                            'id' => 'add_company_invoice',
+                            'class' => 'enrollment_type',
+                            'name' => 'enrollment_mode',
+                            'value' => 'add_invoice',
+                            'checked' => FALSE
+                        );
+                        echo form_radio($data);
+                        ?>
+                        &nbsp;&nbsp;<label style="color:blue;font-weight:bold">Add enrollments to company invoice</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <?php
+                        $data = array(
+                                'id' => 'enrollment_mode_remvind',
+                                'class' => 'enrollment_type',
+                                'name' => 'enrollment_mode',
+                                'value' => 'remvind',
+                                'checked' => FALSE
+                            );
+                            echo form_radio($data);
+                            ?>
+                            &nbsp;&nbsp;
+                            <label style="color:blue;font-weight:bold">Remove individual enrollment</label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <?php
+                        
+                        if((TENANT_ID == 'T20') || (TENANT_ID == 'T17')){
+                            
+                        }else{
+                            $data=array(
+                                    'id'=>'move_enrollment',
+                                    'class'=>'enrollment_type',
+                                    'name'=>'enrollment_mode',
+                                    'value'=>'move_invoice',
+                                    'checked'=>FALSE
+                                    );
+                            echo form_radio($data);
+                        
+                        ?>
+                         &nbsp;&nbsp;
+                        <label style="color:blue;font-weight: bold">Move Trainee from one company Invoice to other company invoice</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <?php }?>
+                    </td>
+                </tr>
+                <?php } ?>
                 <tr class="change_span" style="display:none">
                     <td  colspan="2">
                         <b>Select Individual Enrolled:</b>
@@ -690,3 +760,9 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
         </div>
     </div>
     <!---------- /*  added by shubhranshu for client requirement on 21/03/2019 */-->
+<script>
+    $(document).ready(function(){
+       return enrollment_type_change(); 
+    });
+    
+</script>
