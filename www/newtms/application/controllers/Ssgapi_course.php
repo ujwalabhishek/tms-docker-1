@@ -534,7 +534,7 @@ class ssgapi_course extends CI_Controller {
 
         
        
-       $data=array(
+       $object=array(
             "enrolment"=> array(
               "trainingPartner"=> array(
                 "code"=> $tpcode,
@@ -584,7 +584,7 @@ class ssgapi_course extends CI_Controller {
        
        
         
-        $data=json_encode($data);
+        $object=json_encode($object);
         //print_r($data);exit;
         
 
@@ -593,17 +593,17 @@ class ssgapi_course extends CI_Controller {
         //$requestXml =  file_get_contents("net.xml");
        
         $api_version = 'v1';
-        
-        $response = $this->curl_request('POST',$url,$data,$api_version);
-        
-        
-        
-        
-        
          
+        //$response = $this->curl_request('POST',$url,$data,$api_version);
+        
+        
+        
+        
+        
+         $data['tpg_data'] = $object;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'TPG NEW TRAINEE ENROL';
-        $data['main_content'] = 'ssgapi_course/';
+        $data['main_content'] = 'ssgapi_course/proceed_enrol_final';
         $this->load->view('layout', $data);
     }
 }
