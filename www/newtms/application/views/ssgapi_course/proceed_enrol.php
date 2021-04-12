@@ -34,7 +34,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                             'checked' => TRUE
                         );
                         echo form_radio($data);
-                        ?>&nbsp;&nbsp;<label style="color:blue;font-weight:bold">Individual enrollment</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        ?>&nbsp;&nbsp;<label style="color:blue;font-weight:bold">New enrollment(s)</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       
                            
                     
@@ -212,7 +212,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td>
                 </tr>
                 <tr class="new_span">
-                    <td class="td_heading">Select Course:<span class="required">*</span></td>
+                    <td class="td_heading">Select Course ReferenceNo:<span class="required">*</span></td>
                     <td colspan="3">
                         <?php
                         $options = array();
@@ -224,7 +224,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td>
                 </tr>
                 <tr class="new_span">
-                    <td class="td_heading" width="15%">Select Class:<span class="required">*</span></td>
+                    <td class="td_heading" width="15%">Select Course RunID:<span class="required">*</span></td>
                     <td colspan="3">
                         <?php
                         $options = array();
