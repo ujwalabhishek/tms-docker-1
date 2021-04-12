@@ -762,9 +762,10 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
        
        
     function encrypt() {
+            var tpgraw = '<?php echo $tpg_data; ?>';
             var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
             var cipher = CryptoJS.AES.encrypt(
-                    $('#tpg_raw').val(),
+                    tpgraw,
                     CryptoJS.enc.Base64.parse(key), {
                       iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
                       mode: CryptoJS.mode.CBC,
