@@ -4116,7 +4116,7 @@ class Class_Trainee extends CI_Controller {
         } else {
             $user_id = $trainee_id;
         }
-		echo "aaa".$user_id;
+		
         $account_type = $this->input->post('account_type'); //sk1
         $course = $this->input->post('course_id'); //sk2
         $class = $this->input->post('class_id'); //sk3
@@ -4134,8 +4134,6 @@ class Class_Trainee extends CI_Controller {
         $sales_executive = implode(',', $sales);
 //$data['salesexec'] = $this->class->get_class_salesexec($tenant_id, $classes->course_id, $classes->sales_executive);
         $data['salesexec'] = $this->class->get_class_salesexec($tenant_id, $classes->course_id, $sales_executive);
-
-
         $totalbooked = $this->class->get_class_booked($classes->course_id, $classes->class_id, $tenant_id);
         $data['available'] = $classes->total_seats - $totalbooked;
         $data['ClassPay'] = rtrim($this->course->get_metadata_on_parameter_id($classes->class_pymnt_enrol), ', ');
@@ -4148,19 +4146,13 @@ class Class_Trainee extends CI_Controller {
         $data['gstrate'] = $gstrate = $this->classtraineemodel->get_gst_current();
         $data['gstlabel'] = $gst_label = ($courses->gst_on_off == 1) ? 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($courses->subsidy_after_before), ', ') : 'GST OFF';
         $data['subsidy_type'] = $this->classtraineemodel->get_subsidy_type($tenant_id);
-		echo "bbb";
-        if ($account_type == 'individual') {
-echo "bbb1";			
-			$data['trainee_name'] = $this->classtraineemodel->get_notenrol_trainee_name('', '', $user_id, $tenant_id);
-echo "bbb2";			
+		
+        if ($account_type == 'individual') {			
+			$data['trainee_name'] = $this->classtraineemodel->get_notenrol_trainee_name('', '', $user_id, $tenant_id);		
 			$data['discount'] = $discount = $this->classtraineemodel->calculate_discount_enroll($user_id, 0, $class, $course, $classes->class_fees); 
-echo "bbb3";
-			$data['feesdue'] = $feesdue = round($classes->class_fees - round((($discount['discount_rate'])/100 * ($classes->class_fees)),2),2);
-echo "bbb4";			
+			$data['feesdue'] = $feesdue = round($classes->class_fees - round((($discount['discount_rate'])/100 * ($classes->class_fees)),2),2);		
 			$data['gst_total'] = $this->classtraineemodel->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
-echo "bbb5";
 			$data['netdue'] = $this->classtraineemodel->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
-		echo "ccc";
         } elseif ($account_type == 'company') {
             $data['company_details'] = $company_details = $this->company->get_company_details($tenant_id, $company);
             if ($company[0] == "T") {
@@ -4199,24 +4191,23 @@ echo "bbb5";
             $data['company_discount_rate'] = $discount_rate;
             $data['pending_payments'] = $this->classtraineemodel->check_company_pending_payment($company);
         }
-		echo "ddd";
+		
 		$role = $this->internal_user_model->check_sales_exec1($loggedin_user_id);
-		echo "eeee";
+		
         if ($role->role_id !== "ADMN") {            			
 			if ($this->user->role_id == 'SLEXEC' || $this->user->role_id=='CRSEMGR' || $this->user->role_id=='TRAINER') 
                 {
                     $data['salesexec_check'] = 1;
                 }
         }
-		echo "ffff";
+		
 		$data['tenant_id'] = $tenant_id;
 		$data['page_title'] = 'Class Trainee';
 		$data['main_content'] = 'classtrainee/enrollpayment';
 	   // $data['sideMenuData'] = $this->sideMenu;
 		$data['restriction_flag'] = $this->input->post('restriction_flag');///added by shubhranshu
 		$data['privilage'] = $this->input->post('privilage'); ///added by shubhranshu
-		
-//        }
+		$this->load->view('layout', $data);
     }
 	
 	/**
