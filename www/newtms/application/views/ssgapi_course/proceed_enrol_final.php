@@ -19,7 +19,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
     <div class="table-responsive">
         <?php
         $atr = 'id="search_form2" name="search_form2" method="post" onkeypress="return event.keyCode != 13;"';
-        echo form_open("ssgapi_course/proceed_enrol_final", $atr);
+        echo form_open("ssgapi_course/proceed_enrol_final_to_tpg", $atr);
          $tenant_id = $this->session->userdata('userDetails')->tenant_id;//added by shubhranshu
         ?>  
         <table class="table table-striped">
@@ -55,7 +55,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <select name="change_taxcode" id='change_taxcode' style="width:700px;">
                             <option value="">Please Select</option>
                         </select>                    
-                        <b>Search by NRIC/FIN No.:</b> <input type="text" name="change_taxcode_autocomplete" id="change_taxcode_autocomplete" style="width: 700px;" val='<?php echo $_POST['taxcode']?>'/>
+                        <b>Search by NRIC/FIN No.:</b> <input type="text" name="change_taxcode_autocomplete" id="change_taxcode_autocomplete" style="width: 700px;" value='<?php echo $_POST['taxcode']?>'/>
                         <span id="change_taxcode_err"></span>
                     </td> 
                 </tr>
@@ -754,7 +754,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
 <script>
     $(document).ready(function(){
        return enrollment_type_change(); 
-       encrypt();
+       
        
        function encrypt() {
             var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
@@ -783,7 +783,13 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
             var decrypted = cipher.toString(CryptoJS.enc.Utf8);
             $("#decryptedString").val(decrypted);
       }
-       
+      
+      $("search_form2").onsubmit(function(){
+        encrypt();
+        $("search_form2").submit();
+      });
+      
+      
     });
     
 </script>
