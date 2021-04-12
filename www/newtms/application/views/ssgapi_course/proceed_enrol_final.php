@@ -274,7 +274,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     <td class="td_heading" width="15%">Discount Amount:<span class="required">*</span></td>
                     <td colspan="3">
                        
-                       <input type="number" name="discount_amount" id="discount_amount" val='<?php echo $_POST['discount_amount']?>'/>
+                       <input type="number" name="discount_amount" id="discount_amount" value='<?php echo $_POST['discount_amount']?>'/>
                         <span id="discount_amount_err"></span>
                     </td>
                 </tr>
@@ -293,7 +293,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     <td class="td_heading" width="15%">Enrollment Date:<span class="required">*</span></td>
                     <td colspan="3">
                        
-                      <input type="date" name="enrolment_date" id="enrolment_date" val='<?php echo $_POST['enrolment_date']?>'/>
+                      <input type="date" name="enrolment_date" id="enrolment_date" value='<?php echo $_POST['enrolment_date']?>'/>
                         <span id="enrolment_date_err"></span>
                     </td>
                 </tr>
