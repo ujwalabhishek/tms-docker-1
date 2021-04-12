@@ -157,7 +157,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Collection Status:<span class="required">*</span></td>
                     <td colspan="3">
-                       <input type="number" name="collection_status" id="collection_status" value='<?php echo $_POST['collection_status']?>'/>
+                       <input type="text" name="collection_status" id="collection_status" value='<?php echo $_POST['collection_status'];?>'/>
                      
                         <span id="discount_amount_err"></span>
                     </td>
