@@ -4105,9 +4105,10 @@ class Class_Trainee extends CI_Controller {
     /* This Method is used for the enrol page - gets the data from direct register and enroll page skm start */
 
     public function individual_enrollment_view_page() {
+		$data['sideMenuData'] = fetch_non_main_page_content();
         $this->load->model('internal_user_model');
         $tenant_id = $this->tenant_id;
-        $loggedin_user_id = $this->user->user_id;
+        $loggedin_user_id =  $this->user->user_id;
         extract($_POST);
         if ($search_select == 1) {
             $user_id = $taxcode_id;
