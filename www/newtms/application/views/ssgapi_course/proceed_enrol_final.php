@@ -54,12 +54,13 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                 </tr>
                 <tr class="change_span" style="display:none">
                     <td  colspan="2" >
-                        <select name="change_taxcode" id='change_taxcode' style="width:700px;">
-                            <option value="">Please Select</option>
-                        </select>                    
-                        <b>Search by NRIC/FIN No.:</b> <input type="text" name="change_taxcode_autocomplete" id="change_taxcode_autocomplete" style="width: 700px;" value='<?php echo $_POST['taxcode']?>'/>
+                                            
+                        <b>NRIC/FIN No.:</b> <input type="text" name="change_taxcode_autocomplete" id="" style="width: 700px;" value='<?php echo $trainee['taxcode'];?>'/>
                         <span id="change_taxcode_err"></span>
                     </td> 
+                    <td>
+                       <b>Full Name.:</b> <input type="text" name="fullname" id="" style="width: 700px;" value='<?php echo $trainee['first_name'];?>'/>
+                    </td>
                 </tr>
                 <tr class="change_span1" style="display:none">
                     <td  colspan="2" >
@@ -774,7 +775,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     });
             var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
             $('#tpg_data').val(encrypted);
-           
+          
       }
       
      $('#enrol_now_tpg').click(function(){

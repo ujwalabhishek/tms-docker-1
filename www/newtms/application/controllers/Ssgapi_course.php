@@ -584,7 +584,7 @@ class ssgapi_course extends CI_Controller {
         
         $object=json_encode($object);
         //print_r($data);exit;
-        
+        $data['trainee']=$traine;
         $data['tpg_data'] = $object;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'TPG NEW TRAINEE ENROL';
