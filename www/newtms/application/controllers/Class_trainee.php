@@ -4170,11 +4170,16 @@ class Class_Trainee extends CI_Controller {
         $data['gstlabel'] = $gst_label = ($courses->gst_on_off == 1) ? 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($courses->subsidy_after_before), ', ') : 'GST OFF';
         $data['subsidy_type'] = $this->classtraineemodel->get_subsidy_type($tenant_id);
 		echo "bbb";
-        if ($account_type == 'individual') {           
+        if ($account_type == 'individual') {
+echo "bbb1";			
 			$data['trainee_name'] = $this->classtraineemodel->get_notenrol_trainee_name('', '', $user_id, $tenant_id);
+echo "bbb2";			
 			$data['discount'] = $discount = $this->classtraineemodel->calculate_discount_enroll($user_id, 0, $class, $course, $classes->class_fees); 
+echo "bbb3";
 			$data['feesdue'] = $feesdue = round($classes->class_fees - round((($discount['discount_rate'])/100 * ($classes->class_fees)),2),2);
+echo "bbb4";			
 			$data['gst_total'] = $this->classtraineemodel->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
+echo "bbb5";
 			$data['netdue'] = $this->classtraineemodel->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
 		echo "ccc";
         } elseif ($account_type == 'company') {
