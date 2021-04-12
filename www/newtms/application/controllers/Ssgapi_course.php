@@ -42,7 +42,7 @@ class ssgapi_course extends CI_Controller {
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.pem";
         $encrypted = $this->encrypting($data, "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=");
-            
+        print_r($encrypted);exit;
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -611,7 +611,7 @@ class ssgapi_course extends CI_Controller {
         
         
         $data=json_encode($data);
-        //print_r($data);exit;
+        print_r($data);exit;
         
 
         
