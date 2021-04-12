@@ -4105,7 +4105,7 @@ class Class_Trainee extends CI_Controller {
     /* This Method is used for the enrol page - gets the data from direct register and enroll page skm start */
 
     public function individual_enrollment_view_page() {
-		echo "aaa";
+		
 		$data['sideMenuData'] = fetch_non_main_page_content();
         $this->load->model('internal_user_model');
         $tenant_id = $this->tenant_id;
@@ -4116,31 +4116,10 @@ class Class_Trainee extends CI_Controller {
         } else {
             $user_id = $trainee_id;
         }
+		echo "aaa".$user_id;
         $account_type = $this->input->post('account_type'); //sk1
         $course = $this->input->post('course_id'); //sk2
         $class = $this->input->post('class_id'); //sk3
-//        $this->load->library('form_validation');
-//        $this->form_validation->set_rules('course', 'Course', 'required');
-//        if ($this->form_validation->run() == FALSE) {
-//            $data['courses'] = $this->get_active_classcourse_list_by_tenant($tenant_id);
-//            if ($course) {
-//                $result = $this->classtraineemodel->get_trainee_classes($this->tenant_id, $course, $trainee_id, $taxcode_id);
-//                foreach ($result as $k => $row) {
-//                    if ($row->class_pymnt_enrol == 'PDENROL') {
-//                        $totalbooked = $this->class->get_class_booked($row->course_id, $row->class_id, $this->tenant_id);
-//                        if ($totalbooked >= $row->total_seats) {
-//                            unset($result[$k]);
-//                        }
-//                    }
-//                }
-//                $data['classes'] = $result;
-//            }
-//            $data['companies'] = $this->company->get_activeuser_companies_for_tenant($tenant_id);
-//            $data['page_title'] = 'Class Trainee';
-//            $data['main_content'] = 'classtrainee/addnewenroll';
-//            $data['sideMenuData'] = $this->sideMenu;
-//            $this->load->view('layout', $data);
-//        } else {
         $data['courses'] = $courses = $this->course->get_course_detailse($course);
         $data['course_manager'] = rtrim($this->course->get_managers($courses->crse_manager), ', ');
         $data['courseLevel'] = $this->course->get_metadata_on_parameter_id($courses->certi_level);

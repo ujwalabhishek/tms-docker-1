@@ -139,6 +139,7 @@ $trainee_id = $this->session->userdata('new_trainee_user_id');
                    <td style="color:red;text-align: center;">
                        <input type="hidden" class="class_id"  name="class_id" value="<?php echo $data->class_id;?>"  />
                     <input type="hidden" class="course_id" name="course_id"  value="<?php echo $data->course_id;?>" />
+					<input type="hidden" class="privilage" name="privilage"  value="0" />
                    
                      &nbsp;&nbsp;&nbsp;<input type="submit"  value ="Schedule Class" /></td>
                 </tr>
