@@ -92,10 +92,10 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td> 
 
                     <td>
-                        <b>Trainee Cont. No.:<span class="required">*</span></b> 
+                        <b>Trainee Type.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['contact_number']; ?>' disabled="disabled"/>
+                        <input type="text" name="fullname" id="" style="" value='NRIC' disabled="disabled"/>
                     </td>
                 </tr>
                 
