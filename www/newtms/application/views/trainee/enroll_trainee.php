@@ -78,7 +78,7 @@ $trainee_id = $this->session->userdata('new_trainee_user_id');
                                     $atr = 'id="enroll_trainee_form" name="enroll_trainee_form"';
                                     //Commented by abdulla
 									//echo form_open("trainee/enroll_trainee", $atr);
-									echo form_open("class_trainee/enrollment_view_page", $atr);
+									echo form_open("class_trainee/individual_enrollment_view_page", $atr);
                                     $data_course = array(
                                         'id' => 'course_id',
                                         'name' => 'course_id',
