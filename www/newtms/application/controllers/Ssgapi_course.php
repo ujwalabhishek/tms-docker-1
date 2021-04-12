@@ -475,7 +475,91 @@ class ssgapi_course extends CI_Controller {
         $enrolment_date = $this->input->post('enrolment_date');
      
         $traine = $this->classTraineeModel->get_full_trainee_details($trainee_id);
-        print_r($traine);exit;
+        
+        
+        $enrolment = array(
+            "enrolment"=>array(
+                "trainingPartner" =>array(
+                        "code"=> $tpcode,
+                        "uen"=> $tpuen
+                    )
+                )
+            );
+        
+            $course=  array(
+                "course"=> array(
+                    "referenceNumber"=> $course_ref_no,
+                    "run"=> array(
+                        "id"=> $courserunid
+                        )
+                )
+            );
+                
+                
+            $trainee= array(
+                "trainee"=> array(
+                    "idType"=> array(
+                      "type"=> "NRIC"
+                    )
+                )
+            );
+            
+            
+                    
+            $contactNumber= array(
+                        "contactNumber"=> array(
+                            "countryCode"=> "+65",
+                            "areaCode"=> "",
+                            "phoneNumber"=> $traine['contact_number']
+                        )
+                    );
+                    
+                    
+           
+            $employer= array(       
+                        "employer"=> array(
+                        "uen"=> $tpuen,
+                        "contact"=> array(
+                          "fullName"=> $traine['first_name'].' '.$traine['last_name'],
+                          "contactNumber"=> array(
+                            "countryCode"=> "+65",
+                            "areaCode"=> "",
+                            "phoneNumber"=> $traine['contact_number']
+                          ),
+                          "emailAddress"=> $traine['registered_email_id']
+                        )
+                            
+                    )
+                );
+                    
+                    
+            $fees= array(        
+                    "fees"=> array(
+                      "discountAmount"=> $discount_amount,
+                      "collectionStatus"=> $collection_status
+                    ),
+                    "enrolmentDate"=> $enrolment_date
+              );
+        
+        $data = array(
+            "emailAddress"=> $traine['registered_email_id'],
+            "sponsorshipType"=> "EMPLOYER",
+            "id"=> $traine['tax_code'],
+            "dateOfBirth"=> $traine['dob'],
+            "fullName"=> $traine['first_name'].' '.$traine['last_name'],
+           
+        );
+        
+       $data['fees']  =$fees;
+       $data['employer']  =$employer;
+       $data['contactNumber']  =$contactNumber;
+       $data['trainee']  =$trainee;
+       $data['course']  =$course;
+       $data['enrolment']  =$enrolment;
+        
+        
+        
+        print_r($data);exit;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'TPG NEW TRAINEE ENROL';
         $data['main_content'] = 'ssgapi_course/';
