@@ -11,7 +11,7 @@
     
 $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/addnewenroll.js"></script>
+
 <div class="col-md-10 right-minheight">
     <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
     <h2 class="panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> TPG Trainee Enrollment</h2>
