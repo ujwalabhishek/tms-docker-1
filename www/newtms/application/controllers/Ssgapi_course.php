@@ -464,16 +464,16 @@ class ssgapi_course extends CI_Controller {
     }
     
     public function proceed_enrol_final(){
-        $nric = $this->input->get('taxcode');
-        $trainee_id = $this->input->get('taxcode_id');
-        $tpcode = $this->input->get('tpcode');
-        $tpuen = $this->input->get('tpuen');
-        $course_ref_no = $this->input->get('course');
-        $courserunid = $this->input->get('courserunid');
-        $discount_amount = $this->input->get('discount_amount');
-        $collection_status = $this->input->get('collection_status');
-        $enrolment_date = $this->input->get('enrolment_date');
-        echo $trainee_id;exit;
+        $nric = $this->input->post('taxcode');
+        $trainee_id = $this->input->post('taxcode_id');
+        $tpcode = $this->input->post('tpcode');
+        $tpuen = $this->input->post('tpuen');
+        $course_ref_no = $this->input->post('course');
+        $courserunid = $this->input->post('courserunid');
+        $discount_amount = $this->input->post('discount_amount');
+        $collection_status = $this->input->post('collection_status');
+        $enrolment_date = $this->input->post('enrolment_date');
+     
         $traine = $this->classTraineeModel->get_full_trainee_details($trainee_id);
         print_r($traine);exit;
         $data['sideMenuData'] = fetch_non_main_page_content();

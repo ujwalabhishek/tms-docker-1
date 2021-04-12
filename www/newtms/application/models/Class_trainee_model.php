@@ -14541,7 +14541,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
             $this->db->where('usr.user_id', $id);
 
             $results = $this->db->get()->result_array();
-echo $this->db->last_query();exit;
+
             return $results[0];
         }
     }
