@@ -701,7 +701,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
            $retval = true;
             $nric = $('#nric').val();
             if ($nric.length == 0) {
-                disp_err('#$nric');
+                disp_err('#nric');
                 $retval = false;
             } else {
                 remove_err('#$nric');
