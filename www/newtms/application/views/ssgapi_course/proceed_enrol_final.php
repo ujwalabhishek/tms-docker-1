@@ -18,7 +18,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
     <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Enrollment Details</h2>
     <div class="table-responsive">
         <?php
-        $atr = 'id="search_form2" name="search_form2" method="post" onkeypress="return event.keyCode != 13;"';
+        $atr = 'id="search_form2" name="search_form2" method="post" onsubmit="encrypt();" onkeypress="return event.keyCode != 13"';
         echo form_open("ssgapi_course/proceed_enrol_final_to_tpg", $atr);
          $tenant_id = $this->session->userdata('userDetails')->tenant_id;//added by shubhranshu
         ?>  
@@ -765,6 +765,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     });
             var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
             $('#tpg_data').val(encrypted);
+            return false;
       }
     $(document).ready(function(){
        return enrollment_type_change(); 
@@ -786,10 +787,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
             $("#decryptedString").val(decrypted);
       }
       
-      $("#search_form2").submit(function(){
-        encrypt();alert();
-        //$("search_form2").submit();
-      });
+     
       
       
     });
