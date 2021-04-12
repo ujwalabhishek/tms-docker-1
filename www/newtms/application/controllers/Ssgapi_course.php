@@ -474,7 +474,7 @@ class ssgapi_course extends CI_Controller {
         $collection_status = $this->input->get('collection_status');
         $enrolment_date = $this->input->get('enrolment_date');
         
-        $traine = $this->classtraineemodel->get_full_trainee_details($trainee_id);
+        $traine = $this->classTraineeModel->get_full_trainee_details($trainee_id);
         print_r($traine);exit;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'TPG NEW TRAINEE ENROL';
