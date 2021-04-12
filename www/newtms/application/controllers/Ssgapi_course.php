@@ -464,6 +464,18 @@ class ssgapi_course extends CI_Controller {
     }
     
     public function proceed_enrol_final(){
+        $nric = $this->input->get('taxcode');
+        $trainee_id = $this->input->get('taxcode_id');
+        $tpcode = $this->input->get('tpcode');
+        $tpuen = $this->input->get('tpuen');
+        $course_ref_no = $this->input->get('course');
+        $courserunid = $this->input->get('courserunid');
+        $discount_amount = $this->input->get('discount_amount');
+        $collection_status = $this->input->get('collection_status');
+        $enrolment_date = $this->input->get('enrolment_date');
+        
+        $traine = $this->classtraineemodel->get_full_trainee_details($trainee_id);
+        print_r($traine);exit;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'TPG NEW TRAINEE ENROL';
         $data['main_content'] = 'ssgapi_course/';

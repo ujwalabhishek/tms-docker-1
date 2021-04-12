@@ -14523,5 +14523,27 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
         return $output;
     }
+    
+    public function get_full_trainee_details($id) {
+
+        if ($id) {
+
+            $this->db->select('*');
+
+            $this->db->from('tms_users_pers pers');
+
+            $this->db->join('tms_users usr', 'usr.user_id=pers.user_id');
+
+            $this->db->where('usr.account_type', 'TRAINE');
+
+            $this->db->where('usr.tenant_id', $this->session->userdata('userDetails')->tenant_id);
+
+            $this->db->where('usr.user_id', $id);
+
+            $results = $this->db->get()->result_array();
+
+            return $results[0];
+        }
+    }
 
 }
