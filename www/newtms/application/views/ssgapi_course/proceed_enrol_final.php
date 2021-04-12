@@ -170,18 +170,11 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <span id="enrolment_date_err"></span>
                     </td>
                 </tr>
-                <tr class="company_tr" style="display:none;">
-                    <td class="td_heading">Select Company:</td>
-                    <td colspan="3">
-                        <?php
-                        $options = array();
-                        $options[''] = 'Select';
-                        $js = ' id="company" disabled="disabled" style="width:40%"';
-                        echo form_dropdown('company', $options, '', $js);
-                        ?>   
-                        <span id="company_err"></span>
-                    </td>
-                </tr>
+                
+                <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Employer Details</h2>
+                
+                
+                
                 <tr class="company_tr" style="display:none;">
                     <td class="td_heading">Trainees:</td>
                     <td colspan="3">
