@@ -53,15 +53,16 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>NRIC/FIN No.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['tax_code']; ?>' disabled="disabled"/>
-                         <span id="change_taxcode_err"></span>
+                        <input type="text" name="change_taxcode_autocomplete" id="nric" style="" value='<?php echo $trainee['tax_code']; ?>' disabled="disabled"/>
+                         <span id="nric_err"></span>
                     </td> 
 
                     <td>
                         <b>Full Name.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['first_name']; ?>' disabled="disabled"/>
+                        <input type="text" name="fullname" id="fullname" style="" value='<?php echo $trainee['first_name']; ?>' disabled="disabled"/>
+                        <span id="fullname_err"></span>
                     </td>
                 </tr>
                 
@@ -70,15 +71,16 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Trainee DOB.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['dob']; ?>' disabled="disabled"/>
-                         <span id="change_taxcode_err"></span>
+                        <input type="text" name="change_taxcode_autocomplete" id="dob" style="" value='<?php echo $trainee['dob']; ?>' disabled="disabled"/>
+                         <span id="dob_err"></span>
                     </td> 
 
                     <td>
                         <b>Trainee Cont. No.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['contact_number']; ?>' disabled="disabled"/>
+                        <input type="text" name="fullname" id="contactno" style="" value='<?php echo $trainee['contact_number']; ?>' disabled="disabled"/>
+                         <span id="contactno_err"></span>
                     </td>
                 </tr>
        
@@ -87,15 +89,16 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Trainee Email.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['registered_email_id']; ?>' disabled="disabled"/>
-                         <span id="change_taxcode_err"></span>
+                        <input type="text" name="change_taxcode_autocomplete" id="temail" style="" value='<?php echo $trainee['registered_email_id']; ?>' disabled="disabled"/>
+                         <span id="temail_err"></span>
                     </td> 
 
                     <td>
                         <b>Trainee Type.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                        <input type="text" name="fullname" id="" style="" value='NRIC' disabled="disabled"/>
+                        <input type="text" name="fullname" id="ttype" style="" value='NRIC' disabled="disabled"/>
+                        <span id="ttype_err"></span>
                     </td>
                 </tr>
                 
@@ -105,13 +108,13 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                  <tr class="new_span">
                     <td class="td_heading" width="15%">Trainning Partner Code:<span class="required">*</span></td>
                     <td>
-                        <input type="text" name="tpcode" id="" style="" value='<?php echo $_POST['tpcode']; ?>' disabled="disabled"/>
+                        <input type="text" name="tpcode" id="tpcode" style="" value='<?php echo $_POST['tpcode']; ?>' disabled="disabled"/>
                        
                     <span id="tpcode_err"></span>
                     </td>
                     <td class="td_heading" width="15%">Trainning Partner UEN:<span class="required">*</span></td>
                       <td>
-                          <input type="text" name="tpuen" id="" style="" value='<?php echo $_POST['tpuen']; ?>' disabled="disabled"/>
+                          <input type="text" name="tpuen" id="tpuen" style="" value='<?php echo $_POST['tpuen']; ?>' disabled="disabled"/>
                           
                       <span id="tpuen_err"></span>
                       </td> 
@@ -128,8 +131,8 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                        // $js = 'id="course" ';
                         //echo form_dropdown('course', $options, $this->input->post('course'), $js);
                         ?>
-                         <input type="text" name="course" id="" style="" value='<?php echo $_POST['course']; ?>' disabled="disabled"/>
-                        <span id="course_err"></span>
+                         <input type="text" name="course" id="crefno" style="" value='<?php echo $_POST['course']; ?>' disabled="disabled"/>
+                        <span id="crefno_err"></span>
                     </td>
                 </tr>
                 <tr class="new_span">
@@ -141,9 +144,9 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         //$js = 'id="class" ';
                         //echo form_dropdown('class', $options, $this->input->post('class'), $js);
                         ?>
-                        <input type="text" name="courserunid" id="" style="" value='<?php echo $_POST['courserunid']; ?>' disabled="disabled"/>
+                        <input type="text" name="courserunid" id="crunid" style="" value='<?php echo $_POST['courserunid']; ?>' disabled="disabled"/>
                        
-                        <span id="class_err"></span>
+                        <span id="crunid_err"></span>
                     </td>
                 </tr>
                 <tr class="new_span">
@@ -181,15 +184,16 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Employer Name.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="tenant_name" id="" style="" value='<?php echo $trainee['tenant_name']; ?>' disabled="disabled"/>
-                         <span id="change_taxcode_err"></span>
+                        <input type="text" name="tenant_name" id="ename" style="" value='<?php echo $trainee['tenant_name']; ?>' disabled="disabled"/>
+                         <span id="ename_err"></span>
                     </td> 
 
                     <td>
                         <b>Employer Address.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                        <input type="text" name="tenant_address" id="" style="" value='<?php echo $trainee['tenant_address']; ?>' disabled="disabled"/>
+                        <input type="text" name="tenant_address" id="eaddress" style="" value='<?php echo $trainee['tenant_address']; ?>' disabled="disabled"/>
+                        <span id="eaddress_err"></span>
                     </td>
                 </tr>
                 <tr class="change_span" style="">
@@ -197,15 +201,16 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Contact Person.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="contact_name" id="" style="" value='<?php echo $trainee['contact_name']; ?>' disabled="disabled"/>
-                         <span id="change_taxcode_err"></span>
+                        <input type="text" name="contact_name" id="econperson" style="" value='<?php echo $trainee['contact_name']; ?>' disabled="disabled"/>
+                         <span id="econperson_err"></span>
                     </td> 
 
                     <td>
                         <b>Cont. No.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                        <input type="text" name="tenant_contact_num" id="" style="" value='<?php echo $trainee['tenant_contact_num']; ?>' disabled="disabled"/>
+                        <input type="text" name="tenant_contact_num" id="econtno" style="" value='<?php echo $trainee['tenant_contact_num']; ?>' disabled="disabled"/>
+                        <span id="econtno_err"></span>
                     </td>
                 </tr>
                 <tr class="change_span" style="">
@@ -213,31 +218,22 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Employer email.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="tenant_email_id" id="" style="" value='<?php echo $trainee['tenant_email_id']; ?>' disabled="disabled"/>
-                         <span id="change_taxcode_err"></span>
+                        <input type="text" name="tenant_email_id" id="Eemail" style="" value='<?php echo $trainee['tenant_email_id']; ?>' disabled="disabled"/>
+                         <span id="Eemail_err"></span>
                     </td> 
 
                     <td>
                          <b>Employer Country.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                         <input type="text" name="tenant_country" id="" style="" value='<?php echo $trainee['tenant_country']; ?>' disabled="disabled"/>
+                         <input type="text" name="tenant_country" id="Ecountry" style="" value='<?php echo $trainee['tenant_country']; ?>' disabled="disabled"/>
+                         <span id="Ecountry_err"></span>
                     </td>
                 </tr>
                 
                 
-                <tr class="company_tr" style="display:none;">
-                    <td class="td_heading">Trainees:</td>
-                    <td colspan="3">
-                        <span  class="company_td">
-                            <select id="control_n" disabled="disabled"><option value="">Select</option></select>
-                        </span>
-                        <span id="control_6_err"></span>
-                    </td>
-                </tr>
-                 <tr class="add_inv1" style="display: none;">
-                    <td colspan="3"><span><font color="red">[The invoice for this company is already exist, Please enroll by using</font>  <a href="#" class="add_inv" style="display: none;" >Add enrollments to Company invoice</a><font color="red">.]</font></span></td>
-                </tr>
+                
+                
                 <tr class="new_span">
                     <td colspan="4" class="no-bg">
                         <div class="push_right">
@@ -677,26 +673,32 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
        
        
     function encrypt() {
-            var tpgraw = '<?php echo $tpg_data; ?>';
-            var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
-            var cipher = CryptoJS.AES.encrypt(
-                    tpgraw,
-                    CryptoJS.enc.Base64.parse(key), {
-                      iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
-                      mode: CryptoJS.mode.CBC,
-                      keySize: 256 / 32,
-                      padding: CryptoJS.pad.Pkcs7
-                    });
-            var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
-            $('#tpg_data').val(encrypted);
+        var tpgraw = '<?php echo $tpg_data; ?>';
+        var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+        var cipher = CryptoJS.AES.encrypt(
+                tpgraw,
+                CryptoJS.enc.Base64.parse(key), {
+                  iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+                  mode: CryptoJS.mode.CBC,
+                  keySize: 256 / 32,
+                  padding: CryptoJS.pad.Pkcs7
+                });
+        var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
+        $('#tpg_data').val(encrypted);
           
       }
       
      $('#enrol_now_tpg').click(function(){
          encrypt();
+         
+         if(validation()){
+         }
          $('#tpg_form').submit();
-     })
-      
+     });
+     
+    function validation(){
+        
+    }
       
     });
     
