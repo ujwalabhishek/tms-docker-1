@@ -462,4 +462,11 @@ class ssgapi_course extends CI_Controller {
         $data['main_content'] = 'ssgapi_course/proceed_enrol';
         $this->load->view('layout', $data);
     }
+    
+    public function proceed_enrol_final(){
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['page_title'] = 'TPG NEW TRAINEE ENROL';
+        $data['main_content'] = 'ssgapi_course/';
+        $this->load->view('layout', $data);
+    }
 }
