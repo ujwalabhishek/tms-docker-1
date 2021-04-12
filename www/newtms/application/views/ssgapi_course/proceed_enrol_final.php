@@ -754,6 +754,36 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
 <script>
     $(document).ready(function(){
        return enrollment_type_change(); 
+       encrypt();
+       
+       function encrypt() {
+            var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+            var cipher = CryptoJS.AES.encrypt(
+                    $('#tpg_data').val(),
+                    CryptoJS.enc.Base64.parse(key), {
+                      iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+                      mode: CryptoJS.mode.CBC,
+                      keySize: 256 / 32,
+                      padding: CryptoJS.pad.Pkcs7
+                    });
+            var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
+            $('#tpg_data').val(encrypted);
+      }
+
+      function decrypt() {
+            var key = $("#key").val();
+            var cipher = CryptoJS.AES.decrypt(
+                    $("#encryptedString").val(),
+                    CryptoJS.enc.Base64.parse(key), {
+                      iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+                      mode: CryptoJS.mode.CBC,
+                      keySize: 256 / 32,
+                      padding: CryptoJS.pad.Pkcs7
+                    });
+            var decrypted = cipher.toString(CryptoJS.enc.Utf8);
+            $("#decryptedString").val(decrypted);
+      }
+       
     });
     
 </script>
