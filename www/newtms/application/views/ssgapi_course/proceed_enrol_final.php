@@ -786,7 +786,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
       
       $("search_form2").onsubmit(function(){
         encrypt();
-        $("search_form2").submit();
+        //$("search_form2").submit();
       });
       
       
