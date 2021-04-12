@@ -4105,6 +4105,7 @@ class Class_Trainee extends CI_Controller {
     /* This Method is used for the enrol page - gets the data from direct register and enroll page skm start */
 
     public function individual_enrollment_view_page() {
+		echo "aaa";
 		$data['sideMenuData'] = fetch_non_main_page_content();
         $this->load->model('internal_user_model');
         $tenant_id = $this->tenant_id;
@@ -4168,7 +4169,7 @@ class Class_Trainee extends CI_Controller {
         $data['gstrate'] = $gstrate = $this->classtraineemodel->get_gst_current();
         $data['gstlabel'] = $gst_label = ($courses->gst_on_off == 1) ? 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($courses->subsidy_after_before), ', ') : 'GST OFF';
         $data['subsidy_type'] = $this->classtraineemodel->get_subsidy_type($tenant_id);
-		
+		echo "bbb"; exit;
         if ($account_type == 'individual') {           
 			$data['trainee_name'] = $this->classtraineemodel->get_notenrol_trainee_name('', '', $user_id, $tenant_id);
 			$data['discount'] = $discount = $this->classtraineemodel->calculate_discount_enroll($user_id, 0, $class, $course, $classes->class_fees); 
