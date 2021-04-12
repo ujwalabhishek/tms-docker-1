@@ -755,7 +755,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
     
 
     $(document).ready(function(){
-       return enrollment_type_change(); 
+     
        
        
        
