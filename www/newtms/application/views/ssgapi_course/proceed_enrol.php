@@ -18,7 +18,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
     <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Enrollment Details</h2>
     <div class="table-responsive">
         <?php
-        $atr = 'id="search_form" name="search_form" method="post" onkeypress="return event.keyCode != 13;"';
+        $atr = 'id="search_form2" name="search_form2" method="post" onkeypress="return event.keyCode != 13;"';
         echo form_open("ssgapi_course/proceed_enrol_final", $atr);
          $tenant_id = $this->session->userdata('userDetails')->tenant_id;//added by shubhranshu
         ?>  
