@@ -104,17 +104,15 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
               
                  <tr class="new_span">
                     <td class="td_heading" width="15%">Trainning Partner Code:<span class="required">*</span></td>
-                    <td><select name="tpcode" id="cars">
-                            <option value="201000372W-03">201000372W-03</option>
-                            
-                        </select>
+                    <td>
+                        <input type="text" name="tpcode" id="" style="" value='<?php echo $_POST['tpcode']; ?>'/>
+                       
                     <span id="tpcode_err"></span>
                     </td>
                     <td class="td_heading" width="15%">Trainning Partner UEN:<span class="required">*</span></td>
-                      <td><select name="tpuen" id="cars">
-                            <option value="201000372W">201000372W</option>
-                            
-                        </select>
+                      <td>
+                          <input type="text" name="tpuen" id="" style="" value='<?php echo $_POST['tpuen']; ?>'/>
+                          
                       <span id="tpuen_err"></span>
                       </td> 
                        
@@ -130,7 +128,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                        // $js = 'id="course" ';
                         //echo form_dropdown('course', $options, $this->input->post('course'), $js);
                         ?>
-                         <input type="text" name="course" id="" style="" value='<?php echo $course; ?>'/>
+                         <input type="text" name="course" id="" style="" value='<?php echo $_POST['course']; ?>'/>
                         <span id="course_err"></span>
                     </td>
                 </tr>
@@ -143,7 +141,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         //$js = 'id="class" ';
                         //echo form_dropdown('class', $options, $this->input->post('class'), $js);
                         ?>
-                        <input type="text" name="courserunid" id="" style="" value='<?php echo $courserunid; ?>'/>
+                        <input type="text" name="courserunid" id="" style="" value='<?php echo $_POST['$courserunid']; ?>'/>
                        
                         <span id="class_err"></span>
                     </td>
