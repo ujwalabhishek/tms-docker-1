@@ -141,7 +141,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         //$js = 'id="class" ';
                         //echo form_dropdown('class', $options, $this->input->post('class'), $js);
                         ?>
-                        <input type="text" name="courserunid" id="" style="" value='<?php echo $_POST['$courserunid']; ?>'/>
+                        <input type="text" name="courserunid" id="" style="" value='<?php echo $_POST['courserunid']; ?>'/>
                        
                         <span id="class_err"></span>
                     </td>
