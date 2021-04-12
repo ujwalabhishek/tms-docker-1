@@ -247,6 +247,43 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <span id="class_err"></span>
                     </td>
                 </tr>
+                <tr class="new_span">
+                    <td class="td_heading" width="15%">Discount Amount:<span class="required">*</span></td>
+                    <td colspan="3">
+                       
+                       <input type="text" name="discount_amount" id="discount_amount" style="width: 700px;"/>
+                        <span id="discount_amount_err"></span>
+                    </td>
+                </tr>
+                <tr class="new_span">
+                    <td class="td_heading" width="15%">Discount Amount:<span class="required">*</span></td>
+                    <td colspan="3">
+                       
+                      <select name="collection_status" id="collection_status">
+                            <option value="Part Payment">Part Payment</option>
+                           <option value="Full Payment">Full Payment</option>
+                        </select>
+                        <span id="discount_amount_err"></span>
+                    </td>
+                </tr>
+                 <tr class="new_span">
+                    <td class="td_heading" width="15%">Enrolment Date:<span class="required">*</span></td>
+                    <td colspan="3">
+                       
+                      <?php
+                            $start_date = array(
+                                'name' => 'start_date',
+                                'id' => 'start_date',
+                                'readonly' => 'readonly',
+                                'style' => 'width:45%',
+                                'placeholder' => 'dd/mm/yyyy',
+                                'value' => $this->input->post('start_date'),
+                            );
+                            echo form_input($start_date);
+                            ?>
+                        <span id="discount_amount_err"></span>
+                    </td>
+                </tr>
                 <tr class="company_tr" style="display:none;">
                     <td class="td_heading">Select Company:</td>
                     <td colspan="3">
