@@ -177,6 +177,37 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td>
                 </tr>
                 
+                <tr class="change_span" style="">
+                    <td>                    
+                        <b>Contact Person.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['dob']; ?>' disabled="disabled"/>
+                         <span id="change_taxcode_err"></span>
+                    </td> 
+
+                    <td>
+                        <b>Cont. No.:<span class="required">*</span></b> 
+                     </td>
+                    <td> 
+                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['contact_number']; ?>' disabled="disabled"/>
+                    </td>
+                </tr>
+                <tr class="change_span" style="">
+                    <td>                    
+                        <b>Employer email.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['dob']; ?>' disabled="disabled"/>
+                         <span id="change_taxcode_err"></span>
+                    </td> 
+
+                    <td>
+                        
+                     </td>
+                    <td> 
+                        </td>
+                </tr>
                 
                 
                 <tr class="company_tr" style="display:none;">
