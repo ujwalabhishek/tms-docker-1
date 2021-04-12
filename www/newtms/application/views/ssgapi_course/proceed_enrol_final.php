@@ -201,16 +201,16 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Contact Person.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="contact_name" id="econperson" style="" value='<?php echo $trainee['contact_name']; ?>' disabled="disabled"/>
-                         <span id="econperson_err"></span>
+                        <input type="text" name="contact_name" id="contact_name" style="" value='<?php echo $trainee['contact_name']; ?>' disabled="disabled"/>
+                         <span id="contact_name_err"></span>
                     </td> 
 
                     <td>
                         <b>Cont. No.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                        <input type="text" name="tenant_contact_num" id="econtno" style="" value='<?php echo $trainee['tenant_contact_num']; ?>' disabled="disabled"/>
-                        <span id="econtno_err"></span>
+                        <input type="text" name="tenant_contact_num" id="tenant_contact_num" style="" value='<?php echo $trainee['tenant_contact_num']; ?>' disabled="disabled"/>
+                        <span id="tenant_contact_num_err"></span>
                     </td>
                 </tr>
                 <tr class="change_span" style="">
@@ -218,8 +218,8 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Employer email.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="tenant_email_id" id="Eemail" style="" value='<?php echo $trainee['tenant_email_id']; ?>' disabled="disabled"/>
-                         <span id="Eemail_err"></span>
+                        <input type="text" name="tenant_email_id" id="tenant_email_id" style="" value='<?php echo $trainee['tenant_email_id']; ?>' disabled="disabled"/>
+                         <span id="tenant_email_id_err"></span>
                     </td> 
 
                     <td>
@@ -799,6 +799,15 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
             } else {
                 remove_err('#tenant_contact_num');
             }
+            
+            $contact_name = $('#contact_name').val();
+            if ($contact_name.length == 0) {
+                disp_err('#contact_name');
+                $retval = false;
+            } else {
+                remove_err('#contact_name');
+            }
+
 
             return $retval;
 
