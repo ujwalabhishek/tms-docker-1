@@ -10,6 +10,11 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
     $gst_feesdue = '<?php echo $feesdue; ?>';
     $amount_check = '<?php echo $feesdue; ?>';
     $gst_gstrate = '<?php echo $gstrate; ?>';
+	
+	$course_id = '<?php echo $courses->course_id;?>';//s_skm1 
+    $trainee_age = '<?php echo $trainee_age->age?>';//s_skm2
+    $trainee_id = '<?php echo $trainee_id; ?>';//s_skm3
+    $course_duration = '<?php echo $course_duration; ?>';//s_skm4
 
     $company_unit_fees = '<?php echo $company_unit_fees; ?>';
 
@@ -89,16 +94,46 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                         );
                         echo form_input($data, $this->input->post('discount'), 'id="discount"');
                         echo array_to_input($this->input->post('control_6'), 'control_6');
-                        $data = array(
+
+// skm code start
+                        if($direct == 1){ // direct check whether trainee direct comes from register and enroll process OR from enrollemnt process
+                            // $direct == 1 means trainee direct comes from register and enroll process
+                            $data = array(
+                                'name' => 'course',
+                                'type' => 'hidden',
+                                'value' => $course
+                            );
+                            echo form_input($data, $this->input->post('course'), 'id="course"');
+                            $data = array(
+                                'name' => 'class',
+                                'type' => 'hidden',
+                                value => $class
+                            );
+                            echo form_input($data, $this->input->post('class'), 'id="class"');
+                        }
+                        else
+                        {
+                            $data = array(
                             'name' => 'course',
                             'type' => 'hidden'
-                        );
-                        echo form_input($data, $this->input->post('course'), 'id="course"');
-                        $data = array(
-                            'name' => 'class',
-                            'type' => 'hidden'
-                        );
-                        echo form_input($data, $this->input->post('class'), 'id="class"');
+                            );
+                            echo form_input($data, $this->input->post('course'), 'id="course"');
+                            $data = array(
+                                'name' => 'class',
+                                'type' => 'hidden'
+                            );
+                            echo form_input($data, $this->input->post('class'), 'id="class"');
+                        }
+//                        $data = array(
+//                            'name' => 'course',
+//                            'type' => 'hidden'
+//                        );
+//                        echo form_input($data, $this->input->post('course'), 'id="course"');
+//                        $data = array(
+//                            'name' => 'class',
+//                            'type' => 'hidden'
+//                        );
+//                        echo form_input($data, $this->input->post('class'), 'id="class"');
                         $data = array(
                             'name' => 'search_select',
                             'type' => 'hidden'
