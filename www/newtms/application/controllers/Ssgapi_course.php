@@ -37,6 +37,43 @@ class ssgapi_course extends CI_Controller {
         $this->load->view('layout', $data);
     }
     
+    public function curl_request($mode,$url,$data,$api_version){
+        
+        $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/key.pem";
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => $mode,
+        CURLOPT_SSLCERT => $pemfile,
+        CURLOPT_SSLCERTTYPE => 'PEM', 
+        CURLOPT_SSLKEY => $keyfile, 
+        CURLOPT_POSTFIELDS => $data, 
+        CURLOPT_HTTPHEADER => array(
+       "Authorization:  ",
+       "Cache-Control: no-cache",
+       "Content-Type: application/json",
+       "x-api-version: $api_version"
+        ),
+      ));
+        
+        $response = curl_exec($curl);
+         if($response === false){
+             print_r(curl_error($curl));exit;
+         }else{
+             print_r(json_decode($response));exit;
+         }
+        curl_close($curl);
+    }
+
+
     public function list_search_course(){
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Accounting';
@@ -558,8 +595,23 @@ class ssgapi_course extends CI_Controller {
        $data['enrolment']  =$enrolment;
         
         
+        $data=json_encode($data);
+        //print_r($data);exit;
         
-        print_r($data);exit;
+
+        
+        $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
+        //$requestXml =  file_get_contents("net.xml");
+       
+        $api_version = 'v1.2';
+        
+        $response = $this->curl_request('POST',$url,$data,$api_version);
+        
+        
+        
+        
+        
+         
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'TPG NEW TRAINEE ENROL';
         $data['main_content'] = 'ssgapi_course/';
