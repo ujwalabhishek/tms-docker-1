@@ -111,7 +111,7 @@ $trainee_id = $this->session->userdata('new_trainee_user_id');
 										'value' => 'individual',
 										'id' => 'account_type',
 										'name' => 'account_type',
-										'type' => 'hidden',  
+										'type' => 'hidden',
 										);
                                     echo form_input($data_account_type); //Added by abdulla
 
@@ -126,7 +126,7 @@ $trainee_id = $this->session->userdata('new_trainee_user_id');
                                     ?>
                                     <button type="submit" class="btn btn-xs btn-primary no-mar">
                                         <span class="glyphicon glyphicon-retweet"></span>
-                                        Enroll Now
+                                        Individual Enrollment
                                     </button>
                                        <?php }
                                     echo form_close();  
