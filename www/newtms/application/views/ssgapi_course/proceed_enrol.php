@@ -10,7 +10,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/addnewenroll.js"></script>
 <div class="col-md-10 right-minheight">
     <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
-    <h2 class="panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> Class Trainee Enrollment</h2>
+    <h2 class="panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> TPG Trainee Enrollment</h2>
     <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Enrollment Details</h2>
     <div class="table-responsive">
         <?php
@@ -215,11 +215,19 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     <td class="td_heading">Select Course ReferenceNo:<span class="required">*</span></td>
                     <td colspan="3">
                         <?php
-                        $options = array();
-                        $options[''] = 'Select';
-                        $js = 'id="course" ';
-                        echo form_dropdown('course', $options, $this->input->post('course'), $js);
+                        //$options = array();
+                        //$options[''] = 'Select';
+                       // $js = 'id="course" ';
+                        //echo form_dropdown('course', $options, $this->input->post('course'), $js);
                         ?>
+                        <select name="course" id="cars">
+                            <option value="TGS-2020002106">TGS-2020002106</option>
+                            <option value="TGS-2020002108">TGS-2020002108</option>
+                            <option value="TGS-2020002104">TGS-2020002104</option>
+                            <option value="TGS-2020002096">TGS-2020002096</option>
+                            <option value="TGS-2020002095">TGS-2020002095</option>
+                            <option value="TGS-2020002051">TGS-2020002051</option>
+                        </select>
                         <span id="course_err"></span>
                     </td>
                 </tr>
@@ -227,11 +235,15 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     <td class="td_heading" width="15%">Select Course RunID:<span class="required">*</span></td>
                     <td colspan="3">
                         <?php
-                        $options = array();
-                        $options[''] = 'Select';
-                        $js = 'id="class" ';
-                        echo form_dropdown('class', $options, $this->input->post('class'), $js);
+                        //$options = array();
+                        //$options[''] = 'Select';
+                        //$js = 'id="class" ';
+                        //echo form_dropdown('class', $options, $this->input->post('class'), $js);
                         ?>
+                        <select name="class" id="carss">
+                            <option value="52204">52204</option>
+                           
+                        </select>
                         <span id="class_err"></span>
                     </td>
                 </tr>
