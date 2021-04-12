@@ -752,11 +752,8 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
     </div>
     <!---------- /*  added by shubhranshu for client requirement on 21/03/2019 */-->
 <script>
-    $(document).ready(function(){
-       return enrollment_type_change(); 
-       
-       
-       function encrypt() {
+    
+    function encrypt() {
             var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
             var cipher = CryptoJS.AES.encrypt(
                     $('#tpg_data').val(),
@@ -769,6 +766,11 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
             var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
             $('#tpg_data').val(encrypted);
       }
+    $(document).ready(function(){
+       return enrollment_type_change(); 
+       
+       
+       
 
       function decrypt() {
             var key = $("#key").val();
