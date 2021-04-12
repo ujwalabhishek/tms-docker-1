@@ -27,7 +27,8 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
             <tbody>
                 <tr>
                     <td colspan="4">
-                        <textarea type="hidden" id='tpg_data' name="tpg_data" value="<?php echo $tpg_data;?>"></textarea>
+                        <input type="hidden" id='tpg_raw' name="restriction_flag" value="<?php echo $tpg_data;?>">
+                        <textarea type="hidden" id='tpg_data' name="tpg_data" ></textarea>
                         <input type="hidden" name="privilage" value="<?php echo $privilage;?>"><!--added  by shubhranshu-->
                         <input type="hidden" id='restriction_flag' name="restriction_flag" value="">
                         <?php
@@ -763,7 +764,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
     function encrypt() {
             var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
             var cipher = CryptoJS.AES.encrypt(
-                    $('#tpg_data').val(),
+                    $('#tpg_raw').val(),
                     CryptoJS.enc.Base64.parse(key), {
                       iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
                       mode: CryptoJS.mode.CBC,
