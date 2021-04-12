@@ -215,6 +215,25 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <span id="trainee_err"></span>
                     </td>
                 </tr>
+                 <tr class="new_span">
+                    <td class="td_heading" width="15%">Trainning Partner Code:<span class="required">*</span></td>
+                    <td><select name="tpcode" id="cars">
+                            <option value="201000372W-03">201000372W-03</option>
+                            
+                        </select>
+                    <span id="tpcode_err"></span>
+                    </td>
+                    <td class="td_heading" width="15%">Trainning Partner UEN:<span class="required">*</span></td>
+                      <td><select name="tpuen" id="cars">
+                            <option value="201000372W">201000372W</option>
+                            
+                        </select>
+                      <span id="tpuen_err"></span>
+                      </td> 
+                       
+                        
+                    
+                </tr>
                 <tr class="new_span">
                     <td class="td_heading">Select Course ReferenceNo:<span class="required">*</span></td>
                     <td colspan="3">
