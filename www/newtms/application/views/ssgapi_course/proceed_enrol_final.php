@@ -176,13 +176,28 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Employer Details</h2>
                     </td>
                 </tr>
-                
+                <tr class="change_span" style="">
+                    <td>                    
+                        <b>Employer Name.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <input type="text" name="tenant_name" id="" style="" value='<?php echo $trainee['tenant_name']; ?>' disabled="disabled"/>
+                         <span id="change_taxcode_err"></span>
+                    </td> 
+
+                    <td>
+                        <b>Employer Address.:<span class="required">*</span></b> 
+                     </td>
+                    <td> 
+                        <input type="text" name="tenant_address" id="" style="" value='<?php echo $trainee['tenant_address']; ?>' disabled="disabled"/>
+                    </td>
+                </tr>
                 <tr class="change_span" style="">
                     <td>                    
                         <b>Contact Person.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['dob']; ?>' disabled="disabled"/>
+                        <input type="text" name="contact_name" id="" style="" value='<?php echo $trainee['contact_name']; ?>' disabled="disabled"/>
                          <span id="change_taxcode_err"></span>
                     </td> 
 
@@ -190,7 +205,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Cont. No.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['contact_number']; ?>' disabled="disabled"/>
+                        <input type="text" name="tenant_contact_num" id="" style="" value='<?php echo $trainee['tenant_contact_num']; ?>' disabled="disabled"/>
                     </td>
                 </tr>
                 <tr class="change_span" style="">
@@ -198,15 +213,16 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>Employer email.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['dob']; ?>' disabled="disabled"/>
+                        <input type="text" name="tenant_email_id" id="" style="" value='<?php echo $trainee['tenant_email_id']; ?>' disabled="disabled"/>
                          <span id="change_taxcode_err"></span>
                     </td> 
 
                     <td>
-                        
+                         <b>Employer Country.:<span class="required">*</span></b> 
                      </td>
                     <td> 
-                        </td>
+                         <input type="text" name="tenant_country" id="" style="" value='<?php echo $trainee['tenant_country']; ?>' disabled="disabled"/>
+                    </td>
                 </tr>
                 
                 

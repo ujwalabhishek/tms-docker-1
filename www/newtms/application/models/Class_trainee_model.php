@@ -14534,6 +14534,8 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
             $this->db->join('tms_users usr', 'usr.user_id=pers.user_id');
 
+            $this->db->join('tenant_master tm', 'tm.tenant_id=pers.tenant_id');
+            
             $this->db->where('usr.account_type', 'TRAINE');
 
             $this->db->where('usr.tenant_id', $this->session->userdata('userDetails')->tenant_id);
