@@ -287,6 +287,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     <td colspan="3">
                        
                       <select name="collection_status" id="collection_status">
+                           <option value="">Select</option>
                             <option value="Part Payment">Part Payment</option>
                            <option value="Full Payment">Full Payment</option>
                         </select>
