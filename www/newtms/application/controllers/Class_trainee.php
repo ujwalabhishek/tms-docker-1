@@ -4220,14 +4220,16 @@ echo "bbb5";
             $data['company_discount_rate'] = $discount_rate;
             $data['pending_payments'] = $this->classtraineemodel->check_company_pending_payment($company);
         }
-		echo "ddd";exit;
+		echo "ddd";
 		$role = $this->internal_user_model->check_sales_exec1($loggedin_user_id);
+		echo "eeee";
         if ($role->role_id !== "ADMN") {            			
 			if ($this->user->role_id == 'SLEXEC' || $this->user->role_id=='CRSEMGR' || $this->user->role_id=='TRAINER') 
                 {
                     $data['salesexec_check'] = 1;
                 }
-        }  		
+        }
+		echo "ffff";
 		$data['tenant_id'] = $tenant_id;
 		$data['page_title'] = 'Class Trainee';
 		$data['main_content'] = 'classtrainee/enrollpayment';
