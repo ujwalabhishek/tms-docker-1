@@ -601,7 +601,7 @@ class ssgapi_course extends CI_Controller {
             <script>
             decrypt();
             function decrypt() {
-            var strings = $response;
+            var strings = '$response';
 				var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
 				var cipher = CryptoJS.AES.decrypt(
 					strings,
