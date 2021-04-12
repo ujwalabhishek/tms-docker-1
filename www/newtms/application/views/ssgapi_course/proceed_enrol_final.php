@@ -704,7 +704,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                 disp_err('#nric');
                 $retval = false;
             } else {
-                remove_err('#$nric');
+                remove_err('#nric');
             } 
             $fullname = $('#fullname').val();
             if ($fullname.length == 0) {
