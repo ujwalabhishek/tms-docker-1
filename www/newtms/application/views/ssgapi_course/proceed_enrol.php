@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/multiselectdropdown.css" />
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/multiselectdropdown.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/multidropdown.js"></script><script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/multidropdown.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.ui.timepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/jquery.ui.timepicker.css" />
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
     $role_id = "<?php echo $this->session->userdata('userDetails')->role_id;?>";//added by shubhranshu
@@ -256,7 +258,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td>
                 </tr>
                 <tr class="new_span">
-                    <td class="td_heading" width="15%">Discount Amount:<span class="required">*</span></td>
+                    <td class="td_heading" width="15%">Collection Status:<span class="required">*</span></td>
                     <td colspan="3">
                        
                       <select name="collection_status" id="collection_status">
@@ -267,7 +269,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td>
                 </tr>
                  <tr class="new_span">
-                    <td class="td_heading" width="15%">Enrolment Date:<span class="required">*</span></td>
+                    <td class="td_heading" width="15%">Enrollment Date:<span class="required">*</span></td>
                     <td colspan="3">
                        
                       <?php
