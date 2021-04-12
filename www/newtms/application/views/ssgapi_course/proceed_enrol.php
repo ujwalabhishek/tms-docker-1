@@ -218,6 +218,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                  <tr class="new_span">
                     <td class="td_heading" width="15%">Trainning Partner Code:<span class="required">*</span></td>
                     <td><select name="tpcode" id="cars">
+                             <option value="">Select</option>
                             <option value="201000372W-03">201000372W-03</option>
                             
                         </select>
@@ -225,7 +226,8 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td>
                     <td class="td_heading" width="15%">Trainning Partner UEN:<span class="required">*</span></td>
                       <td><select name="tpuen" id="cars">
-                            <option value="201000372W">201000372W</option>
+                               <option value="">Select</option>
+                                <option value="201000372W">201000372W</option>
                             
                         </select>
                       <span id="tpuen_err"></span>
@@ -244,6 +246,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         //echo form_dropdown('course', $options, $this->input->post('course'), $js);
                         ?>
                         <select name="course" id="cars">
+                            <option value="">Select</option>
                             <option value="TGS-2020002106">TGS-2020002106</option>
                             <option value="TGS-2020002108">TGS-2020002108</option>
                             <option value="TGS-2020002104">TGS-2020002104</option>
@@ -264,6 +267,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         //echo form_dropdown('class', $options, $this->input->post('class'), $js);
                         ?>
                         <select name="courserunid" id="carss">
+                             <option value="">Select</option>
                             <option value="52204">52204</option>
                            
                         </select>
