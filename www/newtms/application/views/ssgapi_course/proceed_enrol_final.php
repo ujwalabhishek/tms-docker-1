@@ -775,7 +775,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
       }
       
      $('#enrol_now_tpg').click(function(){
-         alert();
+         encrypt();
      })
       
       
