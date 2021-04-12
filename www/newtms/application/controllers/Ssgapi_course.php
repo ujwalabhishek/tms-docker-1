@@ -560,15 +560,15 @@ class ssgapi_course extends CI_Controller {
                 "emailAddress"=> $traine['registered_email_id'],
                 "sponsorshipType"=> "EMPLOYER",
                 "employer"=> array(
-                  "uen"=> "201000372W",
+                  "uen"=> $tpuen,
                   "contact"=> array(
-                    "fullName"=> $traine['first_name'].' '.$traine['last_name'],
+                    "fullName"=> $traine['contact_name'],
                     "contactNumber"=> array(
                       "countryCode"=> "+65",
                       "areaCode"=> "",
-                      "phoneNumber"=> $traine['contact_number']
+                      "phoneNumber"=> $traine['tenant_contact_num']
                     ),
-                    "emailAddress"=> $traine['registered_email_id']
+                    "emailAddress"=> $traine['tenant_email_id']
                   )
                 ),
                 "fees"=> array(
