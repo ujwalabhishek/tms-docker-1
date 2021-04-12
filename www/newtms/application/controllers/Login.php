@@ -257,7 +257,9 @@ class Login extends CI_Controller {
      */
     public function _404() {
         $session_data = $this->session->all_userdata();
-        $tenant_id == $session_data['userDetails']->tenant_id;
+        //Commented by abdulla
+		//$tenant_id == $session_data['userDetails']->tenant_id;
+		$tenant_id = $this->session->userdata('userDetails')->tenant_id;    
         if ($tenant_id) {
             $data['tenant_details'] = $this->login->fetch_tenant_details($tenant_id);
             $data['session_data'] = $session_data;
