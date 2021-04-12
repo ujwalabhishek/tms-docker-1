@@ -600,6 +600,7 @@ class ssgapi_course extends CI_Controller {
         echo " <div id='out'></div>
             
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
+            <script src='https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous'></script>
             <script>
             decrypt();
             function decrypt() {
