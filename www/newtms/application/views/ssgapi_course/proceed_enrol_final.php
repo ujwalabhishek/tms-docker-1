@@ -53,7 +53,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                         <b>NRIC/FIN No.:</b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['taxcode']; ?>'/>
+                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['tax_code']; ?>'/>
                          <span id="change_taxcode_err"></span>
                     </td> 
 
@@ -65,7 +65,22 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td>
                 </tr>
                 
-                
+                <tr class="change_span" style="">
+                    <td>                    
+                        <b>Trainee DOB.:</b> 
+                    </td>   
+                    <td>
+                        <input type="text" name="change_taxcode_autocomplete" id="" style="" value='<?php echo $trainee['doob']; ?>'/>
+                         <span id="change_taxcode_err"></span>
+                    </td> 
+
+                    <td>
+                        <b>Trainee Cont. No.:</b> 
+                     </td>
+                    <td> 
+                        <input type="text" name="fullname" id="" style="" value='<?php echo $trainee['contact_number']; ?>'/>
+                    </td>
+                </tr>
        
                 
                 
