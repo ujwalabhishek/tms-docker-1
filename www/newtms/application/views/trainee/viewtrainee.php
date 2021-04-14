@@ -1345,7 +1345,7 @@ echo form_close();
 
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/view_trainee.js?0.0001"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/view_trainee.js?0.00001"></script>
 <?php
 // added by shubhranshu $attn_status due to receipt issue for viewtrainee absent trainee
 function get_links($attn_status,$enrolment_mode, $payment_status, $invoice_id, $user_id, $pymnt_due_id, $class_id, $view_trainee_data, $trainee_Status,$classStatus,$company_id, $assmnt_links) {
