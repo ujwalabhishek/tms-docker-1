@@ -684,6 +684,13 @@ $(document).ready(function() {
                         $('#COMYTCOM_EX').prop('disabled', true);
                         $('#COMYTCOM_2NYC').prop('disabled', true);
                         $('#COMYTCOM_ABS').prop('disabled', false);
+                    }else if(res.att_percentage == null){
+                        $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                        $('#COMYTCOM_C').prop('disabled', true);
+                        $('#COMYTCOM_NYC').prop('disabled', true);     
+                        $('#COMYTCOM_EX').prop('disabled', true);
+                        $('#COMYTCOM_2NYC').prop('disabled', true);
+                        $('#COMYTCOM_ABS').prop('disabled', false);
                     }else{
                         $('#COMYTCOM_ATTRITION').prop('disabled', true);
                     }
