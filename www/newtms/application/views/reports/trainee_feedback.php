@@ -419,11 +419,21 @@ echo form_open("reports/trainee_feedback", $atr);
                                     'id' => 'COMYTCOM_2NYC',
                                     'value' => '2NYC',
                                 );
+                                $COMYTCOM_ATTRITION = array(
+                                    'name' => 'COMYTCOM',
+                                    'id' => 'COMYTCOM_ATTRITION',
+                                    'value' => 'ATR',
+                                );
                                 ?>              
                                 <?php echo form_radio($COMYTCOM_C); ?> Competent <br/>
                                 <?php echo form_radio($COMYTCOM_NYC); ?> Not Yet Competent <br/>                    
                                 <?php echo form_radio($COMYTCOM_EX); ?> Exempted<br/>                    
                                 <?php echo form_radio($COMYTCOM_ABS); ?> Absent<br/>
+                                <?php 
+                                if(TENANT_ID == 'T02'){/////below code was added by shubhranshu for xp for attrition option start-----
+                                    echo form_radio($COMYTCOM_ATTRITION); echo "Attrition <br/>";
+                                }
+                                ?> 
                                 <?php echo form_radio($COMYTCOM_2NYC); ?> Twice Not Competent                    
                             </td>
                         </tr>
