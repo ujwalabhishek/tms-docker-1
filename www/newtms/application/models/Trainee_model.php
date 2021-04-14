@@ -2173,7 +2173,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             if(empty($result['trainee'])){
                 $result['trainee'] = 0;
             }
-            //////below code was added by shubhranshu for xp2 for attrition option start-----
+            //////below code was added by shubhranshu for xp for attrition option start-----
             if(TENANT_ID=='T02'){
                 $qr =$this->db->query("select att.user_id as user_id,SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) / (select count(cs.class_id) 
                     from class_schld cs where cs.course_id='$course' and cs.class_id='$class' and cs.tenant_id='T02' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
@@ -2185,7 +2185,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                 $result['att_percentage'] =$qr->result_array()[0][attendence];
             }
             //////below code was added by shubhranshu for xp2 for attrition option end-----
-            //echo $this->db->last_query();print_r($result);exit;
+            echo $this->db->last_query();print_r($result);exit;
             return $result;
         }
         else 
