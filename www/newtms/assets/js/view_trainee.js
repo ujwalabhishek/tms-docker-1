@@ -198,6 +198,7 @@ $(document).ready(function() {
                     }
                     
                     ///////below code was added by shubhranshu for xp for attrition option start-----
+                if(item.training_score != "NYC" || item.training_score != "C" || item.training_score != "2NYC"){
                     if((res.att_percentage <= 0.50) && (res.att_percentage !==null) && (res.att_percentage >= 0)){
                         $('#COMYTCOM_ATTRITION').prop('disabled', false);
                         $('#COMYTCOM_C').prop('disabled', true);
@@ -222,7 +223,7 @@ $(document).ready(function() {
                     }else{
                         $('#COMYTCOM_ATTRITION').prop('disabled', true);
                     }
-
+                }
                     ////below code was added by shubhranshu for xp for attrition option end-----
                 });
                 $.each(lock_status, function(i,item){
