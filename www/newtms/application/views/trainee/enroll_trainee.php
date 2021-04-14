@@ -124,6 +124,7 @@ $trainee_id = $this->session->userdata('new_trainee_user_id');
                                     <?php 
                                     }else{
                                     ?>
+									<input type="hidden" class="privilage" name="privilage"  value="0" />
                                     <button type="submit" class="btn btn-xs btn-primary no-mar">
                                         <span class="glyphicon glyphicon-retweet"></span>
                                         Individual Enrollment
