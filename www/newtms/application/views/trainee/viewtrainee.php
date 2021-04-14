@@ -1075,7 +1075,11 @@ echo form_open("trainee/trainer_feedback/$item->user_id/$item->course_id/$item->
                 'id' => 'COMYTCOM_2NYC',
                 'value' => '2NYC',
             );
-
+            $COMYTCOM_ATTRITION = array(
+                'name' => 'COMYTCOM',
+                'id' => 'COMYTCOM_ATTRITION',
+                'value' => 'ATR',
+            );
 
             ?>              
                                 <?php echo form_radio($COMYTCOM_C); ?> Competent <br/>
@@ -1084,6 +1088,11 @@ echo form_open("trainee/trainer_feedback/$item->user_id/$item->course_id/$item->
 
                                 <?php echo form_radio($COMYTCOM_EX); ?> Exempted<br/>                    
                                 <?php echo form_radio($COMYTCOM_ABS); ?> Absent<br/>
+                                <?php 
+                                if(TENANT_ID == 'T02'){/////below code was added by shubhranshu for xp for attrition option start-----
+                                    echo form_radio($COMYTCOM_ATTRITION); echo "Attrition <br/>";
+                                }
+                                ?> 
                                 <?php echo form_radio($COMYTCOM_2NYC); ?> Twice Not Competent
 
 
@@ -1336,7 +1345,7 @@ echo form_close();
 
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/view_trainee.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/view_trainee.js?0.001"></script>
 <?php
 // added by shubhranshu $attn_status due to receipt issue for viewtrainee absent trainee
 function get_links($attn_status,$enrolment_mode, $payment_status, $invoice_id, $user_id, $pymnt_due_id, $class_id, $view_trainee_data, $trainee_Status,$classStatus,$company_id, $assmnt_links) {
