@@ -1554,6 +1554,14 @@ class Class_Trainee_Model extends CI_Model {
                 $this->db->where('feedback_question_id','COMYTCOM');
                 $this->db->where('user_id',$trainee_id);
                 $this->db->update('trainer_feedback', $data);
+                
+                $data = array('feedback_answer'  =>'ATR' );
+                $this->db->where('tenant_id',$tenant_id);
+                $this->db->where('course_id',$course_id);
+                $this->db->where('class_id',$class_id);
+                $this->db->where('feedback_question_id','COMYTCOM');
+                $this->db->where('user_id',$trainee_id);
+                $this->db->update('trainer_feedback', $data);
             }
             $this->update_payment_due($payment_due_id, $user_id);
            // $this->remove_payment_due($payment_due_id, $user_id);
