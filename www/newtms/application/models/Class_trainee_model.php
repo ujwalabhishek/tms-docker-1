@@ -1360,7 +1360,7 @@ class Class_Trainee_Model extends CI_Model {
      */
     
    public function remove_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
-    ,$invoice_id, $payment_due_id, $trainee_id,$att_percentage) {echo $att_percentage ;exit;
+    ,$invoice_id, $payment_due_id, $trainee_id,$att_percentage) {
        
         $status = TRUE;
 
@@ -1542,7 +1542,7 @@ class Class_Trainee_Model extends CI_Model {
      */
     
     public function remove_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id,$invoice_id, $payment_due_id, $trainee_id,$att_percentage) {
-       echo $att_percentage ;exit;
+       
         $status = TRUE;
         $curr_invoice_details = $this->get_invoice_details($payment_due_id);
 
