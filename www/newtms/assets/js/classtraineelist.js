@@ -669,19 +669,7 @@ $(document).ready(function() {
                          $('#tbl').show();
                     }
                     
-                    ///////below code was added by shubhranshu for xp2 for attrition option start-----
-                    if((res.att_percentage <= 0.50) && (res.att_percentage !==null) && (res.att_percentage > 0)){
-                        $('#COMYTCOM_ATTRITION').prop('disabled', false);
-                        $('#COMYTCOM_C').prop('disabled', true);
-                        $('#COMYTCOM_NYC').prop('disabled', true);     
-                        $('#COMYTCOM_EX').prop('disabled', true);
-                        $('#COMYTCOM_2NYC').prop('disabled', true);
-                        $('#COMYTCOM_ABS').prop('disabled', false);
-                    }else{
-                        $('#COMYTCOM_ATTRITION').prop('disabled', true);
-                    }
-
-                    ////below code was added by shubhranshu for xp2 for attrition option end-----
+                    
                    
                 });
                 $.each(trainee, function(i, item) {

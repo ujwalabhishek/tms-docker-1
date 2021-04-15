@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.2"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.21"></script>
 <style>
     table td{
         font-size: 11px;
@@ -650,11 +650,11 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                         'id' => 'COMYTCOM_2NYC',
                         'value' => '2NYC',
                     );
-                    $COMYTCOM_ATTRITION = array(
-                        'name' => 'COMYTCOM',
-                        'id' => 'COMYTCOM_ATTRITION',
-                        'value' => 'ATR',
-                    );
+//                    $COMYTCOM_ATTRITION = array(
+//                        'name' => 'COMYTCOM',
+//                        'id' => 'COMYTCOM_ATTRITION',
+//                        'value' => 'ATR',
+//                    );
                     ?>              
                       <?php echo form_radio($COMYTCOM_C); ?> Competent <br/>
                     <?php echo form_radio($COMYTCOM_NYC); ?> Not Yet Competent <br/>
@@ -662,9 +662,9 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                     <?php echo form_radio($COMYTCOM_EX); ?> Exempted <br/>                    
                     <?php echo form_radio($COMYTCOM_ABS); ?> Absent<br/>
                      <?php 
-                     if(TENANT_ID == 'T02'){/////below code was added by shubhranshu for xp2 for attrition option start-----
-                         echo form_radio($COMYTCOM_ATTRITION); echo "Attrition <br/>";
-                     }
+                     //if(TENANT_ID == 'T02'){/////below code was added by shubhranshu for xp2 for attrition option start-----
+                         //echo form_radio($COMYTCOM_ATTRITION); echo "Attrition <br/>";
+                     //}
                      ?> 
                     <?php echo form_radio($COMYTCOM_2NYC); ?> Twice Not Competent
                 </td>
