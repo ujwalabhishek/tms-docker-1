@@ -7,7 +7,7 @@
     $siteurl = '<?php echo site_url(); ?>';  
     $js_role = '<?php echo $role; ?>';    
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.001"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.001000"></script>
 <?php
 $this->load->helper('form');
 $this->load->helper('metavalues_helper');
