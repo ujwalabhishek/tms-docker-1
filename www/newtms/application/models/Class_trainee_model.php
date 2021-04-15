@@ -891,7 +891,7 @@ class Class_Trainee_Model extends CI_Model {
                     $this->db->where('epd.user_id', $trainee_id);
                     $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
                     
-                    
+                    //////below code was added by shubhranshu for xp for attrition option START-----
                     $data = array('feedback_answer'  =>'' );
                     $this->db->where('tenant_id',$tenant_id);
                     $this->db->where('course_id',$course_id);
@@ -899,6 +899,7 @@ class Class_Trainee_Model extends CI_Model {
                     $this->db->where('feedback_question_id','COMYTCOM');
                     $this->db->where('user_id',$trainee_id);
                     $this->db->update('trainer_feedback', $data);
+                    //////below code was added by shubhranshu for xp for attrition option end-----
                 }
 
                 //$this->db->last_query();

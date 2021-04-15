@@ -7,7 +7,7 @@
     $siteurl = '<?php echo site_url(); ?>';  
     $js_role = '<?php echo $role; ?>';    
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.001"></script>
 <?php
 $this->load->helper('form');
 $this->load->helper('metavalues_helper');
@@ -440,8 +440,10 @@ echo form_open("classes/add_new_class", $atr);
                             </tr>
                         </thead>
                         <tbody>
+                          
                         </tbody>
                     </table>
+                    
                     <div class="error error_text">No Schedule available</div>
                 </div>
             </div>
