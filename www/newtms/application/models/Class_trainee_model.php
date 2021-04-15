@@ -701,18 +701,7 @@ class Class_Trainee_Model extends CI_Model {
                     having attendence >= 0.75");
                      $this->db->last_query(); 
                 }
-                 //////below code was added by shubhranshu for xp for attrition option START-----
-                if(TENANT_ID=='T02'){
-                    $qr =$this->db->query("select att.user_id as user_id,SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) / (select count(cs.class_id) 
-                        from class_schld cs where cs.course_id='$course' and cs.class_id='$class' and cs.tenant_id='T02' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
-                        from class_attendance att
-                        join course_class cc on cc.class_id='$class' and cc.course_id='$course' and cc.tenant_id='T02'
-                        where att.class_id='$class' and att.course_id='$course' and att.user_id='$user'
-                        group by att.user_id,att.class_id");
-                        //having attendence <= 0.50");
-                    $att_percentage =$qr->result_array()[0][attendence];
-                }
-                //////below code was added by shubhranshu for xp for attrition option end-----
+                
                 
                 
                 
@@ -724,6 +713,21 @@ class Class_Trainee_Model extends CI_Model {
                 $absentee= array_diff($trainees,$attended_trainee);
                 foreach($absentee as $key=>$trainee_id)
                 {
+                    
+                     //////below code was added by shubhranshu for xp for attrition option START-----
+                    if(TENANT_ID=='T02'){
+                        $qr =$this->db->query("select att.user_id as user_id,SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) / (select count(cs.class_id) 
+                            from class_schld cs where cs.course_id='$course_id' and cs.class_id='$class_id' and cs.tenant_id='T02' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
+                            from class_attendance att
+                            join course_class cc on cc.class_id='$class_id' and cc.course_id='$course_id' and cc.tenant_id='T02'
+                            where att.class_id='$class_id' and att.course_id='$course_id' and att.user_id='$trainee_id'
+                            group by att.user_id,att.class_id");
+                            //having attendence <= 0.50");
+                        $att_percentage =$qr->result_array()[0][attendence];
+                    }
+                    //////below code was added by shubhranshu for xp for attrition option end-----
+                    
+                    
                     $this->db->select('ce.pymnt_due_id,ce.company_id,ei.invoice_id');
                     $this->db->from('class_enrol ce');
                     $this->db->join('enrol_invoice ei','ei.pymnt_due_id=ce.pymnt_due_id');
