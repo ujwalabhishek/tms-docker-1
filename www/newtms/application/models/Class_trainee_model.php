@@ -862,7 +862,7 @@ class Class_Trainee_Model extends CI_Model {
                 }
                 
                 
-                if($att_percentage <= 0.50 && TENANT_ID =='T02'){
+                if($att_percentage >= 0 $att_percentage <= 0.50 && TENANT_ID =='T02'){
                     $this->db->set('ce.training_score', 'ATR');
                     $this->db->where('ce.pymnt_due_id', $payment_due_id);
                     $this->db->where('epd.pymnt_due_id', $payment_due_id);
@@ -870,6 +870,17 @@ class Class_Trainee_Model extends CI_Model {
                     $this->db->where('ce.user_id', $trainee_id);
                     $this->db->where('epd.user_id', $trainee_id);
                     $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
+                    
+                    
+                    $data = array('feedback_answer'  =>'ATR' );
+                    $this->db->where('tenant_id',$tenant_id);
+                    $this->db->where('course_id',$course_id);
+                    $this->db->where('class_id',$class_id);
+                    $this->db->where('feedback_question_id','COMYTCOM');
+                    $this->db->where('user_id',$trainee_id);
+                    $this->db->update('trainer_feedback', $data);
+                
+                    
                 }else{//////below code was added by shubhranshu for xp for attrition option end-----
                 
                     $this->db->set('ce.training_score', 'ABS');
