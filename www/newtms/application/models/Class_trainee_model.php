@@ -1360,7 +1360,7 @@ class Class_Trainee_Model extends CI_Model {
      */
     
    public function remove_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
-    ,$invoice_id, $payment_due_id, $trainee_id,$att_percentage) {
+    ,$invoice_id, $payment_due_id, $trainee_id,$att_percentage) {echo $att_percentage ;exit;
        
         $status = TRUE;
 
