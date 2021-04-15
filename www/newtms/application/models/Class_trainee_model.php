@@ -1584,7 +1584,7 @@ class Class_Trainee_Model extends CI_Model {
                 $this->db->where('user_id',$trainee_id);
                 $this->db->update('class_enrol', $data);
             }else{//modified by shubhranshu due to attrition end
-                echo $att_percentage."tt"exit;$data = array('training_score'  =>'ABS');
+                echo $att_percentage."tt";exit;$data = array('training_score'  =>'ABS');
                 $this->db->where('pymnt_due_id',$payment_due_id);
                 $this->db->where('user_id',$trainee_id);
                 $this->db->update('class_enrol', $data);
