@@ -2184,7 +2184,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                     //having attendence <= 0.50");
                 $result['att_percentage'] =$qr->result_array()[0][attendence];
             }
-            //////below code was added by shubhranshu for xp2 for attrition option end-----
+            //////below code was added by shubhranshu for xp for attrition option end-----
             //echo $this->db->last_query();print_r($result);exit;
             return $result;
         }

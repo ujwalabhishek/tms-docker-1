@@ -701,6 +701,21 @@ class Class_Trainee_Model extends CI_Model {
                     having attendence >= 0.75");
                      $this->db->last_query(); 
                 }
+                 //////below code was added by shubhranshu for xp for attrition option START-----
+                if(TENANT_ID=='T02'){
+                    $qr =$this->db->query("select att.user_id as user_id,SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) / (select count(cs.class_id) 
+                        from class_schld cs where cs.course_id='$course' and cs.class_id='$class' and cs.tenant_id='T02' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
+                        from class_attendance att
+                        join course_class cc on cc.class_id='$class' and cc.course_id='$course' and cc.tenant_id='T02'
+                        where att.class_id='$class' and att.course_id='$course' and att.user_id='$user'
+                        group by att.user_id,att.class_id");
+                        //having attendence <= 0.50");
+                    $att_percentage =$qr->result_array()[0][attendence];
+                }
+                //////below code was added by shubhranshu for xp for attrition option end-----
+                
+                
+                
                 $attended_trainee =array();
                 foreach($query->result_array() as $row)
                 {
@@ -735,7 +750,7 @@ class Class_Trainee_Model extends CI_Model {
                         {
                             //sk1
                           $status= $this->remove_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
-                                  ,$invoice_id, $payment_due_id, $trainee_id);
+                                  ,$invoice_id, $payment_due_id, $trainee_id,$att_percentage);
                         }
                     }
                     else
@@ -752,7 +767,7 @@ class Class_Trainee_Model extends CI_Model {
                             if ($query->num_rows() > 0)
                             {
                              
-                              $status= $this->remove_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id,$invoice_id, $payment_due_id, $trainee_id);
+                              $status= $this->remove_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id,$invoice_id, $payment_due_id, $trainee_id,$att_percentage);
                             }
                     }
                 }
@@ -1341,7 +1356,7 @@ class Class_Trainee_Model extends CI_Model {
      */
     
    public function remove_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
-    ,$invoice_id, $payment_due_id, $trainee_id) {
+    ,$invoice_id, $payment_due_id, $trainee_id,$att_percentage) {
        
         $status = TRUE;
 
@@ -1381,22 +1396,41 @@ class Class_Trainee_Model extends CI_Model {
             $total_net_fees_due += $payments_result->total_amount_due;
 
             $total_subsidy_amount_due += $payments_result->subsidy_amount;
-            $data = array('training_score'  =>'ABS');
-            $this->db->where('pymnt_due_id',$payment_due_id);
-            $this->db->where('user_id',$trainee_id);
-            $this->db->update('class_enrol', $data);
+            //modified by shubhranshu due to attrition starts
+            if($att_percentage <= 0.50){
+                $data = array('training_score'  =>'ATR');
+                $this->db->where('pymnt_due_id',$payment_due_id);
+                $this->db->where('user_id',$trainee_id);
+                $this->db->update('class_enrol', $data);
+            }else{//modified by shubhranshu due to attrition end
+                $data = array('training_score'  =>'ABS');
+                $this->db->where('pymnt_due_id',$payment_due_id);
+                $this->db->where('user_id',$trainee_id);
+                $this->db->update('class_enrol', $data);
+            }
+            
             
             $query=$this->db->select('*')->from('trainer_feedback')->where('tenant_id',$tenant_id)->where('course_id',$course_id)
                         ->where('class_id',$class_id)->where('user_id',$trainee_id)->get();
             if($query->num_rows()>0)
-            {
-                $data = array('feedback_answer'  =>'ABS' );
-                $this->db->where('tenant_id',$tenant_id);
-                $this->db->where('course_id',$course_id);
-                $this->db->where('class_id',$class_id);
-                $this->db->where('feedback_question_id','COMYTCOM');
-                $this->db->where('user_id',$trainee_id);
-                $this->db->update('trainer_feedback', $data);
+            {//modified by shubhranshu due to attrition starts
+                if($att_percentage <= 0.50){
+                    $data = array('feedback_answer'  =>'ATR' );
+                    $this->db->where('tenant_id',$tenant_id);
+                    $this->db->where('course_id',$course_id);
+                    $this->db->where('class_id',$class_id);
+                    $this->db->where('feedback_question_id','COMYTCOM');
+                    $this->db->where('user_id',$trainee_id);
+                    $this->db->update('trainer_feedback', $data);
+                }else{//modified by shubhranshu due to attrition end
+                    $data = array('feedback_answer'  =>'ABS' );
+                    $this->db->where('tenant_id',$tenant_id);
+                    $this->db->where('course_id',$course_id);
+                    $this->db->where('class_id',$class_id);
+                    $this->db->where('feedback_question_id','COMYTCOM');
+                    $this->db->where('user_id',$trainee_id);
+                    $this->db->update('trainer_feedback', $data);
+                }
             }
             
             $this->update_payment_due($payment_due_id, $user_id);
@@ -1503,7 +1537,7 @@ class Class_Trainee_Model extends CI_Model {
      * changed by pritam
      */
     
-    public function remove_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id,$invoice_id, $payment_due_id, $trainee_id) {
+    public function remove_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id,$invoice_id, $payment_due_id, $trainee_id,$att_percentage) {
        
         $status = TRUE;
         $curr_invoice_details = $this->get_invoice_details($payment_due_id);
@@ -1539,29 +1573,40 @@ class Class_Trainee_Model extends CI_Model {
             $total_net_fees_due += $payments_result->total_amount_due;
 
             $total_subsidy_amount_due += $payments_result->subsidy_amount;
-            $data = array('training_score'  =>'ABS');
-            $this->db->where('pymnt_due_id',$payment_due_id);
-            $this->db->where('user_id',$trainee_id);
-            $this->db->update('class_enrol', $data);
+            //modified by shubhranshu due to attrition starts
+            if($att_percentage <= 0.50){
+                $data = array('training_score'  =>'ATR');
+                $this->db->where('pymnt_due_id',$payment_due_id);
+                $this->db->where('user_id',$trainee_id);
+                $this->db->update('class_enrol', $data);
+            }else{//modified by shubhranshu due to attrition end
+                $data = array('training_score'  =>'ABS');
+                $this->db->where('pymnt_due_id',$payment_due_id);
+                $this->db->where('user_id',$trainee_id);
+                $this->db->update('class_enrol', $data);
+            }
+            
             $query=$this->db->select('*')->from('trainer_feedback')->where('tenant_id',$tenant_id)->where('course_id',$course_id)
                         ->where('class_id',$class_id)->where('user_id',$trainee_id)->get();
             if($query->num_rows()>0)
-            {
-                $data = array('feedback_answer'  =>'ABS' );
-                $this->db->where('tenant_id',$tenant_id);
-                $this->db->where('course_id',$course_id);
-                $this->db->where('class_id',$class_id);
-                $this->db->where('feedback_question_id','COMYTCOM');
-                $this->db->where('user_id',$trainee_id);
-                $this->db->update('trainer_feedback', $data);
-                
-                $data = array('feedback_answer'  =>'ATR' );
-                $this->db->where('tenant_id',$tenant_id);
-                $this->db->where('course_id',$course_id);
-                $this->db->where('class_id',$class_id);
-                $this->db->where('feedback_question_id','COMYTCOM');
-                $this->db->where('user_id',$trainee_id);
-                $this->db->update('trainer_feedback', $data);
+            {/////modified by shubhranshu due to attrition starts
+                if($att_percentage <= 0.50){
+                    $data = array('feedback_answer'  =>'ATR' );
+                    $this->db->where('tenant_id',$tenant_id);
+                    $this->db->where('course_id',$course_id);
+                    $this->db->where('class_id',$class_id);
+                    $this->db->where('feedback_question_id','COMYTCOM');
+                    $this->db->where('user_id',$trainee_id);
+                    $this->db->update('trainer_feedback', $data);
+                }else{//modified by shubhranshu due to attrition end
+                    $data = array('feedback_answer'  =>'ABS' );
+                    $this->db->where('tenant_id',$tenant_id);
+                    $this->db->where('course_id',$course_id);
+                    $this->db->where('class_id',$class_id);
+                    $this->db->where('feedback_question_id','COMYTCOM');
+                    $this->db->where('user_id',$trainee_id);
+                    $this->db->update('trainer_feedback', $data);
+                }
             }
             $this->update_payment_due($payment_due_id, $user_id);
            // $this->remove_payment_due($payment_due_id, $user_id);
