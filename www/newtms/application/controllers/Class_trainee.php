@@ -4147,7 +4147,13 @@ class Class_Trainee extends CI_Controller {
         $data['gstlabel'] = $gst_label = ($courses->gst_on_off == 1) ? 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($courses->subsidy_after_before), ', ') : 'GST OFF';
         $data['subsidy_type'] = $this->classtraineemodel->get_subsidy_type($tenant_id);
 		
-        if ($account_type == 'individual') {			
+        if ($account_type == 'individual') {
+			
+			$data['direct'] = 1; //Added by abdulla
+            $data['course'] = $course; //Added by abdulla
+            $data['class'] = $class; //Added by abdulla
+            $data['trainee_id'] = $user_id; //Added by abdulla
+			
 			$data['trainee_name'] = $this->classtraineemodel->get_notenrol_trainee_name('', '', $user_id, $tenant_id);		
 			$data['discount'] = $discount = $this->classtraineemodel->calculate_discount_enroll($user_id, 0, $class, $course, $classes->class_fees); 
 			$data['feesdue'] = $feesdue = round($classes->class_fees - round((($discount['discount_rate'])/100 * ($classes->class_fees)),2),2);		
