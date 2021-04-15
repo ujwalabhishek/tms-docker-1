@@ -892,7 +892,7 @@ class Class_Trainee_Model extends CI_Model {
                     $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
                     
                     
-                    $data = array('feedback_answer'  =>'ABS' );
+                    $data = array('feedback_answer'  =>'' );
                     $this->db->where('tenant_id',$tenant_id);
                     $this->db->where('course_id',$course_id);
                     $this->db->where('class_id',$class_id);
