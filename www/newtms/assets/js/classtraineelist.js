@@ -674,12 +674,12 @@ $(document).ready(function() {
                         $('#COMYTCOM_ATTRITION').prop('disabled', true);
                     }else{
                         if((res.att_percentage <= 0.50) && (res.att_percentage != null) && (res.att_percentage >= 0)){
-//                            $('#COMYTCOM_ATTRITION').prop('disabled', false);
-//                            $('#COMYTCOM_C').prop('disabled', true);
-//                            $('#COMYTCOM_NYC').prop('disabled', true);     
-//                            $('#COMYTCOM_EX').prop('disabled', true);
-//                            $('#COMYTCOM_2NYC').prop('disabled', true);
-//                            $('#COMYTCOM_ABS').prop('disabled', false);
+                            $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                            $('#COMYTCOM_C').prop('disabled', true);
+                            $('#COMYTCOM_NYC').prop('disabled', true);     
+                            $('#COMYTCOM_EX').prop('disabled', true);
+                            $('#COMYTCOM_2NYC').prop('disabled', true);
+                            $('#COMYTCOM_ABS').prop('disabled', false);
                         }else if((res.att_percentage < 0.75) && (res.att_percentage != null) && (res.att_percentage >= 0)){
                             $('#COMYTCOM_ATTRITION').prop('disabled', true);
                             $('#COMYTCOM_C').prop('disabled', true);
@@ -707,7 +707,32 @@ $(document).ready(function() {
                     $('#'+item.feedback_question_id+' option[value="' + item.feedback_answer + '"]').attr("selected", "selected");
                     $('#remarks').text(item.other_remarks_trainee);
                 });
-                
+                $.each(lock_status, function(i,item){
+                        if(item.lock_status==1){
+                           //   $('#lock_att').prop('disabled',true);
+                            $('#COMYTCOM_C').prop('disabled', true);
+                            $('#COMYTCOM_ABS').prop('disabled', true);     
+                            $('#COMYTCOM_EX').prop('disabled', true);
+                            $('#COMYTCOM_NYC').prop('disabled', true);
+                            $('#COMYTCOM_2NYC').prop('disabled', true);
+                            $('#new_entrance').prop('disabled', true);
+                            $('#satisfaction_rating').prop('disabled', true);
+                            $('#COMMNTS').prop('disabled', false); 
+                            $('#APPKNLSKL_YES').prop('disabled', true);
+                            $('#APPKNLSKL_NO').prop('disabled', true);
+                            $('#CERTCOM1_YES').prop('disabled', true);
+                            $('#CERTCOM1_NO').prop('disabled', true);
+                            $('#EXPJOBSCP_YES').prop('disabled', true);
+                            $('#EXPJOBSCP_NO').prop('disabled', true);
+                            $('#RT3MNTHS_YES').prop('disabled', true);
+                            $('#RT3MNTHS_NO').prop('disabled', true);
+                            $('.attendance_lock').show();
+                        }
+                        else{
+                            $('#lock_att').prop('disabled',false);
+                            $('.attendance_lock').hide();
+                        }
+                });
                 
             }
         });
