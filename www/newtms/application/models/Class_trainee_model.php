@@ -892,7 +892,7 @@ class Class_Trainee_Model extends CI_Model {
                     $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
                     
                     //////below code was added by shubhranshu for xp for attrition option START-----
-                    if(($att_percentage >= 0 && $att_percentage <= 0.50 && TENANT_ID =='T02') || ($att_percentage==null && TENANT_ID =='T02'){
+                    if(($att_percentage >= 0 && $att_percentage <= 0.50 && TENANT_ID =='T02') || ($att_percentage==null && TENANT_ID =='T02')){
                     
                         $data = array('feedback_answer'  =>'' );
                         $this->db->where('tenant_id',$tenant_id);
