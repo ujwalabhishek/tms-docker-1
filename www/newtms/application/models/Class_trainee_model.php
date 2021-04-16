@@ -829,7 +829,7 @@ class Class_Trainee_Model extends CI_Model {
             }
               
             foreach ($data_table as $trainee_id => $data_row) 
-            {echo "ui".print_r($data_table);exit;
+            {//echo "ui".print_r($data_table);exit;
                
                 $query11=$this->db->select('ce.pymnt_due_id,ei.invoice_id')
                                 ->from('class_enrol ce')
