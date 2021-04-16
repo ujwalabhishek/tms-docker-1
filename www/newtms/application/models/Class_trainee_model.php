@@ -892,14 +892,17 @@ class Class_Trainee_Model extends CI_Model {
                     $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
                     
                     //////below code was added by shubhranshu for xp for attrition option START-----
-                    $data = array('feedback_answer'  =>'' );
-                    $this->db->where('tenant_id',$tenant_id);
-                    $this->db->where('course_id',$course_id);
-                    $this->db->where('class_id',$class_id);
-                    $this->db->where('feedback_question_id','COMYTCOM');
-                    $this->db->where('user_id',$trainee_id);
-                    $this->db->update('trainer_feedback', $data);
-                    //////below code was added by shubhranshu for xp for attrition option end-----
+                    if(($att_percentage >= 0 && $att_percentage <= 0.50 && TENANT_ID =='T02') || ($att_percentage==null && TENANT_ID =='T02'){
+                    
+                        $data = array('feedback_answer'  =>'' );
+                        $this->db->where('tenant_id',$tenant_id);
+                        $this->db->where('course_id',$course_id);
+                        $this->db->where('class_id',$class_id);
+                        $this->db->where('feedback_question_id','COMYTCOM');
+                        $this->db->where('user_id',$trainee_id);
+                        $this->db->update('trainer_feedback', $data);
+                        //////below code was added by shubhranshu for xp for attrition option end-----
+                    }
                 }
 
                 //$this->db->last_query();
