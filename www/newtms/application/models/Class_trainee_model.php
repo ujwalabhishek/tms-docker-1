@@ -829,7 +829,7 @@ class Class_Trainee_Model extends CI_Model {
             }
               
             foreach ($data_table as $trainee_id => $data_row) 
-            {echo "ui".print_r($data_table);exit;
+            {
                
                 $query11=$this->db->select('ce.pymnt_due_id,ei.invoice_id')
                                 ->from('class_enrol ce')
@@ -862,7 +862,7 @@ class Class_Trainee_Model extends CI_Model {
                 }
                 
                 
-                if($att_percentage >= 0 && $att_percentage <= 0.50 && TENANT_ID =='T02'){
+                if($att_percentage != null && $att_percentage >= 0 && $att_percentage <= 0.50 && TENANT_ID =='T02'){
                     $this->db->set('ce.training_score', 'ATR');
                     $this->db->where('ce.pymnt_due_id', $payment_due_id);
                     $this->db->where('epd.pymnt_due_id', $payment_due_id);
