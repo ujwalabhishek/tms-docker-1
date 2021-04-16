@@ -694,7 +694,7 @@ $(document).ready(function() {
                             $('#COMYTCOM_EX').prop('disabled', true);
                             $('#COMYTCOM_2NYC').prop('disabled', true);
                             $('#COMYTCOM_ABS').prop('disabled', false);
-                        }else{alert('k');
+                        }else{
                             $('#COMYTCOM_ATTRITION').prop('disabled', true);
                         }
                     }
@@ -707,32 +707,7 @@ $(document).ready(function() {
                     $('#'+item.feedback_question_id+' option[value="' + item.feedback_answer + '"]').attr("selected", "selected");
                     $('#remarks').text(item.other_remarks_trainee);
                 });
-                $.each(lock_status, function(i,item){
-                        if(item.lock_status==1){
-                           //   $('#lock_att').prop('disabled',true);
-                            $('#COMYTCOM_C').prop('disabled', true);
-                            $('#COMYTCOM_ABS').prop('disabled', true);     
-                            $('#COMYTCOM_EX').prop('disabled', true);
-                            $('#COMYTCOM_NYC').prop('disabled', true);
-                            $('#COMYTCOM_2NYC').prop('disabled', true);
-                            $('#new_entrance').prop('disabled', true);
-                            $('#satisfaction_rating').prop('disabled', true);
-                            $('#COMMNTS').prop('disabled', false); 
-                            $('#APPKNLSKL_YES').prop('disabled', true);
-                            $('#APPKNLSKL_NO').prop('disabled', true);
-                            $('#CERTCOM1_YES').prop('disabled', true);
-                            $('#CERTCOM1_NO').prop('disabled', true);
-                            $('#EXPJOBSCP_YES').prop('disabled', true);
-                            $('#EXPJOBSCP_NO').prop('disabled', true);
-                            $('#RT3MNTHS_YES').prop('disabled', true);
-                            $('#RT3MNTHS_NO').prop('disabled', true);
-                            $('.attendance_lock').show();
-                        }
-                        else{
-                            $('#lock_att').prop('disabled',false);
-                            $('.attendance_lock').hide();
-                        }
-                });
+                
                 
             }
         });
