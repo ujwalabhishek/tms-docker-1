@@ -829,7 +829,7 @@ class Class_Trainee_Model extends CI_Model {
             }
               
             foreach ($data_table as $trainee_id => $data_row) 
-            {
+            {echo "ui".print_r($data_table);exit;
                
                 $query11=$this->db->select('ce.pymnt_due_id,ei.invoice_id')
                                 ->from('class_enrol ce')
@@ -893,7 +893,7 @@ class Class_Trainee_Model extends CI_Model {
                     
                     //////below code was added by shubhranshu for xp for attrition option START-----
                     if(($att_percentage >= 0 && $att_percentage <= 0.50 && TENANT_ID =='T02') || ($att_percentage==null && TENANT_ID =='T02')){
-                    echo "ss";exit;
+                    
                         $data = array('feedback_answer'  =>'' );
                         $this->db->where('tenant_id',$tenant_id);
                         $this->db->where('course_id',$course_id);
