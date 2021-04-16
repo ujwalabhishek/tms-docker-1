@@ -171,6 +171,19 @@ $(document).ready(function() {
                         $('#skm').hide();
                         $('#tbl').show();
                     }
+                    
+                    if(item.training_score == 'ATR')
+                    {
+                      
+                        $('#COMYTCOM_C').prop('disabled', true);
+                        $('#COMYTCOM_ABS').prop('disabled', false);     
+                        $('#COMYTCOM_EX').prop('disabled', true);
+                        $('#COMYTCOM_NYC').prop('disabled', true);
+                        $('#COMYTCOM_2NYC').prop('disabled', true);
+                         $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                        $('#skm').hide();
+                        $('#tbl').show();
+                    }
                     if (item.training_score == null){
                         
                         $('#COMYTCOM_C').prop('disabled', false);
