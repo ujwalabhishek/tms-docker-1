@@ -10,7 +10,7 @@ if (!empty($tax_error)) {
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
     $js_class_status = '<?php echo $js_class_status; ?>';
-    
+     $js_tenant = '<?php echo TENANT_ID; ?>';
 </script>
 <script>
     $trainee_enroll = <?php echo json_encode($trainee_enrolled); ?>;
@@ -26,7 +26,7 @@ if (!empty($tax_error)) {
     $siteurl = '<?php echo site_url(); ?>';
     $course_duration = '<?php echo $course_duration; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/editclass.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/editclass.js?0.01"></script>
 
 <div class="col-md-10">
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class.png" /> Class - Edit</h2>
