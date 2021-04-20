@@ -5,9 +5,10 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/jquery.ui.timepicker.css" />
 <script>
     $siteurl = '<?php echo site_url(); ?>';  
-    $js_role = '<?php echo $role; ?>';    
+    $js_role = '<?php echo $role; ?>';   
+    $js_tenant = '<?php echo TENANT_ID; ?>';  
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.001000"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.0011"></script>
 <?php
 $this->load->helper('form');
 $this->load->helper('metavalues_helper');
