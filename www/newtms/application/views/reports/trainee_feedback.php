@@ -148,6 +148,8 @@ if (empty($class_id)) {
                                             echo "<label style='color:red'>Absent</label>";
                                         } else if ($data['training_score'] == '2NYC') {
                                             echo "<label style='color:red'>Twice Not Competent</label>";
+                                        }else if ($data['training_score'] == 'ATR') {////added by shubhranshu for attrition
+                                            echo "<label style='color:red'>Attrition</label>";
                                         } else {
                                             echo "<label>Rating not available</label>";
                                         }
