@@ -621,6 +621,8 @@ $(document).ready(function() {
                         $('#COMYTCOM_ABS').prop('disabled', true);
                          $('#skm').hide();
                          $('#tbl').show();
+                          $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                       
                     }
                     if(item.training_score == 'ABS')
@@ -633,6 +635,8 @@ $(document).ready(function() {
                         $('#COMYTCOM_2NYC').prop('disabled', true);
                         $('#skm').hide();
                         $('#tbl').show();
+                         $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                     }
                     
                     if(item.training_score == 'ATR')
@@ -646,6 +650,8 @@ $(document).ready(function() {
                          $('#COMYTCOM_ATTRITION').prop('disabled', false);
                         $('#skm').hide();
                         $('#tbl').show();
+                        $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                     }
                     
                     if (item.training_score == null){
@@ -658,6 +664,8 @@ $(document).ready(function() {
                         $('#COMYTCOM_ATTRITION').prop('disabled', false);
                         $('#skm').hide();
                         $('#tbl').show();
+                         $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                     }
                   
                     if (item.feedback_question_id == 'COMYTCOM') {
@@ -683,6 +691,8 @@ $(document).ready(function() {
                         }     
                          $('#skm').hide();
                          $('#tbl').show();
+                          $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                     }
                     
                     ///////below code was added by shubhranshu for xp for attrition option start-----
