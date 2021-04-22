@@ -557,6 +557,8 @@ $(document).ready(function() {
         $('#tbl').hide();
         $('#skm').show();
         $('#skm').html(ajax_image);
+        $('#ssp').hide();
+        $('#trainee_fdbk').show();
         reset_form();
         $('#traineefeedbackForm').attr("action", baseurl + "class_trainee/trainee_feedback/" + $user + "/" + $course + "/" + $class);
         $('#trainer_feedback_form').attr("action", baseurl + "class_trainee/trainer_feedback/" + $user + "/" + $course + "/" + $class);
@@ -618,6 +620,8 @@ $(document).ready(function() {
                         $('#COMYTCOM_ABS').prop('disabled', true);
                          $('#skm').hide();
                          $('#tbl').show();
+                        $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                       
                     }
                     if(item.training_score == 'ABS')
@@ -630,6 +634,8 @@ $(document).ready(function() {
                         $('#COMYTCOM_2NYC').prop('disabled', true);
                         $('#skm').hide();
                         $('#tbl').show();
+                        $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                     }
                     
                     if (item.training_score == null){
@@ -642,6 +648,8 @@ $(document).ready(function() {
                         $('#COMYTCOM_ATTRITION').prop('disabled', false);
                         $('#skm').hide();
                         $('#tbl').show();
+                        $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                     }
                   
                     if (item.feedback_question_id == 'COMYTCOM') {
@@ -667,6 +675,8 @@ $(document).ready(function() {
                         }     
                          $('#skm').hide();
                          $('#tbl').show();
+                         $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                     }
                     
                     
