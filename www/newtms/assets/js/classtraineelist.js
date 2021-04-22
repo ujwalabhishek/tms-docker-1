@@ -555,8 +555,11 @@ $(document).ready(function() {
         
         var ajax_image = "<img src='assets/images/q.gif' alt='Loading...' />";
         $('#tbl').hide();
+        $('#trainee_fdbk').hide();
         $('#skm').show();
+        $('#ssp').show();
         $('#skm').html(ajax_image);
+        $('#ssp').html(ajax_image);
         reset_form();
         $('#traineefeedbackForm').attr("action", baseurl + "class_trainee/trainee_feedback/" + $user + "/" + $course + "/" + $class);
         $('#trainer_feedback_form').attr("action", baseurl + "class_trainee/trainer_feedback/" + $user + "/" + $course + "/" + $class);

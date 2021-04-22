@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.0310000000000001"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.0311111111111111111"></script>
 <style>
     table td{
         font-size: 11px;
@@ -733,8 +733,10 @@ if($tenant_id == 'T20' || $tenant_id == 'T17'){
     echo form_open('class_trainee/trainee_feedback', $atr);
     ?> 
     <p>
-    <h2 class="panel_heading_style" style = "width:100%" >Trainee Feedback</h2>  
-      <div id ="trainee_fdbk">
+    <h2 class="panel_heading_style" style = "width:100%" >Trainee Feedback</h2> 
+    <center> <span id="ssp" style="display:none"></span></center>
+    <div id ="trainee_fdbk">
+    
     <table class="table table-striped">
         <?php
         $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
@@ -912,6 +914,7 @@ $('.feed').change(function () {
     ?> 
     <p>
     <h2 class="panel_heading_style" style = "width:100%" >Trainee Feedback</h2>  
+    <center> <span id="ssp" style="display:none"></span></center>
     <div id ="trainee_fdbk">
     <table class="table table-striped">
         <?php
