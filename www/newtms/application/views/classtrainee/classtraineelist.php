@@ -735,6 +735,7 @@ if($tenant_id == 'T20' || $tenant_id == 'T17'){
     <p>
     <h2 class="panel_heading_style" style = "width:100%" >Trainee Feedback</h2>  
       <div id ="trainee_fdbk">
+          <center> <span id="skm" style="display:none"></span></center>
     <table class="table table-striped">
         <?php
         $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
@@ -913,6 +914,7 @@ $('.feed').change(function () {
     <p>
     <h2 class="panel_heading_style" style = "width:100%" >Trainee Feedback</h2>  
     <div id ="trainee_fdbk">
+        <center> <span id="skm" style="display:none"></span></center>
     <table class="table table-striped">
         <?php
         $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
