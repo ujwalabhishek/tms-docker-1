@@ -734,9 +734,7 @@ if($tenant_id == 'T20' || $tenant_id == 'T17'){
     ?> 
     <p>
     <h2 class="panel_heading_style" style = "width:100%" >Trainee Feedback</h2>  
-    <div id ="trainee_fdbk">
-    <center> <span id="skm" style="display:none"></span></center>
-    <span id="tbl" style="display:none">
+      <div id ="trainee_fdbk">
     <table class="table table-striped">
         <?php
         $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
@@ -861,7 +859,6 @@ if($tenant_id == 'T20' || $tenant_id == 'T17'){
             </tr>
         </tbody>
     </table>
-    </span>
     </div>
     <?php 
 echo form_hidden('query_string', $export_url);
@@ -916,8 +913,6 @@ $('.feed').change(function () {
     <p>
     <h2 class="panel_heading_style" style = "width:100%" >Trainee Feedback</h2>  
     <div id ="trainee_fdbk">
-    <center> <span id="skm" style="display:none"></span></center>
-    <span id="tbl" style="display:none">
     <table class="table table-striped">
         <?php
         $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
@@ -1080,7 +1075,6 @@ $('.feed').change(function () {
             </tr>
         </tbody>
     </table>
-    </span>
     </div>
     <?php 
 echo form_hidden('query_string', $export_url);
