@@ -727,6 +727,7 @@ $(document).ready(function() {
                     ////below code was added by shubhranshu for xp for attrition option end-----
                    
                 });
+                $('#rating').val('');
                 $.each(trainee, function(i, item) {
                     //$('#rating option[value="' + item.trainee_feedback_rating + '"]').attr("selected", "selected"); 
                     $('#rating').val(item.trainee_feedback_rating);
