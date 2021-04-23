@@ -16,7 +16,7 @@ if (empty($class_id)) {
     var class_id = <?php echo $class_id ?>;
     var course_id = <?php echo $course_id ?>;
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/trainee_feedback_report.js?0.0001"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/trainee_feedback_report.js?0.00001"></script>
 
 <div class="col-md-10">
     <?php
