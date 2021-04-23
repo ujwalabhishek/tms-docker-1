@@ -16,7 +16,7 @@ if (empty($class_id)) {
     var class_id = <?php echo $class_id ?>;
     var course_id = <?php echo $course_id ?>;
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/trainee_feedback_report.js?0.00001"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/trainee_feedback_report.js?0.00000001"></script>
 
 <div class="col-md-10">
     <?php
@@ -503,7 +503,9 @@ if($tenant_id == 'T20' || $tenant_id == 'T17'){
     ?> 
     <p>
     <h2 class="panel_heading_style">Trainee Feedback Form <span class="required_i">(5. Strongly agree, 4. Agree, 3. Neutral, 2. Disagree,  1. Strongly disagree )</span></h2>
-   <table class="table table-striped">
+   <center> <span id="ssp" style="display:none"></span></center>
+    <div id ="trainee_fdbk">
+    <table class="table table-striped">
         <?php
         $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
         ?>
@@ -628,7 +630,7 @@ if($tenant_id == 'T20' || $tenant_id == 'T17'){
             </tr>
         </tbody>
     </table>
-
+    </div>
 <?php form_close(); ?>
 </p>
 </div>
@@ -640,6 +642,8 @@ if($tenant_id == 'T20' || $tenant_id == 'T17'){
     ?> 
     <p>
     <h2 class="panel_heading_style">Trainee Feedback Form <span class="required_i">(1. Strongly disagree, 2. Disagree, 3. Neutral, 4. Agree, 5. Strongly agree)</span></h2>
+    <center> <span id="ssp" style="display:none"></span></center>
+    <div id ="trainee_fdbk">
     <table class="table table-striped">
         <?php
         $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
@@ -803,7 +807,7 @@ if($tenant_id == 'T20' || $tenant_id == 'T17'){
             </tr>
         </tbody>
     </table>
-
+    </div>
 <?php form_close(); ?>
 </p>
 </div>
