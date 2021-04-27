@@ -6711,13 +6711,17 @@ function export__total_tenant_page_fields($titles, $data, $filename, $sheetname 
 
 /*shubhranshu  start: replace nric first 5 character with mas */
 function mask_format($nric) {  
-    if(is_numeric($nric) == 1){
+    if($this->session->userdata('userDetails')->user_id == 2){
         return $nric;
     }else{
-        $new_nric = substr_replace($nric,'XXXXX',0,5);   
-        //$new_nric = substr_replace($nric,'XXXX',5);        
-        return $new_nric;
-    }   
+        if(is_numeric($nric) == 1){
+            return $nric;
+        }else{
+            $new_nric = substr_replace($nric,'XXXXX',0,5);   
+            //$new_nric = substr_replace($nric,'XXXX',5);        
+            return $new_nric;
+        }   
+    }
 }
 /* shubhranshu end */
 
