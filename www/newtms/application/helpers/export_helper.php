@@ -126,7 +126,8 @@ function export_tms_report_page($result) {
            
         }
         $sheet->setCellValue('A' . $rn, $rn - 2);
-        $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
+        //$sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
+        $sheet->setCellValue('B' . $rn, $row->tax_code);
         $sheet->setCellValue('C' . $rn, $row->user_id);
         $sheet->setCellValue('D' . $rn, $row->invoice_id);
         $sheet->setCellValue('E' . $rn, $row->name);
@@ -6711,17 +6712,13 @@ function export__total_tenant_page_fields($titles, $data, $filename, $sheetname 
 
 /*shubhranshu  start: replace nric first 5 character with mas */
 function mask_format($nric) {  
-    if($this->session->userdata('userDetails')->user_id == 2){
+    if(is_numeric($nric) == 1){
         return $nric;
     }else{
-        if(is_numeric($nric) == 1){
-            return $nric;
-        }else{
-            $new_nric = substr_replace($nric,'XXXXX',0,5);   
-            //$new_nric = substr_replace($nric,'XXXX',5);        
-            return $new_nric;
-        }   
-    }
+        $new_nric = substr_replace($nric,'XXXXX',0,5);   
+        //$new_nric = substr_replace($nric,'XXXX',5);        
+        return $new_nric;
+    }   
 }
 /* shubhranshu end */
 
