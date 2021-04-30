@@ -3410,7 +3410,7 @@ JOIN(SELECT ttt.*
 	JOIN
 	(SELECT invoice_id, MAX(trigger_date) AS Maxdate FROM enrol_paymnt_recd GROUP BY invoice_id) gttt ON ttt.invoice_id = gttt.invoice_id AND ttt.trigger_date = gttt.Maxdate) epr on epr.invoice_id=ei.invoice_id 
 WHERE cc . tenant_id = 'T02' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
-AND ce.training_score in ('C') AND AND ce.payment_status in ('" . $payment_status . "')
+AND ce.training_score in ('C') AND ce.payment_status in ('" . $payment_status . "')
 AND date(cc.class_end_datetime)>= '2021-01-01' and date(cc.class_end_datetime) <= '2021-03-31'";
         
         
