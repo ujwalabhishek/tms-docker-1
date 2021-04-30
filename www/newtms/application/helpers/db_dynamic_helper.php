@@ -3,7 +3,7 @@
 function switch_db_dynamic($name_db)
 {
     $config_app['dsn'] = '';
-    $config_app['hostname'] = '172.18.0.4';
+    $config_app['hostname'] = '172.18.0.2';
     $config_app['username'] = 'root';
     $config_app['password'] = 'tms#8938480*';
     $config_app['database'] = $name_db;
@@ -30,8 +30,8 @@ function fetch_dynamic_db_details(){
     if($host == 'xprienz.net'){
         $object = new stdClass();
         $object->tenant_db_name = 'biipmico_tms_masterdata';
-        $object->tenant_db_user = 'biipmico_tms_master';
-        $object->tenant_db_password = 'ksj784382*879#';
+        $object->tenant_db_user = 'root';
+        $object->tenant_db_password = 'tms#8938480*';
         
         return $object;
     }
