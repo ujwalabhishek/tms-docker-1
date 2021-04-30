@@ -3340,7 +3340,7 @@ $query5 = "SELECT
                   
                     AND date(cc.class_end_datetime)>= '2021-01-01' and date(cc.class_end_datetime) <= '2021-03-31'";
 
-        $result = $this->db->query($query)->result();
+        $result = $this->db->query($query5)->result();
 
         return $result;
     }
@@ -3414,7 +3414,7 @@ AND ce.training_score in ('C')
 AND date(cc.class_end_datetime)>= '2021-01-01' and date(cc.class_end_datetime) <= '2021-03-31'";
         
         
-        $result = $this->db->query($query)->result();
+        $result = $this->db->query($query5)->result();
 
         return $result;
     }
