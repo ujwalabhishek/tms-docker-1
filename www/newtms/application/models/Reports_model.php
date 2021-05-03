@@ -3339,7 +3339,7 @@ SELECT  {$calc_rows} c.crse_name,
                     WHERE cc . tenant_id = 'T02' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
 AND ce.training_score in ('C','NYC') AND ce.payment_status in ('" . $payment_status . "')
 
-                   AND date(cc.class_end_datetime)>= '2021-05-23' and date(cc.class_end_datetime) <= '2021-05-29'";
+                   AND date(cc.class_end_datetime)>= '2021-04-23' and date(cc.class_end_datetime) <= '2021-04-29'";
 
         $result = $this->db->query($query5)->result();
 
@@ -3419,7 +3419,7 @@ AND ce.training_score in ('C','NYC') AND ce.payment_status in ('" . $payment_sta
                         (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_paymnt_recd GROUP BY invoice_id) gttt ON ttt.invoice_id = gttt.invoice_id AND ttt.trigger_date = gttt.Maxdate) epr on epr.invoice_id=ei.invoice_id 
                    WHERE cc . tenant_id = 'T02' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
 AND ce.training_score in ('C','NYC') AND ce.payment_status in ('" . $payment_status . "')
-AND date(cc.class_end_datetime)>= '2021-05-23' and date(cc.class_end_datetime) <= '2021-05-29'";
+AND date(cc.class_end_datetime)>= '2021-04-23' and date(cc.class_end_datetime) <= '2021-04-29'";
         $result = $this->db->query($query5)->result();
 
         return $result;
