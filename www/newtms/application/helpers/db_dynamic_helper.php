@@ -4,8 +4,8 @@ function switch_db_dynamic($name_db)
 {
     $config_app['dsn'] = '';
     $config_app['hostname'] = '172.18.0.2';
-    $config_app['username'] = 'biipmico_tms_master';
-    $config_app['password'] = 'ksj784382*879#';
+    $config_app['username'] = 'biipmico_tms_dev';
+    $config_app['password'] = 'biipmi@#*123@biipbyte';
     $config_app['database'] = $name_db;
     $config_app['dbdriver'] = 'mysqli';
     $config_app['dbprefix'] = '';
