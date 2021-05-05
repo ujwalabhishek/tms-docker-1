@@ -229,6 +229,7 @@ class Class_Trainee extends CI_Controller {
                             $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> '.$TGAMT.' </span> </a><br/>';
                         }
                         
+
                        // if($check_attendance<=0 || $check_competent>0)
                          if($check_competent>0)
                         {
@@ -263,10 +264,9 @@ class Class_Trainee extends CI_Controller {
                         }                                   
                     }                
                     $linkStr .= get_links($row['enrolment_mode'], $row['payment_status'], $row['invoice_id'], $row['user_id'], $row['pymnt_due_id'], $row['class_id'], $this, $row['account_status'], $row['cc_class_status'],$row['company_id'], $row['att_status']);
-                }  
+                }
                 //////add by shubhranshu to save enrollment id on 18/03/2021
                 $linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">'. $EIDNO .' </span> </a><br/>';
-
                 $new_tabledata[$k]['action_link'] = $linkStr;
                 $new_tabledata[$k]['referrer'] = $row['referral_details'];
 
@@ -4103,7 +4103,121 @@ class Class_Trainee extends CI_Controller {
         }
     }
 
-    /**
+    /* This Method is used for the enrol page - gets the data from direct register and enroll page skm start */
+
+    public function individual_enrollment_view_page() {
+		
+		$data['sideMenuData'] = fetch_non_main_page_content();
+        $this->load->model('internal_user_model');
+        $tenant_id = $this->tenant_id;
+        $loggedin_user_id =  $this->user->user_id;
+        extract($_POST);
+        if ($search_select == 1) {
+            $user_id = $taxcode_id;
+        } else {
+            $user_id = $trainee_id;
+        }
+		
+        $account_type = $this->input->post('account_type'); //sk1
+        $course = $this->input->post('course_id'); //sk2
+        $class = $this->input->post('class_id'); //sk3
+        $data['courses'] = $courses = $this->course->get_course_detailse($course);
+        $data['course_manager'] = rtrim($this->course->get_managers($courses->crse_manager), ', ');
+        $data['courseLevel'] = $this->course->get_metadata_on_parameter_id($courses->certi_level);
+        $data['classes'] = $classes = $this->class->get_class_details($tenant_id, $class);
+
+        /* get the sales executive name based on course- prit* 18-07-2016 */
+        $course_salesexec = $this->class->get_course_salesexec1($tenant_id, $course);
+        $sales = array();
+        foreach ($course_salesexec as $value) {
+            $sales[] = $value->user_id;
+        }
+        $sales_executive = implode(',', $sales);
+//$data['salesexec'] = $this->class->get_class_salesexec($tenant_id, $classes->course_id, $classes->sales_executive);
+        $data['salesexec'] = $this->class->get_class_salesexec($tenant_id, $classes->course_id, $sales_executive);
+        $totalbooked = $this->class->get_class_booked($classes->course_id, $classes->class_id, $tenant_id);
+        $data['available'] = $classes->total_seats - $totalbooked;
+        $data['ClassPay'] = rtrim($this->course->get_metadata_on_parameter_id($classes->class_pymnt_enrol), ', ');
+        $data['ClassLang'] = rtrim($this->course->get_metadata_on_parameter_id($classes->class_language), ', ');
+        $data['ClassLoc'] = $this->get_classroom_location($classes->classroom_location, $classes->classroom_venue_oth);
+        $data['ClassTrainer'] = $this->class->get_trainer_names($classes->classroom_trainer);
+        $data['LabTrainer'] = $this->class->get_trainer_names($classes->lab_trainer);
+        $data['Assessor'] = $this->class->get_trainer_names($classes->assessor);
+        $data['TrainingAide'] = $this->class->get_course_manager_names($classes->training_aide);
+        $data['gstrate'] = $gstrate = $this->classtraineemodel->get_gst_current();
+        $data['gstlabel'] = $gst_label = ($courses->gst_on_off == 1) ? 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($courses->subsidy_after_before), ', ') : 'GST OFF';
+        $data['subsidy_type'] = $this->classtraineemodel->get_subsidy_type($tenant_id);
+		
+        if ($account_type == 'individual') {
+			
+			$data['direct'] = 1; //Added by abdulla
+            $data['course'] = $course; //Added by abdulla
+            $data['class'] = $class; //Added by abdulla
+            $data['trainee_id'] = $user_id; //Added by abdulla
+			
+			$data['trainee_name'] = $this->classtraineemodel->get_notenrol_trainee_name('', '', $user_id, $tenant_id);		
+			$data['discount'] = $discount = $this->classtraineemodel->calculate_discount_enroll($user_id, 0, $class, $course, $classes->class_fees); 
+			$data['feesdue'] = $feesdue = round($classes->class_fees - round((($discount['discount_rate'])/100 * ($classes->class_fees)),2),2);		
+			$data['gst_total'] = $this->classtraineemodel->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
+			$data['netdue'] = $this->classtraineemodel->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
+        } elseif ($account_type == 'company') {
+            $data['company_details'] = $company_details = $this->company->get_company_details($tenant_id, $company);
+            if ($company[0] == "T") {
+                $tenant_details = fetch_tenant_details($tenant_id);
+                $data['company_details'][0]->company_name = $tenant_details->tenant_name;
+            }
+            $data['discount'] = $discount = $this->classtraineemodel->calculate_discount_enroll(0, $company, $class, $course, $classes->class_fees);
+            $discount_label = $discount['discount_label'];
+            $discount_rate = round($discount['discount_rate'], 4);
+            $discount_amount = round(($classes->class_fees * ($discount_rate / 100)), 2);
+            if ($discount_amount > $classes->class_fees) {
+                $discount_rate = 100;
+                $discount_amount = $classes->class_fees;
+            }
+            $feesdue = round(($classes->class_fees - $discount_amount), 2);
+            $company_net_due = 0;
+            $company_unit_fees = 0;
+            $company_discount_amount = 0;
+            $company_gst_total = 0;
+            if (!empty($control_6)) {
+                $data['trainees'] = $this->classtraineemodel->get_trainee_details_for_trainee_ids($tenant_id, $control_6);
+            }
+            foreach ($control_6 as $user_id) {
+                $gst_total = $this->classtraineemodel->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
+                $calculated_net_due = $this->classtraineemodel->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
+                $company_net_due = round(($company_net_due + $calculated_net_due), 2);
+                $company_unit_fees = round(($company_unit_fees + $classes->class_fees), 2);
+                $company_discount_amount = round(($company_discount_amount + $discount_amount), 2);
+                $company_gst_total = round(($company_gst_total + $gst_total), 2);
+            }
+            $data['company_net_due'] = $company_net_due;
+            $data['company_unit_fees'] = $company_unit_fees;
+            $data['company_gst_total'] = $company_gst_total;
+            $data['company_discount_amount'] = round($discount_amount, 2);
+            $data['company_discount_label'] = $discount_label;
+            $data['company_discount_rate'] = $discount_rate;
+            $data['pending_payments'] = $this->classtraineemodel->check_company_pending_payment($company);
+        }
+		
+		$role = $this->internal_user_model->check_sales_exec1($loggedin_user_id);
+		
+        if ($role->role_id !== "ADMN") {            			
+			if ($this->user->role_id == 'SLEXEC' || $this->user->role_id=='CRSEMGR' || $this->user->role_id=='TRAINER') 
+                {
+                    $data['salesexec_check'] = 1;
+                }
+        }
+		
+		$data['tenant_id'] = $tenant_id;
+		$data['page_title'] = 'Class Trainee';
+		$data['main_content'] = 'classtrainee/enrollpayment';
+	   // $data['sideMenuData'] = $this->sideMenu;
+		$data['restriction_flag'] = $this->input->post('restriction_flag');///added by shubhranshu
+		$data['privilage'] = $this->input->post('privilage'); ///added by shubhranshu
+		$this->load->view('layout', $data);
+    }
+	
+	/**
      * This method generates the receipt and gets the individual enrollment data and updates the DB
      */
     public function individual_enrollment() {

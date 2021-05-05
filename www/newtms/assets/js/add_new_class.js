@@ -574,6 +574,15 @@ function validate() {
     } else {
         remove_err('#control_5');
     }
+    $schlded_date = $('.schlded_date').val();
+
+    if($schlded_date === undefined && $js_tenant == 'T02'){
+        $(".marketing #dis-error").html('<span id="dis-error" class="error">You must create atleast one class Schedule.</span>');
+        $retval = false;
+    } else {
+         $(".marketing #dis-error").html('');
+    }
+    
     return $retval;
 }
 

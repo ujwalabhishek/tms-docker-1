@@ -5,9 +5,6 @@ if (!defined('BASEPATH'))
  * This is the controller class for Trainee use case all features. 
  */
 class Trainee extends CI_Controller {
-    
-    private $user;
-    
     public function __construct() {
         parent::__construct();
         $this->load->model('trainee_model', 'traineemodel');
@@ -375,7 +372,7 @@ class Trainee extends CI_Controller {
                 $this->load->view('layout', $data);
                 return;
             }
-        } else if ($this->input->post('task') == 'deactivate') {
+        } else if ($this->input->post('task') == 'deactivate') { 
             $user_id = $this->input->post('userid');
             $res = $this->traineemodel->get_complete_trainee_details($user_id);
             $previous_trainee_data = json_encode($res);
@@ -467,6 +464,7 @@ class Trainee extends CI_Controller {
      * export trainee data
      */
     public function export_trainee_page() {
+        
         set_time_limit(0);
         ini_set("memory_limit","-1");
         $result = $this->traineemodel->get_trainee_list_export();
@@ -570,6 +568,7 @@ class Trainee extends CI_Controller {
      * This method for validating each excel field.
      */
       private function validate_excel($trainee, $i) {
+        $tenant_id=$this->user->tenant_id;
         $metavalues = array();
         $metavalues = $this->get_metavalues_array();
         $is_taxcode_unique = $this->is_taxcode_unique($trainee[$i][taxcode]);
@@ -972,8 +971,8 @@ class Trainee extends CI_Controller {
                 $trainee[$i][CompanyCode] = $this->user->company_id;
             }
             $trainee[$i][countryofresidence] = ($exceldata[1])? trim($exceldata[1]): 'SGP';
-            ////Below if else was addded by shubhranshu for Xprienz requirement
-            if($tenant_id =='T02' || $tenant_id =='T01'){
+            ////addded by shubhranshu for Xprienz requirement
+            if($tenant_id =='T02'){
                 $trainee[$i][nrictype] = trim($exceldata[2] ? $exceldata[2] : 'Others');
                 if($exceldata[2]){////added by shubhranshu
                     $trainee[$i][nrictypeOthers] = $exceldata[3];
@@ -991,7 +990,7 @@ class Trainee extends CI_Controller {
                 $trainee[$i][education] = trim($exceldata[6]);
                 $trainee[$i][gender] = trim($exceldata[8]);
             }
-            $trainee[$i][taxcode] = trim($exceldata[4]);
+            $trainee[$i][taxcode] = trim($exceldata[4]);          
             $trainee[$i][firstname] = trim($exceldata[7]);
             $trainee[$i][dob] = trim($exceldata[9]);
             $trainee[$i][ContactNumber] = trim($exceldata[10]);
@@ -1017,7 +1016,7 @@ class Trainee extends CI_Controller {
                 $trainee['flag'] = $restrict_flag;
             }
             ///////////////////////////////////////////////////
-            if ($trainee[$i][rowstatus] == 'success') {                
+            if ($trainee[$i][rowstatus] == 'success') {               
                 $status = $this->traineemodel->save_bulk_user_data($trainee[$i]);
                //print_r($status);exit;
                 if ($status['status'] == FALSE) {
@@ -1063,9 +1062,16 @@ class Trainee extends CI_Controller {
                     $data['error'] = 'File is not readable.';
                 } else {
                     $excel_data = $this->excel_reader->sheets[0][cells];
-                    $trainee = $this->validate_bulk_trainee($excel_data);
+                    if(count($excel_data[1]) > 0){////added by shubhranshu to prevent if the sheet is blank
+                        
+                        $trainee = $this->validate_bulk_trainee($excel_data);
+                    }else{
+                        $this->session->set_flashdata('error_message', 'Oops! Excel Sheet is blank!');
+                        
+                    }
+                    
 
-		if ($trainee[1]['db_error'] == 'db_error') {
+                    if ($trainee[1]['db_error'] == 'db_error') {
                         $this->session->set_flashdata('error_message', 'Oops! Sorry, it looks like something went wrong with some record.Please check!');
                     }
                     unset($trainee[1]['db_error']);
@@ -1089,7 +1095,6 @@ class Trainee extends CI_Controller {
    /**
     * download smaple excel file.
     * @param type $file_name
-    * download_xls function  was modified by shubhranshu due to client request
     */
     public function download_xls() {
         $tenant_id = $this->user->tenant_id;////added by shubhranshu due to client request
@@ -1620,28 +1625,20 @@ class Trainee extends CI_Controller {
     }
     
     public function test_send_mail(){
-        
-        
-        $this->load->config('email');
+  
         $this->load->library('email');
-         $this->email->clear();
-        $this->email->from('payments@xprienz.com', INBOX_MAIL_NAME);
-        $this->email->to('testpay@mailinator.com');
+        $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
+        $this->email->to('abdullah@mailinator.com');
         $this->email->subject('Hello');
         $this->email->message('Good to know you are happy');
-        //print_r($this->email);exit;
         if ($this->email->send()) {
             echo "mail sent successfully";
-                  
-            echo $this->email->print_debugger();
+             echo $this->email->print_debugger();
+        
         }else{
             echo "something went wrong";
-            echo $this->email->print_debugger();
+             echo $this->email->print_debugger();
         }
-        
-
-        
     }
-    
 }
 

@@ -718,16 +718,16 @@ endif;
                                     }    
                                 }
                                 $check_competent=$this->classtraineemodel->check_competent($item->tenant_id,$item->course_id,$item->class_id,$item->user_id);
-                              
+                                
                                 if($check_competent > 0){
-                                     $wsq_courses_array = $this->config->item('wsq_courses'); // wsq courses modified by shubhranshu
+                                    $wsq_courses_array = $this->config->item('wsq_courses'); // wsq courses modified by shubhranshu
                                     
                                     $tenant_array = array('T02','T12'); // xp and xp2 
                                     $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/'. $item->class_id . '/' . $item->user_id . '">LOC</a><br/>';
-                                    //////added by shubhranshu for wablab TCS for all courses
+                                    //////added by shubhranshu for wablab and everest TCS for all courses
                                     $tenant_id = $trainee[userdetails]['tenant_id'];
                                    
-                                   if(($tenant_id == 'T20') || ($tenant_id == 'T17')){
+                                    if(($tenant_id == 'T20') || ($tenant_id == 'T17')){
                                         $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$item->course_id.'/'. $item->class_id  . '/' . $item->user_id . '">TCS</a><br/>';
 
                                     }else{
@@ -736,6 +736,7 @@ endif;
                                            $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$item->course_id.'/'. $item->class_id . '/' . $item->user_id . '">TCS</a><br/>'; 
                                         }
                                     }
+
                                 }
                             } else {
                             if ($item->payment_status != 'PYNOTREQD' &&
@@ -1074,7 +1075,11 @@ echo form_open("trainee/trainer_feedback/$item->user_id/$item->course_id/$item->
                 'id' => 'COMYTCOM_2NYC',
                 'value' => '2NYC',
             );
-
+            $COMYTCOM_ATTRITION = array(
+                'name' => 'COMYTCOM',
+                'id' => 'COMYTCOM_ATTRITION',
+                'value' => 'ATR',
+            );
 
             ?>              
                                 <?php echo form_radio($COMYTCOM_C); ?> Competent <br/>
@@ -1083,6 +1088,11 @@ echo form_open("trainee/trainer_feedback/$item->user_id/$item->course_id/$item->
 
                                 <?php echo form_radio($COMYTCOM_EX); ?> Exempted<br/>                    
                                 <?php echo form_radio($COMYTCOM_ABS); ?> Absent<br/>
+                                <?php 
+                                if(TENANT_ID == 'T02'){/////below code was added by shubhranshu for xp for attrition option start-----
+                                    echo form_radio($COMYTCOM_ATTRITION); echo "Attrition <br/>";
+                                }
+                                ?> 
                                 <?php echo form_radio($COMYTCOM_2NYC); ?> Twice Not Competent
 
 
@@ -1335,7 +1345,7 @@ echo form_close();
 
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/view_trainee.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/view_trainee.js?0.000000001"></script>
 <?php
 // added by shubhranshu $attn_status due to receipt issue for viewtrainee absent trainee
 function get_links($attn_status,$enrolment_mode, $payment_status, $invoice_id, $user_id, $pymnt_due_id, $class_id, $view_trainee_data, $trainee_Status,$classStatus,$company_id, $assmnt_links) {
