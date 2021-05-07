@@ -3308,8 +3308,38 @@ SELECT  {$calc_rows} c.crse_name,
                     AND ce.training_score in ('" . $training_score . "')
                     AND ce.payment_status in ('" . $payment_status . "')
                     AND date(cc.class_end_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
-
-        $result = $this->db->query($query)->result();
+$query5 = "SELECT 
+            tu.tax_code,
+            ei.invoice_id,
+            tup.first_name as name,
+            cm.company_name,
+            due.class_fees,
+            ceil((due.class_fees * due.discount_rate))/ 100 as discount_rate,
+            due.gst_amount,
+            ce.tg_number,
+            due.subsidy_amount,
+            due.total_amount_due,
+            ce.payment_status,
+            ce.enrolment_mode,
+            cc.class_start_datetime,
+            cc.class_end_datetime,
+            cc.class_name,
+            ce.training_score,
+            due.att_status
+           
+                    FROM ( course_class cc) 
+                    JOIN course c ON c.course_id = cc.course_id 
+                    JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                    JOIN enrol_pymnt_due due ON ce.pymnt_due_id = due.pymnt_due_id and ce.user_id = due.user_id 
+                    join enrol_invoice ei on ei.pymnt_due_id and due.pymnt_due_id and ei.pymnt_due_id=ce.pymnt_due_id
+                    JOIN tms_users tu ON tu.user_id = ce.user_id 
+                    left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
+                    left join company_master cm on cm.company_id=ce.company_id
+                 WHERE cc . tenant_id = 'T02' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
+                    AND ce.training_score in ('C','NYC') AND ce.payment_status in ('NOTPAID')
+                    AND date(cc.class_end_datetime)>= '2021-04-30' and date(cc.class_end_datetime) <= '2021-05-06'";
+        
+        $result = $this->db->query($query5)->result();
 
         return $result;
     }
@@ -3354,7 +3384,42 @@ SELECT  {$calc_rows} c.crse_name,
                     AND ce.payment_status in ('" . $payment_status . "')
                     AND date(cc.class_end_datetime)>= '" . $start_date . "' and date(cc.class_end_datetime) <= '" . $end_date . "'";
 
-        $result = $this->db->query($query)->result();
+    $query5 = "SELECT 
+            tu.tax_code,
+            tu.user_id,
+            ei.invoice_id,
+            tup.first_name as name,
+            cm.company_name,
+            due.class_fees,
+            ceil((due.class_fees * due.discount_rate))/ 100 as discount_rate,
+            due.gst_amount,
+            ce.tg_number,
+            due.subsidy_amount,
+            ce.payment_status,
+            ce.enrolment_mode,
+            epr.mode_of_pymnt,
+            cc.class_start_datetime,
+            cc.class_end_datetime,
+            cc.class_name,
+            ce.training_score,
+            due.att_status
+                    FROM ( course_class cc) 
+                    JOIN course c ON c.course_id = cc.course_id 
+                    JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                    JOIN enrol_pymnt_due due ON ce.pymnt_due_id = due.pymnt_due_id and ce.user_id = due.user_id 
+                    join enrol_invoice ei on ei.pymnt_due_id and due.pymnt_due_id and ei.pymnt_due_id=ce.pymnt_due_id
+                    JOIN tms_users tu ON tu.user_id = ce.user_id 
+                    left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
+                    left join company_master cm on cm.company_id=ce.company_id
+                    JOIN(SELECT ttt.*
+                        FROM enrol_paymnt_recd ttt
+                        JOIN
+                        (SELECT `invoice_id`, MAX(`trigger_date`) AS Maxdate FROM enrol_paymnt_recd GROUP BY invoice_id) gttt ON ttt.invoice_id = gttt.invoice_id AND ttt.trigger_date = gttt.Maxdate) epr on epr.invoice_id=ei.invoice_id 
+                    WHERE cc . tenant_id = 'T02' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT') 
+                    AND ce.training_score in ('C','NYC') AND ce.payment_status in ('PAID')
+                    AND date(cc.class_end_datetime)>= '2021-04-30' and date(cc.class_end_datetime) <= '2021-05-06'";
+        
+        $result = $this->db->query($query5)->result();
 
         return $result;
     }
