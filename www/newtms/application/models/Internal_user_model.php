@@ -431,7 +431,7 @@ class Internal_User_Model extends CI_Model {
             return FALSE;
         }
 		
-		$edit_user_id = str_replace(array( '(', ')' ), '', $edit_user_id);
+		//$edit_user_id = str_replace(array( '(', ')' ), '', $edit_user_id);
 		
         $this->db->select("crse_name as course_class_name");
         $this->db->from("course");
