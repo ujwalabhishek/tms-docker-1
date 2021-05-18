@@ -4727,7 +4727,7 @@ class Course_Public_Model extends CI_Model {
 
 
 
-        //$this->send_tenant_mail($enrolled_user_data, 'enrol'); 
+        $this->send_tenant_mail($enrolled_user_data, 'enrol'); 
 
 
 
@@ -5331,6 +5331,11 @@ class Course_Public_Model extends CI_Model {
             $body .= $footer_data;
         }
 
+        // added by shubhranshu for FRCS requirement dt 18.05.2021 to send mail to different mail id for NSA courses!
+        if (str_contains($traineedata[1][0]['crse_name'], 'NSA')) {
+            $tenant_details->tenant_email_id = 'nsadivya@mailinator.com';
+        }
+        
         return send_mail($tenant_details->tenant_email_id, '', $subject, $body);
     }
 
