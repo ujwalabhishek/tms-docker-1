@@ -434,6 +434,7 @@ class Internal_User_Model extends CI_Model {
 		$user_details = explode('(', $edit_user_id);
         $edit_user_id = rtrim($user_details[1], ')');
 		
+		$data['edit_user_id'] = $edit_user_id;
         $this->db->select("crse_name as course_class_name");
         $this->db->from("course");
         $this->db->where("crse_status","ACTIVE");
