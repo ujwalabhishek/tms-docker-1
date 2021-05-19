@@ -199,8 +199,21 @@ class Internal_user extends CI_Controller {
         $form_style_attr = ' style="display:none;"';
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $user_details = explode('(', $this->input->post('search_user_firstname'));
-            $edit_user_id = rtrim($user_details[1], ')');
-            $data['edit_user_id'] = $edit_user_id;
+            
+			
+			
+			//$edit_user_id = rtrim($user_details[1], ')');
+            //$data['edit_user_id'] = $edit_user_id;
+			
+			$user_details = explode('(', $edit_user_id);
+			$edit_user_id1 = rtrim($user_details[1], ')');
+			
+			$data['edit_user_id'] = $edit_user_id;
+			
+			//echo "tenant_id".$tenant_id;
+		echo "edit_user_id 123".$edit_user_id1;
+			
+			
             $form_style_attr = ' style="display: ;"';
             if ($this->input->post('edit_user_form_btn') != '') {
                 $this->load->library('form_validation');
