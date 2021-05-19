@@ -320,7 +320,7 @@ class Internal_user extends CI_Controller {
         $data['user_role_check'] = $user_role_check;
         $data['form_style_attr'] = $form_style_attr;
         $data['main_content'] = 'internaluser/edituser';
-		
+		$this->output->enable_profiler(TRUE);
         $this->load->view('layout', $data);
     }
     /*
