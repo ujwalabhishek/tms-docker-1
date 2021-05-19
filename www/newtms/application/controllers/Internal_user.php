@@ -315,7 +315,7 @@ class Internal_user extends CI_Controller {
         $user_role_name = $this->internaluser->get_user_role_name($user_list_values->role_id);
         $data['user_role_name'] = $user_role_name;
         $data['roles'] = $this->internaluser->get_user_role($tenant_id);
-        $user_role_check = $this->internaluser->user_role_check($edit_user_id1, $tenant_id);
+        $user_role_check = $this->internaluser->user_role_check($edit_user_id, $tenant_id);
 		//echo $this->db->last_query(); die; exit;
         $data['user_role_check'] = $user_role_check;
         $data['form_style_attr'] = $form_style_attr;
