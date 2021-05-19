@@ -450,12 +450,12 @@ class Internal_User_Model extends CI_Model {
             $this->db->or_where("FIND_IN_SET(" . $edit_user_id . ",sales_executive) !=", 0);
             $result = $this->db->get();            
         }     
-
+$result->result();
 		var_dump($this->db->last_query());
 
 		exit();
 		
-        return $result->result();
+        //return 
     }
 
    /**
