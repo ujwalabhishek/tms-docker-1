@@ -199,7 +199,7 @@ class Internal_user extends CI_Controller {
         $form_style_attr = ' style="display:none;"';
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $user_details = explode('(', $this->input->post('search_user_firstname'));
-            $edit_user_id = rtrim($user_details[1], ')');
+            $edit_user_id = $this->input->post('search_user_id');
             $data['edit_user_id'] = $edit_user_id;
             $form_style_attr = ' style="display: ;"';
             if ($this->input->post('edit_user_form_btn') != '') {
