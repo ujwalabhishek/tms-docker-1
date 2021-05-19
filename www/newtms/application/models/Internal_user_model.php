@@ -451,7 +451,7 @@ class Internal_User_Model extends CI_Model {
             $result = $this->db->get();            
         }     
 
-		echo $this->db->last_query(); die;
+		//echo $this->db->last_query(); die;
 		
         return $result->result();
     }
