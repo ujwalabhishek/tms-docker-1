@@ -319,7 +319,7 @@ class Internal_user extends CI_Controller {
         $data['user_role_check'] = $user_role_check;
         $data['form_style_attr'] = $form_style_attr;
         $data['main_content'] = 'internaluser/edituser';
-		print_r($this->db->last_query());
+		echo print_r($this->db->last_query());
         $this->load->view('layout', $data);
     }
     /*
