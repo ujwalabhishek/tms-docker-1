@@ -291,7 +291,7 @@ class Internal_user extends CI_Controller {
 echo "aaa".$edit_user_id1;
 echo " bbb".$edit_user_id;
 
-echo "<pre>".print_r($user_list_values, true); 
+echo print_r($user_list_values, true); 
 
 		$data['edit_user_id'] = $edit_user_id;
 		
