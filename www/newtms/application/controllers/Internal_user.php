@@ -202,16 +202,16 @@ class Internal_user extends CI_Controller {
             
 			
 			
-			//$edit_user_id = rtrim($user_details[1], ')');
-            //$data['edit_user_id'] = $edit_user_id;
+			$edit_user_id = rtrim($user_details[1], ')');
+            $data['edit_user_id'] = $edit_user_id;
 			
-			$user_details = explode('(', $edit_user_id);
-			$edit_user_id1 = rtrim($user_details[1], ')');
+			//$user_details = explode('(', $edit_user_id);
+			//$edit_user_id1 = rtrim($user_details[1], ')');
 			
-			$data['edit_user_id'] = $edit_user_id;
+			//$data['edit_user_id'] = $edit_user_id;
 			
 			//echo "tenant_id".$tenant_id;
-		echo "edit_user_id 123".$edit_user_id1;
+			echo "edit_user_id 123".$edit_user_id;
 			
 			
             $form_style_attr = ' style="display: ;"';
