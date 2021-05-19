@@ -199,22 +199,8 @@ class Internal_user extends CI_Controller {
         $form_style_attr = ' style="display:none;"';
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $user_details = explode('(', $this->input->post('search_user_firstname'));
-            
-			
-			
-			//$edit_user_id = rtrim($user_details[1], ')');
-            //$data['edit_user_id'] = $edit_user_id;
-			
-			$user_details = explode('(', $edit_user_id);
-			$edit_user_id1 = rtrim($user_details[1], ')');
-			
-			$data['edit_user_id'] = $edit_user_id;
-			
-			echo print_r($user_details, true);
-			
-			echo "edit_user_id 123".$edit_user_id;
-			
-			
+            $edit_user_id = rtrim($user_details[1], ')');
+            $data['edit_user_id'] = $edit_user_id;
             $form_style_attr = ' style="display: ;"';
             if ($this->input->post('edit_user_form_btn') != '') {
                 $this->load->library('form_validation');
@@ -295,17 +281,10 @@ class Internal_user extends CI_Controller {
                 }
             }
         }
-		echo "tenant_id".$tenant_id;
-		echo "edit_user_id".$edit_user_id;
         $user_list_values = $this->internaluser->get_user_details($tenant_id, $edit_user_id);
 		
-		$user_details = explode('(', $edit_user_id);
-        $edit_user_id1 = rtrim($user_details[1], ')');			
-
-echo "aaa".$edit_user_id1;
-echo " bbb".$edit_user_id;
-
-echo print_r($user_list_values, true); 
+		//$user_details = explode('(', $edit_user_id);
+        $edit_user_id1 = $this->input->post('search_user_id');			
 
 		$data['edit_user_id'] = $edit_user_id;
 		
@@ -337,11 +316,9 @@ echo print_r($user_list_values, true);
         $data['user_role_name'] = $user_role_name;
         $data['roles'] = $this->internaluser->get_user_role($tenant_id);
         $user_role_check = $this->internaluser->user_role_check($edit_user_id1, $tenant_id);
-		//echo $this->db->last_query(); die; exit;
         $data['user_role_check'] = $user_role_check;
         $data['form_style_attr'] = $form_style_attr;
         $data['main_content'] = 'internaluser/edituser';
-		$this->output->enable_profiler(TRUE);
         $this->load->view('layout', $data);
     }
     /*
