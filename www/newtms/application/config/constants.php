@@ -152,3 +152,6 @@ define('ONLINE', 'ONLINE');//11/12/14-MODE OF PAYMENT
 ////added by shubhranshu for google captcha////////////////
 define('GOOGLE_CAPTCHA_SITEKEY', "6LfFt-AUAAAAAD55LkGylvDtnsY2Id1tAC4ngkuE"); 
 define('GOOGLE_CAPTCHA_SECRETKEY', "6LfFt-AUAAAAAJ5j-dygHmPcCTw_dKg4se_fjCOz");
+
+/////added by shubhranshu for NSA courses mail send to anther mail id for FRCS
+define('FRCSMAILID', "nsa@frcs.sg"); 
