@@ -449,7 +449,10 @@ class Internal_User_Model extends CI_Model {
             $this->db->or_where("FIND_IN_SET(" . $edit_user_id . ",training_aide) !=", 0);
             $this->db->or_where("FIND_IN_SET(" . $edit_user_id . ",sales_executive) !=", 0);
             $result = $this->db->get();            
-        }        
+        }     
+
+		print_r($this->db->last_query());
+		
         return $result->result();
     }
 
