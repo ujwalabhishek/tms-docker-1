@@ -204,7 +204,7 @@ class Internal_user extends CI_Controller {
             $form_style_attr = ' style="display: ;"';
             if ($this->input->post('edit_user_form_btn') != '') {
                 $this->load->library('form_validation');
-                $edit_user_id = $this->input->post('edit_user_id');
+                //$edit_user_id = $this->input->post('edit_user_id');
                 $user_list_values = $this->internaluser->get_user_details($tenant_id, $edit_user_id);                
                 if ($user_list_values == false) {
                     redirect('internal_user/edit_user');
@@ -282,12 +282,7 @@ class Internal_user extends CI_Controller {
             }
         }
         $user_list_values = $this->internaluser->get_user_details($tenant_id, $edit_user_id);
-		
-		//$user_details = explode('(', $edit_user_id);
-        $edit_user_id1 = $this->input->post('search_user_id');			
-
-		$data['edit_user_id'] = $edit_user_id;
-		
+						
         $data['user_list_values'] = $user_list_values;
         $country_of_residence = get_param_value($user_list_values->country_of_residence);
         $data['country_of_residence'] = $country_of_residence;
@@ -315,7 +310,7 @@ class Internal_user extends CI_Controller {
         $user_role_name = $this->internaluser->get_user_role_name($user_list_values->role_id);
         $data['user_role_name'] = $user_role_name;
         $data['roles'] = $this->internaluser->get_user_role($tenant_id);
-        $user_role_check = $this->internaluser->user_role_check($edit_user_id1, $tenant_id);
+        $user_role_check = $this->internaluser->user_role_check($edit_user_id, $tenant_id);
         $data['user_role_check'] = $user_role_check;
         $data['form_style_attr'] = $form_style_attr;
         $data['main_content'] = 'internaluser/edituser';
