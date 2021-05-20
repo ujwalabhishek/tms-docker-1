@@ -213,6 +213,7 @@ $CI->load->model('class_model');
                                 <th width="10%" class="th_header text_move"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=classroom_trainer&o=" . $ancher; ?>" >Trainer</a></th>
                                 <th width="9%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=class_language&o=" . $ancher; ?>" >Language</a></th>
                                 <th width="9%" class="th_header">Status</th>
+                                <th width="9%" class="th_header">SSG Status</th>
                             </tr>
                             <tr>
                                 <th colspan="3">&nbsp;</th>
@@ -296,6 +297,7 @@ $CI->load->model('class_model');
                             
                             <td><?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($data['class_language']), ', '); ?></td>
                             <td><?php echo $status_label; ?></td>
+                            <td><a href="<?php echo base_url() .'ssgapi_course/get_ssg_courserun/' . $data['class_id']; ?>">Create Course Run</a></td>
                             </tr>
                             <?php
                         }
