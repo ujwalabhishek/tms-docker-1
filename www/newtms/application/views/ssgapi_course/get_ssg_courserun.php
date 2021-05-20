@@ -131,7 +131,7 @@
         <tbody>
             <tr>                        
                 <td class="td_heading" width="20%">Trainer Name:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
+                <td width='40%'><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
                 <td class="td_heading">Trainer Email:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
             </tr>
