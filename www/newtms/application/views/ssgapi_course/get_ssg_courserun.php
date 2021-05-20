@@ -15,7 +15,8 @@
                     
                     <tr>
                         <td class="td_heading">Mode Of Training:<span class="required">*</span></td>
-                        <td colspan="3"> <label class="label_font"></label>(Mode of training code - Code Description,1 Classroom,2 Asynchronous eLearning,3 In-house,4 On-the-Job,5 Practical / Practicum,6 Supervised Field,7 Traineeship,8 Assessment,9 Synchronous eLearning)</td>
+                        <td><label class="label_font"></label></td>
+                        <td colspan="2"> <label class="label_font"></label>(Mode of training code - Code Description,1 Classroom,2 Asynchronous eLearning,3 In-house,4 On-the-Job,5 Practical / Practicum,6 Supervised Field,7 Traineeship,8 Assessment,9 Synchronous eLearning)</td>
                     </tr>
                     
                     <tr>
