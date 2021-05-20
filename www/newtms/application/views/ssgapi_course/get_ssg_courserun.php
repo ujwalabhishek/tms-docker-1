@@ -142,7 +142,7 @@
                 <td><label class="label_font">1</label>
                     <div style='color:grey'>1-(Existing) ,2-(New)</div>
                 </td>
-                <td class="td_heading">Trainer Description:<span class="required">*</span></td>
+                <td class="td_heading" width="13%">Trainer Description:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
             </tr>
 
