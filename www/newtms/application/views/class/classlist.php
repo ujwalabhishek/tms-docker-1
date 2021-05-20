@@ -297,7 +297,7 @@ $CI->load->model('class_model');
                             
                             <td><?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($data['class_language']), ', '); ?></td>
                             <td><?php echo $status_label; ?></td>
-                            <td><a class='create_course_run' href="<?php echo base_url() .'ssgapi_course/get_ssg_courserun/' . $data['class_id']; ?>">Create Course Run</a></td>
+                            <td><a class='create_course_run' href="<?php echo base_url() .'ssgapi_course/get_ssg_courserun/' . $data['class_id'].'/'.$data['course_id']; ?>">Create Course Run</a></td>
                             </tr>
                             <?php
                         }
