@@ -217,8 +217,8 @@ $CI->load->model('class_model');
                             </tr>
                             <tr>
                                 <th colspan="3">&nbsp;</th>
-                                <th width="8%" class="text_move">Booked</th>
-                                <th width="11%" class="text_move">Available</th>
+                                <th width="" class="text_move">Booked</th>
+                                <th width="" class="text_move">Available</th>
                                 <!--<th width="10%" class="text_move">Total</th>-->
                                 <th colspan="5">&nbsp;</th>
                             </tr>
