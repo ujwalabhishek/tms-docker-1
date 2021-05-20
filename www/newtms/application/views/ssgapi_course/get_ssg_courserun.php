@@ -18,7 +18,7 @@
      <table class="table table-striped">
         <tbody>
             <tr>
-                <td class="td_heading">Mode Of Training:<span class="required">*</span></td>
+                <td width="20%" class="td_heading">Mode Of Training:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
                 <td colspan="2"> <label class="label_font"></label>
                     <div style='color:grey'>(Mode of training code - Code Description,1 Classroom,2 Asynchronous eLearning,3 In-house,4 On-the-Job,5 Practical / Practicum,6 Supervised Field,7 Traineeship,8 Assessment,9 Synchronous eLearning)</div>
@@ -95,7 +95,7 @@
     <table class="table table-striped">
         <tbody>
             <tr>                        
-                <td class="td_heading">Session Start Date:<span class="required">*</span></td>
+                <td class="td_heading" width="20%">Session Start Date:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
                 <td class="td_heading">Session End Date:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
@@ -130,7 +130,7 @@
     <table class="table table-striped">
         <tbody>
             <tr>                        
-                <td class="td_heading">Trainer Name:<span class="required">*</span></td>
+                <td class="td_heading" width="20%">Trainer Name:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
                 <td class="td_heading">Trainer Email:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
