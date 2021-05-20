@@ -618,4 +618,20 @@ class ssgapi_course extends CI_Controller {
 				$('#out').html(decrypted);
 			  }</script>";
     }
+    
+   ///  //////  Below functions added by shubhranshu for SSG API integration ///////////////////////////////////////////
+    
+    public function get_ssg_courserun($class_id){
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['page_title'] = 'SSG CREATE COURSE RUN';
+        $data['main_content'] = 'ssgapi_course/get_ssg_courserun';
+        $this->load->view('layout', $data);
+    }
+    
+    
+    
+    
+    
+    
+    
 }
