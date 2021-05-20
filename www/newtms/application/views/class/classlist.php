@@ -210,10 +210,10 @@ $CI->load->model('class_model');
                                 <th width="15%" class="th_header text_move"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=class_end_datetime&o=" . $ancher; ?>" >End Date & Time</a></th>
                                 <th class="th_header text_move" colspan="2">Seats</th>
                                 <th width="10%" class="th_header text_move"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=classroom_trainer&o=" . $ancher; ?>" >Trainee Aide</a></th>
-                                <th width="10%" class="th_header text_move"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=classroom_trainer&o=" . $ancher; ?>" >Trainer</a></th>
-                                <th width="9%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=class_language&o=" . $ancher; ?>" >Language</a></th>
-                                <th width="9%" class="th_header">Status</th>
-                                <th width="9%" class="th_header">SSG Status</th>
+                                <th width="6%" class="th_header text_move"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=classroom_trainer&o=" . $ancher; ?>" >Trainer</a></th>
+                                <th width="3%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=class_language&o=" . $ancher; ?>" >Language</a></th>
+                                <th width="5%" class="th_header">Status</th>
+                                <th width="20%" class="th_header">SSG Status</th>
                             </tr>
                             <tr>
                                 <th colspan="3">&nbsp;</th>
