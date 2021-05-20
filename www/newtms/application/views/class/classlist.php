@@ -297,7 +297,7 @@ $CI->load->model('class_model');
                             
                             <td><?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($data['class_language']), ', '); ?></td>
                             <td><?php echo $status_label; ?></td>
-                            <td><a href="<?php echo base_url() .'ssgapi_course/get_ssg_courserun/' . $data['class_id']; ?>">Create Course Run</a></td>
+                            <td><a class='create_course_run' href="<?php echo base_url() .'ssgapi_course/get_ssg_courserun/' . $data['class_id']; ?>">Create Course Run</a></td>
                             </tr>
                             <?php
                         }
@@ -370,5 +370,36 @@ echo form_open("", $form_attributes);
 <?php
 echo form_close();
 ?>
+<style>
+    .create_course_run{
+        text-align: center;
+    -moz-box-shadow: inset 0px 1px 0px 0px #54a3f7;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #54a3f7;
+    box-shadow: inset 0px 1px 0px 0px #54a3f7;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
+    background: -moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: -webkit-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: -o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: -ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
+    background-color: #007dc1;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #124d77;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    padding: 2px 3px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #154682;
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: normal;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    }   
+    
 
+</style>
 <!-- END Confirmation Dialog - ENTUTO -->
