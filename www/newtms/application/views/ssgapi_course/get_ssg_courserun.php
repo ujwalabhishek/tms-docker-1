@@ -20,13 +20,16 @@
             <tr>
                 <td class="td_heading">Mode Of Training:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
-                <td colspan="2"> <label class="label_font"></label>(Mode of training code - Code Description,1 Classroom,2 Asynchronous eLearning,3 In-house,4 On-the-Job,5 Practical / Practicum,6 Supervised Field,7 Traineeship,8 Assessment,9 Synchronous eLearning)</td>
+                <td colspan="2"> <label class="label_font"></label>
+                    <div style='color:grey'>(Mode of training code - Code Description,1 Classroom,2 Asynchronous eLearning,3 In-house,4 On-the-Job,5 Practical / Practicum,6 Supervised Field,7 Traineeship,8 Assessment,9 Synchronous eLearning)</div>
+                </td>
             </tr>
 
             <tr>
                 <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
-                <td colspan="2"> <label class="label_font"></label>Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'</td>
+                <td colspan="2"> <label class="label_font"></label>
+                    <div style='color:grey'>Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'</td></div>
             </tr>
 
             <tr>
