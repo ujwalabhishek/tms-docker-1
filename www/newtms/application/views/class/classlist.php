@@ -220,7 +220,7 @@ $CI->load->model('class_model');
                                 <th width="8%" class="text_move">Booked</th>
                                 <th width="11%" class="text_move">Available</th>
                                 <!--<th width="10%" class="text_move">Total</th>-->
-                                <th colspan="4">&nbsp;</th>
+                                <th colspan="5">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
