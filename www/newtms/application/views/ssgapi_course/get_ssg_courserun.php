@@ -35,14 +35,14 @@
             <tr>
                 <td class="td_heading">Registration Open Date:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
-                <td class="td_heading">Registration Close Date:</td>
+                <td class="td_heading">Registration Close Date:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
             </tr>
 
             <tr>
                 <td class="td_heading">Course Start Date:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
-                <td class="td_heading">Course End Date:</td>
+                <td class="td_heading">Course End Date:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
             </tr>
 
