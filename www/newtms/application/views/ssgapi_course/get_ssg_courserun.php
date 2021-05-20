@@ -79,7 +79,7 @@
                 <td class="td_heading">Course Vacancy Code:<span class="required">*</span></td>
                 <td>
                     <label class="label_font">L</label>
-                    <div style='color:grey'>A  - Available F  - Full L  - Limited Vacancy</div>
+                    <div style='color:grey'>A  - Available ,F  - Full, L  - Limited Vacancy</div>
                 </td>
                 <td class="td_heading">Course Vacancy Description:<span class="required">*</span></td>
                 <td><label class="label_font">Limited Vacancy</label></td>
@@ -148,8 +148,10 @@
                 <td><label class="label_font">True</label>
                     <div style='color:grey'>For trainerType as "1-Existing" trainer, fill up the Trainer name, email and leave the rest of the Trainer fields empty. API will get the details from the TP Profile,For trainerType as "2-New" trainer, please fill in all required details. If inTrainingProviderProfile is set to "true", the new added trainer will be saved into trainer profile as well as linked to this specific course run; otherwise, this trainer is linked to this specific course run only.</div>
                 </td>
-                <td class="td_heading">Trainer Email:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td class="td_heading">Trainer ID:<span class="required">*</span></td>
+                <td><label class="label_font"></label>
+                <div style='color:grey'>The unique Trainer id for existing trainer. For new trainer, leave it blank.</div>
+                </td>
             </tr>
         </tbody>
     </table>
