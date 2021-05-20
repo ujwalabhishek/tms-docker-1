@@ -5,7 +5,7 @@
     <table class="table table-striped">
         <tbody>
             <tr>
-                <td class="td_heading" width="28%">Course Reference Number:<span class="required">*</span></td>
+                <td class="td_heading" width="20%">Course Reference Number:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo $course_data->crse_name; ?></label></td>
                 <td class="td_heading">TP UEN:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
