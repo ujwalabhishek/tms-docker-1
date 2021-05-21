@@ -4322,7 +4322,7 @@ class Class_Trainee extends CI_Controller {
                                 <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Trim finger nails and remove nail polish.</li>
                                 '.$li.'
-                                <li>Payment via Paynow/Paylah or GIRO.</li>
+                                <li>Payment via Paynow/ Paylah, GIRO or SkillsFuture Credit.</li>
                                  <li>Dress code : Covered shoes.</li>
                             </ol>';
                 }else{
@@ -4508,7 +4508,7 @@ class Class_Trainee extends CI_Controller {
                                 <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Trim finger nails and remove nail polish.</li>
                                  '.$li.'
-                                <li>Payment via Paynow/Paylah or GIRO.</li>
+                                <li>Payment via Paynow/ Paylah, GIRO or SkillsFuture Credit.</li>
                                  <li>Dress code : Covered shoes.</li>
                             </ol>';
                 }else{
