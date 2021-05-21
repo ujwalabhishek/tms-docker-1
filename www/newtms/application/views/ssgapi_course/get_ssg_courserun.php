@@ -83,8 +83,8 @@
             </tr>
 
             <tr>
-                <td class="td_heading">Schedule Info:<span class="required">*</span></td>
-                <td colspan='3'><label class="label_font"><?php echo date('d/m/Y h:i A', strtotime($class->class_start_datetime)).' - '.date('d/m/Y h:i A', strtotime($class->class_end_datetime)).' / '.date('D', strtotime($class->class_start_datetime)); ?></label></td>
+                <td class="td_heading">Schedule Info:<span class="required">*</span></td>"04Mar : Sat / 5 Sats / 9am - 6pm",
+                <td colspan='3'><label class="label_font"><?php echo date('dM', strtotime($class->class_start_datetime)).' : '.date('D', strtotime($class->class_start_datetime)).' / '.date('h:i A', strtotime($class->class_start_datetime)).' - '.date('h:i A', strtotime($class->class_end_datetime)); ?></label></td>
             </tr>
 
             <tr>
@@ -300,7 +300,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan='4'><button id='crse_run_btn'>Verify & Proceed</button></td>
+                <td colspan='4' class='text-center'><button id='crse_run_btn'>Verify & Proceed</button></td>
             </tr>
         </tbody>
     </table>
@@ -365,7 +365,7 @@
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
-    padding: 2px 3px;
+    padding: 6px 17px;
     text-decoration: none;
     text-shadow: 0px 1px 0px #154682;
     text-transform: none;
