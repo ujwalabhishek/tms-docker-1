@@ -345,7 +345,7 @@
 
 </script>
 <style>
-    .crse_run_btn{
+    #crse_run_btn{
      text-align: center;
     -moz-box-shadow: inset 0px 1px 0px 0px #54a3f7;
     -webkit-box-shadow: inset 0px 1px 0px 0px #54a3f7;
