@@ -18,6 +18,7 @@ class ssgapi_course extends CI_Controller {
         parent::__construct();
         $this->load->model('class_trainee_model', 'classTraineeModel');
         $this->load->model('class_Model', 'classModel');
+        $this->load->model('course_model', 'coursemodel');
         $this->load->model('company_model', 'companyModel');
         $this->load->model('tenant_model', 'tenantModel');
         $this->load->helper('common');
@@ -35,6 +36,14 @@ class ssgapi_course extends CI_Controller {
         $data['page_title'] = 'Accounting';
         $data['main_content'] = 'classtrainee/accounting';
         $this->load->view('layout', $data);
+    }
+    
+    public function get_classroom_location($venue, $other) {
+        if ($venue == 'OTH') {
+            return 'Others (' . $other . ')';
+        } else {
+            return $this->coursemodel->get_metadata_on_parameter_id($venue);
+        }
     }
     
     public function curl_request($mode,$url,$encrypted_data,$api_version){
@@ -621,8 +630,15 @@ class ssgapi_course extends CI_Controller {
     
    ///  //////  Below functions added by shubhranshu for SSG API integration ///////////////////////////////////////////
     
-    public function get_ssg_courserun($class_id){
+    public function get_ssg_courserun($class_id,$course_id){
+        $tenant_id = $this->tenant_id;
         $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['tenant'] = $this->classTraineeModel->get_tenant_masters($tenant_id);
+        $data['coursedetails'] = $this->coursemodel->get_course_detailse($course_id);
+        $data['class'] = $class = $this->class_Model->get_class_details_assmnts($tenant_id, $class_id);
+        $data['ClassTrainer'] = $this->class_Model->get_trainer_names($class->classroom_trainer);
+        $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
+        $data['booked_seats'] = $this->class_Model->get_class_booked($course_id,$class_id,$tenant_id);
         $data['page_title'] = 'SSG CREATE COURSE RUN';
         $data['main_content'] = 'ssgapi_course/get_ssg_courserun';
         $this->load->view('layout', $data);

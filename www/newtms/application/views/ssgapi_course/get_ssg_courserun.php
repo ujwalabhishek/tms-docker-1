@@ -6,8 +6,8 @@
         <tbody>
             <tr>
                 <td class="td_heading" width="20%">Course Reference Number:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $course_data->crse_name; ?></label></td>
-                <td class="td_heading">TP UEN:<span class="required">*</span></td>
+                <td><label class="label_font"><?php echo $coursedetails->reference_num; ?></label></td>
+                <td class="td_heading">TP UEN:<span class="required">*</span><?php echo $tenant->comp_reg_no; ?></td>
                 <td><label class="label_font"></label></td>
             </tr>
         </tbody>
@@ -19,7 +19,7 @@
         <tbody>
             <tr>
                 <td width="20%" class="td_heading">Mode Of Training:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label>1</td>
                 <td colspan="2"> <label class="label_font"></label>
                     <div style='color:grey'>(Mode of training code - Code Description,1 Classroom,2 Asynchronous eLearning,3 In-house,4 On-the-Job,5 Practical / Practicum,6 Supervised Field,7 Traineeship,8 Assessment,9 Synchronous eLearning)</div>
                 </td>
@@ -27,23 +27,23 @@
 
             <tr>
                 <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label><?php echo $tenant->tenant_email_id; ?></td>
                 <td colspan="2"> <label class="label_font"></label>
                     <div style='color:grey'>Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'</td></div>
             </tr>
 
             <tr>
                 <td class="td_heading">Registration Open Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_start_datetime)); ?></td>
                 <td class="td_heading">Registration Close Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_end_datetime)); ?></td>
             </tr>
 
             <tr>
                 <td class="td_heading">Course Start Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label><?php echo date('h:i A', strtotime($class->class_start_datetime)); ?></td>
                 <td class="td_heading">Course End Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label><?php echo date('h:i A', strtotime($class->class_end_datetime)); ?></td>
             </tr>
 
             <tr>
@@ -55,33 +55,43 @@
 
             <tr>
                 <td class="td_heading">Schedule Info:<span class="required">*</span></td>
-                <td colspan='3'><label class="label_font">04Mar : Sat / 5 Sats / 9am - 6pm</label></td>
+                <td colspan='3'><label class="label_font"><?php echo strtotime($class->class_start_datetime); ?> : Sat / 5 Sats / 9am - 6pm</label></td>
             </tr>
 
             <tr>                        
                 <td class="td_heading"> Venue Floor:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
+                <td><label class="label_font"><?php echo rtrim($ClassLoc, ', '); ?></label></td>
                 <td class="td_heading">Venue Unit:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label><?php echo rtrim($ClassLoc, ', '); ?></td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Venue Postal Code:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
                 <td class="td_heading">Venue Room:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label><?php echo rtrim($ClassLoc, ', '); ?></td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Course Intake Size:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label><?php echo $class->total_seats; ?></td>
                 <td colspan="2"> <label class="label_font"></label>Course run intake size. It's maximum pax for a class</td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Course Vacancy Code:<span class="required">*</span></td>
                 <td>
-                    <label class="label_font">L</label>
+                    <label class="label_font">
+                        <?php 
+                        if($booked_seats >= $class->total_seats){
+                            echo "F";
+                        }elseif($booked_seats < $class->total_seats && $booked_seats > ($class->total_seats/2)){
+                            echo "L";
+                        }elseif($booked_seats < $class->total_seats && $booked_seats < ($class->total_seats/2)){
+                            echo "A";
+                        }
+                        ?>
+                    </label>
                     <div style='color:grey'>A  - Available ,F  - Full, L  - Limited Vacancy</div>
                 </td>
                 <td class="td_heading">Course Vacancy Description:<span class="required">*</span></td>
@@ -96,30 +106,30 @@
         <tbody>
             <tr>                        
                 <td class="td_heading" width="20%">Session Start Date:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
+                <td><label class="label_font"><?php echo date('Ymd', strtotime($class->class_start_datetime)); ?></label></td>
                 <td class="td_heading">Session End Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_end_datetime)); ?></td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Session Start Time:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
+                <td><label class="label_font"><?php echo date('h:i A', strtotime($class->class_start_datetime)); ?></label></td>
                 <td class="td_heading">Session End Time:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label><?php echo date('h:i A', strtotime($class->class_end_datetime)); ?></td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Session Venue Floor:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
+                <td><label class="label_font"><?php echo rtrim($LabLoc, ', '); ?></label></td>
                 <td class="td_heading">Session Venue Unit:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label><?php echo rtrim($LabLoc, ', '); ?></td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Session Venue Postal Code:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
                 <td class="td_heading">Session Venue Room:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label><?php echo rtrim($LabLoc, ', '); ?></td>
             </tr>
         </tbody>
     </table>
@@ -131,7 +141,7 @@
         <tbody>
             <tr>                        
                 <td class="td_heading" width="20%">Trainer Name:<span class="required">*</span></td>
-                <td width='40%'><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
+                <td width='40%'><label class="label_font"><?php echo rtrim($ClassTrainer, ', '); ?></label></td>
                 <td class="td_heading">Trainer Email:<span class="required">*</span></td>
                 <td><label class="label_font"></label></td>
             </tr>
