@@ -299,6 +299,9 @@
                 <div style='color:grey'>The unique Trainer id for existing trainer. For new trainer, leave it blank.</div>
                 </td>
             </tr>
+            <tr>
+                <td colspan='4'><button id='crse_run_btn'>Verify & Proceed</button></td>
+            </tr>
         </tbody>
     </table>
     <script>
@@ -341,3 +344,33 @@
     });   
 
 </script>
+<style>
+    .crse_run_btn{
+     text-align: center;
+    -moz-box-shadow: inset 0px 1px 0px 0px #54a3f7;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #54a3f7;
+    box-shadow: inset 0px 1px 0px 0px #54a3f7;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
+    background: -moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: -webkit-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: -o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: -ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
+    background-color: #007dc1;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #124d77;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    padding: 2px 3px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #154682;
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: normal;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+</style>
