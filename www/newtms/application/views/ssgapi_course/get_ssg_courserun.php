@@ -235,14 +235,14 @@
 
     
     <h2 class="sub_panel_heading_style">TRAINER</h2>
-    
+    <?php foreach($ClassTrainer as $trainer){?>
     <table class="table table-striped">
         <tbody>
             <tr>                        
                 <td class="td_heading" width="20%">Trainer Name:<span class="required">*</span></td>
-                <td width='40%'><label class="label_font"><?php echo rtrim($ClassTrainer, ', '); ?></label></td>
+                <td width='40%'><label class="label_font"><?php echo $trainer->first_name.' '.$trainer->last_name; ?></label></td>
                 <td class="td_heading">Trainer Email:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"><?php echo $trainer->registered_email_id;?></label></td>
             </tr>
 
 
@@ -267,5 +267,5 @@
             </tr>
         </tbody>
     </table>
-
+    <?php } ?>
 </div>
