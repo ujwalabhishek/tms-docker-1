@@ -219,16 +219,16 @@
 
             <tr>                        
                 <td class="td_heading">Session Venue Floor:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo rtrim($LabLoc, ', '); ?></label></td>
+                <td><label class="svenue_floor"></label></td>
                 <td class="td_heading">Session Venue Unit:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo rtrim($LabLoc, ', '); ?></td>
+                <td><label class="svenue_unit"></label></td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Session Venue Postal Code:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
+                <td><label class="svenue_postalcode"></label></td>
                 <td class="td_heading">Session Venue Room:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo rtrim($LabLoc, ', '); ?></td>
+                <td><label class="svenue_room"></label></td>
             </tr>
         </tbody>
     </table>
@@ -245,17 +245,39 @@
                 <td class="td_heading" width="20%">Trainer Name:<span class="required">*</span></td>
                 <td width='40%'><label class="label_font"><?php echo $trainer->first_name.' '.$trainer->last_name; ?></label></td>
                 <td class="td_heading">Trainer Email:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $trainer->registered_email_id;?></label></td>
+                <td>
+                    <label class="label_font">
+                    <?php
+                    $trainer_email = array(
+                        'name' => 'trainer_email',
+                        'id' => 'trainer_email',
+                        'value' => '',
+                        'maxlength' => 50,
+                        "class" => "upper_case"
+                    );
+                    echo form_input($trainer_email);
+                    ?>
+                    </label>
+                    <span id="trainer_email_err"></span>
+                </td>
             </tr>
-
 
             <tr>                        
                 <td class="td_heading">Trainer Type Code:<span class="required">*</span></td>
-                <td><label class="label_font">2</label>
+                <td>
+                    <label class="label_font">
+                    <select name="ttcode[]" id="ttcode<?php echo $sl;?>">
+                            <option value="" selected="selected">Please Choose</option>
+                            <option value="1">1-Existing</option>
+                            <option value="2">2-New</option>
+                        </select>
+                    
+                    <span id="ttcode<?php echo $sl;?>_err"></span>
+                    </label>
                     <div style='color:grey'>1-(Existing) ,2-(New)</div>
                 </td>
                 <td class="td_heading" width="13%">Trainer Description:<span class="required">*</span></td>
-                <td><label class="label_font"></label></td>
+                <td><label class="label_font"></label>NEW</td>
             </tr>
 
             <tr>                        
@@ -264,8 +286,8 @@
                     <label class="label_font">
                         <select name="itpf[]" id="itpf<?php echo $sl;?>">
                             <option value="" selected="selected">Please Choose</option>
-                            <option value="1">1-Existing</option>
-                            <option value="2">2-New</option>
+                            <option value="1">True</option>
+                            <option value="2">False</option>
                         </select>
                     
                     <span id="itpf<?php echo $sl;?>_err"></span>
@@ -279,12 +301,43 @@
             </tr>
         </tbody>
     </table>
+    <script>
+    $(document).ready(function() {
+        $('#ttcode<?php echo $sl;?>').on('change', function() { 
+            if($('#ttcode<?php echo $sl;?>').val() == 2){
+                $('#itpf<?php echo $sl;?>').val('1');
+            }else{
+                $('#itpf<?php echo $sl;?>').val('2');
+            }
+        }); 
+        $('#itpf<?php echo $sl;?>').on('change', function() { 
+            if($('#itpf<?php echo $sl;?>').val() == 2){
+                $('#ttcode<?php echo $sl;?>').val('1');
+            }else{
+                $('#ttcode<?php echo $sl;?>').val('2');
+            }
+        }); 
+    });   
+
+    </script>
     <?php $sl++;} ?>
 </div>
 
 <script>
     $(document).ready(function() {
-        
+       $('#venue_floor').keyup(function(){
+           $('#svenue_floor').html($('#venue_floor').val());
+       });
+        $('#venue_unit').keyup(function(){
+           $('#svenue_unit').html($('#venue_unit').val());
+       });
+        $('#venue_postalcode').keyup(function(){
+           $('#svenue_postalcode').html($('#venue_postalcode').val());
+       });
+        $('#venue_room').keyup(function(){
+           $('#svenue_room').html($('#venue_room').val());
+       });
+       
     });   
 
 </script>
