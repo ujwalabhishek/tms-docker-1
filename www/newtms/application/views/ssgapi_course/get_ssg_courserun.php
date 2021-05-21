@@ -326,16 +326,16 @@
 <script>
     $(document).ready(function() {
        $('#venue_floor').keyup(function(){
-           $('#svenue_floor').html($('#venue_floor').val());
+           $('.svenue_floor').html($('#venue_floor').val());
        });
         $('#venue_unit').keyup(function(){
-           $('#svenue_unit').html($('#venue_unit').val());
+           $('.svenue_unit').html($('#venue_unit').val());
        });
         $('#venue_postalcode').keyup(function(){
-           $('#svenue_postalcode').html($('#venue_postalcode').val());
+           $('.svenue_postalcode').html($('#venue_postalcode').val());
        });
         $('#venue_room').keyup(function(){
-           $('#svenue_room').html($('#venue_room').val());
+           $('.svenue_room').html($('#venue_room').val());
        });
        
     });   
