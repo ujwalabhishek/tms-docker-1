@@ -20,7 +20,7 @@ class ssgapi_course extends CI_Controller {
         $this->load->model('class_Model', 'classModel');
         $this->load->model('course_model', 'coursemodel');
         $this->load->model('company_model', 'companyModel');
-        $this->load->model('ssg_model', 'ssgModel');
+        $this->load->model('ssg_api_model', 'ssgModel');
         $this->load->model('tenant_model', 'tenantModel');
         $this->load->helper('common');
         $this->load->helper('metavalues_helper');
