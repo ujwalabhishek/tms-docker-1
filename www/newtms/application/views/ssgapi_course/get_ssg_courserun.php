@@ -7,8 +7,8 @@
             <tr>
                 <td class="td_heading" width="20%">Course Reference Number:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo $coursedetails->reference_num; ?></label></td>
-                <td class="td_heading">TP UEN:<span class="required">*</span><?php echo $tenant->comp_reg_no; ?></td>
-                <td><label class="label_font"></label></td>
+                <td class="td_heading">TP UEN:<span class="required">*</span></td>
+                <td><label class="label_font"></label><?php echo $tenant->comp_reg_no; ?></td>
             </tr>
         </tbody>
     </table> 
@@ -41,9 +41,9 @@
 
             <tr>
                 <td class="td_heading">Course Start Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('h:i A', strtotime($class->class_start_datetime)); ?></td>
+                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_start_datetime)); ?></td>
                 <td class="td_heading">Course End Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('h:i A', strtotime($class->class_end_datetime)); ?></td>
+                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_end_datetime)); ?></td>
             </tr>
 
             <tr>
