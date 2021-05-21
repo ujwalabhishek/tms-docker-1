@@ -635,10 +635,10 @@ class ssgapi_course extends CI_Controller {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['tenant'] = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $data['coursedetails'] = $this->coursemodel->get_course_detailse($course_id);
-        $data['class'] = $class = $this->class_Model->get_class_details_assmnts($tenant_id, $class_id);
-        $data['ClassTrainer'] = $this->class_Model->get_trainer_names($class->classroom_trainer);
+        $data['class'] = $class = $this->classModel->get_class_details_assmnts($tenant_id, $class_id);
+        $data['ClassTrainer'] = $this->classModel->get_trainer_names($class->classroom_trainer);
         $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
-        $data['booked_seats'] = $this->class_Model->get_class_booked($course_id,$class_id,$tenant_id);
+        $data['booked_seats'] = $this->classModel->get_class_booked($course_id,$class_id,$tenant_id);
         $data['page_title'] = 'SSG CREATE COURSE RUN';
         $data['main_content'] = 'ssgapi_course/get_ssg_courserun';
         $this->load->view('layout', $data);
