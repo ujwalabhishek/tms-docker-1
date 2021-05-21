@@ -12,7 +12,7 @@ class Ssg_api_Model extends CI_Model {
         if (!empty($tids)) 
         {
             $this->load->model('course_model', 'course');
-            $trainer = '';
+            
             foreach ($tids as $tid) 
             {                
                 $sql = "SELECT pers.user_id,tu.registered_email_id, pers.first_name, pers.last_name, rl.role_id 
