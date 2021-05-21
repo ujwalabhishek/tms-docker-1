@@ -19,7 +19,7 @@
         <tbody>
             <tr>
                 <td width="20%" class="td_heading">Mode Of Training:<span class="required">*</span></td>
-                <td>
+                <td width="20%">
                     <select name="modeoftraining" id="modeoftraining">
                         <option value="" selected="selected">Please Choose</option>
                         <option value="1">Classroom</option>
@@ -203,7 +203,7 @@
     
     <table class="table table-striped">
         <tbody>
-            <tr>                        
+            <tr width="20%">                        
                 <td class="td_heading" width="20%">Session Start Date:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo date('Ymd', strtotime($class->class_start_datetime)); ?></label></td>
                 <td class="td_heading">Session End Date:<span class="required">*</span></td>
