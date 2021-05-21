@@ -235,7 +235,10 @@
 
     
     <h2 class="sub_panel_heading_style">TRAINER</h2>
-    <?php foreach($ClassTrainer as $trainer){?>
+    <?php 
+    $sl = 1;
+    foreach($ClassTrainer as $trainer){
+    ?>
     <table class="table table-striped">
         <tbody>
             <tr>                        
@@ -248,7 +251,7 @@
 
             <tr>                        
                 <td class="td_heading">Trainer Type Code:<span class="required">*</span></td>
-                <td><label class="label_font">1</label>
+                <td><label class="label_font">2</label>
                     <div style='color:grey'>1-(Existing) ,2-(New)</div>
                 </td>
                 <td class="td_heading" width="13%">Trainer Description:<span class="required">*</span></td>
@@ -257,7 +260,16 @@
 
             <tr>                        
                 <td class="td_heading">inTrainingProviderProfile:<span class="required">*</span></td>
-                <td><label class="label_font">True</label>
+                <td>
+                    <label class="label_font">
+                        <select name="itpf[]" id="itpf<?php echo $sl;?>">
+                            <option value="" selected="selected">Please Choose</option>
+                            <option value="1">1-Existing</option>
+                            <option value="2">2-New</option>
+                        </select>
+                    
+                    <span id="itpf<?php echo $sl;?>_err"></span>
+                    </label>
                     <div style='color:grey'>For trainerType as "1-Existing" trainer, fill up the Trainer name, email and leave the rest of the Trainer fields empty. API will get the details from the TP Profile,For trainerType as "2-New" trainer, please fill in all required details. If inTrainingProviderProfile is set to "true", the new added trainer will be saved into trainer profile as well as linked to this specific course run; otherwise, this trainer is linked to this specific course run only.</div>
                 </td>
                 <td class="td_heading">Trainer ID:<span class="required">*</span></td>
@@ -267,5 +279,12 @@
             </tr>
         </tbody>
     </table>
-    <?php } ?>
+    <?php $sl++;} ?>
 </div>
+
+<script>
+    $(document).ready(function() {
+        
+    });   
+
+</script>
