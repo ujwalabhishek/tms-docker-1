@@ -110,11 +110,10 @@ if (in_array($role_check, $role_array))
              <span class="fa fa-check-square-o" id="icone_grande"></span><br><br>
             <span class="texto_grande"><i class="fa fa-list-ul"></i> Mark Attendance </span><br><br></a>
       </div> 
-     <?php }else{ ?>
+     <?php }else{ 
 	 
-	 <?php $tenant_id = $this->session->userdata('userDetails')->tenant_id;
-	  if($tenant_id=='T20' || $tenant_id=='T17'){ ?>
-		<?php if($user_role == 'SLEXEC' || $user_role =='TRAINER'){?>
+	  if($tenant_id=='T20' || $tenant_id=='T17'){ 
+		if($user_role == 'SLEXEC' || $user_role =='TRAINER'){?>
 	  
 		  
 		<?php } else { ?>
@@ -131,7 +130,7 @@ if (in_array($role_check, $role_array))
 					<span class="fa fa-user-plus" id="icone_grande"></span><br><br>
 					<span class="texto_grande">Add New Trainee </span><br><br></a>
 			</div>	 
-	 <?php } ?>
+		<?php } ?>
           <div class="col-md-3">
          <a class="btn btn-block btn-sm btn-success" id="newclass" href="<?php echo base_url();?>reports/attendance"><br>
             <span class="fa fa-calendar-check-o" id="icone_grande"></span><br><br>          
