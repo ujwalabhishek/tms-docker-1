@@ -85,14 +85,22 @@ if (in_array($role_check, $role_array))
 <?php }else{ ?>
     <!--tariner-->
       <div class="row">
-      
-   
-      
-      <div class="col-md-3">
+      <?php if(TENANT_ID=='T20' || TENANT_ID=='T17'){ ?>	  
+		<?php if($user_role != 'SLEXEC'||$user_role !='TRAINER'){?>
+	  
+		  <div class="col-md-3">
+			<a class="btn btn-block btn-sm btn-primary" data-toggle="modal" data-target="#mymodal" id="newenrollment" href="<?php echo base_url();?>class_trainee/add_new_enrol"><br>
+				<span class="fa fa-pencil-square-o" id="icone_grande"></span><br><br>
+				<span class="texto_grande">Class Trainee Enrollment </span><br><br></a>
+		  </div>
+		<?php } ?>
+	  <?php }else{ ?>
+	  <div class="col-md-3">
         <a class="btn btn-block btn-sm btn-primary" data-toggle="modal" data-target="#mymodal" id="newenrollment" href="<?php echo base_url();?>class_trainee/add_new_enrol"><br>
             <span class="fa fa-pencil-square-o" id="icone_grande"></span><br><br>
             <span class="texto_grande">Class Trainee Enrollment </span><br><br></a>
       </div>
+	  <?php } ?>
      <?php if($user_role == 'TRAINER'){?>
       <div class="col-md-3">
         <a class="btn btn-block btn-sm btn-warning" id="markattendence" href="<?php echo base_url();?>class_trainee/mark_attendance"><br>
