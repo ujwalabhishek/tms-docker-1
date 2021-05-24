@@ -110,27 +110,13 @@ if (in_array($role_check, $role_array))
              <span class="fa fa-check-square-o" id="icone_grande"></span><br><br>
             <span class="texto_grande"><i class="fa fa-list-ul"></i> Mark Attendance </span><br><br></a>
       </div> 
-     <?php }else{ 
-	 
-	  if($tenant_id=='T20' || $tenant_id=='T17'){ 
-		if($user_role == 'SLEXEC' || $user_role =='TRAINER'){?>
-	  
-		  
-		<?php } else { ?>
-			<div class="col-md-3">
-			<a class="btn btn-block btn-sm btn-danger" id="newtrainee" href="<?php echo base_url();?>trainee/add_new_trainee"><br>
-			  <span class="fa fa-user-plus" id="icone_grande"></span><br><br>
-				<span class="texto_grande">Add New Trainee </span><br><br></a>
-			</div> 
-	 
-		<?php } ?>
-         <?php } else { ?>
-			<div class="col-md-3">
-				<a class="btn btn-block btn-sm btn-danger" id="newtrainee" href="<?php echo base_url();?>trainee/add_new_trainee"><br>
-					<span class="fa fa-user-plus" id="icone_grande"></span><br><br>
-					<span class="texto_grande">Add New Trainee </span><br><br></a>
-			</div>	 
-		<?php } ?>
+     <?php }else{ ?>
+        <div class="col-md-3">
+        <a class="btn btn-block btn-sm btn-danger" id="newtrainee" href="<?php echo base_url();?>trainee/add_new_trainee"><br>
+          <span class="fa fa-user-plus" id="icone_grande"></span><br><br>
+            <span class="texto_grande">Add New Trainee </span><br><br></a>
+      </div>  
+     <?php } ?>
           <div class="col-md-3">
          <a class="btn btn-block btn-sm btn-success" id="newclass" href="<?php echo base_url();?>reports/attendance"><br>
             <span class="fa fa-calendar-check-o" id="icone_grande"></span><br><br>          
