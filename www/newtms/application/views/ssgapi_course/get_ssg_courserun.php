@@ -422,9 +422,7 @@
            $('.svenue_room').html($('#venue_room').val());
        });
        
-       $("#venue_postalcode").inputFilter(function(value) {
-         return /^\d*$/.test(value);    // Allow digits only, using a RegExp
-      });
+      
         
         $('#courserun_form').on('submit',function() {
         if(validate_courserun()){
