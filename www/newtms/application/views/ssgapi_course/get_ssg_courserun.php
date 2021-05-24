@@ -381,10 +381,7 @@
            $('.svenue_room').html($('#venue_room').val());
        });
        
-       $('#crse_run_btn').click(function(){
-           
-        )};
-    
+       
         $('#crse_run_btn').click(function(){
             if(validate(true)){
                 return true;
