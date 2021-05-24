@@ -295,7 +295,7 @@
                     echo form_input($trainer_email);
                     ?>
                     </label>
-                    <span id="trainer_id_err"></span>
+                    <span id="trainer_email_err"></span>
                 </td>
             </tr>
 
@@ -304,9 +304,8 @@
                 <td>
                     <label class="label_font">
                     <select name="ttcode[]" id="ttcode<?php echo $sl;?>">
-                            <option value="" selected="selected">Please Choose</option>
                             <option value="1">1-Existing</option>
-                            <option value="2">2-New</option>
+                            <option value="2" selected="selected">2-New</option>
                         </select>
                     
                     <span id="ttcode<?php echo $sl;?>_err"></span>
@@ -322,8 +321,7 @@
                 <td>
                     <label class="label_font">
                         <select name="itpf[]" id="itpf<?php echo $sl;?>">
-                            <option value="" selected="selected">Please Choose</option>
-                            <option value="1">True</option>
+                            <option value="1" selected="selected">True</option>
                             <option value="2">False</option>
                         </select>
                     
