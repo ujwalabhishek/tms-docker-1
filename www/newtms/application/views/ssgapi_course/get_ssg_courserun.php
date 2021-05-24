@@ -295,7 +295,7 @@
                     echo form_input($trainer_email);
                     ?>
                     </label>
-                    <span id="trainer_email_err"></span>
+                    <span id="trainer_id_err"></span>
                 </td>
             </tr>
 
@@ -333,11 +333,23 @@
                 </td>
                 <td class="td_heading">Trainer ID:<span class="required">*</span></td>
                 <td><label class="label_font"></label>
-                <div style='color:grey'>The unique Trainer id for existing trainer. For new trainer, leave it blank.</div>
+                    <?php
+                    $trainer_id = array(
+                        'name' => 'trainer_id',
+                        'id' => 'trainer_id',
+                        'value' => '',
+                        'maxlength' => 50,
+                        "class" => "upper_case"
+                    );
+                    echo form_input($trainer_id);
+                    ?>
+                    </label>
+                    <span id="trainer_id_err"></span>
+                    <div style='color:grey'>The unique Trainer id for existing trainer. For new trainer, leave it blank.</div>
                 </td>
             </tr>
             <tr>
-                <td colspan='4' class='text-center'><button id='crse_run_btn'>Verify & Proceed</button></td>
+                <td colspan='4' class='text-center'><button type='submit' id='crse_run_btn'>Verify & Proceed</button></td>
             </tr>
         </tbody>
     </table>
@@ -382,18 +394,135 @@
        });
        
        
-        $('#crse_run_btn').click(function(){
-            if(validate(true)){
-                return true;
-            }else{
-                return false;
-            }
-        });
+        
+        $('#courserun_form').on('submit',function() {
+        if(validate_courserun()){
+            var self = $(this),
+            button = self.find('input[type="submit"],button');
+            button.attr('disabled','disabled').html('Please Wait..');
+            return true;
+        }else{
+            return false;
+        }
         
        
     });  
-    function validate(){
-        alert('sss');
+    function validate_courserun(){
+        var retVal = true;
+        $tp_uen$crsrefno=$('#crse_ref_no').val();
+        if ($crsrefno == null || $crsrefno == '') {
+            $("#crse_ref_no_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#crse_ref_no_err").text("").removeClass('error');
+        }
+        $tp_uen=$('#tp_uen').val();
+        if ($crsrefno == null || $tp_uen == '') {
+            $("#tp_uen_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#tp_uen_err").text("").removeClass('error');
+        }
+        $modeoftraining=$('#modeoftraining').val();
+        if ($modeoftraining == null || $modeoftraining == '') {
+            $("#modeoftraining_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#modeoftraining_err").text("").removeClass('error');
+        }
+        $crs_admin_email=$('#crs_admin_email').val();
+        if ($crs_admin_email == null || $crs_admin_email == '') {
+            $("#crs_admin_email_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#crs_admin_email_err").text("").removeClass('error');
+        }
+        $reg_open_date=$('#reg_open_date').val();
+        if ($reg_open_date == null || $reg_open_date == '') {
+            $("#reg_open_date_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#reg_open_date_err").text("").removeClass('error');
+        }
+        $reg_close_date=$('#reg_close_date').val();
+        if ($reg_close_date == null || $reg_close_date == '') {
+            $("#reg_close_date_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#reg_close_date_err").text("").removeClass('error');
+        }
+        
+        $crse_start_date=$('#crse_start_date').val();
+        if ($crse_start_date == null || $crse_start_date == '') {
+            $("#crse_start_date_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#crse_start_date_err").text("").removeClass('error');
+        }
+        
+        $crse_end_date=$('#crse_end_date').val();
+        if ($crse_end_date == null || $crse_end_date == '') {
+            $("#crse_end_date_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#crse_end_date_err").text("").removeClass('error');
+        }
+        
+        $venue_floor=$('#venue_floor').val();
+        if ($venue_floor == null || $venue_floor == '') {
+            $("#venue_floor_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_floor_err").text("").removeClass('error');
+        }
+        $venue_unit=$('#venue_unit').val();
+        if ($venue_unit == null || $venue_unit == '') {
+            $("#venue_unit_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_unit_err").text("").removeClass('error');
+        }
+        $venue_postalcode=$('#venue_postalcode').val();
+        if ($venue_postalcode == null || $venue_postalcode == '') {
+            $("#venue_postalcode_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_postalcode_err").text("").removeClass('error');
+        }
+        
+        $venue_room = $('#venue_room').val();
+        if ($venue_room == null || $venue_room == '') {
+            $("#venue_room_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_room_err").text("").removeClass('error');
+        }
+        
+        $crse_vacancy_code = $('#crse_vacancy_code').val();
+        if ($crse_vacancy_code == null || $crse_vacancy_code == '') {
+            $("#crse_vacancy_code_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#crse_vacancy_code_err").text("").removeClass('error');
+        }
+        
+        $crse_vacancy_description = $('#crse_vacancy_description').val();
+        if ($crse_vacancy_description == null || $crse_vacancy_description == '') {
+            $("#crse_vacancy_description_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#crse_vacancy_description_err").text("").removeClass('error');
+        }
+        
+        $trainer_email = $('#trainer_email').val();
+        if ($trainer_email == null || $trainer_email == '') {
+            $("#trainer_email_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#trainer_email_err").text("").removeClass('error');
+        }
+        
+        return retVal;
     }
     
 </script>

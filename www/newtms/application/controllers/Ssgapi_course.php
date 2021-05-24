@@ -630,7 +630,7 @@ class ssgapi_course extends CI_Controller {
     }
     
    ///  //////  Below functions added by shubhranshu for SSG API integration ///////////////////////////////////////////
-    
+    /////to fetch the course api required parameters
     public function get_ssg_courserun($class_id,$course_id){
         $tenant_id = $this->tenant_id;
         $data['sideMenuData'] = fetch_non_main_page_content();
@@ -643,6 +643,10 @@ class ssgapi_course extends CI_Controller {
         $data['page_title'] = 'SSG CREATE COURSE RUN';
         $data['main_content'] = 'ssgapi_course/get_ssg_courserun';
         $this->load->view('layout', $data);
+    }
+    ///to verify the course api parameters
+    function verify_courserun(){
+        echo "Verified";
     }
     
     
