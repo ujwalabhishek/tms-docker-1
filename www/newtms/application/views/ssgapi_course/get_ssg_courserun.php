@@ -405,7 +405,7 @@
             return false;
         }
         
-       
+        });
     });  
     function validate_courserun(){
         var retVal = true;
