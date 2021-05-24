@@ -674,6 +674,10 @@ class ssgapi_course extends CI_Controller {
         
         if ($this->form_validation->run() == TRUE){
                 echo "verified";
+        }else{
+            $data['page_title'] = 'SSG CREATE COURSE RUN';
+            $data['main_content'] = 'ssgapi_course/get_ssg_courserun';
+            $this->load->view('layout', $data);
         }
         
     }
