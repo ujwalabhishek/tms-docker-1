@@ -646,6 +646,7 @@ class ssgapi_course extends CI_Controller {
     }
     ///to verify the course api parameters
     function verify_courserun(){
+        $data['sideMenuData'] = fetch_non_main_page_content();
         $this->load->library('form_validation');
         $this->form_validation->set_rules('crse_ref_no', 'Course Reference No', 'required|max_length[30]');
         $this->form_validation->set_rules('tp_uen', 'Training Provider UEN', 'required|max_length[30]|alpha_numeric_spaces');
@@ -676,7 +677,7 @@ class ssgapi_course extends CI_Controller {
                 echo "verified";
         }else{
             $data['page_title'] = 'SSG CREATE COURSE RUN';
-            $data['main_content'] = 'ssgapi_course/get_ssg_courserun';
+            $data['main_content'] = 'ssgapi_course/get_ssg_courserun/'.$class_id.'/'.$course_id;
             $this->load->view('layout', $data);
         }
         
