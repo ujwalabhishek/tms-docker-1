@@ -5,6 +5,7 @@
         echo form_open("ssgapi_course/verify_courserun", $atr);
     ?>  
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Add Course Run Details</h2>   
+    <div><?php echo validation_errors('<span class="error">', '</span>'); ?></div>
     <h2 class="sub_panel_heading_style">COURSE</h2>
     <table class="table table-striped">
         <tbody>
@@ -333,7 +334,7 @@
                 <td><label class="label_font"></label>
                     <?php
                     $trainer_id = array(
-                        'name' => 'trainer_id',
+                        'name' => 'trainer_id[]',
                         'id' => 'trainer_id',
                         'value' => '',
                         'maxlength' => 50,
@@ -391,7 +392,9 @@
            $('.svenue_room').html($('#venue_room').val());
        });
        
-       
+       $("#venue_postalcode").inputFilter(function(value) {
+         return /^\d*$/.test(value);    // Allow digits only, using a RegExp
+      });
         
         $('#courserun_form').on('submit',function() {
         if(validate_courserun()){
