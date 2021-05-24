@@ -520,6 +520,20 @@
             $("#trainer_email_err").text("").removeClass('error');
         }
         
+        if(!valid_email_address($trainer_email)){
+            $("#trainer_email_err").text("[Invalid Email]").addClass('error');
+             retVal = false;
+        }else{
+            $("#trainer_email_err").text("").removeClass('error');
+        }
+        
+        if(!valid_email_address($crs_admin_email)){
+            $("#crs_admin_email").text("[Invalid Email]").addClass('error');
+             retVal = false;
+        }else{
+            $("#crs_admin_email").text("").removeClass('error');
+        }
+        
         return retVal;
     }
     
