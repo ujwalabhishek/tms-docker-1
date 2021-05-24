@@ -392,7 +392,7 @@
     } 
      
     ?>
-</div>
+
 <table>
     <tbody>
         <input type="hidden" name="course_id" value="<?php echo $class->course_id ?? $this->input->post('course_id'); ?>">
@@ -406,6 +406,7 @@
  <?php
  echo form_close();
 ?>
+</div>
 <script>
     $(document).ready(function() {
        $('#venue_floor').keyup(function(){
