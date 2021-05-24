@@ -1,14 +1,25 @@
   
 <div class="col-md-10">
+    <?php
+        $atr = 'id="courserun_form" name="courserun_form"';
+        echo form_open("ssgapi_course/verify_courserun", $atr);
+    ?>  
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Add Course Run Details</h2>   
     <h2 class="sub_panel_heading_style">COURSE</h2>
     <table class="table table-striped">
         <tbody>
             <tr>
                 <td class="td_heading" width="20%">Course Reference Number:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $coursedetails->reference_num; ?></label></td>
+                <td><label class="label_font"><?php echo $coursedetails->reference_num; ?></label>
+                    <span id="crse_ref_no_err"></span>
+                </td>
                 <td class="td_heading">TP UEN:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo $tenant->comp_reg_no; ?></td>
+                <td>
+                    <label class="label_font"></label><?php echo $tenant->comp_reg_no; ?>
+                    <span id="tp_uen_err"></span>
+                </td>
+                <input type="hidden" name="crse_ref_no" value="<?php echo $coursedetails->reference_num; ?>" id="crse_ref_no">
+                <input type="hidden" name="tp_uen" value="<?php echo $tenant->comp_reg_no; ?>" id="tp_uen">
             </tr>
         </tbody>
     </table> 
@@ -56,6 +67,7 @@
                         echo form_input($crs_admin_email);
                         ?>
                     </label>
+                    <span id="crs_admin_email_err"></span>
                     </td>
                 <td colspan="2"> <label class="label_font"></label>
                     <div style='color:grey'>Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'</td></div>
@@ -63,16 +75,28 @@
 
             <tr>
                 <td class="td_heading">Registration Open Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_start_datetime)); ?></td>
+                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_start_datetime)); ?>
+                    <span id="reg_open_date_err"></span>
+                </td>
                 <td class="td_heading">Registration Close Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_end_datetime)); ?></td>
+                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_end_datetime)); ?>
+                    <span id="reg_close_date_err"></span>
+                </td>
+                <input type="hidden" name="reg_open_date" value="<?php echo date('Ymd', strtotime($class->class_start_datetime)); ?>" id="reg_open_date">
+                <input type="hidden" name="reg_close_date" value="<?php echo date('Ymd', strtotime($class->class_end_datetime)); ?>" id="reg_close_date">
             </tr>
 
             <tr>
                 <td class="td_heading">Course Start Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_start_datetime)); ?></td>
+                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_start_datetime)); ?>
+                    <span id="crse_start_date_err"></span>
+                </td>
                 <td class="td_heading">Course End Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_end_datetime)); ?></td>
+                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_end_datetime)); ?>
+                    <span id="crse_end_date_err"></span>
+                </td>
+                <input type="hidden" name="crse_start_date" value="<?php echo date('Ymd', strtotime($class->class_start_datetime)); ?>" id="crse_start_date">
+                <input type="hidden" name="crse_end_date" value="<?php echo date('Ymd', strtotime($class->class_end_datetime)); ?>" id="crse_end_date">
             </tr>
 
             <tr>
@@ -83,7 +107,7 @@
             </tr>
 
             <tr>
-                <td class="td_heading">Schedule Info:<span class="required">*</span></td>"04Mar : Sat / 5 Sats / 9am - 6pm",
+                <td class="td_heading">Schedule Info:<span class="required">*</span></td>
                 <td colspan='3'><label class="label_font"><?php echo date('dM', strtotime($class->class_start_datetime)).' : '.date('D', strtotime($class->class_start_datetime)).' / '.date('h:i A', strtotime($class->class_start_datetime)).' - '.date('h:i A', strtotime($class->class_end_datetime)); ?></label></td>
             </tr>
 
@@ -107,6 +131,7 @@
                         echo form_input($venue_floor);
                         ?>
                     </label>
+                    <span id="venue_floor_err"></span>
                 </td>
                 <td class="td_heading">Venue Unit:<span class="required">*</span></td>
                 <td>
@@ -122,6 +147,7 @@
                     echo form_input($venue_unit);
                     ?>
                     </label>
+                     <span id="venue_unit_err"></span>
                 </td>
             </tr>
 
@@ -140,6 +166,7 @@
                     echo form_input($venue_postalcode);
                     ?>
                     </label>
+                    <span id="venue_postalcode_err"></span>
                 </td>
                 <td class="td_heading">Venue Room:<span class="required">*</span></td>
                 <td>
@@ -155,13 +182,17 @@
                     echo form_input($venue_room);
                     ?>
                     </label>
+                     <span id="venue_room_err"></span>
                 </td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Course Intake Size:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo $class->total_seats; ?></td>
+                <td><label class="label_font"></label><?php echo $class->total_seats; ?>
+                    <span id="crse_intake_size_err"></span>
+                </td>
                 <td colspan="2"> <label class="label_font"></label>Course run intake size. It's maximum pax for a class</td>
+                <input type="hidden" name="crse_intake_size" value="<?php echo $class->total_seats; ?>" id="crse_intake_size">
             </tr>
 
             <tr>                        
@@ -170,14 +201,16 @@
                     <label class="label_font">
                         <?php 
                         if($booked_seats >= $class->total_seats){
-                            echo "F";
+                            $crse_vacancy_code= "F";
                         }elseif($booked_seats < $class->total_seats && $booked_seats > ($class->total_seats/2)){
-                            echo "L";
+                            $crse_vacancy_code= "L";
                         }elseif($booked_seats < $class->total_seats && $booked_seats < ($class->total_seats/2)){
-                            echo "A";
+                            $crse_vacancy_code= "A";
                         }
+                        echo $crse_vacancy_code;
                         ?>
                     </label>
+                    <span id="crse_vacancy_code_err"></span>
                     <div style='color:grey'>A  - Available ,F  - Full, L  - Limited Vacancy</div>
                 </td>
                 <td class="td_heading">Course Vacancy Description:<span class="required">*</span></td>
@@ -185,16 +218,20 @@
                     <label class="label_font">
                     <?php 
                         if($booked_seats >= $class->total_seats){
-                            echo "Full";
+                            $crse_vacancy_description= "Full";
                         }elseif($booked_seats < $class->total_seats && $booked_seats > ($class->total_seats/2)){
-                            echo "Limited Vacancy";
+                            $crse_vacancy_description= "Limited Vacancy";
                         }elseif($booked_seats < $class->total_seats && $booked_seats < ($class->total_seats/2)){
-                            echo "Available";
+                            $crse_vacancy_description= "Available";
                         }
+                        echo $crse_vacancy_description;
                         ?>
                                 
                     </label>
+                    <span id="crse_vacancy_description_err"></span>
                 </td>
+                <input type="hidden" name="crse_vacancy_code" value="<?php echo $crse_vacancy_code; ?>" id="crse_vacancy_code">
+                <input type="hidden" name="crse_vacancy_description" value="<?php echo $crse_vacancy_description; ?>" id="crse_vacancy_description">
             </tr>
         </tbody>
     </table>
@@ -323,7 +360,10 @@
     });   
 
     </script>
-    <?php $sl++;} ?>
+    <?php $sl++;
+    } 
+     echo form_close();
+    ?>
 </div>
 
 <script>
@@ -341,8 +381,24 @@
            $('.svenue_room').html($('#venue_room').val());
        });
        
-    });   
-
+       $('#crse_run_btn').click(function(){
+           
+        )};
+    
+        $('#crse_run_btn').click(function(){
+            if(validate(true)){
+                return true;
+            }else{
+                return false;
+            }
+        });
+        
+       
+    });  
+    function validate(){
+        alert('s');
+    }
+    
 </script>
 <style>
     #crse_run_btn{
