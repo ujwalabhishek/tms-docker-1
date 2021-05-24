@@ -795,20 +795,20 @@ class Class_Trainee extends CI_Controller {
             $reporting_time = date("H:i A", strtotime('-30 minutes', $time));
                 if($classes->course_id == 67 || $classes->course_id == 121)
                 {
-                     $li = "Report at center at $reporting_time to register for class";
+                     $li = "Report at center at $reporting_time to register for class.";
                 }else{
-                     $li = "Report at center at 8:30 AM to register for class";
+                     $li = "Report at center at 8:30 AM to register for class.";
                 }
             /* end */
                 if($tenant_details->tenant_id == 'T02')
                 {
-                    $li2 = "<li>Payment via Paynow/Paylah or GIRO</li><li>Dress code : Covered shoes</li>";
+                    $li2 = "<li>Payment via Paynow/ Paylah, GIRO or SkillsFuture Credit.</li><li>Dress code : Covered shoes</li>";
                 } else {
                     $li2 = '';
                 } 
                 ///// added by shubhranshu for wablab points
                 if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
-                    $li_first = "<li>Your NRIC, work permit or will be photocopied on the class date</li>";
+                    $li_first = "<li>Your NRIC, work permit or will be photocopied on the class date.</li>";
                 }else{
                     $li_first ="<li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>";
                 }
@@ -816,7 +816,7 @@ class Class_Trainee extends CI_Controller {
              <ol style="font-size:13px;color:#4f4b4b">
                           '.$li_first.'
                             
-                            <li>Trim finger nails and remove nail polish</li>
+                            <li>Trim finger nails and remove nail polish.</li>
                             <li>'.$li.'</li>
                             '.$li2.'
                         </ol>';
@@ -893,23 +893,23 @@ class Class_Trainee extends CI_Controller {
         $reporting_time = date("H:i A", strtotime('-30 minutes', $time));
         if($classes->course_id == 67 || $classes->course_id == 121)
         {
-            $li = "Report at center at $reporting_time to register for class";
+            $li = "Report at center at $reporting_time to register for class.";
         }else{
-            $li = "Report at center at 8:30 AM to register for class";
+            $li = "Report at center at 8:30 AM to register for class.";
         }
         //   echo removed by shubhranshu to [revent TCPDF header sent issue.
         /* end */
         if($tenant_details->tenant_id == 'T02')
         {
-            $li2 = "<li>Payment via Paynow/Paylah or GIRO.</li>
-                    <li>Dress code : Covered shoes</li>";
+            $li2 = "<li>Payment via Paynow/ Paylah, GIRO or SkillsFuture Credit.</li>
+                    <li>Dress code : Covered shoes.</li>";
         } else {
             $li2 = '';
         } 
         
         ///// added by shubhranshu for wablab points
         if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
-            $li_first = "Your NRIC, work permit or will be photocopied on the class date";
+            $li_first = "Your NRIC, work permit or will be photocopied on the class date.";
         }else{
             $li_first ="All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.";
         }
@@ -950,7 +950,7 @@ class Class_Trainee extends CI_Controller {
                         <strong style="font-size:13px">Remark *: </strong>
                         <ol style="font-size:13px;color:#4f4b4b">
                             <li>'.$li_first.'</li>
-                            <li>Trim finger nails and remove nail polish</li>
+                            <li>Trim finger nails and remove nail polish.</li>
                             <li>'.$li.'</li>
                             '.$li2.'
                         </ol>
@@ -982,7 +982,7 @@ class Class_Trainee extends CI_Controller {
                             <strong style="font-size:13px">Remark *: </strong>
                             <ol style="font-size:13px;color:#4f4b4b">
                                 <li>'.$li_first.'</li>
-                                <li>Trim finger nails and remove nail polish</li>
+                                <li>Trim finger nails and remove nail polish.</li>
                                 '.$li2.'
                             </ol>
                         </td>
@@ -4322,7 +4322,7 @@ class Class_Trainee extends CI_Controller {
                                 <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Trim finger nails and remove nail polish.</li>
                                 '.$li.'
-                                <li>Payment via Paynow/Paylah or GIRO.</li>
+                                <li>Payment via Paynow/ Paylah, GIRO or SkillsFuture Credit.</li>
                                  <li>Dress code : Covered shoes.</li>
                             </ol>';
                 }else{
@@ -4508,7 +4508,7 @@ class Class_Trainee extends CI_Controller {
                                 <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Trim finger nails and remove nail polish.</li>
                                  '.$li.'
-                                <li>Payment via Paynow/Paylah or GIRO.</li>
+                                <li>Payment via Paynow/ Paylah, GIRO or SkillsFuture Credit.</li>
                                  <li>Dress code : Covered shoes.</li>
                             </ol>';
                 }else{
