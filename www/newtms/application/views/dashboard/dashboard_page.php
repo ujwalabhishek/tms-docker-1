@@ -85,10 +85,13 @@ if (in_array($role_check, $role_array))
 <?php }else{ ?>
     <!--tariner-->
       <div class="row">
-      <?php if(TENANT_ID=='T20' || TENANT_ID=='T17'){ ?>	  
-		<?php if($user_role != 'SLEXEC'||$user_role !='TRAINER'){?>
+      <?php $tenant_id = $this->session->userdata('userDetails')->tenant_id;
+	  if($tenant_id=='T20' || $tenant_id=='T17'){ ?>
+		<?php if($user_role == 'SLEXEC' || $user_role =='TRAINER'){?>
 	  
-		  <div class="col-md-3">
+		  
+		<?php } else { ?>
+		<div class="col-md-3">
 			<a class="btn btn-block btn-sm btn-primary" data-toggle="modal" data-target="#mymodal" id="newenrollment" href="<?php echo base_url();?>class_trainee/add_new_enrol"><br>
 				<span class="fa fa-pencil-square-o" id="icone_grande"></span><br><br>
 				<span class="texto_grande">Class Trainee Enrollment </span><br><br></a>
