@@ -409,7 +409,7 @@
     });  
     function validate_courserun(){
         var retVal = true;
-        $tp_uen$crsrefno=$('#crse_ref_no').val();
+        $crsrefno=$('#crse_ref_no').val();
         if ($crsrefno == null || $crsrefno == '') {
             $("#crse_ref_no_err").text("[required]").addClass('error');
             retVal = false;
