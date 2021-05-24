@@ -646,6 +646,7 @@ class ssgapi_course extends CI_Controller {
     }
     ///to verify the course api parameters
     function verify_courserun(){
+        $this->load->library('form_validation');
         $this->form_validation->set_rules('crse_ref_no', 'Course Reference No', 'required|max_length[30]');
         $this->form_validation->set_rules('tp_uen', 'Training Provider UEN', 'required|max_length[30]|alpha_numeric_spaces');
         $this->form_validation->set_rules('modeoftraining', 'Mode Of Training', 'required|max_length[30]|numeric');
