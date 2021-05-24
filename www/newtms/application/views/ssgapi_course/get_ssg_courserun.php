@@ -396,7 +396,7 @@
        
     });  
     function validate(){
-        alert('s');
+        alert('sss');
     }
     
 </script>
