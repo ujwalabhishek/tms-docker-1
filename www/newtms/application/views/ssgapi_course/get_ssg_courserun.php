@@ -390,7 +390,7 @@
     </script>
     <?php $sl++;
     } 
-     echo form_close();
+     
     ?>
 </div>
 <table>
@@ -403,7 +403,9 @@
         </tr>
     </tbody>
 </table>
-
+ <?php
+ echo form_close();
+?>
 <script>
     $(document).ready(function() {
        $('#venue_floor').keyup(function(){
