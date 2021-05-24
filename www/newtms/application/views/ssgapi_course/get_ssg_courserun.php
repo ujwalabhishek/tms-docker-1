@@ -433,7 +433,12 @@
             $("#crs_admin_email_err").text("[required]").addClass('error');
             retVal = false;
         } else {
-            $("#crs_admin_email_err").text("").removeClass('error');
+            if(!valid_email_address($crs_admin_email)){
+                $("#crs_admin_email_err").text("[Invalid Email]").addClass('error');
+                 retVal = false;
+            }else{
+                $("#crs_admin_email_err").text("").removeClass('error');
+            }
         }
         $reg_open_date=$('#reg_open_date').val();
         if ($reg_open_date == null || $reg_open_date == '') {
@@ -517,22 +522,18 @@
             $("#trainer_email_err").text("[required]").addClass('error');
             retVal = false;
         } else {
-            $("#trainer_email_err").text("").removeClass('error');
+            if(!valid_email_address($trainer_email)){
+                $("#trainer_email_err").text("[Invalid Email]").addClass('error');
+                 retVal = false;
+            }else{
+                $("#trainer_email_err").text("").removeClass('error');
+            }
+            
         }
         
-        if(!valid_email_address($trainer_email)){
-            $("#trainer_email_err").text("[Invalid Email]").addClass('error');
-             retVal = false;
-        }else{
-            $("#trainer_email_err").text("").removeClass('error');
-        }
         
-        if(!valid_email_address($crs_admin_email)){
-            $("#crs_admin_email").text("[Invalid Email]").addClass('error');
-             retVal = false;
-        }else{
-            $("#crs_admin_email").text("").removeClass('error');
-        }
+        
+        
         
         return retVal;
     }
