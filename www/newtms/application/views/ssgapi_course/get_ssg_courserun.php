@@ -393,7 +393,7 @@
      
     ?>
 
-<table>
+<table class='table table-striped'>
     <tbody>
         <input type="hidden" name="course_id" value="<?php echo $class->course_id ?? $this->input->post('course_id'); ?>">
         <input type="hidden" name="class_id" value="<?php echo $class->class_id ?? $this->input->post('class_id'); ?>">
