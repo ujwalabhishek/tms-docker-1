@@ -693,7 +693,7 @@ class tp_gateway extends CI_Controller {
     
     public function crosscheck_tpg_courserun(){
         $data['sideMenuData'] = fetch_non_main_page_content();
-        $data['dat']=$this->session->flashdata('dat');print_r($data['dat']);exit;
+        $data['dat']=$this->session->flashdata('dat');
         $data['page_title'] = 'TPG VERIFY COURSE RUN DETAILS';
         $data['main_content'] = 'tp_gateway/crosscheck_tpg_courserun';
         $this->load->view('layout', $data);
