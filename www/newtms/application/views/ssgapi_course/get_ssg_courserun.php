@@ -11,7 +11,7 @@
         <tbody>
             <tr>
                 <td class="td_heading" width="20%">Course Reference Number:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $coursedetails->reference_num?? $this->input->post('crse_ref_no'); ?></label>
+                <td><label class="label_font"><?php echo $coursedetails->reference_num ?? $this->input->post('crse_ref_no'); ?></label>
                     <span id="crse_ref_no_err"></span>
                 </td>
                 <td class="td_heading">TP UEN:<span class="required">*</span></td>
@@ -300,7 +300,7 @@
             <tr>                        
                 <td class="td_heading" width="20%">Trainer Name:<span class="required">*</span></td>
                 <td width='40%'><label class="label_font"><?php echo $this->input->post('trainer_name') ?? $trainer->first_name.' '.$trainer->last_name; ?></label> <span id="trainer_name_err"></span></td>
-                <input type="hidden" name="trainer_name" value="<?php echo $this->input->post('trainer_name') ?? $trainer->first_name.' '.$trainer->last_name; ?>" id="trainer_name">
+                <input type="hidden" name="trainer_name[]" value="<?php echo $this->input->post('trainer_name') ?? $trainer->first_name.' '.$trainer->last_name; ?>" id="trainer_name">
                 <td class="td_heading">Trainer Email:<span class="required">*</span></td>
                 <td>
                     <label class="label_font">

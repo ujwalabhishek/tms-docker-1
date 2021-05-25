@@ -667,7 +667,8 @@ class ssgapi_course extends CI_Controller {
         $this->form_validation->set_rules('crse_intake_size', 'Course INtake Size', 'required|max_length[30]|numeric');
         $this->form_validation->set_rules('crse_vacancy_code', 'Course Vacancy Code', 'required|max_length[2]|in_list[A,F,L]|alpha');
         $this->form_validation->set_rules('crse_vacancy_description', 'Course Vacancy Description', 'required|max_length[30]|in_list[Available,Full,Limited Vacancy]');
-        $this->form_validation->set_rules('trainer_email', 'Trainer Email', 'trim|required|valid_email|max_length[30]');
+        $this->form_validation->set_rules('trainer_email[]', 'Trainer Email', 'trim|required|valid_email|max_length[30]');
+        $this->form_validation->set_rules('trainer_name[]', 'Trainer Name', 'trim|required|max_length[30]');
         $this->form_validation->set_rules('ttcode[]', 'Trainer Type Code', 'required|max_length[30]|numeric');
         $this->form_validation->set_rules('itpf[]', 'Trainer Description', 'required|max_length[30]|numeric');
         foreach($ttcode as $code){
@@ -678,9 +679,11 @@ class ssgapi_course extends CI_Controller {
         }
         
         if ($this->form_validation->run() == TRUE){
-            $data['page_title'] = 'TPG VERIFY COURSE RUN DETAILS';
-            $data['main_content'] = 'ssgapi_course/crosscheck_tpg_courserun';
+            $data['form_url'] = '';
+            $data['page_title'] = 'new';
+            $data['main_content'] = 'ssgapi_course/crosscheck_tpg_courserun/'.$class_id.'/'.$course_id;
             $this->load->view('layout', $data);
+            
         }else{
             $data['page_title'] = 'SSG CREATE COURSE RUN';
             $data['main_content'] = 'ssgapi_course/get_ssg_courserun/'.$class_id.'/'.$course_id;
@@ -689,7 +692,12 @@ class ssgapi_course extends CI_Controller {
         
     }
     
-    
+    public function crosscheck_tpg_courserun(){
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['page_title'] = 'TPG VERIFY COURSE RUN DETAILS';
+        $data['main_content'] = 'ssgapi_course/crosscheck_tpg_courserun';
+        $this->load->view('layout', $data);
+    }
     
     
     
