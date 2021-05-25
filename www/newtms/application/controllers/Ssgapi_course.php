@@ -686,7 +686,7 @@ class ssgapi_course extends CI_Controller {
             
         }else{
             $data['page_title'] = 'SSG CREATE COURSE RUN';
-            $data['main_content'] = 'ssgapi_course/get_ssg_courserun/'.$this->input->post('class_id').'/'.$this->input->post('course_id');
+            $data['main_content'] = 'ssgapi_course/get_ssg_courserun';
             $this->load->view('layout', $data);
         }
         
