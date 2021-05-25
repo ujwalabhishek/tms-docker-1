@@ -2,7 +2,7 @@
 <div class="col-md-10">
     <?php
         $atr = 'id="courserun_form" name="courserun_form"';
-        echo form_open("tp_gateway//", $atr);
+        echo form_open("tp_gateway/courserun_call_tpg", $atr);
     ?>  
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Crosscheck Data To Submit TPG</h2>   
     
@@ -12,15 +12,15 @@
             <tr>
                 <td class="td_heading" width="20%">Course Reference Number:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo $dat[crse_ref_no]; ?></label>
-                    <span id="crse_ref_no_err"></span>
+                   
                 </td>
                 <td class="td_heading">TP UEN:<span class="required">*</span></td>
                 <td>
-                    <label class="label_font"></label><?php echo $tenant->comp_reg_no ?? $this->input->post('tp_uen'); ?>
-                    <span id="tp_uen_err"></span>
+                    <label class="label_font"></label><?php echo $dat[tp_uen]; ?>
+                   
                 </td>
-                <input type="hidden" name="crse_ref_no" value="<?php echo $coursedetails->reference_num?? $this->input->post('crse_ref_no'); ?>" id="crse_ref_no">
-                <input type="hidden" name="tp_uen" value="<?php echo $tenant->comp_reg_no??$this->input->post('tp_uen'); ?>" id="tp_uen">
+                <input type="hidden" name="crse_ref_no" value="<?php echo $dat[crse_ref_no]; ?>" id="crse_ref_no">
+                <input type="hidden" name="tp_uen" value="<?php echo $dat[tp_uen]; ?>" id="tp_uen">
             </tr>
         </tbody>
     </table> 
@@ -31,38 +31,8 @@
         <tbody>
             <tr>
                 <td width="20%" class="td_heading">Mode Of Training:<span class="required">*</span></td>
-                <td width="20%">
-<!--                    <select name="modeoftraining" id="modeoftraining">
-                        <option value="" selected="selected">Please Choose</option>
-                        <option value="1">Classroom</option>
-                        <option value="2">Asynchronous eLearning</option>
-                        <option value="3">In-house</option>
-                        <option value="4">On-the-Job</option>
-                        <option value="5">Practical / Practicum</option>
-                        <option value="6">Supervised Field</option>
-                        <option value="7">Traineeship</option>
-                        <option value="8">Assessment</option>
-                        <option value="9">Synchronous eLearning</option>
-                    </select>-->
-                     <?php
-                        
-                        $modeoftraining = array();
-                        $modeoftraining[''] = 'Please Choose';
-                        $modeoftraining[1] = '1-Classroom';
-                        $modeoftraining[2] = '2-Asynchronous eLearning';
-                        $modeoftraining[3] = '3-In-house';
-                        $modeoftraining[4] = '4-On-the-Job';
-                        $modeoftraining[5] = '5-Practical / Practicum';
-                        $modeoftraining[6] = '6-Supervised Field';
-                        $modeoftraining[7] = '7-Traineeship';
-                        $modeoftraining[8] = '8-Assessment';
-                        $modeoftraining[9] = '9-Synchronous eLearning';
-                        echo form_dropdown('modeoftraining', $modeoftraining, $this->input->post('modeoftraining'), 'id="modeoftraining"');
-                        ?>
-                    
-                    <span id="modeoftraining_err"></span>
-                
-                </td>
+                <td><label class="label_font"><?php echo $dat[modeoftraining]; ?></label>
+                <input type="hidden" name="modeoftraining" value="<?php echo $dat[modeoftraining]; ?>">
                 <td colspan="2"> <label class="label_font"></label>
                     <div style='color:grey'>(Mode of training code - Code Description,1 Classroom,2 Asynchronous eLearning,3 In-house,4 On-the-Job,5 Practical / Practicum,6 Supervised Field,7 Traineeship,8 Assessment,9 Synchronous eLearning)</div>
                 </td>
@@ -70,185 +40,92 @@
 
             <tr>
                 <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
-                    <td>
-                    <label class="label_font">
-                        <?php
-                        $crs_admin_email = array(
-                            'name' => 'crs_admin_email',
-                            'id' => 'crs_admin_email',
-                            'value' => $this->input->post('crs_admin_email'),
-                            'maxlength' => 50,
-                            "class" => "upper_case"
-                        );
-                        echo form_input($crs_admin_email);
-                        ?>
-                    </label>
-                    <span id="crs_admin_email_err"></span>
-                    </td>
+                <td><label class="label_font"><?php echo $dat[crs_admin_email]; ?></label>
+                <input type="hidden" name="crs_admin_email" value="<?php echo $dat[crs_admin_email]; ?>">   
                 <td colspan="2"> <label class="label_font"></label>
                     <div style='color:grey'>Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'</td></div>
             </tr>
 
             <tr>
                 <td class="td_heading">Registration Open Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_start_datetime))??$this->input->post('reg_open_date'); ?>
+                <td><label class="label_font"></label><?php echo $dat[reg_open_date]; ?>
                     <span id="reg_open_date_err"></span>
                 </td>
                 <td class="td_heading">Registration Close Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_end_datetime))??$this->input->post('reg_close_date'); ?>
+                <td><label class="label_font"></label><?php echo $dat[reg_close_date]; ?>
                     <span id="reg_close_date_err"></span>
                 </td>
-                <input type="hidden" name="reg_open_date" value="<?php echo date('Ymd', strtotime($class->class_start_datetime))??$this->input->post('reg_open_date'); ?>" id="reg_open_date">
-                <input type="hidden" name="reg_close_date" value="<?php echo date('Ymd', strtotime($class->class_end_datetime))??$this->input->post('reg_close_date'); ?>" id="reg_close_date">
+                <input type="hidden" name="reg_open_date" value="<?php echo $dat[reg_open_date]; ?>" id="reg_open_date">
+                <input type="hidden" name="reg_close_date" value="<?php echo $dat[reg_close_date]; ?>" id="reg_close_date">
             </tr>
 
             <tr>
                 <td class="td_heading">Course Start Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_start_datetime))??$this->input->post('crse_start_date'); ?>
+                <td><label class="label_font"></label><?php echo $dat[crse_start_date]; ?>
                     <span id="crse_start_date_err"></span>
                 </td>
                 <td class="td_heading">Course End Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_end_datetime))??$this->input->post('crse_end_date'); ?>
+                <td><label class="label_font"></label><?php echo $dat[crse_end_date]; ?>
                     <span id="crse_end_date_err"></span>
                 </td>
-                <input type="hidden" name="crse_start_date" value="<?php echo date('Ymd', strtotime($class->class_start_datetime))??$this->input->post('crse_start_date'); ?>" id="crse_start_date">
-                <input type="hidden" name="crse_end_date" value="<?php echo date('Ymd', strtotime($class->class_end_datetime))??$this->input->post('crse_end_date'); ?>" id="crse_end_date">
+                <input type="hidden" name="crse_start_date" value="<?php echo $dat[crse_start_date]; ?>" id="crse_start_date">
+                <input type="hidden" name="crse_end_date" value="<?php echo $dat[crse_end_date]; ?>" id="crse_end_date">
             </tr>
 
             <tr>
                 <td class="td_heading">Schedule Info Code:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $this->input->post('crse_end_date')??'01'; ?></label></td>
+                <td><label class="label_font"><?php echo $this->input->post('schedule_info_code')??'01'; ?></label></td>
                 <td class="td_heading">Schedule Info Description:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $this->input->post('crse_end_date') ??'Description'; ?></label></td>                        
+                <td><label class="label_font"><?php echo $this->input->post('schedule_info_des') ??'Description'; ?></label></td>
+                <input type="hidden" name="schedule_info_code" value="<?php echo $dat[schedule_info_code];?>">
+                <input type="hidden" name="schedule_info_des" value="<?php echo $dat[schedule_info_des];?>">
             </tr>
 
             <tr>
                 <td class="td_heading">Schedule Info:<span class="required">*</span></td>
-                <td colspan='3'><label class="label_font"><?php echo $this->input->post('crse_end_date') ?? date('dM', strtotime($class->class_start_datetime)).' : '.date('D', strtotime($class->class_start_datetime)).' / '.date('h:i A', strtotime($class->class_start_datetime)).' - '.date('h:i A', strtotime($class->class_end_datetime)); ?></label></td>
-                <input type="hidden" name="schedule_info" value="<?php echo $this->input->post('schedule_info') ?? date('dM', strtotime($class->class_start_datetime)).' : '.date('D', strtotime($class->class_start_datetime)).' / '.date('h:i A', strtotime($class->class_start_datetime)).' - '.date('h:i A', strtotime($class->class_end_datetime)); ?>" id="schedule_info">
+                <td colspan='3'><label class="label_font"><?php echo $dat[schedule_info]; ?></label></td>
+                <input type="hidden" name="schedule_info" value="<?php echo $dat[schedule_info];?>">
             </tr>
 
-            <tr>
-                <td class="td_heading">Classroom Venue(TMS):</td>
-                <td colspan='3'><?php echo rtrim($ClassLoc, ', '); ?></td>
-            </tr>
+            
             
             <tr>                        
                 <td class="td_heading"> Venue Floor:<span class="required">*</span></td>
-                <td>
-                    <label class="label_font">
-                        <?php
-                        $venue_floor = array(
-                            'name' => 'venue_floor',
-                            'id' => 'venue_floor',
-                            'value' => $this->input->post('venue_floor'),
-                            'maxlength' => 50,
-                            "class" => "upper_case"
-                        );
-                        echo form_input($venue_floor);
-                        ?>
-                    </label>
-                    <span id="venue_floor_err"></span>
-                </td>
+                <td><label class="label_font"><?php echo $dat[venue_floor]; ?></label></td>
+                <input type="hidden" name="venue_floor" value="<?php echo $dat[venue_floor];?>">
+                
                 <td class="td_heading">Venue Unit:<span class="required">*</span></td>
-                <td>
-                    <label class="label_font">
-                    <?php
-                    $venue_unit = array(
-                        'name' => 'venue_unit',
-                        'id' => 'venue_unit',
-                        'value' => $this->input->post('venue_unit'),
-                        'maxlength' => 50,
-                        "class" => "upper_case"
-                    );
-                    echo form_input($venue_unit);
-                    ?>
-                    </label>
-                     <span id="venue_unit_err"></span>
-                </td>
+                <td><label class="label_font"><?php echo $dat[venue_unit]; ?></label></td>
+                <input type="hidden" name="venue_unit" value="<?php echo $dat[venue_unit];?>">
+                
             </tr>
 
             <tr>                        
                 <td class="td_heading">Venue Postal Code:<span class="required">*</span></td>
-                <td>
-                    <label class="label_font">
-                    <?php
-                    $venue_postalcode = array(
-                        'name' => 'venue_postalcode',
-                        'id' => 'venue_postalcode',
-                        'value' => $this->input->post('venue_postalcode'),
-                        'maxlength' => 50,
-                        "class" => "upper_case"
-                    );
-                    echo form_input($venue_postalcode);
-                    ?>
-                    </label>
-                    <span id="venue_postalcode_err"></span>
-                </td>
+                <td><label class="label_font"><?php echo $dat[venue_postalcode]; ?></label></td>
+                <input type="hidden" name="venue_postalcode" value="<?php echo $dat[venue_postalcode];?>">
+                
                 <td class="td_heading">Venue Room:<span class="required">*</span></td>
-                <td>
-                    <label class="label_font">
-                    <?php
-                    $venue_room = array(
-                        'name' => 'venue_room',
-                        'id' => 'venue_room',
-                        'value' => $this->input->post('venue_room'),
-                        'maxlength' => 50,
-                        "class" => "upper_case"
-                    );
-                    echo form_input($venue_room);
-                    ?>
-                    </label>
-                     <span id="venue_room_err"></span>
-                </td>
+                <td><label class="label_font"><?php echo $dat[venue_room]; ?></label></td>
+                <input type="hidden" name="venue_room" value="<?php echo $dat[venue_room];?>">
+               
             </tr>
 
             <tr>                        
                 <td class="td_heading">Course Intake Size:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo $class->total_seats ?? $this->input->post('crse_intake_size'); ?>
-                    <span id="crse_intake_size_err"></span>
-                </td>
+                
+                 <td><label class="label_font"><?php echo $dat[crse_intake_size]; ?></label></td>
                 <td colspan="2"> <label class="label_font"></label>Course run intake size. It's maximum pax for a class</td>
-                <input type="hidden" name="crse_intake_size" value="<?php echo $class->total_seats ?? $this->input->post('crse_intake_size'); ?>" id="crse_intake_size">
+                <input type="hidden" name="crse_intake_size" value="<?php $dat[crse_intake_size]; ?>" id="crse_intake_size">
             </tr>
 
             <tr>                        
                 <td class="td_heading">Course Vacancy Code:<span class="required">*</span></td>
-                <td>
-                    <label class="label_font">
-                        <?php 
-                        if($booked_seats >= $class->total_seats){
-                            $crse_vacancy_code= "F";
-                        }elseif($booked_seats < $class->total_seats && $booked_seats > ($class->total_seats/2)){
-                            $crse_vacancy_code= "L";
-                        }elseif($booked_seats < $class->total_seats && $booked_seats < ($class->total_seats/2)){
-                            $crse_vacancy_code= "A";
-                        }
-                        echo $crse_vacancy_code ?? $this->input->post('crse_vacancy_code');
-                        ?>
-                    </label>
-                    <span id="crse_vacancy_code_err"></span>
-                    <div style='color:grey'>A  - Available ,F  - Full, L  - Limited Vacancy</div>
-                </td>
+                <td><label class="label_font"><?php echo $dat[crse_vacancy_code]; ?></label></td>
                 <td class="td_heading">Course Vacancy Description:<span class="required">*</span></td>
-                <td>
-                    <label class="label_font">
-                    <?php 
-                        if($booked_seats >= $class->total_seats){
-                            $crse_vacancy_description= "Full";
-                        }elseif($booked_seats < $class->total_seats && $booked_seats > ($class->total_seats/2)){
-                            $crse_vacancy_description= "Limited Vacancy";
-                        }elseif($booked_seats < $class->total_seats && $booked_seats < ($class->total_seats/2)){
-                            $crse_vacancy_description= "Available";
-                        }
-                        echo $crse_vacancy_description ?? $this->input->post('crse_vacancy_description');
-                        ?>
-                                
-                    </label>
-                    <span id="crse_vacancy_description_err"></span>
-                </td>
-                <input type="hidden" name="crse_vacancy_code" value="<?php echo $crse_vacancy_code ?? $this->input->post('crse_vacancy_code'); ?>" id="crse_vacancy_code">
-                <input type="hidden" name="crse_vacancy_description" value="<?php echo $crse_vacancy_description ?? $this->input->post('crse_vacancy_description'); ?>" id="crse_vacancy_description">
+                <td><label class="label_font"><?php echo $dat[crse_vacancy_description]; ?></label></td>
+                <input type="hidden" name="crse_vacancy_code" value="<?php echo $dat[crse_vacancy_code]; ?>" id="crse_vacancy_code">
+                <input type="hidden" name="crse_vacancy_description" value="<?php echo $dat[crse_vacancy_description]; ?>" id="crse_vacancy_description">
             </tr>
         </tbody>
     </table>
@@ -259,32 +136,32 @@
         <tbody>
             <tr width="20%">                        
                 <td class="td_heading" width="20%">Session Start Date:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo date('Ymd', strtotime($class->class_start_datetime)) ?? $this->input->post('crse_start_date'); ?></label></td>
+                <td><label class="label_font"><?php echo $dat[class_start_datetime]; ?></label></td>
                 <td class="td_heading">Session End Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_end_datetime)) ?? $this->input->post('crse_end_date'); ?></td>
+                <td><label class="label_font"></label><?php echo $dat[class_end_datetime]; ?></td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Session Start Time:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo date('h:i A', strtotime($class->class_start_datetime)) ?? $this->input->post('sess_start_time'); ?></label></td>
+                <td><label class="label_font"><?php echo $dat[sess_start_time]; ?></label></td>
                 <td class="td_heading">Session End Time:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('h:i A', strtotime($class->class_end_datetime)) ?? $this->input->post('sess_end_time'); ?></td>
-                <input type="hidden" name="sess_start_time" value="<?php echo date('h:i A', strtotime($class->class_start_datetime)) ?? $this->input->post('sess_start_time'); ?>" id="sess_start_time">
-                <input type="hidden" name="sess_end_time" value="<?php echo date('h:i A', strtotime($class->class_end_datetime)) ?? $this->input->post('sess_end_time'); ?>" id="sess_end_time">
+                <td><label class="label_font"></label><?php echo $dat[sess_end_time]; ?></td>
+                <input type="hidden" name="sess_start_time" value="<?php echo $dat[sess_start_time]; ?>" id="sess_start_time">
+                <input type="hidden" name="sess_end_time" value="<?php echo $dat[sess_end_time]; ?>" id="sess_end_time">
             </tr>
 
             <tr>                        
                 <td class="td_heading">Session Venue Floor:<span class="required">*</span></td>
-                <td><label class="svenue_floor"></label><?php echo $this->input->post('venue_floor');?></td>
+                <td><label class="svenue_floor"></label><?php echo $dat[venue_floor];?></td>
                 <td class="td_heading">Session Venue Unit:<span class="required">*</span></td>
-                <td><label class="svenue_unit"></label><?php echo $this->input->post('venue_unit');?></td>
+                <td><label class="svenue_unit"></label><?php echo $dat[venue_unit];?></td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Session Venue Postal Code:<span class="required">*</span></td>
-                <td><label class="svenue_postalcode"></label><?php echo $this->input->post('venue_postalcode');?></td>
+                <td><label class="svenue_postalcode"></label><?php echo $dat[venue_postalcode];?></td>
                 <td class="td_heading">Session Venue Room:<span class="required">*</span></td>
-                <td><label class="svenue_room"></label><?php echo $this->input->post('venue_room');?></td>
+                <td><label class="svenue_room"></label><?php echo $dat[venue_room];?></td>
             </tr>
         </tbody>
     </table>
@@ -292,102 +169,38 @@
     
     <h2 class="sub_panel_heading_style">TRAINER</h2>
     <?php 
-    $sl = 1;
-    foreach($ClassTrainer as $trainer){
+    $sl = 0;
+    foreach($dat[trainer_name] as $trainer){
     ?>
     <table class="table table-striped">
         <tbody>
             <tr>                        
                 <td class="td_heading" width="20%">Trainer Name:<span class="required">*</span></td>
-                <td width='40%'><label class="label_font"><?php echo $this->input->post('trainer_name') ?? $trainer->first_name.' '.$trainer->last_name; ?></label> <span id="trainer_name_err"></span></td>
-                <input type="hidden" name="trainer_name" value="<?php echo $this->input->post('trainer_name') ?? $trainer->first_name.' '.$trainer->last_name; ?>" id="trainer_name">
+                <td width='40%'><label class="label_font"><?php echo $trainer ?></label> <span id="trainer_name_err"></span></td>
+                <input type="hidden" name="trainer_name" value="<?php echo $trainer; ?>" id="trainer_name">
                 <td class="td_heading">Trainer Email:<span class="required">*</span></td>
-                <td>
-                    <label class="label_font">
-                    <?php
-                    $trainer_email = array(
-                        'name' => 'trainer_email',
-                        'id' => 'trainer_email',
-                        'value' =>$this->input->post('trainer_email'),
-                        'maxlength' => 50,
-                        "class" => "upper_case"
-                    );
-                    echo form_input($trainer_email);
-                    ?>
-                    </label>
-                    <span id="trainer_email_err"></span>
-                </td>
+                <td width='40%'><label class="label_font"><?php echo $dat[trainer_email][$sl]; ?></label> <span id="trainer_email_err"></span></td>
+                <input type="hidden" name="trainer_email" value="<?php echo $dat[trainer_email][$sl]; ?>" id="trainer_email">
             </tr>
 
             <tr>                        
                 <td class="td_heading">Trainer Type Code:<span class="required">*</span></td>
-                <td>
-                    <label class="label_font">
-                    <select name="ttcode[]" id="ttcode<?php echo $sl;?>">
-                            <option value="1">1-Existing</option>
-                            <option value="2" selected="selected">2-New</option>
-                        </select>
-                    
-                    <span id="ttcode<?php echo $sl;?>_err"></span>
-                    </label>
-                    <div style='color:grey'>1-(Existing) ,2-(New)</div>
-                </td>
+                <td width='40%'><label class="label_font"><?php echo $dat[ttcode][$sl]; ?></label></td>
+                
                 <td class="td_heading" width="13%">Trainer Description:<span class="required">*</span></td>
                 <td><label class="label_font"></label>NEW</td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">inTrainingProviderProfile:<span class="required">*</span></td>
-                <td>
-                    <label class="label_font">
-                        <select name="itpf[]" id="itpf<?php echo $sl;?>">
-                            <option value="1" selected="selected">True</option>
-                            <option value="2">False</option>
-                        </select>
-                    
-                    <span id="itpf<?php echo $sl;?>_err"></span>
-                    </label>
-                    <div style='color:grey'>For trainerType as "1-Existing" trainer, fill up the Trainer name, email and leave the rest of the Trainer fields empty. API will get the details from the TP Profile,For trainerType as "2-New" trainer, please fill in all required details. If inTrainingProviderProfile is set to "true", the new added trainer will be saved into trainer profile as well as linked to this specific course run; otherwise, this trainer is linked to this specific course run only.</div>
-                </td>
+                 <td><label class="label_font"></label>1</td>
                 <td class="td_heading">Trainer ID:<span class="required">*</span></td>
-                <td><label class="label_font"></label>
-                    <?php
-                    $trainer_id = array(
-                        'name' => 'trainer_id[]',
-                        'id' => 'trainer_id',
-                        'value' => $this->input->post('trainer_id[]'),
-                        'maxlength' => 50,
-                        "class" => "upper_case"
-                    );
-                    echo form_input($trainer_id);
-                    ?>
-                    </label>
-                    <span id="trainer_id_err"></span>
-                    <div style='color:grey'>The unique Trainer id for existing trainer. For new trainer, leave it blank.</div>
-                </td>
+                <td><label class="label_font"></label>1</td>
             </tr>
              
         </tbody>
     </table>
-    <script>
-    $(document).ready(function() {
-        $('#ttcode<?php echo $sl;?>').on('change', function() { 
-            if($('#ttcode<?php echo $sl;?>').val() == 2){
-                $('#itpf<?php echo $sl;?>').val('1');
-            }else{
-                $('#itpf<?php echo $sl;?>').val('2');
-            }
-        }); 
-        $('#itpf<?php echo $sl;?>').on('change', function() { 
-            if($('#itpf<?php echo $sl;?>').val() == 2){
-                $('#ttcode<?php echo $sl;?>').val('1');
-            }else{
-                $('#ttcode<?php echo $sl;?>').val('2');
-            }
-        }); 
-    });   
-
-    </script>
+    
     <?php $sl++;
     } 
      
@@ -395,11 +208,11 @@
 
 <table class='table table-striped'>
     <tbody>
-        <input type="hidden" name="course_id" value="<?php echo $class->course_id ?? $this->input->post('course_id'); ?>">
-        <input type="hidden" name="class_id" value="<?php echo $class->class_id ?? $this->input->post('class_id'); ?>">
+        <input type="hidden" name="course_id" value="<?php echo $dat[course_id];?>">
+        <input type="hidden" name="class_id" value="<?php echo $dat[class_id]; ?>">
             
         <tr>
-            <td colspan='4' class='text-center'><button type='submit' id='crse_run_btn'>Verify & Proceed</button></td>
+            <td colspan='4' class='text-center'><button type='submit' id='crse_run_btn'>Submit Data To TPG</button></td>
         </tr>
     </tbody>
 </table>

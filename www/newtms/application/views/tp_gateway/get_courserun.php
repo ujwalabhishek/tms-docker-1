@@ -108,7 +108,14 @@
                     <span id="crse_start_date_err"></span>
                 </td>
                 <td class="td_heading">Course End Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_end_datetime))??$this->input->post('crse_end_date'); ?>
+                <td><label class="label_font"></label><?php echo date('<tr>
+                <td class="td_heading">Schedule Info Code:<span class="required">*</span></td>
+                <td><label class="label_font"><?php echo $this->input->post('schedule_info_code')??'01'; ?></label></td>
+                <td class="td_heading">Schedule Info Description:<span class="required">*</span></td>
+                <td><label class="label_font"><?php echo $this->input->post('schedule_info_des') ??'Description'; ?></label></td>
+                <input type="hidden" name="schedule_info_code" value="<?php echo $this->input->post('schedule_info_code') ?? '01'; ?>">
+                <input type="hidden" name="schedule_info_des" value="<?php echo $this->input->post('schedule_info_des') ?? 'Description'; ?>">
+            </tr>Ymd', strtotime($class->class_end_datetime))??$this->input->post('crse_end_date'); ?>
                     <span id="crse_end_date_err"></span>
                 </td>
                 <input type="hidden" name="crse_start_date" value="<?php echo date('Ymd', strtotime($class->class_start_datetime))??$this->input->post('crse_start_date'); ?>" id="crse_start_date">
@@ -117,9 +124,11 @@
 
             <tr>
                 <td class="td_heading">Schedule Info Code:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $this->input->post('crse_end_date')??'01'; ?></label></td>
+                <td><label class="label_font"><?php echo $this->input->post('schedule_info_code')??'01'; ?></label></td>
                 <td class="td_heading">Schedule Info Description:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $this->input->post('crse_end_date') ??'Description'; ?></label></td>                        
+                <td><label class="label_font"><?php echo $this->input->post('schedule_info_des') ??'Description'; ?></label></td>
+                <input type="hidden" name="schedule_info_code" value="<?php echo $this->input->post('schedule_info_code') ?? '01'; ?>">
+                <input type="hidden" name="schedule_info_des" value="<?php echo $this->input->post('schedule_info_des') ?? 'Description'; ?>">
             </tr>
 
             <tr>

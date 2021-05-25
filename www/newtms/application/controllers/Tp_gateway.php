@@ -699,7 +699,9 @@ class tp_gateway extends CI_Controller {
         $this->load->view('layout', $data);
     }
     
-    
+    public function courserun_call_tpg(){
+        
+    }
     
     
     
