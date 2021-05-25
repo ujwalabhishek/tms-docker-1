@@ -11,7 +11,7 @@
         <tbody>
             <tr>
                 <td class="td_heading" width="20%">Course Reference Number:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $coursedetails; ?></label>
+                <td><label class="label_font"><?php echo $crse_ref_no; ?></label>
                     <span id="crse_ref_no_err"></span>
                 </td>
                 <td class="td_heading">TP UEN:<span class="required">*</span></td>
