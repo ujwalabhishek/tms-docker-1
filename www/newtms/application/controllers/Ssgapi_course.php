@@ -681,12 +681,12 @@ class ssgapi_course extends CI_Controller {
         if ($this->form_validation->run() == TRUE){
             $data['form_url'] = '';
             $data['page_title'] = 'new';
-            $data['main_content'] = 'ssgapi_course/crosscheck_tpg_courserun/'.$class_id.'/'.$course_id;
+            $data['main_content'] = 'ssgapi_course/crosscheck_tpg_courserun/'.$this->input->post('class_id').'/'.$this->input->post('course_id');
             $this->load->view('layout', $data);
             
         }else{
             $data['page_title'] = 'SSG CREATE COURSE RUN';
-            $data['main_content'] = 'ssgapi_course/get_ssg_courserun/'.$class_id.'/'.$course_id;
+            $data['main_content'] = 'ssgapi_course/get_ssg_courserun/'.$this->input->post('class_id').'/'.$this->input->post('course_id');
             $this->load->view('layout', $data);
         }
         
