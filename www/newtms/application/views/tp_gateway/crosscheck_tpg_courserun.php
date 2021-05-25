@@ -47,12 +47,12 @@
             </tr>
 
             <tr>
-                <td class="td_heading">Registration Open Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo $dat[reg_open_date]; ?>
+                <td class="td_heading" width='20%'>Registration Open Date:<span class="required">*</span></td>
+                <td width='20%'><label class="label_font"></label><?php echo $dat[reg_open_date]; ?>
                     <span id="reg_open_date_err"></span>
                 </td>
-                <td class="td_heading">Registration Close Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo $dat[reg_close_date]; ?>
+                <td class="td_heading" width='20%'>Registration Close Date:<span class="required">*</span></td>
+                <td width='20%'><label class="label_font"></label><?php echo $dat[reg_close_date]; ?>
                     <span id="reg_close_date_err"></span>
                 </td>
                 <input type="hidden" name="reg_open_date" value="<?php echo $dat[reg_open_date]; ?>" id="reg_open_date">
@@ -136,9 +136,9 @@
         <tbody>
             <tr width="20%">                        
                 <td class="td_heading" width="20%">Session Start Date:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $dat[class_start_datetime]; ?></label></td>
+                <td><label class="label_font"><?php echo $dat[crse_start_date]; ?></label></td>
                 <td class="td_heading">Session End Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo $dat[class_end_datetime]; ?></td>
+                <td><label class="label_font"></label><?php echo $dat[crse_end_date]; ?></td>
             </tr>
 
             <tr>                        
