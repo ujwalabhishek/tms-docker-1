@@ -685,7 +685,7 @@ class tp_gateway extends CI_Controller {
             $this->load->view('layout', $data);
             
         }else{
-            redirect('tp_gateway/get_ssg_courserun');
+            redirect('tp_gateway/get_courserun');
         }
         
     }
