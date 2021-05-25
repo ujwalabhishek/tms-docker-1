@@ -310,14 +310,16 @@
                     <?php
                     $trainer_email = array(
                         'name' => 'trainer_email',
-                        'id' => 'trainer_email',
+                        'id' => 'trainer_emailh',
                         'value' =>$trainer->registered_email_id ?? $this->input->post('trainer_email'),
                         'maxlength' => 50,
+                        'disabled' =>'disabled',
                         "class" => "upper_case"
                     );
                     echo form_input($trainer_email);
                     ?>
                     </label>
+                     <input type="hidden" name="trainer_email[]" value="" id="trainer_email">
                     <span id="trainer_email_err"></span>
                 </td>
             </tr>
