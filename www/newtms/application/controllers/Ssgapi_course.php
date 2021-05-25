@@ -629,6 +629,10 @@ class ssgapi_course extends CI_Controller {
 			  }</script>";
     }
     
+    
+    
+    
+    
    ///  //////  Below functions added by shubhranshu for SSG API integration ///////////////////////////////////////////
     /////to fetch the course api required parameters
     public function get_ssg_courserun($class_id,$course_id){
@@ -674,7 +678,9 @@ class ssgapi_course extends CI_Controller {
         }
         
         if ($this->form_validation->run() == TRUE){
-                echo "verified";
+            $data['page_title'] = 'TPG VERIFY COURSE RUN DETAILS';
+            $data['main_content'] = 'ssgapi_course/crosscheck_tpg_courserun/';
+            $this->load->view('layout', $data);
         }else{
             $data['page_title'] = 'SSG CREATE COURSE RUN';
             $data['main_content'] = 'ssgapi_course/get_ssg_courserun/'.$class_id.'/'.$course_id;
@@ -682,6 +688,8 @@ class ssgapi_course extends CI_Controller {
         }
         
     }
+    
+    
     
     
     

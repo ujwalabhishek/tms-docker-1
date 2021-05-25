@@ -409,6 +409,7 @@
 </div>
 <script>
     $(document).ready(function() {
+        $("#courserun_form :input").prop("disabled", true);
        $('#venue_floor').keyup(function(){
            $('.svenue_floor').html($('#venue_floor').val());
        });
