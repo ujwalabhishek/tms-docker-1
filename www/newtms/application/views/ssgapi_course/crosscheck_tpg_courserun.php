@@ -16,7 +16,7 @@
                 </td>
                 <td class="td_heading">TP UEN:<span class="required">*</span></td>
                 <td>
-                    <label class="label_font"></label><?php echo $tenant->comp_reg_no; ?>
+                    <label class="label_font"></label><?php echo $tenant->comp_reg_no ?? $this->input->post('tp_uen'); ?>
                     <span id="tp_uen_err"></span>
                 </td>
                 <input type="hidden" name="crse_ref_no" value="<?php echo $coursedetails->reference_num?? $this->input->post('crse_ref_no'); ?>" id="crse_ref_no">
