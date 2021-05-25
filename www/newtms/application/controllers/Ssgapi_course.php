@@ -679,7 +679,7 @@ class ssgapi_course extends CI_Controller {
         
         if ($this->form_validation->run() == TRUE){
             $data['page_title'] = 'TPG VERIFY COURSE RUN DETAILS';
-            $data['main_content'] = 'ssgapi_course/crosscheck_tpg_courserun/';
+            $data['main_content'] = 'ssgapi_course/crosscheck_tpg_courserun';
             $this->load->view('layout', $data);
         }else{
             $data['page_title'] = 'SSG CREATE COURSE RUN';
