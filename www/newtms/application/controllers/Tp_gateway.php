@@ -7,7 +7,7 @@ if (!defined('BASEPATH'))
  * his is the controller class for Accounting Use Cases
  */
 
-class ssgapi_course extends CI_Controller {
+class tp_gateway extends CI_Controller {
 
     private $user;
 
@@ -20,7 +20,7 @@ class ssgapi_course extends CI_Controller {
         $this->load->model('class_Model', 'classModel');
         $this->load->model('course_model', 'coursemodel');
         $this->load->model('company_model', 'companyModel');
-        $this->load->model('ssg_api_model', 'ssgModel');
+        $this->load->model('tpg_api_model', 'ssgModel');
         $this->load->model('tenant_model', 'tenantModel');
         $this->load->helper('common');
         $this->load->helper('metavalues_helper');
@@ -247,7 +247,7 @@ class ssgapi_course extends CI_Controller {
         
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'SSG API COURSE DETAILS';
-        $data['main_content'] = 'ssgapi_course/view_course';
+        $data['main_content'] = 'tp_gateway/view_course';
         $this->load->view('layout', $data);
     }
     
@@ -521,7 +521,7 @@ class ssgapi_course extends CI_Controller {
     public function proceed_enrol(){
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'TPG NEW TRAINEE ENROL';
-        $data['main_content'] = 'ssgapi_course/proceed_enrol';
+        $data['main_content'] = 'tp_gateway/proceed_enrol';
         $this->load->view('layout', $data);
     }
     
@@ -598,7 +598,7 @@ class ssgapi_course extends CI_Controller {
         $data['tpg_data'] = $object;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'TPG NEW TRAINEE ENROL';
-        $data['main_content'] = 'ssgapi_course/proceed_enrol_final';
+        $data['main_content'] = 'tp_gateway/proceed_enrol_final';
         $this->load->view('layout', $data);
     }
     
@@ -635,7 +635,7 @@ class ssgapi_course extends CI_Controller {
     
    ///  //////  Below functions added by shubhranshu for SSG API integration ///////////////////////////////////////////
     /////to fetch the course api required parameters
-    public function get_ssg_courserun($class_id,$course_id){
+    public function get_courserun($class_id,$course_id){
         $tenant_id = $this->tenant_id;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['tenant'] = $this->classTraineeModel->get_tenant_masters($tenant_id);
@@ -645,7 +645,7 @@ class ssgapi_course extends CI_Controller {
         $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
         $data['booked_seats'] = $this->classModel->get_class_booked($course_id,$class_id,$tenant_id);
         $data['page_title'] = 'SSG CREATE COURSE RUN';
-        $data['main_content'] = 'ssgapi_course/get_ssg_courserun';
+        $data['main_content'] = 'tp_gateway/get_courserun';
         $this->load->view('layout', $data);
     }
     ///to verify the course api parameters
@@ -681,13 +681,11 @@ class ssgapi_course extends CI_Controller {
         if ($this->form_validation->run() == TRUE){
             $data['form_url'] = '';
             $data['page_title'] = 'new';
-            $data['main_content'] = 'ssgapi_course/crosscheck_tpg_courserun/'.$this->input->post('class_id').'/'.$this->input->post('course_id');
+            $data['main_content'] = 'tp_gateway/crosscheck_tpg_courserun/'.$this->input->post('class_id').'/'.$this->input->post('course_id');
             $this->load->view('layout', $data);
             
         }else{
-            $data['page_title'] = 'SSG CREATE COURSE RUN';
-            $data['main_content'] = 'ssgapi_course/get_ssg_courserun';
-            $this->load->view('layout', $data);
+            redirect('tp_gateway/get_ssg_courserun');
         }
         
     }
@@ -695,7 +693,7 @@ class ssgapi_course extends CI_Controller {
     public function crosscheck_tpg_courserun(){
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'TPG VERIFY COURSE RUN DETAILS';
-        $data['main_content'] = 'ssgapi_course/crosscheck_tpg_courserun';
+        $data['main_content'] = 'tp_gateway/crosscheck_tpg_courserun';
         $this->load->view('layout', $data);
     }
     

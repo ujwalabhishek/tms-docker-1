@@ -1,6 +1,6 @@
 <?php
 
-class Ssg_api_Model extends CI_Model {
+class Tpg_api_Model extends CI_Model {
 
 /**
      * this function to get trainer names

@@ -2,7 +2,7 @@
 <div class="col-md-10">
     <?php
         $atr = 'id="courserun_form" name="courserun_form"';
-        echo form_open("ssgapi_course/verify_courserun/", $atr);
+        echo form_open("tp_gateway/verify_courserun/", $atr);
     ?>  
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Add Course Run Details</h2>   
     <div><?php echo validation_errors('<span class="error">', '</span>'); ?></div>
