@@ -682,7 +682,7 @@ class tp_gateway extends CI_Controller {
             //print_r($_POST);exit;
             $data_nextlevel = $_POST;
             // store data to flashdata
-            $this->session->set_flashdata('$dat',$data_nextlevel);
+            $this->session->set_flashdata('dat',$data_nextlevel);
             redirect('tp_gateway/crosscheck_tpg_courserun');
             
         }else{
