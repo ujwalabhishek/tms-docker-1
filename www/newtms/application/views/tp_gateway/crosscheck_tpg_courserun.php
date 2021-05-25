@@ -47,12 +47,12 @@
             </tr>
 
             <tr>
-                <td class="td_heading" width='20%'>Registration Open Date:<span class="required">*</span></td>
-                <td width='20%'><label class="label_font"></label><?php echo $dat[reg_open_date]; ?>
+                <td class="td_heading" width='25%'>Registration Open Date:<span class="required">*</span></td>
+                <td width='25%'><label class="label_font"></label><?php echo $dat[reg_open_date]; ?>
                     <span id="reg_open_date_err"></span>
                 </td>
-                <td class="td_heading" width='20%'>Registration Close Date:<span class="required">*</span></td>
-                <td width='20%'><label class="label_font"></label><?php echo $dat[reg_close_date]; ?>
+                <td class="td_heading" width='25%'>Registration Close Date:<span class="required">*</span></td>
+                <td width='25%'><label class="label_font"></label><?php echo $dat[reg_close_date]; ?>
                     <span id="reg_close_date_err"></span>
                 </td>
                 <input type="hidden" name="reg_open_date" value="<?php echo $dat[reg_open_date]; ?>" id="reg_open_date">
@@ -135,10 +135,10 @@
     <table class="table table-striped">
         <tbody>
             <tr width="20%">                        
-                <td class="td_heading" width="20%">Session Start Date:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $dat[crse_start_date]; ?></label></td>
-                <td class="td_heading">Session End Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo $dat[crse_end_date]; ?></td>
+                <td class="td_heading" width="25%">Session Start Date:<span class="required">*</span></td>
+                <td width='25%'><label class="label_font"><?php echo $dat[crse_start_date]; ?></label></td>
+                <td class="td_heading" width='25%'>Session End Date:<span class="required">*</span></td>
+                <td width='25%'><label class="label_font"></label><?php echo $dat[crse_end_date]; ?></td>
             </tr>
 
             <tr>                        
@@ -175,11 +175,11 @@
     <table class="table table-striped">
         <tbody>
             <tr>                        
-                <td class="td_heading" width="20%">Trainer Name:<span class="required">*</span></td>
-                <td width='40%'><label class="label_font"><?php echo $trainer ?></label> <span id="trainer_name_err"></span></td>
+                <td class="td_heading" width="25%">Trainer Name:<span class="required">*</span></td>
+                <td width='25%'><label class="label_font"><?php echo $trainer ?></label> <span id="trainer_name_err"></span></td>
                 <input type="hidden" name="trainer_name" value="<?php echo $trainer; ?>" id="trainer_name">
-                <td class="td_heading">Trainer Email:<span class="required">*</span></td>
-                <td width='40%'><label class="label_font"><?php echo $dat[trainer_email][$sl]; ?></label> <span id="trainer_email_err"></span></td>
+                <td class="td_heading" width='25%'>Trainer Email:<span class="required">*</span></td>
+                <td width='25%'><label class="label_font"><?php echo $dat[trainer_email][$sl]; ?></label> <span id="trainer_email_err"></span></td>
                 <input type="hidden" name="trainer_email" value="<?php echo $dat[trainer_email][$sl]; ?>" id="trainer_email">
             </tr>
 
