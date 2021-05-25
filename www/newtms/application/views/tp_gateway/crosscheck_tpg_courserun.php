@@ -2,16 +2,16 @@
 <div class="col-md-10">
     <?php
         $atr = 'id="courserun_form" name="courserun_form"';
-        echo form_open("tp_gateway/verify_courserun/", $atr);
+        echo form_open("tp_gateway//", $atr);
     ?>  
-    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Add Course Run Details</h2>   
-    <div><?php echo validation_errors('<span class="error">', '</span>'); ?></div>
+    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Crosscheck Data To Submit TPG</h2>   
+    
     <h2 class="sub_panel_heading_style">COURSE</h2>
     <table class="table table-striped">
         <tbody>
             <tr>
                 <td class="td_heading" width="20%">Course Reference Number:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $coursedetails->reference_num?? $this->input->post('crse_ref_no'); ?></label>
+                <td><label class="label_font"><?php echo $coursedetails; ?></label>
                     <span id="crse_ref_no_err"></span>
                 </td>
                 <td class="td_heading">TP UEN:<span class="required">*</span></td>
