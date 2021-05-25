@@ -678,11 +678,11 @@ class tp_gateway extends CI_Controller {
             
         }
         
-        if ($this->form_validation->run() == TRUE){
-            $data['form_url'] = '';
-            $data['page_title'] = 'new';
-            $data['main_content'] = 'tp_gateway/crosscheck_tpg_courserun/'.$this->input->post('class_id').'/'.$this->input->post('course_id');
-            $this->load->view('layout', $data);
+        if ($this->form_validation->run() == TRUE){print_r($_POST);exit;
+            $data = array('firstname'=>'fname','lastname'=>'lastname');
+            // store data to flashdata
+            $this->session->set_flashdata('lolwut',$data);
+            redirect('tp_gateway/crosscheck_tpg_courserun');
             
         }else{
             redirect('tp_gateway/get_courserun');

@@ -308,7 +308,7 @@
                     $trainer_email = array(
                         'name' => 'trainer_email',
                         'id' => 'trainer_email',
-                        'value' =>$this->input->post('trainer_email'),
+                        'value' =>$this->input->post('trainer_email') ?? $trainer->first_name.' '.$trainer->last_name,
                         'maxlength' => 50,
                         "class" => "upper_case"
                     );
@@ -334,6 +334,7 @@
                 </td>
                 <td class="td_heading" width="13%">Trainer Description:<span class="required">*</span></td>
                 <td><label class="label_font"></label>NEW</td>
+                <input type="hidden" name="trainer_des[]" value="NEW" id="trainer_des">
             </tr>
 
             <tr>                        
@@ -350,19 +351,21 @@
                     <div style='color:grey'>For trainerType as "1-Existing" trainer, fill up the Trainer name, email and leave the rest of the Trainer fields empty. API will get the details from the TP Profile,For trainerType as "2-New" trainer, please fill in all required details. If inTrainingProviderProfile is set to "true", the new added trainer will be saved into trainer profile as well as linked to this specific course run; otherwise, this trainer is linked to this specific course run only.</div>
                 </td>
                 <td class="td_heading">Trainer ID:<span class="required">*</span></td>
-                <td><label class="label_font"></label>
+                <td><label class="label_font">
                     <?php
                     $trainer_id = array(
                         'name' => 'trainer_id[]',
-                        'id' => 'trainer_id',
+                        'id' => 'trainer_idh',
                         'value' => $this->input->post('trainer_id[]'),
                         'maxlength' => 50,
+                        'disabled' =>'disabled',
                         "class" => "upper_case"
                     );
                     echo form_input($trainer_id);
                     ?>
                     </label>
                     <span id="trainer_id_err"></span>
+                    <input type="hidden" name="trainer_id[]" value="" id="trainer_id">
                     <div style='color:grey'>The unique Trainer id for existing trainer. For new trainer, leave it blank.</div>
                 </td>
             </tr>
