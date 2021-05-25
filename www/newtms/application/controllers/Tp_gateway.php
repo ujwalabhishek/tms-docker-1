@@ -20,7 +20,7 @@ class tp_gateway extends CI_Controller {
         $this->load->model('class_Model', 'classModel');
         $this->load->model('course_model', 'coursemodel');
         $this->load->model('company_model', 'companyModel');
-        $this->load->model('tpg_api_model', 'ssgModel');
+        $this->load->model('tpg_api_model', 'tpgModel');
         $this->load->model('tenant_model', 'tenantModel');
         $this->load->helper('common');
         $this->load->helper('metavalues_helper');
@@ -641,7 +641,7 @@ class tp_gateway extends CI_Controller {
         $data['tenant'] = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $data['coursedetails'] = $this->coursemodel->get_course_detailse($course_id);
         $data['class'] = $class = $this->classModel->get_class_details_assmnts($tenant_id, $class_id);
-        $data['ClassTrainer'] = $this->ssgModel->get_trainer_details($class->classroom_trainer);
+        $data['ClassTrainer'] = $this->tpgModel->get_trainer_details($class->classroom_trainer);
         $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
         $data['booked_seats'] = $this->classModel->get_class_booked($course_id,$class_id,$tenant_id);
         $data['page_title'] = 'SSG CREATE COURSE RUN';

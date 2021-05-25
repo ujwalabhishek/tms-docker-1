@@ -299,7 +299,10 @@
         <tbody>
             <tr>                        
                 <td class="td_heading" width="20%">Trainer Name:<span class="required">*</span></td>
-                <td width='40%'><label class="label_font"><?php echo $this->input->post('trainer_name') ?? $trainer->first_name.' '.$trainer->last_name; ?></label> <span id="trainer_name_err"></span></td>
+                <td width='40%'>
+                    <label class="label_font"><?php echo $this->input->post('trainer_name') ?? $trainer->first_name.' '.$trainer->last_name; ?>
+                    </label> 
+                    <span id="trainer_name_err"></span></td>
                 <input type="hidden" name="trainer_name[]" value="<?php echo $this->input->post('trainer_name') ?? $trainer->first_name.' '.$trainer->last_name; ?>" id="trainer_name">
                 <td class="td_heading">Trainer Email:<span class="required">*</span></td>
                 <td>
@@ -308,7 +311,7 @@
                     $trainer_email = array(
                         'name' => 'trainer_email',
                         'id' => 'trainer_email',
-                        'value' =>$this->input->post('trainer_email') ?? $trainer->first_name.' '.$trainer->last_name,
+                        'value' =>$trainer->registered_email_id ?? $this->input->post('trainer_email'),
                         'maxlength' => 50,
                         "class" => "upper_case"
                     );
