@@ -11,6 +11,7 @@ if ($user->role_id == 'ADMN' || $user->role_id == 'COMPACT') {
 if (!empty($tax_error)) { 
     echo '<div class="error1">' . $tax_error . '</div>';
 }
+
 ?>
 <div class="col-md-10">
     <?php echo validation_errors('<div class="error1">', '</div>'); ?>   
@@ -159,7 +160,11 @@ if (!empty($tax_error)) {
                             ?> 
                             <span id="pers_gender_err"></span>
                         </td>
-                        <td class="td_heading">Date of Birth:</td>
+                        <td class="td_heading">Date of Birth:
+						<?php if($tenant_id=='T24'){ ?>
+							<span class="required">*
+						<?php } ?>
+						</td>
                         <td>
                             <?php
                             $pers_dob = array(
