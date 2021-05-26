@@ -1914,8 +1914,8 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
 
             pers_dob = $.trim($("#pers_dob").val());
             if (pers_dob == "") {
-                $("#pers_dob_err").text("").removeClass('error');
-                $("#pers_dob").removeClass('error');
+                $("#pers_dob_err").text("").addClass('error');
+                $("#pers_dob").addClass('error');
             } else if (valid_date_field(pers_dob) == false) {
                 $("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
                 $("#pers_dob").removeClass('error');
