@@ -11,7 +11,8 @@ if ($user->role_id == 'ADMN' || $user->role_id == 'COMPACT') {
 if (!empty($tax_error)) { 
     echo '<div class="error1">' . $tax_error . '</div>';
 }
-
+//Added by abdulla
+$tenant_id = $this->session->userdata('userDetails')->tenant_id;
 ?>
 <div class="col-md-10">
     <?php echo validation_errors('<div class="error1">', '</div>'); ?>   
