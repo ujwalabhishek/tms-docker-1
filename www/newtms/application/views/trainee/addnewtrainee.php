@@ -1882,17 +1882,6 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                 }
             }
 			
-			//Added by abdulla
-			pers_dob = $.trim($("#pers_dob").val());
-            if (pers_dob == "") {
-                $("#pers_dob_err").text("[required]").addClass('error');
-                $("#pers_dob").addClass('error');
-                retVal = false;
-            } else {
-                $("#pers_dob_err").text("").removeClass('error');
-                $("#pers_dob").removeClass('error');
-            }
-						
             pers_first_name = $.trim($("#pers_first_name").val());
             if (pers_first_name == "") {
                 $("#pers_first_name_err").text("[required]").addClass('error');
@@ -1927,14 +1916,11 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
             if (pers_dob == "") {
                 $("#pers_dob_err").text("").removeClass('error');
                 $("#pers_dob").removeClass('error');
-            }
-            else if (valid_date_field(pers_dob) == false) {
+            } else if (valid_date_field(pers_dob) == false) {
                 $("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
                 $("#pers_dob").removeClass('error');
                 retVal = false;
-            }
-
-            else {
+            } else {
                 $("#pers_dob_err").text("").removeClass('error');
                 $("#pers_dob").removeClass('error');
             }
