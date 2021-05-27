@@ -527,7 +527,8 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                             $attr = array('' => 'Select');
                             $attr_js = 'id="pers_states"';
                             echo form_dropdown('pers_states', $attr, set_value(pers_states), $attr_js);
-                            ?>                        
+                            ?>
+							<span id="pers_states_err"></span>
                         </td>
 
                         <td class="td_heading">Postal Code:
@@ -2110,6 +2111,18 @@ $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>"
                 $("#highest_educ_level").removeClass('error');
             }
 
+			if($tenant_id == 'T24') {
+				pers_states = $.trim($("#pers_states").val());
+				if (pers_states == "") {
+					$("#pers_states_err").text("[required]").addClass('error');
+					$("#pers_states").addClass('error');
+					retVal = false;
+				} else {
+					$("#pers_states_err").text("").removeClass('error');
+					$("#pers_states").removeClass('error');
+				}			
+			}
+			
 			if($tenant_id == 'T24') {
 				var pers_city = $.trim($("#pers_city").val());
 				if (pers_city != '') {
