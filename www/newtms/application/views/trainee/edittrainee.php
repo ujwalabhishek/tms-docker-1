@@ -12,6 +12,8 @@ if ($user->role_id == 'ADMN' || $user->role_id == 'COMPACT') {
 if (!empty($tax_error)) { 
     echo '<div class="error1">' . $tax_error . '</div>';
 }
+//Added by abdulla
+$tenant_id = $this->session->userdata('userDetails')->tenant_id;
 ?>
 <style>
     .edu_level{
