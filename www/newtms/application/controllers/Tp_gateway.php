@@ -827,7 +827,7 @@ class tp_gateway extends CI_Controller {
         
         
         //print_r($data);exit;
-        $api_version = 'v1';
+        $api_version = 'v1.3';
         $url = "https://uat-api.ssg-wsg.sg/courses/runs";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
         print_r($response);exit;
