@@ -464,7 +464,11 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
             <table class="table table-striped">
                 <tbody>
                     <tr>
-                        <td class="td_heading" width="15%">Building/Street:</td>
+                        <td class="td_heading" width="15%">Building/Street:
+						<?php if($tenant_id=='T24'){ ?>
+							<span class="required">*
+						<?php } ?>
+						</td>
                         <?php
                         $p_addr = array(
                             'name' => 'pers_personal_address_bldg',
@@ -475,8 +479,14 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                             'class' => 'upper_case'
                         );
                         ?>
-                        <td colspan="3" width="50%"><?php echo form_textarea($p_addr); ?></td>
-                        <td class="td_heading" width="8%">City:</td>
+                        <td colspan="3" width="50%"><?php echo form_textarea($p_addr); ?>
+							<span id="pers_personal_address_bldg_err"></span>
+						</td>
+                        <td class="td_heading" width="8%">City:
+						<?php if($tenant_id=='T24'){ ?>
+							<span class="required">*
+						<?php } ?>
+						</td>
                         <?php
                         $city = array(
                             'name' => 'pers_city',
@@ -494,7 +504,11 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         </td>                    
                     </tr>
                     <tr>
-                        <td class="td_heading">Country:</td>
+                        <td class="td_heading">Country:
+						<?php if($tenant_id=='T24'){ ?>
+							<span class="required">*
+						<?php } ?>
+						</td>
                         <td width="25%">
                             <?php
                             $attr = 'id="pers_country"';
@@ -503,7 +517,11 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                             <span id="pers_country_err"></span>
                         </td>
 
-                        <td class="td_heading">State:</td>
+                        <td class="td_heading">State:
+						<?php if($tenant_id=='T24'){ ?>
+							<span class="required">*
+						<?php } ?>
+						</td>
                         <td>                           
                             <?php
                             $attr = array('' => 'Select');
@@ -512,7 +530,11 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                             ?>                        
                         </td>
 
-                        <td class="td_heading">Postal Code:</td>
+                        <td class="td_heading">Postal Code:
+						<?php if($tenant_id=='T24'){ ?>
+							<span class="required">*
+						<?php } ?>
+						</td>
                         <?php
                         $zip = array(
                             'name' => 'pers_zip_code',
@@ -2088,20 +2110,50 @@ $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>"
                 $("#highest_educ_level").removeClass('error');
             }
 
-            var pers_city = $.trim($("#pers_city").val());
-            if (pers_city != '') {
-                if (valid_name(pers_city) == false) {
-                    $("#pers_city_err").text("[invalid]").addClass('error');
-                    $("#pers_city").addClass('error');
-                } else {
-                    $("#pers_city_err").text("").removeClass('error');
-                    $("#pers_city").removeClass('error');
-                }
-            } else {
-                $("#pers_city_err").text("").removeClass('error');
-                $("#pers_city").removeClass('error');
-            }
-
+			if($tenant_id == 'T24') {
+				var pers_city = $.trim($("#pers_city").val());
+				if (pers_city != '') {
+					if (valid_name(pers_city) == false) {
+						$("#pers_city_err").text("[invalid]").addClass('error');
+						$("#pers_city").addClass('error');
+					} else {
+						$("#pers_city_err").text("").removeClass('error');
+						$("#pers_city").removeClass('error');
+					}
+				} else if(pers_city == '') {
+					$("#pers_city_err").text("[required]").addClass('error');
+					$("#pers_city").addClass('error');				
+				} else {
+					$("#pers_city_err").text("").removeClass('error');
+					$("#pers_city").removeClass('error');
+				}
+			} else {
+				var pers_city = $.trim($("#pers_city").val());
+				if (pers_city != '') {
+					if (valid_name(pers_city) == false) {
+						$("#pers_city_err").text("[invalid]").addClass('error');
+						$("#pers_city").addClass('error');
+					} else {
+						$("#pers_city_err").text("").removeClass('error');
+						$("#pers_city").removeClass('error');
+					}
+				} else {
+					$("#pers_city_err").text("").removeClass('error');
+					$("#pers_city").removeClass('error');
+				}
+			}
+			
+			if($tenant_id == 'T24') {
+				pers_personal_address_bldg = $.trim($("#pers_personal_address_bldg").val());
+				if (pers_personal_address_bldg == "") {
+					$("#pers_personal_address_bldg_err").text("[required]").addClass('error');
+					$("#pers_personal_address_bldg").addClass('error');
+				} else {
+					$("#pers_personal_address_bldg_err").text("").removeClass('error');
+					$("#pers_personal_address_bldg").removeClass('error');
+				}
+			}
+			
             var pers_zipcode = $.trim($("#pers_zipcode").val());
             if (pers_zipcode != '') {
                 if (valid_zip(pers_zipcode) == false) {
