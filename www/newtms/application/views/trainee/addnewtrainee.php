@@ -2154,19 +2154,39 @@ $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>"
 				}
 			}
 			
-            var pers_zipcode = $.trim($("#pers_zipcode").val());
-            if (pers_zipcode != '') {
-                if (valid_zip(pers_zipcode) == false) {
-                    $("#pers_zipcode_err").text("[invalid]").addClass('error');
-                    $("#pers_zipcode").addClass('error');
-                } else {
-                    $("#pers_zipcode_err").text("").removeClass('error');
-                    $("#pers_zipcode").removeClass('error');
-                }
-            } else {
-                $("#pers_zipcode_err").text("").removeClass('error');
-                $("#pers_zipcode").removeClass('error');
-            }            
+			if($tenant_id == 'T24') {
+				var pers_zipcode = $.trim($("#pers_zipcode").val());
+				if (pers_zipcode != '') {
+					if (valid_zip(pers_zipcode) == false) {
+						$("#pers_zipcode_err").text("[invalid]").addClass('error');
+						$("#pers_zipcode").addClass('error');
+					} else {
+						$("#pers_zipcode_err").text("").removeClass('error');
+						$("#pers_zipcode").removeClass('error');
+					}
+				} else if(pers_zipcode == '') {
+					$("#pers_zipcode_err").text("[required]").addClass('error');
+					$("#pers_zipcode").addClass('error');
+				} else {
+					$("#pers_zipcode_err").text("").removeClass('error');
+					$("#pers_zipcode").removeClass('error');
+				}
+			} else {
+				var pers_zipcode = $.trim($("#pers_zipcode").val());
+				if (pers_zipcode != '') {
+					if (valid_zip(pers_zipcode) == false) {
+						$("#pers_zipcode_err").text("[invalid]").addClass('error');
+						$("#pers_zipcode").addClass('error');
+					} else {
+						$("#pers_zipcode_err").text("").removeClass('error');
+						$("#pers_zipcode").removeClass('error');
+					}
+				} else {
+					$("#pers_zipcode_err").text("").removeClass('error');
+					$("#pers_zipcode").removeClass('error');
+				}  
+			}
+		    
             if ($('#trainee_validation_div span').hasClass('error')) {
                 retVal = false;
             }
