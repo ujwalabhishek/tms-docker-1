@@ -751,8 +751,8 @@ class tp_gateway extends CI_Controller {
               },
               "scheduleInfo": "'.$schedule_info.'",
               "venue": {
-                "block": "",
-                "street": "",
+                "block": "'.$venue_block.'",
+                "street": "'.$venue_street.'",
                 "floor": "'.$venue_floor.'",
                 "unit": "'.$venue_unit.'",
                 "building": "",
@@ -771,19 +771,19 @@ class tp_gateway extends CI_Controller {
               },
               "sessions": [
                 {
-                  "startDate": "'.$sess_start_time.'",
-                  "endDate": "'.$sess_end_time.'",
-                  "startTime": "11:00",
-                  "modeOfTraining": "3",
-                  "endTime": "12:30",
+                  "startDate": "'.$crse_start_date.'",
+                  "endDate": "'.$crse_end_date.'",
+                  "startTime": "'.$sess_start_time.'",
+                  "modeOfTraining": "'.$modeoftraining.'",
+                  "endTime": "'.$sess_end_time.'",
                   "venue": {
-                    "block": "112A",
-                    "street": "Street ABC",
-                    "floor": "1",
-                    "unit": "1",
+                    "block": "'.$venue_block.'",
+                    "street": "'.$venue_street.'",
+                    "floor": "'.$venue_floor.'",
+                    "unit": "'.$venue_unit.'",
                     "building": "",
-                    "postalCode": 760635,
-                    "room": "24",
+                    "postalCode": '.$venue_postalcode.',
+                    "room": "'.$venue_room.'",
                     "wheelChairAccess": true,
                     "primaryVenue": true
                   }
