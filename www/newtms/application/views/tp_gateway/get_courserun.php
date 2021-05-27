@@ -350,7 +350,7 @@
                     $trainer_email = array(
                         'name' => 'trainer_email',
                         'id' => 'trainer_emailh',
-                        'value' =>($trainer->registered_email_id ?? $this->input->post('trainer_email'))?? 'tmstrainer@mailinator.com'),
+                        'value' =>($trainer->registered_email_id ?? $this->input->post('trainer_email'))?? 'tmstrainer@mailinator.com',
                         'maxlength' => 50,
                         'disabled' =>'disabled',
                         "class" => "upper_case"
