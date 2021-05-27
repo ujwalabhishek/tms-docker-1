@@ -713,6 +713,8 @@ class tp_gateway extends CI_Controller {
        $schedule_info_code= $this->input->post('schedule_info_code');
        $schedule_info_des= $this->input->post('schedule_info_des');
        $schedule_info= $this->input->post('schedule_info');
+        $venue_block= $this->input->post('venue_block');
+         $venue_street= $this->input->post('venue_street');
        $venue_floor= $this->input->post('venue_floor');
        $venue_unit= $this->input->post('venue_unit');
        $venue_postalcode= $this->input->post('venue_postalcode');
