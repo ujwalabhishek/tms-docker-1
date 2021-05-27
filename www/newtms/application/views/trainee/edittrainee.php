@@ -267,10 +267,11 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                                 ?>
                                 <span id="pers_gender_err"></span>
                             </td>
-                            <td class="td_heading">Date of Birth:</td>
+                            <td class="td_heading">Date of Birth:
 							<?php if($tenant_id=='T24'){ ?>
 								<span class="required">*
 							<?php } ?>
+							</td>						
                             <td> <?php
                                 $dob_input = (empty($trainee[userdetails]['dob'])) ? '' : date('d-m-Y', strtotime($trainee[userdetails]['dob']));
                                 $dob = array(
