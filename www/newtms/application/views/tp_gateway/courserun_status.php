@@ -42,7 +42,7 @@
 
             <tr>
                 <td class="td_heading">Attendance Taken:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $run->attendanceTaken; ?></label>
+                <td><label class="label_font"><?php echo $run->attendanceTaken? 'True': 'False'; ?></label>
                 <td colspan="2"> <label class="label_font"></label>
                     <div style='color:grey'>indicate whether the attendance taken is done for the course run</div>
                 </td>
