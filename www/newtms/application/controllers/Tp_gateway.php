@@ -930,11 +930,11 @@ class tp_gateway extends CI_Controller {
         }
       }';
         
-        //echo $tpg_course_run_json;exit;
+        echo $tpg_course_run_json;exit;
         //print_r(json_encode($tpg_course_run_json));exit;
         $api_version = 'v1.3';
         $url = "https://uat-api.ssg-wsg.sg/courses/runs";
-        $response = $this->curl_request('POST',$url,json_encode($ss),$api_version);
+        $response = $this->curl_request('POST',$url,$ss,$api_version);
         print_r($response);exit;
 //        echo " <div id='out'></div>
 //            
