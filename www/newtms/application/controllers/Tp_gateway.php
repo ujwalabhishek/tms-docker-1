@@ -849,10 +849,10 @@ class tp_gateway extends CI_Controller {
     public function courserun_status(){
         $data['sideMenuData'] = fetch_non_main_page_content();
         $api_version = 'v1.3';
-        //$resp=$this->session->flashdata('resp');
+        $resp=$this->session->flashdata('resp');
         $crse_run_id = $resp->data->runs[0]->id;
-        //$url = "https://uat-api.ssg-wsg.sg/courses/runs/$crse_run_id";
-        $url = "https://uat-api.ssg-wsg.sg/courses/runs/223382";
+        $url = "https://uat-api.ssg-wsg.sg/courses/runs/$crse_run_id";
+        //$url = "https://uat-api.ssg-wsg.sg/courses/runs/223382";
         $response = json_decode($this->curl_request('GET',$url,'',$api_version));
         $this->session->set_flashdata('success',"Congratulations! You Have Successfully Add Course Run To TPG");
         //print_r($resp);print_r($response);exit;
