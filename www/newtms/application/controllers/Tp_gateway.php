@@ -869,7 +869,7 @@ class tp_gateway extends CI_Controller {
     
     public function check_status(){
          $response=$this->session->flashdata('resp');
-         print_r($response);exit;
+         //print_r($response);exit;
         if($response[status] == 400){
             $this->session->set_flashdata('error',"Oops! Bad request!");
         }elseif($response[status] == 403){
@@ -885,7 +885,7 @@ class tp_gateway extends CI_Controller {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $resp = json_decode($response);
         $data['error'] = $response->error->details;
-        
+        print_r($data);exit;
         $data['page_title'] = 'Course Run Status';
         $data['main_content'] = 'tp_gateway/error_status';
         $this->load->view('layout', $data);
