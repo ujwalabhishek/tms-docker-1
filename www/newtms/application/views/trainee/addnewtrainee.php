@@ -11,6 +11,8 @@ if ($user->role_id == 'ADMN' || $user->role_id == 'COMPACT') {
 if (!empty($tax_error)) { 
     echo '<div class="error1">' . $tax_error . '</div>';
 }
+//Added by abdulla
+$tenant_id = $this->session->userdata('userDetails')->tenant_id;
 ?>
 <div class="col-md-10">
     <?php echo validation_errors('<div class="error1">', '</div>'); ?>   
@@ -159,7 +161,11 @@ if (!empty($tax_error)) {
                             ?> 
                             <span id="pers_gender_err"></span>
                         </td>
-                        <td class="td_heading">Date of Birth:</td>
+                        <td class="td_heading">Date of Birth:
+						<?php if($tenant_id=='T24'){ ?>
+							<span class="required">*
+						<?php } ?>
+						</td>
                         <td>
                             <?php
                             $pers_dob = array(
@@ -1875,7 +1881,7 @@ if (!empty($tax_error)) {
                     $("#user_name").addClass('error');
                 }
             }
-
+			
             pers_first_name = $.trim($("#pers_first_name").val());
             if (pers_first_name == "") {
                 $("#pers_first_name_err").text("[required]").addClass('error');
@@ -1906,21 +1912,37 @@ if (!empty($tax_error)) {
                 $("#pers_gender").removeClass('error');
             }
 
-            pers_dob = $.trim($("#pers_dob").val());
+//Added by abdulla
+$tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>";
+
+		if($tenant_id == 'T24') {
+			pers_dob = $.trim($("#pers_dob").val());
             if (pers_dob == "") {
-                $("#pers_dob_err").text("").removeClass('error');
-                $("#pers_dob").removeClass('error');
-            }
-            else if (valid_date_field(pers_dob) == false) {
+                $("#pers_dob_err").text("[required]").addClass('error');
+                $("#pers_dob").addClass('error');
+            } else if (valid_date_field(pers_dob) == false) {
                 $("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
                 $("#pers_dob").removeClass('error');
                 retVal = false;
-            }
-
-            else {
+            } else {
                 $("#pers_dob_err").text("").removeClass('error');
                 $("#pers_dob").removeClass('error');
             }
+		} else {
+			pers_dob = $.trim($("#pers_dob").val());
+            if (pers_dob == "") {
+                $("#pers_dob_err").text("").removeClass('error');
+                $("#pers_dob").removeClass('error');
+            } else if (valid_date_field(pers_dob) == false) {
+                $("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
+                $("#pers_dob").removeClass('error');
+                retVal = false;
+            } else {
+                $("#pers_dob_err").text("").removeClass('error');
+                $("#pers_dob").removeClass('error');
+            }
+		}
+            
 
             pers_contact_number = $.trim($("#pers_contact_number").val());
             if (pers_contact_number == "") {

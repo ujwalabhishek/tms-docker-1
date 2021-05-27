@@ -87,6 +87,7 @@ class Trainee extends CI_Controller {
      */
     public function add_new_trainee() 
     {
+		$tenant_id=$this->user->tenant_id;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $user = $this->session->userdata('userDetails');
         $tenant_id = $user->tenant_id;
@@ -142,6 +143,9 @@ class Trainee extends CI_Controller {
             $this->form_validation->set_rules('pers_personal_address_bldg', 'Address', 'max_length[255]');
             $this->form_validation->set_rules('pers_city', 'City', 'max_length[50]');
             $this->form_validation->set_rules('pers_gender', 'Gender', 'required');
+			if($tenant_id =='T24'){
+				$this->form_validation->set_rules('pers_dob', 'Date of Birth', 'required|max_length[10]');
+			}
             $this->form_validation->set_rules('highest_educ_level', 'Highest Educ Level', 'required');
             $this->form_validation->set_rules('nationality', 'Nationality', 'required');
             if ($valid && $this->form_validation->run() == TRUE) {
