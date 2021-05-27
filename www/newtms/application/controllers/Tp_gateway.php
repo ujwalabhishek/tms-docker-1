@@ -873,13 +873,13 @@ class tp_gateway extends CI_Controller {
     public function check_status(){
          $response=$this->session->flashdata('resp');
          //print_r($response);exit;
-        if($response[status] == 400){
+        if($response->status == 400){
             $this->session->set_flashdata('error',"Oops! Bad request!");
-        }elseif($response[status] == 403){
+        }elseif($response->status == 403){
             $this->session->set_flashdata('error',"Oops! Forbidden. Authorization information is missing or invalid.");
-        }elseif($response[status] == 404){
+        }elseif($response->status == 404){
             $this->session->set_flashdata('error',"Oops! Not Found!");
-        }elseif($response[status] == 500){
+        }elseif($response->status == 500){
             $this->session->set_flashdata('error',"Oops! Internal Error!!");
         }else{
             $this->session->set_flashdata('error',"Oops ! Something Went Wrong Contact System Administrator"); 
