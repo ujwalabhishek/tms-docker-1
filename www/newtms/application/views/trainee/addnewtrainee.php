@@ -479,7 +479,9 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                             'class' => 'upper_case'
                         );
                         ?>
-                        <td colspan="3" width="50%"><?php echo form_textarea($p_addr); ?></td>
+                        <td colspan="3" width="50%"><?php echo form_textarea($p_addr); ?>
+							<span id="pers_personal_address_bldg_err"></span>
+						</td>
                         <td class="td_heading" width="8%">City:
 						<?php if($tenant_id=='T24'){ ?>
 							<span class="required">*
@@ -2140,7 +2142,18 @@ $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>"
 					$("#pers_city").removeClass('error');
 				}
 			}
-            
+			
+			if($tenant_id == 'T24') {
+				pers_personal_address_bldg = $.trim($("#pers_personal_address_bldg").val());
+				if (pers_personal_address_bldg == "") {
+					$("#pers_personal_address_bldg_err").text("[required]").addClass('error');
+					$("#pers_personal_address_bldg").addClass('error');
+				} else {
+					$("#pers_personal_address_bldg_err").text("").removeClass('error');
+					$("#pers_personal_address_bldg").removeClass('error');
+				}
+			}
+			
             var pers_zipcode = $.trim($("#pers_zipcode").val());
             if (pers_zipcode != '') {
                 if (valid_zip(pers_zipcode) == false) {

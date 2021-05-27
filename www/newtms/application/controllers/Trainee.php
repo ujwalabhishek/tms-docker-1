@@ -147,7 +147,7 @@ class Trainee extends CI_Controller {
 				$this->form_validation->set_rules('pers_states', 'State', 'required');
 				$this->form_validation->set_rules('pers_city', 'City', 'required|max_length[50]');
 				$this->form_validation->set_rules('pers_zip_code', 'Postal Code', 'required|max_length[10]');
-				$this->form_validation->set_rules('pers_personal_address_bldg', 'Building/Street:', 'required|max_length[255]');
+				$this->form_validation->set_rules('pers_personal_address_bldg', 'Address', 'required|max_length[255]');
 			} else {
 				$this->form_validation->set_rules('pers_personal_address_bldg', 'Address', 'max_length[255]');
 				$this->form_validation->set_rules('pers_city', 'City', 'max_length[50]');
