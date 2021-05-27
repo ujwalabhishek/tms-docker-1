@@ -101,12 +101,17 @@
             </tr>
         </tbody>
     </table>
+    <hr class='hr'>
     <?php }?>
     
 </div>
 <style>
     
     .comment{
-        color:grey;
+      color:grey;
+    }
+    .hr{
+      background: #a0bdf1;
+      height: 5px;
     }
 </style>
