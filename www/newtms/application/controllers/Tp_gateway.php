@@ -700,7 +700,105 @@ class tp_gateway extends CI_Controller {
     }
     
     public function courserun_call_tpg(){
+        echo $crse_ref_no; exit;
         
+        $tpg_course_run_arr= json_decode('{
+        "course": {
+          "courseReferenceNumber": "TGS-2020002096",
+          "trainingProvider": {
+            "uen": "201000372W"
+          },
+          "runs": [
+            {
+              "sequenceNumber": 0,
+              "modeOfTraining": "1",
+              "registrationDates": {
+                "opening": 20211025,
+                "closing": 20211025 
+              },
+              "courseDates": {
+                "start": 20211025,
+                "end": 20211025
+              },
+              "scheduleInfoType": {
+                "code": "01",
+                "description": "Description"
+              },
+              "scheduleInfo": "04Mar : Sat / 5 Sats / 9am - 6pm",
+              "venue": {
+                "block": "",
+                "street": "",
+                "floor": "1",
+                "unit": "1",
+                "building": "",
+                "postalCode": 760635,
+                "room": "1",
+                "wheelChairAccess": true
+              },
+              "intakeSize": 50,
+              "courseVacancy": {
+                "code": "L",
+                "description": "Limited Vacancy"
+              },
+              "file": {
+                "Name": "",
+                "content": ""
+              },
+              "sessions": [
+                {
+                  "startDate": "20211025",
+                  "endDate": "20211025",
+                  "startTime": "11:00",
+                  "modeOfTraining": "3",
+                  "endTime": "12:30",
+                  "venue": {
+                    "block": "112A",
+                    "street": "Street ABC",
+                    "floor": "1",
+                    "unit": "1",
+                    "building": "",
+                    "postalCode": 760635,
+                    "room": "24",
+                    "wheelChairAccess": true,
+                    "primaryVenue": true
+                  }
+                }
+              ],
+              "linkCourseRunTrainer": [
+                {
+                  "trainer": {
+                    "indexNumber": 0,
+                    "id": "FE9DA6F2-103D-4E2A-8AD1-D8E246E002155",
+                    "name": "ww",
+                    "inTrainingProviderProfile": true,
+                    "domainAreaOfPractice": "Testing Management in Computer Application and Diploma in Computer Application",
+                    "experience": "Testing ABC",
+                    "linkedInURL": "https://sg.linkedin.com/company/linkedin/abc",
+                    "salutationId": 1,
+                    "photo": {
+                      "name": "",
+                      "content": ""
+                    },
+                    "email": "abc@test.com",
+                    "trainerType": {
+                      "code": "2",
+                      "description": "New"
+                    },
+                    "linkedSsecEQAs": [
+                      {
+                        "description": "EQA test 4",
+                        "ssecEQA": {
+                          "code": "12"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }');
     }
     
     
