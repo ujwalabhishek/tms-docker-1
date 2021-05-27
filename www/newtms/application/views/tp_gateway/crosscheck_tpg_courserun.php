@@ -125,7 +125,7 @@
                 
                  <td><label class="label_font"><?php echo $dat[crse_intake_size]; ?></label></td>
                 <td colspan="2"> <label class="label_font"></label>Course run intake size. It's maximum pax for a class</td>
-                <input type="hidden" name="crse_intake_size" value="<?php $dat[crse_intake_size]; ?>" id="crse_intake_size">
+                <input type="hidden" name="crse_intake_size" value="<?php echo $dat[crse_intake_size]; ?>" id="crse_intake_size">
             </tr>
 
             <tr>                        
