@@ -700,7 +700,7 @@ class tp_gateway extends CI_Controller {
     }
     
     public function courserun_call_tpg(){
-        echo $this->input->post($crse_ref_no); exit;
+        echo $this->input->post('crse_ref_no'); exit;
         
         $tpg_course_run_arr= json_decode('{
         "course": {
