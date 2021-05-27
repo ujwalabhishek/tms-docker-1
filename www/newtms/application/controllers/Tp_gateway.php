@@ -844,7 +844,7 @@ class tp_gateway extends CI_Controller {
             $this->session->set_flashdata('resp',$response);
             redirect('tp_gateway/courserun_status');
         }else{
-            $this->check_status();
+            $this->check_status($response);
         }
         
     }
