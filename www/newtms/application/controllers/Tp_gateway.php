@@ -869,6 +869,7 @@ class tp_gateway extends CI_Controller {
     
     public function check_status(){
          $response=$this->session->flashdata('resp');
+         print_r($response);exit;
         if($response[status] == 400){
             $this->session->set_flashdata('error',"Oops! Bad request!");
         }elseif($response[status] == 403){
