@@ -673,6 +673,7 @@ class tp_gateway extends CI_Controller {
         $this->form_validation->set_rules('trainer_name[]', 'Trainer Name', 'trim|required|max_length[30]');
         $this->form_validation->set_rules('ttcode[]', 'Trainer Type Code', 'required|max_length[30]|numeric');
         $this->form_validation->set_rules('itpf[]', 'Trainer Description', 'required|max_length[30]|numeric');
+        $ttcode=$this->input->post('ttcode');
         foreach($ttcode as $code){
             if($code == 1){
                 $this->form_validation->set_rules('trainer_id[]', 'Trainer ID', 'required|max_length[30]');
@@ -732,133 +733,164 @@ class tp_gateway extends CI_Controller {
         $tenant_id = $this->tenant_id;
        $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
         $tpg_course_run_json='{
-  "course": {
-    "courseReferenceNumber": "TGS-2020002096",
-    "trainingProvider": {
-      "uen": "201000372W"
-    },
-    "runs": [
-      {
-        "sequenceNumber": 0,
-        "modeOfTraining": "'.$modeoftraining.'",
-        "registrationDates": {
-          "opening": '.$reg_open_date.',
-          "closing": '.$reg_close_date.' 
-        },
-        "courseDates": {
-          "start": '.$crse_start_date.',
-          "end": '.$crse_end_date.'
-        },
-        "scheduleInfoType": {
-          "code": "'.$schedule_info_code.'",
-          "description": "'.$schedule_info_des.'"
-        },
-        "scheduleInfo": "'.$schedule_info.'",
-        "venue": {
-            "block": "'.$venue_block.'",
-            "street": "'.$venue_street.'",
-            "floor": "'.$venue_floor.'",
-            "unit": "'.$venue_unit.'",
-            "building": "",
-            "postalCode": '.$venue_postalcode.',
-            "room": "'.$venue_room.'",
-            "wheelChairAccess": true
-        },
-        "intakeSize": '.$crse_intake_size.',
-        "courseAdminEmail": "'.$crs_admin_email.'",
-        "threshold": 10,
-        "registeredUserCount": '.$booked_seats.',
-        "courseVacancy": {
-          "code": "'.$crse_vacancy_code.'",
-          "description": "'.$crse_vacancy_description.'"
-        },
-        "file": {
-          "Name": "",
-          "content": ""
-        },
-        "sessions": [
-          {
-            "startDate": "'.$crse_start_date.'",
-            "endDate": "'.$crse_end_date.'",
-            "startTime": "'.$sess_start_time.'",
-            "modeOfTraining": "'.$modeoftraining.'",
-            "endTime": "'.$sess_end_time.'",
-            "venue": {
-              "block": "'.$venue_block.'",
-              "street": "'.$venue_street.'",
-              "floor": "'.$venue_floor.'",
-              "unit": "'.$venue_unit.'",
-              "building": "",
-              "postalCode": '.$venue_postalcode.',
-              "room": "'.$venue_room.'",
-              "wheelChairAccess": true,
-              "primaryVenue": true
-            }
-          }
-        ],
-        "linkCourseRunTrainer": [
-          {
-            "trainer": {
-              "indexNumber": 0,
-              "id": "FE9DA6F2-TMS-'.$trainer_id.'-8AD1-D8E246E002155",
-              "name": "'.$trainer_name.'",
-              "inTrainingProviderProfile": true,
-              "domainAreaOfPractice": "Testing Management in Computer Application and Diploma in Computer Application",
-              "experience": "Testing ABC",
-              "linkedInURL": "https://sg.linkedin.com/company/linkedin/abc",
-              "salutationId": 1,
-              "photo": {
-                "name": "",
-                "content": ""
-              },
-              "email": "'.$trainer_email.'",
-              "trainerType": {
-                "code": "2",
-                "description": "New"
-              },
-              "linkedSsecEQAs": [
-                {
-                  "description": "EQA test 4",
-                  "ssecEQA": {
-                    "code": "12"
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    ]
-  }
-}';
+                    "course": {
+                      "courseReferenceNumber": "TGS-2020002096",
+                      "trainingProvider": {
+                        "uen": "201000372W"
+                      },
+                      "runs": [
+                        {
+                          "sequenceNumber": 0,
+                          "modeOfTraining": "'.$modeoftraining.'",
+                          "registrationDates": {
+                            "opening": '.$reg_open_date.',
+                            "closing": '.$reg_close_date.' 
+                          },
+                          "courseDates": {
+                            "start": '.$crse_start_date.',
+                            "end": '.$crse_end_date.'
+                          },
+                          "scheduleInfoType": {
+                            "code": "'.$schedule_info_code.'",
+                            "description": "'.$schedule_info_des.'"
+                          },
+                          "scheduleInfo": "'.$schedule_info.'",
+                          "venue": {
+                              "block": "'.$venue_block.'",
+                              "street": "'.$venue_street.'",
+                              "floor": "'.$venue_floor.'",
+                              "unit": "'.$venue_unit.'",
+                              "building": "",
+                              "postalCode": "'.$venue_postalcode.'",
+                              "room": "'.$venue_room.'",
+                              "wheelChairAccess": true
+                          },
+                          "intakeSize": '.$crse_intake_size.',
+                          "courseAdminEmail": "'.$crs_admin_email.'",
+                          "threshold": 10,
+                          "registeredUserCount": '.$booked_seats.',
+                          "courseVacancy": {
+                            "code": "'.$crse_vacancy_code.'",
+                            "description": "'.$crse_vacancy_description.'"
+                          },
+                          "file": {
+                            "Name": "",
+                            "content": ""
+                          },
+                          "sessions": [
+                            {
+                              "startDate": "'.$crse_start_date.'",
+                              "endDate": "'.$crse_end_date.'",
+                              "startTime": "'.$sess_start_time.'",
+                              "modeOfTraining": "'.$modeoftraining.'",
+                              "endTime": "'.$sess_end_time.'",
+                              "venue": {
+                                "block": "'.$venue_block.'",
+                                "street": "'.$venue_street.'",
+                                "floor": "'.$venue_floor.'",
+                                "unit": "'.$venue_unit.'",
+                                "building": "",
+                                "postalCode": "'.$venue_postalcode.'",
+                                "room": "'.$venue_room.'",
+                                "wheelChairAccess": true,
+                                "primaryVenue": true
+                              }
+                            }
+                          ],
+                          "linkCourseRunTrainer": [
+                            {
+                              "trainer": {
+                                "indexNumber": 0,
+                                "id": "'.$tenant_id.'-TMS-'.$trainer_id.'-'.$course_id.'-'.$class_id.'",
+                                "name": "'.$trainer_name.'",
+                                "inTrainingProviderProfile": true,
+                                "domainAreaOfPractice": "Testing Management in Computer Application and Diploma in Computer Application",
+                                "experience": "Testing ABC",
+                                "linkedInURL": "https://sg.linkedin.com/company/linkedin/abc",
+                                "salutationId": 1,
+                                "photo": {
+                                  "name": "",
+                                  "content": ""
+                                },
+                                "email": "'.$trainer_email.'",
+                                "trainerType": {
+                                  "code": "2",
+                                  "description": "New"
+                                },
+                                "linkedSsecEQAs": [
+                                  {
+                                    "description": "EQA test 4",
+                                    "ssecEQA": {
+                                      "code": "12"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }';
        
-        
-        //print_r ($ss);exit;
+       
         //print_r(json_encode($tpg_course_run_json));exit;
         $api_version = 'v1.3';
         $url = "https://uat-api.ssg-wsg.sg/courses/runs";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
-        print_r($response);exit;
-//        echo " <div id='out'></div>
-//            
-//            <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
-//            <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
-//            <script>
-//            decrypt();
-//            function decrypt() {
-//            var strings = '$response';
-//            var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
-//            var cipher = CryptoJS.AES.decrypt(
-//                    strings,
-//                    CryptoJS.enc.Base64.parse(key), {
-//                      iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
-//                      mode: CryptoJS.mode.CBC,
-//                      keySize: 256 / 32,
-//                      padding: CryptoJS.pad.Pkcs7
-//                    });
-//            var decrypted = cipher.toString(CryptoJS.enc.Utf8);
-//            $('#out').html(decrypted);
-//            }</script>";
+        //print_r($response);exit;
+        $obj=json_decode($response);
+        //$obj = json_decode('{ "data": { "runs": [ { "id": 223389 } ] }, "error": {}, "meta": {}, "status": 200 }');
+        $this->session->set_flashdata('resp',$obj);
+        if($obj->status == 200){
+            redirect('tp_gateway/courserun_status');
+        }else{
+            redirect('tp_gateway/check_status');
+        }
+        
+    }
+    
+    public function courserun_status(){
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $api_version = 'v1.3';
+        $resp=$this->session->flashdata('resp');
+        $crse_run_id = $resp->data->runs[0]->id;
+        $url = "https://uat-api.ssg-wsg.sg/courses/runs/$crse_run_id";
+        //$url = "https://uat-api.ssg-wsg.sg/courses/runs/223382";
+        $response = json_decode($this->curl_request('GET',$url,'',$api_version));
+        $this->session->set_flashdata('success',"Congratulations! You Have Successfully Add Course Run To TPG");
+        //print_r($resp);print_r($response);echo $url;exit;
+        //print_r($response);exit;
+        $data['support'] = $response->data->course->support;
+        $data['run'] = $response->data->course->run;
+        $data['course_title'] = $response->data->course->title;
+        $data['page_title'] = 'Course Run Status';
+        $data['main_content'] = 'tp_gateway/courserun_status';
+        $this->load->view('layout', $data);
+    }
+    
+    
+    public function check_status(){
+         $response=$this->session->flashdata('resp');
+         //print_r($response);exit;
+        if($response->status == 400){
+            $this->session->set_flashdata('error',"Oops! Bad request!");
+        }elseif($response->status == 403){
+            $this->session->set_flashdata('error',"Oops! Forbidden. Authorization information is missing or invalid.");
+        }elseif($response->status == 404){
+            $this->session->set_flashdata('error',"Oops! Not Found!");
+        }elseif($response->status == 500){
+            $this->session->set_flashdata('error',"Oops! Internal Error!!");
+        }else{
+            $this->session->set_flashdata('error',"Oops ! Something Went Wrong Contact System Administrator"); 
+        }
+        
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['error'] = $response->error->details;
+        //print_r($data);exit;
+        $data['page_title'] = 'Course Run Status';
+        $data['main_content'] = 'tp_gateway/error_status';
+        $this->load->view('layout', $data);
         
         
     }

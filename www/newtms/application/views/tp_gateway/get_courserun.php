@@ -57,7 +57,7 @@
                         $modeoftraining[7] = '7-Traineeship';
                         $modeoftraining[8] = '8-Assessment';
                         $modeoftraining[9] = '9-Synchronous eLearning';
-                        echo form_dropdown('modeoftraining', $modeoftraining, $this->input->post('modeoftraining'), 'id="modeoftraining"');
+                        echo form_dropdown('modeoftraining', $modeoftraining, $this->input->post('modeoftraining')??'9', 'id="modeoftraining"');
                         ?>
                     
                     <span id="modeoftraining_err"></span>
@@ -76,7 +76,7 @@
                         $crs_admin_email = array(
                             'name' => 'crs_admin_email',
                             'id' => 'crs_admin_email',
-                            'value' => $this->input->post('crs_admin_email'),
+                            'value' => $this->input->post('crs_admin_email')??'tmsadmin@mailinator.com',
                             'maxlength' => 50,
                             "class" => "upper_case"
                         );
@@ -143,7 +143,7 @@
                         $venue_block = array(
                             'name' => 'venue_block',
                             'id' => 'venue_block',
-                            'value' => $this->input->post('venue_block'),
+                            'value' => $this->input->post('venue_block')??'531',
                             'maxlength' => 50,
                             "class" => "upper_case"
                         );
@@ -159,7 +159,7 @@
                     $venue_street = array(
                         'name' => 'venue_street',
                         'id' => 'venue_street',
-                        'value' => $this->input->post('venue_street'),
+                        'value' => $this->input->post('venue_street')??'Upper Cross Street',
                         'maxlength' => 50,
                         "class" => "upper_case"
                     );
@@ -178,7 +178,7 @@
                         $venue_floor = array(
                             'name' => 'venue_floor',
                             'id' => 'venue_floor',
-                            'value' => $this->input->post('venue_floor'),
+                            'value' => $this->input->post('venue_floor')??'03',
                             'maxlength' => 50,
                             "class" => "upper_case"
                         );
@@ -194,7 +194,7 @@
                     $venue_unit = array(
                         'name' => 'venue_unit',
                         'id' => 'venue_unit',
-                        'value' => $this->input->post('venue_unit'),
+                        'value' => $this->input->post('venue_unit')??'40',
                         'maxlength' => 50,
                         "class" => "upper_case"
                     );
@@ -213,7 +213,7 @@
                     $venue_postalcode = array(
                         'name' => 'venue_postalcode',
                         'id' => 'venue_postalcode',
-                        'value' => $this->input->post('venue_postalcode'),
+                        'value' => $this->input->post('venue_postalcode')??'050531',
                         'maxlength' => 50,
                         "class" => "upper_case"
                     );
@@ -229,7 +229,7 @@
                     $venue_room = array(
                         'name' => 'venue_room',
                         'id' => 'venue_room',
-                        'value' => $this->input->post('venue_room'),
+                        'value' => $this->input->post('venue_room')??'HL2',
                         'maxlength' => 50,
                         "class" => "upper_case"
                     );
@@ -350,7 +350,7 @@
                     $trainer_email = array(
                         'name' => 'trainer_email',
                         'id' => 'trainer_emailh',
-                        'value' =>$trainer->registered_email_id ?? $this->input->post('trainer_email'),
+                        'value' =>'tmstrainer@mailinator.com',//($trainer->registered_email_id ?? $this->input->post('trainer_email'))?? 
                         'maxlength' => 50,
                         'disabled' =>'disabled',
                         "class" => "upper_case"
@@ -358,7 +358,7 @@
                     echo form_input($trainer_email);
                     ?>
                     </label>
-                     <input type="hidden" name="trainer_email[]" value="<?php echo $trainer->registered_email_id ?? $this->input->post('trainer_email');?>" id="trainer_email">
+                     <input type="hidden" name="trainer_email[]" value="<?php echo 'tmstrainer@mailinator.com';//($trainer->registered_email_id ?? $this->input->post('trainer_email'))??;?>" id="trainer_email">
                     <span id="trainer_email_err"></span>
                 </td>
             </tr>
