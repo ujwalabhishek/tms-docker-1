@@ -87,7 +87,16 @@
                 <input type="hidden" name="schedule_info" value="<?php echo $dat[schedule_info];?>">
             </tr>
 
-            
+            <tr>                        
+                <td class="td_heading"> Venue Block:<span class="required">*</span></td>
+                <td><label class="label_font"><?php echo $dat[venue_block]; ?></label></td>
+                <input type="hidden" name="venue_block" value="<?php echo $dat[venue_block];?>">
+                
+                <td class="td_heading">Venue Street:<span class="required">*</span></td>
+                <td><label class="label_font"><?php echo $dat[venue_street]; ?></label></td>
+                <input type="hidden" name="venue_street" value="<?php echo $dat[venue_street];?>">
+                
+            </tr>
             
             <tr>                        
                 <td class="td_heading"> Venue Floor:<span class="required">*</span></td>

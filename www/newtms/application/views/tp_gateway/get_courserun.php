@@ -136,6 +136,41 @@
             </tr>
             
             <tr>                        
+                <td class="td_heading"> Venue Block:<span class="required">*</span></td>
+                <td>
+                    <label class="label_font">
+                        <?php
+                        $venue_block = array(
+                            'name' => 'venue_block',
+                            'id' => 'venue_block',
+                            'value' => $this->input->post('venue_block'),
+                            'maxlength' => 50,
+                            "class" => "upper_case"
+                        );
+                        echo form_input($venue_block);
+                        ?>
+                    </label>
+                    <span id="venue_block_err"></span>
+                </td>
+                <td class="td_heading">Venue Street:<span class="required">*</span></td>
+                <td>
+                    <label class="label_font">
+                    <?php
+                    $venue_street = array(
+                        'name' => 'venue_street',
+                        'id' => 'venue_street',
+                        'value' => $this->input->post('venue_street'),
+                        'maxlength' => 50,
+                        "class" => "upper_case"
+                    );
+                    echo form_input($venue_street);
+                    ?>
+                    </label>
+                     <span id="venue_street_err"></span>
+                </td>
+            </tr>
+            
+            <tr>                        
                 <td class="td_heading"> Venue Floor:<span class="required">*</span></td>
                 <td>
                     <label class="label_font">
@@ -540,6 +575,22 @@
             retVal = false;
         } else {
             $("#venue_room_err").text("").removeClass('error');
+        }
+        
+        $venue_block = $('#venue_blobk').val();
+        if ($venue_block == null || $venue_block == '') {
+            $("#venue_blobk_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_blobk_err").text("").removeClass('error');
+        }
+        
+        $venue_street = $('#venue_street').val();
+        if ($venue_street == null || $venue_street == '') {
+            $("#venue_street_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_street_err").text("").removeClass('error');
         }
         
         $crse_vacancy_code = $('#crse_vacancy_code').val();
