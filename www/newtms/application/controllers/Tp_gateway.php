@@ -859,7 +859,7 @@ class tp_gateway extends CI_Controller {
         //$url = "https://uat-api.ssg-wsg.sg/courses/runs/223382";
         $response = json_decode($this->curl_request('GET',$url,'',$api_version));
         $this->session->set_flashdata('success',"Congratulations! You Have Successfully Add Course Run To TPG");
-        print_r($resp);print_r($response);echo $url;exit;
+        //print_r($resp);print_r($response);echo $url;exit;
         $data['support'] = $response->data->course->support;
         $data['run'] = $response->data->course->run;
         $data['course_title'] = $response->data->course->title;
