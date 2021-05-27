@@ -660,6 +660,8 @@ class tp_gateway extends CI_Controller {
         $this->form_validation->set_rules('reg_close_date', 'Registration Close Date', 'required|max_length[30]|numeric');
         $this->form_validation->set_rules('crse_start_date', 'Course Start Date', 'required|max_length[30]|numeric');
         $this->form_validation->set_rules('crse_end_date', 'Course End Date', 'required|max_length[30]|numeric');
+        $this->form_validation->set_rules('venue_block', 'Venue Block', 'required|max_length[30]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('venue_street', 'Venue Street', 'required|max_length[30]|alpha_numeric_spaces');
         $this->form_validation->set_rules('venue_floor', 'Venue Floor', 'required|max_length[30]|numeric');
         $this->form_validation->set_rules('venue_unit', 'Venue Unit', 'required|max_length[30]|alpha_numeric_spaces');
         $this->form_validation->set_rules('venue_postalcode', 'Venue Postal Code', 'required|max_length[30]|numeric');
@@ -700,8 +702,168 @@ class tp_gateway extends CI_Controller {
     }
     
     public function courserun_call_tpg(){
+       $crse_ref_no= $this->input->post('crse_ref_no');
+       $tp_uen= $this->input->post('tp_uen');
+       $modeoftraining= $this->input->post('modeoftraining');
+       $crs_admin_email= $this->input->post('crs_admin_email');
+       $reg_open_date= $this->input->post('reg_open_date');
+       $reg_close_date= $this->input->post('reg_close_date');
+       $crse_start_date= $this->input->post('crse_start_date');
+       $crse_end_date= $this->input->post('crse_end_date');
+       $schedule_info_code= $this->input->post('schedule_info_code');
+       $schedule_info_des= $this->input->post('schedule_info_des');
+       $schedule_info= $this->input->post('schedule_info');
+        $venue_block= $this->input->post('venue_block');
+         $venue_street= $this->input->post('venue_street');
+       $venue_floor= $this->input->post('venue_floor');
+       $venue_unit= $this->input->post('venue_unit');
+       $venue_postalcode= $this->input->post('venue_postalcode');
+       $venue_room= $this->input->post('venue_room');
+       $crse_intake_size= $this->input->post('crse_intake_size');
+       $crse_vacancy_code= $this->input->post('crse_vacancy_code');
+       $crse_vacancy_description= $this->input->post('crse_vacancy_description');
+       $sess_start_time= $this->input->post('sess_start_time');
+       $sess_end_time= $this->input->post('sess_end_time');
+       $trainer_name= $this->input->post('trainer_name');
+       $trainer_id= $this->input->post('trainer_id');
+       $trainer_email= $this->input->post('trainer_email');
+       $course_id= $this->input->post('course_id');
+       $class_id= $this->input->post('class_id');
+        $tenant_id = $this->tenant_id;
+       $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
+        $tpg_course_run_json='{
+  "course": {
+    "courseReferenceNumber": "TGS-2020002096",
+    "trainingProvider": {
+      "uen": "201000372W"
+    },
+    "runs": [
+      {
+        "sequenceNumber": 0,
+        "modeOfTraining": "'.$modeoftraining.'",
+        "registrationDates": {
+          "opening": '.$reg_open_date.',
+          "closing": '.$reg_close_date.' 
+        },
+        "courseDates": {
+          "start": '.$crse_start_date.',
+          "end": '.$crse_end_date.'
+        },
+        "scheduleInfoType": {
+          "code": "'.$schedule_info_code.'",
+          "description": "'.$schedule_info_des.'"
+        },
+        "scheduleInfo": "'.$schedule_info.'",
+        "venue": {
+            "block": "'.$venue_block.'",
+            "street": "'.$venue_street.'",
+            "floor": "'.$venue_floor.'",
+            "unit": "'.$venue_unit.'",
+            "building": "",
+            "postalCode": '.$venue_postalcode.',
+            "room": "'.$venue_room.'",
+            "wheelChairAccess": true
+        },
+        "intakeSize": '.$crse_intake_size.',
+        "courseAdminEmail": "'.$crs_admin_email.'",
+        "threshold": 10,
+        "registeredUserCount": '.$booked_seats.',
+        "courseVacancy": {
+          "code": "'.$crse_vacancy_code.'",
+          "description": "'.$crse_vacancy_description.'"
+        },
+        "file": {
+          "Name": "",
+          "content": ""
+        },
+        "sessions": [
+          {
+            "startDate": "'.$crse_start_date.'",
+            "endDate": "'.$crse_end_date.'",
+            "startTime": "'.$sess_start_time.'",
+            "modeOfTraining": "'.$modeoftraining.'",
+            "endTime": "'.$sess_end_time.'",
+            "venue": {
+              "block": "'.$venue_block.'",
+              "street": "'.$venue_street.'",
+              "floor": "'.$venue_floor.'",
+              "unit": "'.$venue_unit.'",
+              "building": "",
+              "postalCode": '.$venue_postalcode.',
+              "room": "'.$venue_room.'",
+              "wheelChairAccess": true,
+              "primaryVenue": true
+            }
+          }
+        ],
+        "linkCourseRunTrainer": [
+          {
+            "trainer": {
+              "indexNumber": 0,
+              "id": "FE9DA6F2-TMS-'.$trainer_id.'-8AD1-D8E246E002155",
+              "name": "'.$trainer_name.'",
+              "inTrainingProviderProfile": true,
+              "domainAreaOfPractice": "Testing Management in Computer Application and Diploma in Computer Application",
+              "experience": "Testing ABC",
+              "linkedInURL": "https://sg.linkedin.com/company/linkedin/abc",
+              "salutationId": 1,
+              "photo": {
+                "name": "",
+                "content": ""
+              },
+              "email": "'.$trainer_email.'",
+              "trainerType": {
+                "code": "2",
+                "description": "New"
+              },
+              "linkedSsecEQAs": [
+                {
+                  "description": "EQA test 4",
+                  "ssecEQA": {
+                    "code": "12"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}';
+       
+        
+        //print_r ($ss);exit;
+        //print_r(json_encode($tpg_course_run_json));exit;
+        $api_version = 'v1.3';
+        $url = "https://uat-api.ssg-wsg.sg/courses/runs";
+        $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
+        print_r($response);exit;
+//        echo " <div id='out'></div>
+//            
+//            <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
+//            <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
+//            <script>
+//            decrypt();
+//            function decrypt() {
+//            var strings = '$response';
+//            var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+//            var cipher = CryptoJS.AES.decrypt(
+//                    strings,
+//                    CryptoJS.enc.Base64.parse(key), {
+//                      iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+//                      mode: CryptoJS.mode.CBC,
+//                      keySize: 256 / 32,
+//                      padding: CryptoJS.pad.Pkcs7
+//                    });
+//            var decrypted = cipher.toString(CryptoJS.enc.Utf8);
+//            $('#out').html(decrypted);
+//            }</script>";
+        
         
     }
+    
+    
     
     
     

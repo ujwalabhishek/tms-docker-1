@@ -136,6 +136,41 @@
             </tr>
             
             <tr>                        
+                <td class="td_heading"> Venue Block:<span class="required">*</span></td>
+                <td>
+                    <label class="label_font">
+                        <?php
+                        $venue_block = array(
+                            'name' => 'venue_block',
+                            'id' => 'venue_block',
+                            'value' => $this->input->post('venue_block'),
+                            'maxlength' => 50,
+                            "class" => "upper_case"
+                        );
+                        echo form_input($venue_block);
+                        ?>
+                    </label>
+                    <span id="venue_block_err"></span>
+                </td>
+                <td class="td_heading">Venue Street:<span class="required">*</span></td>
+                <td>
+                    <label class="label_font">
+                    <?php
+                    $venue_street = array(
+                        'name' => 'venue_street',
+                        'id' => 'venue_street',
+                        'value' => $this->input->post('venue_street'),
+                        'maxlength' => 50,
+                        "class" => "upper_case"
+                    );
+                    echo form_input($venue_street);
+                    ?>
+                    </label>
+                     <span id="venue_street_err"></span>
+                </td>
+            </tr>
+            
+            <tr>                        
                 <td class="td_heading"> Venue Floor:<span class="required">*</span></td>
                 <td>
                     <label class="label_font">
@@ -212,6 +247,7 @@
                 </td>
                 <td colspan="2"> <label class="label_font"></label>Course run intake size. It's maximum pax for a class</td>
                 <input type="hidden" name="crse_intake_size" value="<?php echo $class->total_seats ?? $this->input->post('crse_intake_size'); ?>" id="crse_intake_size">
+                
             </tr>
 
             <tr>                        
@@ -271,8 +307,8 @@
                 <td><label class="label_font"><?php echo date('h:i A', strtotime($class->class_start_datetime)) ?? $this->input->post('sess_start_time'); ?></label></td>
                 <td class="td_heading">Session End Time:<span class="required">*</span></td>
                 <td><label class="label_font"></label><?php echo date('h:i A', strtotime($class->class_end_datetime)) ?? $this->input->post('sess_end_time'); ?></td>
-                <input type="hidden" name="sess_start_time" value="<?php echo date('h:i A', strtotime($class->class_start_datetime)) ?? $this->input->post('sess_start_time'); ?>" id="sess_start_time">
-                <input type="hidden" name="sess_end_time" value="<?php echo date('h:i A', strtotime($class->class_end_datetime)) ?? $this->input->post('sess_end_time'); ?>" id="sess_end_time">
+                <input type="hidden" name="sess_start_time" value="<?php echo date('h:i', strtotime($class->class_start_datetime)) ?? $this->input->post('sess_start_time'); ?>" id="sess_start_time">
+                <input type="hidden" name="sess_end_time" value="<?php echo date('h:i', strtotime($class->class_end_datetime)) ?? $this->input->post('sess_end_time'); ?>" id="sess_end_time">
             </tr>
 
             <tr>                        
@@ -306,6 +342,7 @@
                     </label> 
                     <span id="trainer_name_err"></span></td>
                 <input type="hidden" name="trainer_name[]" value="<?php echo $this->input->post('trainer_name') ?? $trainer->first_name.' '.$trainer->last_name; ?>" id="trainer_name">
+                <input type="hidden" name="trainer_id[]" value="<?php echo $this->input->post('trainer_id') ?? $trainer->user_id; ?>" id="trainer_id">
                 <td class="td_heading">Trainer Email:<span class="required">*</span></td>
                 <td>
                     <label class="label_font">
@@ -540,6 +577,22 @@
             retVal = false;
         } else {
             $("#venue_room_err").text("").removeClass('error');
+        }
+        
+        $venue_block = $('#venue_block').val();
+        if ($venue_block == null || $venue_block == '') {
+            $("#venue_block_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_block_err").text("").removeClass('error');
+        }
+        
+        $venue_street = $('#venue_street').val();
+        if ($venue_street == null || $venue_street == '') {
+            $("#venue_street_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_street_err").text("").removeClass('error');
         }
         
         $crse_vacancy_code = $('#crse_vacancy_code').val();

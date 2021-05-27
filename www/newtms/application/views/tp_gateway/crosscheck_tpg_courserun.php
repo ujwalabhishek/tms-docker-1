@@ -87,7 +87,16 @@
                 <input type="hidden" name="schedule_info" value="<?php echo $dat[schedule_info];?>">
             </tr>
 
-            
+            <tr>                        
+                <td class="td_heading"> Venue Block:<span class="required">*</span></td>
+                <td><label class="label_font"><?php echo $dat[venue_block]; ?></label></td>
+                <input type="hidden" name="venue_block" value="<?php echo $dat[venue_block];?>">
+                
+                <td class="td_heading">Venue Street:<span class="required">*</span></td>
+                <td><label class="label_font"><?php echo $dat[venue_street]; ?></label></td>
+                <input type="hidden" name="venue_street" value="<?php echo $dat[venue_street];?>">
+                
+            </tr>
             
             <tr>                        
                 <td class="td_heading"> Venue Floor:<span class="required">*</span></td>
@@ -116,7 +125,7 @@
                 
                  <td><label class="label_font"><?php echo $dat[crse_intake_size]; ?></label></td>
                 <td colspan="2"> <label class="label_font"></label>Course run intake size. It's maximum pax for a class</td>
-                <input type="hidden" name="crse_intake_size" value="<?php $dat[crse_intake_size]; ?>" id="crse_intake_size">
+                <input type="hidden" name="crse_intake_size" value="<?php echo $dat[crse_intake_size]; ?>" id="crse_intake_size">
             </tr>
 
             <tr>                        
@@ -181,6 +190,7 @@
                 <td class="td_heading" width='25%'>Trainer Email:<span class="required">*</span></td>
                 <td width='25%'><label class="label_font"><?php echo $dat[trainer_email][$sl]; ?></label> <span id="trainer_email_err"></span></td>
                 <input type="hidden" name="trainer_email" value="<?php echo $dat[trainer_email][$sl]; ?>" id="trainer_email">
+                <input type="hidden" name="trainer_id" value="<?php echo $dat[trainer_id][$sl]; ?>" id="trainer_id">
             </tr>
 
             <tr>                        
