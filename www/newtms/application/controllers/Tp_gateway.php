@@ -727,7 +727,7 @@ class tp_gateway extends CI_Controller {
        $course_id= $this->input->post('course_id');
        $class_id= $this->input->post('class_id');
         $tenant_id = $this->tenant_id;
-       $booked_seats = $CI->classModel->get_class_booked($course_id, $class_id,$tenant_id);
+       $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
         
        $tpg_course_run_json= json_decode('{
         "course": {
