@@ -673,6 +673,7 @@ class tp_gateway extends CI_Controller {
         $this->form_validation->set_rules('trainer_name[]', 'Trainer Name', 'trim|required|max_length[30]');
         $this->form_validation->set_rules('ttcode[]', 'Trainer Type Code', 'required|max_length[30]|numeric');
         $this->form_validation->set_rules('itpf[]', 'Trainer Description', 'required|max_length[30]|numeric');
+        $ttcode=$this->input->post('ttcode');
         foreach($ttcode as $code){
             if($code == 1){
                 $this->form_validation->set_rules('trainer_id[]', 'Trainer ID', 'required|max_length[30]');
