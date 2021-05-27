@@ -684,8 +684,8 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
     echo form_dropdown('pers_states', $state_options, $trainee[userdetails]['personal_address_state'], $attr_js);
     echo form_hidden('current_pers_states', $trainee[userdetails]['personal_address_state'], 'current_pers_states');
     ?>                        
-                            </td> 
-                    <span id="pers_states_err"></span>
+                            <span id="pers_states_err"></span></td> 
+                    
                     <td class="td_heading">Postal Code:
 					<?php if($tenant_id=='T24'){ ?>
 						<span class="required">*
