@@ -832,7 +832,7 @@ class tp_gateway extends CI_Controller {
         }
       }');
         
-        
+        echo $tpg_course_run_json;exit;
         print_r(json_encode($tpg_course_run_json));exit;
         $api_version = 'v1.3';
         $url = "https://uat-api.ssg-wsg.sg/courses/runs";
