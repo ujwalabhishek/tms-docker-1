@@ -838,13 +838,12 @@ class tp_gateway extends CI_Controller {
         $api_version = 'v1.3';
         $url = "https://uat-api.ssg-wsg.sg/courses/runs";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
-        print_r($response);exit;
-        
+        //print_r($response);exit;
+        $this->session->set_flashdata('resp',$response);
         if($response[status] == 200){
-            $this->session->set_flashdata('resp',$response);
             redirect('tp_gateway/courserun_status');
         }else{
-            $this->check_status($response);
+            redirect('tp_gateway/check_status');
         }
         
     }
