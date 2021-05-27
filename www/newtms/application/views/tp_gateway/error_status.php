@@ -5,12 +5,10 @@
         echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
     }
     ?> 
-    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Crosscheck Data To Submit TPG</h2>   
+    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Error Response</h2>   
     
     <h2 class="sub_panel_heading_style">Error Details</h2>
     
-    
-    <h2 class="sub_panel_heading_style">SUPPORT</h2>
     <?php 
     if(!empty($error)){
     foreach($error as $err){
@@ -35,14 +33,9 @@
     
     ?>
     
-    <table class="table table-striped">
-        <tbody>
-            <tr width="20%">                        
-                <td class="td_heading" width="25%">Field:<span class="required">*</span></td>
-                <td width='25%'><label class="label_font">You Are Doing Something Wrong! Contact Admin</label></td>
-            </tr>     
-        </tbody>
-    </table>
+    <div class="alert alert-danger dang">
+    <strong>Oops!</strong> You are doing something wrong! Contact System Administrator..
+  </div>
     
     <?php } ?>
 </div>
@@ -53,5 +46,11 @@
     }
     .label_font{
         color:red;
+    }
+    
+    .dang{
+        padding: 20px !important;
+    font-size: 14px !important;
+    text-align: center;
     }
 </style>
