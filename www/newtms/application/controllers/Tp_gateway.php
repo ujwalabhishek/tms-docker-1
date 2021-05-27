@@ -731,7 +731,7 @@ class tp_gateway extends CI_Controller {
        $class_id= $this->input->post('class_id');
         $tenant_id = $this->tenant_id;
        $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
-        $ss='{
+        $tpg_course_run_json='{
   "course": {
     "courseReferenceNumber": "TGS-2020002096",
     "trainingProvider": {
@@ -766,6 +766,8 @@ class tp_gateway extends CI_Controller {
         },
         "intakeSize": '.$crse_intake_size.',
         "courseAdminEmail": "'.$crs_admin_email.'",
+        "threshold": 10,
+        "registeredUserCount": '.$booked_seats.',
         "courseVacancy": {
           "code": "'.$crse_vacancy_code.'",
           "description": "'.$crse_vacancy_description.'"
@@ -829,112 +831,13 @@ class tp_gateway extends CI_Controller {
     ]
   }
 }';
-       $tpg_course_run_json= '{
-        "course": {
-          "courseReferenceNumber": "TGS-2020002104",
-          "trainingProvider": {
-            "uen": "201000372W"
-          },
-          "runs": [
-            {
-              "sequenceNumber": 0,
-              "registrationDates": {
-                "opening": '.$reg_open_date.',
-                "closing": '.$reg_close_date.' 
-              },
-              "courseDates": {
-                "start": '.$crse_start_date.',
-                "end": '.$crse_end_date.'
-              },
-              "scheduleInfoType": {
-                "code": "'.$schedule_info_code.'",
-                "description": "'.$schedule_info_des.'"
-              },
-              "scheduleInfo": "'.$schedule_info.'",
-              "venue": {
-                "block": "'.$venue_block.'",
-                "street": "'.$venue_street.'",
-                "floor": "'.$venue_floor.'",
-                "unit": "'.$venue_unit.'",
-                "building": "",
-                "postalCode": '.$venue_postalcode.',
-                "room": "'.$venue_room.'",
-                "wheelChairAccess": true
-              },
-                "intakeSize": '.$crse_intake_size.',
-                "threshold": 10,
-                "registeredUserCount": '.$booked_seats.',
-                "modeOfTraining": "'.$modeoftraining.'",
-                "courseAdminEmail": "'.$crs_admin_email.'",
-              "courseVacancy": {
-                "code": "'.$crse_vacancy_code.'",
-                "description": "'.$crse_vacancy_description.'"
-              },
-              "file": {
-                "Name": "",
-                "content": ""
-              },
-              "sessions": [
-                {
-                  "startDate": "'.$crse_start_date.'",
-                  "endDate": "'.$crse_end_date.'",
-                  "startTime": "'.$sess_start_time.'",
-                  "modeOfTraining": "'.$modeoftraining.'",
-                  "endTime": "'.$sess_end_time.'",
-                  "venue": {
-                    "block": "'.$venue_block.'",
-                    "street": "'.$venue_street.'",
-                    "floor": "'.$venue_floor.'",
-                    "unit": "'.$venue_unit.'",
-                    "building": "",
-                    "postalCode": '.$venue_postalcode.',
-                    "room": "'.$venue_room.'",
-                    "wheelChairAccess": true,
-                    "primaryVenue": true
-                  }
-                }
-              ],
-              "linkCourseRunTrainer": [
-                {
-                  "trainer": {
-                    "indexNumber": 0,
-                    "id": "",
-                    "name": "'.$trainer_name.'",
-                    "inTrainingProviderProfile": true,
-                    "domainAreaOfPractice": "Testing Management in Computer Application and Diploma in Computer Application",
-                    "experience": "Testing",
-                    "linkedInURL": "",
-                    "salutationId": 1,
-                    "photo": {
-                      "name": "",
-                      "content": ""
-                    },
-                    "email": "'.$trainer_email.'",
-                    "trainerType": {
-                      "code": "2",
-                      "description": "New"
-                    },
-                    "linkedSsecEQAs": [
-                      {
-                        "description": "EQA test 4",
-                        "ssecEQA": {
-                          "code": "12"
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      }';
+       
         
-        print_r ($ss);exit;
+        //print_r ($ss);exit;
         //print_r(json_encode($tpg_course_run_json));exit;
         $api_version = 'v1.3';
         $url = "https://uat-api.ssg-wsg.sg/courses/runs";
-        $response = $this->curl_request('POST',$url,$ss,$api_version);
+        $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
         print_r($response);exit;
 //        echo " <div id='out'></div>
 //            
