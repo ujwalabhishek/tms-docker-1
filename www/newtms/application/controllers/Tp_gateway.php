@@ -839,8 +839,8 @@ class tp_gateway extends CI_Controller {
         $url = "https://uat-api.ssg-wsg.sg/courses/runs";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
         //print_r($response);exit;
-        //$obj=json_decode($response);
-        $obj = json_decode('{ "data": { "runs": [ { "id": 223389 } ] }, "error": {}, "meta": {}, "status": 200 }');
+        $obj=json_decode($response);
+        //$obj = json_decode('{ "data": { "runs": [ { "id": 223389 } ] }, "error": {}, "meta": {}, "status": 200 }');
         $this->session->set_flashdata('resp',$obj);
         if($obj->status == 200){
             redirect('tp_gateway/courserun_status');
