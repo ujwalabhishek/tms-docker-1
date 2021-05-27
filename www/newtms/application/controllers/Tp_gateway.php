@@ -731,7 +731,7 @@ class tp_gateway extends CI_Controller {
         $tenant_id = $this->tenant_id;
        $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
         
-       $tpg_course_run_json= json_decode('{
+       $tpg_course_run_json= '{
         "course": {
           "courseReferenceNumber": "TGS-2020002104",
           "trainingProvider": {
@@ -830,7 +830,7 @@ class tp_gateway extends CI_Controller {
             }
           ]
         }
-      }');
+      }';
         
         echo $tpg_course_run_json;exit;
         print_r(json_encode($tpg_course_run_json));exit;
