@@ -577,12 +577,12 @@
             $("#venue_room_err").text("").removeClass('error');
         }
         
-        $venue_block = $('#venue_blobk').val();
+        $venue_block = $('#venue_block').val();
         if ($venue_block == null || $venue_block == '') {
-            $("#venue_blobk_err").text("[required]").addClass('error');
+            $("#venue_block_err").text("[required]").addClass('error');
             retVal = false;
         } else {
-            $("#venue_blobk_err").text("").removeClass('error');
+            $("#venue_block_err").text("").removeClass('error');
         }
         
         $venue_street = $('#venue_street').val();
