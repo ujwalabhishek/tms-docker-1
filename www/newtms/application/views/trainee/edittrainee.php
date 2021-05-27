@@ -266,6 +266,9 @@ if (!empty($tax_error)) {
                                 <span id="pers_gender_err"></span>
                             </td>
                             <td class="td_heading">Date of Birth:</td>
+							<?php if($tenant_id=='T24'){ ?>
+								<span class="required">*
+							<?php } ?>
                             <td> <?php
                                 $dob_input = (empty($trainee[userdetails]['dob'])) ? '' : date('d-m-Y', strtotime($trainee[userdetails]['dob']));
                                 $dob = array(
@@ -611,20 +614,30 @@ if (!empty($tax_error)) {
                 <table class="table table-striped">
                     <tbody>
                         <tr>
-                            <td class="td_heading">Building/Street:</td>
-    <?php
-    $p_addr = array(
-        'name' => 'pers_personal_address',
-        'id' => 'pers_personal_address_bldg',
-        'maxlength' => '255',
-        'rows' => '1',
-        'cols' => '70',
-        'value' => $trainee[userdetails]['personal_address_bldg'],
-        'class' => 'upper_case'
-    );
-    ?>
-                            <td colspan="3"><?php echo form_textarea($p_addr); ?></td>
-                            <td class="td_heading">City:</td>
+                            <td class="td_heading">Building/Street:
+							<?php if($tenant_id=='T24'){ ?>
+								<span class="required">*
+							<?php } ?>
+							</td>
+								<?php
+								$p_addr = array(
+									'name' => 'pers_personal_address',
+									'id' => 'pers_personal_address_bldg',
+									'maxlength' => '255',
+									'rows' => '1',
+									'cols' => '70',
+									'value' => $trainee[userdetails]['personal_address_bldg'],
+									'class' => 'upper_case'
+								);
+								?>
+                            <td colspan="3"><?php echo form_textarea($p_addr); ?>
+								<span id="pers_personal_address_bldg_err"></span>
+							</td>
+                            <td class="td_heading">City:
+							<?php if($tenant_id=='T24'){ ?>
+								<span class="required">*
+							<?php } ?>
+							</td>
     <?php
     $city = array(
         'name' => 'pers_city',
@@ -639,7 +652,11 @@ if (!empty($tax_error)) {
                             </td>
                         </tr>
                         <tr>
-                            <td class="td_heading">Country:</td>
+                            <td class="td_heading">Country:
+							<?php if($tenant_id=='T24'){ ?>
+								<span class="required">*
+							<?php } ?>
+							</td>
                             <td width="25%">
     <?php
     $attr = 'id="pers_country"';
@@ -648,7 +665,11 @@ if (!empty($tax_error)) {
     ?>
                                 <span id="pers_country_err"></span>
                             </td>
-                            <td class="td_heading">State:</td>
+                            <td class="td_heading">State:
+							<?php if($tenant_id=='T24'){ ?>
+								<span class="required">*
+							<?php } ?>
+							</td>
                             <td>                           
     <?php
     $states = ($trainee[userdetails]['personal_address_country']) ? $this->traineemodel->get_states($trainee[userdetails]['personal_address_country']) : 'Select';
@@ -662,7 +683,11 @@ if (!empty($tax_error)) {
     ?>                        
                             </td> 
                     <span id="pers_states_err"></span>
-                    <td class="td_heading">Postal Code:</td>
+                    <td class="td_heading">Postal Code:
+					<?php if($tenant_id=='T24'){ ?>
+						<span class="required">*
+					<?php } ?>
+					</td>
     <?php
     $zip = array(
         'name' => 'personal_address_zip',
@@ -1987,15 +2012,33 @@ endif;
                 $("#pers_gender").removeClass('error');
             }
 
-            pers_dob = $.trim($("#pers_dob").val());            
-            if (valid_date_field(pers_dob) == false && pers_dob.trim().length > 0) {
-                $("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
-                $("#pers_dob").removeClass('error');
-                retVal = false;
-            } else {
-                $("#pers_dob_err").text("").removeClass('error');
-                $("#pers_dob").removeClass('error');
-            }
+//Added by abdulla
+$tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>";
+
+			if($tenant_id == 'T24') {
+				pers_dob = $.trim($("#pers_dob").val());            
+				if (valid_date_field(pers_dob) == false && pers_dob.trim().length > 0) {
+					$("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
+					$("#pers_dob").removeClass('error');
+					retVal = false;
+				} else if(pers_dob == "") {
+					$("#pers_dob_err").text("[required]").addClass('error');
+					$("#pers_dob").addClass('error');
+				} else {
+					$("#pers_dob_err").text("").removeClass('error');
+					$("#pers_dob").removeClass('error');
+				}
+			} else {
+				pers_dob = $.trim($("#pers_dob").val());            
+				if (valid_date_field(pers_dob) == false && pers_dob.trim().length > 0) {
+					$("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
+					$("#pers_dob").removeClass('error');
+					retVal = false;
+				} else {
+					$("#pers_dob_err").text("").removeClass('error');
+					$("#pers_dob").removeClass('error');
+				}
+			}
 
             pers_contact_number = $.trim($("#pers_contact_number").val());
             if (pers_contact_number == "") {
@@ -2132,33 +2175,95 @@ endif;
                 $("#highest_educ_level").removeClass('error');
             }
 
-            var pers_city = $.trim($("#pers_city").val());
-            if (pers_city != '') {
-                if (valid_name(pers_city) == false) {
-                    $("#pers_city_err").text("[invalid]").addClass('error');
-                    $("#pers_city").addClass('error');
-                } else {
-                    $("#pers_city_err").text("").removeClass('error');
-                    $("#pers_city").removeClass('error');
-                }
-            } else {
-                $("#pers_city_err").text("").removeClass('error');
-                $("#pers_city").removeClass('error');
-            }
+			if($tenant_id == 'T24') {
+				pers_states = $.trim($("#pers_states").val());
+				if (pers_states == "") {
+					$("#pers_states_err").text("[required]").addClass('error');
+					$("#pers_states").addClass('error');
+					retVal = false;
+				} else {
+					$("#pers_states_err").text("").removeClass('error');
+					$("#pers_states").removeClass('error');
+				}			
+			}
 
-            var pers_zipcode = $.trim($("#pers_zipcode").val());
-            if (pers_zipcode != '') {
-                if (valid_zip(pers_zipcode) == false) {
-                    $("#pers_zipcode_err").text("[invalid]").addClass('error');
-                    $("#pers_zipcode").addClass('error');
-                } else {
-                    $("#pers_zipcode_err").text("").removeClass('error');
-                    $("#pers_zipcode").removeClass('error');
-                }
-            } else {
-                $("#pers_zipcode_err").text("").removeClass('error');
-                $("#pers_zipcode").removeClass('error');
-            }
+			if($tenant_id == 'T24') {
+				var pers_city = $.trim($("#pers_city").val());
+				if (pers_city != '') {
+					if (valid_name(pers_city) == false) {
+						$("#pers_city_err").text("[invalid]").addClass('error');
+						$("#pers_city").addClass('error');
+					} else {
+						$("#pers_city_err").text("").removeClass('error');
+						$("#pers_city").removeClass('error');
+					}
+				} else if(pers_city == '') {
+					$("#pers_city_err").text("[required]").addClass('error');
+					$("#pers_city").addClass('error');			
+				} else {
+					$("#pers_city_err").text("").removeClass('error');
+					$("#pers_city").removeClass('error');
+				}				
+			} else {
+				var pers_city = $.trim($("#pers_city").val());
+				if (pers_city != '') {
+					if (valid_name(pers_city) == false) {
+						$("#pers_city_err").text("[invalid]").addClass('error');
+						$("#pers_city").addClass('error');
+					} else {
+						$("#pers_city_err").text("").removeClass('error');
+						$("#pers_city").removeClass('error');
+					}
+				} else {
+					$("#pers_city_err").text("").removeClass('error');
+					$("#pers_city").removeClass('error');
+				}			
+			}
+			
+			if($tenant_id == 'T24') {
+				pers_personal_address_bldg = $.trim($("#pers_personal_address_bldg").val());
+				if (pers_personal_address_bldg == "") {
+					$("#pers_personal_address_bldg_err").text("[required]").addClass('error');
+					$("#pers_personal_address_bldg").addClass('error');
+				} else {
+					$("#pers_personal_address_bldg_err").text("").removeClass('error');
+					$("#pers_personal_address_bldg").removeClass('error');
+				}
+			}
+
+			if($tenant_id == 'T24') {
+				var pers_zipcode = $.trim($("#pers_zipcode").val());
+				if (pers_zipcode != '') {
+					if (valid_zip(pers_zipcode) == false) {
+						$("#pers_zipcode_err").text("[invalid]").addClass('error');
+						$("#pers_zipcode").addClass('error');
+					} else {
+						$("#pers_zipcode_err").text("").removeClass('error');
+						$("#pers_zipcode").removeClass('error');
+					}
+				} else if(pers_zipcode == '') {
+					$("#pers_zipcode_err").text("[required]").addClass('error');
+					$("#pers_zipcode").addClass('error');
+				} else {
+					$("#pers_zipcode_err").text("").removeClass('error');
+					$("#pers_zipcode").removeClass('error');
+				}
+			} else {
+				var pers_zipcode = $.trim($("#pers_zipcode").val());
+				if (pers_zipcode != '') {
+					if (valid_zip(pers_zipcode) == false) {
+						$("#pers_zipcode_err").text("[invalid]").addClass('error');
+						$("#pers_zipcode").addClass('error');
+					} else {
+						$("#pers_zipcode_err").text("").removeClass('error');
+						$("#pers_zipcode").removeClass('error');
+					}
+				} else {
+					$("#pers_zipcode_err").text("").removeClass('error');
+					$("#pers_zipcode").removeClass('error');
+				}
+			}
+			            
             if ($('#trainee_validation_div span').hasClass('error')) {
                 retVal = false;
             }
