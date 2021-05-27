@@ -726,17 +726,18 @@ class tp_gateway extends CI_Controller {
        $trainer_email= $this->input->post('trainer_email');
        $course_id= $this->input->post('course_id');
        $class_id= $this->input->post('class_id');
+        $tenant_id = $this->tenant_id;
+       $booked_seats = $CI->classModel->get_class_booked($course_id, $class_id,$tenant_id);
         
-        $tpg_course_run_json= json_decode('{
+       $tpg_course_run_json= json_decode('{
         "course": {
-          "courseReferenceNumber": "'.$crse_ref_no.'",
+          "courseReferenceNumber": "TGS-2020002104",
           "trainingProvider": {
-            "uen": "'.$tp_uen.'"
+            "uen": "201000372W"
           },
           "runs": [
             {
               "sequenceNumber": 0,
-              "modeOfTraining": "'.$modeoftraining.'",
               "registrationDates": {
                 "opening": '.$reg_open_date.',
                 "closing": '.$reg_close_date.' 
@@ -760,7 +761,11 @@ class tp_gateway extends CI_Controller {
                 "room": "'.$venue_room.'",
                 "wheelChairAccess": true
               },
-              "intakeSize": '.$crse_intake_size.',
+                "intakeSize": '.$crse_intake_size.',
+                "threshold": 10,
+                "registeredUserCount": '.$booked_seats.',
+                "modeOfTraining": "'.$modeoftraining.'",
+                "courseAdminEmail": "'.$crs_admin_email.'",
               "courseVacancy": {
                 "code": "'.$crse_vacancy_code.'",
                 "description": "'.$crse_vacancy_description.'"
@@ -826,7 +831,7 @@ class tp_gateway extends CI_Controller {
       }');
         
         
-        print_r(json_encode($tpg_course_run_json));exit;
+        //print_r(json_encode($tpg_course_run_json));exit;
         $api_version = 'v1.3';
         $url = "https://uat-api.ssg-wsg.sg/courses/runs";
         $response = $this->curl_request('POST',$url,json_encode($tpg_course_run_json),$api_version);

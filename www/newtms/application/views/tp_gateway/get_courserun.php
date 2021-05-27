@@ -247,6 +247,7 @@
                 </td>
                 <td colspan="2"> <label class="label_font"></label>Course run intake size. It's maximum pax for a class</td>
                 <input type="hidden" name="crse_intake_size" value="<?php echo $class->total_seats ?? $this->input->post('crse_intake_size'); ?>" id="crse_intake_size">
+                
             </tr>
 
             <tr>                        
@@ -306,8 +307,8 @@
                 <td><label class="label_font"><?php echo date('h:i A', strtotime($class->class_start_datetime)) ?? $this->input->post('sess_start_time'); ?></label></td>
                 <td class="td_heading">Session End Time:<span class="required">*</span></td>
                 <td><label class="label_font"></label><?php echo date('h:i A', strtotime($class->class_end_datetime)) ?? $this->input->post('sess_end_time'); ?></td>
-                <input type="hidden" name="sess_start_time" value="<?php echo date('h:i A', strtotime($class->class_start_datetime)) ?? $this->input->post('sess_start_time'); ?>" id="sess_start_time">
-                <input type="hidden" name="sess_end_time" value="<?php echo date('h:i A', strtotime($class->class_end_datetime)) ?? $this->input->post('sess_end_time'); ?>" id="sess_end_time">
+                <input type="hidden" name="sess_start_time" value="<?php echo date('h:i', strtotime($class->class_start_datetime)) ?? $this->input->post('sess_start_time'); ?>" id="sess_start_time">
+                <input type="hidden" name="sess_end_time" value="<?php echo date('h:i', strtotime($class->class_end_datetime)) ?? $this->input->post('sess_end_time'); ?>" id="sess_end_time">
             </tr>
 
             <tr>                        
