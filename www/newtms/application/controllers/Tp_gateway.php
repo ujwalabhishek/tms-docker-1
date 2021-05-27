@@ -839,9 +839,11 @@ class tp_gateway extends CI_Controller {
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
         //print_r($response);exit;
         
-        if($this->check_status($response)){
+        if($response[status] == 200){
             $this->session->set_flashdata('resp',$response);
             redirect('tp_gateway/courserun_status');
+        }else{
+            $this->check_status();
         }
         
     }
@@ -855,7 +857,7 @@ class tp_gateway extends CI_Controller {
         //$url = "https://uat-api.ssg-wsg.sg/courses/runs/223382";
         $response = json_decode($this->curl_request('GET',$url,'',$api_version));
         $this->session->set_flashdata('success',"Congratulations! You Have Successfully Add Course Run To TPG");
-        //print_r($resp);print_r($response);exit;
+        print_r($resp);print_r($response);echo $url;exit;
         $data['support'] = $response->data->course->support;
         $data['run'] = $response->data->course->run;
         $data['course_title'] = $response->data->course->title;
@@ -866,17 +868,13 @@ class tp_gateway extends CI_Controller {
     
     
     public function check_status($response){
-        
-        if($response[status] = 200){
-            //successful
-            return true;
-        }elseif($response[status] = 400){
+        if($response[status] == 400){
             $this->session->set_flashdata('error',"Oops! Bad request!");
-        }elseif($response[status] = 403){
+        }elseif($response[status] == 403){
             $this->session->set_flashdata('error',"Oops! Forbidden. Authorization information is missing or invalid.");
-        }elseif($response[status] = 404){
+        }elseif($response[status] == 404){
             $this->session->set_flashdata('error',"Oops! Not Found!");
-        }elseif($response[status] = 500){
+        }elseif($response[status] == 500){
             $this->session->set_flashdata('error',"Oops! Internal Error!!");
         }else{
             $this->session->set_flashdata('error',"Oops ! Something Went Wrong Contact System Administrator"); 
