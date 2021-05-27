@@ -13,20 +13,10 @@
     if(!empty($error)){
     foreach($error as $err){
     ?>
-    <table class="table table-striped">
-        <tbody>
-            <tr width="20%">                        
-                <td class="td_heading" width="25%">Field:<span class="required">*</span></td>
-                <td width='25%'><label class="label_font"><?php echo $err->field; ?></label></td>
-            </tr>
-
-            <tr>                        
-                <td class="td_heading">Message:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $err->message;?></label></td>
-               
-            </tr>            
-        </tbody>
-    </table>
+    <div class="alert alert-danger dang">
+        <strong><?php echo $err->field; ?></strong> <?php echo $err->message;?>
+    </div>
+    
     <?php 
     }
     }else{
@@ -34,8 +24,8 @@
     ?>
     
     <div class="alert alert-danger dang">
-    <strong>Oops!</strong> You are doing something wrong! Contact System Administrator..
-  </div>
+       <strong>Oops!</strong> You are doing something wrong! Contact System Administrator..
+    </div>
     
     <?php } ?>
 </div>
