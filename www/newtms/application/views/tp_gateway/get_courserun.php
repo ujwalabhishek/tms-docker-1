@@ -342,6 +342,7 @@
                     </label> 
                     <span id="trainer_name_err"></span></td>
                 <input type="hidden" name="trainer_name[]" value="<?php echo $this->input->post('trainer_name') ?? $trainer->first_name.' '.$trainer->last_name; ?>" id="trainer_name">
+                <input type="hidden" name="trainer_id[]" value="<?php echo $this->input->post('trainer_id') ?? $trainer->user_id; ?>" id="trainer_id">
                 <td class="td_heading">Trainer Email:<span class="required">*</span></td>
                 <td>
                     <label class="label_font">

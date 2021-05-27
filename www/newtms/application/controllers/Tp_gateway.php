@@ -725,12 +725,110 @@ class tp_gateway extends CI_Controller {
        $sess_start_time= $this->input->post('sess_start_time');
        $sess_end_time= $this->input->post('sess_end_time');
        $trainer_name= $this->input->post('trainer_name');
+       $trainer_id= $this->input->post('trainer_id');
        $trainer_email= $this->input->post('trainer_email');
        $course_id= $this->input->post('course_id');
        $class_id= $this->input->post('class_id');
         $tenant_id = $this->tenant_id;
        $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
-        
+        $ss='{
+  "course": {
+    "courseReferenceNumber": "TGS-2020002096",
+    "trainingProvider": {
+      "uen": "201000372W"
+    },
+    "runs": [
+      {
+        "sequenceNumber": 0,
+        "modeOfTraining": "'.$modeoftraining.'",
+        "registrationDates": {
+          "opening": '.$reg_open_date.',
+          "closing": '.$reg_close_date.' 
+        },
+        "courseDates": {
+          "start": '.$crse_start_date.',
+          "end": '.$crse_end_date.'
+        },
+        "scheduleInfoType": {
+          "code": "'.$schedule_info_code.'",
+          "description": "'.$schedule_info_des.'"
+        },
+        "scheduleInfo": "'.$schedule_info.'",
+        "venue": {
+            "block": "'.$venue_block.'",
+            "street": "'.$venue_street.'",
+            "floor": "'.$venue_floor.'",
+            "unit": "'.$venue_unit.'",
+            "building": "",
+            "postalCode": '.$venue_postalcode.',
+            "room": "'.$venue_room.'",
+            "wheelChairAccess": true
+        },
+        "intakeSize": '.$crse_intake_size.',
+        "courseAdminEmail": "'.$crs_admin_email.'",
+        "courseVacancy": {
+          "code": "'.$crse_vacancy_code.'",
+          "description": "'.$crse_vacancy_description.'"
+        },
+        "file": {
+          "Name": "",
+          "content": ""
+        },
+        "sessions": [
+          {
+            "startDate": "'.$crse_start_date.'",
+            "endDate": "'.$crse_end_date.'",
+            "startTime": "'.$sess_start_time.'",
+            "modeOfTraining": "'.$modeoftraining.'",
+            "endTime": "'.$sess_end_time.'",
+            "venue": {
+              "block": "'.$venue_block.'",
+              "street": "'.$venue_street.'",
+              "floor": "'.$venue_floor.'",
+              "unit": "'.$venue_unit.'",
+              "building": "",
+              "postalCode": '.$venue_postalcode.',
+              "room": "'.$venue_room.'",
+              "wheelChairAccess": true,
+              "primaryVenue": true
+            }
+          }
+        ],
+        "linkCourseRunTrainer": [
+          {
+            "trainer": {
+              "indexNumber": 0,
+              "id": "FE9DA6F2-TMS-'.$trainer_id.'-8AD1-D8E246E002155",
+              "name": "'.$trainer_name.'",
+              "inTrainingProviderProfile": true,
+              "domainAreaOfPractice": "Testing Management in Computer Application and Diploma in Computer Application",
+              "experience": "Testing ABC",
+              "linkedInURL": "https://sg.linkedin.com/company/linkedin/abc",
+              "salutationId": 1,
+              "photo": {
+                "name": "",
+                "content": ""
+              },
+              "email": "'.$trainer_email.'",
+              "trainerType": {
+                "code": "2",
+                "description": "New"
+              },
+              "linkedSsecEQAs": [
+                {
+                  "description": "EQA test 4",
+                  "ssecEQA": {
+                    "code": "12"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}';
        $tpg_course_run_json= '{
         "course": {
           "courseReferenceNumber": "TGS-2020002104",
@@ -832,11 +930,11 @@ class tp_gateway extends CI_Controller {
         }
       }';
         
-        echo $tpg_course_run_json;exit;
-        print_r(json_encode($tpg_course_run_json));exit;
+        //echo $tpg_course_run_json;exit;
+        //print_r(json_encode($tpg_course_run_json));exit;
         $api_version = 'v1.3';
         $url = "https://uat-api.ssg-wsg.sg/courses/runs";
-        $response = $this->curl_request('POST',$url,json_encode($tpg_course_run_json),$api_version);
+        $response = $this->curl_request('POST',$url,json_encode($ss),$api_version);
         print_r($response);exit;
 //        echo " <div id='out'></div>
 //            

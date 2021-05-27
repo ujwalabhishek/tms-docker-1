@@ -190,6 +190,7 @@
                 <td class="td_heading" width='25%'>Trainer Email:<span class="required">*</span></td>
                 <td width='25%'><label class="label_font"><?php echo $dat[trainer_email][$sl]; ?></label> <span id="trainer_email_err"></span></td>
                 <input type="hidden" name="trainer_email" value="<?php echo $dat[trainer_email][$sl]; ?>" id="trainer_email">
+                <input type="hidden" name="trainer_id" value="<?php echo $dat[trainer_id][$sl]; ?>" id="trainer_id">
             </tr>
 
             <tr>                        
