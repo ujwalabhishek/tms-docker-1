@@ -922,7 +922,7 @@ class tp_gateway extends CI_Controller {
         $data['ClassTrainer'] = $this->tpgModel->get_trainer_details($class->classroom_trainer);
         $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
         $data['booked_seats'] = $this->classModel->get_class_booked($course_id,$class_id,$tenant_id);
-        $data['courserun_id']= $this->input->get('courserun_id');
+        $data['courserun_id']= $courserunid;
         $data['page_title'] = 'TPG UPDATE COURSE RUN';
         $data['main_content'] = 'tp_gateway/update_courserun';
         $this->load->view('layout', $data);
