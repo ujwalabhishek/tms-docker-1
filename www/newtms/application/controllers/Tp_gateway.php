@@ -969,108 +969,106 @@ class tp_gateway extends CI_Controller {
        $tenant_id = $this->tenant_id;
        $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
         $tpg_course_run_json='{
-                    "course": {
-                      "courseReferenceNumber": "TGS-2020002096",
-                      "trainingProvider": {
-                        "uen": "201000372W"
-                      },
-                      "run": [
-                        {
-                          "action": "update",
-                          "sequenceNumber": 0,
-                          "modeOfTraining": "'.$modeoftraining.'",
-                          "registrationDates": {
-                            "opening": '.$reg_open_date.',
-                            "closing": '.$reg_close_date.' 
-                          },
-                          "courseDates": {
-                            "start": '.$crse_start_date.',
-                            "end": '.$crse_end_date.'
-                          },
-                          "scheduleInfoType": {
-                            "code": "'.$schedule_info_code.'",
-                            "description": "'.$schedule_info_des.'"
-                          },
-                          "scheduleInfo": "'.$schedule_info.'",
-                          "venue": {
-                              "block": "'.$venue_block.'",
-                              "street": "'.$venue_street.'",
-                              "floor": "'.$venue_floor.'",
-                              "unit": "'.$venue_unit.'",
-                              "building": "",
-                              "postalCode": "'.$venue_postalcode.'",
-                              "room": "'.$venue_room.'",
-                              "wheelChairAccess": true
-                          },
-                          "intakeSize": '.$crse_intake_size.',
-                          "courseAdminEmail": "'.$crs_admin_email.'",
-                          "threshold": 10,
-                          "registeredUserCount": '.$booked_seats.',
-                          "courseVacancy": {
-                            "code": "'.$crse_vacancy_code.'",
-                            "description": "'.$crse_vacancy_description.'"
-                          },
-                          "file": {
-                            "Name": "",
-                            "content": ""
-                          },
-                          "sessions": [
-                            {
-                              "action": "update",
-                              "sessionId": "TGS-2020002096-'.$courserun_id.'-S1",
-                              "startDate": "'.$crse_start_date.'",
-                              "endDate": "'.$crse_end_date.'",
-                              "startTime": "'.$sess_start_time.'",
-                              "modeOfTraining": "'.$modeoftraining.'",
-                              "endTime": "'.$sess_end_time.'",
-                              "venue": {
-                                "block": "'.$venue_block.'",
-                                "street": "'.$venue_street.'",
-                                "floor": "'.$venue_floor.'",
-                                "unit": "'.$venue_unit.'",
-                                "building": "",
-                                "postalCode": "'.$venue_postalcode.'",
-                                "room": "'.$venue_room.'",
-                                "wheelChairAccess": true,
-                                "primaryVenue": true
-                              }
-                            }
-                          ],
-                          "linkCourseRunTrainer": [
-                            {
-                              "trainer": {
-                                "indexNumber": 0,
-                                "id": "'.$tenant_id.'-TMS-'.$trainer_id.'-'.$course_id.'-'.$class_id.'",
-                                "name": "'.$trainer_name.'",
-                                "inTrainingProviderProfile": true,
-                                "domainAreaOfPractice": "Testing Management in Computer Application and Diploma in Computer Application",
-                                "experience": "Testing ABC",
-                                "linkedInURL": "https://sg.linkedin.com/company/linkedin/abc",
-                                "salutationId": 1,
-                                "photo": {
-                                  "name": "",
+                            "course": {
+                              "courseReferenceNumber": "TGS-2020002096",
+                              "trainingProvider": {
+                                "uen": "201000372W"
+                              },
+                              "run": {
+                                "action": "update",
+                                "sequenceNumber": 0,
+                                "registrationDates": {
+                                  "opening": '.$reg_open_date.',
+                                  "closing": '.$reg_close_date.'
+                                },
+                                "courseDates": {
+                                  "start": '.$crse_start_date.',
+                                  "end": '.$crse_end_date.'
+                                },
+                                "scheduleInfoType": {
+                                  "code": "'.$schedule_info_code.'",
+                                  "description": "'.$schedule_info_des.'"
+                                },
+                                "scheduleInfo": "'.$schedule_info.'",
+                                "venue": {
+                                  "block": "'.$venue_block.'",
+                                  "street": "'.$venue_street.'",
+                                  "floor": "'.$venue_floor.'",
+                                  "unit": "'.$venue_unit.'",
+                                  "building": "",
+                                  "postalCode": "'.$venue_postalcode.'",
+                                  "room": "'.$venue_room.'",
+                                  "wheelChairAccess": true
+                                },
+                                "intakeSize": '.$crse_intake_size.',
+                                "threshold": 10,
+                                "registeredUserCount": '.$booked_seats.',
+                                "modeOfTraining": "'.$modeoftraining.'",
+                                "courseAdminEmail": "'.$crs_admin_email.'",
+                                "courseVacancy": {
+                                  "code": "'.$crse_vacancy_code.'",
+                                  "description": "'.$crse_vacancy_description.'"
+                                },
+                                "file": {
+                                  "Name": "",
                                   "content": ""
                                 },
-                                "email": "'.$trainer_email.'",
-                                "trainerType": {
-                                  "code": "2",
-                                  "description": "New"
-                                },
-                                "linkedSsecEQAs": [
+                                "sessions": [
                                   {
-                                    "description": "EQA test 4",
-                                    "ssecEQA": {
-                                      "code": "12"
+                                    "action": "update",
+                                    "sessionId": "TGS-2020002096-'.$courserun_id.'-S1",
+                                    "startDate": "'.$crse_start_date.'",
+                                    "endDate": "'.$crse_end_date.'",
+                                    "startTime": "'.$sess_start_time.'",
+                                    "endTime": "'.$sess_end_time.'",
+                                    "modeOfTraining": "'.$modeoftraining.'",
+                                    "venue": {
+                                      "block": "'.$venue_block.'",
+                                      "street": "'.$venue_street.'",
+                                      "floor": "'.$venue_floor.'",
+                                      "unit": "'.$venue_unit.'",
+                                      "building": "",
+                                      "postalCode": "'.$venue_postalcode.'",
+                                      "room": "'.$venue_room.'",
+                                      "wheelChairAccess": true,
+                                      "primaryVenue": false
+                                    }
+                                  }
+                                ],
+                                "linkCourseRunTrainer": [
+                                  {
+                                    "trainer": {
+                                      "trainerType": {
+                                        "code": "2",
+                                        "description": "New"
+                                      },
+                                      "indexNumber": 0,
+                                      "id": "",
+                                      "name": "'.$trainer_name.'",
+                                      "email": "'.$trainer_email.'",
+                                      "inTrainingProviderProfile": true,
+                                      "domainAreaOfPractice": "Testing Management in Computer Application and Diploma in Computer Application",
+                                      "experience": "Testing ABC",
+                                      "linkedInURL": "https://sg.linkedin.com/company/linkedin/abc",
+                                      "salutationId": 1,
+                                      "photo": {
+                                        "name": "",
+                                        "content": ""
+                                      },
+                                      "linkedSsecEQAs": [
+                                        {
+                                          "description": "EQA test 4",
+                                          "ssecEQA": {
+                                            "code": "12"
+                                          }
+                                        }
+                                      ]
                                     }
                                   }
                                 ]
                               }
                             }
-                          ]
-                        }
-                      ]
-                    }
-                  }';
+                          }';
        
        
         print_r($tpg_course_run_json);exit;
