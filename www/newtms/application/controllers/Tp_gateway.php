@@ -839,7 +839,7 @@ class tp_gateway extends CI_Controller {
                   }';
        
        
-        //print_r(json_encode($tpg_course_run_json));exit;
+        //print_r(json_decode($tpg_course_run_json));exit;
         $api_version = 'v1.3';
         $url = "https://uat-api.ssg-wsg.sg/courses/runs";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
@@ -1073,7 +1073,7 @@ class tp_gateway extends CI_Controller {
                   }';
        
        
-        //print_r(json_encode($tpg_course_run_json));exit;
+        print_r(json_decode($tpg_course_run_json));exit;
         $api_version = 'v1.3';
         $url = "https://uat-api.ssg-wsg.sg/courses/runs/$courserun_id";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
