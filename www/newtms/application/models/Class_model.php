@@ -425,7 +425,7 @@ class Class_Model extends CI_Model {
         if ($offset <= 0 || empty($tenant_id)) {
             return;
         }
-        $this->db->select("class_pymnt_enrol, class_id, course_id, class_name, class_start_datetime, "
+        $this->db->select("tpg_course_run_id,class_pymnt_enrol, class_id, course_id, class_name, class_start_datetime, "
                 . "class_end_datetime, classroom_trainer,training_aide, "
                 . "class_language, total_seats, class_status");
         $this->db->from('course_class');
