@@ -971,7 +971,7 @@ class tp_gateway extends CI_Controller {
                       "trainingProvider": {
                         "uen": "201000372W"
                       },
-                      "run": [
+                      "runs": [
                         {
                           "action": "update",
                           "sequenceNumber": 0,
