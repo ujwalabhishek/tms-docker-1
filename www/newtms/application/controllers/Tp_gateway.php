@@ -887,7 +887,7 @@ class tp_gateway extends CI_Controller {
         
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['error'] = $response->error->details;
-        //print_r($data);exit;
+        ////print_r($data);exit;
         $data['page_title'] = 'Course Run Status';
         $data['main_content'] = 'tp_gateway/error_status';
         $this->load->view('layout', $data);
