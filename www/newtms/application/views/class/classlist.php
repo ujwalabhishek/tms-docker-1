@@ -299,7 +299,7 @@ $CI->load->model('class_model');
                             <td><?php echo $status_label; ?></td>
                             <td>
                             <?php
-                            if(empty($data['tpg-course_run_id'])){
+                            if(empty($data['tpg_course_run_id'])){
                                 $link= base_url() .'tp_gateway/get_courserun/' . $data['class_id'].'/'.$data['course_id'];
                                  $html="<a class='create_course_run' href='".$link."'>Create Course Run</a>";
                                         
