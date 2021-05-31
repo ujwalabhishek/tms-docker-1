@@ -1017,6 +1017,7 @@ class tp_gateway extends CI_Controller {
                           "sessions": [
                             {
                               "action": "update",
+                              "sessionId": "TGS-2020002096-'.$courserun_id.'-S1",
                               "startDate": "'.$crse_start_date.'",
                               "endDate": "'.$crse_end_date.'",
                               "startTime": "'.$sess_start_time.'",
