@@ -415,7 +415,7 @@ echo form_close();
     text-transform: none;
     letter-spacing: normal;
     font-weight: normal;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
     }   
     .disabled_btn{
     text-align: center;
