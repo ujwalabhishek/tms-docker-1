@@ -304,7 +304,7 @@ $CI->load->model('class_model');
                                  $html="<a class='create_course_run' href='".$link."'>Create Course Run</a>";
                                         
                             }else{
-                                $link= base_url() .'tp_gateway/update_courserun/' . $data['class_id'].'/'.$data['course_id'];
+                                $link= base_url() .'tp_gateway/update_courserun/' . $data['class_id'].'/'.$data['course_id'].'/'.$data['tpg_course_run_id'];
                                  $html="<a class='create_course_run' href='".$link."'>Update Course Run</a>";
                             }
                             echo $html;

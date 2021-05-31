@@ -680,13 +680,18 @@ class tp_gateway extends CI_Controller {
             }
             
         }
-        
+        $update = $this->input->get('status');
         if ($this->form_validation->run() == TRUE){
             //print_r($_POST);exit;
             $data_nextlevel = $_POST;
             // store data to flashdata
             $this->session->set_flashdata('dat',$data_nextlevel);
-            redirect('tp_gateway/crosscheck_tpg_courserun');
+            if($update='update'){
+                redirect('tp_gateway/update_tpg_courserun');
+            }else{
+                redirect('tp_gateway/crosscheck_tpg_courserun');
+            }
+            
             
         }else{
             redirect('tp_gateway/get_courserun');
@@ -714,8 +719,8 @@ class tp_gateway extends CI_Controller {
        $schedule_info_code= $this->input->post('schedule_info_code');
        $schedule_info_des= $this->input->post('schedule_info_des');
        $schedule_info= $this->input->post('schedule_info');
-        $venue_block= $this->input->post('venue_block');
-         $venue_street= $this->input->post('venue_street');
+       $venue_block= $this->input->post('venue_block');
+       $venue_street= $this->input->post('venue_street');
        $venue_floor= $this->input->post('venue_floor');
        $venue_unit= $this->input->post('venue_unit');
        $venue_postalcode= $this->input->post('venue_postalcode');
@@ -856,15 +861,21 @@ class tp_gateway extends CI_Controller {
         $api_version = 'v1.3';
         $resp=$this->session->flashdata('resp');
         $class_id=$this->session->flashdata('cid');
+        $status=$this->session->flashdata('update');
         $crse_run_id = $resp->data->runs[0]->id;
         $url = "https://uat-api.ssg-wsg.sg/courses/runs/$crse_run_id";
         //$url = "https://uat-api.ssg-wsg.sg/courses/runs/223382";
         $response = json_decode($this->curl_request('GET',$url,'',$api_version));
-        $this->session->set_flashdata('success',"Congratulations! You Have Successfully Add Course Run To TPG");
-        $status =$this->tpgModel->updateCourseRunId($class_id,$crse_run_id);
-        if($status === FALSE) {
-            $this->session->set_flashdata('error',"Oops ! Unable To Update CourseRun ID"); 
+        if($status == 'update'){
+            $this->session->set_flashdata('success',"Congratulations! You Have Successfully Updated The Course Run Inside TPG");
+        }else{
+            $this->session->set_flashdata('success',"Congratulations! You Have Successfully Add Course Run To TPG");
+            $status =$this->tpgModel->updateCourseRunId($class_id,$crse_run_id);
+            if($status === FALSE) {
+                $this->session->set_flashdata('error',"Oops ! Unable To Update CourseRun ID"); 
+            }
         }
+        
         //print_r($resp);print_r($response);echo $url;exit;
         //print_r($response);exit;
         $data['support'] = $response->data->course->support;
@@ -901,6 +912,179 @@ class tp_gateway extends CI_Controller {
         
     }
     
+    
+    public function update_courserun($class_id,$course_id,$courserunid){
+        $tenant_id = $this->tenant_id;
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['tenant'] = $this->classTraineeModel->get_tenant_masters($tenant_id);
+        $data['coursedetails'] = $this->coursemodel->get_course_detailse($course_id);
+        $data['class'] = $class = $this->classModel->get_class_details_assmnts($tenant_id, $class_id);
+        $data['ClassTrainer'] = $this->tpgModel->get_trainer_details($class->classroom_trainer);
+        $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
+        $data['booked_seats'] = $this->classModel->get_class_booked($course_id,$class_id,$tenant_id);
+        $data['page_title'] = 'TPG UPDATE COURSE RUN';
+        $data['main_content'] = 'tp_gateway/update_courserun';
+        $this->load->view('layout', $data);
+    }
+    
+    public function update_tpg_courserun(){
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['dat']=$this->session->flashdata('dat');
+        $data['page_title'] = 'TPG VERIFY COURSE RUN DETAILS';
+        $data['main_content'] = 'tp_gateway/update_tpg_courserun';
+        $this->load->view('layout', $data);
+    }
+    
+    public function update_courserun_call_tpg(){
+       $crse_ref_no= $this->input->post('crse_ref_no');
+       $tp_uen= $this->input->post('tp_uen');
+       $modeoftraining= $this->input->post('modeoftraining');
+       $crs_admin_email= $this->input->post('crs_admin_email');
+       $reg_open_date= $this->input->post('reg_open_date');
+       $reg_close_date= $this->input->post('reg_close_date');
+       $crse_start_date= $this->input->post('crse_start_date');
+       $crse_end_date= $this->input->post('crse_end_date');
+       $schedule_info_code= $this->input->post('schedule_info_code');
+       $schedule_info_des= $this->input->post('schedule_info_des');
+       $schedule_info= $this->input->post('schedule_info');
+       $venue_block= $this->input->post('venue_block');
+       $venue_street= $this->input->post('venue_street');
+       $venue_floor= $this->input->post('venue_floor');
+       $venue_unit= $this->input->post('venue_unit');
+       $venue_postalcode= $this->input->post('venue_postalcode');
+       $venue_room= $this->input->post('venue_room');
+       $crse_intake_size= $this->input->post('crse_intake_size');
+       $crse_vacancy_code= $this->input->post('crse_vacancy_code');
+       $crse_vacancy_description= $this->input->post('crse_vacancy_description');
+       $sess_start_time= $this->input->post('sess_start_time');
+       $sess_end_time= $this->input->post('sess_end_time');
+       $trainer_name= $this->input->post('trainer_name');
+       $trainer_id= $this->input->post('trainer_id');
+       $trainer_email= $this->input->post('trainer_email');
+       $course_id= $this->input->post('course_id');
+       $class_id= $this->input->post('class_id');
+        $tenant_id = $this->tenant_id;
+       $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
+        $tpg_course_run_json='{
+                    "course": {
+                      "courseReferenceNumber": "TGS-2020002096",
+                      "trainingProvider": {
+                        "uen": "201000372W"
+                      },
+                      "run": [
+                        {
+                          "action": "update",
+                          "sequenceNumber": 0,
+                          "modeOfTraining": "'.$modeoftraining.'",
+                          "registrationDates": {
+                            "opening": '.$reg_open_date.',
+                            "closing": '.$reg_close_date.' 
+                          },
+                          "courseDates": {
+                            "start": '.$crse_start_date.',
+                            "end": '.$crse_end_date.'
+                          },
+                          "scheduleInfoType": {
+                            "code": "'.$schedule_info_code.'",
+                            "description": "'.$schedule_info_des.'"
+                          },
+                          "scheduleInfo": "'.$schedule_info.'",
+                          "venue": {
+                              "block": "'.$venue_block.'",
+                              "street": "'.$venue_street.'",
+                              "floor": "'.$venue_floor.'",
+                              "unit": "'.$venue_unit.'",
+                              "building": "",
+                              "postalCode": "'.$venue_postalcode.'",
+                              "room": "'.$venue_room.'",
+                              "wheelChairAccess": true
+                          },
+                          "intakeSize": '.$crse_intake_size.',
+                          "courseAdminEmail": "'.$crs_admin_email.'",
+                          "threshold": 10,
+                          "registeredUserCount": '.$booked_seats.',
+                          "courseVacancy": {
+                            "code": "'.$crse_vacancy_code.'",
+                            "description": "'.$crse_vacancy_description.'"
+                          },
+                          "file": {
+                            "Name": "",
+                            "content": ""
+                          },
+                          "sessions": [
+                            {
+                              "startDate": "'.$crse_start_date.'",
+                              "endDate": "'.$crse_end_date.'",
+                              "startTime": "'.$sess_start_time.'",
+                              "modeOfTraining": "'.$modeoftraining.'",
+                              "endTime": "'.$sess_end_time.'",
+                              "venue": {
+                                "block": "'.$venue_block.'",
+                                "street": "'.$venue_street.'",
+                                "floor": "'.$venue_floor.'",
+                                "unit": "'.$venue_unit.'",
+                                "building": "",
+                                "postalCode": "'.$venue_postalcode.'",
+                                "room": "'.$venue_room.'",
+                                "wheelChairAccess": true,
+                                "primaryVenue": true
+                              }
+                            }
+                          ],
+                          "linkCourseRunTrainer": [
+                            {
+                              "trainer": {
+                                "indexNumber": 0,
+                                "id": "'.$tenant_id.'-TMS-'.$trainer_id.'-'.$course_id.'-'.$class_id.'",
+                                "name": "'.$trainer_name.'",
+                                "inTrainingProviderProfile": true,
+                                "domainAreaOfPractice": "Testing Management in Computer Application and Diploma in Computer Application",
+                                "experience": "Testing ABC",
+                                "linkedInURL": "https://sg.linkedin.com/company/linkedin/abc",
+                                "salutationId": 1,
+                                "photo": {
+                                  "name": "",
+                                  "content": ""
+                                },
+                                "email": "'.$trainer_email.'",
+                                "trainerType": {
+                                  "code": "2",
+                                  "description": "New"
+                                },
+                                "linkedSsecEQAs": [
+                                  {
+                                    "description": "EQA test 4",
+                                    "ssecEQA": {
+                                      "code": "12"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }';
+       
+       
+        //print_r(json_encode($tpg_course_run_json));exit;
+        $api_version = 'v1.3';
+        $url = "https://uat-api.ssg-wsg.sg/courses/runs";
+        $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
+        //print_r($response);exit;
+        $obj=json_decode($response);
+        //$obj = json_decode('{ "data": { "runs": [ { "id": 223389 } ] }, "error": {}, "meta": {}, "status": 200 }');
+        $this->session->set_flashdata('resp',$obj);
+        $this->session->set_flashdata('cid',$class_id);
+        $this->session->set_flashdata('status','update');
+        if($obj->status == 200){
+            redirect('tp_gateway/courserun_status');
+        }else{
+            redirect('tp_gateway/check_status');
+        }
+        
+    }
     
     
     
