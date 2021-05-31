@@ -438,6 +438,7 @@ echo form_close();
     text-transform: none;
     letter-spacing: normal;
     font-weight: normal;
+    pointer-events: none;
     }
 
 </style>
