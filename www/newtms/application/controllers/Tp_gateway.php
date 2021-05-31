@@ -842,6 +842,7 @@ class tp_gateway extends CI_Controller {
         $obj=json_decode($response);
         //$obj = json_decode('{ "data": { "runs": [ { "id": 223389 } ] }, "error": {}, "meta": {}, "status": 200 }');
         $this->session->set_flashdata('resp',$obj);
+        $this->session->set_flashdata('cid',$class_id);
         if($obj->status == 200){
             redirect('tp_gateway/courserun_status');
         }else{
@@ -854,11 +855,16 @@ class tp_gateway extends CI_Controller {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $api_version = 'v1.3';
         $resp=$this->session->flashdata('resp');
+        $class_id=$this->session->flashdata('cid');
         $crse_run_id = $resp->data->runs[0]->id;
         $url = "https://uat-api.ssg-wsg.sg/courses/runs/$crse_run_id";
         //$url = "https://uat-api.ssg-wsg.sg/courses/runs/223382";
         $response = json_decode($this->curl_request('GET',$url,'',$api_version));
         $this->session->set_flashdata('success',"Congratulations! You Have Successfully Add Course Run To TPG");
+        $status =$this->tpgModel->updateCourseRunId($class_id,$crse_run_id);
+        if($status === FALSE) {
+            $this->session->set_flashdata('error',"Oops ! Unable To Update CourseRun ID"); 
+        }
         //print_r($resp);print_r($response);echo $url;exit;
         //print_r($response);exit;
         $data['support'] = $response->data->course->support;

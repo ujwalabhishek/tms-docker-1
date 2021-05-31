@@ -297,19 +297,32 @@ $CI->load->model('class_model');
                             
                             <td><?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($data['class_language']), ', '); ?></td>
                             <td><?php echo $status_label; ?></td>
-                            <td><a class='create_course_run' href="<?php echo base_url() .'tp_gateway/get_courserun/' . $data['class_id'].'/'.$data['course_id']; ?>">Create Course Run</a></td>
-                            </tr>
+                            <td>
                             <?php
+                            if(empty($data['tpg-course_run_id'])){
+                                $link= base_url() .'tp_gateway/get_courserun/' . $data['class_id'].'/'.$data['course_id'];
+                                 $html="<a class='create_course_run' href='".$link."'>Create Course Run</a>";
+                                        
+                            }else{
+                                $link= base_url() .'tp_gateway/update_courserun/' . $data['class_id'].'/'.$data['course_id'];
+                                 $html="<a class='create_course_run' href='".$link."'>Update Course Run</a>";
+                            }
+                            
+                            ?>
+                            </td>
+                            </tr>
+                          <?php
                         }
-                        ?>
+                        ?>   
+                        
                         </tbody>
                         <?php
                         $note = '<span style="color:red">** Over Booking Allowed</span>';
-                    } else {
-                        $note = '';
-                        echo "<tr><td class='no-bor' colspan='10'>&nbsp;</td></tr><tr class='danger'><td colspan='10' class='error' style='text-align:center;'>There are no classes available for this course.</td></tr>";
-                    }
-                    ?>
+                        } else {
+                            $note = '';
+                            echo "<tr><td class='no-bor' colspan='10'>&nbsp;</td></tr><tr class='danger'><td colspan='10' class='error' style='text-align:center;'>There are no classes available for this course.</td></tr>";
+                        }
+                        ?>
 
                 </table>
             </div>
