@@ -389,6 +389,10 @@ echo form_open("", $form_attributes);
 echo form_close();
 ?>
 <style>
+    .create_course_run:hover{
+      background: #97979f;
+      color: white;   
+    }
     .create_course_run{
         text-align: center;
     -moz-box-shadow: inset 0px 1px 0px 0px #54a3f7;
