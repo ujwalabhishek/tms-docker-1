@@ -889,7 +889,7 @@ class tp_gateway extends CI_Controller {
     
     public function check_status(){
          $response=$this->session->flashdata('resp');
-         print_r($response);exit;
+         //print_r($response);exit;
         if($response->status == 400){
             $this->session->set_flashdata('error',"Oops! Bad request!");
         }elseif($response->status == 403){
@@ -1071,7 +1071,7 @@ class tp_gateway extends CI_Controller {
                           }';
        
        
-        print_r($tpg_course_run_json);exit;
+        //print_r($tpg_course_run_json);exit;
         $api_version = 'v1.3';
         $url = "https://uat-api.ssg-wsg.sg/courses/runs/$courserun_id";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
