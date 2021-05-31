@@ -299,13 +299,18 @@ $CI->load->model('class_model');
                             <td><?php echo $status_label; ?></td>
                             <td>
                             <?php
+                            if ($status == 'Yet to Start'){
+                                $cls ='create_course_run';
+                            }else{
+                                $cls ='disabled_btn';
+                            }
                             if(empty($data['tpg_course_run_id'])){
                                 $link= base_url() .'tp_gateway/get_courserun/' . $data['class_id'].'/'.$data['course_id'];
-                                 $html="<a class='create_course_run' href='".$link."'>Create Course Run</a>";
+                                 $html="<a class='$cls' href='".$link."'>Create Course Run</a>";
                                         
                             }else{
                                 $link= base_url() .'tp_gateway/update_courserun/' . $data['class_id'].'/'.$data['course_id'].'/'.$data['tpg_course_run_id'];
-                                 $html="<a class='create_course_run' href='".$link."'>Update Course Run</a>";
+                                 $html="<a class='$cls' href='".$link."'>Update Course Run</a>";
                             }
                             echo $html;
                             ?>
@@ -412,7 +417,28 @@ echo form_close();
     font-weight: normal;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     }   
-    
+    .disabled_btn{
+    text-align: center;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #e7eaeb ), color-stop(1, #e7eaeb ));
+    background: -moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: -webkit-linear-gradient(top, #e7eaeb 5%, #e7eaeb 100%);
+    background: -o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: -ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: linear-gradient(to bottom, #e7eaeb 5%, #e3e3e3 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
+    background-color: #c1c4c6;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #d1d4d6;
+    display: inline-block;
+    color: #515151;
+    padding: 1px 0px;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: normal;
+    }
 
 </style>
 <!-- END Confirmation Dialog - ENTUTO -->
