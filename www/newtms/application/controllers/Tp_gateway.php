@@ -922,6 +922,7 @@ class tp_gateway extends CI_Controller {
         $data['ClassTrainer'] = $this->tpgModel->get_trainer_details($class->classroom_trainer);
         $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
         $data['booked_seats'] = $this->classModel->get_class_booked($course_id,$class_id,$tenant_id);
+        $data['courserun_id']= $this->input->get('courserun_id');
         $data['page_title'] = 'TPG UPDATE COURSE RUN';
         $data['main_content'] = 'tp_gateway/update_courserun';
         $this->load->view('layout', $data);
@@ -963,6 +964,7 @@ class tp_gateway extends CI_Controller {
        $trainer_email= $this->input->post('trainer_email');
        $course_id= $this->input->post('course_id');
        $class_id= $this->input->post('class_id');
+        $class_id= $this->input->post('class_id');
         $tenant_id = $this->tenant_id;
        $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
         $tpg_course_run_json='{
@@ -971,7 +973,7 @@ class tp_gateway extends CI_Controller {
                       "trainingProvider": {
                         "uen": "201000372W"
                       },
-                      "runs": [
+                      "run": [
                         {
                           "action": "update",
                           "sequenceNumber": 0,
@@ -1013,6 +1015,7 @@ class tp_gateway extends CI_Controller {
                           },
                           "sessions": [
                             {
+                              "action": "update",
                               "startDate": "'.$crse_start_date.'",
                               "endDate": "'.$crse_end_date.'",
                               "startTime": "'.$sess_start_time.'",
@@ -1070,7 +1073,7 @@ class tp_gateway extends CI_Controller {
        
         //print_r(json_encode($tpg_course_run_json));exit;
         $api_version = 'v1.3';
-        $url = "https://uat-api.ssg-wsg.sg/courses/runs";
+        $url = "https://uat-api.ssg-wsg.sg/courses/runs/";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
         //print_r($response);exit;
         $obj=json_decode($response);

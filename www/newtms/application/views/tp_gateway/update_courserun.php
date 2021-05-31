@@ -432,7 +432,7 @@
     <tbody>
         <input type="hidden" name="course_id" value="<?php echo $class->course_id ?? $this->input->post('course_id'); ?>">
         <input type="hidden" name="class_id" value="<?php echo $class->class_id ?? $this->input->post('class_id'); ?>">
-            
+         <input type="hidden" name="courserun_id" value="<?php echo $courserun_id ?? $this->input->post('courserun_id'); ?>">   
         <tr>
             <td colspan='4' class='text-center'><button type='submit' id='crse_run_btn'>Verify & Proceed</button></td>
         </tr>

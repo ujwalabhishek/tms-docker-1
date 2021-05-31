@@ -220,7 +220,7 @@
     <tbody>
         <input type="hidden" name="course_id" value="<?php echo $dat[course_id];?>">
         <input type="hidden" name="class_id" value="<?php echo $dat[class_id]; ?>">
-            
+         <input type="hidden" name="courserun_id" value="<?php echo $dat[courserun_id]; ?>">   
         <tr>
             <td colspan='4' class='text-center'><button type='submit' id='crse_run_btn'>Submit Data To TPG</button></td>
         </tr>
