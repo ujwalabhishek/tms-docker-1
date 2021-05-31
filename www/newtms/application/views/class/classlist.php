@@ -392,6 +392,7 @@ echo form_close();
     .create_course_run:hover{
       background: #97979f;
       color: white;   
+      box-shadow: unset;
     }
     .create_course_run{
         text-align: center;
