@@ -139,25 +139,40 @@
         </tbody>
     </table>
     
-    <h2 class="sub_panel_heading_style">SESSION</h2>
+     <h2 class="sub_panel_heading_style">SESSIONS</h2>
     
     <table class="table table-striped">
         <tbody>
+            <?php 
+            $ss = 1;
+            foreach($sessions as $session){
+
+               if($session['session_type_id'] != 'BRK'){
+            ?>
+            <tr><td style='background: #a4dfc4;'><i><b>Session-(<?php echo $ss.')'.$session['session_type_id'];?><b><i></td></tr>
             <tr width="20%">                        
-                <td class="td_heading" width="25%">Session Start Date:<span class="required">*</span></td>
-                <td width='25%'><label class="label_font"><?php echo $dat[crse_start_date]; ?></label></td>
-                <td class="td_heading" width='25%'>Session End Date:<span class="required">*</span></td>
-                <td width='25%'><label class="label_font"></label><?php echo $dat[crse_end_date]; ?></td>
+                <td class="td_heading" width="20%">Session Start Date:<span class="required">*</span></td>
+                <td><label class="label_font"><?php echo date('Ymd', strtotime($session['class_date'])) ?? $this->input->post('sess_start_time'); ?></label></td>
+                <td class="td_heading">Session End Date:<span class="required">*</span></td>
+                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($session['class_date'])) ?? $this->input->post('sess_end_time'); ?></td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Session Start Time:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $dat[sess_start_time]; ?></label></td>
+                <td><label class="label_font"><?php echo date('h:i A', strtotime($session['session_start_time'])) ?? $this->input->post('sess_start_time'); ?></label></td>
                 <td class="td_heading">Session End Time:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo $dat[sess_end_time]; ?></td>
-                <input type="hidden" name="sess_start_time" value="<?php echo $dat[sess_start_time]; ?>" id="sess_start_time">
-                <input type="hidden" name="sess_end_time" value="<?php echo $dat[sess_end_time]; ?>" id="sess_end_time">
+                <td><label class="label_font"></label><?php echo date('h:i A', strtotime($session['session_end_time'])) ?? $this->input->post('sess_end_time'); ?></td>
+                
+                <input type="hidden" name="sess_start_time[]" value="<?php echo date('h:i', strtotime($session['session_start_time'])) ?? $this->input->post('sess_start_time'); ?>" id="sess_start_time">
+                <input type="hidden" name="sess_end_time[]" value="<?php echo date('h:i', strtotime($session['session_end_time'])) ?? $this->input->post('sess_end_time'); ?>" id="sess_end_time">
+                <input type="hidden" name="sess_start_date[]" value="<?php echo date('Ymd', strtotime($session['class_date'])) ?? $this->input->post('sess_start_date'); ?>" id="sess_start_date">
+                <input type="hidden" name="sess_end_date[]" value="<?php echo date('Ymd', strtotime($session['class_date'])) ?? $this->input->post('sess_end_date'); ?>" id="sess_end_date">
             </tr>
+            <tr><td><br></td></tr>
+            <?php 
+               }
+               $ss++;
+            } ?>
 
             <tr>                        
                 <td class="td_heading">Session Venue Floor:<span class="required">*</span></td>
@@ -176,13 +191,14 @@
     </table>
 
     
-    <h2 class="sub_panel_heading_style">TRAINER</h2>
+    <h2 class="sub_panel_heading_style">TRAINERS</h2>
     <?php 
     $sl = 0;
     foreach($dat[trainer_name] as $trainer){
     ?>
     <table class="table table-striped">
         <tbody>
+            <tr><td style='background: #a4dfc4;'><i><b>Trainer-<?php echo $sl+1;?><b><i></td></tr>
             <tr>                        
                 <td class="td_heading" width="25%">Trainer Name:<span class="required">*</span></td>
                 <td width='25%'><label class="label_font"><?php echo $trainer ?></label> <span id="trainer_name_err"></span></td>
@@ -207,7 +223,7 @@
                 <td class="td_heading">Trainer ID:<span class="required">*</span></td>
                 <td><label class="label_font"></label>1</td>
             </tr>
-             
+             <tr><td><br></td></tr>
         </tbody>
     </table>
     
