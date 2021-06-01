@@ -744,20 +744,20 @@ class tp_gateway extends CI_Controller {
            if($session[session_type_id] != 'BRK'){
                $dates = date('Ymd', strtotime($session['class_date']));
                $session_arr[] = array(
-                "startDate" => "'.$dates.'",
-                "endDate" => "'.$dates.'",
-                "startTime" => "'.$session[session_start_time].'",
-                "endTime" => "'.$session[session_end_time].'",
-                "modeOfTraining" => "'.$modeoftraining.'",
+                "startDate" => "$dates",
+                "endDate" => "$dates",
+                "startTime" => "$session[session_start_time]",
+                "endTime" => "$session[session_end_time]",
+                "modeOfTraining" => "$modeoftraining",
                 "venue" => array
                     (
-                        "block" => "'.$venue_block.'",
-                        "street" => "'.$venue_street.'",
-                        "floor" => "'.$venue_floor.'",
-                        "unit" => "'.$venue_unit.'",
+                        "block" => "$venue_block",
+                        "street" => "$venue_street",
+                        "floor" => "$venue_floor",
+                        "unit" => "$venue_unit",
                         "building" => "",
-                        "postalCode" => "'.$venue_postalcode.'",
-                        "room" => "'.$venue_room.'",
+                        "postalCode" => "$venue_postalcode",
+                        "room" => "$venue_room",
                         "wheelChairAccess" => true,
                         "primaryVenue" => true,
                     ),
