@@ -641,7 +641,7 @@ class tp_gateway extends CI_Controller {
         $data['tenant'] = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $data['coursedetails'] = $this->coursemodel->get_course_detailse($course_id);
         $data['class'] = $class = $this->classModel->get_class_details_assmnts($tenant_id, $class_id);
-        $data['sessions'] = $class = $this->classModel->get_all_class_schedule($tenant_id, $class_id);
+        $data['sessions'] = $class = $this->tpgModel->get_all_class_schedule($tenant_id, $class_id);
         $data['ClassTrainer'] = $this->tpgModel->get_trainer_details($class->classroom_trainer);
         $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
         $data['booked_seats'] = $this->classModel->get_class_booked($course_id,$class_id,$tenant_id);
@@ -738,7 +738,7 @@ class tp_gateway extends CI_Controller {
        $class_id= $this->input->post('class_id');
         $tenant_id = $this->tenant_id;
        $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
-       $sessions = $class = $this->classModel->get_all_class_schedule($tenant_id, $class_id);
+       $sessions = $class = $this->tpgModel->get_all_class_schedule($tenant_id, $class_id);
        foreach($sessions as $session){
            if($session->session_type_id != 'BRK'){
                

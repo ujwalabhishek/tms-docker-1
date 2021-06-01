@@ -291,7 +291,7 @@
         </tbody>
     </table>
     
-    <h2 class="sub_panel_heading_style">SESSION</h2>
+    <h2 class="sub_panel_heading_style">SESSIONS</h2>
     
     <table class="table table-striped">
         <tbody>
@@ -300,6 +300,7 @@
 
                if($session['session_type_id'] != 'BRK'){
             ?>
+            <tr><td><?php echo 'Session-'.$session['session_type_id'];?></td></tr>
             <tr width="20%">                        
                 <td class="td_heading" width="20%">Session Start Date:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo date('Ymd', strtotime($session['class_date'])) ?? $this->input->post('sess_start_time'); ?></label></td>
@@ -318,6 +319,7 @@
                 <input type="hidden" name="sess_start_date" value="<?php echo date('Ymd', strtotime($session['class_date'])) ?? $this->input->post('sess_start_date'); ?>" id="sess_start_date">
                 <input type="hidden" name="sess_end_date" value="<?php echo date('Ymd', strtotime($session['class_date'])) ?? $this->input->post('sess_end_date'); ?>" id="sess_end_date">
             </tr>
+            <tr><td><br></td></tr>
             <?php 
                }
             } ?>

@@ -49,5 +49,12 @@ class Tpg_api_Model extends CI_Model {
         }
         return true;
     }
+    
+    public function get_all_class_schedule($tenant_id, $cid) {
+        $result = $this->db->query("select class_date, session_type_id, session_start_time,session_end_time
+                from class_schld where tenant_id='$tenant_id' and class_id='$cid'
+                order by class_date ASC, session_start_time ASC");
+        return $result->result_array();
+    }
 
 }
