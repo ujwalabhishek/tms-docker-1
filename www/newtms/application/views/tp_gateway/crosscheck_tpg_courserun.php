@@ -144,11 +144,12 @@
     <table class="table table-striped">
         <tbody>
             <?php 
+            $ss = 1;
             foreach($sessions as $session){
 
                if($session['session_type_id'] != 'BRK'){
             ?>
-            <tr><td style='background: #a4dfc4;'><i><b><?php echo 'Session-'.$session['session_type_id'];?><b><i></td></tr>
+            <tr><td style='background: #a4dfc4;'><i><b>Session-(<?php echo $ss.')'.$session['session_type_id'];?><b><i></td></tr>
             <tr width="20%">                        
                 <td class="td_heading" width="20%">Session Start Date:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo date('Ymd', strtotime($session['class_date'])) ?? $this->input->post('sess_start_time'); ?></label></td>
@@ -170,6 +171,7 @@
             <tr><td><br></td></tr>
             <?php 
                }
+               $ss++;
             } ?>
 
             <tr>                        

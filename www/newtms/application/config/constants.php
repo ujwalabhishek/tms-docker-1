@@ -154,3 +154,6 @@ define('GOOGLE_CAPTCHA_SITEKEY', "6Le7puAUAAAAAPUPDMn2d98Zf6ABHAB1fen1Te-R");
 define('GOOGLE_CAPTCHA_SECRETKEY', "6Le7puAUAAAAAISg1yqxoXAur7FxGj5u9a-OSd66"); 
 /////added by shubhranshu for NSA courses mail send to anther mail id for FRCS
 define('FRCSMAILID', "nsadivya@mailinator.com"); 
+////added by shubhranshu for TPG Gateway Environment variable
+//define('TPG_ENVIRONMENT', "PRODUCTION"); 
+define('TPG_ENVIRONMENT', "DEVELOPEMENT"); 

@@ -766,12 +766,20 @@ class tp_gateway extends CI_Controller {
           }
        }
        
+       if(TPG_ENVIRONMENT == 'PRODUCTION'){
+           $crse_ref_no = $crse_ref_no;
+           $tp_uen  = $tp_uen;
+       }else{
+          $crse_ref_no =  'TGS-2020002096';
+          $tp_uen = '201000372W';
+       }
+       
        
         $tpg_course_run_json='{
                     "course": {
-                      "courseReferenceNumber": "TGS-2020002096",
+                      "courseReferenceNumber": "'.$crse_ref_no.'",
                       "trainingProvider": {
-                        "uen": "201000372W"
+                        "uen": "'.$tp_uen.'"
                       },
                       "runs": [
                         {
