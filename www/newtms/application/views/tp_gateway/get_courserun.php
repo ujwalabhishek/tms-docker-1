@@ -297,7 +297,7 @@
         <tbody>
             <?php 
             foreach($sessions as $session){
-                echo $session->session_type_id;exit;
+                echo $session['session_type_id'];exit;
                if($session->session_type_id != 'BRK'){
             ?>
             <tr width="20%">                        
