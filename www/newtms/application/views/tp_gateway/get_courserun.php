@@ -347,6 +347,7 @@
     ?>
     <table class="table table-striped">
         <tbody>
+             <tr><td style='background: #a4dfc4;'><i><b><?php echo 'Trainer-'.$sl+1;?><b><i></td></tr>
             <tr>                        
                 <td class="td_heading" width="20%">Trainer Name:<span class="required">*</span></td>
                 <td width='40%'>
@@ -425,6 +426,7 @@
                     <div style='color:grey'>The unique Trainer id for existing trainer. For new trainer, leave it blank.</div>
                 </td>
             </tr>
+            <tr><td><br></td></tr>
              
         </tbody>
     </table>
