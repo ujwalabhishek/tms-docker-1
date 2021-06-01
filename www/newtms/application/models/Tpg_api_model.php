@@ -9,6 +9,7 @@ class Tpg_api_Model extends CI_Model {
     {        
         $tenantId = $this->session->userdata('userDetails')->tenant_id;
         $tids = explode(',', $trainer_id);
+        print_r($tids);exit;
         if (!empty($tids)) 
         {
             $this->load->model('course_model', 'course');
