@@ -304,7 +304,7 @@
                 <td class="td_heading" width="20%">Session Start Date:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo date('Ymd', strtotime($session['class_date'])) ?? $this->input->post('sess_start_time'); ?></label></td>
                 <td class="td_heading">Session End Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($session->class_date)) ?? $this->input->post('sess_end_time'); ?></td>
+                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($session['class_date'])) ?? $this->input->post('sess_end_time'); ?></td>
             </tr>
 
             <tr>                        
