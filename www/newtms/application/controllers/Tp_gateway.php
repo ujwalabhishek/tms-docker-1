@@ -695,7 +695,9 @@ class tp_gateway extends CI_Controller {
             
             
         }else{
-            redirect('tp_gateway/get_courserun');
+            $class_id=$this->input->post('class_id');
+            $course_id=$this->input->post('course_id');
+            redirect('tp_gateway/get_courserun/'.$class_id.'/'.$course_id);
         }
         
     }
@@ -729,8 +731,6 @@ class tp_gateway extends CI_Controller {
        $crse_intake_size= $this->input->post('crse_intake_size');
        $crse_vacancy_code= $this->input->post('crse_vacancy_code');
        $crse_vacancy_description= $this->input->post('crse_vacancy_description');
-       $sess_start_time= $this->input->post('sess_start_time');
-       $sess_end_time= $this->input->post('sess_end_time');
        $trainer_name= $this->input->post('trainer_name');
        $trainer_id= $this->input->post('trainer_id');
        $trainer_email= $this->input->post('trainer_email');
