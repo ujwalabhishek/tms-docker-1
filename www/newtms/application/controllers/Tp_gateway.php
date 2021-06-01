@@ -641,6 +641,7 @@ class tp_gateway extends CI_Controller {
         $data['tenant'] = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $data['coursedetails'] = $this->coursemodel->get_course_detailse($course_id);
         $data['class'] = $class = $this->classModel->get_class_details_assmnts($tenant_id, $class_id);
+        $data['sessions'] = $class = $this->classModel->get_all_class_schedule($tenant_id, $class_id);
         $data['ClassTrainer'] = $this->tpgModel->get_trainer_details($class->classroom_trainer);
         $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
         $data['booked_seats'] = $this->classModel->get_class_booked($course_id,$class_id,$tenant_id);
@@ -737,6 +738,34 @@ class tp_gateway extends CI_Controller {
        $class_id= $this->input->post('class_id');
         $tenant_id = $this->tenant_id;
        $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
+       $sessions = $class = $this->classModel->get_all_class_schedule($tenant_id, $class_id);
+       foreach($sessions as $session){
+           if($session->session_type_id != 'BRK'){
+               
+               $session_arr[] = array(
+                "startDate" => "'.$session->class_date.'",
+                "endDate" => "'.$session->class_date.'",
+                "startTime" => "'.$session->session_start_time.'",
+                "endTime" => "'.$session->session_end_time.'",
+                "modeOfTraining" => "'.$modeoftraining.'",
+                "venue" => array
+                    (
+                        "block" => "'.$venue_block.'",
+                        "street" => "'.$venue_street.'",
+                        "floor" => "'.$venue_floor.'",
+                        "unit" => "'.$venue_unit.'",
+                        "building" => "",
+                        "postalCode" => "'.$venue_postalcode.'",
+                        "room" => "'.$venue_room.'",
+                        "wheelChairAccess" => true,
+                        "primaryVenue" => true,
+                    ),
+
+            );
+          }
+       }
+       
+       
         $tpg_course_run_json='{
                     "course": {
                       "courseReferenceNumber": "TGS-2020002096",
@@ -783,24 +812,7 @@ class tp_gateway extends CI_Controller {
                             "content": ""
                           },
                           "sessions": [
-                            {
-                              "startDate": "'.$crse_start_date.'",
-                              "endDate": "'.$crse_end_date.'",
-                              "startTime": "'.$sess_start_time.'",
-                              "modeOfTraining": "'.$modeoftraining.'",
-                              "endTime": "'.$sess_end_time.'",
-                              "venue": {
-                                "block": "'.$venue_block.'",
-                                "street": "'.$venue_street.'",
-                                "floor": "'.$venue_floor.'",
-                                "unit": "'.$venue_unit.'",
-                                "building": "",
-                                "postalCode": "'.$venue_postalcode.'",
-                                "room": "'.$venue_room.'",
-                                "wheelChairAccess": true,
-                                "primaryVenue": true
-                              }
-                            }
+                            '.json_encode($session_arr).'
                           ],
                           "linkCourseRunTrainer": [
                             {
@@ -839,7 +851,7 @@ class tp_gateway extends CI_Controller {
                   }';
        
        
-        //print_r(json_decode($tpg_course_run_json));exit;
+        print_r($tpg_course_run_json);exit;
         $api_version = 'v1.3';
         $url = "https://uat-api.ssg-wsg.sg/courses/runs";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);

@@ -295,22 +295,31 @@
     
     <table class="table table-striped">
         <tbody>
+            <?php 
+            foreach($sessions as $session){
+                
+               if($session->session_type_id != 'BRK'){
+            ?>
             <tr width="20%">                        
                 <td class="td_heading" width="20%">Session Start Date:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo date('Ymd', strtotime($class->class_start_datetime)) ?? $this->input->post('crse_start_date'); ?></label></td>
+                <td><label class="label_font"><?php echo date('Ymd', strtotime($session->class_date)) ?? $this->input->post('sess_start_time'); ?></label></td>
                 <td class="td_heading">Session End Date:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($class->class_end_datetime)) ?? $this->input->post('crse_end_date'); ?></td>
+                <td><label class="label_font"></label><?php echo date('Ymd', strtotime($session->class_date)) ?? $this->input->post('sess_end_time'); ?></td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Session Start Time:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo date('h:i A', strtotime($class->class_start_datetime)) ?? $this->input->post('sess_start_time'); ?></label></td>
+                <td><label class="label_font"><?php echo date('h:i A', strtotime($session->session_start_time)) ?? $this->input->post('sess_start_time'); ?></label></td>
                 <td class="td_heading">Session End Time:<span class="required">*</span></td>
-                <td><label class="label_font"></label><?php echo date('h:i A', strtotime($class->class_end_datetime)) ?? $this->input->post('sess_end_time'); ?></td>
-                <input type="hidden" name="sess_start_time" value="<?php echo date('h:i', strtotime($class->class_start_datetime)) ?? $this->input->post('sess_start_time'); ?>" id="sess_start_time">
-                <input type="hidden" name="sess_end_time" value="<?php echo date('h:i', strtotime($class->class_end_datetime)) ?? $this->input->post('sess_end_time'); ?>" id="sess_end_time">
+                <td><label class="label_font"></label><?php echo date('h:i A', strtotime($session->session_end_time)) ?? $this->input->post('sess_end_time'); ?></td>
+                <input type="hidden" name="sess_start_time" value="<?php echo date('h:i', strtotime($class->session_start_time)) ?? $this->input->post('sess_start_time'); ?>" id="sess_start_time">
+                <input type="hidden" name="sess_end_time" value="<?php echo date('h:i', strtotime($class->session_end_time)) ?? $this->input->post('sess_end_time'); ?>" id="sess_end_time">
+                 <input type="hidden" name="sess_start_date" value="<?php echo date('Ymd', strtotime($class->session_start_time)) ?? $this->input->post('sess_start_date'); ?>" id="sess_start_date">
+                <input type="hidden" name="sess_end_date" value="<?php echo date('Ymd', strtotime($class->session_end_time)) ?? $this->input->post('sess_end_date'); ?>" id="sess_end_date">
             </tr>
-
+            <?php 
+               }
+            } ?>
             <tr>                        
                 <td class="td_heading">Session Venue Floor:<span class="required">*</span></td>
                 <td><label class="svenue_floor"></label><?php echo $this->input->post('venue_floor');?></td>
