@@ -347,7 +347,7 @@
     ?>
     <table class="table table-striped">
         <tbody>
-             
+             <tr><td style='background: #a4dfc4;'><i><b>Trainer-<?php echo $sl+1;?><b><i></td></tr>
             <tr>                        
                 <td class="td_heading" width="20%">Trainer Name:<span class="required">*</span></td>
                 <td width='40%'>

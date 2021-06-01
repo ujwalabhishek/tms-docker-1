@@ -742,10 +742,10 @@ class tp_gateway extends CI_Controller {
        $sessions = $this->tpgModel->get_all_class_schedule($tenant_id, $class_id);
        foreach($sessions as $session){
            if($session[session_type_id] != 'BRK'){
-               
+               $dates = date('Ymd', strtotime($session['class_date']));
                $session_arr[] = array(
-                "startDate" => "'.$session[class_date].'",
-                "endDate" => "'.$session[class_date].'",
+                "startDate" => "'.$dates.'",
+                "endDate" => "'.$dates.'",
                 "startTime" => "'.$session[session_start_time].'",
                 "endTime" => "'.$session[session_end_time].'",
                 "modeOfTraining" => "'.$modeoftraining.'",
