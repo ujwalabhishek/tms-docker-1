@@ -139,7 +139,7 @@
         </tbody>
     </table>
     
-    <h2 class="sub_panel_heading_style">SESSION</h2>
+    <h2 class="sub_panel_heading_style">SESSIONS</h2>
     
     <table class="table table-striped">
         <tbody>
@@ -189,13 +189,14 @@
     </table>
 
     
-    <h2 class="sub_panel_heading_style">TRAINER</h2>
+    <h2 class="sub_panel_heading_style">TRAINERS</h2>
     <?php 
     $sl = 0;
     foreach($dat[trainer_name] as $trainer){
     ?>
     <table class="table table-striped">
         <tbody>
+            <tr><td style='background: #a4dfc4;'><i><b><?php echo 'Trainer-'.$sl+1;?><b><i></td></tr>
             <tr>                        
                 <td class="td_heading" width="25%">Trainer Name:<span class="required">*</span></td>
                 <td width='25%'><label class="label_font"><?php echo $trainer ?></label> <span id="trainer_name_err"></span></td>
@@ -220,7 +221,7 @@
                 <td class="td_heading">Trainer ID:<span class="required">*</span></td>
                 <td><label class="label_font"></label>1</td>
             </tr>
-             
+             <tr><td><br></td></tr>
         </tbody>
     </table>
     
