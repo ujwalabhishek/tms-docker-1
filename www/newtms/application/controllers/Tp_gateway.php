@@ -934,6 +934,7 @@ class tp_gateway extends CI_Controller {
         $data['tenant'] = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $data['coursedetails'] = $this->coursemodel->get_course_detailse($course_id);
         $data['class'] = $class = $this->classModel->get_class_details_assmnts($tenant_id, $class_id);
+        $data['sessions'] = $this->tpgModel->get_all_class_schedule($tenant_id, $class_id);
         $data['ClassTrainer'] = $this->tpgModel->get_trainer_details($class->classroom_trainer);
         $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
         $data['booked_seats'] = $this->classModel->get_class_booked($course_id,$class_id,$tenant_id);
@@ -944,8 +945,10 @@ class tp_gateway extends CI_Controller {
     }
     
     public function update_tpg_courserun(){
+         $tenant_id = $this->tenant_id;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['dat']=$this->session->flashdata('dat');
+        $data['sessions'] = $this->tpgModel->get_all_class_schedule($tenant_id, $data['dat'][class_id]);
         $data['page_title'] = 'TPG VERIFY COURSE RUN DETAILS';
         $data['main_content'] = 'tp_gateway/update_tpg_courserun';
         $this->load->view('layout', $data);
@@ -979,10 +982,44 @@ class tp_gateway extends CI_Controller {
        $trainer_email= $this->input->post('trainer_email');
        $course_id= $this->input->post('course_id');
        $class_id= $this->input->post('class_id');
-       $class_id= $this->input->post('class_id');
        $courserun_id= $this->input->post('courserun_id');
        $tenant_id = $this->tenant_id;
        $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
+       $sessions = $this->tpgModel->get_all_class_schedule($tenant_id, $class_id);
+       foreach($sessions as $session){
+           if($session[session_type_id] != 'BRK'){
+               $dates = date('Ymd', strtotime($session['class_date']));
+               $session_arr[] = array(
+                "startDate" => "$dates",
+                "endDate" => "$dates",
+                "startTime" => "$session[session_start_time]",
+                "endTime" => "$session[session_end_time]",
+                "modeOfTraining" => "$modeoftraining",
+                "venue" => array
+                    (
+                        "block" => "$venue_block",
+                        "street" => "$venue_street",
+                        "floor" => "$venue_floor",
+                        "unit" => "$venue_unit",
+                        "building" => "",
+                        "postalCode" => "$venue_postalcode",
+                        "room" => "$venue_room",
+                        "wheelChairAccess" => true,
+                        "primaryVenue" => true,
+                    ),
+
+            );
+          }
+       }
+       
+       if(TPG_ENVIRONMENT == 'PRODUCTION'){
+           $crse_ref_no = $crse_ref_no;
+           $tp_uen  = $tp_uen;
+       }else{
+          $crse_ref_no =  'TGS-2020002096';
+          $tp_uen = '201000372W';
+       }
+       
         $tpg_course_run_json='{
                             "course": {
                               "courseReferenceNumber": "TGS-2020002096",
