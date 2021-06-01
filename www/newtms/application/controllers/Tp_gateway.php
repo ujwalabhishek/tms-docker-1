@@ -739,9 +739,9 @@ class tp_gateway extends CI_Controller {
        $class_id= $this->input->post('class_id');
         $tenant_id = $this->tenant_id;
        $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
-       $sessions = $class = $this->tpgModel->get_all_class_schedule($tenant_id, $class_id);
+       $sessions = $this->tpgModel->get_all_class_schedule($tenant_id, $class_id);
        foreach($sessions as $session){
-           if($session->session_type_id != 'BRK'){
+           if($session[session_type_id] != 'BRK'){
                
                $session_arr[] = array(
                 "startDate" => "'.$session[class_date].'",
