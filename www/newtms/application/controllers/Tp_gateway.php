@@ -694,16 +694,18 @@ class tp_gateway extends CI_Controller {
             
             
         }else{
-            $class_id=$this->input->post('class_id');
-            $course_id=$this->input->post('course_id');
+            $class_id = $this->input->post('class_id');
+            $course_id = $this->input->post('course_id');
             redirect('tp_gateway/get_courserun/'.$class_id.'/'.$course_id);
         }
         
     }
     
     public function crosscheck_tpg_courserun(){
+        $tenant_id = $this->tenant_id;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['dat']=$this->session->flashdata('dat');
+        $data['sessions'] = $this->tpgModel->get_all_class_schedule($tenant_id, $data['dat'][class_id]);
         $data['page_title'] = 'TPG VERIFY COURSE RUN DETAILS';
         $data['main_content'] = 'tp_gateway/crosscheck_tpg_courserun';
         $this->load->view('layout', $data);
