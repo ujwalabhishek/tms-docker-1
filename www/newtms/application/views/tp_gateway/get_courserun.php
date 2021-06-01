@@ -300,7 +300,7 @@
 
                if($session['session_type_id'] != 'BRK'){
             ?>
-            <tr><td><?php echo 'Session-'.$session['session_type_id'];?></td></tr>
+            <tr><td style='background: #a4dfc4;'><i><b><?php echo 'Session-'.$session['session_type_id'];?><b><i></td></tr>
             <tr width="20%">                        
                 <td class="td_heading" width="20%">Session Start Date:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo date('Ymd', strtotime($session['class_date'])) ?? $this->input->post('sess_start_time'); ?></label></td>
