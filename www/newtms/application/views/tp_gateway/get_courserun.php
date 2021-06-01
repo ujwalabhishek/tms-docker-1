@@ -297,7 +297,7 @@
         <tbody>
             <?php 
             foreach($sessions as $session){
-                
+                echo $session->session_type_id;exit;
                if($session->session_type_id != 'BRK'){
             ?>
             <tr width="20%">                        
@@ -312,9 +312,10 @@
                 <td><label class="label_font"><?php echo date('h:i A', strtotime($session->session_start_time)) ?? $this->input->post('sess_start_time'); ?></label></td>
                 <td class="td_heading">Session End Time:<span class="required">*</span></td>
                 <td><label class="label_font"></label><?php echo date('h:i A', strtotime($session->session_end_time)) ?? $this->input->post('sess_end_time'); ?></td>
+                
                 <input type="hidden" name="sess_start_time" value="<?php echo date('h:i', strtotime($session->session_start_time)) ?? $this->input->post('sess_start_time'); ?>" id="sess_start_time">
                 <input type="hidden" name="sess_end_time" value="<?php echo date('h:i', strtotime($session->session_end_time)) ?? $this->input->post('sess_end_time'); ?>" id="sess_end_time">
-                 <input type="hidden" name="sess_start_date" value="<?php echo date('Ymd', strtotime($session->session_start_time)) ?? $this->input->post('sess_start_date'); ?>" id="sess_start_date">
+                <input type="hidden" name="sess_start_date" value="<?php echo date('Ymd', strtotime($session->session_start_time)) ?? $this->input->post('sess_start_date'); ?>" id="sess_start_date">
                 <input type="hidden" name="sess_end_date" value="<?php echo date('Ymd', strtotime($session->session_end_time)) ?? $this->input->post('sess_end_date'); ?>" id="sess_end_date">
             </tr>
             <?php 
