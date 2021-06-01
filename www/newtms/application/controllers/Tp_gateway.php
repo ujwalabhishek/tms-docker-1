@@ -744,10 +744,10 @@ class tp_gateway extends CI_Controller {
            if($session->session_type_id != 'BRK'){
                
                $session_arr[] = array(
-                "startDate" => "'.$session->class_date.'",
-                "endDate" => "'.$session->class_date.'",
-                "startTime" => "'.$session->session_start_time.'",
-                "endTime" => "'.$session->session_end_time.'",
+                "startDate" => "'.$session[class_date].'",
+                "endDate" => "'.$session[class_date].'",
+                "startTime" => "'.$session[session_start_time].'",
+                "endTime" => "'.$session[session_end_time].'",
                 "modeOfTraining" => "'.$modeoftraining.'",
                 "venue" => array
                     (
