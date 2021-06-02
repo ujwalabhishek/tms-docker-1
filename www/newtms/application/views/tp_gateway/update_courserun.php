@@ -330,19 +330,7 @@
                }
                $ss++;
             } ?>
-            <tr>                        
-                <td class="td_heading">Session Venue Floor:<span class="required">*</span></td>
-                <td><label class="svenue_floor"></label><?php echo $this->input->post('venue_floor');?></td>
-                <td class="td_heading">Session Venue Unit:<span class="required">*</span></td>
-                <td><label class="svenue_unit"></label><?php echo $this->input->post('venue_unit');?></td>
-            </tr>
-
-            <tr>                        
-                <td class="td_heading">Session Venue Postal Code:<span class="required">*</span></td>
-                <td><label class="svenue_postalcode"></label><?php echo $this->input->post('venue_postalcode');?></td>
-                <td class="td_heading">Session Venue Room:<span class="required">*</span></td>
-                <td><label class="svenue_room"></label><?php echo $this->input->post('venue_room');?></td>
-            </tr>
+            
         </tbody>
     </table>
 
@@ -477,19 +465,7 @@
 </div>
 <script>
     $(document).ready(function() {
-       $('#venue_floor').keyup(function(){
-           $('.svenue_floor').html($('#venue_floor').val());
-       });
-        $('#venue_unit').keyup(function(){
-           $('.svenue_unit').html($('#venue_unit').val());
-       });
-        $('#venue_postalcode').keyup(function(){
-           $('.svenue_postalcode').html($('#venue_postalcode').val());
-       });
-        $('#venue_room').keyup(function(){
-           $('.svenue_room').html($('#venue_room').val());
-       });
-       
+      
       
         
         $('#courserun_form').on('submit',function() {

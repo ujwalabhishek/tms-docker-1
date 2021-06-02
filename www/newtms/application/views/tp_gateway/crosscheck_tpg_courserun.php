@@ -179,19 +179,7 @@
                $ss++;
             } ?>
 
-            <tr>                        
-                <td class="td_heading">Session Venue Floor:<span class="required">*</span></td>
-                <td><label class="svenue_floor"></label><?php echo $dat[venue_floor];?></td>
-                <td class="td_heading">Session Venue Unit:<span class="required">*</span></td>
-                <td><label class="svenue_unit"></label><?php echo $dat[venue_unit];?></td>
-            </tr>
-
-            <tr>                        
-                <td class="td_heading">Session Venue Postal Code:<span class="required">*</span></td>
-                <td><label class="svenue_postalcode"></label><?php echo $dat[venue_postalcode];?></td>
-                <td class="td_heading">Session Venue Room:<span class="required">*</span></td>
-                <td><label class="svenue_room"></label><?php echo $dat[venue_room];?></td>
-            </tr>
+            
         </tbody>
     </table>
 

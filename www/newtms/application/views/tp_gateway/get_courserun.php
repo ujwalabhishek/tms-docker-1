@@ -343,30 +343,30 @@
                $ss++;
             } ?>
             
-             <tr>                        
+<!--             <tr>                        
                 <td class="td_heading">Session Venue Building:<span class="required">*</span></td>
-                <td><label class="svenue_building"></label><?php echo $this->input->post('venue_building');?></td>
+                <td><label class="svenue_building"></label><?php //echo $this->input->post('venue_building');?></td>
                
             </tr>
              <tr>                        
                 <td class="td_heading">Session Venue Block:<span class="required">*</span></td>
-                <td><label class="svenue_block"></label><?php echo $this->input->post('venue_block');?></td>
+                <td><label class="svenue_block"></label><?php //echo $this->input->post('venue_block');?></td>
                 <td class="td_heading">Session Venue Street:<span class="required">*</span></td>
-                <td><label class="svenue_street"></label><?php echo $this->input->post('venue_street');?></td>
+                <td><label class="svenue_street"></label><?php //echo $this->input->post('venue_street');?></td>
             </tr>
             <tr>                        
                 <td class="td_heading">Session Venue Floor:<span class="required">*</span></td>
-                <td><label class="svenue_floor"></label><?php echo $this->input->post('venue_floor');?></td>
+                <td><label class="svenue_floor"></label><?php //echo $this->input->post('venue_floor');?></td>
                 <td class="td_heading">Session Venue Unit:<span class="required">*</span></td>
-                <td><label class="svenue_unit"></label><?php echo $this->input->post('venue_unit');?></td>
+                <td><label class="svenue_unit"></label><?php //echo $this->input->post('venue_unit');?></td>
             </tr>
 
             <tr>                        
                 <td class="td_heading">Session Venue Postal Code:<span class="required">*</span></td>
-                <td><label class="svenue_postalcode"></label><?php echo $this->input->post('venue_postalcode');?></td>
+                <td><label class="svenue_postalcode"></label><?php //echo $this->input->post('venue_postalcode');?></td>
                 <td class="td_heading">Session Venue Room:<span class="required">*</span></td>
-                <td><label class="svenue_room"></label><?php echo $this->input->post('venue_room');?></td>
-            </tr>
+                <td><label class="svenue_room"></label><?php //echo $this->input->post('venue_room');?></td>
+            </tr>-->
         </tbody>
     </table>
 
@@ -501,27 +501,7 @@
 </div>
 <script>
     $(document).ready(function() {
-       $('#venue_floor').keyup(function(){
-           $('.svenue_floor').html($('#venue_floor').val());
-       });
-        $('#venue_unit').keyup(function(){
-           $('.svenue_unit').html($('#venue_unit').val());
-       });
-        $('#venue_postalcode').keyup(function(){
-           $('.svenue_postalcode').html($('#venue_postalcode').val());
-       });
-        $('#venue_room').keyup(function(){
-           $('.svenue_room').html($('#venue_room').val());
-       });
-       $('#venue_block').keyup(function(){
-           $('.venue_block').html($('#venue_block').val());
-       });
-       $('#venue_street').keyup(function(){
-           $('.venue_street').html($('#venue_street').val());
-       });
-       $('#venue_building').keyup(function(){
-           $('.venue_building').html($('#venue_building').val());
-       });
+       
        
       
         
