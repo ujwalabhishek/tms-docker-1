@@ -662,6 +662,7 @@ class tp_gateway extends CI_Controller {
         $this->form_validation->set_rules('crse_end_date', 'Course End Date', 'required|max_length[30]|numeric');
         $this->form_validation->set_rules('venue_block', 'Venue Block', 'required|max_length[30]|alpha_numeric_spaces');
         $this->form_validation->set_rules('venue_street', 'Venue Street', 'required|max_length[30]|alpha_numeric_spaces');
+         $this->form_validation->set_rules('venue_building', 'Venue Building', 'required|max_length[30]|alpha_numeric_spaces');
         $this->form_validation->set_rules('venue_floor', 'Venue Floor', 'required|max_length[30]|numeric');
         $this->form_validation->set_rules('venue_unit', 'Venue Unit', 'required|max_length[30]|alpha_numeric_spaces');
         $this->form_validation->set_rules('venue_postalcode', 'Venue Postal Code', 'required|max_length[30]|numeric');
@@ -723,6 +724,7 @@ class tp_gateway extends CI_Controller {
        $schedule_info_code= $this->input->post('schedule_info_code');
        $schedule_info_des= $this->input->post('schedule_info_des');
        $schedule_info= $this->input->post('schedule_info');
+       $venue_building= $this->input->post('venue_building');
        $venue_block= $this->input->post('venue_block');
        $venue_street= $this->input->post('venue_street');
        $venue_floor= $this->input->post('venue_floor');
@@ -755,7 +757,7 @@ class tp_gateway extends CI_Controller {
                         "street" => "$venue_street",
                         "floor" => "$venue_floor",
                         "unit" => "$venue_unit",
-                        "building" => "",
+                        "building" => "$venue_building",
                         "postalCode" => "$venue_postalcode",
                         "room" => "$venue_room",
                         "wheelChairAccess" => true,
@@ -810,7 +812,7 @@ class tp_gateway extends CI_Controller {
                           },
                           "intakeSize": '.$crse_intake_size.',
                           "courseAdminEmail": "'.$crs_admin_email.'",
-                          "threshold": 10,
+                          "threshold": 0,
                           "registeredUserCount": '.$booked_seats.',
                           "courseVacancy": {
                             "code": "'.$crse_vacancy_code.'",
@@ -896,6 +898,8 @@ class tp_gateway extends CI_Controller {
         $data['support'] = $response->data->course->support;
         $data['run'] = $response->data->course->run;
         $data['course_title'] = $response->data->course->title;
+        $data['refno'] = $response->data->course->referenceNumber;
+        $data['exrefno'] = $response->data->course->externalReferenceNumber;
         $data['page_title'] = 'Course Run Status';
         $data['main_content'] = 'tp_gateway/courserun_status';
         $this->load->view('layout', $data);
@@ -966,6 +970,7 @@ class tp_gateway extends CI_Controller {
        $schedule_info_code= $this->input->post('schedule_info_code');
        $schedule_info_des= $this->input->post('schedule_info_des');
        $schedule_info= $this->input->post('schedule_info');
+        $venue_building= $this->input->post('venue_building');
        $venue_block= $this->input->post('venue_block');
        $venue_street= $this->input->post('venue_street');
        $venue_floor= $this->input->post('venue_floor');
@@ -986,10 +991,21 @@ class tp_gateway extends CI_Controller {
        $tenant_id = $this->tenant_id;
        $booked_seats = $this->classModel->get_class_booked($course_id, $class_id,$tenant_id);
        $sessions = $this->tpgModel->get_all_class_schedule($tenant_id, $class_id);
+       if(TPG_ENVIRONMENT == 'PRODUCTION'){
+           $crse_ref_no = $crse_ref_no;
+           $tp_uen  = $tp_uen;
+       }else{
+          $crse_ref_no =  'TGS-2020002096';
+          $tp_uen = '201000372W';
+       }
+       
+       $count=1;
        foreach($sessions as $session){
            if($session[session_type_id] != 'BRK'){
                $dates = date('Ymd', strtotime($session['class_date']));
                $session_arr[] = array(
+                "action" => "update",
+                "sessionId" => "$crse_ref_no.'-'.$courserun_id.'-S'.$count",
                 "startDate" => "$dates",
                 "endDate" => "$dates",
                 "startTime" => "$session[session_start_time]",
@@ -1001,7 +1017,7 @@ class tp_gateway extends CI_Controller {
                         "street" => "$venue_street",
                         "floor" => "$venue_floor",
                         "unit" => "$venue_unit",
-                        "building" => "",
+                        "building" => "$venue_building",
                         "postalCode" => "$venue_postalcode",
                         "room" => "$venue_room",
                         "wheelChairAccess" => true,
@@ -1009,22 +1025,16 @@ class tp_gateway extends CI_Controller {
                     ),
 
             );
-          }
+          }$count++;
        }
        
-       if(TPG_ENVIRONMENT == 'PRODUCTION'){
-           $crse_ref_no = $crse_ref_no;
-           $tp_uen  = $tp_uen;
-       }else{
-          $crse_ref_no =  'TGS-2020002096';
-          $tp_uen = '201000372W';
-       }
+       
        
         $tpg_course_run_json='{
                             "course": {
-                              "courseReferenceNumber": "TGS-2020002096",
+                              "courseReferenceNumber": "'.$crse_ref_no.'",
                               "trainingProvider": {
-                                "uen": "201000372W"
+                                "uen": "'.$tp_uen.'"
                               },
                               "run": {
                                 "action": "update",
@@ -1053,7 +1063,7 @@ class tp_gateway extends CI_Controller {
                                   "wheelChairAccess": true
                                 },
                                 "intakeSize": '.$crse_intake_size.',
-                                "threshold": 10,
+                                "threshold": 0,
                                 "registeredUserCount": '.$booked_seats.',
                                 "modeOfTraining": "'.$modeoftraining.'",
                                 "courseAdminEmail": "'.$crs_admin_email.'",

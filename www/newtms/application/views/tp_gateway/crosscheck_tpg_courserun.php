@@ -88,6 +88,11 @@
             </tr>
 
             <tr>                        
+                <td class="td_heading"> Venue Building:<span class="required">*</span></td>
+                <td colspan='3'><label class="label_font"><?php echo $dat[venue_building]; ?></label></td>
+                <input type="hidden" name="venue_building" value="<?php echo $dat[venue_building];?>">
+            </tr>
+            <tr>                        
                 <td class="td_heading"> Venue Block:<span class="required">*</span></td>
                 <td><label class="label_font"><?php echo $dat[venue_block]; ?></label></td>
                 <input type="hidden" name="venue_block" value="<?php echo $dat[venue_block];?>">

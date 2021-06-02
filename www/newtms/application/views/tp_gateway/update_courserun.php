@@ -122,7 +122,24 @@
                 <td class="td_heading">Classroom Venue(TMS):</td>
                 <td colspan='3'><?php echo rtrim($ClassLoc, ', '); ?></td>
             </tr>
-            
+            <tr>                        
+                <td class="td_heading"> Venue Building:<span class="required">*</span></td>
+                <td colspan='3'>
+                    <label class="label_font">
+                        <?php
+                        $venue_building = array(
+                            'name' => 'venue_building',
+                            'id' => 'venue_building',
+                            'value' => $this->input->post('venue_building')??'HONG LIM COMPLEX',
+                            'maxlength' => 50,
+                            "class" => "upper_case"
+                        );
+                        echo form_input($venue_building);
+                        ?>
+                    </label>
+                    <span id="venue_building_err"></span>
+                </td>
+             </tr>
             <tr>                        
                 <td class="td_heading"> Venue Block:<span class="required">*</span></td>
                 <td>
@@ -552,7 +569,13 @@
         } else {
             $("#crse_end_date_err").text("").removeClass('error');
         }
-        
+        $venue_building=$('#venue_building').val();
+        if ($venue_building == null || $venue_building == '') {
+            $("#venue_building_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_building_err").text("").removeClass('error');
+        }
         $venue_floor=$('#venue_floor').val();
         if ($venue_floor == null || $venue_floor == '') {
             $("#venue_floor_err").text("[required]").addClass('error');

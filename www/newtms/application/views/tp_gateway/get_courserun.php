@@ -134,7 +134,24 @@
                 <td class="td_heading">Classroom Venue(TMS):</td>
                 <td colspan='3'><?php echo rtrim($ClassLoc, ', '); ?></td>
             </tr>
-            
+             <tr>                        
+                <td class="td_heading"> Venue Building:<span class="required">*</span></td>
+                <td colspan='3'>
+                    <label class="label_font">
+                        <?php
+                        $venue_building = array(
+                            'name' => 'venue_building',
+                            'id' => 'venue_building',
+                            'value' => $this->input->post('venue_building')??'HONG LIM COMPLEX',
+                            'maxlength' => 50,
+                            "class" => "upper_case"
+                        );
+                        echo form_input($venue_building);
+                        ?>
+                    </label>
+                    <span id="venue_building_err"></span>
+                </td>
+             </tr>
             <tr>                        
                 <td class="td_heading"> Venue Block:<span class="required">*</span></td>
                 <td>
@@ -325,6 +342,18 @@
                }
                $ss++;
             } ?>
+            
+             <tr>                        
+                <td class="td_heading">Session Venue Building:<span class="required">*</span></td>
+                <td><label class="svenue_building"></label><?php echo $this->input->post('venue_building');?></td>
+               
+            </tr>
+             <tr>                        
+                <td class="td_heading">Session Venue Block:<span class="required">*</span></td>
+                <td><label class="svenue_block"></label><?php echo $this->input->post('venue_block');?></td>
+                <td class="td_heading">Session Venue Street:<span class="required">*</span></td>
+                <td><label class="svenue_street"></label><?php echo $this->input->post('venue_street');?></td>
+            </tr>
             <tr>                        
                 <td class="td_heading">Session Venue Floor:<span class="required">*</span></td>
                 <td><label class="svenue_floor"></label><?php echo $this->input->post('venue_floor');?></td>
@@ -484,6 +513,15 @@
         $('#venue_room').keyup(function(){
            $('.svenue_room').html($('#venue_room').val());
        });
+       $('#venue_block').keyup(function(){
+           $('.venue_block').html($('#venue_block').val());
+       });
+       $('#venue_street').keyup(function(){
+           $('.venue_street').html($('#venue_street').val());
+       });
+       $('#venue_building').keyup(function(){
+           $('.venue_building').html($('#venue_building').val());
+       });
        
       
         
@@ -571,6 +609,13 @@
             retVal = false;
         } else {
             $("#venue_floor_err").text("").removeClass('error');
+        }
+        $venue_building=$('#venue_building').val();
+        if ($venue_building == null || $venue_building == '') {
+            $("#venue_building_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_building_err").text("").removeClass('error');
         }
         $venue_unit=$('#venue_unit').val();
         if ($venue_unit == null || $venue_unit == '') {

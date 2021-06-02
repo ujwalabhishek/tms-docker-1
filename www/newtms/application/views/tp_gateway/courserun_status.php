@@ -13,8 +13,8 @@
     <table class="table table-striped">
         <tbody>
             <tr>
-                <td class="td_heading" width="20%">Course Reference Number:<span class="required">*</span></td>
-                <td><label class="label_font"><?php echo $run->referenceNumber; ?></label>
+                <td class="td_heading" width="20%">Reference Number:<span class="required">*</span></td>
+                <td><label class="label_font"><?php echo $refno; ?></label>
                    
                 </td>
             </tr>
@@ -22,6 +22,12 @@
                 <td class="td_heading">Course Title:<span class="required">*</span></td>
                 <td>
                     <label class="label_font"></label><?php echo $course_title; ?>
+                </td>
+            </tr>
+            <tr>
+                <td class="td_heading">External Reference Number:<span class="required">*</span></td>
+                <td>
+                    <label class="label_font"></label><?php echo $exrefno; ?>
                 </td>
             </tr>
         </tbody>
@@ -47,6 +53,12 @@
                     <div style='color:grey'>indicate whether the attendance taken is done for the course run</div>
                 </td>
             </tr>
+            
+             <tr>
+                <td width="20%" class="td_heading">QR-Code Link:<span class="required">*</span></td>
+                <td colspan='3'><label class="label_font"><?php echo $run->qrCodeLink;?></label>
+            </tr>
+            
 
         </tbody>
     </table>
