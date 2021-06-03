@@ -422,6 +422,8 @@ echo form_close();
     text-transform: none;
     letter-spacing: normal;
     font-weight: normal;
+    font-size: 11px;
+    margin:1px;
     /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
     }   
     .disabled_btn{
