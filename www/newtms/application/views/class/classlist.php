@@ -312,7 +312,7 @@ $CI->load->model('class_model');
                                 $link= base_url() .'tp_gateway/update_courserun/' . $data['class_id'].'/'.$data['course_id'].'/'.$data['tpg_course_run_id'];
                                 $link1= base_url() .'tp_gateway/delete_courserun/' . $data['class_id'].'/'.$data['course_id'].'/'.$data['tpg_course_run_id'];
                                  $html="<a class='$cls' href='".$link."'>Update Course Run</a>";
-                                 $html.="<div><a class='$cls' href='".$link."'>Delete Course Run</a></div>";
+                                 $html.="<div><a class='$cls' href='".$link1."'>Delete Course Run</a></div>";
                             }
                             echo $html;
                             ?>
