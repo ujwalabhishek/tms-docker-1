@@ -448,6 +448,8 @@ echo form_close();
     letter-spacing: normal;
     font-weight: normal;
     pointer-events: none;
+    font-size: 11px;
+    margin:1px;
     }
 
 </style>

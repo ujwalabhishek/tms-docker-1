@@ -1169,7 +1169,9 @@ class tp_gateway extends CI_Controller {
         $this->load->view('layout', $data);
     }
     
-    
+    public function delete_courserun($class_id,$course_id,$courserunid){
+        
+    }
     
     
     
