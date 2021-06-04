@@ -267,7 +267,7 @@ $(document).ready(function() {
                 text = text.slice(0,-2);                
                 $('#control_3').children('span').text(text);
                 $('#control_3').attr('title',text);   
-                $('#crs_admin_email').val(res.crs_admin_email);     
+                $('#crs_admin_email').val(res.crse_admin_email);     
             }
         });
     });
