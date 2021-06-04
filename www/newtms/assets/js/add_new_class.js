@@ -268,7 +268,7 @@ $(document).ready(function() {
                 $('#control_3').children('span').text(text);
                 $('#control_3').attr('title',text);   
                 $('#crs_admin_email').val(res.crse_admin_email);  
-                $('#crse_ref_no').val(res.reference_num); 
+                $('#crse_ref_no').val(res.crse_ref_no); 
             }
         });
     });
