@@ -245,7 +245,8 @@ echo form_open("classes/add_new_class", $atr);
                                 'id' => 'crs_admin_email',
                                 'value' => $this->input->post('crs_admin_email'),
                                 'maxlength' => 50,
-                                "class" => "upper_case"
+                                "class" => "upper_case",
+                                "readonly" => "readonly"
                             );
                             echo form_input($crs_admin_email);
                             ?>
