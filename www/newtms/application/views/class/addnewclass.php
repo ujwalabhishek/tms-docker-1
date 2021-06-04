@@ -219,25 +219,25 @@ echo form_open("classes/add_new_class", $atr);
                     </tr>
                    
                     <tr>
-                        <td class="td_heading">TPGateway Course Run ID:</td>
+<!--                        <td class="td_heading">TPGateway Course Run ID:</td>
                         <td colspan="2">
                             <?php
-                            $tpg_course_run_id = array(
-                                'name' => 'tpg_course_run_id',
-                                'id' => 'tpg_course_run_id',
-                                'value' => $this->input->post('tpg_course_run_id'),
-                                'maxlength' => 60,
-                                'width' => '300px',
-                                "class" => 'upper_case'
-                            );
-                            echo form_input($tpg_course_run_id);
+//                            $tpg_course_run_id = array(
+//                                'name' => 'tpg_course_run_id',
+//                                'id' => 'tpg_course_run_id',
+//                                'value' => $this->input->post('tpg_course_run_id'),
+//                                'maxlength' => 60,
+//                                'width' => '300px',
+//                                "class" => 'upper_case'
+//                            );
+//                            echo form_input($tpg_course_run_id);
                             ?>
                             </span>
                             <br>
                             <span id="tpg_crse_err" class="tpg_crse_err"></span>
-                        </td>
+                        </td>-->
                         <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
-                        <td>
+                        <td> <label class="label_font"></label>
                         <label class="label_font">
                             <?php
                             $crs_admin_email = array(
@@ -252,8 +252,10 @@ echo form_open("classes/add_new_class", $atr);
                         </label>
                         <span id="crs_admin_email_err"></span>
                         </td>
-                    <td colspan="2"> <label class="label_font"></label>
-                    <div style='color:grey'>Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'</td></div>
+                        <td colspan='4'>
+                        <div style='color:grey'>Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'
+                        </div>
+                        </td>
                     </tr>
                    
                     <tr>
