@@ -121,7 +121,7 @@ echo form_open("classes/add_new_class", $atr);
                         </td>
                     </tr>
                     <tr>
-                        <td class="td_heading">Total Seats:<span class="required">*</span></td>
+                        <td class="td_heading">Course Intake Size:<span class="required">*</span></td>
                         <td><?php
                             $total_seats = array(
                                 'name' => 'total_seats',
@@ -217,10 +217,10 @@ echo form_open("classes/add_new_class", $atr);
                             ?>
                             &nbsp;</td>
                     </tr>
-                    <?php if(TENANT_ID=='T02' || TENANT_ID=='T24'){ ?>
+                   
                     <tr>
                         <td class="td_heading">TPGateway Course Run ID:</td>
-                        <td colspan="5">
+                        <td colspan="2">
                             <?php
                             $tpg_course_run_id = array(
                                 'name' => 'tpg_course_run_id',
@@ -236,8 +236,26 @@ echo form_open("classes/add_new_class", $atr);
                             <br>
                             <span id="tpg_crse_err" class="tpg_crse_err"></span>
                         </td>
+                        <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
+                        <td>
+                        <label class="label_font">
+                            <?php
+                            $crs_admin_email = array(
+                                'name' => 'crs_admin_email',
+                                'id' => 'crs_admin_email',
+                                'value' => $this->input->post('crs_admin_email'),
+                                'maxlength' => 50,
+                                "class" => "upper_case"
+                            );
+                            echo form_input($crs_admin_email);
+                            ?>
+                        </label>
+                        <span id="crs_admin_email_err"></span>
+                        </td>
+                    <td colspan="2"> <label class="label_font"></label>
+                    <div style='color:grey'>Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'</td></div>
                     </tr>
-                    <?php } ?>
+                   
                     <tr>
                         <td colspan="2" class="td_heading">  
                             <?php
@@ -361,6 +379,127 @@ echo form_open("classes/add_new_class", $atr);
                             <span id="lab_venue_err" class="lab_venue_oth_err"></span>
                         </td>
                     </tr>
+                    <tr>                        
+                        <td class="td_heading"> Venue Building:<span class="required">*</span></td>
+                        <td colspan='5'>
+                            <label class="label_font">
+                                <?php
+                                $venue_building = array(
+                                    'name' => 'venue_building',
+                                    'id' => 'venue_building',
+                                    'value' => $this->input->post('venue_building'),
+                                    'maxlength' => 50,
+                                    "class" => "upper_case"
+                                );
+                                echo form_input($venue_building);
+                                ?>
+                            </label>
+                            <span id="venue_building_err"></span>
+                        </td>
+                    </tr>
+                
+                <tr>  
+                    <td class="td_heading"> Venue Block:<span class="required">*</span></td>
+                    <td>
+                        <label class="label_font">
+                            <?php
+                            $venue_block = array(
+                                'name' => 'venue_block',
+                                'id' => 'venue_block',
+                                'value' => $this->input->post('venue_block'),
+                                'maxlength' => 50,
+                                "class" => "upper_case"
+                            );
+                            echo form_input($venue_block);
+                            ?>
+                        </label>
+                        <span id="venue_block_err"></span>
+                    </td>
+                    <td class="td_heading">Venue Street:<span class="required">*</span></td>
+                    <td>
+                        <label class="label_font">
+                        <?php
+                        $venue_street = array(
+                            'name' => 'venue_street',
+                            'id' => 'venue_street',
+                            'value' => $this->input->post('venue_street'),
+                            'maxlength' => 50,
+                            "class" => "upper_case"
+                        );
+                        echo form_input($venue_street);
+                        ?>
+                        </label>
+                         <span id="venue_street_err"></span>
+                    </td>
+                    <td class="td_heading"> Venue Floor:<span class="required">*</span></td>
+                    <td>
+                        <label class="label_font">
+                            <?php
+                            $venue_floor = array(
+                                'name' => 'venue_floor',
+                                'id' => 'venue_floor',
+                                'value' => $this->input->post('venue_floor'),
+                                'maxlength' => 50,
+                                "class" => "upper_case"
+                            );
+                            echo form_input($venue_floor);
+                            ?>
+                        </label>
+                        <span id="venue_floor_err"></span>
+                    </td>
+                    
+                </tr>
+
+                <tr>  
+                    <td class="td_heading">Venue Unit:<span class="required">*</span></td>
+                    <td>
+                        <label class="label_font">
+                        <?php
+                        $venue_unit = array(
+                            'name' => 'venue_unit',
+                            'id' => 'venue_unit',
+                            'value' => $this->input->post('venue_unit'),
+                            'maxlength' => 50,
+                            "class" => "upper_case"
+                        );
+                        echo form_input($venue_unit);
+                        ?>
+                        </label>
+                         <span id="venue_unit_err"></span>
+                    </td>
+                    <td class="td_heading">Venue Postal Code:<span class="required">*</span></td>
+                    <td>
+                        <label class="label_font">
+                        <?php
+                        $venue_postalcode = array(
+                            'name' => 'venue_postalcode',
+                            'id' => 'venue_postalcode',
+                            'value' => $this->input->post('venue_postalcode'),
+                            'maxlength' => 50,
+                            "class" => "upper_case"
+                        );
+                        echo form_input($venue_postalcode);
+                        ?>
+                        </label>
+                        <span id="venue_postalcode_err"></span>
+                    </td>
+                    <td class="td_heading">Venue Room:<span class="required">*</span></td>
+                    <td>
+                        <label class="label_font">
+                        <?php
+                        $venue_room = array(
+                            'name' => 'venue_room',
+                            'id' => 'venue_room',
+                            'value' => $this->input->post('venue_room'),
+                            'maxlength' => 50,
+                            "class" => "upper_case"
+                        );
+                        echo form_input($venue_room);
+                        ?>
+                        </label>
+                         <span id="venue_room_err"></span>
+                    </td>
+                </tr>
                     <tr>
                         <td class="td_heading">Class Room Trainer:<span class="required">*</span></td>
                         <td><?php

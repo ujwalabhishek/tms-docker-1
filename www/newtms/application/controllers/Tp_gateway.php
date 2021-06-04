@@ -662,7 +662,7 @@ class tp_gateway extends CI_Controller {
         $this->form_validation->set_rules('crse_end_date', 'Course End Date', 'required|max_length[30]|numeric');
         $this->form_validation->set_rules('venue_block', 'Venue Block', 'required|max_length[30]|alpha_numeric_spaces');
         $this->form_validation->set_rules('venue_street', 'Venue Street', 'required|max_length[30]|alpha_numeric_spaces');
-         $this->form_validation->set_rules('venue_building', 'Venue Building', 'required|max_length[30]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('venue_building', 'Venue Building', 'required|max_length[30]|alpha_numeric_spaces');
         $this->form_validation->set_rules('venue_floor', 'Venue Floor', 'required|max_length[30]|numeric');
         $this->form_validation->set_rules('venue_unit', 'Venue Unit', 'required|max_length[30]|alpha_numeric_spaces');
         $this->form_validation->set_rules('venue_postalcode', 'Venue Postal Code', 'required|max_length[30]|numeric');

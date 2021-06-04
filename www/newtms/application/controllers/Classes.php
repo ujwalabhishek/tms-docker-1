@@ -140,7 +140,17 @@ class Classes extends CI_Controller {
             $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
             $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
             $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'trim|numeric|required');///modified by shubhranshu for trainer validation
-            
+            $this->form_validation->set_rules('crs_admin_email', 'Course Admin Email', 'trim|required|valid_email|max_length[30]');
+            $this->form_validation->set_rules('venue_block', 'Venue Block', 'required|max_length[30]|alpha_numeric_spaces');
+            $this->form_validation->set_rules('venue_street', 'Venue Street', 'required|max_length[30]|alpha_numeric_spaces');
+            $this->form_validation->set_rules('venue_building', 'Venue Building', 'required|max_length[30]|alpha_numeric_spaces');
+            $this->form_validation->set_rules('venue_floor', 'Venue Floor', 'required|max_length[30]|numeric');
+            $this->form_validation->set_rules('venue_unit', 'Venue Unit', 'required|max_length[30]|alpha_numeric_spaces');
+            $this->form_validation->set_rules('venue_postalcode', 'Venue Postal Code', 'required|max_length[30]|numeric');
+        
+             
+             
+             
             if ($this->form_validation->run() == FALSE) {
                 $data['main_content'] = 'class/addnewclass';
                 //$data['sideMenuData'] = $this->sideMenu;
