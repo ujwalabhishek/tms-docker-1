@@ -607,6 +607,13 @@ function validate() {
     } else {
         remove_err('#languages');
     }
+    $modeoftraining = $('#modeoftraining').val();
+    if ($modeoftraining.length == 0) {
+        disp_err('#modeoftraining');
+        $retval = false;
+    } else {
+        remove_err('#modeoftraining');
+    }
     $cls_venue = $('#cls_venue').val();
     if ($cls_venue.length == 0) {
         disp_err('#cls_venue');

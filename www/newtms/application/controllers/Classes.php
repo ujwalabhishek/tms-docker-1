@@ -13,6 +13,7 @@ class Classes extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;
+        $this->load->model('class_trainee_model', 'classTraineeModel');
         $this->load->model('class_model', 'classmodel');
         $this->load->model('course_model', 'coursemodel');
         $this->load->model('tpg_api_model', 'tpgModel');
@@ -137,6 +138,7 @@ class Classes extends CI_Controller {
             $this->form_validation->set_rules('class_discount', 'Class Discount', 'numeric');
             $this->form_validation->set_rules('display_class', 'Check box', 'trim');
             $this->form_validation->set_rules('languages', 'Languages', 'required');
+            $this->form_validation->set_rules('modeoftraining', 'modeoftraining', 'required');
             $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
             $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
             $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
@@ -148,7 +150,7 @@ class Classes extends CI_Controller {
             $this->form_validation->set_rules('venue_floor', 'Venue Floor', 'required|max_length[30]|numeric');
             $this->form_validation->set_rules('venue_unit', 'Venue Unit', 'required|max_length[30]|alpha_numeric_spaces');
             $this->form_validation->set_rules('venue_postalcode', 'Venue Postal Code', 'required|max_length[30]|numeric');
-        
+            $this->form_validation->set_rules('crse_ref_no', 'Course Reference No', 'required');
              
              
              
@@ -166,8 +168,9 @@ class Classes extends CI_Controller {
                         $this->load->view('layout', $data); 
                         return;
                     }                                     
-                }  
-                $result = $this->tpgModel->create_courserun_tpg($tenantId, $userId);
+                }
+                $tenant = $this->classTraineeModel->get_tenant_masters($tenantId);
+                $result = $this->tpgModel->create_courserun_tpg($tenantId, $userId,$tenant->comp_reg_no);
                 $result = $this->classmodel->create_class($tenant_id, $user_id);
                 if ($result == TRUE) {
                     $this->session->set_flashdata("success", "Class created successfully.");
