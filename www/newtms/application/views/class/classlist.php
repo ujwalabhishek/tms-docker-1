@@ -210,17 +210,16 @@ $CI->load->model('class_model');
                                 <th width="15%" class="th_header text_move"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=class_end_datetime&o=" . $ancher; ?>" >End Date & Time</a></th>
                                 <th class="th_header text_move" colspan="2">Seats</th>
                                 <th width="10%" class="th_header text_move"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=classroom_trainer&o=" . $ancher; ?>" >Trainee Aide</a></th>
-                                <th width="6%" class="th_header text_move"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=classroom_trainer&o=" . $ancher; ?>" >Trainer</a></th>
-                                <th width="3%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=class_language&o=" . $ancher; ?>" >Language</a></th>
-                                <th width="5%" class="th_header">Status</th>
-                                <th width="14%" class="th_header">TPG Status</th>
+                                <th width="10%" class="th_header text_move"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=classroom_trainer&o=" . $ancher; ?>" >Trainer</a></th>
+                                <th width="9%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=class_language&o=" . $ancher; ?>" >Language</a></th>
+                                <th width="9%" class="th_header">Status</th>
                             </tr>
                             <tr>
                                 <th colspan="3">&nbsp;</th>
-                                <th width="" class="text_move">Booked</th>
-                                <th width="" class="text_move">Available</th>
+                                <th width="8%" class="text_move">Booked</th>
+                                <th width="11%" class="text_move">Available</th>
                                 <!--<th width="10%" class="text_move">Total</th>-->
-                                <th colspan="5">&nbsp;</th>
+                                <th colspan="4">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -297,39 +296,18 @@ $CI->load->model('class_model');
                             
                             <td><?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($data['class_language']), ', '); ?></td>
                             <td><?php echo $status_label; ?></td>
-                            <td>
-                            <?php
-                            if ($status == 'Yet to Start'){
-                                $cls ='create_course_run';
-                            }else{
-                                $cls ='disabled_btn';
-                            }
-                            if(empty($data['tpg_course_run_id'])){
-                                $link= base_url() .'tp_gateway/get_courserun/' . $data['class_id'].'/'.$data['course_id'];
-                                 $html="<a class='$cls' href='".$link."'>Create Course Run</a>";
-                                        
-                            }else{
-                                $link= base_url() .'tp_gateway/update_courserun/' . $data['class_id'].'/'.$data['course_id'].'/'.$data['tpg_course_run_id'];
-                                $link1= base_url() .'tp_gateway/delete_courserun/' . $data['class_id'].'/'.$data['course_id'].'/'.$data['tpg_course_run_id'];
-                                 $html="<a class='$cls' href='".$link."'>Update Course Run</a>";
-                                 $html.="<div><a class='$cls' href='".$link1."'>Delete Course Run</a></div>";
-                            }
-                            echo $html;
-                            ?>
-                            </td>
                             </tr>
-                          <?php
+                            <?php
                         }
-                        ?>   
-                        
+                        ?>
                         </tbody>
                         <?php
                         $note = '<span style="color:red">** Over Booking Allowed</span>';
-                        } else {
-                            $note = '';
-                            echo "<tr><td class='no-bor' colspan='10'>&nbsp;</td></tr><tr class='danger'><td colspan='10' class='error' style='text-align:center;'>There are no classes available for this course.</td></tr>";
-                        }
-                        ?>
+                    } else {
+                        $note = '';
+                        echo "<tr><td class='no-bor' colspan='10'>&nbsp;</td></tr><tr class='danger'><td colspan='10' class='error' style='text-align:center;'>There are no classes available for this course.</td></tr>";
+                    }
+                    ?>
 
                 </table>
             </div>
@@ -390,67 +368,5 @@ echo form_open("", $form_attributes);
 <?php
 echo form_close();
 ?>
-<style>
-    .create_course_run:hover{
-      background: #97979f;
-      color: white;   
-      box-shadow: unset;
-    }
-    .create_course_run{
-        text-align: center;
-    -moz-box-shadow: inset 0px 1px 0px 0px #54a3f7;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #54a3f7;
-    box-shadow: inset 0px 1px 0px 0px #54a3f7;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
-    background: -moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-    background: -webkit-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-    background: -o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-    background: -ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-    background: linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
-    background-color: #007dc1;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    border: 1px solid #124d77;
-    display: inline-block;
-    cursor: pointer;
-    color: #ffffff;
-        padding: 2px 1px;
-    text-decoration: none;
-    text-shadow: 0px 1px 0px #154682;
-    text-transform: none;
-    letter-spacing: normal;
-    font-weight: normal;
-    font-size: 11px;
-    margin:1px;
-    /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
-    }   
-    .disabled_btn{
-    text-align: center;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #e7eaeb ), color-stop(1, #e7eaeb ));
-    background: -moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-    background: -webkit-linear-gradient(top, #e7eaeb 5%, #e7eaeb 100%);
-    background: -o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-    background: -ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-    background: linear-gradient(to bottom, #e7eaeb 5%, #e3e3e3 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
-    background-color: #c1c4c6;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    border: 1px solid #d1d4d6;
-    display: inline-block;
-    color: #515151;
-        padding: 2px 1px;
-    text-decoration: none;
-    text-transform: none;
-    letter-spacing: normal;
-    font-weight: normal;
-    pointer-events: none;
-    font-size: 11px;
-    margin:1px;
-    }
 
-</style>
 <!-- END Confirmation Dialog - ENTUTO -->
