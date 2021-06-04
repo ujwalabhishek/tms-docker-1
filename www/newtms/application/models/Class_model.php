@@ -1567,12 +1567,11 @@ class Class_Model extends CI_Model {
         $control_4 = empty($control_4) ? NULL : $control_4;
         $classroom_venue_oth = empty($classroom_venue_oth) ? NULL : strtoupper($classroom_venue_oth);
         $lab_venue_oth = empty($lab_venue_oth) ? NULL : strtoupper($lab_venue_oth);     
-        if(TENANT_ID=='T02' || TENANT_ID=='T24'){
             $data = array(
             'tenant_id' => $tenantId,
             'course_id' => $class_course,
             'class_name' => strtoupper($class_name),
-            'tpg_course_run_id' => strtoupper($tpg_course_run_id),
+            //'tpg_course_run_id' => strtoupper($tpg_course_run_id),
             'class_start_datetime' => $start_date_timestamp,
             'class_end_datetime' => $end_date_timestamp,
             'total_seats' => $total_seats,
@@ -1605,47 +1604,7 @@ class Class_Model extends CI_Model {
             'last_modified_on' => date('Y-m-d H:i:s'),
             'classroom_venue_oth' => $classroom_venue_oth,
             'lab_venue_oth' => $lab_venue_oth
-            );
-        }else{
-            $data = array(
-            'tenant_id' => $tenantId,
-            'course_id' => $class_course,
-            'class_name' => strtoupper($class_name),
-            
-            'class_start_datetime' => $start_date_timestamp,
-            'class_end_datetime' => $end_date_timestamp,
-            'total_seats' => $total_seats,
-            'total_classroom_duration' => $cls_duration,
-            'total_lab_duration' => $lab_duration,
-            'assmnt_duration' => $class_assmnt_duration,
-            'class_fees' => $fees,
-            'class_discount' => $class_discount,
-            'certi_coll_date' => $coll_date,
-            'class_session_day' => $sessions_perday,
-            'class_pymnt_enrol' => $payment_details,
-            'classroom_location' => $cls_venue,
-            'lab_location' => $lab_venue,
-            'class_language' => $languages,
-            'description' => $description,
-            'display_class_public' => $display_class,
-            'min_reqd_students' => $minimum_students,
-            'min_reqd_noti_freq1' => $reminder1,
-            'min_reqd_noti_freq2' => $reminder2,
-            'min_reqd_noti_freq3' => $reminder3,
-            'classroom_trainer' => $control_5,
-            'lab_trainer' => $control_6,
-            'assessor' => $control_7,
-            'training_aide' => $control_3,
-            'sales_executive' => $control_4,
-            'class_status' => $class_status,
-            'created_by' => $userId,
-            'created_on' => date('Y-m-d H:i:s'),
-            'last_modified_by' => $userId,
-            'last_modified_on' => date('Y-m-d H:i:s'),
-            'classroom_venue_oth' => $classroom_venue_oth,
-            'lab_venue_oth' => $lab_venue_oth
-        );
-        }
+            );  
         
         $this->db->trans_start();
         $this->db->insert('course_class', $data);

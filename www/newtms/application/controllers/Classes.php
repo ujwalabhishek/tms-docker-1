@@ -153,7 +153,6 @@ class Classes extends CI_Controller {
              
             if ($this->form_validation->run() == FALSE) {
                 $data['main_content'] = 'class/addnewclass';
-                //$data['sideMenuData'] = $this->sideMenu;
                 $this->load->view('layout', $data);
             } else {
                 if($this->user->role_id != 'ADMN'){
@@ -161,7 +160,6 @@ class Classes extends CI_Controller {
                     $today_date = strtotime(date('Y-m-d'));                                            
                     if($start_date_timestamp < $today_date){                       
                         $data['main_content'] = 'class/addnewclass';
-                        //$data['sideMenuData'] = $this->sideMenu;
                         $data['tax_error'] = "You donot have permission to create class with start date lesser than today's date. Please get in touch with your Administratot to make this change.";
                         $data['tax_error_status'] = 1;
                         $this->load->view('layout', $data); 
@@ -178,7 +176,6 @@ class Classes extends CI_Controller {
             }
         } else {
             $data['main_content'] = 'class/addnewclass';
-            //$data['sideMenuData'] = $this->sideMenu;
             $this->load->view('layout', $data);
         }
     }
@@ -801,7 +798,8 @@ class Classes extends CI_Controller {
         }
         $course_details = $this->coursemodel->get_course_detailse($courseId);        
         $course_duration = $course_details->crse_duration;        
-        $course_manager = $course_details->crse_manager;       
+        $course_manager = $course_details->crse_manager;    
+        $all_data_arr['crse_admin_email'] = $course_details->crse_admin_email;  
         $all_data_arr['languages'] = $languages_arr;
         $all_data_arr['salesexec'] = $salesexec_arr;
         $all_data_arr['course_duration'] = $course_duration; 
