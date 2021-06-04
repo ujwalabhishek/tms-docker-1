@@ -15,6 +15,7 @@ class Classes extends CI_Controller {
         $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;
         $this->load->model('class_model', 'classmodel');
         $this->load->model('course_model', 'coursemodel');
+        $this->load->model('tpg_api_model', 'tpgModel');
         $this->load->model('meta_values');
         $this->user = $this->session->userdata('userDetails');
        
@@ -165,7 +166,8 @@ class Classes extends CI_Controller {
                         $this->load->view('layout', $data); 
                         return;
                     }                                     
-                }                
+                }  
+                $result = $this->tpgModel->create_courserun_tpg($tenantId, $userId);
                 $result = $this->classmodel->create_class($tenant_id, $user_id);
                 if ($result == TRUE) {
                     $this->session->set_flashdata("success", "Class created successfully.");
@@ -800,6 +802,7 @@ class Classes extends CI_Controller {
         $course_duration = $course_details->crse_duration;        
         $course_manager = $course_details->crse_manager;    
         $all_data_arr['crse_admin_email'] = $course_details->crse_admin_email;  
+        $all_data_arr['crse_ref_no'] = $course_details->reference_num; 
         $all_data_arr['languages'] = $languages_arr;
         $all_data_arr['salesexec'] = $salesexec_arr;
         $all_data_arr['course_duration'] = $course_duration; 

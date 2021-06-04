@@ -8,7 +8,7 @@
     $js_role = '<?php echo $role; ?>';   
     $js_tenant = '<?php echo TENANT_ID; ?>';  
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.001145"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.0011459"></script>
 <?php
 $this->load->helper('form');
 $this->load->helper('metavalues_helper');
@@ -237,7 +237,7 @@ echo form_open("classes/add_new_class", $atr);
                             <span id="tpg_crse_err" class="tpg_crse_err"></span>
                         </td>-->
                         <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
-                        <td> <label class="label_font"></label>
+                        <td colspan='2'> <label class="label_font"></label>
                         <label class="label_font">
                             <?php
                             $crs_admin_email = array(
@@ -253,9 +253,22 @@ echo form_open("classes/add_new_class", $atr);
                         </label>
                         <span id="crs_admin_email_err"></span>
                         </td>
-                        <td colspan='4'>
-                        <div style='color:grey'>Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'
-                        </div>
+                        <td class="td_heading" width="20%">Course Reference Number:<span class="required">*</span></td>
+                        <td colspan='2'> <label class="label_font"></label>
+                        <label class="label_font">
+                            <?php
+                            $crse_ref_no = array(
+                                'name' => 'crse_ref_no',
+                                'id' => 'crse_ref_no',
+                                'value' => $this->input->post('crse_ref_no'),
+                                'maxlength' => 50,
+                                "class" => "upper_case",
+                                "readonly" => "readonly"
+                            );
+                            echo form_input($crse_ref_no);
+                            ?>
+                        </label>
+                        <span id="crse_ref_no_err"></span>
                         </td>
                     </tr>
                    
