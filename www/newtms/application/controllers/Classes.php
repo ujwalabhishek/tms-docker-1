@@ -170,14 +170,41 @@ class Classes extends CI_Controller {
                     }                                     
                 }
                 $tenant = $this->classTraineeModel->get_tenant_masters($tenantId);
-                $result = $this->tpgModel->create_courserun_tpg($tenantId, $userId,$tenant->comp_reg_no);
-                $result = $this->classmodel->create_class($tenant_id, $user_id);
-                if ($result == TRUE) {
-                    $this->session->set_flashdata("success", "Class created successfully.");
-                } else {
-                    $this->session->set_flashdata("error", "Unable to create class. Please try again later.");
+                $tpg_response = $this->tpgModel->create_courserun_tpg($tenantId, $userId,$tenant->comp_reg_no);
+                if($tpg_response->status == 200){
+                    $result = $this->classmodel->create_class($tenant_id, $user_id);
+                    if($result['status'] == TRUE) {
+                        $tpg_course_run_id = $tpg_response->data->course->run->id;
+                        $st = $this->tpgModel->updateCourseRunId($result['classid'],$tpg_course_run_id);
+                        if($st == TRUE){
+                           $this->session->set_flashdata("success", "Class created successfully With Course Run ID: ".$tpg_course_run_id); 
+                        }else{
+                            $this->session->set_flashdata("success", "Class created successfully Without Course Run ID");
+                        }
+                        
+                        
+                    } else {
+                        $this->session->set_flashdata("error", "Unable to create class. Please try again later.");
+                    }
+                    redirect('classes?course_id=' . $this->input->post('class_course'));
+                }else{
+                    if($tpg_response->status == 400){
+                        $this->session->set_flashdata('error',"Oops! Bad request!");
+                    }elseif($tpg_response->status == 403){
+                        $this->session->set_flashdata('error',"Oops! Forbidden. Authorization information is missing or invalid.");
+                    }elseif($tpg_response->status == 404){
+                        $this->session->set_flashdata('error',"Oops! Not Found!");
+                    }elseif($tpg_response->status == 500){
+                        $this->session->set_flashdata('error',"Oops! Internal Error!!");
+                    }else{
+                        $this->session->set_flashdata('error',"Oops ! Something Went Wrong Contact System Administrator"); 
+                    }
+                    $data['error'] = $tpg_response->error->details;
+                    $data['main_content'] = 'class/addnewclass';
+                    $this->load->view('layout', $data);
                 }
-                redirect('classes?course_id=' . $this->input->post('class_course'));
+                
+                
             }
         } else {
             $data['main_content'] = 'class/addnewclass';
