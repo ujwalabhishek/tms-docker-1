@@ -209,12 +209,12 @@ class Tpg_api_Model extends CI_Model {
                           "sequenceNumber": 0,
                           "modeOfTraining": "'.$modeoftraining.'",
                           "registrationDates": {
-                            "opening": '.$reg_open_date.',
-                            "closing": '.$reg_close_date.' 
+                            "opening": "'.date("Ymd", strtotime($reg_open_date)).'",
+                            "closing": "'.date("Ymd", strtotime($reg_close_date)).'"
                           },
                           "courseDates": {
-                            "start": '.$crse_start_date.',
-                            "end": '.$crse_end_date.'
+                            "start": "'.date("Ymd", strtotime($crse_start_date)).'",
+                            "end": "'.date("Ymd", strtotime($crse_end_date)).'"
                           },
                           "scheduleInfoType": {
                             "code": "'.$schedule_info_code.'",
