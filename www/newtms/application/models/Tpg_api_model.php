@@ -13,6 +13,44 @@ class Tpg_api_Model extends CI_Model {
         $this->user = $this->session->userdata('userDetails');
     }
     
+    public function curl_request($mode,$url,$encrypted_data,$api_version){
+       // echo $encrypted_data;exit;
+        $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/key.pem";
+        //print_r($data);exit;
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => $mode,
+        CURLOPT_SSLCERT => $pemfile,
+        CURLOPT_SSLCERTTYPE => 'PEM', 
+        CURLOPT_SSLKEY => $keyfile, 
+        CURLOPT_POSTFIELDS => $encrypted_data, 
+        CURLOPT_HTTPHEADER => array(
+       "Authorization:  ",
+       "Cache-Control: no-cache",
+       "Content-Type: application/json",
+       "x-api-version: $api_version"
+        ),
+      ));
+        
+        $response = curl_exec($curl);
+         if($response === false){
+             print_r(curl_error($curl));exit;
+         }else{
+             //print_r(json_decode($response));exit;
+             return $response;
+         }
+        curl_close($curl);
+    }
+    
     public function correct_live_dev_api_data($crse_ref_no,$tp_uen){
         if(TPG_ENVIRONMENT == 'PRODUCTION'){
            $crse_ref_no = $crse_ref_no;
