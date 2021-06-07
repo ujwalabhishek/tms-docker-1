@@ -82,7 +82,7 @@ class Tpg_api_Model extends CI_Model {
                         JOIN internal_user_emp_detail iued on iued.user_id = pers.user_id AND iued.tenant_id = pers.tenant_id
                         WHERE pers.tenant_id = '$tenantId' 
                         AND rl.role_id='TRAINER' 
-                        AND rl.user_id in ('$ids)";                
+                        AND rl.user_id in ('$ids')";                
                 $query = $this->db->query($sql);
                 $data = $query->row(0);
                 echo $this->db->last_query();exit;
