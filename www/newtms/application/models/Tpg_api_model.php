@@ -283,7 +283,7 @@ class Tpg_api_Model extends CI_Model {
                   }';
        
        
-        //print_r($tpg_course_run_json);exit;
+        print_r($tpg_course_run_json);exit;
         $api_version = 'v1.3';
         $url = "https://".$retun[domain]."/courses/runs";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
@@ -292,12 +292,12 @@ class Tpg_api_Model extends CI_Model {
         //$obj = json_decode('{ "data": { "runs": [ { "id": 223389 } ] }, "error": {}, "meta": {}, "status": 200 }');
         $this->session->set_flashdata('resp',$obj);
         $this->session->set_flashdata('cid',$class_id);
-        if($obj->status == 200){
+        //if($obj->status == 200){
             //redirect('tp_gateway/courserun_status');
             return $obj;
-        }else{
-            redirect('tp_gateway/check_status');
-        }
+        ///}else{
+            //redirect('tp_gateway/check_status');
+        //}
         
     }
 
