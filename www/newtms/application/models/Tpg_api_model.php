@@ -134,7 +134,6 @@ class Tpg_api_Model extends CI_Model {
        $reg_close_date= $this->input->post('end_date');
        $crse_start_date= $this->input->post('start_date');
        $crse_end_date= $this->input->post('end_date');
-       $schedule_info_code= 01;//Course run schedule info code
        $schedule_info_des= 'Description';//Course run schedule info Description
        $schedule_info= date('dM', strtotime($reg_open_date)).' : '.date('D', strtotime($reg_open_date)).' / '.date('h:i A', strtotime($this->input->post('start_time'))).' - '.date('h:i A', strtotime($this->input->post('end_date')));
        $venue_building= $this->input->post('venue_building');
@@ -250,7 +249,7 @@ class Tpg_api_Model extends CI_Model {
                             "end": "'.date("Ymd", strtotime($crse_end_date)).'"
                           },
                           "scheduleInfoType": {
-                            "code": "'.$schedule_info_code.'",
+                            "code": "01",
                             "description": "'.$schedule_info_des.'"
                           },
                           "scheduleInfo": "'.$schedule_info.'",
