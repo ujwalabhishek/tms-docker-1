@@ -93,19 +93,24 @@ class Tpg_api_Model extends CI_Model {
         }
     
     public function updateCourseRunId($class_id,$crse_run_id){
-        $tenantId = $this->session->userdata('userDetails')->tenant_id;
-         $data = array(
-                    'tpg_course_run_id' => $crse_run_id
-                );
-        $this->db->trans_start();
-        $this->db->where('class_id', $class_id);
-        $this->db->where('tenant_id', $tenantId);
-        $this->db->update('course_class', $data);
-        $this->db->trans_complete();
-        if ($this->db->trans_status() === FALSE) {
+        if(!empty($crse_run_id)){
+            $tenantId = $this->session->userdata('userDetails')->tenant_id;
+            $data = array(
+                       'tpg_course_run_id' => $crse_run_id
+                   );
+           $this->db->trans_start();
+           $this->db->where('class_id', $class_id);
+           $this->db->where('tenant_id', $tenantId);
+           $this->db->update('course_class', $data);
+           $this->db->trans_complete();
+           if ($this->db->trans_status() === FALSE) {
+               return false;
+           }
+           return true;
+        }else{
             return false;
         }
-        return true;
+        
     }
     
     public function get_all_class_schedule($tenant_id, $cid) {

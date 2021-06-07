@@ -176,6 +176,7 @@ class Classes extends CI_Controller {
                     if($result['status'] == TRUE) {
                         $tpg_course_run_id = $tpg_response->data->course->run->id;
                         $st = $this->tpgModel->updateCourseRunId($result['classid'],$tpg_course_run_id);
+                        print_r($tpg_response);exit;
                         if($st == TRUE){
                            $this->session->set_flashdata("success", "Class created successfully With Course Run ID: ".$tpg_course_run_id); 
                         }else{
