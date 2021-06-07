@@ -89,8 +89,8 @@ class Tpg_api_Model extends CI_Model {
                         AND rl.role_id='TRAINER' 
                         AND rl.user_id='$tid' ";                
                 $query = $this->db->query($sql);
-
                 $data = $query->row(0);
+                echo $this->db->last_query();exit;
                 $trainer[] = $data;
 
                 
