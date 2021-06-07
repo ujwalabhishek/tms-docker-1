@@ -69,15 +69,12 @@ class Tpg_api_Model extends CI_Model {
         return $data;
     }
     
-    public function get_trainer_details($trainer_id) 
-    {     print_r($trainer_id);exit;   
+    public function get_trainer_details($trainer_ids) 
+    {    
         $tenantId = $this->session->userdata('userDetails')->tenant_id;
-        $tids = explode(',', $trainer_id);
-        if (!empty($tids)) 
-        {
-            
-            foreach ($tids as $tid) 
-            {                
+        $tids = explode(',', $trainer_ids);
+        $ids = join("','",$tids); 
+                    
                 $sql = "SELECT iued.off_email_id,pers.user_id,tu.registered_email_id, pers.first_name, pers.last_name, rl.role_id
                         FROM `tms_users_pers` pers
                         JOIN internal_user_role rl on rl.tenant_id = pers.tenant_id AND rl.user_id = pers.user_id
@@ -85,17 +82,15 @@ class Tpg_api_Model extends CI_Model {
                         JOIN internal_user_emp_detail iued on iued.user_id = pers.user_id AND iued.tenant_id = pers.tenant_id
                         WHERE pers.tenant_id = '$tenantId' 
                         AND rl.role_id='TRAINER' 
-                        AND rl.user_id='$tid";                
+                        AND rl.user_id in ('$ids)";                
                 $query = $this->db->query($sql);
                 $data = $query->row(0);
                 echo $this->db->last_query();exit;
                 $trainer[] = $data;
-
                 
-            }
             return $trainer;
+        
         }
-    }
     
     public function updateCourseRunId($class_id,$crse_run_id){
         $tenantId = $this->session->userdata('userDetails')->tenant_id;
