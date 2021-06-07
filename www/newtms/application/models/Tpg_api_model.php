@@ -85,7 +85,7 @@ class Tpg_api_Model extends CI_Model {
                         AND rl.user_id in ('$ids')";                
                 $query = $this->db->query($sql);
                 $data = $query->row(0);
-                echo $this->db->last_query();exit;
+                //echo $this->db->last_query();exit;
                 $trainer[] = $data;
                 
             return $trainer;
