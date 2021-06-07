@@ -17,19 +17,21 @@ if (!empty($tax_error)) {
     echo '<div class="error1">' . $tax_error . '</div>';
 }
  
-if(!empty($error)){
-    foreach($error as $err){
 
-    echo '<div class="alert alert-danger dang">
-        <strong>'.$err->field.'</strong>'.$err->message.'
-    </div>';
-    }
-}
 $atr = 'id="AddclassForm" name="AddclassForm"';
 echo form_open("classes/add_new_class", $atr);
 ?>  
 <div class="col-md-10">
-    <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
+    <?php echo validation_errors('<div class="error1">', '</div>'); 
+    if(!empty($error)){
+        foreach($error as $err){
+
+        echo '<div class="alert alert-danger dang">
+            <strong>'.$err->field.'</strong>'.$err->message.'
+        </div>';
+        }
+    }
+    ?> 
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class.png"> Class - Add New(Create Course Run)</h2>
     <div class="table-responsive">
         <table class="table table-striped">

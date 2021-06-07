@@ -75,15 +75,16 @@ class Tpg_api_Model extends CI_Model {
         $tids = explode(',', $trainer_id);
         if (!empty($tids)) 
         {
-            $this->load->model('course_model', 'course');
             
             foreach ($tids as $tid) 
             {                
-                $sql = "SELECT pers.user_id,tu.registered_email_id, pers.first_name, pers.last_name, rl.role_id 
-                        FROM `tms_users_pers` pers, internal_user_role rl, tms_users tu
+                $sql = "SELECT iued.off_email_id,pers.user_id,tu.registered_email_id, pers.first_name, pers.last_name, rl.role_id 
+                        FROM `tms_users_pers` pers, internal_user_role rl, tms_users tu, internal_user_emp_detail iued
                         WHERE pers.tenant_id = rl.tenant_id 
                         AND pers.user_id = rl.user_id 
                         AND tu.user_id = pers.user_id 
+                        AND iued.user_id = pers.user_id 
+                        AND iued.tenant_id = pers.user_id
                         AND pers.tenant_id = '$tenantId' 
                         AND rl.role_id='TRAINER' 
                         AND rl.user_id='$tid' ";                
@@ -193,8 +194,40 @@ class Tpg_api_Model extends CI_Model {
                }
              }
         }
+        
+        $ClassTrainers = $this->get_trainer_details($control_5);
+        
+        if (!empty($ClassTrainers)) {    
+            foreach ($ClassTrainers as $trainer) {
+                $trainers[] = array("trainer"=> array(
+                  "trainerType"=> array(
+                        "code"=> "2",
+                        "description"=> "New"
+                  ),
+                  "indexNumber"=> 0,
+                  "id"=> "",
+                  "name"=> "'.$trainer->first_name.' '.$trainer->last_name;.'",
+                  "email"=> "'.$trainer->off_email_id.'",
+                  "inTrainingProviderProfile"=> true,
+                  "domainAreaOfPractice"=> "Testing Management in Computer Application and Diploma in Computer Application",
+                  "experience"=> "Testing ABC",
+                  "linkedInURL"=> "https=>//sg.linkedin.com/company/linkedin/abc",
+                  "salutationId"=> 1,
+                  "photo"=> array(
+                        "name"=> "",
+                        "content"=> ""
+                  ),
+                  "linkedSsecEQAs"=> array(
+                          "description"=> "EQA test 4",
+                          "ssecEQA"=> array(
+                                "code"=> "12"
+                          ) 
+                        )
+                    )
+                );
+            }
        
-      
+       ///salutationId    = Available value - 1(Mr) 2(Ms) 3(Mdm) 4(Mrs) 5(Dr) 6(Prof).
        
        $retun = $this->correct_live_dev_api_data($crse_ref_no,$tp_uen);
        
@@ -246,37 +279,7 @@ class Tpg_api_Model extends CI_Model {
                           "sessions": 
                             '.json_encode($session_arr).'
                           ,
-                          "linkCourseRunTrainer": [
-                            {
-                              "trainer": {
-                                "indexNumber": 0,
-                                "id": "'.$tenant_id.'-TMS-'.$trainer_id.'-'.$course_id.'-'.$class_id.'",
-                                "name": "'.$trainer_name.'",
-                                "inTrainingProviderProfile": true,
-                                "domainAreaOfPractice": "Testing Management in Computer Application and Diploma in Computer Application",
-                                "experience": "Testing ABC",
-                                "linkedInURL": "https://sg.linkedin.com/company/linkedin/abc",
-                                "salutationId": 1,
-                                "photo": {
-                                  "name": "",
-                                  "content": ""
-                                },
-                                "email": "'.$trainer_email.'",
-                                "trainerType": {
-                                  "code": "2",
-                                  "description": "New"
-                                },
-                                "linkedSsecEQAs": [
-                                  {
-                                    "description": "EQA test 4",
-                                    "ssecEQA": {
-                                      "code": "12"
-                                    }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
+                          "linkCourseRunTrainer": '.json_encode($trainers).'
                         }
                       ]
                     }
