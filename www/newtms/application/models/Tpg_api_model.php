@@ -70,7 +70,7 @@ class Tpg_api_Model extends CI_Model {
     }
     
     public function get_trainer_details($trainer_id) 
-    {        
+    {     print_r($trainer_id);exit;   
         $tenantId = $this->session->userdata('userDetails')->tenant_id;
         $tids = explode(',', $trainer_id);
         if (!empty($tids)) 
@@ -78,16 +78,14 @@ class Tpg_api_Model extends CI_Model {
             
             foreach ($tids as $tid) 
             {                
-                $sql = "SELECT iued.off_email_id,pers.user_id,tu.registered_email_id, pers.first_name, pers.last_name, rl.role_id 
-                        FROM `tms_users_pers` pers, internal_user_role rl, tms_users tu, internal_user_emp_detail iued
-                        WHERE pers.tenant_id = rl.tenant_id 
-                        AND pers.user_id = rl.user_id 
-                        AND tu.user_id = pers.user_id 
-                        AND iued.user_id = pers.user_id 
-                        AND iued.tenant_id = pers.user_id
-                        AND pers.tenant_id = '$tenantId' 
+                $sql = "SELECT iued.off_email_id,pers.user_id,tu.registered_email_id, pers.first_name, pers.last_name, rl.role_id
+                        FROM `tms_users_pers` pers
+                        JOIN internal_user_role rl on rl.tenant_id = pers.tenant_id AND rl.user_id = pers.user_id
+                        JOIN tms_users tu on tu.user_id = pers.user_id
+                        JOIN internal_user_emp_detail iued on iued.user_id = pers.user_id AND iued.tenant_id = pers.tenant_id
+                        WHERE pers.tenant_id = '$tenantId' 
                         AND rl.role_id='TRAINER' 
-                        AND rl.user_id='$tid' ";                
+                        AND rl.user_id='$tid";                
                 $query = $this->db->query($sql);
                 $data = $query->row(0);
                 echo $this->db->last_query();exit;
