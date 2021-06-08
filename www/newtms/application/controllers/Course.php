@@ -840,7 +840,7 @@ class Course extends CI_Controller {
 
         $this->form_validation->set_rules('course_manager[]', 'Course Manager', 'required');
         $this->form_validation->set_rules('default_commission_rate', 'Default Commission Rate', 'required');
-        //$this->form_validation->set_rules('sales_executives[]', 'Sales Executives', 'required');
+        $this->form_validation->set_rules('sales_executives[]', 'Sales Executives', 'required');
 
         $this->form_validation->set_rules('sales_exec_commission_rates[]', 'Commission Rates', 'required');
 
