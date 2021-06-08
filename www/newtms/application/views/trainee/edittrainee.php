@@ -2100,7 +2100,7 @@ $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>"
             }
 
             user_registered_email = $.trim($("#user_registered_email").val());
-            if ($("#bypassemail_2").is(":checked")) {
+            //if ($("#bypassemail_2").is(":checked")) {
                 if (user_registered_email == "") {
                     $("#user_registered_email_err").text("[required]").addClass('error');
                     $("#user_registered_email").addClass('error');
@@ -2113,12 +2113,12 @@ $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>"
                     $("#pers_conf_email_err").text("").removeClass('error');
                     $("#pers_conf_email").removeClass('error');
                 }
-            } else {
-                $("#user_registered_email_err").text("").removeClass('error');
-                $("#user_registered_email").removeClass('error');
-                $("#pers_conf_email_err").text("").removeClass('error');
-                $("#pers_conf_email").removeClass('error');
-            }            
+            //} else {
+            //    $("#user_registered_email_err").text("").removeClass('error');
+            //    $("#user_registered_email").removeClass('error');
+            //    $("#pers_conf_email_err").text("").removeClass('error');
+            //    $("#pers_conf_email").removeClass('error');
+            //}            
 
             pers_conf_email = $.trim($("#pers_conf_email").val());
             if (pers_conf_email != user_registered_email) {
