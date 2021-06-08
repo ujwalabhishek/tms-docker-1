@@ -18,7 +18,6 @@ if (!empty($tax_error)) {
 }
   if ($this->session->flashdata('error')) {
         echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
-       echo "<script> $('.class_display_none').fadeIn('100');</script>";
     }
 
 $atr = 'id="AddclassForm" name="AddclassForm"';
@@ -56,8 +55,8 @@ echo form_open("classes/add_new_class", $atr);
         </table>
     </div>
     <br>
-    <h2 class="sub_panel_heading_style class_display_none" style="display:none;"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png"> Class Details</h2>
-    <div class="bs-example class_display_none" style="display:none;">
+    <h2 class="sub_panel_heading_style class_display_none" style="<?php echo ($display ?? 'display:none;');?>"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png"> Class Details</h2>
+    <div class="bs-example class_display_none" style="<?php echo ($display ?? 'display:none;');?>">
         <div class="table-responsive">
             <table class="table table-striped">
                 <tbody>
