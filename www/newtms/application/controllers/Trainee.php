@@ -141,8 +141,8 @@ class Trainee extends CI_Controller {
             $this->form_validation->set_rules('pers_alternate_email', 'Email', 'valid_email');
             $this->form_validation->set_rules('pers_alternate_contact_number', 'Alternater Contact Number', 'max_length[50]');
             $this->form_validation->set_rules('pers_gender', 'Gender', 'required');
-			if($tenant_id =='T24'){
-				$this->form_validation->set_rules('pers_dob', 'Date of Birth', 'required|max_length[10]');				
+			$this->form_validation->set_rules('pers_dob', 'Date of Birth', 'required|max_length[10]');
+			if($tenant_id =='T24'){								
 				$this->form_validation->set_rules('pers_country', 'Country', 'required');
 				$this->form_validation->set_rules('pers_states', 'State', 'required');
 				$this->form_validation->set_rules('pers_city', 'City', 'required|max_length[50]');
