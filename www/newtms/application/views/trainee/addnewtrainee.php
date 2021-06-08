@@ -1186,21 +1186,21 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                 var email = $.trim($('#user_registered_email').val());
                 if (email == '') {
                     //$("#user_registered_email_err").text("").removeClass('error');
-                    //$("#user_registered_email").removeClass('error');
-                    //$("#pers_conf_email_err").text("").removeClass('error');
-                    //$("#pers_conf_email").removeClass('error');
+                   // $("#user_registered_email").removeClass('error');
+                   // $("#pers_conf_email_err").text("").removeClass('error');
+                   // $("#pers_conf_email").removeClass('error');
                 }
                 $('#span_activate_user').css("display", "");
                 $('#BPEMAC_content').css("display", "");
                 $('#EMACRQ_content').css("display", "none");
                 //$("#span_email_id").css("display", "none");
-                //$("#span_confirm_email_id").css("display", "none");
+               // $("#span_confirm_email_id").css("display", "none");
             } else {
                 $('#span_activate_user').css("display", "none");
                 $('#BPEMAC_content').css("display", "none");
                 $('#EMACRQ_content').css("display", "");
-                //$("#span_email_id").css("display", "");
-                //$("#span_confirm_email_id").css("display", "");
+               // $("#span_email_id").css("display", "");
+               // $("#span_confirm_email_id").css("display", "");
             }
             return false;
         });
@@ -1745,11 +1745,11 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
 
         function isunique_email(e, id) {
             e = $.trim(e);
-            if (e == '' && $("#bypassemail_1").is(":checked")) {
-                $("#" + id + "_err").text("").removeClass('error');
-                $("#" + id).removeClass('error');
-                return false;
-            }
+            //if (e == '' && $("#bypassemail_1").is(":checked")) {
+            //    $("#" + id + "_err").text("").removeClass('error');
+            //    $("#" + id).removeClass('error');
+            //    return false;
+            //}
             if (e == '') {
                 $("#" + id + "_err").text("[required]").addClass('error');
                 $("#" + id).addClass('error');
@@ -2053,7 +2053,7 @@ $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>"
             //}
 
             pers_conf_email = $.trim($("#pers_conf_email").val());
-            if ((user_registered_email != "") && (pers_conf_email != user_registered_email)) {
+            if (pers_conf_email != user_registered_email) {
                 if (valid_email_address(user_registered_email) == true) {
                     if (pers_conf_email == '') {
                         $("#pers_conf_email_err").text("[required]").addClass('error');
@@ -2067,10 +2067,7 @@ $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>"
                     }
                     retVal = false;
                 }
-            } else if(user_registered_email != "") {
-				$("#user_registered_email_err").text("[required]").addClass('error');
-                $("#user_registered_email").addClass('error');			
-			} else {
+            } else {
                 $("#pers_conf_email").removeClass('error');
                 $("#pers_conf_email_err").text("").removeClass('error');
             }
