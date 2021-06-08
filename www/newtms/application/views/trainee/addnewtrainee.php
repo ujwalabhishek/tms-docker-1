@@ -1185,10 +1185,10 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
             if ($("#bypassemail_1").is(":checked")) {
                 var email = $.trim($('#user_registered_email').val());
                 if (email == '') {
-                    $("#user_registered_email_err").text("").addClass('error');
-                    $("#user_registered_email").addClass('error');
-                    $("#pers_conf_email_err").text("").addClass('error');
-                    $("#pers_conf_email").addClass('error');
+                    $("#user_registered_email_err").text("").removeClass('error');
+                    $("#user_registered_email").removeClass('error');
+                    $("#pers_conf_email_err").text("").removeClass('error');
+                    $("#pers_conf_email").removeClass('error');
                 }
                 $('#span_activate_user').css("display", "");
                 $('#BPEMAC_content').css("display", "");
