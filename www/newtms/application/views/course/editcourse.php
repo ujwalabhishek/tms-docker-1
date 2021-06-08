@@ -11,7 +11,7 @@ $CI->load->model('settings_model');
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-2.3.2.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.modal.js" type="text/javascript" charset="utf-8"></script>      
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/course_common.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/edit_course.js"></script>        
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/edit_course.js?0.00004"></script>        
 <div class="col-md-10">        
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Edit/ Deactivate</h2>        
     <div class="table-responsive">    

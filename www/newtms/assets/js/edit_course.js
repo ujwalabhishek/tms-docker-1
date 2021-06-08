@@ -326,6 +326,15 @@ function validate() {
         $("#course_reference_num_err").text("").removeClass('error');
         $("#course_reference_num").removeClass('error');
     }
+    var external_reference_num = $.trim($('#external_reference_number').val());
+    if (external_reference_num == "") {
+        $("#external_reference_number_err").text("[required]").addClass('error');
+        $("#external_reference_number").addClass('error');
+        retVal = false;
+    } else {
+        $("#external_reference_number_err").text("").removeClass('error');
+        $("#external_reference_number").removeClass('error');
+    }
     var course_competency_code = $.trim($('#course_competency_code').val());
     if (course_competency_code == "") {
         $("#course_competency_code_err").text("[required]").addClass('error');
