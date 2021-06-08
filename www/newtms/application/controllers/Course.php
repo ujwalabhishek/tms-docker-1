@@ -934,7 +934,7 @@ class Course extends CI_Controller {
 
             redirect("course");
 
-        } else {echo "s1";exit
+        } else {echo "s1";exit;
 
             $this->edit_course($this->input->post('course_id'));
 
