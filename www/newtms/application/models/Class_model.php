@@ -1603,7 +1603,14 @@ class Class_Model extends CI_Model {
             'last_modified_by' => $userId,
             'last_modified_on' => date('Y-m-d H:i:s'),
             'classroom_venue_oth' => $classroom_venue_oth,
-            'lab_venue_oth' => $lab_venue_oth
+            'lab_venue_oth' => $lab_venue_oth,
+            'venue_building' => $venue_building,
+            'venue_block' => $venue_block,
+            'venue_street' => $venue_street,
+            'venue_room' => $venue_room,
+            'venue_unit' => $venue_unit,
+            'venue_postalcode' => $venue_postalcode,
+            'venue_floor' => $venue_floor
             );  
         
         $this->db->trans_start();
