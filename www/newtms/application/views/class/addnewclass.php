@@ -16,7 +16,9 @@ $this->load->model('meta_values');
 if (!empty($tax_error)) { 
     echo '<div class="error1">' . $tax_error . '</div>';
 }
- 
+  if ($this->session->flashdata('error')) {
+        echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
+    }
 
 $atr = 'id="AddclassForm" name="AddclassForm"';
 echo form_open("classes/add_new_class", $atr);

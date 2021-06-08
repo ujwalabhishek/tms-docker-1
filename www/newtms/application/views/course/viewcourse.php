@@ -159,7 +159,7 @@ $role_array = array("COMPACT","TRAINER");
                      <tr>
                         
                         <td class="td_heading">External Reference Number:<span class="required">*</span></td>
-                        <td><label class="label_font"><?php echo $course_data->external_reference_number; ?></label></td>                        
+                        <td colspan="3"><label class="label_font"><?php echo $course_data->external_reference_number; ?></label></td>                        
                     </tr>
                     
                     <tr>                        
