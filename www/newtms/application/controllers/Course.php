@@ -854,7 +854,7 @@ class Course extends CI_Controller {
 
         }
 
-        if ($this->form_validation->run() == TRUE) {echo "s";exit
+        if ($this->form_validation->run() == TRUE) {echo "s";exit;
             
             $course_id = $this->input->post('course_id');
             $res = $this->course->get_course_details($course_id,$tenant_id);
