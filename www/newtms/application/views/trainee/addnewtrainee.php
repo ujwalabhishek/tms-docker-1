@@ -2067,7 +2067,10 @@ $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>"
                     }
                     retVal = false;
                 }
-            } else {
+            } else if(user_registered_email != "") {
+				$("#user_registered_email_err").text("[required]").addClass('error');
+                $("#user_registered_email").addClass('error');			
+			} else {
                 $("#pers_conf_email").removeClass('error');
                 $("#pers_conf_email_err").text("").removeClass('error');
             }
