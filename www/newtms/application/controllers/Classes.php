@@ -212,7 +212,7 @@ class Classes extends CI_Controller {
                 
             }
         } else {
-            $data['display'] = 'display:block;';
+            $data['display'] = 'display:none;';
             $data['main_content'] = 'class/addnewclass';
             $this->load->view('layout', $data);
         }
