@@ -1521,7 +1521,7 @@ class Class_Model extends CI_Model {
      * @param type $userId
      * @param type $courseId
      */
-    public function create_class($tenantId, $userId) {
+    public function create_class($tenantId, $userId,$tpg_course_run_id) {
         $display_class = 0;
         $control_4 = '';
         $control_5 = '';
@@ -1621,6 +1621,7 @@ class Class_Model extends CI_Model {
                 $this->db->update('course_class', array('class_name' => $course_name)); //coursename_classid
             }
             if (!empty($schlded_date)) {
+                $ct =1;
                 foreach ($schlded_date as $k => $v) {
                     $class_date = date('Y-m-d', strtotime($schlded_date[$k]));
                     $session_start_time = $schlded_start_time[$k] . ':00';
@@ -1631,10 +1632,12 @@ class Class_Model extends CI_Model {
                         'class_id' => $class_id,
                         'class_date' => $class_date,
                         'session_type_id' => $schlded_session_type[$k],
+                        'tpg_session_id' => $crse_ref_no.'-'.$tpg_course_run_id.'-S'.$ct,
                         'session_start_time' => $session_start_time,
                         'session_end_time' => $session_end_time
                     );
                     $this->db->insert('class_schld', $class_schld_data);
+                    $ct +=1;
                 }
             }
             if (isset($def_schlded_date)) {
