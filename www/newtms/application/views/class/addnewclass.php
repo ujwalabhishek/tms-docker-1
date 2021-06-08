@@ -18,6 +18,7 @@ if (!empty($tax_error)) {
 }
   if ($this->session->flashdata('error')) {
         echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
+       echo "<script> $('.class_display_none').fadeIn('100');</script>";
     }
 
 $atr = 'id="AddclassForm" name="AddclassForm"';
