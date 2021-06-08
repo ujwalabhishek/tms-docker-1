@@ -253,7 +253,7 @@ $CI->load->model('settings_model');
                             ?>
                             <div style='color:grey'>Always Starts with "TGS-"</div>
                             <span id="external_reference_number_err"></span>
-                            <?php echo form_error('external_reference_number', '<div class="error">', '</div>'); ?>
+                            <?php //echo form_error('external_reference_number', '<div class="error">', '</div>'); ?>
                         </td>
                     </tr>      
                     <tr>
