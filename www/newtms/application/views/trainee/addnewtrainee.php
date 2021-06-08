@@ -1185,22 +1185,22 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
             if ($("#bypassemail_1").is(":checked")) {
                 var email = $.trim($('#user_registered_email').val());
                 if (email == '') {
-                    $("#user_registered_email_err").text("").removeClass('error');
-                    $("#user_registered_email").removeClass('error');
-                    $("#pers_conf_email_err").text("").removeClass('error');
-                    $("#pers_conf_email").removeClass('error');
+                    //$("#user_registered_email_err").text("").removeClass('error');
+                    //$("#user_registered_email").removeClass('error');
+                    //$("#pers_conf_email_err").text("").removeClass('error');
+                    //$("#pers_conf_email").removeClass('error');
                 }
                 $('#span_activate_user').css("display", "");
                 $('#BPEMAC_content').css("display", "");
                 $('#EMACRQ_content').css("display", "none");
-                $("#span_email_id").css("display", "none");
-                $("#span_confirm_email_id").css("display", "none");
+                //$("#span_email_id").css("display", "none");
+                //$("#span_confirm_email_id").css("display", "none");
             } else {
                 $('#span_activate_user').css("display", "none");
                 $('#BPEMAC_content').css("display", "none");
                 $('#EMACRQ_content').css("display", "");
-                $("#span_email_id").css("display", "");
-                $("#span_confirm_email_id").css("display", "");
+                //$("#span_email_id").css("display", "");
+                //$("#span_confirm_email_id").css("display", "");
             }
             return false;
         });
