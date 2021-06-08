@@ -425,7 +425,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
             'crse_type' => $course_types, 'class_type' => $class_types,
 
-            'crse_duration' => $course_duration, 'reference_num' => strtoupper($course_reference_num),
+            'crse_duration' => $course_duration, 'reference_num' => strtoupper($course_reference_num),'external_reference_number' => strtoupper($external_reference_number),
             'default_commission_rate' => $default_commission_rate, 'default_commission_rate' => ($default_commission_rate),
 
             'competency_code' => strtoupper($course_competency_code), 'certi_level' => $certification_code,
@@ -1751,7 +1751,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
             $data = array('tenant_id' => $tenant_id, 'crse_name' => strtoupper($course_name),
 
-                'language' => $language_value, 'reference_num' => strtoupper($course_reference_num),
+                'language' => $language_value, 'reference_num' => strtoupper($course_reference_num),'external_reference_number' => strtoupper($external_reference_number),
 
                 'competency_code' => strtoupper($course_competency_code), 'crse_manager' => $crse_manager_value,
                 'default_commission_rate' => $default_commission_rate, 'default_commission_rate' => $default_commission_rate,

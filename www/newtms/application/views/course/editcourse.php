@@ -238,6 +238,25 @@ $CI->load->model('settings_model');
                         </td>
                     </tr>
                     <tr>
+                        <td class="td_heading">External Reference Number:<span class="required">*</span></td>
+                        <td colspan="3">
+                            <?php
+                            $external_reference_number = array(
+                                'name' => 'external_reference_number',
+                                'id' => 'external_reference_number',
+                                'value' => $course_data->external_reference_number,
+                                'maxlength' => 50,
+                                'class' => 'upper_case',
+                                'style' => 'width:200px',
+                            );
+                            echo form_input($external_reference_number);
+                            ?>
+                            <div style='color:grey'>Always Starts with "TGS-"</div>
+                            <span id="external_reference_number_err"></span>
+                            <?php echo form_error('external_reference_number', '<div class="error">', '</div>'); ?>
+                        </td>
+                    </tr>      
+                    <tr>
                         <td class="td_heading">Course Competency Code:<span class="required">*</span></td>
                         <td>
                             <?php

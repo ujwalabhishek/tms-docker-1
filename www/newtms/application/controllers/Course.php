@@ -185,6 +185,8 @@ class Course extends CI_Controller {
         $this->form_validation->set_rules('course_duration', 'Course Duration', 'required');
 
         $this->form_validation->set_rules('course_reference_num', 'Course Reference Number', 'required');
+        
+        $this->form_validation->set_rules('external_reference_number', 'External Course Reference Number', 'required');
 
         $this->form_validation->set_rules('course_competency_code', 'Course Competency Code', 'required');
 
@@ -831,6 +833,8 @@ class Course extends CI_Controller {
         $this->form_validation->set_rules('subsidy', 'Subsidy', 'required');
 
         $this->form_validation->set_rules('course_reference_num', 'Course Reference Number', 'required');
+        
+        $this->form_validation->set_rules('external_reference_number', 'External Reference Number', 'required');
 
         $this->form_validation->set_rules('course_competency_code', 'Course Competency Code', 'required');
 
