@@ -1183,7 +1183,7 @@ class tp_gateway extends CI_Controller {
         $traineeDateOfBirth = $traineeDetails['dob'];
         $traineeEmailAddress = $traineeDetails['registered_email_id'];
         $traineeContactNumber = $traineeDetails['contact_number'];
-        $traineeEnrolmentDate = "";
+        $traineeEnrolmentDate = "2021-06-10";
 
         $enrolmentMode = $this->input->post('enrolmentMode');
         $tenant_id = $this->tenant_id;
@@ -1224,57 +1224,57 @@ class tp_gateway extends CI_Controller {
         $trainingPartnerUEN = $tenant_details->comp_reg_no;
         $trainingPartnerCode = $tenant_details->comp_reg_no . '-01';
 
-        if (TPG_ENVIRONMENT == 'PRODUCTION') {
-            $courseReferenceNumber = $courseReferenceNumber;
-            $trainingPartnerUEN = $trainingPartnerUEN;
-        } else {
-            $courseReferenceNumber = 'TGS-2020002096';
-            $trainingPartnerUEN = '201000372W';
-        }
+//        if (TPG_ENVIRONMENT == 'PRODUCTION') {
+//            $courseReferenceNumber = $courseReferenceNumber;
+//            $trainingPartnerUEN = $trainingPartnerUEN;
+//        } else {
+//            $courseReferenceNumber = 'TGS-2020002096';
+//            $trainingPartnerUEN = '201000372W';
+//        }
 
         $tpg_enrolment_json = '{
                                 "enrolment": {
                                   "course": {
                                     "run": {
-                                      "id": "10026"
+                                      "id": "'.$courseRunId.'"
                                     },
-                                    "referenceNumber": "TGS-0026008-ES"
+                                    "referenceNumber": "'.$courseReferenceNumber.'"
                                   },
                                   "trainee": {
-                                    "id": "S0118316H",
+                                    "id": "'.$traineeId.'",
                                     "fees": {
                                       "discountAmount": 50.25,
-                                      "collectionStatus": "Full Payment"
+                                      "collectionStatus": "'.$feeCollectionStatus.'"
                                     },
                                     "idType": {
-                                      "type": "NRIC"
+                                      "type": "'.$traineeIdType.'"
                                     },
                                     "employer": {
-                                      "uen": "G01234567S",
+                                      "uen": "'.$employerUEN.'",
                                       "contact": {
-                                        "fullName": "Stephen Chua",
-                                        "emailAddress": "abc@abc.com",
+                                        "fullName": "'.$emploerFullName.'",
+                                        "emailAddress": "'.$employerEmailAddress.'",
                                         "contactNumber": {
                                           "areaCode": "00",
-                                          "countryCode": "60",
-                                          "phoneNumber": "88881234"
+                                          "countryCode": "65",
+                                          "phoneNumber": "'.$employerContactNumber.'"
                                         }
                                       }
                                     },
-                                    "fullName": "Jon Chua",
-                                    "dateOfBirth": "1950-10-16",
-                                    "emailAddress": "abc@abc.com",
+                                    "fullName": "'.$traineeFullName.'",
+                                    "dateOfBirth": "'.$traineeDateOfBirth.'",
+                                    "emailAddress": "'.$traineeEmailAddress.'",
                                     "contactNumber": {
                                       "areaCode": "00",
                                       "countryCode": "65",
-                                      "phoneNumber": "88881234"
+                                      "phoneNumber": "'.$traineeContactNumber.'"
                                     },
-                                    "enrolmentDate": "2020-05-15",
-                                    "sponsorshipType": "EMPLOYER"
+                                    "enrolmentDate": "'.$traineeEnrolmentDate.'",
+                                    "sponsorshipType": "'.$traineeSponsorshipType.'"
                                   },
                                   "trainingPartner": {
-                                    "uen": "T16GB0003C",
-                                    "code": "T16GB0003C-01"
+                                    "uen": "'.$trainingPartnerUEN.'",
+                                    "code": "'.$trainingPartnerCode.'"
                                   }
                                 }
                               }';
