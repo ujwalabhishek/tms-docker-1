@@ -330,7 +330,7 @@ class Tpg_api_Model extends CI_Model {
         $api_version = 'v1.3';
         $url = "https://".$retun[domain]."/courses/runs".$courserunid;
         $response = $this->curl_request('POST',$url,$tpg_delete_courserun_json,$api_version);
-        //print_r($response);exit;
+        print_r($response);exit;
         $obj=json_decode($response);
         return $obj;
     }
