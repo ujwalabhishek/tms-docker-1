@@ -1283,7 +1283,7 @@ class tp_gateway extends CI_Controller {
 
 
         //print_r($tpg_enrolment_json);exit;
-        $api_version = 'v1';
+        $api_version = 'v1.0.0';
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $response = $this->curl_request('POST', $url, $tpg_enrolment_json, $api_version);
@@ -1292,7 +1292,7 @@ class tp_gateway extends CI_Controller {
         if ($tpg_response->status == 200) {
             //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
 
-            $this->session->set_flashdata("success", "Created");
+            $this->session->set_flashdata("success", "Enrolment created");
 
             redirect('class_trainee?course_id=' . $this->input->post('courseId').'&class='.$this->input->post('classId'));
         } else {
