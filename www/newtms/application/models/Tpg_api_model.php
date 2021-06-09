@@ -303,9 +303,7 @@ class Tpg_api_Model extends CI_Model {
     
     public function delete_courserun_tpg($crse_ref_no,$tp_uen,$courserunid){
         $retun = $this->correct_live_dev_api_data($crse_ref_no,$tp_uen);
-        $tpg_delete_courserun_json='{
-
-            "course": {
+        $tpg_delete_courserun_json='{"course": {
 
               "courseReferenceNumber": "'.$retun[ref_no].'",
 
@@ -329,8 +327,8 @@ class Tpg_api_Model extends CI_Model {
         
         $api_version = 'v1.3';
         $url = "https://".$retun[domain]."/courses/runs/".$courserunid;
-        //$response = $this->curl_request('POST',$url,$tpg_delete_courserun_json,$api_version);
-        print_r($tpg_delete_courserun_json);echo $url;exit;
+        $response = $this->curl_request('POST',$url,$tpg_delete_courserun_json,$api_version);
+        //print_r($tpg_delete_courserun_json);echo $url;exit;
         $obj=json_decode($response);
         return $obj;
     }
