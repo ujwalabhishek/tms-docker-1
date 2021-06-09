@@ -174,6 +174,9 @@ class Class_Trainee extends CI_Controller {
                 //Added by abdulla for TPG
                 $new_tabledata[$k]['enrolment_mode'] = $row['enrolment_mode'];
                 $new_tabledata[$k]['payment_status'] = $row['payment_status'];
+                $new_tabledata[$k]['reference_num'] = $row['reference_num'];
+                $new_tabledata[$k]['external_reference_number'] = $row['external_reference_number'];
+                $new_tabledata[$k]['tpg_course_run_id'] = $row['tpg_course_run_id'];
 
                  //$new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'],$row['sales_executive_id']);
                 $new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'], $row['class_id'],$row['user_id']);

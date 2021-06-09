@@ -356,8 +356,8 @@
                                 <td><?php echo $row['paid'] ;?></td>
                                 <td><?php echo $row['action_link'];?></td>
                                 <td>
-                                    <input type="hidden" name="courseRunId" value="<?php echo $row['user_id']; ?>" id="courseRunId">
-                                    <input type="hidden" name="courseReferenceNumber" value="<?php echo $row['user_id']; ?>" id="courseReferenceNumber">
+                                    <input type="hidden" name="courseRunId" value="<?php echo $row['tpg_course_run_id']; ?>" id="courseRunId">
+                                    <input type="hidden" name="courseReferenceNumber" value="<?php echo $row['reference_num']; ?>" id="courseReferenceNumber">
                                     <input type="hidden" name="userId" value="<?php echo $row['user_id']; ?>" id="userId">
                                     <input type="hidden" name="enrolmentMode" value="<?php echo $row['enrolment_mode']; ?>" id="enrolmentMode">
                                     <input type="hidden" name="paymentStatus" value="<?php echo $row['payment_status']; ?>" id="paymentStatus">
