@@ -122,7 +122,7 @@ class Tpg_api_Model extends CI_Model {
     
     
     ///////////////////////////////API MODEL START///////////////////////////////////////////
-    
+    ///// api added  by shubhranshu create a courserun inside SSG system
     public function create_courserun_tpg($tenant_id, $userId,$tp_uen){
         extract($_POST);
        $crse_ref_no= $this->input->post('crse_ref_no');
@@ -300,7 +300,7 @@ class Tpg_api_Model extends CI_Model {
         //}
         
     }
-    
+    //////beloe function added by shubhranshu to delete created courserun completely from the SSG system
     public function delete_courserun_tpg($crse_ref_no,$tp_uen,$courserunid){
         $retun = $this->correct_live_dev_api_data($crse_ref_no,$tp_uen);
         $tpg_delete_courserun_json='{"course": {

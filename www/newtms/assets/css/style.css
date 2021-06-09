@@ -2241,3 +2241,9 @@ ul.list_style1 li:last-child{border:none;padding-bottom:2px;}
 
 /*17 Dec 2014 css added for td text align*/
 .td_center_align {text-align: center}
+
+ .dang{
+        padding: 20px !important;
+    font-size: 14px !important;
+    text-align: center;
+    }  
