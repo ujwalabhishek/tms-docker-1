@@ -115,7 +115,7 @@ class Classes extends CI_Controller {
     }
 
     /*
-     * This function loads the empty Add class form.
+     * This function modified by shubhranshu to chech with SSG system and sync the data with TMS 09.05.21
      */
     public function add_new_class() {
         $data['sideMenuData'] = fetch_non_main_page_content();
@@ -234,9 +234,14 @@ class Classes extends CI_Controller {
                 $this->form_validation->set_rules('other_reason_for_deactivation', 'other reason for deactivation', 'required');
             }
             if ($this->form_validation->run() == TRUE) {
+                $res = $this->classmodel->get_class_info($class_id_deactive);
+                $crs = $this->coursemodel->get_course_detailse($res[course_id]);
+                print_r($crs);exit;
+                $response = $this->tpgModel->delete_courserun_tpg($crs->reference_num);
+                
                 $result = $this->classmodel->deactivate_class($class_id_deactive);
                 if ($result == TRUE) {
-                    $res = $this->classmodel->get_class_info($class_id_deactive);
+                    
                     $current_class_data = json_encode($res);
                     user_activity( 5, $class_id_deactive, $current_class_data);
                     $this->session->set_flashdata('success', 'Class has been deactivated successfully');

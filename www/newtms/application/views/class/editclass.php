@@ -327,7 +327,7 @@ if (!empty($tax_error)) {
                                 ?>
                                 &nbsp;</td>
                         </tr>
-                        <?php if(TENANT_ID=='T02' || TENANT_ID=='T24'){ ?>
+                       
                         <tr>
                         <td class="td_heading">TPGateway Course Run ID:</td>
                         <td colspan="5">
@@ -347,7 +347,7 @@ if (!empty($tax_error)) {
                             <span id="tpg_crse_err" class="tpg_crse_err"></span>
                         </td>
                     </tr>
-                    <?php } ?>
+                    
                         <tr>
                             <td colspan="2" class="td_heading">  
                                 <?php
@@ -735,7 +735,7 @@ if (!empty($tax_error)) {
         ?>
         <div class="button_class">
             <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button> &nbsp; &nbsp; 
-            <a href="#ex8" rel="modal:open" class="small_text <?php echo $deactivate_class; ?> check_deactivate" data-class="<?php echo $this->input->post('class_id'); ?>"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Deactivate</button></a> &nbsp; &nbsp; 
+            <a href="#ex8" rel="modal:open" class="small_text <?php echo $deactivate_class; ?> check_deactivate" data-class="<?php echo $this->input->post('class_id'); ?>"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Delete</button></a> &nbsp; &nbsp; 
             
         </div>
        
@@ -1139,8 +1139,8 @@ echo form_open("classes/deactivate_class", $form_attributes);
 ?>
 <div class="modal1_051" id="ex8" style="display:none;">
     <p>
-    <h2 class="panel_heading_style">Deactivate Class</h2>
-    <span class="error"><strong> This Class will be deactivated from </strong>
+    <h2 class="panel_heading_style">Delete Class</h2>
+    <span class="error"><strong> This Class will be deleted from </strong>
         <?php
         $deactiv_date = array(
             'name' => 'deactivation_date',
@@ -1175,6 +1175,7 @@ echo form_open("classes/deactivate_class", $form_attributes);
             'maxlength' => '250',
         );
         echo form_input($attr);
+        echo form_hidden('class_id_deactive', $class->class_id);
         echo form_hidden('class_id_deactive', $class->class_id);
         ?>
     </div>
