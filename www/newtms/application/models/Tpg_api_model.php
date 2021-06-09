@@ -300,5 +300,41 @@ class Tpg_api_Model extends CI_Model {
         //}
         
     }
+    
+    public function delete_courserun_tpg($crse_ref_no,$tp_uen,$courserunid){
+        $retun = $this->correct_live_dev_api_data($crse_ref_no,$tp_uen);
+        $tpg_delete_courserun_json='{
+
+            "course": {
+
+              "courseReferenceNumber": "'.$retun[ref_no].'",
+
+              "trainingProvider": {
+
+                "uen": "'.$retun[tp_uen].'"
+
+              },
+
+              "run": {
+
+                "action": "delete"
+
+              }
+
+            }
+
+          }';
+        
+        
+        
+        $api_version = 'v1.3';
+        $url = "https://".$retun[domain]."/courses/runs".$courserunid;
+        $response = $this->curl_request('POST',$url,$tpg_delete_courserun_json,$api_version);
+        //print_r($response);exit;
+        $obj=json_decode($response);
+        return $obj;
+    }
+    
+
 
 }

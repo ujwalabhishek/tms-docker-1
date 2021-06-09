@@ -1155,7 +1155,7 @@ echo form_open("classes/deactivate_class", $form_attributes);
     </span>
     <span id="deactivation_date_err"></span>
     <br><br>
-    <strong>Reason for De-Activation:<span class="red">*</span></strong>  <?php
+    <strong>Reason for Deletion:<span class="red">*</span></strong>  <?php
     $d_reasons = fetch_metavalues_by_category_id(Meta_Values::CLASS_DEACTIVATE_REASONS);
     $reasons_options[''] = 'Select';
     foreach ($d_reasons as $item):
@@ -1181,7 +1181,7 @@ echo form_open("classes/deactivate_class", $form_attributes);
     </div>
     <span id="other_reason_for_deactivation_err" style="float:right;clear:both;"></span>
     <br><br>
-    Are you sure you want to deactivate this class? <br>
+    Are you sure you want to Delete this class? <br>
     <span class="required_i red">*Required Field</span>
 
     <div class="popup_cancel9">

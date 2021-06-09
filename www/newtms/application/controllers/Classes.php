@@ -222,6 +222,7 @@ class Classes extends CI_Controller {
      * this function to deactivate class
      */
     function deactivate_class() {
+         $tenant_id = $this->tenant_id;
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             foreach ($this->input->post() as $key => $value) {
                 $$key = $value;
@@ -236,17 +237,31 @@ class Classes extends CI_Controller {
             if ($this->form_validation->run() == TRUE) {
                 $res = $this->classmodel->get_class_info($class_id_deactive);
                 $crs = $this->coursemodel->get_course_detailse($res[course_id]);
-                print_r($crs);exit;
-                $response = $this->tpgModel->delete_courserun_tpg($crs->reference_num);
-                
-                $result = $this->classmodel->deactivate_class($class_id_deactive);
-                if ($result == TRUE) {
-                    
-                    $current_class_data = json_encode($res);
-                    user_activity( 5, $class_id_deactive, $current_class_data);
-                    $this->session->set_flashdata('success', 'Class has been deactivated successfully');
-                } else {
-                    $this->session->set_flashdata("error", "Unable to deactivate class. Please try again later.");
+                //print_r($crs);exit;
+                $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
+                $tpg_response = $this->tpgModel->delete_courserun_tpg($crs->reference_num,$tenant->comp_reg_no,$res[tpg_course_run_id]);///callling to delete the courserun FROM SSG system
+                if($tpg_response->status == 200){
+                     $result = $this->classmodel->deactivate_class($class_id_deactive);
+                    if ($result == TRUE) {
+                        $current_class_data = json_encode($res);
+                        user_activity( 5, $class_id_deactive, $current_class_data);
+                        $this->session->set_flashdata('success', 'Class has been deleted successfully With SSG');
+                    } else {
+                        $this->session->set_flashdata("error", "Unable to delete class. Please try again later.");
+                    }
+                }else{
+                    if($tpg_response->status == 400){
+                        $this->session->set_flashdata('error',"Oops! Bad request!");
+                    }elseif($tpg_response->status == 403){
+                        $this->session->set_flashdata('error',"Oops! Forbidden. Authorization information is missing or invalid.");
+                    }elseif($tpg_response->status == 404){
+                        $this->session->set_flashdata('error',"Oops! Not Found!");
+                    }elseif($tpg_response->status == 500){
+                        $this->session->set_flashdata('error',"Oops! Internal Error!!");
+                    }else{
+                        $this->session->set_flashdata('error',"Oops ! Something Went Wrong Contact System Administrator"); 
+                    }
+                     $this->session->set_flashdata('resp_error',$tpg_response->error->details);
                 }
                 redirect('classes');
             }
