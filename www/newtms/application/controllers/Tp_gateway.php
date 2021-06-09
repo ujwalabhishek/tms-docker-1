@@ -1224,13 +1224,15 @@ class tp_gateway extends CI_Controller {
         $trainingPartnerUEN = $tenant_details->comp_reg_no;
         $trainingPartnerCode = $tenant_details->comp_reg_no . '-01';
 
-//        if (TPG_ENVIRONMENT == 'PRODUCTION') {
-//            $courseReferenceNumber = $courseReferenceNumber;
-//            $trainingPartnerUEN = $trainingPartnerUEN;
-//        } else {
-//            $courseReferenceNumber = 'TGS-2020002096';
-//            $trainingPartnerUEN = '201000372W';
-//        }
+        if (TPG_ENVIRONMENT == 'PRODUCTION') {
+            $courseReferenceNumber = $courseReferenceNumber;
+            $trainingPartnerUEN = $trainingPartnerUEN;
+            $trainingPartnerCode = $trainingPartnerCode;
+        } else {
+            $courseReferenceNumber = 'TGS-2020002096';
+            $trainingPartnerUEN = '201000372W';
+            $trainingPartnerCode = '201000372W-01';
+        }
 
         $tpg_enrolment_json = '{
                                 "enrolment": {
