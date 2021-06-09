@@ -168,11 +168,13 @@ class Tpg_api_Model extends CI_Model {
             foreach ($schlded_date as $k => $v) {
                 if($schlded_session_type[$k] != 'BRK'){
                     $dates = date('Ymd', strtotime($schlded_date[$k]));
+                    $starttime = date("h:i", strtotime($schlded_start_time[$k]));
+                    $endtime = date("h:i", strtotime($schlded_end_time[$k]));
                     $session_arr[] = array(
                      "startDate" => "$dates",
                      "endDate" => "$dates",
-                     "startTime" => "$schlded_start_time[$k]",
-                     "endTime" => "$schlded_end_time[$k]",
+                     "startTime" => "$starttime",
+                     "endTime" => "$endtime",
                      "modeOfTraining" => "$modeoftraining",
                      "venue" => array
                          (
