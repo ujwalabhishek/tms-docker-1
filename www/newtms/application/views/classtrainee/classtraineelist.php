@@ -363,7 +363,7 @@
                                     <input type="hidden" name="paymentStatus" value="<?php echo $row['payment_status']; ?>" id="paymentStatus">
                                     <input type="hidden" name="companyId" value="<?php echo $row['company_id']; ?>" id="companyId">
                                     
-                                    <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" /><span class="glyphicon glyphicon-search"></span>Submit To TPG</button>
+                                    <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" />Submit To TPG</button>
                                 </td>
                                 <?php echo form_close(); ?>
                              </tr>
