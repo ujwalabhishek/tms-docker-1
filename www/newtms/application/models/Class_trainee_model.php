@@ -13231,7 +13231,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
  ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode, ce.company_id,ce.referral_details,ce.eid_number, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
 tu . user_id ,tu.tenant_id, tu. account_type, tu.tax_code, tu.account_status,
-tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number,cc.sales_executive');
+tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number,cc.sales_executive, c.reference_num, c.external_reference_number, cc.tpg_course_run_id');
 
         $this->db->from('course_class cc');
 
