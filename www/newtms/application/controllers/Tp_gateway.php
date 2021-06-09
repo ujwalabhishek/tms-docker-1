@@ -1280,8 +1280,8 @@ class tp_gateway extends CI_Controller {
                               }';
 
 
-        print_r($tpg_enrolment_json);exit;
-        $api_version = 'v1.3';
+        //print_r($tpg_enrolment_json);exit;
+        $api_version = 'v1';
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $response = $this->curl_request('POST', $url, $tpg_enrolment_json, $api_version);
