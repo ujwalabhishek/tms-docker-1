@@ -1405,6 +1405,7 @@ class tp_gateway extends CI_Controller {
     public function response_trainee_enrolment_data_tpg() {
         $encrypted_data = $this->input->post('tpg_data');
         $api_version = 'v1';
+        $base_url = base_url();
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
@@ -1428,33 +1429,57 @@ class tp_gateway extends CI_Controller {
 					  padding: CryptoJS.pad.Pkcs7
 					});
 				var decrypted = cipher.toString(CryptoJS.enc.Utf8);
-                                $('#out').html(decrypted);
+                                
+
+                            jQuery.ajax({
+                                type: 'POST',
+                                url: '" .$base_url. "' + 'tp_gateway/final_data_tpg',
+                                dataType: 'json',
+                                data: {decrypted: decrypted},
+                                success: function(res) {
+                                    if (res){
+
+                                    }
+                                }
+                            });
+
+
+
+
+                                
 			  }</script>";
 
-        print_r($tpg_enrolment_decoded);
-        $tpg_response = json_decode(strip_tags($tpg_enrolment_decoded));
-        echo print_r($tpg_response, true);
-        exit;
-        if ($tpg_response->status == 200) {
-            //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
-
-            $this->session->set_flashdata("success", "Enrolment created");
-
-            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
-        } else {
-            if ($tpg_response->status == 400) {
-                $this->session->set_flashdata('error', $tpg_response->message);
-            } elseif ($tpg_response->status == 403) {
-                $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
-            } elseif ($tpg_response->status == 404) {
-                $this->session->set_flashdata('error', "Oops! Not Found!");
-            } elseif ($tpg_response->status == 500) {
-                $this->session->set_flashdata('error', "Oops! Internal Error!!");
-            } else {
-                $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
-            }
-            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
-        }
+//        print_r($tpg_enrolment_decoded);
+//        $tpg_response = json_decode(strip_tags($tpg_enrolment_decoded));
+//        echo print_r($tpg_response, true);
+//        exit;
+//        if ($tpg_response->status == 200) {
+//            //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
+//
+//            $this->session->set_flashdata("success", "Enrolment created");
+//
+//            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
+//        } else {
+//            if ($tpg_response->status == 400) {
+//                $this->session->set_flashdata('error', $tpg_response->message);
+//            } elseif ($tpg_response->status == 403) {
+//                $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
+//            } elseif ($tpg_response->status == 404) {
+//                $this->session->set_flashdata('error', "Oops! Not Found!");
+//            } elseif ($tpg_response->status == 500) {
+//                $this->session->set_flashdata('error', "Oops! Internal Error!!");
+//            } else {
+//                $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
+//            }
+//            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
+//        }
+    }
+    
+    
+    public function final_data_tpg() {
+        $data = $this->input->post('decrypted');
+        
+        echo print_r($data); exit;
     }
 
 }
