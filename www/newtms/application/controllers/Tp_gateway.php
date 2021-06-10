@@ -1359,13 +1359,13 @@ class tp_gateway extends CI_Controller {
                         });
                 var encrypted  = CryptoJS.enc.Base64.stringify(cipher.ciphertext);               
                 $('#out').html(encrypted);
-//alert(encrypted);
+alert(encrypted);
                 //return encrypted;
           
             }</script>";
         
       
-        //print_r($tpg_enrolment_encoded);exit;
+        print_r($tpg_enrolment_encoded);exit;
         $api_version = 'v1';
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
