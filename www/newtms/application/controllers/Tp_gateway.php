@@ -1406,8 +1406,7 @@ class tp_gateway extends CI_Controller {
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
-        print_r($request);
-        exit;
+        
         $tpg_enrolment_decoded = "<div id='out_a'></div>
             
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
