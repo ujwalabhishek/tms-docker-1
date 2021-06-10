@@ -49,7 +49,7 @@ class tp_gateway extends CI_Controller {
     }
 
     public function curl_request($mode, $url, $encrypted_data, $api_version) {
-         echo $encrypted_data;exit;
+         //echo $encrypted_data;exit;
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.pem";
         //print_r($data);exit;
@@ -1357,9 +1357,10 @@ class tp_gateway extends CI_Controller {
                           keySize: 256 / 32,
                           padding: CryptoJS.pad.Pkcs7
                         });
-                var encrypted  = CryptoJS.enc.Base64.stringify(cipher.ciphertext);               
+                var encrypted  = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
+                alert(encrypted);
                 $('#out').html(encrypted);
-alert(encrypted);
+
                 //return encrypted;
           
             }</script>";
