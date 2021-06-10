@@ -587,7 +587,7 @@ class tp_gateway extends CI_Controller {
 
 
         $object = json_encode($object);
-        //print_r($data);exit;
+        print_r($object);exit;
         $data['trainee'] = $traine;
         $data['tpg_data'] = $object;
         $data['sideMenuData'] = fetch_non_main_page_content();
@@ -1333,6 +1333,7 @@ class tp_gateway extends CI_Controller {
 
 
         $tpg_enrolment_encoded = json_encode($tpg_enrolment_json);
+        print_r($tpg_enrolment_encoded);exit;
         //print_r($tpg_enrolment_json);exit;
         $api_version = 'v1';
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
