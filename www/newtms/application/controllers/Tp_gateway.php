@@ -1234,59 +1234,108 @@ class tp_gateway extends CI_Controller {
 //            $trainingPartnerCode = '201000372W-01';
 //        }
 
-        $tpg_enrolment_json = '{
-                                "enrolment": {
-                                  "course": {
-                                    "run": {
-                                      "id": "' . $courseRunId . '"
-                                    },
-                                    "referenceNumber": "' . $courseReferenceNumber . '"
-                                  },
-                                  "trainee": {
-                                    "id": "' . $traineeId . '",
-                                    "fees": {
-                                      "discountAmount": 50.25,
-                                      "collectionStatus": "' . $feeCollectionStatus . '"
-                                    },
-                                    "idType": {
-                                      "type": "' . $traineeIdType . '"
-                                    },
-                                    "employer": {
-                                      "uen": "' . $employerUEN . '",
-                                      "contact": {
-                                        "fullName": "' . $emploerFullName . '",
-                                        "emailAddress": "' . $employerEmailAddress . '",
-                                        "contactNumber": {
-                                          "areaCode": "00",
-                                          "countryCode": "65",
-                                          "phoneNumber": "' . $employerContactNumber . '"
-                                        }
-                                      }
-                                    },
-                                    "fullName": "' . $traineeFullName . '",
-                                    "dateOfBirth": "' . $traineeDateOfBirth . '",
-                                    "emailAddress": "' . $traineeEmailAddress . '",
-                                    "contactNumber": {
-                                      "areaCode": "00",
-                                      "countryCode": "65",
-                                      "phoneNumber": "' . $traineeContactNumber . '"
-                                    },
-                                    "enrolmentDate": "' . $traineeEnrolmentDate . '",
-                                    "sponsorshipType": "' . $traineeSponsorshipType . '"
-                                  },
-                                  "trainingPartner": {
-                                    "uen": "' . $trainingPartnerUEN . '",
-                                    "code": "' . $trainingPartnerCode . '"
-                                  }
-                                }
-                              }';
+//        $tpg_enrolment_json = '{
+//                                "enrolment": {
+//                                  "course": {
+//                                    "run": {
+//                                      "id": "' . $courseRunId . '"
+//                                    },
+//                                    "referenceNumber": "' . $courseReferenceNumber . '"
+//                                  },
+//                                  "trainee": {
+//                                    "id": "' . $traineeId . '",
+//                                    "fees": {
+//                                      "discountAmount": 50.25,
+//                                      "collectionStatus": "' . $feeCollectionStatus . '"
+//                                    },
+//                                    "idType": {
+//                                      "type": "' . $traineeIdType . '"
+//                                    },
+//                                    "employer": {
+//                                      "uen": "' . $employerUEN . '",
+//                                      "contact": {
+//                                        "fullName": "' . $emploerFullName . '",
+//                                        "emailAddress": "' . $employerEmailAddress . '",
+//                                        "contactNumber": {
+//                                          "areaCode": "00",
+//                                          "countryCode": "65",
+//                                          "phoneNumber": "' . $employerContactNumber . '"
+//                                        }
+//                                      }
+//                                    },
+//                                    "fullName": "' . $traineeFullName . '",
+//                                    "dateOfBirth": "' . $traineeDateOfBirth . '",
+//                                    "emailAddress": "' . $traineeEmailAddress . '",
+//                                    "contactNumber": {
+//                                      "areaCode": "00",
+//                                      "countryCode": "65",
+//                                      "phoneNumber": "' . $traineeContactNumber . '"
+//                                    },
+//                                    "enrolmentDate": "' . $traineeEnrolmentDate . '",
+//                                    "sponsorshipType": "' . $traineeSponsorshipType . '"
+//                                  },
+//                                  "trainingPartner": {
+//                                    "uen": "' . $trainingPartnerUEN . '",
+//                                    "code": "' . $trainingPartnerCode . '"
+//                                  }
+//                                }
+//                              }';
+        
+        
+        $tpg_enrolment_json = array(
+            "enrolment" => array(
+                "trainingPartner" => array(
+                    "code" => $trainingPartnerCode,
+                    "uen" => $trainingPartnerUEN
+                ),
+                "course" => array(
+                    "referenceNumber" => $courseReferenceNumber,
+                    "run" => array(
+                        "id" => $courseRunId
+                    )
+                ),
+                "trainee" => array(
+                    "idType" => array(
+                        "type" => $traineeIdType
+                    ),
+                    "id" => $traineeId,
+                    "dateOfBirth" => $traineeDateOfBirth,
+                    "fullName" => $traineeFullName,
+                    "contactNumber" => array(
+                        "countryCode" => "+65",
+                        "areaCode" => "",
+                        "phoneNumber" => $traineeContactNumber
+                    ),
+                    "emailAddress" => $traineeEmailAddress,
+                    "employer" => array(
+                        "uen" => $employerUEN,
+                        "contact" => array(
+                            "fullName" => $emploerFullName,
+                            "contactNumber" => array(
+                                "countryCode" => "+65",
+                                "areaCode" => "",
+                                "phoneNumber" => $employerContactNumber
+                            ),
+                            "emailAddress" => $employerEmailAddress
+                        )
+                    ),
+                    "fees" => array(
+                        "discountAmount" => 2,
+                        "collectionStatus" => $feeCollectionStatus
+                    ),
+                    "sponsorshipType" => $traineeSponsorshipType,
+                    "enrolmentDate" => $traineeEnrolmentDate
+                )
+            )
+        );
 
 
+        $tpg_enrolment_encoded = json_encode($tpg_enrolment_json);
         //print_r($tpg_enrolment_json);exit;
         $api_version = 'v1';
         $url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         //$url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
-        $request = $this->curl_request('POST', $url, $tpg_enrolment_json, $api_version);
+        $request = $this->curl_request('POST', $url, $tpg_enrolment_encoded, $api_version);
 
 
         echo " <div id='out'></div>
