@@ -1354,13 +1354,13 @@ class tp_gateway extends CI_Controller {
                           keySize: 256 / 32,
                           padding: CryptoJS.pad.Pkcs7
                         });
-                var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
-                alert(encrypted);
+                var encrypted = '<?php echo $tpg_enrolment_encoded; ?>' = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
+                //alert(encrypted);
                 return encrypted;
           
             }</script>";
         
-        print_r($val);exit;
+        print_r($tpg_enrolment_encoded);exit;
         $api_version = 'v1';
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
