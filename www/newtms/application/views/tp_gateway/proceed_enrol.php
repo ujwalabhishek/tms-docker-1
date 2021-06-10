@@ -19,7 +19,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
     <div class="table-responsive">
         <?php
         $atr = 'id="search_form2" name="search_form2" method="post" onkeypress="return event.keyCode != 13;"';
-        echo form_open("ssgapi_course/proceed_enrol_final", $atr);
+        echo form_open("tp_gateway/proceed_enrol_final", $atr);
          $tenant_id = $this->session->userdata('userDetails')->tenant_id;//added by shubhranshu
         ?>  
         <table class="table table-striped">
