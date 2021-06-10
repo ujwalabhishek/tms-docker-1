@@ -1365,13 +1365,13 @@ class tp_gateway extends CI_Controller {
           
             }</script>";
         
-      $tpg_enrolment_encodeds = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $tpg_enrolment_encoded);
-        print_r($tpg_enrolment_encoded);echo "------";exit;
+      //$tpg_enrolment_encodeds = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $tpg_enrolment_encoded);
+      //  print_r($tpg_enrolment_encoded);echo "------";exit;
         $api_version = 'v1';
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
-        $request = $this->curl_request('POST', $url, $tpg_enrolment_encodeds, $api_version);        
-
+        $request = $this->curl_request('POST', $url, $tpg_enrolment_encoded, $api_version);        
+print_r($request);exit;
         $tpg_enrolment_decoded = "<div id='out_a'></div>
             
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
