@@ -143,7 +143,7 @@
                         <b>Employer Name.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="tenant_name" id="ename" style="" value='<?php $emploerFullName; ?>' disabled="disabled"/>
+                        <input type="text" name="tenant_name" id="ename" style="" value='<?php echo $emploerFullName; ?>' disabled="disabled"/>
                         <span id="ename_err"></span>
                     </td> 
 
