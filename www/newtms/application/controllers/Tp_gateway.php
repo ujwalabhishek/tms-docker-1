@@ -1313,6 +1313,7 @@ class tp_gateway extends CI_Controller {
                         "phoneNumber" => "98765498"
                     ),
                     "emailAddress" => $traineeEmailAddress,
+                    "sponsorshipType" => "EMPLOYER",
                     "employer" => array(
                         "uen" => $employerUEN,
                         "contact" => array(
@@ -1328,8 +1329,7 @@ class tp_gateway extends CI_Controller {
                     "fees" => array(
                         "discountAmount" => '2',
                         "collectionStatus" => $feeCollectionStatus
-                    ),
-                    "sponsorshipType" => "EMPLOYER",
+                    ),                   
                     "enrolmentDate" => $traineeEnrolmentDate
                 )
             )
