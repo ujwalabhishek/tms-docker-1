@@ -1432,8 +1432,8 @@ class tp_gateway extends CI_Controller {
 				$('#out_a').html(decrypted);
 			  }</script>";        
         
-        $tpg_response = json_decode($tpg_enrolment_decoded);
-        echo print_r($tpg_response); exit;
+        print_r($tpg_enrolment_decoded); exit;
+        $tpg_response = json_decode($tpg_enrolment_decoded);        
         if ($tpg_response->status == 200) {
             //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
 
