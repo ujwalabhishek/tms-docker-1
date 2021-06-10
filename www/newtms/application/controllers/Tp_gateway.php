@@ -1351,7 +1351,7 @@ class tp_gateway extends CI_Controller {
                 var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
                 var cipher = CryptoJS.AES.encrypt(
                         tpgraw,
-                        CryptoJS.e$tpg_enrolment_encodednc.Base64.parse(key), {
+                        CryptoJS.enc.Base64.parse(key), {
                           iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
                           mode: CryptoJS.mode.CBC,
                           keySize: 256 / 32,
