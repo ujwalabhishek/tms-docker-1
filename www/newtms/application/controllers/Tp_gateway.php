@@ -1310,7 +1310,7 @@ class tp_gateway extends CI_Controller {
                     "contactNumber" => array(
                         "countryCode" => "+65",
                         "areaCode" => "",
-                        "phoneNumber" => $traineeContactNumber
+                        "phoneNumber" => "98765498"
                     ),
                     "emailAddress" => $traineeEmailAddress,
                     "employer" => array(
@@ -1320,7 +1320,7 @@ class tp_gateway extends CI_Controller {
                             "contactNumber" => array(
                                 "countryCode" => "+65",
                                 "areaCode" => "",
-                                "phoneNumber" => $employerContactNumber
+                                "phoneNumber" => "98765478"
                             ),
                             "emailAddress" => $employerEmailAddress
                         )
