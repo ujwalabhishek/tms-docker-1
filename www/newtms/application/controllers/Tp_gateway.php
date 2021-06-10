@@ -1224,15 +1224,17 @@ class tp_gateway extends CI_Controller {
         $trainingPartnerUEN = $tenant_details->comp_reg_no;
         $trainingPartnerCode = $tenant_details->comp_reg_no . '-01';
 
-//        if (TPG_ENVIRONMENT == 'PRODUCTION') {
-//            $courseReferenceNumber = $courseReferenceNumber;
-//            $trainingPartnerUEN = $trainingPartnerUEN;
-//            $trainingPartnerCode = $trainingPartnerCode;
-//        } else {
-//            $courseReferenceNumber = 'TGS-2020002096';
-//            $trainingPartnerUEN = '201000372W';
-//            $trainingPartnerCode = '201000372W-01';
-//        }
+        if (TPG_ENVIRONMENT == 'PRODUCTION') {
+            $courseReferenceNumber = $courseReferenceNumber;
+            $courseRunId = $courseRunId;
+            $trainingPartnerUEN = $trainingPartnerUEN;
+            $trainingPartnerCode = $trainingPartnerCode;
+        } else {
+            $courseReferenceNumber = 'TGS-2020002096';
+            $courseRunId = '52204';
+            $trainingPartnerUEN = '201000372W';
+            $trainingPartnerCode = '201000372W-03';
+        }
 
 //        $tpg_enrolment_json = '{
 //                                "enrolment": {
@@ -1333,8 +1335,8 @@ class tp_gateway extends CI_Controller {
         $tpg_enrolment_encoded = json_encode($tpg_enrolment_json);
         //print_r($tpg_enrolment_json);exit;
         $api_version = 'v1';
-        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
-        //$url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
+        //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
+        $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $request = $this->curl_request('POST', $url, $tpg_enrolment_encoded, $api_version);
 
 
