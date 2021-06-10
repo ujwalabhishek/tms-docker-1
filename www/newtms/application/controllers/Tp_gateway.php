@@ -1359,6 +1359,9 @@ class tp_gateway extends CI_Controller {
         $data['courseRunId'] = $courseRunId;
         
         $data['$traineeSponsorshipType'] = $traineeSponsorshipType;
+        
+        $data['courseId'] = $this->input->post('courseId');
+        $data['classId'] = $this->input->post('classId');
                         
         $data['tpg_json_data'] = $tpg_enrolment_json_data;
         $data['sideMenuData'] = fetch_non_main_page_content();
@@ -1427,31 +1430,29 @@ class tp_gateway extends CI_Controller {
 					});
 				var decrypted = cipher.toString(CryptoJS.enc.Utf8);
 				$('#out_a').html(decrypted);
-			  }</script>";
-        print_r($tpg_enrolment_decoded);
-        exit;
+			  }</script>";        
         
-//        $tpg_response = json_decode($response);
-//        if ($tpg_response->status == 200) {
-//            //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
-//
-//            $this->session->set_flashdata("success", "Enrolment created");
-//
-//            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
-//        } else {
-//            if ($tpg_response->status == 400) {
-//                $this->session->set_flashdata('error', "Oops! Bad request!");
-//            } elseif ($tpg_response->status == 403) {
-//                $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
-//            } elseif ($tpg_response->status == 404) {
-//                $this->session->set_flashdata('error', "Oops! Not Found!");
-//            } elseif ($tpg_response->status == 500) {
-//                $this->session->set_flashdata('error', "Oops! Internal Error!!");
-//            } else {
-//                $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
-//            }
-//            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
-//        }
+        $tpg_response = json_decode($tpg_enrolment_decoded);
+        if ($tpg_response->status == 200) {
+            //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
+
+            $this->session->set_flashdata("success", "Enrolment created");
+
+            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
+        } else {
+            if ($tpg_response->status == 400) {
+                $this->session->set_flashdata('error', $tpg_response->message);
+            } elseif ($tpg_response->status == 403) {
+                $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
+            } elseif ($tpg_response->status == 404) {
+                $this->session->set_flashdata('error', "Oops! Not Found!");
+            } elseif ($tpg_response->status == 500) {
+                $this->session->set_flashdata('error', "Oops! Internal Error!!");
+            } else {
+                $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
+            }
+            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
+        }
     }
 
 }
