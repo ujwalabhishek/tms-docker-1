@@ -1368,30 +1368,27 @@ class tp_gateway extends CI_Controller {
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $request = $this->curl_request('POST', $url, $tpg_enrolment_encoded, $api_version);
-print_r($request);exit;
 
-        echo "
-            <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
+        $tpg_enrolment_decoded = " <div id='out_a'></div>
+            
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
-            <script>                       
-
+            <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
+            <script>
             decrypt();
             function decrypt() {
-            
-                var encrypted_data = encrypt();
-                alert(encrypted_data);
-                var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
-                var cipher = CryptoJS.AES.decrypt(
-                        encrypted_data,
-                        CryptoJS.enc.Base64.parse(key), {
-                          iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
-                          mode: CryptoJS.mode.CBC,
-                          keySize: 256 / 32,
-                          padding: CryptoJS.pad.Pkcs7
-                        });
-                var decrypted = cipher.toString(CryptoJS.enc.Utf8);
-                alert(decrypted);
-            }</script>";
+            var strings = '" .$request. "';
+				var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+				var cipher = CryptoJS.AES.decrypt(
+					strings,
+					CryptoJS.enc.Base64.parse(key), {
+					  iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+					  mode: CryptoJS.mode.CBC,
+					  keySize: 256 / 32,
+					  padding: CryptoJS.pad.Pkcs7
+					});
+				var decrypted = cipher.toString(CryptoJS.enc.Utf8);
+				$('#out_a').html(decrypted);
+			  }</script>";
 
 
 
@@ -1399,8 +1396,8 @@ print_r($request);exit;
 
 
 
-//        print_r($response);
-//        exit;
+        print_r($tpg_enrolment_decoded);
+        exit;
 //        $tpg_response = json_decode($response);
 //        if ($tpg_response->status == 200) {
 //            //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
