@@ -49,7 +49,7 @@ class tp_gateway extends CI_Controller {
     }
 
     public function curl_request($mode, $url, $encrypted_data, $api_version) {
-        // echo $encrypted_data;exit;
+         echo $encrypted_data;exit;
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.pem";
         //print_r($data);exit;
@@ -602,7 +602,7 @@ class tp_gateway extends CI_Controller {
         $api_version = 'v1';
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $response = $this->curl_request('POST', $url, $encrypted_data, $api_version);
-        print_r($response); exit;
+        //print_r($response); exit;
         echo " <div id='out'></div>
             
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
@@ -1369,8 +1369,8 @@ alert(encrypted);
         $api_version = 'v1';
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
-        $request = $this->curl_request('POST', $url, $tpg_enrolment_encoded, $api_version);
-
+        $request = $this->curl_request('POST', $url, $tpg_enrolment_encoded, $api_version);        
+print_r($request);exit;
         $tpg_enrolment_decoded = "<div id='out_a'></div>
             
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
