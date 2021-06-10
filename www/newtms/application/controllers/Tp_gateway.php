@@ -1430,15 +1430,14 @@ class tp_gateway extends CI_Controller {
 					});
 				var decrypted = cipher.toString(CryptoJS.enc.Utf8);
                                 
-                                $('#demo').click(function(){
-                                   $.ajax({
-                                      type: 'POST',
-                                      url: '" . $base_url . "' + 'tp_gateway/final_data_tpg',
-                                      data: { value: decrypted }
-                                   }).done(function( msg ) {
-                                      alert('Data Saved');
-                                   });
+                                $.ajax({
+                                   type: 'POST',
+                                   url: '" . $base_url . "'tp_gateway/final_data_tpg',
+                                   data: { value: decrypted }
+                                }).done(function( msg ) {
+                                   alert('Data Saved');
                                 });
+                                
 			  }</script>";
 
 //        print_r($tpg_enrolment_decoded);
