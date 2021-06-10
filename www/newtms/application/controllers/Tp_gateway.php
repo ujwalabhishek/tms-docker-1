@@ -1334,35 +1334,35 @@ class tp_gateway extends CI_Controller {
                 )
             )
         );
-        
+
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
         //print_r($object);exit;
         $data['trainingPartnerCode'] = $trainingPartnerCode;
         $data['trainingPartnerUEN'] = $trainingPartnerUEN;
-        
+
         $data['feeCollectionStatus'] = $feeCollectionStatus;
         $data['traineeEnrolmentDate'] = $traineeEnrolmentDate;
-        
+
         $data['employerUEN'] = $employerUEN;
         $data['emploerFullName'] = $emploerFullName;
-        $data['employerEmailAddress'] = $employerEmailAddress;        
+        $data['employerEmailAddress'] = $employerEmailAddress;
         $data['employerContactNumber'] = $employerContactNumber;
-        
+
         $data['traineeId'] = $traineeId;
         $data['traineeEmailAddress'] = $traineeEmailAddress;
         $data['traineeIdType'] = $traineeIdType;
         $data['traineeDateOfBirth'] = $traineeDateOfBirth;
         $data['traineeFullName'] = $traineeFullName;
         $data['traineeContactNumber'] = $traineeContactNumber;
-        
+
         $data['courseReferenceNumber'] = $courseReferenceNumber;
         $data['courseRunId'] = $courseRunId;
-        
+
         $data['$traineeSponsorshipType'] = $traineeSponsorshipType;
-        
+
         $data['courseId'] = $this->input->post('courseId');
         $data['classId'] = $this->input->post('classId');
-                        
+
         $data['tpg_json_data'] = $tpg_enrolment_json_data;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'TPG NEW TRAINEE ENROL';
@@ -1398,7 +1398,6 @@ class tp_gateway extends CI_Controller {
 //                //return encrypted;
 //          
 //            }</script>";
-
         //$tpg_enrolment_encodeds = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $tpg_enrolment_encoded);
         //  print_r($tpg_enrolment_encoded);echo "------";exit;
     }
@@ -1409,32 +1408,33 @@ class tp_gateway extends CI_Controller {
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
-        
+
         $tpg_enrolment_decoded = "
-            
+            <div id='out'></div>
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
             
             <script>
             decrypt();
             function decrypt() {
-                    var strings = '" . $request . "';
-                    var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
-                    var cipher = CryptoJS.AES.decrypt(
-                            strings,
-                            CryptoJS.enc.Base64.parse(key), {
-                              iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
-                              mode: CryptoJS.mode.CBC,
-                              keySize: 256 / 32,
-                              padding: CryptoJS.pad.Pkcs7
-                            });
-                    var decrypted = cipher.toString(CryptoJS.enc.Utf8);
-                    return decrypted;
-			  }</script>";        
-        
+            var strings = '" . $request . "';
+				var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+				var cipher = CryptoJS.AES.decrypt(
+					strings,
+					CryptoJS.enc.Base64.parse(key), {
+					  iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+					  mode: CryptoJS.mode.CBC,
+					  keySize: 256 / 32,
+					  padding: CryptoJS.pad.Pkcs7
+					});
+				var decrypted = cipher.toString(CryptoJS.enc.Utf8);
+                                $('#out').html(decrypted);
+			  }</script>";
+
         print_r($tpg_enrolment_decoded);
-        $tpg_response = json_decode($tpg_enrolment_decoded);  
-        echo print_r($tpg_response, true); exit;
+        $tpg_response = json_decode(strip_tags($tpg_enrolment_decoded));
+        echo print_r($tpg_response, true);
+        exit;
         if ($tpg_response->status == 200) {
             //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
 
