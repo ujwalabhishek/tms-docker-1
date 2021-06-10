@@ -81,8 +81,8 @@ class tp_gateway extends CI_Controller {
             print_r(curl_error($curl));
             exit;
         } else {
-            print_r($response);exit;
-            //return $response;
+            //print_r($response);exit;
+            return $response;
         }
         curl_close($curl);
     }
