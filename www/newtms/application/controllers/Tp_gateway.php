@@ -587,7 +587,7 @@ class tp_gateway extends CI_Controller {
 
 
         $object = json_encode($object);
-        print_r($object);exit;
+        //print_r($object);exit;
         $data['trainee'] = $traine;
         $data['tpg_data'] = $object;
         $data['sideMenuData'] = fetch_non_main_page_content();
@@ -1229,11 +1229,13 @@ class tp_gateway extends CI_Controller {
             $courseRunId = $courseRunId;
             $trainingPartnerUEN = $trainingPartnerUEN;
             $trainingPartnerCode = $trainingPartnerCode;
+            $employerUEN = $employerUEN;
         } else {
             $courseReferenceNumber = 'TGS-2020002096';
             $courseRunId = '52204';
             $trainingPartnerUEN = '201000372W';
             $trainingPartnerCode = '201000372W-03';
+            $employerUEN = '201000372W';
         }
 
 //        $tpg_enrolment_json = '{
@@ -1333,13 +1335,13 @@ class tp_gateway extends CI_Controller {
 
 
         $tpg_enrolment_encoded = json_encode($tpg_enrolment_json);
-        print_r($tpg_enrolment_encoded);exit;
+        //print_r($tpg_enrolment_encoded);exit;
         //print_r($tpg_enrolment_json);exit;
         $api_version = 'v1';
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $request = $this->curl_request('POST', $url, $tpg_enrolment_encoded, $api_version);
-
+print_r($request);exit;
 
         echo " <div id='out'></div>
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
