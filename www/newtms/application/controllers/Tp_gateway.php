@@ -1322,7 +1322,7 @@ class tp_gateway extends CI_Controller {
                         )
                     ),
                     "fees" => array(
-                        "discountAmount" => 2,
+                        "discountAmount" => '2',
                         "collectionStatus" => $feeCollectionStatus
                     ),
                     "sponsorshipType" => $traineeSponsorshipType,
