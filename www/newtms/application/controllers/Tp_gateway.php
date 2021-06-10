@@ -1357,7 +1357,7 @@ class tp_gateway extends CI_Controller {
                           keySize: 256 / 32,
                           padding: CryptoJS.pad.Pkcs7
                         });
-                var encrypted  = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
+                var encrypted  =$tpg_enrolment_encoded1 = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
                 //alert(encrypted);
                 $('#out').html(encrypted);
 
@@ -1365,8 +1365,8 @@ class tp_gateway extends CI_Controller {
           
             }</script>";
         
-      $tpg_enrolment_encodeds = "$tpg_enrolment_encoded";
-        print_r($tpg_enrolment_encodeds);echo "------";exit;
+      //$tpg_enrolment_encodeds = "$tpg_enrolment_encoded";
+        print_r($tpg_enrolment_encoded1);echo "------";exit;
         $api_version = 'v1';
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
