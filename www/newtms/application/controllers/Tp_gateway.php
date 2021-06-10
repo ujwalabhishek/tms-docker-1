@@ -598,10 +598,11 @@ class tp_gateway extends CI_Controller {
 
     public function proceed_enrol_toTpg() {
         $encrypted_data = $this->input->post('tpg_data');
-        print_r($encrypted_data); exit;
+        
         $api_version = 'v1';
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $response = $this->curl_request('POST', $url, $encrypted_data, $api_version);
+        print_r($response); exit;
         echo " <div id='out'></div>
             
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
