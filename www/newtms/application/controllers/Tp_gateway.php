@@ -1179,7 +1179,7 @@ class tp_gateway extends CI_Controller {
             $traineeIdType = "Others";
         }
 
-        $traineeFullName = $traineeDetails['first_name'] . ' ' . $traineeDetails['last_name'];
+        $traineeFullName = $traineeDetails['first_name'];
         $traineeDateOfBirth = $traineeDetails['dob'];
         $traineeEmailAddress = $traineeDetails['registered_email_id'];
         $traineeContactNumber = $traineeDetails['contact_number'];
@@ -1334,24 +1334,17 @@ class tp_gateway extends CI_Controller {
         );
 
 
-        $tpg_enrolment_encoded = json_encode($tpg_enrolment_json);
-        //print_r($tpg_enrolment_encoded);exit;
+        $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
         //print_r($tpg_enrolment_json);exit;
-        $api_version = 'v1';
-        //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
-        $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
-        $request = $this->curl_request('POST', $url, $tpg_enrolment_encoded, $api_version);
-print_r($request);exit;
-
-        echo " <div id='out'></div>
+        
+        echo "
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
             <script>
             
-           
+           var val = encrypt();
             function encrypt() {
-                var tpgraw = '<?php echo $request; ?>';
-                    alert(tpgraw);
+                var tpgraw = '<?php echo $tpg_enrolment_json_data; ?>';                    
                 var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
                 var cipher = CryptoJS.AES.encrypt(
                         tpgraw,
@@ -1362,10 +1355,22 @@ print_r($request);exit;
                           padding: CryptoJS.pad.Pkcs7
                         });
                 var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
-                
+                alert(encrypted);
                 return encrypted;
           
-            }
+            }</script>";
+        
+        print_r($val);exit;
+        $api_version = 'v1';
+        //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
+        $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
+        $request = $this->curl_request('POST', $url, $tpg_enrolment_encoded, $api_version);
+
+
+        echo "
+            <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
+            <script>                       
 
             decrypt();
             function decrypt() {
