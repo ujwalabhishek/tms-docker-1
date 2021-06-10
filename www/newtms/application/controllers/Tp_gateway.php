@@ -1410,8 +1410,8 @@ class tp_gateway extends CI_Controller {
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
 
-        $tpg_enrolment_decoded = "
-            <div id='out'></div>
+        echo "
+            
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
             
@@ -1430,23 +1430,15 @@ class tp_gateway extends CI_Controller {
 					});
 				var decrypted = cipher.toString(CryptoJS.enc.Utf8);
                                 
-
-                            jQuery.ajax({
-                                type: 'POST',
-                                url: '" .$base_url. "' + 'tp_gateway/final_data_tpg',
-                                dataType: 'json',
-                                data: {decrypted: decrypted},
-                                success: function(res) {
-                                    if (res){
-
-                                    }
-                                }
-                            });
-
-
-
-
-                                
+                                $('#demo').click(function(){
+                                   $.ajax({
+                                      type: 'POST',
+                                      url: '" . $base_url . "' + 'tp_gateway/final_data_tpg',
+                                      data: { value: decrypted }
+                                   }).done(function( msg ) {
+                                      alert('Data Saved');
+                                   });
+                                });
 			  }</script>";
 
 //        print_r($tpg_enrolment_decoded);
@@ -1474,12 +1466,13 @@ class tp_gateway extends CI_Controller {
 //            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
 //        }
     }
-    
-    
-    public function final_data_tpg() {
-        $data = $this->input->post('decrypted');
-        
-        echo print_r($data); exit;
+
+    public function final_data_tpg($value) {
+        $sId = $this->session->set_userdata('sample', $value);
+        if (isset($sId)) {
+            print_r($sId);
+        exit;
+        }
     }
 
 }
