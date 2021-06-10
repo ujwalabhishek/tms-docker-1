@@ -290,6 +290,9 @@ class Classes extends CI_Controller {
             if ($this->classmodel->get_class_status($class_id) == 'Inactive') {
                 $this->session->set_flashdata("error", "You cannot Edit/Deactivate an 'INACTIVE' class.");
                 return redirect("classes");
+            }else if ($this->classmodel->get_class_status($class_id) == 'DELETED') {
+                $this->session->set_flashdata("error", "You cannot Edit a 'Deleted' class.");
+                return redirect("classes");
             } else {
                 $data['classid'] = $class_id;
                 $data['coursename'] = $this->coursemodel->course_name($course_id);

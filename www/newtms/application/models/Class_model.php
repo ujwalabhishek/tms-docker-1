@@ -221,7 +221,8 @@ class Class_Model extends CI_Model {
         }
         $deactivate_date = date('Y-m-d');
         $data = array(
-            'class_status' => 'INACTIV',
+            //'class_status' => 'INACTIV',
+            'class_status' => 'DELETED',
             'deacti_date_time' => $deactivate_date,
             'deacti_reason' => $reason_for_deactivation,
             'deacti_reason_oth' => strtoupper($other_reason_for_deactivation),
@@ -519,6 +520,8 @@ class Class_Model extends CI_Model {
             return 'In-Progress';
         } elseif ($end < $cur_date && $start < $cur_date) {
             return 'Completed';
+        } elseif ($data->class_status == 'DELETED') {
+            return 'DELETED';
         } else {
             return 'Status Unknown!!!!';  
         }
