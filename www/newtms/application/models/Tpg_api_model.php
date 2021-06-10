@@ -55,11 +55,11 @@ class Tpg_api_Model extends CI_Model {
         if(TPG_ENVIRONMENT == 'PRODUCTION'){
            $crse_ref_no = $crse_ref_no;
            $tp_uen  = $tp_uen;
-           $domain='api.ssg-wsg.sg';
+           $domain=TPG_LIVE_URL;
         }else{
           $crse_ref_no =  'TGS-2020002096';
           $tp_uen = '201000372W';
-          $domain='uat-api.ssg-wsg.sg';
+          $domain=TPG_DEV_URL;
         }
         $data =array(
             'ref_no' => $crse_ref_no,
@@ -249,7 +249,7 @@ class Tpg_api_Model extends CI_Model {
                             "end": "'.date("Ymd", strtotime($crse_end_date)).'"
                           },
                           "scheduleInfoType": {
-                            "code": "01",
+                            "code": "1",
                             "description": "'.$schedule_info_des.'"
                           },
                           "scheduleInfo": "'.$schedule_info.'",
