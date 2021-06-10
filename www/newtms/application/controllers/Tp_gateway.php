@@ -49,7 +49,7 @@ class tp_gateway extends CI_Controller {
     }
 
     public function curl_request($mode, $url, $encrypted_data, $api_version) {
-         //echo "ABDULLA - ".$encrypted_data;exit;
+         echo "ABDULLA - ".$encrypted_data;exit;
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/key.pem";
         //print_r($data);exit;
@@ -1358,7 +1358,7 @@ class tp_gateway extends CI_Controller {
                           padding: CryptoJS.pad.Pkcs7
                         });
                 var encrypted  = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
-                alert(encrypted);
+                //alert(encrypted);
                 $('#out').html(encrypted);
 
                 //return encrypted;
@@ -1366,7 +1366,7 @@ class tp_gateway extends CI_Controller {
             }</script>";
         
       
-        print_r($tpg_enrolment_encoded);exit;
+        //print_r($tpg_enrolment_encoded);exit;
         $api_version = 'v1';
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
