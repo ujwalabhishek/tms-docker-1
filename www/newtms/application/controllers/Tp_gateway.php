@@ -1238,45 +1238,45 @@ class tp_gateway extends CI_Controller {
                                 "enrolment": {
                                   "course": {
                                     "run": {
-                                      "id": "'.$courseRunId.'"
+                                      "id": "' . $courseRunId . '"
                                     },
-                                    "referenceNumber": "'.$courseReferenceNumber.'"
+                                    "referenceNumber": "' . $courseReferenceNumber . '"
                                   },
                                   "trainee": {
-                                    "id": "'.$traineeId.'",
+                                    "id": "' . $traineeId . '",
                                     "fees": {
                                       "discountAmount": 50.25,
-                                      "collectionStatus": "'.$feeCollectionStatus.'"
+                                      "collectionStatus": "' . $feeCollectionStatus . '"
                                     },
                                     "idType": {
-                                      "type": "'.$traineeIdType.'"
+                                      "type": "' . $traineeIdType . '"
                                     },
                                     "employer": {
-                                      "uen": "'.$employerUEN.'",
+                                      "uen": "' . $employerUEN . '",
                                       "contact": {
-                                        "fullName": "'.$emploerFullName.'",
-                                        "emailAddress": "'.$employerEmailAddress.'",
+                                        "fullName": "' . $emploerFullName . '",
+                                        "emailAddress": "' . $employerEmailAddress . '",
                                         "contactNumber": {
                                           "areaCode": "00",
                                           "countryCode": "65",
-                                          "phoneNumber": "'.$employerContactNumber.'"
+                                          "phoneNumber": "' . $employerContactNumber . '"
                                         }
                                       }
                                     },
-                                    "fullName": "'.$traineeFullName.'",
-                                    "dateOfBirth": "'.$traineeDateOfBirth.'",
-                                    "emailAddress": "'.$traineeEmailAddress.'",
+                                    "fullName": "' . $traineeFullName . '",
+                                    "dateOfBirth": "' . $traineeDateOfBirth . '",
+                                    "emailAddress": "' . $traineeEmailAddress . '",
                                     "contactNumber": {
                                       "areaCode": "00",
                                       "countryCode": "65",
-                                      "phoneNumber": "'.$traineeContactNumber.'"
+                                      "phoneNumber": "' . $traineeContactNumber . '"
                                     },
-                                    "enrolmentDate": "'.$traineeEnrolmentDate.'",
-                                    "sponsorshipType": "'.$traineeSponsorshipType.'"
+                                    "enrolmentDate": "' . $traineeEnrolmentDate . '",
+                                    "sponsorshipType": "' . $traineeSponsorshipType . '"
                                   },
                                   "trainingPartner": {
-                                    "uen": "'.$trainingPartnerUEN.'",
-                                    "code": "'.$trainingPartnerCode.'"
+                                    "uen": "' . $trainingPartnerUEN . '",
+                                    "code": "' . $trainingPartnerCode . '"
                                   }
                                 }
                               }';
@@ -1286,29 +1286,80 @@ class tp_gateway extends CI_Controller {
         $api_version = 'v1';
         $url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         //$url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
-        $response = $this->curl_request('POST', $url, $tpg_enrolment_json, $api_version);
-        print_r($response);exit;
-        $tpg_response = json_decode($response);
-        if ($tpg_response->status == 200) {
-            //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
+        $request = $this->curl_request('POST', $url, $tpg_enrolment_json, $api_version);
 
-            $this->session->set_flashdata("success", "Enrolment created");
 
-            redirect('class_trainee?course_id=' . $this->input->post('courseId').'&class='.$this->input->post('classId'));
-        } else {
-            if ($tpg_response->status == 400) {
-                $this->session->set_flashdata('error', "Oops! Bad request!");
-            } elseif ($tpg_response->status == 403) {
-                $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
-            } elseif ($tpg_response->status == 404) {
-                $this->session->set_flashdata('error', "Oops! Not Found!");
-            } elseif ($tpg_response->status == 500) {
-                $this->session->set_flashdata('error', "Oops! Internal Error!!");
-            } else {
-                $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
+        echo " <div id='out'></div>
+            <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
+            <script>
+            
+           
+            function encrypt() {
+                var tpgraw = '<?php echo $request; ?>';
+                    alert(tpgraw);
+                var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+                var cipher = CryptoJS.AES.encrypt(
+                        tpgraw,
+                        CryptoJS.enc.Base64.parse(key), {
+                          iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+                          mode: CryptoJS.mode.CBC,
+                          keySize: 256 / 32,
+                          padding: CryptoJS.pad.Pkcs7
+                        });
+                var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
+                
+                return encrypted;
+          
             }
-            redirect('class_trainee?course_id=' . $this->input->post('courseId').'&class='.$this->input->post('classId'));          
-        }
+
+            decrypt();
+            function decrypt() {
+            
+                var encrypted_data = encrypt();
+                alert(encrypted_data);
+                var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+                var cipher = CryptoJS.AES.decrypt(
+                        encrypted_data,
+                        CryptoJS.enc.Base64.parse(key), {
+                          iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+                          mode: CryptoJS.mode.CBC,
+                          keySize: 256 / 32,
+                          padding: CryptoJS.pad.Pkcs7
+                        });
+                var decrypted = cipher.toString(CryptoJS.enc.Utf8);
+                alert(decrypted);
+            }</script>";
+
+
+
+
+
+
+
+//        print_r($response);
+//        exit;
+//        $tpg_response = json_decode($response);
+//        if ($tpg_response->status == 200) {
+//            //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
+//
+//            $this->session->set_flashdata("success", "Enrolment created");
+//
+//            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
+//        } else {
+//            if ($tpg_response->status == 400) {
+//                $this->session->set_flashdata('error', "Oops! Bad request!");
+//            } elseif ($tpg_response->status == 403) {
+//                $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
+//            } elseif ($tpg_response->status == 404) {
+//                $this->session->set_flashdata('error', "Oops! Not Found!");
+//            } elseif ($tpg_response->status == 500) {
+//                $this->session->set_flashdata('error', "Oops! Internal Error!!");
+//            } else {
+//                $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
+//            }
+//            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
+//        }
     }
 
 }
