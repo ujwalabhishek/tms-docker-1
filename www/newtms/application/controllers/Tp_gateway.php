@@ -1337,7 +1337,7 @@ class tp_gateway extends CI_Controller {
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
         //print_r($tpg_enrolment_json);exit;
          //echo "<script>alert('" . $error . "')</script>";
-        echo "<div id='out'></div>
+        $tpg_enrolment_encoded = "<div id='out'></div>
             
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
@@ -1356,14 +1356,14 @@ class tp_gateway extends CI_Controller {
                           padding: CryptoJS.pad.Pkcs7
                         });
                 var encrypted  = CryptoJS.enc.Base64.stringify(cipher.ciphertext);               
-                $('#out').html(encrypted);    
+                $('#out').html(encrypted);
 //alert(encrypted);
                 //return encrypted;
           
             }</script>";
-        die;exit;
+        
       
-        print_r($tpg_enrolment_json_data);exit;
+        print_r($tpg_enrolment_encoded);exit;
         $api_version = 'v1';
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
