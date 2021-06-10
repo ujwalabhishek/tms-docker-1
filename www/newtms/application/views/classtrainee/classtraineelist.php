@@ -241,6 +241,7 @@
                         <th width="10%" class="th_header">Class Status</th>
                         <th width="9%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=ce.payment_status&o=" . $ancher; ?>">Payment</a></th>
                         <th width="13%" class="th_header">Action</th>
+                        <th width="13%" class="th_header">TPG</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -296,6 +297,10 @@
                              $tr .= '</tr>';
                             echo $tr;*/-->
                     <tr>
+                        <?php
+                            $atr = 'id="tpg_form" name="tpg_form" method="post"';
+                            echo form_open("tp_gateway/send_trainee_enrolment_data_tpg", $atr);
+                            ?>
                                 <td><?php echo $row['taxcode'] ;?></td>
                          
                                   <td class="name">
@@ -350,6 +355,20 @@
                                 </td>
                                 <td><?php echo $row['paid'] ;?></td>
                                 <td><?php echo $row['action_link'];?></td>
+                                <td>
+                                    <input type="hidden" name="courseRunId" value="<?php echo $row['tpg_course_run_id']; ?>" id="courseRunId">
+                                    <input type="hidden" name="courseReferenceNumber" value="<?php echo $row['reference_num']; ?>" id="courseReferenceNumber">
+                                    <input type="hidden" name="userId" value="<?php echo $row['user_id']; ?>" id="userId">
+                                    <input type="hidden" name="enrolmentMode" value="<?php echo $row['enrolment_mode']; ?>" id="enrolmentMode">
+                                    <input type="hidden" name="paymentStatus" value="<?php echo $row['payment_status']; ?>" id="paymentStatus">
+                                    <input type="hidden" name="companyId" value="<?php echo $row['company_id']; ?>" id="companyId">
+                                    
+                                    <input type="hidden" name="courseId" value="<?php echo $row['course_id']; ?>" id="courseId">
+                                    <input type="hidden" name="classId" value="<?php echo $row['class_id']; ?>" id="classId">
+                                    
+                                    <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" />Submit To TPG</button>
+                                </td>
+                                <?php echo form_close(); ?>
                              </tr>
                        <?php }
                     } 

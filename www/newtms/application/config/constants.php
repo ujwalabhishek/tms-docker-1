@@ -156,4 +156,6 @@ define('GOOGLE_CAPTCHA_SECRETKEY', "6Le7puAUAAAAAISg1yqxoXAur7FxGj5u9a-OSd66");
 define('FRCSMAILID', "nsadivya@mailinator.com"); 
 ////added by shubhranshu for TPG Gateway Environment variable
 //define('TPG_ENVIRONMENT', "PRODUCTION"); 
-define('TPG_ENVIRONMENT', "DEVELOPEMENT"); 
+define('TPG_ENVIRONMENT', "DEVELOPEMENT");
+define('TPG_LIVE_URL', "api.ssg-wsg.sg");
+define('TPG_DEV_URL', "uat-api.ssg-wsg.sg");
