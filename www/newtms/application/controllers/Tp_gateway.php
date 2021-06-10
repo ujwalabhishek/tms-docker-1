@@ -1410,7 +1410,7 @@ class tp_gateway extends CI_Controller {
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
         
-        $tpg_enrolment_decoded = "<div id='out_a'></div>
+        $tpg_enrolment_decoded = "
             
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
@@ -1418,18 +1418,18 @@ class tp_gateway extends CI_Controller {
             <script>
             decrypt();
             function decrypt() {
-            var strings = '" . $request . "';
-				var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
-				var cipher = CryptoJS.AES.decrypt(
-					strings,
-					CryptoJS.enc.Base64.parse(key), {
-					  iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
-					  mode: CryptoJS.mode.CBC,
-					  keySize: 256 / 32,
-					  padding: CryptoJS.pad.Pkcs7
-					});
-				var decrypted = cipher.toString(CryptoJS.enc.Utf8);
-				$('#out_a').html(decrypted);
+                    var strings = '" . $request . "';
+                    var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+                    var cipher = CryptoJS.AES.decrypt(
+                            strings,
+                            CryptoJS.enc.Base64.parse(key), {
+                              iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+                              mode: CryptoJS.mode.CBC,
+                              keySize: 256 / 32,
+                              padding: CryptoJS.pad.Pkcs7
+                            });
+                    var decrypted = cipher.toString(CryptoJS.enc.Utf8);
+                    return decrypted;
 			  }</script>";        
         
         print_r($tpg_enrolment_decoded);
