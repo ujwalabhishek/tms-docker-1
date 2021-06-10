@@ -1468,7 +1468,9 @@ class tp_gateway extends CI_Controller {
     }
 
     public function final_data_tpg($value) {
-        $sId = $this->session->set_userdata('sample', $value);
+        $this->session->set_userdata('sample', $value);
+        
+        $sId = $this->session->userdata('session_id');
         if (isset($sId)) {
             print_r($sId);
         exit;
