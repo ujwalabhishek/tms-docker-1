@@ -1410,7 +1410,7 @@ class tp_gateway extends CI_Controller {
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
 
-        echo "
+        $tpg_enrolment_decoded = "<div id='out'></div>
             
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
@@ -1418,7 +1418,7 @@ class tp_gateway extends CI_Controller {
             <script>
             decrypt();
             function decrypt() {
-            var strings = '" . $request . "';
+                                var strings = '" . $request . "';
 				var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
 				var cipher = CryptoJS.AES.decrypt(
 					strings,
@@ -1429,18 +1429,21 @@ class tp_gateway extends CI_Controller {
 					  padding: CryptoJS.pad.Pkcs7
 					});
 				var decrypted = cipher.toString(CryptoJS.enc.Utf8);
-                                
-                                $.ajax({
-                                   type: 'POST',
-                                   url: '" . $base_url . "'tp_gateway/final_data_tpg',
-                                   data: { value: decrypted }
-                                }).done(function( msg ) {
-                                   alert('Data Saved');
-                                });
+                                $('#out').html(decrypted);
+                               
                                 
 			  }</script>";
+        
+         //$.ajax({
+         //                          type: 'POST',
+          //                         url: '" . $base_url . "tp_gateway/final_data_tpg',
+           //                        data: { value: decrypted }
+            //                    }).done(function( msg ) {
+             //                      alert('Data Saved');
+             //                   });
+        
 
-//        print_r($tpg_enrolment_decoded);
+        print_r($tpg_enrolment_decoded); exit;
 //        $tpg_response = json_decode(strip_tags($tpg_enrolment_decoded));
 //        echo print_r($tpg_response, true);
 //        exit;
@@ -1468,11 +1471,11 @@ class tp_gateway extends CI_Controller {
 
     public function final_data_tpg($value) {
         $this->session->set_userdata('sample', $value);
-        
+
         $sId = $this->session->userdata('session_id');
         if (isset($sId)) {
             print_r($sId);
-        exit;
+            exit;
         }
     }
 
