@@ -1418,9 +1418,8 @@ class tp_gateway extends CI_Controller {
         $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
         $tpg_response = json_decode($tpg_enrolment_decoded);
-        print_r($tpg_response->error->details[0]->message); exit;
+        //print_r($tpg_response->error->details[0]->message); exit;
         
-
         if ($tpg_response->status == 200) {
             //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
 
@@ -1429,15 +1428,15 @@ class tp_gateway extends CI_Controller {
             redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
         } else {
             if ($tpg_response->status == 400) {
-                $this->session->set_flashdata('error', $tpg_response->error->details->message);
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             } elseif ($tpg_response->status == 403) {
-                $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             } elseif ($tpg_response->status == 404) {
-                $this->session->set_flashdata('error', "Oops! Not Found!");
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             } elseif ($tpg_response->status == 500) {
-                $this->session->set_flashdata('error', "Oops! Internal Error!!");
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             } else {
-                $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             }
             redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
         }
