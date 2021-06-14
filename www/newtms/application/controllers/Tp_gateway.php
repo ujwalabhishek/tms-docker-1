@@ -1405,85 +1405,40 @@ class tp_gateway extends CI_Controller {
     public function response_trainee_enrolment_data_tpg() {
         $encrypted_data = $this->input->post('tpg_data');
         $api_version = 'v1';
-        $base_url = base_url();
+        
         //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
-        $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
-
-        $this->final_data_tpg($request);
-        
-//        $tpg_enrolment_decoded = "<div id='out'></div>
-//            
-//            <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
-//            <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
-//            
-//            <script>
-//            decrypt();
-//            function decrypt() {
-//                                var strings = '" . $request . "';
-//				var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
-//				var cipher = CryptoJS.AES.decrypt(
-//					strings,
-//					CryptoJS.enc.Base64.parse(key), {
-//					  iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
-//					  mode: CryptoJS.mode.CBC,
-//					  keySize: 256 / 32,
-//					  padding: CryptoJS.pad.Pkcs7
-//					});
-//				var decrypted = cipher.toString(CryptoJS.enc.Utf8);
-//                                $('#out').html(decrypted);                                                               
-//			  }</script>";
-
-        //$.ajax({
-        //                          type: 'POST',
-        //                         url: '" . $base_url . "tp_gateway/final_data_tpg',
-        //                        data: { value: decrypted }
-        //                    }).done(function( msg ) {
-        //                      alert('Data Saved');
-        //                   });
-
-
-        //print_r($tpg_enrolment_decoded);
-        //exit;
-//        $tpg_response = json_decode(strip_tags($tpg_enrolment_decoded));
-//        echo print_r($tpg_response, true);
-//        exit;
-//        if ($tpg_response->status == 200) {
-//            //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
-//
-//            $this->session->set_flashdata("success", "Enrolment created");
-//
-//            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
-//        } else {
-//            if ($tpg_response->status == 400) {
-//                $this->session->set_flashdata('error', $tpg_response->message);
-//            } elseif ($tpg_response->status == 403) {
-//                $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
-//            } elseif ($tpg_response->status == 404) {
-//                $this->session->set_flashdata('error', "Oops! Not Found!");
-//            } elseif ($tpg_response->status == 500) {
-//                $this->session->set_flashdata('error', "Oops! Internal Error!!");
-//            } else {
-//                $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
-//            }
-//            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
-//        }
-    }
-
-    public function final_data_tpg($value) {
-
+        $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);        
+ 
         //$output = false;
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
 
-        $output = openssl_decrypt($value, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+        $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
-        
-        "aaaa ".print_r($output);
-        exit;
-        
-        //return $output;
-    }
+        $tpg_response = json_decode($tpg_enrolment_decoded);
+
+        if ($tpg_response->status == 200) {
+            //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
+
+            $this->session->set_flashdata("success", "Enrolment created");
+
+            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
+        } else {
+            if ($tpg_response->status == 400) {
+                $this->session->set_flashdata('error', $tpg_response->message);
+            } elseif ($tpg_response->status == 403) {
+                $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
+            } elseif ($tpg_response->status == 404) {
+                $this->session->set_flashdata('error', "Oops! Not Found!");
+            } elseif ($tpg_response->status == 500) {
+                $this->session->set_flashdata('error', "Oops! Internal Error!!");
+            } else {
+                $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
+            }
+            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
+        }
+    }   
 
 }
