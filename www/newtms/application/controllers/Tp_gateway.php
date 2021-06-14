@@ -1410,40 +1410,41 @@ class tp_gateway extends CI_Controller {
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
 
-        $tpg_enrolment_decoded = "<div id='out'></div>
-            
-            <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
-            <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
-            
-            <script>
-            decrypt();
-            function decrypt() {
-                                var strings = '" . $request . "';
-				var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
-				var cipher = CryptoJS.AES.decrypt(
-					strings,
-					CryptoJS.enc.Base64.parse(key), {
-					  iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
-					  mode: CryptoJS.mode.CBC,
-					  keySize: 256 / 32,
-					  padding: CryptoJS.pad.Pkcs7
-					});
-				var decrypted = cipher.toString(CryptoJS.enc.Utf8);
-                                $('#out').html(decrypted);
-                               
-                                
-			  }</script>";
+        $this->final_data_tpg($request);
         
-         //$.ajax({
-         //                          type: 'POST',
-          //                         url: '" . $base_url . "tp_gateway/final_data_tpg',
-           //                        data: { value: decrypted }
-            //                    }).done(function( msg ) {
-             //                      alert('Data Saved');
-             //                   });
-        
+//        $tpg_enrolment_decoded = "<div id='out'></div>
+//            
+//            <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
+//            <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
+//            
+//            <script>
+//            decrypt();
+//            function decrypt() {
+//                                var strings = '" . $request . "';
+//				var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+//				var cipher = CryptoJS.AES.decrypt(
+//					strings,
+//					CryptoJS.enc.Base64.parse(key), {
+//					  iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+//					  mode: CryptoJS.mode.CBC,
+//					  keySize: 256 / 32,
+//					  padding: CryptoJS.pad.Pkcs7
+//					});
+//				var decrypted = cipher.toString(CryptoJS.enc.Utf8);
+//                                $('#out').html(decrypted);                                                               
+//			  }</script>";
 
-        print_r($tpg_enrolment_decoded); exit;
+        //$.ajax({
+        //                          type: 'POST',
+        //                         url: '" . $base_url . "tp_gateway/final_data_tpg',
+        //                        data: { value: decrypted }
+        //                    }).done(function( msg ) {
+        //                      alert('Data Saved');
+        //                   });
+
+
+        //print_r($tpg_enrolment_decoded);
+        //exit;
 //        $tpg_response = json_decode(strip_tags($tpg_enrolment_decoded));
 //        echo print_r($tpg_response, true);
 //        exit;
@@ -1470,13 +1471,19 @@ class tp_gateway extends CI_Controller {
     }
 
     public function final_data_tpg($value) {
-        $this->session->set_userdata('sample', $value);
 
-        $sId = $this->session->userdata('session_id');
-        if (isset($sId)) {
-            print_r($sId);
-            exit;
-        }
+        //$output = false;
+        $encrypt_method = "AES-256-CBC";
+        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+        $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
+
+        $output = openssl_decrypt($value, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+
+        
+        "aaaa ".print_r($output);
+        exit;
+        
+        //return $output;
     }
 
 }
