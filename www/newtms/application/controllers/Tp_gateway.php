@@ -1185,9 +1185,7 @@ class tp_gateway extends CI_Controller {
         $traineeDateOfBirth = $traineeDetails['dob'];
         $traineeEmailAddress = $traineeDetails['registered_email_id'];
         $traineeContactNumber = $traineeDetails['contact_number'];
-        $traineeEnrolmentDate = date("Y-m-d");
-
-        echo "aaa ".$traineeEnrolmentDate; exit;
+        $traineeEnrolmentDate = date("Y-m-d");       
         
         $enrolmentMode = $this->input->post('enrolmentMode');
         $tenant_id = $this->tenant_id;
