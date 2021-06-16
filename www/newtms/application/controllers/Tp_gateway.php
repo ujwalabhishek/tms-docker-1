@@ -1370,8 +1370,8 @@ class tp_gateway extends CI_Controller {
         }
     }
 
-     public function view_enrolment_tpg($enrolmentReferenceNumber) {
-        
+    public function view_enrolment_tpg($enrolmentReferenceNumber) {
+
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
@@ -1379,14 +1379,41 @@ class tp_gateway extends CI_Controller {
         $api_version = 'v1';
         $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/details/" . $enrolmentReferenceNumber;
 
-        $request = $this->curl_request('GET', $url, "", $api_version);        
+        $request = $this->curl_request('GET', $url, "", $api_version);
 
         $output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
-               
+
         $tpg_response = json_decode($output);
 
         if ($tpg_response->status == 200) {
-            print_r($tpg_response); exit;
+            $data['enrolmentReferenceNumber'] = $enrolmentReferenceNumber;
+            
+            echo $tpg_response->data->enrolment[0]->referenceNumber; exit;
+            
+            $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
+            $data['status'] = $tpg_response->data->enrolment[0]->status;
+            $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
+            $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
+            $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
+            $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
+            $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
+
+
+
+
+
+
+
+
+
+
+            $data['sideMenuData'] = fetch_non_main_page_content();
+            $data['page_title'] = 'TPG VIEW ENROL DATA';
+            $data['main_content'] = 'classtrainee/enrol_trainee_tpg';
+            $this->load->view('layout', $data);
+
+            print_r($tpg_response);
+            exit;
         } else {
             if ($tpg_response->status == 400) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
@@ -1401,7 +1428,6 @@ class tp_gateway extends CI_Controller {
             }
             redirect('class_trainee');
         }
-        
     }
-    
+
 }
