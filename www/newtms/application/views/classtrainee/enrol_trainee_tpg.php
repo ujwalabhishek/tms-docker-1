@@ -29,6 +29,7 @@
                         <textarea type="hidden" style="display:none;" id='tpg_data' name="tpg_data" ></textarea>
                         <input type="hidden" name="courseId" value="<?php echo $courseId; ?>" id="courseId">
                         <input type="hidden" name="classId" value="<?php echo $classId; ?>" id="classId">
+                        <input type="hidden" name="userId" value="<?php echo $userId; ?>" id="userId">
                         <label style="color:blue;font-weight:bold">New enrollment(s)</label>
                     </td>                           
                 </tr>

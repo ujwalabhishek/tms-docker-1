@@ -335,6 +335,27 @@ class Tpg_api_Model extends CI_Model {
         return $obj;
     }
     
-
-
+    public function updateEnrolmentReferenceNumber($course_id,$class_id,$user_id,$enrolmentReferenceNumber){
+        
+        if(!empty($enrolmentReferenceNumber)){
+            $tenantId = $this->session->userdata('userDetails')->tenant_id;
+            $data = array(
+                       'tpg_enrolment_ref_no' => $enrolmentReferenceNumber
+                   );
+           $this->db->trans_start();
+           $this->db->where('tenant_id', $tenantId);
+           $this->db->where('course_id', $course_id);
+           $this->db->where('class_id', $class_id);
+           $this->db->where('user_id', $user_id);
+           $this->db->update('class_enrol', $data);
+           $this->db->trans_complete();
+           if ($this->db->trans_status() === FALSE) {
+               return false;
+           }
+           return true;
+        }else{
+            return false;
+        }
+        
+    }
 }

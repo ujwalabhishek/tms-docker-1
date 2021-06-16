@@ -1237,9 +1237,9 @@ class tp_gateway extends CI_Controller {
         } else {
             $courseReferenceNumber = 'TGS-2020002110';
             $courseRunId = '49842';
-            $trainingPartnerUEN = '201003953Z';
-            $trainingPartnerCode = '201003953Z-01';
-            $employerUEN = '201003953Z';
+            $trainingPartnerUEN = '201000372W';
+            $trainingPartnerCode = '201000372W-03';
+            $employerUEN = '201000372W';
         }
 
         $tpg_enrolment_json = array(
@@ -1316,6 +1316,7 @@ class tp_gateway extends CI_Controller {
 
         $data['courseId'] = $this->input->post('courseId');
         $data['classId'] = $this->input->post('classId');
+        $data['userId'] = $userId;
 
         $data['tpg_json_data'] = $tpg_enrolment_json_data;
         $data['sideMenuData'] = fetch_non_main_page_content();
@@ -1326,6 +1327,9 @@ class tp_gateway extends CI_Controller {
 
     public function response_trainee_enrolment_data_tpg() {
         $encrypted_data = $this->input->post('tpg_data');
+        $course_id = $this->input->post('courseId');
+        $class_id = $this->input->post('classId');
+        $user_id = $this->input->post('userId');
         $api_version = 'v1';
         
         $url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
@@ -1342,11 +1346,14 @@ class tp_gateway extends CI_Controller {
         $tpg_response = json_decode($tpg_enrolment_decoded);        
         
         if ($tpg_response->status == 200) {
-            //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
+            $enrolmentReferenceNumber = $tpg_response->data->enrolment[0]->referenceNumber;            
 
-            $this->session->set_flashdata("success", "Enrolment has been created with reference number - ".$tpg_response->data->enrolment[0]->referenceNumber);
-
-            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
+            $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id,$class_id,$user_id,$enrolmentReferenceNumber);
+            
+            if($updated) {
+                $this->session->set_flashdata("success", "Enrolment has been created with reference number - ".$enrolmentReferenceNumber);
+            }
+            redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         } else {
             if ($tpg_response->status == 400) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
@@ -1359,7 +1366,7 @@ class tp_gateway extends CI_Controller {
             } else {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             }
-            redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
+            redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         }
     }   
 
