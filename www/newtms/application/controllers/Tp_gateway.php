@@ -1339,13 +1339,12 @@ class tp_gateway extends CI_Controller {
 
         $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
-        $tpg_response = json_decode($tpg_enrolment_decoded);
-        print_r($tpg_response); exit;
+        $tpg_response = json_decode($tpg_enrolment_decoded);        
         
         if ($tpg_response->status == 200) {
             //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
 
-            $this->session->set_flashdata("success", "Enrolment created");
+            $this->session->set_flashdata("success", "Enrolment has been created with reference number - ".$tpg_response->data->enrolment[0]->referenceNumber);
 
             redirect('class_trainee?course_id=' . $this->input->post('courseId') . '&class=' . $this->input->post('classId'));
         } else {
