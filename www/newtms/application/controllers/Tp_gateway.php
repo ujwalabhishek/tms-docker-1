@@ -1381,9 +1381,27 @@ class tp_gateway extends CI_Controller {
 
         $request = $this->curl_request('GET', $url, "", $api_version);        
 
-        //$output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+        $output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+               
+        $tpg_response = json_decode($output);
+
+        if ($tpg_response->status == 200) {
+            print_r($tpg_response); exit;
+        } else {
+            if ($tpg_response->status == 400) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 403) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 404) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 500) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } else {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            }
+            redirect('class_trainee');
+        }
         
-        print_r($request); exit;
     }
     
 }
