@@ -1376,10 +1376,8 @@ class tp_gateway extends CI_Controller {
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
 
-        $output_a = openssl_encrypt($enrolmentReferenceNumber, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
-        
         $api_version = 'v1';
-        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/details/" . $output_a;
+        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/details/" . $enrolmentReferenceNumber;
 
         $request = $this->curl_request('GET', $url, "", $api_version);        
 
