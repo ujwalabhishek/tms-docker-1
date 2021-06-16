@@ -1229,14 +1229,14 @@ class tp_gateway extends CI_Controller {
         $trainingPartnerCode = $tenant_details->comp_reg_no . '-01';
 
         if (TPG_ENVIRONMENT == 'PRODUCTION') {
-//            $courseReferenceNumber = $courseReferenceNumber;
-//            $courseRunId = $courseRunId;
+            $courseReferenceNumber = $courseReferenceNumber;
+            $courseRunId = $courseRunId;
             $trainingPartnerUEN = $trainingPartnerUEN;
             $trainingPartnerCode = $trainingPartnerCode;
             $employerUEN = $employerUEN;
         } else {
-//            $courseReferenceNumber = 'TGS-2020002106';
-//            $courseRunId = '52204';
+            $courseReferenceNumber = 'TGS-2020002106';
+            $courseRunId = '52204';
             $trainingPartnerUEN = '201000372W';
             $trainingPartnerCode = '201000372W-03';
             $employerUEN = '201000372W';
