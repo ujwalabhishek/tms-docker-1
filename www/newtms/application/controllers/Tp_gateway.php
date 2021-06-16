@@ -1235,8 +1235,8 @@ class tp_gateway extends CI_Controller {
             $trainingPartnerCode = $trainingPartnerCode;
             $employerUEN = $employerUEN;
         } else {
-            $courseReferenceNumber = 'TGS-2020002096';
-            $courseRunId = '224588';
+            $courseReferenceNumber = 'TGS-2020002106';
+            $courseRunId = '52204';
             $trainingPartnerUEN = '201000372W';
             $trainingPartnerCode = '201000372W-03';
             $employerUEN = '201000372W';
