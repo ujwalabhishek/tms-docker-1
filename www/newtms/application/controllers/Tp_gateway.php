@@ -1185,7 +1185,7 @@ class tp_gateway extends CI_Controller {
         $traineeDateOfBirth = $traineeDetails['dob'];
         $traineeEmailAddress = $traineeDetails['registered_email_id'];
         $traineeContactNumber = $traineeDetails['contact_number'];
-        $traineeEnrolmentDate = "2021-06-10";
+        $traineeEnrolmentDate = date("Y-m-d");
 
         $enrolmentMode = $this->input->post('enrolmentMode');
         $tenant_id = $this->tenant_id;
@@ -1218,75 +1218,29 @@ class tp_gateway extends CI_Controller {
             $feeCollectionStatus = "Full Payment";
         } else if ($paymentStatus == 'NOTPAID') {
             $feeCollectionStatus = "Pending Payment";
-        } else if ($paymentStatus == 'PYNOTREQD') {
+        } else if($paymentStatus == 'PARTPAID') { 
             $feeCollectionStatus = "Partial Payment";
+        } else if ($paymentStatus == 'PYNOTREQD') {
+            $feeCollectionStatus = "Pending Payment";
         }
 
         //Training Partner
         $trainingPartnerUEN = $tenant_details->comp_reg_no;
         $trainingPartnerCode = $tenant_details->comp_reg_no . '-01';
 
-        if (TPG_ENVIRONMENT == 'PRODUCTION') {
-            $courseReferenceNumber = $courseReferenceNumber;
-            $courseRunId = $courseRunId;
-            $trainingPartnerUEN = $trainingPartnerUEN;
-            $trainingPartnerCode = $trainingPartnerCode;
-            $employerUEN = $employerUEN;
-        } else {
-            $courseReferenceNumber = 'TGS-2020002106';
-            $courseRunId = '52204';
-            $trainingPartnerUEN = '201000372W';
-            $trainingPartnerCode = '201000372W-03';
-            $employerUEN = '201000372W';
-        }
-
-//        $tpg_enrolment_json = '{
-//                                "enrolment": {
-//                                  "course": {
-//                                    "run": {
-//                                      "id": "' . $courseRunId . '"
-//                                    },
-//                                    "referenceNumber": "' . $courseReferenceNumber . '"
-//                                  },
-//                                  "trainee": {
-//                                    "id": "' . $traineeId . '",
-//                                    "fees": {
-//                                      "discountAmount": 50.25,
-//                                      "collectionStatus": "' . $feeCollectionStatus . '"
-//                                    },
-//                                    "idType": {
-//                                      "type": "' . $traineeIdType . '"
-//                                    },
-//                                    "employer": {
-//                                      "uen": "' . $employerUEN . '",
-//                                      "contact": {
-//                                        "fullName": "' . $emploerFullName . '",
-//                                        "emailAddress": "' . $employerEmailAddress . '",
-//                                        "contactNumber": {
-//                                          "areaCode": "00",
-//                                          "countryCode": "65",
-//                                          "phoneNumber": "' . $employerContactNumber . '"
-//                                        }
-//                                      }
-//                                    },
-//                                    "fullName": "' . $traineeFullName . '",
-//                                    "dateOfBirth": "' . $traineeDateOfBirth . '",
-//                                    "emailAddress": "' . $traineeEmailAddress . '",
-//                                    "contactNumber": {
-//                                      "areaCode": "00",
-//                                      "countryCode": "65",
-//                                      "phoneNumber": "' . $traineeContactNumber . '"
-//                                    },
-//                                    "enrolmentDate": "' . $traineeEnrolmentDate . '",
-//                                    "sponsorshipType": "' . $traineeSponsorshipType . '"
-//                                  },
-//                                  "trainingPartner": {
-//                                    "uen": "' . $trainingPartnerUEN . '",
-//                                    "code": "' . $trainingPartnerCode . '"
-//                                  }
-//                                }
-//                              }';
-
+//        if (TPG_ENVIRONMENT == 'PRODUCTION') {
+//            $courseReferenceNumber = $courseReferenceNumber;
+//            $courseRunId = $courseRunId;
+//            $trainingPartnerUEN = $trainingPartnerUEN;
+//            $trainingPartnerCode = $trainingPartnerCode;
+//            $employerUEN = $employerUEN;
+//        } else {
+//            $courseReferenceNumber = 'TGS-2020002106';
+//            $courseRunId = '52204';
+//            $trainingPartnerUEN = '201000372W';
+//            $trainingPartnerCode = '201000372W-03';
+//            $employerUEN = '201000372W';
+//        }
 
         $tpg_enrolment_json = array(
             "enrolment" => array(
@@ -1310,7 +1264,7 @@ class tp_gateway extends CI_Controller {
                     "contactNumber" => array(
                         "countryCode" => "+65",
                         "areaCode" => "",
-                        "phoneNumber" => "98765498"
+                        "phoneNumber" => $traineeContactNumber
                     ),
                     "emailAddress" => $traineeEmailAddress,
                     "sponsorshipType" => "EMPLOYER",
@@ -1321,7 +1275,7 @@ class tp_gateway extends CI_Controller {
                             "contactNumber" => array(
                                 "countryCode" => "+65",
                                 "areaCode" => "",
-                                "phoneNumber" => "98765478"
+                                "phoneNumber" => $employerContactNumber
                             ),
                             "emailAddress" => $employerEmailAddress
                         )
@@ -1368,46 +1322,14 @@ class tp_gateway extends CI_Controller {
         $data['page_title'] = 'TPG NEW TRAINEE ENROL';
         $data['main_content'] = 'classtrainee/enrol_trainee_tpg';
         $this->load->view('layout', $data);
-
-//print_r($tpg_enrolment_json);exit;
-//        $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-//
-//        //echo "<script>alert('" . $error . "')</script>";
-//        $tpg_enrolment_encoded = "<div id='out'></div>
-//            
-//            <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
-//            <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
-//            <script>
-//            
-//           var val = encrypt();
-//            function encrypt() {
-//                var tpgraw = '" . $tpg_enrolment_json_data . "';                    
-//                var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
-//                var cipher = CryptoJS.AES.encrypt(
-//                        tpgraw,
-//                        CryptoJS.enc.Base64.parse(key), {
-//                          iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
-//                          mode: CryptoJS.mode.CBC,
-//                          keySize: 256 / 32,
-//                          padding: CryptoJS.pad.Pkcs7
-//                        });
-//                var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
-//                //alert(encrypted);
-//                $('#out').html(encrypted);
-//
-//                //return encrypted;
-//          
-//            }</script>";
-        //$tpg_enrolment_encodeds = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $tpg_enrolment_encoded);
-        //  print_r($tpg_enrolment_encoded);echo "------";exit;
     }
 
     public function response_trainee_enrolment_data_tpg() {
         $encrypted_data = $this->input->post('tpg_data');
         $api_version = 'v1';
         
-        //$url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
-        $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
+        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
+        //$url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);        
  
         //$output = false;
@@ -1418,7 +1340,7 @@ class tp_gateway extends CI_Controller {
         $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
         $tpg_response = json_decode($tpg_enrolment_decoded);
-        //print_r($tpg_response->error->details[0]->message); exit;
+        print_r($tpg_response); exit;
         
         if ($tpg_response->status == 200) {
             //$tpg_course_run_id = $tpg_response->data->runs[0]->id;            
