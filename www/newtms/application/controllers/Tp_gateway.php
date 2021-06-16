@@ -1185,8 +1185,8 @@ class tp_gateway extends CI_Controller {
         $traineeDateOfBirth = $traineeDetails['dob'];
         $traineeEmailAddress = $traineeDetails['registered_email_id'];
         $traineeContactNumber = $traineeDetails['contact_number'];
-        $traineeEnrolmentDate = date("Y-m-d");       
-        
+        $traineeEnrolmentDate = date("Y-m-d");
+
         $enrolmentMode = $this->input->post('enrolmentMode');
         $tenant_id = $this->tenant_id;
         $companyId = $this->input->post('company_id');
@@ -1218,7 +1218,7 @@ class tp_gateway extends CI_Controller {
             $feeCollectionStatus = "Full Payment";
         } else if ($paymentStatus == 'NOTPAID') {
             $feeCollectionStatus = "Pending Payment";
-        } else if($paymentStatus == 'PARTPAID') { 
+        } else if ($paymentStatus == 'PARTPAID') {
             $feeCollectionStatus = "Partial Payment";
         } else if ($paymentStatus == 'PYNOTREQD') {
             $feeCollectionStatus = "Pending Payment";
@@ -1331,11 +1331,11 @@ class tp_gateway extends CI_Controller {
         $class_id = $this->input->post('classId');
         $user_id = $this->input->post('userId');
         $api_version = 'v1';
-        
+
         $url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
         //$url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
-        $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);        
- 
+        $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
+
         //$output = false;
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
@@ -1343,15 +1343,15 @@ class tp_gateway extends CI_Controller {
 
         $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
-        $tpg_response = json_decode($tpg_enrolment_decoded);        
-        
-        if ($tpg_response->status == 200) {
-            $enrolmentReferenceNumber = $tpg_response->data->enrolment[0]->referenceNumber;            
+        $tpg_response = json_decode($tpg_enrolment_decoded);
 
-            $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id,$class_id,$user_id,$enrolmentReferenceNumber);
-            
-            if($updated) {
-                $this->session->set_flashdata("success", "Enrolment has been created with reference number - ".$enrolmentReferenceNumber);
+        if ($tpg_response->status == 200) {
+            $enrolmentReferenceNumber = $tpg_response->data->enrolment[0]->referenceNumber;
+
+            $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber);
+
+            if ($updated) {
+                $this->session->set_flashdata("success", "Enrolment has been created with reference number - " . $enrolmentReferenceNumber);
             }
             redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         } else {
@@ -1369,9 +1369,39 @@ class tp_gateway extends CI_Controller {
             redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         }
     }
-    
+
     public function view_enrolment_tpg($enrolmentReferenceNumber) {
-        echo "aaa"; exit;
+        
+        $encrypt_method = "AES-256-CBC";
+        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+        $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV
+
+        $encryptReferenceNumber = openssl_encrypt($enrolmentReferenceNumber, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
+
+        $api_version = 'v1';
+        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/details/" . $encryptReferenceNumber;
+
+        //$request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
+        $ch = curl_init();
+        $headers = array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+        );
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");    
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Timeout in seconds
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+        $authToken = curl_exec($ch);
+
+        $output = openssl_decrypt($authToken, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+        
+        print_r($output); exit;
     }
 
 }
