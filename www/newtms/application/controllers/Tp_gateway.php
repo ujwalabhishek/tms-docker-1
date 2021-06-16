@@ -1368,6 +1368,10 @@ class tp_gateway extends CI_Controller {
             }
             redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         }
-    }   
+    }
+    
+    public function view_enrolment_tpg($enrolmentReferenceNumber) {
+        echo "aaa"; exit;
+    }
 
 }

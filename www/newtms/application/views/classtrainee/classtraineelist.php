@@ -234,7 +234,7 @@
                         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         if ($tenant_id == 'T01') {
                             ?>
-                               <th width="10%" class="th_header">Sales Executive</th>
+                                       <th width="10%" class="th_header">Sales Executive</th>
                         <?php } ?>-->
                         <th width="12%" class="th_header">Sales Executive</th>
                         <th width="6%" class="th_header">Certi. Coll.</th>
@@ -274,21 +274,21 @@
                             }
                             $name = json_decode($row['referrer']);
                             ?>
-                                          <!--  $tr = '<tr>
-                                            <td>' . $row['taxcode'] . '</td>
-                                            <td class="name">' . $row['name'] . '</td>
-                                            <td>' . $row['course_class'] . '</td>
-                                            <td>' . $row['duration'] . '</td>
-                                            <td>' . $row['enroll_mode'] . '</td>
-                                             <td>'.$salesList.//implode("<br>",$salesList).'</td>
-                                            '</td><td>' . $row['certi_coll'] . '</td>
-                                            <td>' . $row['status_text'] .'<br />'.$row['end_class'] .'  <br />                          
-                                            ' . $result_text . '
-                                            </td>
-                                            <td>' . $row['paid'] . '</td>
-                                            <td>'.$row['action_link'].'</td>';
-                                             $tr .= '</tr>';
-                                            echo $tr;*/-->
+                                                          <!--  $tr = '<tr>
+                                                            <td>' . $row['taxcode'] . '</td>
+                                                            <td class="name">' . $row['name'] . '</td>
+                                                            <td>' . $row['course_class'] . '</td>
+                                                            <td>' . $row['duration'] . '</td>
+                                                            <td>' . $row['enroll_mode'] . '</td>
+                                                             <td>'.$salesList.//implode("<br>",$salesList).'</td>
+                                                            '</td><td>' . $row['certi_coll'] . '</td>
+                                                            <td>' . $row['status_text'] .'<br />'.$row['end_class'] .'  <br />                          
+                                                            ' . $result_text . '
+                                                            </td>
+                                                            <td>' . $row['paid'] . '</td>
+                                                            <td>'.$row['action_link'].'</td>';
+                                                             $tr .= '</tr>';
+                                                            echo $tr;*/-->
                             <tr>                        
                                 <td><?php echo $row['taxcode']; ?></td>
 
@@ -336,23 +336,23 @@
                                 <td><?php echo $row['enroll_mode'] ?></td>
 
                                 <!--<?php if ($tenant_id == 'T01') { ?>
-                                       <td><?php echo $salesList; //implode("<br>",$salesList).  ?></td>
-        <?php } ?>-->
+                                               <td><?php echo $salesList; //implode("<br>",$salesList).    ?></td>
+                                <?php } ?>-->
 
-                                <td><?php echo $salesList; //implode("<br>",$salesList).  ?></td>
+                                <td><?php echo $salesList; //implode("<br>",$salesList).    ?></td>
                                 <td><?php echo $row['certi_coll']; ?></td>
                                 <td><?php
-                            echo $row['status_text'] . '<br />' . $row['end_class'] . '<br />'
-                            . $result_text;
-                            ?>  
+                                    echo $row['status_text'] . '<br />' . $row['end_class'] . '<br />'
+                                    . $result_text;
+                                    ?>  
                                 </td>
                                 <td><?php echo $row['paid']; ?></td>
                                 <td><?php echo $row['action_link']; ?></td>
-                                <?php
-                                $atr = 'id="tpg_form" name="tpg_form" method="post"';
-                                echo form_open("tp_gateway/send_trainee_enrolment_data_tpg", $atr);
-                                ?>
                                 <td>
+                                    <?php
+                                    $atr = 'id="tpg_form" name="tpg_form" method="post"';
+                                    echo form_open("tp_gateway/send_trainee_enrolment_data_tpg", $atr);
+                                    ?>
                                     <input type="hidden" name="courseRunId" value="<?php echo $row['tpg_course_run_id']; ?>" id="courseRunId">
                                     <input type="hidden" name="courseReferenceNumber" value="<?php echo $row['reference_num']; ?>" id="courseReferenceNumber">
                                     <input type="hidden" name="userId" value="<?php echo $row['user_id']; ?>" id="userId">
@@ -364,8 +364,11 @@
                                     <input type="hidden" name="classId" value="<?php echo $row['class_id']; ?>" id="classId">
 
                                     <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" />Submit To TPG</button>
+                                    <?php echo form_close(); ?>                                    
+                                    <br>
+                                    <?php $enrolmentReferenceNumber = "ENR-2009-000243"; ?>
+                                    <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/'.$enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>View Enrolment</span></a>
                                 </td>
-                            <?php echo form_close(); ?>
                             </tr>
                             <?php
                         }
@@ -379,7 +382,7 @@
         </div>
         <div style="clear:both;"></div><br>
         <ul class="pagination pagination_style">
-<?php echo $pagination; ?>
+            <?php echo $pagination; ?>
         </ul>
     </div>
 </div>
@@ -404,9 +407,9 @@
             <tr>
                 <td class="td_heading">TG#:</td>
                 <td>
-<?php
-echo form_input('tg_number', $this->input->post('tg_number'), ' id="tg_number"');
-?>
+                    <?php
+                    echo form_input('tg_number', $this->input->post('tg_number'), ' id="tg_number"');
+                    ?>
                     <span id="tg_number_err"></span>
                 </td>
             </tr>
@@ -438,9 +441,9 @@ echo form_input('tg_number', $this->input->post('tg_number'), ' id="tg_number"')
             <tr>
                 <td class="td_heading">EID#:</td>
                 <td>
-<?php
-echo form_input('eid_number', $this->input->post('eid_number'), ' id="eid_number"');
-?>
+                    <?php
+                    echo form_input('eid_number', $this->input->post('eid_number'), ' id="eid_number"');
+                    ?>
                     <span id="eid_number_err"></span>
                 </td>
             </tr>
@@ -559,8 +562,8 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                             'value' => 'N',
                         );
                         ?>              
-<?php echo form_radio($CERTCOM1_YES); ?> Yes &nbsp;&nbsp;
-<?php echo form_radio($CERTCOM1_NO); ?> No
+                        <?php echo form_radio($CERTCOM1_YES); ?> Yes &nbsp;&nbsp;
+                        <?php echo form_radio($CERTCOM1_NO); ?> No
                     </td>
                 </tr>
                 <tr>
@@ -578,8 +581,8 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                             'value' => 'N',
                         );
                         ?>              
-<?php echo form_radio($APPKNLSKL_YES); ?> Yes &nbsp;&nbsp;
-<?php echo form_radio($APPKNLSKL_NO); ?> No
+                        <?php echo form_radio($APPKNLSKL_YES); ?> Yes &nbsp;&nbsp;
+                        <?php echo form_radio($APPKNLSKL_NO); ?> No
                     </td>
                 </tr>
                 <tr>
@@ -597,8 +600,8 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                             'value' => 'N',
                         );
                         ?>              
-<?php echo form_radio($EXPJOBSCP_YES); ?> Yes &nbsp;&nbsp;
-<?php echo form_radio($EXPJOBSCP_NO); ?> No
+                        <?php echo form_radio($EXPJOBSCP_YES); ?> Yes &nbsp;&nbsp;
+                        <?php echo form_radio($EXPJOBSCP_NO); ?> No
                     </td>
                 </tr>
                 <tr>
@@ -616,8 +619,8 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                             'value' => 'N',
                         );
                         ?>              
-<?php echo form_radio($RT3MNTHS_YES); ?> Yes &nbsp;&nbsp;
-<?php echo form_radio($RT3MNTHS_NO); ?> No
+                        <?php echo form_radio($RT3MNTHS_YES); ?> Yes &nbsp;&nbsp;
+                        <?php echo form_radio($RT3MNTHS_NO); ?> No
                     </td>
                 </tr>
                 <tr>
@@ -682,7 +685,7 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                             echo "Attrition <br/>";
                         }
                         ?> 
-<?php echo form_radio($COMYTCOM_2NYC); ?> Twice Not Competent
+                        <?php echo form_radio($COMYTCOM_2NYC); ?> Twice Not Competent
                     </td>
 
                 </tr>
@@ -729,7 +732,7 @@ echo form_open("class_trainee/trainer_feedback", $atr);
     echo form_hidden('query_string', $export_url);
     echo form_hidden('page', $this->uri->segment(2));
     ?>
-<?php echo form_close(); ?>
+    <?php echo form_close(); ?>
 
     <div class="attendance_lock" style="display: none; height: 50px;text-align: center">                    
         <span style="color:red;"> <i>Can`t update Competent or Not Yet Competent because class attendance is locked. To Update it please contact to Administrator.</i>
@@ -754,9 +757,9 @@ if ($tenant_id == 'T20' || $tenant_id == 'T17') {
         <div id ="trainee_fdbk">
 
             <table class="table table-striped">
-    <?php
-    $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
-    ?>
+                <?php
+                $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
+                ?>
                 <tbody>
 
                     <tr>
@@ -883,7 +886,7 @@ if ($tenant_id == 'T20' || $tenant_id == 'T17') {
         echo form_hidden('query_string', $export_url);
         echo form_hidden('page', $this->uri->segment(2));
         ?>
-    <?php form_close(); ?>
+        <?php form_close(); ?>
     <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>-->
 
         <script>
@@ -922,7 +925,7 @@ if ($tenant_id == 'T20' || $tenant_id == 'T17') {
     </div>
 
 
-    <?php } else { ?>
+<?php } else { ?>
 
     <div id="ex6" class="modal1_trainee_feedback modal" width="85%">
         <?php
@@ -934,9 +937,9 @@ if ($tenant_id == 'T20' || $tenant_id == 'T17') {
         <center> <span id="ssp" style="display:none"></span></center>
         <div id ="trainee_fdbk">
             <table class="table table-striped">
-    <?php
-    $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
-    ?>
+                <?php
+                $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
+                ?>
                 <tbody>
 
                     <tr>
@@ -1100,7 +1103,7 @@ if ($tenant_id == 'T20' || $tenant_id == 'T17') {
         echo form_hidden('query_string', $export_url);
         echo form_hidden('page', $this->uri->segment(2));
         ?>
-    <?php form_close(); ?>
+        <?php form_close(); ?>
     <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>-->
 
         <script>
