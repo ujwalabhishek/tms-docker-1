@@ -1388,15 +1388,17 @@ class tp_gateway extends CI_Controller {
         if ($tpg_response->status == 200) {
             $data['enrolmentReferenceNumber'] = $enrolmentReferenceNumber;
             
-            echo "aaa".print_r($tpg_response->data->enrolment->referenceNumber); exit;
+            echo "aaa".print_r($tpg_response->data->course->run); exit;
             
-            $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
-            $data['status'] = $tpg_response->data->enrolment[0]->status;
-            $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
-            $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
-            $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
-            $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
-            $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
+            $data['referenceNumber'] = $tpg_response->data->enrolment->referenceNumber;
+            $data['status'] = $tpg_response->data->enrolment->status;
+            
+            $data['trainingPartnerCode'] = $tpg_response->data->trainingPartner->code;
+            $data['trainingPartnerUEN'] = $tpg_response->data->trainingPartner->uen;            
+            $data['trainingPartnerName'] = $tpg_response->data->trainingPartner->name;
+            
+            $data['courseReferenceNumber'] = $tpg_response->data->course->referenceNumber;
+            $data['courseTitle'] = $tpg_response->data->course->title;
 
 
 
