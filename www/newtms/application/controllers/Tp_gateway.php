@@ -1370,50 +1370,16 @@ class tp_gateway extends CI_Controller {
         }
     }
 
-    public function view_enrolment_tpg_back($enrolmentReferenceNumber) {
-        
-        $encrypt_method = "AES-256-CBC";
-        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
-        $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV
-
-        $encryptReferenceNumber = openssl_encrypt($enrolmentReferenceNumber, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
-
-        $api_version = 'v1';
-        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/details/" . $encryptReferenceNumber;
-
-        //$request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
-        $ch = curl_init();
-        $headers = array(
-            'Accept: application/json',
-            'Content-Type: application/json',
-        );
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");    
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // Timeout in seconds
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
-        $authToken = curl_exec($ch);
-
-        $output = openssl_decrypt($authToken, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
-        
-        print_r($output); exit;
-    }
-
      public function view_enrolment_tpg($enrolmentReferenceNumber) {
         
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
-        $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV
+        $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
 
-        //$encryptReferenceNumber = openssl_encrypt($enrolmentReferenceNumber, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
-
+        $output_a = openssl_encrypt($enrolmentReferenceNumber, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
+        
         $api_version = 'v1';
-        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/details/" . $enrolmentReferenceNumber;
+        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/details/" . $output_a;
 
         $request = $this->curl_request('GET', $url, "", $api_version);        
 
