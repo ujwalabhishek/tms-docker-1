@@ -1388,7 +1388,7 @@ class tp_gateway extends CI_Controller {
         if ($tpg_response->status == 200) {
             $data['enrolmentReferenceNumber'] = $enrolmentReferenceNumber;
             
-            echo "aaa".print_r($tpg_response->data->enrolment->course->run->id); exit;
+            echo "aaa".print_r($tpg_response->data->enrolment->trainee->idType->type); exit;
             
             $data['referenceNumber'] = $tpg_response->data->enrolment->referenceNumber;
             $data['status'] = $tpg_response->data->enrolment->status;
@@ -1403,7 +1403,7 @@ class tp_gateway extends CI_Controller {
             $data['courseStartDate'] = $tpg_response->data->enrolment->course->run->startDate;
             $data['courseEndDate'] = $tpg_response->data->enrolment->course->run->endDate;
 
-
+            $data['courseEndDate'] = $tpg_response->data->enrolment->course->run->endDate;
 
 
 
@@ -1414,11 +1414,8 @@ class tp_gateway extends CI_Controller {
 
             $data['sideMenuData'] = fetch_non_main_page_content();
             $data['page_title'] = 'TPG VIEW ENROL DATA';
-            $data['main_content'] = 'classtrainee/view_enrol_trainee_tpg';
-            $this->load->view('layout', $data);
-
-            print_r($tpg_response);
-            exit;
+            $data['main_content'] = 'classtrainee/view_enrolled_trainee_tpg';
+            $this->load->view('layout', $data);            
         } else {
             if ($tpg_response->status == 400) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
