@@ -1388,7 +1388,7 @@ class tp_gateway extends CI_Controller {
         if ($tpg_response->status == 200) {
             $data['enrolmentReferenceNumber'] = $enrolmentReferenceNumber;
             
-            echo $tpg_response->data->enrolment[0]->referenceNumber; exit;
+            echo $tpg_response->data->referenceNumber; exit;
             
             $data['referenceNumber'] = $tpg_response->data->enrolment[0]->referenceNumber;
             $data['status'] = $tpg_response->data->enrolment[0]->status;
