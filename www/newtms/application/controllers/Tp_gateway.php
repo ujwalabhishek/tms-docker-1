@@ -1381,9 +1381,9 @@ class tp_gateway extends CI_Controller {
 
         $request = $this->curl_request('GET', $url, "", $api_version);        
 
-        $output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+        //$output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
         
-        print_r($output); exit;
+        print_r($request); exit;
     }
     
 }
