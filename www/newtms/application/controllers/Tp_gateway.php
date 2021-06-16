@@ -1388,7 +1388,7 @@ class tp_gateway extends CI_Controller {
         if ($tpg_response->status == 200) {
             $data['enrolmentReferenceNumber'] = $enrolmentReferenceNumber;
             
-            echo "aaa".print_r($tpg_response->data->enrolment->course->title); exit;
+            echo "aaa".print_r($tpg_response->data->enrolment->course->run->id); exit;
             
             $data['referenceNumber'] = $tpg_response->data->enrolment->referenceNumber;
             $data['status'] = $tpg_response->data->enrolment->status;
@@ -1399,6 +1399,9 @@ class tp_gateway extends CI_Controller {
             
             $data['courseReferenceNumber'] = $tpg_response->data->enrolment->course->referenceNumber;
             $data['courseTitle'] = $tpg_response->data->enrolment->course->title;
+            $data['courseRunId'] = $tpg_response->data->enrolment->course->run->id;
+            $data['courseStartDate'] = $tpg_response->data->enrolment->course->run->startDate;
+            $data['courseEndDate'] = $tpg_response->data->enrolment->course->run->endDate;
 
 
 
