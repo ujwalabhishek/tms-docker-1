@@ -399,16 +399,16 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             <tr>
                 <td class="td_heading">Fee Collection Status:</td>
                 <td>
-                    <?php $enrolmentReferenceNumber = "ENR-1912-000123"; ?>
+                    <?php $enrolmentReferenceNumber = "ENR-2103-001256"; ?>
                     <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
                     <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
                     <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
                     <?php
                     $feecollectionStatus = array('' => 'Select', 'Pending Payment' => "Pending Payment", 'Partial Payment' => "Partial Payment", 'Full Payment' => "Full Payment", 'Cancelled' => "Cancelled");
                     $fee_collectionStatus_attr = 'id="fee_collectionStatus" required="required" ';
-                    echo form_dropdown('FEESTATUS', $feecollectionStatus, '', $fee_collectionStatus_attr);
+                    echo form_dropdown('fee_collectionStatus', $feecollectionStatus, '', $fee_collectionStatus_attr);
                     ?>
-                    <span id="tg_number_err"></span>
+                    <span id="fee_collection_err"></span>
                 </td>
             </tr>
         </tbody>
@@ -418,6 +418,27 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         <span href="#abd" rel="modal:close"><button class="btn btn-primary enrollment_fee_save" type="submit">Submit</button></span>
     </div>
 </div>
+<script>
+    $(document).ready(function() {           
+            $('#trainee_form').submit(function() {               
+                return validateFee(true);
+            });            
+        });
+        
+        function validateFee(retVal) {
+            fee_status = $.trim($("#fee_collectionStatus").val());
+            if (fee_status == "") {
+                $("#fee_collection_err").text("[required]").addClass('error');
+                $("#fee_collection_err").addClass('error');
+                retVal = false;
+            } else {
+                $("#fee_collection_err").text("").removeClass('error');
+                $("#fee_collection_err").removeClass('error');
+                retVal = true;
+            }
+            return retVal;
+        }
+</script>
 <?php echo form_close(); ?>
 
 <div class="modal1_0001" id="ex9" style="display:none;height:200px;min-height: 200px;">
