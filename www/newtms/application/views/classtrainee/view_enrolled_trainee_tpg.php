@@ -101,6 +101,8 @@
                         <input type="text" name="tpuen" id="tpuen" style="" value='<?php echo $trainingPartnerUEN; ?>' disabled="disabled"/>
                         <span id="tpuen_err"></span>
                     </td>
+                </tr>
+                <tr class="new_span">
                     <td class="td_heading" width="15%">Training Partner Name:<span class="required">*</span></td>
                     <td>
                         <input type="text" name="tpuen" id="tpuen" style="" value='<?php echo $trainingPartnerName; ?>' disabled="disabled"/>
@@ -113,14 +115,12 @@
                         <input type="text" name="course" id="crefno" style="" value='<?php echo $courseReferenceNumber; ?>' disabled="disabled"/>
                         <span id="crefno_err"></span>
                     </td>
-                </tr>
-                <tr class="new_span">
                     <td class="td_heading" width="15%">Course RunID:<span class="required">*</span></td>
                     <td colspan="3">
                         <input type="text" name="courserunid" id="crunid" style="" value='<?php echo $courseRunId; ?>' disabled="disabled"/>
                         <span id="crunid_err"></span>
                     </td>
-                </tr>
+                </tr>                
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Course Title:<span class="required">*</span></td>
                     <td colspan="3">
@@ -155,7 +155,7 @@
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Collection Status:<span class="required">*</span></td>
                     <td colspan="3">
-                        <input type="date" name="enrolment_date" id="enrolment_date" value='<?php echo $feeCollectionStatus; ?>' disabled="disabled"/>
+                        <input type="text" name="enrolment_date" id="enrolment_date" value='<?php echo $feeCollectionStatus; ?>' disabled="disabled"/>
                         <span id="enrolment_date_err"></span>
                     </td>
                 </tr>
@@ -176,7 +176,7 @@
                         <b>Employer Name.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="tenant_name" id="ename" style="" value='<?php echo $emploerFullName; ?>' disabled="disabled"/>
+                        <input type="text" name="tenant_name" id="ename" style="" value='<?php echo $employerName; ?>' disabled="disabled"/>
                         <span id="ename_err"></span>
                     </td> 
 
@@ -190,10 +190,10 @@
                 </tr>
                 <tr class="change_span" style="">
                     <td>                    
-                        <b>Employer email.:<span class="required">*</span></b> 
+                        <b>Contact Name.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="tenant_email_id" id="tenant_email_id" style="" value='<?php echo $employerEmailAddress; ?>' disabled="disabled"/>
+                        <input type="text" name="tenant_email_id" id="tenant_email_id" style="" value='<?php echo $employerContactFullName; ?>' disabled="disabled"/>
                         <span id="tenant_email_id_err"></span>
                     </td> 
 
@@ -203,6 +203,15 @@
                     <td> 
                         <input type="text" name="tenant_contact_num" id="tenant_contact_num" style="" value='<?php echo $employerContactNumber; ?>' disabled="disabled"/>
                         <span id="tenant_contact_num_err"></span>
+                    </td>
+                </tr>
+                <tr class="change_span" style="">
+                    <td>                    
+                        <b>Employer Email.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <input type="text" name="tenant_email_id" id="tenant_email_id" style="" value='<?php echo $employerEmailAddress; ?>' disabled="disabled"/>
+                        <span id="tenant_email_id_err"></span>
                     </td>
                 </tr>
                 <tr class="new_span">
