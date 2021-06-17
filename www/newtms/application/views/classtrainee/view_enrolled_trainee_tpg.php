@@ -5,7 +5,7 @@
 
 <div class="col-md-10 right-minheight">
     <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
-    <h2 class="panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> TPG Trainee Enrollment Data</h2>
+    <h2 class="panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> TPG Trainee Enrolled Details</h2>
     <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Enrollment Details</h2>
     <div class="table-responsive">
         <?php        
