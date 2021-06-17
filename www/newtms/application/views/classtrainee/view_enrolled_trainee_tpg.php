@@ -20,6 +20,24 @@
                 </tr>
                 <tr class="change_span" style="">
                     <td>                    
+                        <b>Enrollment Reference No. :<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <input type="text" name="change_taxcode_autocomplete" id="nric" style="" value='<?php echo $referenceNumber; ?>' disabled="disabled"/>
+                        <span id="nric_err"></span>
+                    </td> 
+
+                    <td>
+                        <b>Status:<span class="required">*</span></b> 
+                    </td>
+                    <td> 
+                        <input type="text" name="fullname" id="fullname" style="" value='<?php echo $status; ?>' disabled="disabled"/>
+                        <span id="fullname_err"></span>
+                    </td>
+                </tr>
+                
+                <tr class="change_span" style="">
+                    <td>                    
                         <b>NRIC/FIN No.:<span class="required">*</span></b> 
                     </td>   
                     <td>
@@ -123,6 +141,28 @@
                     <td class="td_heading" width="15%">End Date:<span class="required">*</span></td>
                     <td colspan="3">
                         <input type="date" name="enrolment_date" id="enrolment_date" value='<?php echo $courseEndDate; ?>' disabled="disabled"/>
+                        <span id="enrolment_date_err"></span>
+                    </td>
+                </tr>
+                <tr class="new_span">
+                    <td class="td_heading" width="15%">Discount Amount:<span class="required">*</span></td>
+                    <td colspan="3">
+                        <input type="text" name="collection_status" id="collection_status" value='<?php echo $feeDiscountAmount; ?>' disabled="disabled"/>
+
+                        <span id="discount_amount_err"></span>
+                    </td>
+                </tr>
+                <tr class="new_span">
+                    <td class="td_heading" width="15%">Collection Status:<span class="required">*</span></td>
+                    <td colspan="3">
+                        <input type="date" name="enrolment_date" id="enrolment_date" value='<?php echo $feeCollectionStatus; ?>' disabled="disabled"/>
+                        <span id="enrolment_date_err"></span>
+                    </td>
+                </tr>
+                <tr class="new_span">
+                    <td class="td_heading" width="15%">Enrollment Date:<span class="required">*</span></td>
+                    <td colspan="3">
+                        <input type="date" name="enrolment_date" id="enrolment_date" value='<?php echo $traineeEnrolmentDate; ?>' disabled="disabled"/>
                         <span id="enrolment_date_err"></span>
                     </td>
                 </tr>

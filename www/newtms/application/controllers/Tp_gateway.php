@@ -1387,35 +1387,47 @@ class tp_gateway extends CI_Controller {
 
         if ($tpg_response->status == 200) {
             $data['enrolmentReferenceNumber'] = $enrolmentReferenceNumber;
-            
-            echo "aaa".print_r($tpg_response->data->enrolment->trainee->idType->type); exit;
-            
+
+            echo "aaa" . print_r($tpg_response->data->enrolment->trainee->idType->type);
+            exit;
+
             $data['referenceNumber'] = $tpg_response->data->enrolment->referenceNumber;
             $data['status'] = $tpg_response->data->enrolment->status;
-            
+
             $data['trainingPartnerCode'] = $tpg_response->data->enrolment->trainingPartner->code;
-            $data['trainingPartnerUEN'] = $tpg_response->data->enrolment->trainingPartner->uen;            
+            $data['trainingPartnerUEN'] = $tpg_response->data->enrolment->trainingPartner->uen;
             $data['trainingPartnerName'] = $tpg_response->data->enrolment->trainingPartner->name;
-            
+
             $data['courseReferenceNumber'] = $tpg_response->data->enrolment->course->referenceNumber;
             $data['courseTitle'] = $tpg_response->data->enrolment->course->title;
             $data['courseRunId'] = $tpg_response->data->enrolment->course->run->id;
             $data['courseStartDate'] = $tpg_response->data->enrolment->course->run->startDate;
             $data['courseEndDate'] = $tpg_response->data->enrolment->course->run->endDate;
+                       
+            $data['traineeId'] = $tpg_response->data->enrolment->trainee->id;
+            $data['traineeEmailAddress'] = $tpg_response->data->enrolment->trainee->emailAddress;
+            $data['traineeIdType'] = $tpg_response->data->enrolment->trainee->idType->type;
+            $data['traineeDateOfBirth'] = $tpg_response->data->enrolment->trainee->dateOfBirth;
+            $data['traineeFullName'] = $tpg_response->data->enrolment->trainee->fullName;
+            $data['traineeContactNumber'] = $tpg_response->data->enrolment->trainee->contactNumber;
 
-            $data['courseEndDate'] = $tpg_response->data->enrolment->course->run->endDate;
+            $data['employerUEN'] = $tpg_response->data->enrolment->trainee->employer->uen;
+            $data['employerContactNumber'] = $tpg_response->data->enrolment->trainee->employer->contact->contactNumber;
+            $data['emploerFullName'] = $tpg_response->data->enrolment->trainee->employer->contact->fullName;
+            $data['employerEmailAddress'] = $tpg_response->data->enrolment->trainee->employer->contact->emailAddress;
 
-
-
-
-
-
-
+            $data['feeDiscountAmount'] = $tpg_response->data->enrolment->trainee->fees->discountAmount;
+            $data['feeCollectionStatus'] = $tpg_response->data->enrolment->trainee->fees->collectionStatus;
+            
+            $data['traineeEnrolmentDate'] = $tpg_response->data->enrolment->trainee->enrolmentDate;
+            
+            $data['$traineeSponsorshipType'] = $tpg_response->data->enrolment->trainee->sponsorshipType;
 
             $data['sideMenuData'] = fetch_non_main_page_content();
             $data['page_title'] = 'TPG VIEW ENROL DATA';
             $data['main_content'] = 'classtrainee/view_enrolled_trainee_tpg';
-            $this->load->view('layout', $data);            
+            
+            $this->load->view('layout', $data);
         } else {
             if ($tpg_response->status == 400) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
