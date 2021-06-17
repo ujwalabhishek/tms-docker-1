@@ -366,7 +366,7 @@
                                     <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" />Submit To TPG</button>
                                     <?php echo form_close(); ?>                                    
                                     <br>
-                                    <?php $enrolmentReferenceNumber = "ENR-1912-123456"; ?>
+                                    <?php $enrolmentReferenceNumber = "ENR-2103-001256"; ?>
                                     <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>View Enrolment</span></a>
                                     <br>                                    
                                     <div class="button_class"><a class="small_text" rel="modal:open" href="#abd"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-file"></span>Update Fee</button></a></div>
@@ -399,12 +399,13 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             <tr>
                 <td class="td_heading">Fee Collection Status:</td>
                 <td>
+                    <?php $enrolmentReferenceNumber = "ENR-1912-000123"; ?>
                     <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
                     <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
                     <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
                     <?php
                     $feecollectionStatus = array('' => 'Select', 'Pending Payment' => "Pending Payment", 'Partial Payment' => "Partial Payment", 'Full Payment' => "Full Payment", 'Cancelled' => "Cancelled");
-                    $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
+                    $fee_collectionStatus_attr = 'id="fee_collectionStatus" required="required" ';
                     echo form_dropdown('FEESTATUS', $feecollectionStatus, '', $fee_collectionStatus_attr);
                     ?>
                     <span id="tg_number_err"></span>

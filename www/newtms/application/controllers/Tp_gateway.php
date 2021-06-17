@@ -1459,7 +1459,6 @@ class tp_gateway extends CI_Controller {
         $api_version = 'v1';
         $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/feeCollections/" . $enrolmentReferenceNumber;
 
-
         $tpg_enrolment_json_data = '{
                                     "enrolment": {
                                       "fees": {
@@ -1476,9 +1475,25 @@ class tp_gateway extends CI_Controller {
 
         $tpg_response = json_decode($decrypted_output);
         
-        print_r($tpg_response); exit;
-        
-        redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
+        if($tpg_response->status == 200) {
+            
+            $this->session->set_flashdata("success", "The Fee Collection Status has been updated for the enrolment reference number - " . $enrolmentReferenceNumber);
+            
+            redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
+        } else {
+            if ($tpg_response->status == 400) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 403) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 404) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 500) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } else {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            }
+            redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
+        }
         
     }
 
