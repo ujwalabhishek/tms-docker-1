@@ -366,7 +366,7 @@
                                     <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" />Submit To TPG</button>
                                     <?php echo form_close(); ?>                                    
                                     <br>
-                                    <?php $enrolmentReferenceNumber = "ENR-2103-001256"; ?>
+                                    <?php $enrolmentReferenceNumber = "ENR-1912-123456"; ?>
                                     <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>View Enrolment</span></a>
                                     <br>                                    
                                     <div class="button_class"><a class="small_text" rel="modal:open" href="#abd"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-file"></span>Update Fee</button></a></div>
