@@ -427,7 +427,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             });
             $('#update_fee select').change(function() {
                 if (check == 1) {
-                    return validate(false);
+                    return validateFee(false);
                 }
             });
         });
