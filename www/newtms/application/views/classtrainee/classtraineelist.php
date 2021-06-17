@@ -419,10 +419,17 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
     </div>
 </div>
 <script>
-    $(document).ready(function() {           
-            $('#update_fee').submit(function() {               
+    $(document).ready(function() {
+            var check = 0;
+            $('#update_fee').submit(function() {
+                check = 1;
                 return validateFee(true);
-            });            
+            });
+            $('#update_fee select').change(function() {
+                if (check == 1) {
+                    return validate(false);
+                }
+            });
         });
         
         function validateFee(retVal) {
