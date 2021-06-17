@@ -89,6 +89,13 @@
                         <span id="ttype_err"></span>
                     </td>
                 </tr>
+                <tr class="new_span">
+                    <td class="td_heading" width="15%">Sponsorship Type:<span class="required">*</span></td>
+                    <td>
+                        <input type="text" name="tpuen" id="tpuen" style="" value='<?php echo $traineeSponsorshipType; ?>' disabled="disabled"/>
+                        <span id="tpuen_err"></span>
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="4">                        
                         <label style="color:blue;font-weight:bold">Training Partner Details</label>
@@ -141,12 +148,11 @@
                     <td class="td_heading" width="15%">Start Date:<span class="required">*</span></td>
                     <td>
                         <input type="text" name="collection_status" id="collection_status" value='<?php echo $courseStartDate; ?>' disabled="disabled"/>
-
                         <span id="discount_amount_err"></span>
                     </td>
                     <td class="td_heading" width="15%">End Date:<span class="required">*</span></td>
                     <td>
-                        <input type="date" name="enrolment_date" id="enrolment_date" value='<?php echo $courseEndDate; ?>' disabled="disabled"/>
+                        <input type="text" name="enrolment_date" id="enrolment_date" value='<?php echo $courseEndDate; ?>' disabled="disabled"/>
                         <span id="enrolment_date_err"></span>
                     </td>
                 </tr>
@@ -223,23 +229,10 @@
                 <tr class="new_span">
                     <td colspan="4" class="no-bg">
                         <div class="push_right">
-                            <button type="button" id='enrol_now_tpg' class="search_button btn btn-xs btn-primary no-mar">
-                                <span class="glyphicon glyphicon-retweet"></span>
-                                Enroll Now
-                            </button>
+                            <a href="<?php echo base_url() . 'class_trainee'; ?>" class="small_text1"><span class="label label-default black-btn">Back</span></a>
                         </div>
                     </td>
-                </tr>
-                <tr class="change_span change_span1 remove_company_span move_company_span">
-                    <td colspan="4" class="no-bg">
-                        <div class="push_right">
-                            <button id="search_enrolment" type="button" class="btn btn-xs btn-primary no-mar">
-                                <span class="glyphicon glyphicon-retweet"></span>
-                                Back
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                </tr>                
             </tbody>
         </table>        
     </div>

@@ -1422,7 +1422,7 @@ class tp_gateway extends CI_Controller {
             
             $data['traineeEnrolmentDate'] = $tpg_response->data->enrolment->trainee->enrolmentDate;
             
-            $data['$traineeSponsorshipType'] = $tpg_response->data->enrolment->trainee->sponsorshipType;
+            $data['traineeSponsorshipType'] = $tpg_response->data->enrolment->trainee->sponsorshipType;
 
             $data['sideMenuData'] = fetch_non_main_page_content();
             $data['page_title'] = 'TPG VIEW ENROL DATA';
