@@ -234,7 +234,7 @@
                         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         if ($tenant_id == 'T01') {
                             ?>
-                                       <th width="10%" class="th_header">Sales Executive</th>
+                                           <th width="10%" class="th_header">Sales Executive</th>
                         <?php } ?>-->
                         <th width="12%" class="th_header">Sales Executive</th>
                         <th width="6%" class="th_header">Certi. Coll.</th>
@@ -274,21 +274,21 @@
                             }
                             $name = json_decode($row['referrer']);
                             ?>
-                                                          <!--  $tr = '<tr>
-                                                            <td>' . $row['taxcode'] . '</td>
-                                                            <td class="name">' . $row['name'] . '</td>
-                                                            <td>' . $row['course_class'] . '</td>
-                                                            <td>' . $row['duration'] . '</td>
-                                                            <td>' . $row['enroll_mode'] . '</td>
-                                                             <td>'.$salesList.//implode("<br>",$salesList).'</td>
-                                                            '</td><td>' . $row['certi_coll'] . '</td>
-                                                            <td>' . $row['status_text'] .'<br />'.$row['end_class'] .'  <br />                          
-                                                            ' . $result_text . '
-                                                            </td>
-                                                            <td>' . $row['paid'] . '</td>
-                                                            <td>'.$row['action_link'].'</td>';
-                                                             $tr .= '</tr>';
-                                                            echo $tr;*/-->
+                                                                  <!--  $tr = '<tr>
+                                                                    <td>' . $row['taxcode'] . '</td>
+                                                                    <td class="name">' . $row['name'] . '</td>
+                                                                    <td>' . $row['course_class'] . '</td>
+                                                                    <td>' . $row['duration'] . '</td>
+                                                                    <td>' . $row['enroll_mode'] . '</td>
+                                                                     <td>'.$salesList.//implode("<br>",$salesList).'</td>
+                                                                    '</td><td>' . $row['certi_coll'] . '</td>
+                                                                    <td>' . $row['status_text'] .'<br />'.$row['end_class'] .'  <br />                          
+                                                                    ' . $result_text . '
+                                                                    </td>
+                                                                    <td>' . $row['paid'] . '</td>
+                                                                    <td>'.$row['action_link'].'</td>';
+                                                                     $tr .= '</tr>';
+                                                                    echo $tr;*/-->
                             <tr>                        
                                 <td><?php echo $row['taxcode']; ?></td>
 
@@ -336,10 +336,10 @@
                                 <td><?php echo $row['enroll_mode'] ?></td>
 
                                 <!--<?php if ($tenant_id == 'T01') { ?>
-                                               <td><?php echo $salesList; //implode("<br>",$salesList).    ?></td>
+                                                   <td><?php echo $salesList; //implode("<br>",$salesList).     ?></td>
                                 <?php } ?>-->
 
-                                <td><?php echo $salesList; //implode("<br>",$salesList).    ?></td>
+                                <td><?php echo $salesList; //implode("<br>",$salesList).     ?></td>
                                 <td><?php echo $row['certi_coll']; ?></td>
                                 <td><?php
                                     echo $row['status_text'] . '<br />' . $row['end_class'] . '<br />'
@@ -367,7 +367,9 @@
                                     <?php echo form_close(); ?>                                    
                                     <br>
                                     <?php $enrolmentReferenceNumber = "ENR-2103-001256"; ?>
-                                    <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/'.$enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>View Enrolment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>View Enrolment</span></a>
+                                    <br>                                    
+                                    <div class="button_class"><a class="small_text" rel="modal:open" href="#abd"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-file"></span>&nbsp;Copy</button></a></div>
                                 </td>
                             </tr>
                             <?php
@@ -386,6 +388,39 @@
         </ul>
     </div>
 </div>
+<?php
+$atr = 'id="update_fee" name="update_fee" method="post"';
+echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
+?>
+<div class="modal1_55555_99" id="abd" style="display:none;">
+    <h2 class="panel_heading_style">Update Fee Collection Status#</h2>
+    <table class="table table-striped">
+        <tbody>
+
+            <tr>
+                <td class="td_heading">Fee Collection Status:</td>
+                <td>
+                    <input type="hidden" name="userId" value="<?php echo $row['user_id']; ?>" id="userId">
+                    <input type="hidden" name="courseId" value="<?php echo $row['course_id']; ?>" id="courseId">
+                    <input type="hidden" name="classId" value="<?php echo $row['class_id']; ?>" id="classId">
+                    <input type="hidden" name="enrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="enrolmentReferenceNumber">
+                    <?php
+                    $feecollectionStatus = array('' => 'Select', 'Pending Payment' => "Pending Payment", 'Partial Payment' => "Partial Payment", 'Full Payment' => "Full Payment", 'Cancelled' => "Cancelled");
+                    $fee_collectionStatus_attr = 'id="satisfaction_rating"';
+                    echo form_dropdown('FEESTATUS', $feecollectionStatus, '', $fee_collectionStatus_attr);
+                    ?>
+                    <span id="tg_number_err"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <span class="required required_i">* Required Fields</span>
+    <div class="popup_cance89">
+        <span href="#abd" rel="modal:close"><button class="btn btn-primary enrollment_fee_save" type="submit">Submit</button></span>
+    </div>
+</div>
+<?php echo form_close(); ?>
+
 <div class="modal1_0001" id="ex9" style="display:none;height:200px;min-height: 200px;">
     <h2 class="panel_heading_style">Update TG#</h2>
     <table class="table table-striped">

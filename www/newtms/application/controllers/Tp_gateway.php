@@ -1403,7 +1403,7 @@ class tp_gateway extends CI_Controller {
             $data['courseRunId'] = $tpg_response->data->enrolment->course->run->id;
             $data['courseStartDate'] = $tpg_response->data->enrolment->course->run->startDate;
             $data['courseEndDate'] = $tpg_response->data->enrolment->course->run->endDate;
-                       
+
             $data['traineeId'] = $tpg_response->data->enrolment->trainee->id;
             $data['traineeEmailAddress'] = $tpg_response->data->enrolment->trainee->email->full;
             $data['traineeIdType'] = $tpg_response->data->enrolment->trainee->idType->type;
@@ -1414,20 +1414,20 @@ class tp_gateway extends CI_Controller {
             $data['employerUEN'] = $tpg_response->data->enrolment->trainee->employer->uen;
             $data['employerName'] = $tpg_response->data->enrolment->trainee->employer->name;
             $data['employerContactFullName'] = $tpg_response->data->enrolment->trainee->employer->contact->fullName;
-            $data['employerContactNumber'] = $tpg_response->data->enrolment->trainee->employer->contact->contactNumber->phoneNumber;            
+            $data['employerContactNumber'] = $tpg_response->data->enrolment->trainee->employer->contact->contactNumber->phoneNumber;
             $data['employerEmailAddress'] = $tpg_response->data->enrolment->trainee->employer->contact->email->full;
 
             $data['feeDiscountAmount'] = $tpg_response->data->enrolment->trainee->fees->discountAmount;
             $data['feeCollectionStatus'] = $tpg_response->data->enrolment->trainee->fees->collectionStatus;
-            
+
             $data['traineeEnrolmentDate'] = $tpg_response->data->enrolment->trainee->enrolmentDate;
-            
+
             $data['traineeSponsorshipType'] = $tpg_response->data->enrolment->trainee->sponsorshipType;
 
             $data['sideMenuData'] = fetch_non_main_page_content();
             $data['page_title'] = 'TPG VIEW ENROL DATA';
             $data['main_content'] = 'classtrainee/view_enrolled_trainee_tpg';
-            
+
             $this->load->view('layout', $data);
         } else {
             if ($tpg_response->status == 400) {
@@ -1443,6 +1443,36 @@ class tp_gateway extends CI_Controller {
             }
             redirect('class_trainee');
         }
+    }
+
+    public function update_fee_collection_tpg($enrolmentReferenceNumber, $feeCollectionStatus) {
+
+        $encrypt_method = "AES-256-CBC";
+        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+        $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
+
+        $api_version = 'v1';
+        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/feeCollections/" . $enrolmentReferenceNumber;
+
+
+        $tpg_enrolment_json_data = '{
+                                    "enrolment": {
+                                      "fees": {
+                                        "collectionStatus": "'.$feeCollectionStatus.'"
+                                      }
+                                    }
+                                  }';
+        
+        $encrypted_output = openssl_encrypt($tpg_enrolment_json_data, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
+
+        $request = $this->curl_request('POST', $url, $encrypted_output, $api_version);
+
+        $decrypted_output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+
+        $tpg_response = json_decode($decrypted_output);
+        
+        print_r($tpg_response); exit;
+        
     }
 
 }
