@@ -133,7 +133,6 @@
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Course Title:<span class="required">*</span></td>
                     <td colspan="3">
-
                         <input type="number" name="discount_amount" id="discount_amount" value='<?php echo $courseTitle; ?>' disabled="disabled"/>
                         <span id="discount_amount_err"></span>
                     </td>

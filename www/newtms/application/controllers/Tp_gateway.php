@@ -1405,11 +1405,11 @@ class tp_gateway extends CI_Controller {
             $data['courseEndDate'] = $tpg_response->data->enrolment->course->run->endDate;
                        
             $data['traineeId'] = $tpg_response->data->enrolment->trainee->id;
-            $data['traineeEmailAddress'] = $tpg_response->data->enrolment->trainee->emailAddress;
+            $data['traineeEmailAddress'] = $tpg_response->data->enrolment->trainee->email->full;
             $data['traineeIdType'] = $tpg_response->data->enrolment->trainee->idType->type;
             $data['traineeDateOfBirth'] = $tpg_response->data->enrolment->trainee->dateOfBirth;
             $data['traineeFullName'] = $tpg_response->data->enrolment->trainee->fullName;
-            $data['traineeContactNumber'] = $tpg_response->data->enrolment->trainee->contactNumber;
+            $data['traineeContactNumber'] = $tpg_response->data->enrolment->trainee->contactNumber->phoneNumber;
 
             $data['employerUEN'] = $tpg_response->data->enrolment->trainee->employer->uen;
             $data['employerName'] = $tpg_response->data->enrolment->trainee->employer->name;
