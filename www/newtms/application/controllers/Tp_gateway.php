@@ -1414,8 +1414,8 @@ class tp_gateway extends CI_Controller {
             $data['employerUEN'] = $tpg_response->data->enrolment->trainee->employer->uen;
             $data['employerName'] = $tpg_response->data->enrolment->trainee->employer->name;
             $data['employerContactFullName'] = $tpg_response->data->enrolment->trainee->employer->contact->fullName;
-            $data['employerContactNumber'] = $tpg_response->data->enrolment->trainee->employer->contact->contactNumber;            
-            $data['employerEmailAddress'] = $tpg_response->data->enrolment->trainee->employer->contact->emailAddress->full;
+            $data['employerContactNumber'] = $tpg_response->data->enrolment->trainee->employer->contact->contactNumber->phoneNumber;            
+            $data['employerEmailAddress'] = $tpg_response->data->enrolment->trainee->employer->contact->email->full;
 
             $data['feeDiscountAmount'] = $tpg_response->data->enrolment->trainee->fees->discountAmount;
             $data['feeCollectionStatus'] = $tpg_response->data->enrolment->trainee->fees->collectionStatus;

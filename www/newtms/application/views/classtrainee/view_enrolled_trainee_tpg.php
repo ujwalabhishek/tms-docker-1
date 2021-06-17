@@ -89,7 +89,11 @@
                         <span id="ttype_err"></span>
                     </td>
                 </tr>
-
+                <tr>
+                    <td colspan="4">                        
+                        <label style="color:blue;font-weight:bold">Training Partner Details</label>
+                    </td>                           
+                </tr>
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Training Partner Code:<span class="required">*</span></td>
                     <td>
@@ -109,14 +113,19 @@
                         <span id="tpuen_err"></span>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="4">                        
+                        <label style="color:blue;font-weight:bold">Course Details</label>
+                    </td>                           
+                </tr>
                 <tr class="new_span">
                     <td class="td_heading">Course Reference No.:<span class="required">*</span></td>
-                    <td colspan="3">                       
+                    <td>                       
                         <input type="text" name="course" id="crefno" style="" value='<?php echo $courseReferenceNumber; ?>' disabled="disabled"/>
                         <span id="crefno_err"></span>
                     </td>
                     <td class="td_heading" width="15%">Course RunID:<span class="required">*</span></td>
-                    <td colspan="3">
+                    <td>
                         <input type="text" name="courserunid" id="crunid" style="" value='<?php echo $courseRunId; ?>' disabled="disabled"/>
                         <span id="crunid_err"></span>
                     </td>
@@ -131,15 +140,13 @@
                 </tr>
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Start Date:<span class="required">*</span></td>
-                    <td colspan="3">
+                    <td>
                         <input type="text" name="collection_status" id="collection_status" value='<?php echo $courseStartDate; ?>' disabled="disabled"/>
 
                         <span id="discount_amount_err"></span>
                     </td>
-                </tr>
-                <tr class="new_span">
                     <td class="td_heading" width="15%">End Date:<span class="required">*</span></td>
-                    <td colspan="3">
+                    <td>
                         <input type="date" name="enrolment_date" id="enrolment_date" value='<?php echo $courseEndDate; ?>' disabled="disabled"/>
                         <span id="enrolment_date_err"></span>
                     </td>
