@@ -405,7 +405,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
                     <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
                     <?php
                     $feecollectionStatus = array('' => 'Select', 'Pending Payment' => "Pending Payment", 'Partial Payment' => "Partial Payment", 'Full Payment' => "Full Payment", 'Cancelled' => "Cancelled");
-                    $fee_collectionStatus_attr = 'id="fee_collectionStatus" required="required" ';
+                    $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
                     echo form_dropdown('fee_collectionStatus', $feecollectionStatus, '', $fee_collectionStatus_attr);
                     ?>
                     <span id="fee_collection_err"></span>
@@ -420,7 +420,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
 </div>
 <script>
     $(document).ready(function() {           
-            $('#trainee_form').submit(function() {               
+            $('#update_fee').submit(function() {               
                 return validateFee(true);
             });            
         });
