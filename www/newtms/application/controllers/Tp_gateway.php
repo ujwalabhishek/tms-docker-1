@@ -1445,7 +1445,13 @@ class tp_gateway extends CI_Controller {
         }
     }
 
-    public function update_fee_collection_tpg($enrolmentReferenceNumber, $feeCollectionStatus) {
+    public function update_fee_collection_tpg() {
+        
+        $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumber');
+        $course_id = $this->input->post('tpgCourseId');
+        $class_id = $this->input->post('tpgClassId');
+        $user_id = $this->input->post('tpgUserId');
+        
 
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
@@ -1472,6 +1478,8 @@ class tp_gateway extends CI_Controller {
         $tpg_response = json_decode($decrypted_output);
         
         print_r($tpg_response); exit;
+        
+        redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         
     }
 

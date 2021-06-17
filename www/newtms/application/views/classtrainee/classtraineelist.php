@@ -369,7 +369,7 @@
                                     <?php $enrolmentReferenceNumber = "ENR-2103-001256"; ?>
                                     <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>View Enrolment</span></a>
                                     <br>                                    
-                                    <div class="button_class"><a class="small_text" rel="modal:open" href="#abd"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-file"></span>&nbsp;Copy</button></a></div>
+                                    <div class="button_class"><a class="small_text" rel="modal:open" href="#abd"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-file"></span>Update Fee</button></a></div>
                                 </td>
                             </tr>
                             <?php
@@ -392,21 +392,20 @@
 $atr = 'id="update_fee" name="update_fee" method="post"';
 echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
 ?>
-<div class="modal1_55555_99" id="abd" style="display:none;">
+<div class="modal1_0001" id="abd" style="display:none;">
     <h2 class="panel_heading_style">Update Fee Collection Status#</h2>
     <table class="table table-striped">
         <tbody>
-
             <tr>
                 <td class="td_heading">Fee Collection Status:</td>
                 <td>
-                    <input type="hidden" name="userId" value="<?php echo $row['user_id']; ?>" id="userId">
-                    <input type="hidden" name="courseId" value="<?php echo $row['course_id']; ?>" id="courseId">
-                    <input type="hidden" name="classId" value="<?php echo $row['class_id']; ?>" id="classId">
-                    <input type="hidden" name="enrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="enrolmentReferenceNumber">
+                    <input type="hidden" name="tpgUserId" value="<?php echo $row['user_id']; ?>" id="tpgUserId">
+                    <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
+                    <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
+                    <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
                     <?php
                     $feecollectionStatus = array('' => 'Select', 'Pending Payment' => "Pending Payment", 'Partial Payment' => "Partial Payment", 'Full Payment' => "Full Payment", 'Cancelled' => "Cancelled");
-                    $fee_collectionStatus_attr = 'id="satisfaction_rating"';
+                    $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
                     echo form_dropdown('FEESTATUS', $feecollectionStatus, '', $fee_collectionStatus_attr);
                     ?>
                     <span id="tg_number_err"></span>
