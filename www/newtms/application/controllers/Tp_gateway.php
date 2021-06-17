@@ -1450,9 +1450,7 @@ class tp_gateway extends CI_Controller {
         $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumber');
         $course_id = $this->input->post('tpgCourseId');
         $class_id = $this->input->post('tpgClassId');
-        $user_id = $this->input->post('tpgUserId');
         
-
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
