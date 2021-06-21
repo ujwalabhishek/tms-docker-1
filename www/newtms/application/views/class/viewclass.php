@@ -169,7 +169,7 @@ $role_array = array("COMPACT");
     <div style="clear:both;"></div><br>
     <div class="row marketing">
         <div class="col-lg-6">
-            <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule <div id="view_ssg_session" style='float:right;cursor: pointer;'>View SSG Sessions</div></h4> 
+            <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule <a class="small_text" rel="modal:open" href="#view_ssg_session_modal" style='float:right;cursor:pointer;'>View SSG Session</a></h4> 
             <p>
             <div class="scroll_schedule">
                 <div class="table-responsive">
@@ -320,7 +320,7 @@ $role_array = array("COMPACT");
 <script>
  $(document).ready(function() {
        $('#view_ssg_session').click(function(){
-           $('#view_ssg_session_modal').show();
+          
        });
     });    
 
