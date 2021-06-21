@@ -1446,12 +1446,12 @@ class tp_gateway extends CI_Controller {
     }
 
     public function update_fee_collection_tpg() {
-        
+
         $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumber');
         $course_id = $this->input->post('tpgCourseId');
         $class_id = $this->input->post('tpgClassId');
         $feeCollectionStatus = $this->input->post('fee_collectionStatus');
-        
+
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
@@ -1462,11 +1462,11 @@ class tp_gateway extends CI_Controller {
         $tpg_enrolment_json_data = '{
                                     "enrolment": {
                                       "fees": {
-                                        "collectionStatus": "'.$feeCollectionStatus.'"
+                                        "collectionStatus": "' . $feeCollectionStatus . '"
                                       }
                                     }
                                   }';
-        
+
         $encrypted_output = openssl_encrypt($tpg_enrolment_json_data, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
 
         $request = $this->curl_request('POST', $url, $encrypted_output, $api_version);
@@ -1474,11 +1474,11 @@ class tp_gateway extends CI_Controller {
         $decrypted_output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
         $tpg_response = json_decode($decrypted_output);
-        
-        if($tpg_response->status == 200) {
-            
+
+        if ($tpg_response->status == 200) {
+
             $this->session->set_flashdata("success", "The Fee Collection Status has been updated for the enrolment reference number - " . $enrolmentReferenceNumber);
-            
+
             redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         } else {
             if ($tpg_response->status == 400) {
@@ -1494,7 +1494,164 @@ class tp_gateway extends CI_Controller {
             }
             redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         }
+    }
+
+    public function edit_enrolment_tpg ($enrolmentReferenceNumber) {
         
+        $encrypt_method = "AES-256-CBC";
+        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+        $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
+
+        $api_version = 'v1';
+        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/details/" . $enrolmentReferenceNumber;
+
+        $request = $this->curl_request('GET', $url, "", $api_version);
+
+        $output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+
+        $tpg_response = json_decode($output);
+
+        if ($tpg_response->status == 200) {
+            $data['enrolmentReferenceNumber'] = $enrolmentReferenceNumber;
+
+            //echo "aaa" . print_r($tpg_response);
+            //exit;
+
+            $data['referenceNumber'] = $tpg_response->data->enrolment->referenceNumber;
+            $data['status'] = $tpg_response->data->enrolment->status;
+
+            $data['trainingPartnerCode'] = $tpg_response->data->enrolment->trainingPartner->code;
+            $data['trainingPartnerUEN'] = $tpg_response->data->enrolment->trainingPartner->uen;
+            $data['trainingPartnerName'] = $tpg_response->data->enrolment->trainingPartner->name;
+
+            $data['courseReferenceNumber'] = $tpg_response->data->enrolment->course->referenceNumber;
+            $data['courseTitle'] = $tpg_response->data->enrolment->course->title;
+            $data['courseRunId'] = $tpg_response->data->enrolment->course->run->id;
+            $data['courseStartDate'] = $tpg_response->data->enrolment->course->run->startDate;
+            $data['courseEndDate'] = $tpg_response->data->enrolment->course->run->endDate;
+
+            $data['traineeId'] = $tpg_response->data->enrolment->trainee->id;
+            $data['traineeEmailAddress'] = $tpg_response->data->enrolment->trainee->email->full;
+            $data['traineeIdType'] = $tpg_response->data->enrolment->trainee->idType->type;
+            $data['traineeDateOfBirth'] = $tpg_response->data->enrolment->trainee->dateOfBirth;
+            $data['traineeFullName'] = $tpg_response->data->enrolment->trainee->fullName;
+            $data['traineeContactNumber'] = $tpg_response->data->enrolment->trainee->contactNumber->phoneNumber;
+
+            $data['employerUEN'] = $tpg_response->data->enrolment->trainee->employer->uen;
+            $data['employerName'] = $tpg_response->data->enrolment->trainee->employer->name;
+            $data['employerContactFullName'] = $tpg_response->data->enrolment->trainee->employer->contact->fullName;
+            $data['employerContactNumber'] = $tpg_response->data->enrolment->trainee->employer->contact->contactNumber->phoneNumber;
+            $data['employerEmailAddress'] = $tpg_response->data->enrolment->trainee->employer->contact->email->full;
+
+            $data['feeDiscountAmount'] = $tpg_response->data->enrolment->trainee->fees->discountAmount;
+            $data['feeCollectionStatus'] = $tpg_response->data->enrolment->trainee->fees->collectionStatus;
+            
+            $feeCollectionStatus_options[''] = 'Select';
+            $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
+            $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
+            $feeCollectionStatus_options['Full Payment'] = 'Full Payment';
+            $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
+
+            $data['feeCollectionStatus_options'] = $feeCollectionStatus_options;
+            
+            $data['traineeEnrolmentDate'] = $tpg_response->data->enrolment->trainee->enrolmentDate;
+
+            $data['traineeSponsorshipType'] = $tpg_response->data->enrolment->trainee->sponsorshipType;
+
+            $data['sideMenuData'] = fetch_non_main_page_content();
+            $data['page_title'] = 'TPG EDIT ENROL DATA';
+            $data['main_content'] = 'classtrainee/edit_enrolled_trainee_tpg';
+
+            $this->load->view('layout', $data);
+        } else {
+            if ($tpg_response->status == 400) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 403) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 404) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 500) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } else {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            }
+            redirect('class_trainee');
+        }
+    }
+   
+    public function update_cancel_enrolment_tpg() {
+
+        $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumber');
+        $course_id = $this->input->post('tpgCourseId');
+        $class_id = $this->input->post('tpgClassId');
+        $feeCollectionStatus = $this->input->post('fee_collectionStatus');
+
+        $encrypt_method = "AES-256-CBC";
+        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+        $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
+
+        $api_version = 'v1';
+        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/details/" . $enrolmentReferenceNumber;
+
+        $tpg_enrolment_json_data = '{
+                                        "enrolment": {
+                                          "action": "Update",
+                                          "course": {
+                                            "run": {
+                                              "id": "10026"
+                                            }
+                                          },
+                                          "trainee": {
+                                            "contactNumber": {
+                                              "countryCode": "60",
+                                              "areaCode": "00",
+                                              "phoneNumber": "88881234"
+                                            },
+                                            "emailAddress": "abc@abc.com"
+                                          },
+                                          "employer": {
+                                            "fullName": "Stephen Chua",
+                                            "contactNumber": {
+                                              "countryCode": "60",
+                                              "areaCode": "00",
+                                              "phoneNumber": "88881234"
+                                            },
+                                            "emailAddress": "abc@abc.com"
+                                          },
+                                          "fees": {
+                                            "discountAmount": "50.25",
+                                            "collectionStatus": "Full Payment"
+                                          }
+                                        }
+                                      }';
+
+        $encrypted_output = openssl_encrypt($tpg_enrolment_json_data, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
+
+        $request = $this->curl_request('POST', $url, $encrypted_output, $api_version);
+
+        $decrypted_output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+
+        $tpg_response = json_decode($decrypted_output);
+
+        if ($tpg_response->status == 200) {
+
+            $this->session->set_flashdata("success", "The Fee Collection Status has been updated for the enrolment reference number - " . $enrolmentReferenceNumber);
+
+            redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
+        } else {
+            if ($tpg_response->status == 400) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 403) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 404) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 500) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } else {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            }
+            redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
+        }
     }
 
 }
