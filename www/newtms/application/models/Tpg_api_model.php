@@ -335,12 +335,12 @@ class Tpg_api_Model extends CI_Model {
         return $obj;
     }
     
-    public function fetch_ssg_session($tenant_id,$CourseRunId,$classId,$tp_uen){
+    public function fetch_ssg_session($tenant_id,$CourseRunId,$classId,$tp_uen,$crse_ref_no){
         $retun = $this->correct_live_dev_api_data($crse_ref_no,$tp_uen);
         $api_version = 'v1.3';
-        $url = "https://".$retun[domain]."/courses/runs/".$courserunid;
-        $response = $this->curl_request('POST',$url,$tpg_delete_courserun_json,$api_version);
-        //print_r($tpg_delete_courserun_json);echo $url;exit;
+        $url = "https://".$retun[domain]."/courses/runs/".$CourseRunId.'/sessions?uen='.$retun[tp_uen].'&courseReferenceNumber='.$retun[ref_no];
+        $response = $this->curl_request('GET',$url,'',$api_version);
+        print_r($response);echo $url;exit;
         $obj=json_decode($response);
         return $obj;
     }
