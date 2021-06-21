@@ -441,6 +441,7 @@ class Classes extends CI_Controller {
         }
         $data['def_assessment'] = $cdef_assmnt;
         $data['page_title'] = 'Class';
+        $data['classid'] = $class_id;
         $data['main_content'] = 'class/viewclass';
         //$data['sideMenuData'] = $this->sideMenu;
         $this->load->view('layout', $data);
@@ -901,4 +902,15 @@ class Classes extends CI_Controller {
         }
     }
 
+    ///added by shubhranshu to fetch the latest ssg sessions
+    public function get_ssg_session(){
+        $tenant_id = $this->tenant_id;
+        $CourseRunId = $this->input->post('crs_run_id');
+        $classId = $this->input->post('class_id');
+        $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
+        $class_details = $this->classmodel->get_class_details($tenant_id,$classId);
+        print_r($class_details);exit;
+        //$class_details=$this->coursemodel->get_course_detailse($class_details);
+        //$tpg_response = $this->tpgModel->fetch_ssg_session($tenant_id,$CourseRunId,$classId,$tenant->comp_reg_no);
+    }
 }

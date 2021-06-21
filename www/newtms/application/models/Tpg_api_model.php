@@ -335,6 +335,16 @@ class Tpg_api_Model extends CI_Model {
         return $obj;
     }
     
+    public function fetch_ssg_session($tenant_id,$CourseRunId,$classId,$tp_uen){
+        $retun = $this->correct_live_dev_api_data($crse_ref_no,$tp_uen);
+        $api_version = 'v1.3';
+        $url = "https://".$retun[domain]."/courses/runs/".$courserunid;
+        $response = $this->curl_request('POST',$url,$tpg_delete_courserun_json,$api_version);
+        //print_r($tpg_delete_courserun_json);echo $url;exit;
+        $obj=json_decode($response);
+        return $obj;
+    }
+    
     public function updateEnrolmentReferenceNumber($course_id,$class_id,$user_id,$enrolmentReferenceNumber){
         
         if(!empty($enrolmentReferenceNumber)){

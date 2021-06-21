@@ -84,12 +84,12 @@ $role_array = array("COMPACT");
                                 }
                                 ?></label></td>
                     </tr>
-                    <?php if(TENANT_ID=='T02' || TENANT_ID=='T24'){ ?>
+                   
                     <tr>
                         <td class="td_heading">TPGateway Course Run ID:</td>
-                        <td colspan="5"><label class="label_font"><?php echo $class->tpg_course_run_id; ?></label></td>
+                        <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_course_run_id; ?></label></td>
                     </tr>
-                    <?php } ?>
+                   
                     <tr>
                         <td class="td_heading">Class Language:</td>
                         <td ><?php echo rtrim($ClassLang, ', '); ?></td>
@@ -310,7 +310,19 @@ $role_array = array("COMPACT");
 <script>
  $(document).ready(function() {
        $('#view_ssg_session').click(function(){
-           
+          $crs_run_id= $('#crs_run_id').html();
+          $class_id= '<?php echo $classid;?>';
+           $.ajax({
+            type: 'post',
+            url: $siteurl + 'classes/get_ssg_session',
+            data: {crs_run_id: $crs_run_id,class_id:$class_id},
+            async: false,
+            success: function(res) {
+                if (res == 1) {
+                   
+                }
+            }
+        });
        });
     });    
 
