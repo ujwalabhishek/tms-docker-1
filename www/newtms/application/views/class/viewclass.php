@@ -169,7 +169,7 @@ $role_array = array("COMPACT");
     <div style="clear:both;"></div><br>
     <div class="row marketing">
         <div class="col-lg-6">
-            <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule <div id="view_ssg_session" style='float:right'>View SSG Sessions</div></h4> 
+            <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule <div id="view_ssg_session" style='float:right;cursor: pointer;'>View SSG Sessions</div></h4> 
             <p>
             <div class="scroll_schedule">
                 <div class="table-responsive">
@@ -288,3 +288,29 @@ $role_array = array("COMPACT");
         </div>
     </div>
 </div>
+
+
+<div class="modal1_0001" id="view_ssg_session_modal" style="display:none;height:200px;min-height: 200px;">
+    <h2 class="panel_heading_style">View SSG Sessions</h2>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td class="td_heading">SL.NO</td>
+                <td class="td_heading">Session ID</td>
+                <td class="td_heading">Start Date</td>
+                <td class="td_heading">End Date</td>
+                <td class="td_heading">Start Time</td>
+                <td class="td_heading">End Time</td>
+                <td class="td_heading">Attendance Taken</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+ $(document).ready(function() {
+       $('#view_ssg_session').click(function(){
+           $('#view_ssg_session_modal').show();
+       });
+    });    
+
+</script>
