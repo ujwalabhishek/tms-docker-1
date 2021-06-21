@@ -239,7 +239,7 @@ $CI->load->model('settings_model');
                     </tr>
                     <tr>
                         <td class="td_heading">External Reference Number:<span class="required">*</span></td>
-                        <td colspan="3">
+                        <td>
                             <?php
                             $external_reference_number = array(
                                 'name' => 'external_reference_number',
@@ -254,6 +254,22 @@ $CI->load->model('settings_model');
                             <div style='color:grey'>Always Starts with "TGS-"</div>
                             <span id="external_reference_number_err"></span>
                             <?php //echo form_error('external_reference_number', '<div class="error">', '</div>'); ?>
+                        </td>
+                        <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
+                        <td>
+                            <?php
+                            $crse_admin_email = array(
+                                'name' => 'crse_admin_email',
+                                'id' => 'crse_admin_email',
+                                'value' => set_value('crse_admin_email'),
+                                'maxlength' => 50,
+                                'class' => 'upper_case',
+                                'style' => 'width:200px',
+                            );
+                            echo form_input($crse_admin_email);
+                            ?>
+                            <span id="crse_admin_email_err"></span>
+                            <?php echo form_error('crse_admin_email', '<div class="error">', '</div>'); ?>
                         </td>
                     </tr>      
                     <tr>

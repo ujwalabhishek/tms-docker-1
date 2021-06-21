@@ -430,7 +430,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
             'competency_code' => strtoupper($course_competency_code), 'certi_level' => $certification_code,
 
-            'crse_manager' => $crse_manager_value, 'description' => $course_description,
+            'crse_manager' => $crse_manager_value, 'description' => $course_description,'crse_admin_email' => $crse_admin_email,
 
             'crse_cert_validity' => $validity, 'display_on_portal' => ($display_in_landing_page) ? $display_in_landing_page : 0,
 
@@ -1755,7 +1755,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
                 'competency_code' => strtoupper($course_competency_code), 'crse_manager' => $crse_manager_value,
                 'default_commission_rate' => $default_commission_rate, 'default_commission_rate' => $default_commission_rate,
-                'description' => $course_description, 'display_on_portal' => $display_in_landing_page,
+                'description' => $course_description, 'display_on_portal' => $display_in_landing_page,'crse_admin_email' => $crse_admin_email,
 
                 'last_modified_by' => $user_id, 'last_modified_on' => date('Y-m-d H:i:s'),
 
