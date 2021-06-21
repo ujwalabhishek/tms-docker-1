@@ -169,7 +169,7 @@ $role_array = array("COMPACT");
     <div style="clear:both;"></div><br>
     <div class="row marketing">
         <div class="col-lg-6">
-          <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule</h4> 
+            <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule <div id="view_ssg_session" style='float:right'>View SSG Sessions</div></h4> 
             <p>
             <div class="scroll_schedule">
                 <div class="table-responsive">
