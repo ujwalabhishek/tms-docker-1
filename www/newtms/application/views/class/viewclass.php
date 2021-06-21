@@ -169,7 +169,7 @@ $role_array = array("COMPACT");
     <div style="clear:both;"></div><br>
     <div class="row marketing">
         <div class="col-lg-6">
-            <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule <a class="small_text" rel="modal:open" href="#view_ssg_session_modal" style='float:right;cursor:pointer;'>View SSG Session</a></h4> 
+           <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule <a class="small_text" rel="modal:open" href="#view_ssg_session_modal" id='view_ssg_session' style='float:right;cursor:pointer;'>View SSG Session</a></h4> 
             <p>
             <div class="scroll_schedule">
                 <div class="table-responsive">
@@ -291,36 +291,26 @@ $role_array = array("COMPACT");
 
 
 <div class="modal1_0001" id="view_ssg_session_modal" style="display:none;height:200px;min-height: 200px;">
-    <h2 class="panel_heading_style">Update Fee Collection Status</h2>
+    <h2 class="panel_heading_style">View SSG Sessions</h2>
     <table class="table table-striped">
         <tbody>
             <tr>
-                <td class="td_heading">Fee Collection Status:</td>
-                <td>
-                    <?php $enrolmentReferenceNumber = "ENR-2103-001256"; ?>
-                    <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
-                    <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
-                    <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
-                    <?php
-                    $feecollectionStatus = array('' => 'Select', 'Pending Payment' => "Pending Payment", 'Partial Payment' => "Partial Payment", 'Full Payment' => "Full Payment", 'Cancelled' => "Cancelled");
-                    $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
-                    echo form_dropdown('fee_collectionStatus', $feecollectionStatus, '', $fee_collectionStatus_attr);
-                    ?>
-                    <span id="fee_collection_err"></span>
-                </td>
+                <td class="td_heading">SL.NO</td>
+                <td class="td_heading">Session ID</td>
+                <td class="td_heading">Start Date</td>
+                <td class="td_heading">End Date</td>
+                <td class="td_heading">Start Time</td>
+                <td class="td_heading">End Time</td>
+                <td class="td_heading">Attendance Taken</td>
             </tr>
         </tbody>
     </table>
-    <span class="required required_i">* Required Fields</span>
-    <div class="popup_cance89">
-        <span href="#abd" rel="modal:close"><button class="btn btn-primary enrollment_fee_save" type="submit">Submit</button></span>
-    </div>
 </div>
 
 <script>
  $(document).ready(function() {
        $('#view_ssg_session').click(function(){
-          
+           
        });
     });    
 
