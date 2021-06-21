@@ -290,7 +290,7 @@ $role_array = array("COMPACT");
 </div>
 
 
-<div class="modal1_0001" id="view_ssg_session_modal" style="display:none;height:200px;min-height: 200px;">
+<div class="modal1_0001" id="view_ssg_session_modal" style="display:none;height:227px;min-height: 200px;">
     <h2 class="panel_heading_style">View SSG Sessions</h2>
     <table class="table table-striped">
         <tbody id='ssg_sess'>
