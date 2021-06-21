@@ -850,6 +850,33 @@ class Class_Model extends CI_Model {
       
         return $result;
     }
+    
+    ////added by shubhranshu to fetch course run id
+    public function get_course_Run_id($tenantId, $courseId, $mark_attendance = NULL, $is_allclass = 0,$classTrainee=0) {
+        
+        $this->db->select('cc.tpg_course_run_id');
+        $this->db->from('course_class cc');
+        $this->db->where('cc.tenant_id', $tenantId);
+        $this->db->where('cc.course_id', $courseId);
+        if (empty($is_allclass)) {
+             $this->db->where('cc.class_status !=', 'INACTIV');
+        }
+        if ($this->sess_user->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
+            $this->traineelist_querychange_copy();
+        }
+         if ($this->sess_user->role_id == 'TRAINER') {
+            $this->db->where("FIND_IN_SET(" . $this->sess_user->user_id . ",cc.classroom_trainer) !=", 0);
+        }
+        $this->db->order_by("DATE(cc.class_start_datetime)", "DESC"); // added for class start date based sorting on Nov 24 2014.
+        $query = $this->db->get();   
+        
+        $result = array();
+        foreach ($query->result() as $row) {
+            $result[$row->tpg_course_run_id] = $row->tpg_course_run_id;
+        }
+      
+        return $result;
+    }
 
     /**
      * This method gets the languages in a course
