@@ -73,6 +73,7 @@ class Classes extends CI_Controller {
         $data['courses'] = $this->coursemodel->get_active_course_list_by_tenant($tenantId);
         $data['classes'] = array();
         $data['courseDetails'] = array();
+         $data['courseRunId'] = $this->classmodel->get_course_Run_id($tenantId, $courseId, '', 1);
         if ($courseId) {
             $export_url = '?';
             foreach ($_GET as $k => $v) {
@@ -83,7 +84,7 @@ class Classes extends CI_Controller {
             $data['sort_link'] = $sort_link = "course_id=" . $this->input->get('course_id') . "&class_id=" . $this->input->get('class_id') . "&class_status=" . $this->input->get('class_status');
             $this->load->model('settings_model', 'settingsmodel');
             $data['classes'] = $this->classmodel->get_course_class($tenantId, $courseId, '', 1);
-            $data['courseRunId'] = $this->classmodel->get_course_Run_id($tenantId, $courseId, '', 1);
+           
             $data['courseDetails'] = $coursedetails = $this->coursemodel->get_course_detailse($courseId);
             $data['coursePreReq'] = $this->coursemodel->get_pre_requisite($coursedetails->pre_requisite);
             $data['courseLang'] = $this->coursemodel->get_metadata_on_parameter_id($coursedetails->language);
