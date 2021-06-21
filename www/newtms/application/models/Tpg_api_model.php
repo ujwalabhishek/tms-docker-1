@@ -92,11 +92,12 @@ class Tpg_api_Model extends CI_Model {
         
         }
     
-    public function updateCourseRunId($class_id,$crse_run_id){
+    public function updateSsgData($class_id,$crse_run_id,$ssg_data){
         if(!empty($crse_run_id)){
             $tenantId = $this->session->userdata('userDetails')->tenant_id;
             $data = array(
-                       'tpg_course_run_id' => $crse_run_id
+                       'tpg_course_run_id' => $crse_run_id,
+                       'tpg_qr_code' => $ssg_data->qrCodeLink
                    );
            $this->db->trans_start();
            $this->db->where('class_id', $class_id);
@@ -334,6 +335,16 @@ class Tpg_api_Model extends CI_Model {
         $obj=json_decode($response);
         return $obj;
     }
+    
+    public function getCourseByRunId($tpg_course_run_id){
+        $api_version = 'v1.3';
+        $url = "https://".$retun[domain]."/courses/runs/".$tpg_course_run_id;
+        $response = $this->curl_request('POST',$url,'',$api_version);
+        //print_r($tpg_delete_courserun_json);echo $url;exit;
+        $obj=json_decode($response);
+        return $obj;
+    }
+    
     ///added by shubhranshu to fetch the latest ssg sessions
     public function fetch_ssg_session($tenant_id,$CourseRunId,$classId,$tp_uen,$crse_ref_no){
         $retun = $this->correct_live_dev_api_data($crse_ref_no,$tp_uen);

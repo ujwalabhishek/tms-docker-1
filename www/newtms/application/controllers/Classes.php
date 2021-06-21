@@ -177,8 +177,8 @@ class Classes extends CI_Controller {
                     $tpg_course_run_id = $tpg_response->data->runs[0]->id;
                     $result = $this->classmodel->create_class($tenant_id, $user_id,$tpg_course_run_id);
                     if($result['status'] == TRUE) {
-                        
-                        $st = $this->tpgModel->updateCourseRunId($result['classid'],$tpg_course_run_id);
+                        $ssg_data = $this->tpgModel->getCourseByRunId($tpg_course_run_id);//to get qr code details
+                        $st = $this->tpgModel->updateSsgData($result['classid'],$tpg_course_run_id,$ssg_data->data->course->run);
                         //print_r($tpg_response);exit;
                         if($st == TRUE){
                            $this->session->set_flashdata("success", "Class created successfully With Course Run ID: ".$tpg_course_run_id); 
