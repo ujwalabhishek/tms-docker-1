@@ -438,6 +438,9 @@ class Class_Model extends CI_Model {
         if (!empty($class_id)) {
             $this->db->where('class_id', $class_id);
         }
+        if (!empty($tpg_course_run_id)) {
+            $this->db->where('tpg_course_run_id', $tpg_course_run_id);
+        }
         if (!empty($class_status)) {
             switch ($class_status) {
                 case 'IN_PROG':
