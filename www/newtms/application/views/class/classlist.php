@@ -117,12 +117,12 @@ $CI->load->model('class_model');
                             $crsrunid_js = $crsrunid_js;
                             $tpg_course_run_id_options[''] = 'All';
                         } else {
-                            //$crsrunid_js = $crsrunid_js . ' disabled="disabled"';
+                            $crsrunid_js = $crsrunid_js . ' disabled="disabled"';
                         }
                         foreach ($courseRunId as $k => $v) {
                             $tpg_course_run_id_options[$k] = $v;
                         }
-                        echo form_dropdown('tpg_course_run_id', $tpg_course_run_id_options, $this->input->get('tpg_course_run_id'), $class_js);
+                        echo form_dropdown('tpg_course_run_id', $tpg_course_run_id_options, $this->input->get('tpg_course_run_id'), $crsrunid_js);
                         ?>
                     </td>
                     
