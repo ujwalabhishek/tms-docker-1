@@ -112,7 +112,7 @@ $CI->load->model('class_model');
                         <?php
                         $class_options = array();
                         $crsrunid_js = 'id="tpg_course_run_id"';
-                        $tpg_course_run_id_options[''] = 'Select';
+                         $tpg_course_run_id_options[''] = 'All';
                         if (!empty($courseRunId)) {
                             $crsrunid_js = $crsrunid_js;
                             $tpg_course_run_id_options[''] = 'All';
