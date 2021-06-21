@@ -911,5 +911,6 @@ class Classes extends CI_Controller {
         $class_details = $this->classmodel->get_class_details($tenant_id,$classId);
         $crse_details=$this->coursemodel->get_course_detailse($class_details->course_id);
         $tpg_response = $this->tpgModel->fetch_ssg_session($tenant_id,$CourseRunId,$classId,$tenant->comp_reg_no,$crse_details->crse_ref_no);
+        echo $tpg_response;
     }
 }

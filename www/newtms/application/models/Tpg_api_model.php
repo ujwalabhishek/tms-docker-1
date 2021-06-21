@@ -340,9 +340,9 @@ class Tpg_api_Model extends CI_Model {
         $api_version = 'v1.3';
         $url = "https://".$retun[domain]."/courses/runs/".$CourseRunId.'/sessions?uen='.$retun[tp_uen].'&courseReferenceNumber='.$retun[ref_no];
         $response = $this->curl_request('GET',$url,'',$api_version);
-        print_r($response);echo $url;exit;
-        $obj=json_decode($response);
-        return $obj;
+        //print_r($response);echo $url;exit;
+        //$obj=json_decode($response);
+        return $response;
     }
     
     public function updateEnrolmentReferenceNumber($course_id,$class_id,$user_id,$enrolmentReferenceNumber){
