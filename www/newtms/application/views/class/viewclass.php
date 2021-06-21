@@ -293,7 +293,7 @@ $role_array = array("COMPACT");
 <div class="modal1_0001" id="view_ssg_session_modal" style="display:none;height:200px;min-height: 200px;">
     <h2 class="panel_heading_style">View SSG Sessions</h2>
     <table class="table table-striped">
-        <tbody>
+        <tbody id='ssg_sess'>
             <tr>
                 <td class="td_heading">SL.NO</td>
                 <td class="td_heading">Session ID</td>
@@ -303,6 +303,7 @@ $role_array = array("COMPACT");
                 <td class="td_heading">End Time</td>
                 <td class="td_heading">Attendance Taken</td>
             </tr>
+            
         </tbody>
     </table>
 </div>
@@ -319,8 +320,10 @@ $role_array = array("COMPACT");
             data: {crs_run_id: $crs_run_id,class_id:$class_id},
             async: false,
             success: function(res) {
-                if (res == 1) {
-                   
+                if (res != '') {
+                   $.each(res.data.sessions, function(i, item) {
+                       $('#ssg_sess').append('<tr><td>'+i+'</td><td>'+item.id+'</td><td>'+item.startDate+'</td><td>'+item.endDate+'</td><td>'+item.startTime+'</td><td>'+item.endTime+'</td><td>'+item.attendanceTaken+'</td></tr>');
+                    });
                 }
             }
         });
