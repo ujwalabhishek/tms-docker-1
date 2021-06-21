@@ -293,7 +293,7 @@ $role_array = array("COMPACT");
 <div class="modal1_0001" id="view_ssg_session_modal" style="display:none;height:227px;min-height: 200px;">
     <h2 class="panel_heading_style">View SSG Sessions</h2>
     <table class="table table-striped">
-        <tbody id='ssg_sess'>
+        <thead>
             <tr>
                 <td class="td_heading">SL.NO</td>
                 <td class="td_heading">Session ID</td>
@@ -303,6 +303,9 @@ $role_array = array("COMPACT");
                 <td class="td_heading">End Time</td>
                 <td class="td_heading">Attendance Taken</td>
             </tr>
+        </thead>
+        <tbody id='ssg_sess'>
+            
             
         </tbody>
     </table>
@@ -312,6 +315,7 @@ $role_array = array("COMPACT");
  $(document).ready(function() {
       $siteurl = '<?php echo site_url(); ?>';
        $('#view_ssg_session').click(function(){
+           $('#ssg_sess').html('');
           $crs_run_id= $('#crs_run_id').html();
           $class_id= '<?php echo $classid;?>';
            $.ajax({
@@ -323,7 +327,7 @@ $role_array = array("COMPACT");
                 json_data = $.parseJSON(res);
                 if (json_data != '') {
                    $.each(json_data.data.sessions, function(i, item) {
-                       $('#ssg_sess').append('<tr><td>'+i+'</td><td>'+item.id+'</td><td>'+item.startDate+'</td><td>'+item.endDate+'</td><td>'+item.startTime+'</td><td>'+item.endTime+'</td><td>'+item.attendanceTaken+'</td></tr>');
+                       $('#ssg_sess').append('<tr><td>'+(i+1)+'</td><td>'+item.id+'</td><td>'+item.startDate+'</td><td>'+item.endDate+'</td><td>'+item.startTime+'</td><td>'+item.endTime+'</td><td>'+item.attendanceTaken+'</td></tr>');
                     });
                 }
             }
