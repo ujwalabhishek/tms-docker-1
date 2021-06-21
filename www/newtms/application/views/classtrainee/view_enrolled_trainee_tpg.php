@@ -8,14 +8,14 @@
     <h2 class="panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> TPG Trainee Enrolled Details</h2>
     <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Enrollment Details</h2>
     <div class="table-responsive">
-        <?php        
+        <?php
         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
         ?>  
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <td colspan="4">                        
-                        <label style="color:blue;font-weight:bold">Enrollment Details</label>
+                    <td colspan="4">                            
+                        <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Trainee Details</h2>
                     </td>                           
                 </tr>
                 <tr class="change_span" style="">
@@ -35,7 +35,7 @@
                         <span id="fullname_err"></span>
                     </td>
                 </tr>
-                
+
                 <tr class="change_span" style="">
                     <td>                    
                         <b>NRIC/FIN No.:<span class="required">*</span></b> 
@@ -95,10 +95,10 @@
                         <input type="text" name="tpuen" id="tpuen" style="" value='<?php echo $traineeSponsorshipType; ?>' disabled="disabled"/>
                         <span id="tpuen_err"></span>
                     </td>
-                </tr>
+                </tr>                
                 <tr>
-                    <td colspan="4">                        
-                        <label style="color:blue;font-weight:bold">Training Partner Details</label>
+                    <td colspan="4">                            
+                        <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Training Partner Details</h2>
                     </td>                           
                 </tr>
                 <tr class="new_span">
@@ -119,10 +119,10 @@
                         <input type="text" name="tpuen" id="tpuen" style="" value='<?php echo $trainingPartnerName; ?>' disabled="disabled"/>
                         <span id="tpuen_err"></span>
                     </td>
-                </tr>
+                </tr>                
                 <tr>
-                    <td colspan="4">                        
-                        <label style="color:blue;font-weight:bold">Course Details</label>
+                    <td colspan="4">                            
+                        <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Course Details</h2>
                     </td>                           
                 </tr>
                 <tr class="new_span">

@@ -1582,9 +1582,11 @@ class tp_gateway extends CI_Controller {
     public function update_cancel_enrolment_tpg() {
 
         $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumber');
-        $course_id = $this->input->post('tpgCourseId');
-        $class_id = $this->input->post('tpgClassId');
         $feeCollectionStatus = $this->input->post('fee_collectionStatus');
+        
+        //$course_id = $this->input->post('tpgCourseId');
+        //$class_id = $this->input->post('tpgClassId');
+        
 
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
