@@ -309,6 +309,7 @@ $role_array = array("COMPACT");
 
 <script>
  $(document).ready(function() {
+      $siteurl = '<?php echo site_url(); ?>';
        $('#view_ssg_session').click(function(){
           $crs_run_id= $('#crs_run_id').html();
           $class_id= '<?php echo $classid;?>';
