@@ -112,10 +112,10 @@ $CI->load->model('class_model');
                         <?php
                         $class_options = array();
                         $crsrunid_js = 'id="tpg_course_run_id"';
-                         $tpg_course_run_id_options[''] = 'All';
+                        $tpg_course_run_id_options[''] = 'All';
                        
                         foreach ($courseRunId as $k => $v) {
-                            $tpg_course_run_id_options[$k] = $v;
+                            $tpg_course_run_id_options.=$tpg_course_run_id_options[$k] = $v;
                         }
                         echo form_dropdown('tpg_course_run_id', $tpg_course_run_id_options, $this->input->get('tpg_course_run_id'), $class_js);
                         ?>
