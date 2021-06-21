@@ -119,17 +119,13 @@ $CI->load->model('class_model');
                         } else {
                             $class_js = $class_js . ' disabled="disabled"';
                         }
-                        foreach ($classes as $k => $v) {
+                        foreach ($courseRunId as $k => $v) {
                             $tpg_course_run_id_options[$k] = $v;
                         }
                         echo form_dropdown('tpg_course_run_id', $tpg_course_run_id_options, $this->input->get('tpg_course_run_id'), $class_js);
                         ?>
                     </td>
-                    <td width="10%" align="center"><button title="Search" value="Search" type="submit" class="btn btn-xs btn-primary no-mar">
-                            <span class="glyphicon glyphicon-search"></span>
-                            Search
-                        </button>
-                    </td>
+                    
                 </tr>
                 <tr>
                     <td width="24%" class="td_heading">Filter by Class Status:</td>
