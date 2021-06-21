@@ -338,8 +338,9 @@ class Tpg_api_Model extends CI_Model {
     
     public function getCourseByRunId($tpg_course_run_id){
         $api_version = 'v1.3';
+         $retun = $this->correct_live_dev_api_data('','');
         $url = "https://".$retun[domain]."/courses/runs/".$tpg_course_run_id;
-        $response = $this->curl_request('POST',$url,'',$api_version);
+        $response = $this->curl_request('GET',$url,'',$api_version);
         //print_r($tpg_delete_courserun_json);echo $url;exit;
         $obj=json_decode($response);
         return $obj;

@@ -89,7 +89,10 @@ $role_array = array("COMPACT");
                         <td class="td_heading">TPGateway Course Run ID:</td>
                         <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_course_run_id; ?></label></td>
                     </tr>
-                   
+                    <tr>
+                        <td class="td_heading">TPGateway QR-Code:</td>
+                        <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_qr_code; ?></label></td>
+                    </tr>
                     <tr>
                         <td class="td_heading">Class Language:</td>
                         <td ><?php echo rtrim($ClassLang, ', '); ?></td>
