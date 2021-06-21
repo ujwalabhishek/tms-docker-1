@@ -249,7 +249,7 @@ class Tpg_api_Model extends CI_Model {
                             "end": "'.date("Ymd", strtotime($crse_end_date)).'"
                           },
                           "scheduleInfoType": {
-                            "code": "1",
+                            "code": "01",
                             "description": "'.$schedule_info_des.'"
                           },
                           "scheduleInfo": "'.$schedule_info.'",
