@@ -111,13 +111,13 @@ $CI->load->model('class_model');
                     <td colspan="3">
                         <?php
                         $class_options = array();
-                        $class_js = 'id="tpg_course_run_id"';
+                        $crsrunid_js = 'id="tpg_course_run_id"';
                         $tpg_course_run_id_options[''] = 'Select';
                         if (!empty($courseRunId)) {
-                            $class_js = $class_js;
+                            $crsrunid_js = $crsrunid_js;
                             $tpg_course_run_id_options[''] = 'All';
                         } else {
-                            $class_js = $class_js . ' disabled="disabled"';
+                            $crsrunid_js = $crsrunid_js . ' disabled="disabled"';
                         }
                         foreach ($courseRunId as $k => $v) {
                             $tpg_course_run_id_options[$k] = $v;
