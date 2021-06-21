@@ -295,13 +295,13 @@ $role_array = array("COMPACT");
     <table class="table table-striped">
         <thead>
             <tr>
-                <td class="td_heading">SL.NO</td>
-                <td class="td_heading">Session ID</td>
-                <td class="td_heading">Start Date</td>
-                <td class="td_heading">End Date</td>
-                <td class="td_heading">Start Time</td>
-                <td class="td_heading">End Time</td>
-                <td class="td_heading">Attendance Taken</td>
+                <th class="td_heading">SL.NO</th>
+                <th class="td_heading">Session ID</th>
+                <th class="td_heading">Start Date</th>
+                <th class="td_heading">End Date</th>
+                <th class="td_heading">Start Time</th>
+                <th class="td_heading">End Time</th>
+                <th class="td_heading">Attendance Taken</th>
             </tr>
         </thead>
         <tbody id='ssg_sess'>
