@@ -319,9 +319,9 @@ $role_array = array("COMPACT");
             url: $siteurl + 'classes/get_ssg_session',
             data: {crs_run_id: $crs_run_id,class_id:$class_id},
             async: false,
-            success: function(res) {
+            success: function(res) {alert(res);
                 if (res != '') {
-                   $.each(res.sessions, function(i, item) {
+                   $.each(res.data.sessions, function(i, item) {
                        $('#ssg_sess').append('<tr><td>'+i+'</td><td>'+item.id+'</td><td>'+item.startDate+'</td><td>'+item.endDate+'</td><td>'+item.startTime+'</td><td>'+item.endTime+'</td><td>'+item.attendanceTaken+'</td></tr>');
                     });
                 }
