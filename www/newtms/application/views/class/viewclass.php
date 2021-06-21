@@ -291,45 +291,32 @@ $role_array = array("COMPACT");
 
 
 <div class="modal1_0001" id="view_ssg_session_modal" style="display:none;height:200px;min-height: 200px;">
-    <h2 class="panel_heading_style">View SSG Sessions</h2>
+    <h2 class="panel_heading_style">Update Fee Collection Status</h2>
     <table class="table table-striped">
         <tbody>
             <tr>
-                <td class="td_heading">SL.NO</td>
-                <td class="td_heading">Session ID</td>
-                <td class="td_heading">Start Date</td>
-                <td class="td_heading">End Date</td>
-                <td class="td_heading">Start Time</td>
-                <td class="td_heading">End Time</td>
-                <td class="td_heading">Attendance Taken</td>
+                <td class="td_heading">Fee Collection Status:</td>
+                <td>
+                    <?php $enrolmentReferenceNumber = "ENR-2103-001256"; ?>
+                    <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
+                    <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
+                    <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
+                    <?php
+                    $feecollectionStatus = array('' => 'Select', 'Pending Payment' => "Pending Payment", 'Partial Payment' => "Partial Payment", 'Full Payment' => "Full Payment", 'Cancelled' => "Cancelled");
+                    $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
+                    echo form_dropdown('fee_collectionStatus', $feecollectionStatus, '', $fee_collectionStatus_attr);
+                    ?>
+                    <span id="fee_collection_err"></span>
+                </td>
             </tr>
         </tbody>
     </table>
-</div>
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+    <span class="required required_i">* Required Fields</span>
+    <div class="popup_cance89">
+        <span href="#abd" rel="modal:close"><button class="btn btn-primary enrollment_fee_save" type="submit">Submit</button></span>
     </div>
-
-  </div>
 </div>
+
 <script>
  $(document).ready(function() {
        $('#view_ssg_session').click(function(){
