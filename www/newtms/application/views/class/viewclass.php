@@ -172,7 +172,7 @@ $role_array = array("COMPACT");
     <div style="clear:both;"></div><br>
     <div class="row marketing">
         <div class="col-lg-6">
-           <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule <a class="small_text" rel="modal:open" href="#view_ssg_session_modal" id='view_ssg_session' style='float:right;cursor:pointer;'>View SSG Sessions</a></h4> 
+           <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule <a class="small_text" rel="modal:open" href="#view_ssg_session_modal" id='view_ssg_session' style='float:right;cursor:pointer;color:blue;'>View TPG Sessions</a></h4> 
             <p>
             <div class="scroll_schedule">
                 <div class="table-responsive">
@@ -294,7 +294,7 @@ $role_array = array("COMPACT");
 
 
 <div class="modal1_0001" id="view_ssg_session_modal" style="display:none;height:227px;min-height: 200px;">
-    <h2 class="panel_heading_style">View SSG Live Sessions</h2>
+    <h2 class="panel_heading_style">View TPG Live Sessions</h2>
     <table class="table table-striped">
         <thead>
             <tr>
