@@ -321,7 +321,7 @@ $role_array = array("COMPACT");
             async: false,
             success: function(res) {
                 if (res != '') {
-                   $.each(res.data.sessions, function(i, item) {
+                   $.each(res.sessions, function(i, item) {
                        $('#ssg_sess').append('<tr><td>'+i+'</td><td>'+item.id+'</td><td>'+item.startDate+'</td><td>'+item.endDate+'</td><td>'+item.startTime+'</td><td>'+item.endTime+'</td><td>'+item.attendanceTaken+'</td></tr>');
                     });
                 }
