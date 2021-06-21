@@ -91,7 +91,7 @@ $role_array = array("COMPACT");
                     </tr>
                     <tr>
                         <td class="td_heading">TPGateway QR-Code Link:</td>
-                        <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_qr_code; ?></label></td>
+                        <td colspan="5"><label class="label_font" id='crs_run_id'><a href='<?php echo $class->tpg_qr_code; ?>' target="_blank"><?php echo $class->tpg_qr_code; ?></a></label></td>
                     </tr>
                     <tr>
                         <td class="td_heading">Class Language:</td>
