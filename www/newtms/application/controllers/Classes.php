@@ -915,7 +915,7 @@ class Classes extends CI_Controller {
         echo $tpg_response;
     }
     
-    public function add_assemt_toTpg(){
+    public function tpg_assessments(){
         
     }
 }
