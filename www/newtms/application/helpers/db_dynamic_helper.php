@@ -3,7 +3,7 @@
 function switch_db_dynamic($name_db)
 {
     $config_app['dsn'] = '';
-    $config_app['hostname'] = '172.18.0.3';
+    $config_app['hostname'] = '172.18.0.2';
     $config_app['username'] = 'biipmico_tms_dev';
     $config_app['password'] = 'biipmi@#*123@biipbyte';
     $config_app['database'] = $name_db;
