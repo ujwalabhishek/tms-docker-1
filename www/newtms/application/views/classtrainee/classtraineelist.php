@@ -366,13 +366,17 @@
                                     <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" />Submit To TPG</button>
                                     <?php echo form_close(); ?>                                    
                                     <br>
-                                    <?php $enrolmentReferenceNumber = "ENR-2103-001256"; 
+                                    <?php
+                                    $enrolmentReferenceNumber = $row['enrolmentReferenceNumber']; 
                                     $feecollectionStatus = $row['feecollectionStatus'];
-                                    ?>
+                                    
+                                    if($enrolmentReferenceNumber != '') {
+                                    ?>                                    
                                     <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-search"></span>View Enrolment</span></a>
                                     <br>
                                     <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-retweet"></span>Edit Enrolment</span></a>
                                     <br>
+                                    <?php }?>
                                     <div class="button_class"><a class="small_text" rel="modal:open" href="#abd"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-file"></span>Update Fee</button></a></div>
                                 </td>
                             </tr>
@@ -402,8 +406,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         <tbody>
             <tr>
                 <td class="td_heading">Fee Collection Status:</td>
-                <td>
-                    <?php $enrolmentReferenceNumber = "ENR-2103-001256"; ?>
+                <td>                    
                     <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
                     <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
                     <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
