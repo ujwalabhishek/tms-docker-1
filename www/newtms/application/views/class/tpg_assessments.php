@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?11111.000"></script>
 <style>
     table td{
         font-size: 11px;
@@ -48,6 +48,20 @@
                 </tr>                
                 <tr>
                     <td class="td_heading">Class Name:</td>
+                    <td colspan='3'>
+                        <?php
+                        $options = array();
+                        $options[''] = 'Select';
+                        foreach ($classes as $k => $v) {
+                            $options[$k] = $v;
+                        }
+                        $js = 'id="class" ';
+                        echo form_dropdown('class', $options, $this->input->get('class'), $js);
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_heading">Trainee NRIC:</td>
                     <td colspan='3'>
                         <?php
                         $options = array();
