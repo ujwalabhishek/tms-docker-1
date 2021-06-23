@@ -165,7 +165,7 @@ class Class_Trainee extends CI_Controller {
                     $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
                 }
                 
-                $new_tabledata['feecollectionStatus'] = $feeCollectionStatus_options;
+                $new_tabledata[$k]['feecollectionStatus'] = $feeCollectionStatus_options;
 
                 //$new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'],$row['sales_executive_id']);
                 $new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'], $row['class_id'], $row['user_id']);
