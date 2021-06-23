@@ -820,7 +820,7 @@ class Class_Model extends CI_Model {
         $query = $this->db->get();
         $result = array();
         foreach ($query->result() as $row) {
-            $result[$row->class_id] = $row->class_name.'('.$row->tpg_course_run_id.')';
+            $result[$row->class_id] = $row->class_name;
         }
         return $result;
     }
@@ -848,7 +848,7 @@ class Class_Model extends CI_Model {
         
         $result = array();
         foreach ($query->result() as $row) {
-            $result[$row->class_id] = $row->class_name;
+            $result[$row->class_id] = $row->class_name.'('.$row->tpg_course_run_id.')';
         }
       
         return $result;
