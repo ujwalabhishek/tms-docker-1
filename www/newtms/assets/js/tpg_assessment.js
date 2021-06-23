@@ -27,25 +27,25 @@ $(document).ready(function () {
     });
     
     $('#class').change(function () {
-        $class = $('#class');
+        $nric= $('#nric');
         $.ajax({
             type: 'post',
-            url: $baseurl + 'classes/get_course_classes_json',
-            data: {course_id: $('#course').val()},
+            url: $baseurl + 'classes/get_enrol_trainee_list',
+            data: {course_id: $('#class').val()},
             dataType: "json",
             beforeSend: function () {
-                $class.html('<option value="">Select</option>');
+                $nric.html('<option value="">Select</option>');
             },
             success: function (res) {
                 if (res != '') {
-                    $class.html('<option value="">All</option>');
-                    $class.removeAttr('disabled');
+                    $nric.html('<option value="">All</option>');
+                    $nric.removeAttr('disabled');
                 } else {
-                    $class.html('<option value="">Select</option>');
-                    $class.attr('disabled', 'disabled');
+                    $nric.html('<option value="">Select</option>');
+                    $nric.attr('disabled', 'disabled');
                 }
                 $.each(res, function (i, item) {
-                    $class.append('<option value="' + item.key + '">' + item.value + '</option>');
+                    $nric.append('<option value="' + item.key + '">' + item.value + '</option>');
                 });
             }
         });
