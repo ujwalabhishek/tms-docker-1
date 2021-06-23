@@ -234,7 +234,7 @@
                         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         if ($tenant_id == 'T01') {
                             ?>
-                                                   <th width="10%" class="th_header">Sales Executive</th>
+                                                           <th width="10%" class="th_header">Sales Executive</th>
                         <?php } ?>-->
                         <th width="12%" class="th_header">Sales Executive</th>
                         <th width="6%" class="th_header">Certi. Coll.</th>
@@ -274,21 +274,21 @@
                             }
                             $name = json_decode($row['referrer']);
                             ?>
-                                                                                  <!--  $tr = '<tr>
-                                                                                    <td>' . $row['taxcode'] . '</td>
-                                                                                    <td class="name">' . $row['name'] . '</td>
-                                                                                    <td>' . $row['course_class'] . '</td>
-                                                                                    <td>' . $row['duration'] . '</td>
-                                                                                    <td>' . $row['enroll_mode'] . '</td>
-                                                                                     <td>'.$salesList.//implode("<br>",$salesList).'</td>
-                                                                                    '</td><td>' . $row['certi_coll'] . '</td>
-                                                                                    <td>' . $row['status_text'] .'<br />'.$row['end_class'] .'  <br />                          
-                                                                                    ' . $result_text . '
-                                                                                    </td>
-                                                                                    <td>' . $row['paid'] . '</td>
-                                                                                    <td>'.$row['action_link'].'</td>';
-                                                                                     $tr .= '</tr>';
-                                                                                    echo $tr;*/-->
+                                                                                                  <!--  $tr = '<tr>
+                                                                                                    <td>' . $row['taxcode'] . '</td>
+                                                                                                    <td class="name">' . $row['name'] . '</td>
+                                                                                                    <td>' . $row['course_class'] . '</td>
+                                                                                                    <td>' . $row['duration'] . '</td>
+                                                                                                    <td>' . $row['enroll_mode'] . '</td>
+                                                                                                     <td>'.$salesList.//implode("<br>",$salesList).'</td>
+                                                                                                    '</td><td>' . $row['certi_coll'] . '</td>
+                                                                                                    <td>' . $row['status_text'] .'<br />'.$row['end_class'] .'  <br />                          
+                                                                                                    ' . $result_text . '
+                                                                                                    </td>
+                                                                                                    <td>' . $row['paid'] . '</td>
+                                                                                                    <td>'.$row['action_link'].'</td>';
+                                                                                                     $tr .= '</tr>';
+                                                                                                    echo $tr;*/-->
                             <tr>                        
                                 <td><?php echo $row['taxcode']; ?></td>
 
@@ -336,10 +336,10 @@
                                 <td><?php echo $row['enroll_mode'] ?></td>
 
                                 <!--<?php if ($tenant_id == 'T01') { ?>
-                                                           <td><?php echo $salesList; //implode("<br>",$salesList).       ?></td>
+                                                                   <td><?php echo $salesList; //implode("<br>",$salesList).         ?></td>
                                 <?php } ?>-->
 
-                                <td><?php echo $salesList; //implode("<br>",$salesList).       ?></td>
+                                <td><?php echo $salesList; //implode("<br>",$salesList).         ?></td>
                                 <td><?php echo $row['certi_coll']; ?></td>
                                 <td><?php
                                     echo $row['status_text'] . '<br />' . $row['end_class'] . '<br />'
@@ -363,21 +363,26 @@
                                     <input type="hidden" name="courseId" value="<?php echo $row['course_id']; ?>" id="courseId">
                                     <input type="hidden" name="classId" value="<?php echo $row['class_id']; ?>" id="classId">
 
-                                    <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" />Submit To TPG</button>
-                                    <?php echo form_close(); ?>                                    
-                                    <br>
-                                    <?php
-                                    $enrolmentReferenceNumber = $row['enrolmentReferenceNumber']; 
-                                    $feecollectionStatus = $row['feecollectionStatus'];
-                                    
-                                    if($enrolmentReferenceNumber != '') {
+                                    <?php if ($enrolmentReferenceNumber == '') {
+                                        ?>
+                                        <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" />Submit To TPG</button>
+                                        <br>
+                                        <?php
+                                    }
+                                    echo form_close();
                                     ?>                                    
-                                    <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-search"></span>View Enrolment</span></a>
-                                    <br>
-                                    <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-retweet"></span>Edit Enrolment</span></a>
-                                    <br>
-                                    <?php }?>
-                                    <div class="button_class"><a class="small_text" rel="modal:open" href="#abd"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-file"></span>Update Fee</button></a></div>
+                                    <?php
+                                    $enrolmentReferenceNumber = $row['enrolmentReferenceNumber'];
+                                    $feecollectionStatus = $row['feecollectionStatus'];
+
+                                    if ($enrolmentReferenceNumber != '') {
+                                        ?>                                    
+                                        <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-search"></span>View Enrolment</span></a>
+                                        <br>
+                                        <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-retweet"></span>Edit Enrolment</span></a>
+                                        <br>
+                                        <div class="button_class"><a class="small_text" rel="modal:open" href="#abd"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-file"></span>Update Fee</button></a></div>
+                                    <?php } ?>
                                 </td>
                             </tr>
                             <?php
@@ -410,7 +415,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
                     <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
                     <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
                     <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
-                    <?php                    
+                    <?php
                     $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
                     echo form_dropdown('fee_collectionStatus', $feecollectionStatus, '', $fee_collectionStatus_attr);
                     ?>
@@ -425,32 +430,32 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
     </div>
 </div>
 <script>
-    $(document).ready(function() {
-            var check = 0;
-            $('#update_fee').submit(function() {
-                check = 1;
-                return validateFee(true);
-            });
-            $('#update_fee select').change(function() {
-                if (check == 1) {
-                    return validateFee(false);
-                }
-            });
+    $(document).ready(function () {
+        var check = 0;
+        $('#update_fee').submit(function () {
+            check = 1;
+            return validateFee(true);
         });
-        
-        function validateFee(retVal) {
-            fee_status = $.trim($("#fee_collectionStatus").val());
-            if (fee_status == "") {
-                $("#fee_collection_err").text("[required]").addClass('error');
-                $("#fee_collection_err").addClass('error');
-                retVal = false;
-            } else {
-                $("#fee_collection_err").text("").removeClass('error');
-                $("#fee_collection_err").removeClass('error');
-                retVal = true;
+        $('#update_fee select').change(function () {
+            if (check == 1) {
+                return validateFee(false);
             }
-            return retVal;
+        });
+    });
+
+    function validateFee(retVal) {
+        fee_status = $.trim($("#fee_collectionStatus").val());
+        if (fee_status == "") {
+            $("#fee_collection_err").text("[required]").addClass('error');
+            $("#fee_collection_err").addClass('error');
+            retVal = false;
+        } else {
+            $("#fee_collection_err").text("").removeClass('error');
+            $("#fee_collection_err").removeClass('error');
+            retVal = true;
         }
+        return retVal;
+    }
 </script>
 <?php echo form_close(); ?>
 
