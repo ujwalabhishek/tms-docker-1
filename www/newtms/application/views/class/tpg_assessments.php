@@ -274,21 +274,7 @@
                             }
                             $name = json_decode($row['referrer']);
                             ?>
-                                                                                  <!--  $tr = '<tr>
-                                                                                    <td>' . $row['taxcode'] . '</td>
-                                                                                    <td class="name">' . $row['name'] . '</td>
-                                                                                    <td>' . $row['course_class'] . '</td>
-                                                                                    <td>' . $row['duration'] . '</td>
-                                                                                    <td>' . $row['enroll_mode'] . '</td>
-                                                                                     <td>'.$salesList.//implode("<br>",$salesList).'</td>
-                                                                                    '</td><td>' . $row['certi_coll'] . '</td>
-                                                                                    <td>' . $row['status_text'] .'<br />'.$row['end_class'] .'  <br />                          
-                                                                                    ' . $result_text . '
-                                                                                    </td>
-                                                                                    <td>' . $row['paid'] . '</td>
-                                                                                    <td>'.$row['action_link'].'</td>';
-                                                                                     $tr .= '</tr>';
-                                                                                    echo $tr;*/-->
+                                                                              
                             <tr>                        
                                 <td><?php echo $row['taxcode']; ?></td>
 
@@ -380,7 +366,7 @@
                         }
                     } else {
                         $err_msg = $error_msg ? $error_msg : $err_msg; /// added by shubhranshu to remove the classtrainee list on 26/11/2018
-                        echo '<tr><td colspan="10" class="error" style="text-align: center">' . $err_msg . '</td></tr>';
+                        echo '<tr><td colspan="11" class="error" style="text-align: center">' . $err_msg . '</td></tr>';
                     }
                     ?>
                 </tbody>

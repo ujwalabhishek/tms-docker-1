@@ -916,7 +916,9 @@ class Classes extends CI_Controller {
     }
     
     public function tpg_assessments(){
+         $tenant_id = $this->tenant_id;
         $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['courses'] = $courses = $this->coursemodel->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
         $data['main_content'] = 'class/tpg_assessments';
         $this->load->view('layout', $data);
     }
