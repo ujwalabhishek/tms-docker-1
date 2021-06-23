@@ -914,4 +914,8 @@ class Classes extends CI_Controller {
         $tpg_response = $this->tpgModel->fetch_ssg_session($tenant_id,$CourseRunId,$classId,$tenant->comp_reg_no,$crse_details->crse_ref_no);
         echo $tpg_response;
     }
+    
+    public function add_assemt_toTpg(){
+        
+    }
 }
