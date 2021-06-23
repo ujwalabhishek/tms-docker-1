@@ -73,14 +73,14 @@ $(document).ready(function () {
             $('#course').css('border', 'solid 1px red');
             $retval = false;
         } else {
-            $('#course').css('border', 'nonre');
+            $('#course').css('border', 'solid 1px #bcbcbc');
         }
         
         if (clas.length > 0 && clas.length == 0) {
             $('#class').css('border', 'solid 1px red');
             $retval = false;
         } else {
-            $('#class').css('border', 'nonre');
+            $('#class').css('border', 'solid 1px #bcbcbc');
         }
         
         return $retval;
