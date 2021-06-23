@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 
 /*
  * This is the controller class for Class Trainee Use case features. 
-  */
+ */
 
 class Class_Trainee extends CI_Controller {
 
@@ -18,38 +18,36 @@ class Class_Trainee extends CI_Controller {
         $this->load->model('course_model', 'course');
         $this->load->model('class_model', 'class');
         $this->load->model('company_model', 'company');
-        $this->load->model('reports_model', 'reportsModel'); 
+        $this->load->model('reports_model', 'reportsModel');
         $this->load->helper('common');
         $this->load->helper('metavalues_helper');
         $this->load->model('meta_values', 'meta');
-        $this->load->model('trainee_model', 'traineemodel'); 
+        $this->load->model('trainee_model', 'traineemodel');
         $this->load->model('activity_log_model', 'activitylog');
         $this->user = $this->session->userdata('userDetails');
-        $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;    
-      
+        $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;
     }
 
     /*
      * This function loads the initial list view page for class trainee.
      */
 
-    public function index()
-    {
+    public function index() {
         //ini_set('max_execution_time', 0);
         //$this->output->enable_profiler(TRUE);
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
-         extract($_GET);
+        extract($_GET);
         $data['courses'] = $courses = $this->course->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
         if ($course) {
-            
-            $course_classes = $this->class->get_course_class($tenant_id, $course,"","","classTrainee");
+
+            $course_classes = $this->class->get_course_class($tenant_id, $course, "", "", "classTrainee");
             $data['classes'] = $course_classes;
         }
         $export_url = '';
         $sort_url = '';
-        $data['error_msg']= 'Kindly apply filter to fetch the trainees';////ssp/////
-        if(!empty($_GET)){ /// added by shubhranshu to remove the classtrainee list on 26/11/2018
+        $data['error_msg'] = 'Kindly apply filter to fetch the trainees'; ////ssp/////
+        if (!empty($_GET)) { /// added by shubhranshu to remove the classtrainee list on 26/11/2018
             if (!empty($_GET)) {
                 $export_url = '?';
                 foreach ($_GET as $k => $v) {
@@ -63,7 +61,7 @@ class Class_Trainee extends CI_Controller {
                     }
                 }
             }
-            $data['error_msg']='';////ssp/////
+            $data['error_msg'] = ''; ////ssp/////
             $export_url = rtrim($export_url, '&');
             $sort_url = rtrim($sort_url, '&');
             $data['export_url'] = $export_url;
@@ -78,218 +76,185 @@ class Class_Trainee extends CI_Controller {
             $field = ($this->input->get('f')) ? $this->input->get('f') : 'ce.pymnt_due_id';
             $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'desc';
 
-    //      $records_per_page = RECORDS_PER_PAGE;
-             $records_per_page = 25;
+            //      $records_per_page = RECORDS_PER_PAGE;
+            $records_per_page = 25;
             $baseurl = base_url() . 'class_trainee/';
             $pageno = ($this->uri->segment(2)) ? $this->uri->segment(2) : 1;
             $offset = ($pageno * $records_per_page);
             $data['tenant'] = $tenant_id;
             $company_id = $this->input->get('company_id');
             $this->db->cache_on();
-            $tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id,$eid);
+            $tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
 
-            $totalrows = $this->classtraineemodel->get_all_classtrainee_count_by_tenant_id($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id,$eid);
+            $totalrows = $this->classtraineemodel->get_all_classtrainee_count_by_tenant_id($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
 
             $new_tabledata = array();
             $role_array = array("TRAINER", "COMPACT", "SLEXEC");
-            foreach ($tabledata as $k => $row) 
-            {
-                if ($row['enrolment_mode'] == 'COMPSPON') 
-                {
-                    if ($row['company_id'][0] == 'T') 
-                    {
+            foreach ($tabledata as $k => $row) {
+                if ($row['enrolment_mode'] == 'COMPSPON') {
+                    if ($row['company_id'][0] == 'T') {
                         $tenant_details = fetch_tenant_details($row['company_id']);
                         $company[0]->company_name = $tenant_details->tenant_name;
-                    } 
-                    else 
-                    {
+                    } else {
                         $company = $this->company->get_company_details($tenant_id, $row['company_id']);
                     }
                     $new_tabledata[$k]['enroll_mode'] = $company[0]->company_name;
-                } 
-                else 
-                {
+                } else {
                     $new_tabledata[$k]['enroll_mode'] = 'Individual';
                 }
                 $paidlabel = rtrim($this->course->get_metadata_on_parameter_id($row['payment_status']), ', ');
-                if ($row['payment_status'] == 'PAID') 
-                {
-                    $new_tabledata[$k]['paid'] = '<a href="javascript:;" class="small_text1 paid_href" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">' . $paidlabel . '<br> $'.number_format($row['total_amount_due'], 2, '.', ''). '</span></a>';
-                } 
-                else if ($row['payment_status'] == 'PYNOTREQD') 
-                {
+                if ($row['payment_status'] == 'PAID') {
+                    $new_tabledata[$k]['paid'] = '<a href="javascript:;" class="small_text1 paid_href" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">' . $paidlabel . '<br> $' . number_format($row['total_amount_due'], 2, '.', '') . '</span></a>';
+                } else if ($row['payment_status'] == 'PYNOTREQD') {
                     $new_tabledata[$k]['paid'] = '<span style="color:#ffcc66;">' . $paidlabel . '</span>';
-                } 
-                else if (in_array($this->session->userdata('userDetails')->role_id, $role_array)) 
-                { 
+                } else if (in_array($this->session->userdata('userDetails')->role_id, $role_array)) {
                     $new_tabledata[$k]['paid'] = '<span class="error">' . $paidlabel . '</span>';
-                } 
-                else 
-                {
-                    $enrol_mode = ($row['enrolment_mode'] == 'COMPSPON')?'company&company_id='.$row['company_id']:'individual';
-                    $invoice_id = $this->classtraineemodel->get_invoice_id_for_class_trainee($row['class_id'],$row['user_id']);
-                    $get_data = '?invoice_id='.$invoice_id.'&enrol_mode='.$enrol_mode;
-                    $new_tabledata[$k]['paid'] = '<a href="' . base_url() . 'accounting/update_payment'.$get_data.'"><span class="error">' . $paidlabel .'<br> $'.number_format($row['total_amount_due'], 2, '.', ''). '</span></a>';
+                } else {
+                    $enrol_mode = ($row['enrolment_mode'] == 'COMPSPON') ? 'company&company_id=' . $row['company_id'] : 'individual';
+                    $invoice_id = $this->classtraineemodel->get_invoice_id_for_class_trainee($row['class_id'], $row['user_id']);
+                    $get_data = '?invoice_id=' . $invoice_id . '&enrol_mode=' . $enrol_mode;
+                    $new_tabledata[$k]['paid'] = '<a href="' . base_url() . 'accounting/update_payment' . $get_data . '"><span class="error">' . $paidlabel . '<br> $' . number_format($row['total_amount_due'], 2, '.', '') . '</span></a>';
                 }
                 $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
                 $class_end_date = $this->class->get_end_date($row['class_id']);
-                if ($status == 'Completed') 
-                {
+                if ($status == 'Completed') {
                     $new_tabledata[$k]['status_text'] = '<span class="red">' . $status . '</span>';
-                } 
-                elseif ($status == 'Yet to Start') 
-                {
+                } elseif ($status == 'Yet to Start') {
                     $new_tabledata[$k]['status_text'] = '<span class="green">' . $status . '</span>';
-                } 
-                elseif ($status == 'In-Progress') 
-                {
+                } elseif ($status == 'In-Progress') {
                     $cur_date = strtotime(date("Y-m-d"));
                     $new_tabledata[$k]['status_text'] = '<span style="color:blue;">' . $status . '</span>';
-                    if($class_end_date == $cur_date){
-                    $new_tabledata[$k]['end_class'] = '<form name="end_class" method="get" action="'.base_url().'classes/end_class">'
-                            . '<input type="hidden" name="end_class" value="'.$row['class_id'].'">'
-                    . '<button style="color:blue;" >End Class</button></form>';
+                    if ($class_end_date == $cur_date) {
+                        $new_tabledata[$k]['end_class'] = '<form name="end_class" method="get" action="' . base_url() . 'classes/end_class">'
+                                . '<input type="hidden" name="end_class" value="' . $row['class_id'] . '">'
+                                . '<button style="color:blue;" >End Class</button></form>';
                     }
-                } 
-                else 
-                {
+                } else {
                     $new_tabledata[$k]['status_text'] = $status;
                 }
-                if ($row['account_type'] == 'INTUSR') 
-                {
+                if ($row['account_type'] == 'INTUSR') {
                     $new_tabledata[$k]['taxcode'] = '<a href="' . base_url() . 'internal_user/view_user/' . $row['user_id'] . '">' . $row['tax_code'] . '</a>';
-                } 
-                else 
-                {
+                } else {
                     $new_tabledata[$k]['taxcode'] = '<a href="' . base_url() . 'trainee/view_trainee/' . $row['user_id'] . '">' . $row['tax_code'] . '</a>';
                 }
                 $new_tabledata[$k]['name'] = $row['first_name'] . ' ' . $row['last_name'];
-                $new_tabledata[$k]['certi_coll'] = !empty($row['certificate_coll_on']) ? date('d/m/Y',  strtotime($row['certificate_coll_on'])):'';
+                $new_tabledata[$k]['certi_coll'] = !empty($row['certificate_coll_on']) ? date('d/m/Y', strtotime($row['certificate_coll_on'])) : '';
                 $new_tabledata[$k]['class_end_datetime'] = $row['class_end_datetime'];
                 $new_tabledata[$k]['course_id'] = $row['course_id'];
                 $new_tabledata[$k]['class_id'] = $row['class_id'];
                 $new_tabledata[$k]['user_id'] = $row['user_id'];
                 $new_tabledata[$k]['feedback_answer'] = $row['feedback_answer'];
-                
+
                 //Added by abdulla for TPG
                 $new_tabledata[$k]['enrolment_mode'] = $row['enrolment_mode'];
                 $new_tabledata[$k]['payment_status'] = $row['payment_status'];
                 $new_tabledata[$k]['reference_num'] = $row['reference_num'];
                 $new_tabledata[$k]['external_reference_number'] = $row['external_reference_number'];
                 $new_tabledata[$k]['tpg_course_run_id'] = $row['tpg_course_run_id'];
+             
+                if ($row['payment_status'] == 'PAID') {
+                    $feeCollectionStatus_options[''] = 'Select';
+                    $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
+                    $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
+                    $feeCollectionStatus_options['Full Payment'] = 'Full Payment';
+                    $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
+                } else {
+                    $feeCollectionStatus_options[''] = 'Select';
+                    $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
+                    $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';                    
+                    $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
+                }
+                
+                $new_tabledata['feecollectionStatus'] = $feeCollectionStatus_options;
 
-                 //$new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'],$row['sales_executive_id']);
-                $new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'], $row['class_id'],$row['user_id']);
+                //$new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'],$row['sales_executive_id']);
+                $new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'], $row['class_id'], $row['user_id']);
 
                 $new_tabledata[$k]['course_class'] = $row['crse_name'] . ' - ' . $row['class_name'];
                 $new_tabledata[$k]['duration'] = date('d/m/Y', strtotime($row['class_start_datetime'])) . ' - ' . date('d/m/Y', strtotime($row['class_end_datetime']));
                 $new_tabledata[$k]['subsidy'] = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">Update</a>';
-                $TGAMT = !empty($row['subsidy_amount']) ? "$".$row['subsidy_amount'] : "NA";
+                $TGAMT = !empty($row['subsidy_amount']) ? "$" . $row['subsidy_amount'] : "NA";
                 $TGNO = !empty($row['tg_number']) ? $row['tg_number'] : "NA";
                 $EIDNO = !empty($row['eid_number']) ? $row['eid_number'] : "NA";
-                $TGNOBR= !empty($row['tg_number']) ? "<br>": "";
-                $data['trainee_feedback'] = $this->reportsModel->get_trainee_feedback_by_user_id($tenant_id, $new_tabledata[$k]['course_id'], $new_tabledata[$k]['class_id'], $new_tabledata[$k]['user_id']); 
+                $TGNOBR = !empty($row['tg_number']) ? "<br>" : "";
+                $data['trainee_feedback'] = $this->reportsModel->get_trainee_feedback_by_user_id($tenant_id, $new_tabledata[$k]['course_id'], $new_tabledata[$k]['class_id'], $new_tabledata[$k]['user_id']);
                 $linkStr = '';
-                if ($row['account_status'] == 'PENDACT') 
-                {
+                if ($row['account_status'] == 'PENDACT') {
                     $linkStr = '<span style="color:red;">Account not yet activated.</span>';
-                } 
-                else if ($row['account_status'] == 'INACTIV') 
-                {
+                } else if ($row['account_status'] == 'INACTIV') {
                     $linkStr = get_links($row['enrolment_mode'], $row['payment_status'], $row['invoice_id'], $row['user_id'], $row['pymnt_due_id'], $row['class_id'], $this, $row['account_status'], $row['cc_class_status'], $row['company_id'], $row['att_status']);
-                } 
-                else 
-                {
-                    $linkStr = '';  
+                } else {
+                    $linkStr = '';
                     $cur_date = strtotime(date('Y-m-d'));
                     $class_end_datetime = date("Y-m-d", strtotime($row['class_end_datetime']));
                     $class_end_datetime_str = strtotime($class_end_datetime);
-                    if ($cur_date >= $class_end_datetime_str) 
-                    {    
-                        $check_attendance=$this->classtraineemodel->check_attendance_row($tenant_id,$row['course_id'],$row['class_id']);
-                         $check_competent=$this->classtraineemodel->check_competent($tenant_id,$row['course_id'],$row['class_id'],$row['user_id']);
-                        $linkStr = '';                    
-                        if ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') 
-                        {
-                             $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
-                            if ($status == 'Completed') 
-                            {
-                                 if($check_attendance>0){
-                                $linkStr .= ' <a href="#ex7" rel="modal:open" data-course="' . $row['course_id'] . '" '
-                                     . 'data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '"data-payment="'.$row['pymnt_due_id']. '"class="training_update small_text1">Trainer Feedback</a><br/>';                            
-                                if($check_competent>0)
-                                {
-                                    $linkStr .= ' <a  href="#ex6" rel="modal:open" data-course="' . $row['course_id'] . '" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '" class="training_update small_text1"><span>Trainee Feedback</span></a><br/>';
+                    if ($cur_date >= $class_end_datetime_str) {
+                        $check_attendance = $this->classtraineemodel->check_attendance_row($tenant_id, $row['course_id'], $row['class_id']);
+                        $check_competent = $this->classtraineemodel->check_competent($tenant_id, $row['course_id'], $row['class_id'], $row['user_id']);
+                        $linkStr = '';
+                        if ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') {
+                            $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
+                            if ($status == 'Completed') {
+                                if ($check_attendance > 0) {
+                                    $linkStr .= ' <a href="#ex7" rel="modal:open" data-course="' . $row['course_id'] . '" '
+                                            . 'data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '"data-payment="' . $row['pymnt_due_id'] . '"class="training_update small_text1">Trainer Feedback</a><br/>';
+                                    if ($check_competent > 0) {
+                                        $linkStr .= ' <a  href="#ex6" rel="modal:open" data-course="' . $row['course_id'] . '" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '" class="training_update small_text1"><span>Trainee Feedback</span></a><br/>';
+                                    }
+                                } else {
+                                    $linkStr.='<form action="' . base_url() . 'class_trainee/mark_attendance" method="post" name="maarkatt[]"><input type="hidden" name="course_id" value="' . $row['course_id'] . '" /><input type="hidden" name="class_id" value="' . $row['class_id'] . '" /><input type="submit" class="red" value ="Mark Attendance" /></form><br />';
                                 }
-
                             }
-                            else{
-                               $linkStr.='<form action="'.base_url().'class_trainee/mark_attendance" method="post" name="maarkatt[]"><input type="hidden" name="course_id" value="'.$row['course_id'].'" /><input type="hidden" name="class_id" value="'.$row['class_id'].'" /><input type="submit" class="red" value ="Mark Attendance" /></form><br />';
-                            }
-                            } 
-
-                        }    
-                        if ($row['payment_status'] != 'PYNOTREQD' && $this->user->role_id == 'ADMN' || $row['payment_status'] != 'PYNOTREQD' && $this->user->role_id == 'CRSEMGR') 
-                        {
-                            $linkStr .= '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
-
-                            $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> '.$TGAMT.' </span> </a><br/>';
                         }
-                        
+                        if ($row['payment_status'] != 'PYNOTREQD' && $this->user->role_id == 'ADMN' || $row['payment_status'] != 'PYNOTREQD' && $this->user->role_id == 'CRSEMGR') {
+                            $linkStr .= '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">' . $TGNO . ' </span> </a>';
 
-                       // if($check_attendance<=0 || $check_competent>0)
-                         if($check_competent>0)
-                        {
+                            $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> ' . $TGAMT . ' </span> </a><br/>';
+                        }
+
+
+                        // if($check_attendance<=0 || $check_competent>0)
+                        if ($check_competent > 0) {
                             $wsq_courses_array = $this->config->item('wsq_courses'); // wsq courses modified by shubhranshu
-                            $tenant_array = array('T02','T12'); // xp and xp2 
-                            $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/'. $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
+                            $tenant_array = array('T02', 'T12'); // xp and xp2 
+                            $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/' . $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
                             //////added by shubhranshu for wablab and everest TCS for all courses
-                            if($tenant_id == 'T20' || $tenant_id == 'T17'){
-                                $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$row['course_id'].'/'. $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>';
-
-                            }else{
-                                if (in_array($row['course_id'], $wsq_courses_array) && in_array($tenant_id, $tenant_array))
-                                { 
-                                   $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$row['course_id'].'/'. $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>'; 
+                            if ($tenant_id == 'T20' || $tenant_id == 'T17') {
+                                $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' . $row['course_id'] . '/' . $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>';
+                            } else {
+                                if (in_array($row['course_id'], $wsq_courses_array) && in_array($tenant_id, $tenant_array)) {
+                                    $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' . $row['course_id'] . '/' . $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>';
                                 }
                             }
-                            
-                           
 
-    //                        $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/' . $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
-                        } 
 
-                    }
-                    else 
-                    {
+
+                            //                        $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/' . $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
+                        }
+                    } else {
                         if ($row['payment_status'] != 'PYNOTREQD' &&
-                                $this->user->role_id == 'ADMN') 
-                        {
-                            $linkStr = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
+                                $this->user->role_id == 'ADMN') {
+                            $linkStr = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">' . $TGNO . ' </span> </a>';
 
-                            $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> '.$TGAMT.' </span> </a><br/>';
-                        }                                   
-                    }                
-                    $linkStr .= get_links($row['enrolment_mode'], $row['payment_status'], $row['invoice_id'], $row['user_id'], $row['pymnt_due_id'], $row['class_id'], $this, $row['account_status'], $row['cc_class_status'],$row['company_id'], $row['att_status']);
+                            $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> ' . $TGAMT . ' </span> </a><br/>';
+                        }
+                    }
+                    $linkStr .= get_links($row['enrolment_mode'], $row['payment_status'], $row['invoice_id'], $row['user_id'], $row['pymnt_due_id'], $row['class_id'], $this, $row['account_status'], $row['cc_class_status'], $row['company_id'], $row['att_status']);
                 }
                 //////add by shubhranshu to save enrollment id on 18/03/2021
-                $linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">'. $EIDNO .' </span> </a><br/>';
+                $linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">' . $EIDNO . ' </span> </a><br/>';
                 $new_tabledata[$k]['action_link'] = $linkStr;
                 $new_tabledata[$k]['referrer'] = $row['referral_details'];
-
             }
             $this->db->cache_off();
             $data['tabledata'] = $new_tabledata;
-             //echo "<pre>"; print_r($new_tabledata);exit;
+            //echo "<pre>"; print_r($new_tabledata);exit;
             $data['sort_order'] = $order_by;
             $data['controllerurl'] = 'class_trainee/';
             $this->load->helper('pagination');
-            if ($sort_url) 
-            {
+            if ($sort_url) {
                 $pag_sort = $order_by . '&' . $sort_url;
-            } 
-            else 
-            {
+            } else {
                 $pag_sort = $order_by;
             }
             $data['pagination'] = get_pagination($records_per_page, $pageno, $baseurl, $totalrows, $field, $pag_sort);
@@ -298,266 +263,217 @@ class Class_Trainee extends CI_Controller {
         $data['main_content'] = 'classtrainee/classtraineelist';
         $this->load->view('layout', $data);
     }
+
     ///by shubhranshu for client requirement for declaration data to save
-    public function save_declaration_trainee_data(){
+    public function save_declaration_trainee_data() {
         $tenant_id = $this->tenant_id ?? TENANT_ID;
-        $tax_code=$this->input->post('tax_code');
-        $name=$this->input->post('name');
-        $type=$this->input->post('type');
-        $email=$this->input->post('email');
-        $mobile=$this->input->post('mobile');
-        $trainee_id=$this->input->post('user_id');
-        $class_id=$this->input->post('class_id');
-        $condition=$this->input->post('res');
-        $lesson_timing=$this->input->post('lesson_timing');
-        $overseas=$this->input->post('overseas');
-       $status=$this->classtraineemodel->save_declaration_data($tenant_id,$trainee_id,$class_id,$tax_code,$name,$type,$email,$mobile,$condition,$lesson_timing,$overseas);
-       echo $status;
+        $tax_code = $this->input->post('tax_code');
+        $name = $this->input->post('name');
+        $type = $this->input->post('type');
+        $email = $this->input->post('email');
+        $mobile = $this->input->post('mobile');
+        $trainee_id = $this->input->post('user_id');
+        $class_id = $this->input->post('class_id');
+        $condition = $this->input->post('res');
+        $lesson_timing = $this->input->post('lesson_timing');
+        $overseas = $this->input->post('overseas');
+        $status = $this->classtraineemodel->save_declaration_data($tenant_id, $trainee_id, $class_id, $tax_code, $name, $type, $email, $mobile, $condition, $lesson_timing, $overseas);
+        echo $status;
     }
-    
-      /* This function loads the trainee list of public portal skm start */
-    public function online_trainee()
-    {
+
+    /* This function loads the trainee list of public portal skm start */
+
+    public function online_trainee() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
-         extract($_GET);
+        extract($_GET);
         $data['courses'] = $courses = $this->course->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
         if ($course) {
-            
-            $course_classes = $this->class->get_course_class($tenant_id, $course,"","","classTrainee");
+
+            $course_classes = $this->class->get_course_class($tenant_id, $course, "", "", "classTrainee");
             $data['classes'] = $course_classes;
         }
         $export_url = '';
         $sort_url = '';
-    if(!empty($_GET)){ /// added by shubhranshu to remove the classtrainee list on 01/01/2019
-        if (!empty($_GET)) {
-            $export_url = '?';
-            foreach ($_GET as $k => $v) {
-                if (!empty($v)) {
-                    $export_url .="$k=$v&";
-                }
-                if ($k != 'f' && $k != 'o') {
+        if (!empty($_GET)) { /// added by shubhranshu to remove the classtrainee list on 01/01/2019
+            if (!empty($_GET)) {
+                $export_url = '?';
+                foreach ($_GET as $k => $v) {
                     if (!empty($v)) {
-                        $sort_url .="$k=$v&";
+                        $export_url .="$k=$v&";
+                    }
+                    if ($k != 'f' && $k != 'o') {
+                        if (!empty($v)) {
+                            $sort_url .="$k=$v&";
+                        }
                     }
                 }
             }
-        }
-        $export_url = rtrim($export_url, '&');
-        $sort_url = rtrim($sort_url, '&');
-        $data['export_url'] = $export_url;
-        $data['sort_url'] = '?' . $sort_url;
-        $course = ($this->input->get('course')) ? $this->input->get('course') : '';
-        $class = ($this->input->get('class')) ? $this->input->get('class') : '';
-        $class_status = ($this->input->get('class_status')) ? $this->input->get('class_status') : '';
-        $search_select = ($this->input->get('search_select')) ? $this->input->get('search_select') : '';
-        $taxcode_id = ($this->input->get('taxcode_id')) ? $this->input->get('taxcode_id') : '';
-        $trainee_id = ($this->input->get('trainee_id')) ? $this->input->get('trainee_id') : '';
-        $field = ($this->input->get('f')) ? $this->input->get('f') : 'ce.pymnt_due_id';
-        $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'desc';
+            $export_url = rtrim($export_url, '&');
+            $sort_url = rtrim($sort_url, '&');
+            $data['export_url'] = $export_url;
+            $data['sort_url'] = '?' . $sort_url;
+            $course = ($this->input->get('course')) ? $this->input->get('course') : '';
+            $class = ($this->input->get('class')) ? $this->input->get('class') : '';
+            $class_status = ($this->input->get('class_status')) ? $this->input->get('class_status') : '';
+            $search_select = ($this->input->get('search_select')) ? $this->input->get('search_select') : '';
+            $taxcode_id = ($this->input->get('taxcode_id')) ? $this->input->get('taxcode_id') : '';
+            $trainee_id = ($this->input->get('trainee_id')) ? $this->input->get('trainee_id') : '';
+            $field = ($this->input->get('f')) ? $this->input->get('f') : 'ce.pymnt_due_id';
+            $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'desc';
 
-        $records_per_page = RECORDS_PER_PAGE;
-        $baseurl = base_url() . 'class_trainee/online_trainee/';
-        $pageno = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
-        $offset = ($pageno * $records_per_page);
-        $data['tenant'] = $tenant_id;
-        $company_id = $this->input->get('company_id');
-        $this->db->cache_on();
+            $records_per_page = RECORDS_PER_PAGE;
+            $baseurl = base_url() . 'class_trainee/online_trainee/';
+            $pageno = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
+            $offset = ($pageno * $records_per_page);
+            $data['tenant'] = $tenant_id;
+            $company_id = $this->input->get('company_id');
+            $this->db->cache_on();
 
-        $tabledata = $this->classtraineemodel->online_list_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
-        
-        $totalrows = $this->classtraineemodel->get_all_online_classtrainee_count_by_tenant_id($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
+            $tabledata = $this->classtraineemodel->online_list_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
+
+            $totalrows = $this->classtraineemodel->get_all_online_classtrainee_count_by_tenant_id($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
 //        echo $this->db->last_query();
 //        print_r($totalrows);
 //        exit();
-      
-        $new_tabledata = array();
-        $role_array = array("TRAINER", "COMPACT", "SLEXEC");
-        foreach ($tabledata as $k => $row) 
-        {
-            if ($row['enrolment_mode'] == 'COMPSPON') 
-            {
-                if ($row['company_id'][0] == 'T') 
-                {
-                    $tenant_details = fetch_tenant_details($row['company_id']);
-                    $company[0]->company_name = $tenant_details->tenant_name;
-                } 
-                else 
-                {
-                    $company = $this->company->get_company_details($tenant_id, $row['company_id']);
-                }
-                $new_tabledata[$k]['enroll_mode'] = $company[0]->company_name;
-            } 
-            else 
-            {
-                $new_tabledata[$k]['enroll_mode'] = 'Individual';
-            }
-            $paidlabel = rtrim($this->course->get_metadata_on_parameter_id($row['payment_status']), ', ');
-            if ($row['payment_status'] == 'PAID') 
-            {
-                $new_tabledata[$k]['paid'] = '<a href="javascript:;" class="small_text1 paid_href" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">' . $paidlabel . '<br> $'.number_format($row['total_amount_due'], 2, '.', ''). '</span></a>';
-            } 
-            else if ($row['payment_status'] == 'PYNOTREQD') 
-            {
-                $new_tabledata[$k]['paid'] = '<span style="color:#ffcc66;">' . $paidlabel . '</span>';
-            } 
-            else if (in_array($this->session->userdata('userDetails')->role_id, $role_array)) 
-            { 
-                $new_tabledata[$k]['paid'] = '<span class="error">' . $paidlabel . '</span>';
-            } 
-            else 
-            {
-                $enrol_mode = ($row['enrolment_mode'] == 'COMPSPON')?'company&company_id='.$row['company_id']:'individual';
-                $invoice_id = $this->classtraineemodel->get_invoice_id_for_class_trainee($row['class_id'],$row['user_id']);
-                $get_data = '?invoice_id='.$invoice_id.'&enrol_mode='.$enrol_mode;
-                $new_tabledata[$k]['paid'] = '<a href="' . base_url() . 'accounting/update_payment'.$get_data.'"><span class="error">' . $paidlabel .'<br> $'.number_format($row['total_amount_due'], 2, '.', ''). '</span></a>';
-            }
-            $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
-            $class_end_date = $this->class->get_end_date($row['class_id']);
-            if ($status == 'Completed') 
-            {
-                $new_tabledata[$k]['status_text'] = '<span class="red">' . $status . '</span>';
-            } 
-            elseif ($status == 'Yet to Start') 
-            {
-                $new_tabledata[$k]['status_text'] = '<span class="green">' . $status . '</span>';
-            } 
-            elseif ($status == 'In-Progress') 
-            {
-                $cur_date = strtotime(date("Y-m-d"));
-                $new_tabledata[$k]['status_text'] = '<span style="color:blue;">' . $status . '</span>';
-                if($class_end_date == $cur_date){
-                $new_tabledata[$k]['end_class'] = '<form name="end_class" method="get" action="'.base_url().'classes/end_class">'
-                        . '<input type="hidden" name="end_class" value="'.$row['class_id'].'">'
-                . '<button style="color:blue;" >End Class</button></form>';
-                }
-            } 
-            else 
-            {
-                $new_tabledata[$k]['status_text'] = $status;
-            }
-            if ($row['account_type'] == 'INTUSR') 
-            {
-                $new_tabledata[$k]['taxcode'] = '<a href="' . base_url() . 'internal_user/view_user/' . $row['user_id'] . '">' . $row['tax_code'] . '</a>';
-            } 
-            else 
-            {
-                $new_tabledata[$k]['taxcode'] = '<a href="' . base_url() . 'trainee/view_trainee/' . $row['user_id'] . '">' . $row['tax_code'] . '</a>';
-            }
-            $new_tabledata[$k]['name'] = $row['first_name'] . ' ' . $row['last_name'];
-            $new_tabledata[$k]['certi_coll'] = !empty($row['certificate_coll_on']) ? date('d/m/Y',  strtotime($row['certificate_coll_on'])):'';
-            $new_tabledata[$k]['class_end_datetime'] = $row['class_end_datetime'];
-            $new_tabledata[$k]['course_id'] = $row['course_id'];
-            $new_tabledata[$k]['class_id'] = $row['class_id'];
-            $new_tabledata[$k]['user_id'] = $row['user_id'];
-            $new_tabledata[$k]['feedback_answer'] = $row['feedback_answer'];
-            
-            $new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'], $row['sales_executive_id']);
-            
-            $new_tabledata[$k]['course_class'] = $row['crse_name'] . ' - ' . $row['class_name'];
-            $new_tabledata[$k]['duration'] = date('d/m/Y', strtotime($row['class_start_datetime'])) . ' - ' . date('d/m/Y', strtotime($row['class_end_datetime']));
-            $new_tabledata[$k]['subsidy'] = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">Update</a>';
-            $TGAMT = !empty($row['subsidy_amount']) ? "$".$row['subsidy_amount'] : "NA";
-            $TGNO = !empty($row['tg_number']) ? $row['tg_number'] : "NA";
-            $TGNOBR= !empty($row['tg_number']) ? "<br>": "";
-            $data['trainee_feedback'] = $this->reportsModel->get_trainee_feedback_by_user_id($tenant_id, $new_tabledata[$k]['course_id'], $new_tabledata[$k]['class_id'], $new_tabledata[$k]['user_id']); 
-            $linkStr = '';
-            if ($row['account_status'] == 'PENDACT') 
-            {
-                $linkStr = '<span style="color:red;">Account not yet activated.</span>';
-            } 
-            else if ($row['account_status'] == 'INACTIV') 
-            {
-                $linkStr = get_links($row['enrolment_mode'], $row['payment_status'], $row['invoice_id'], $row['user_id'], $row['pymnt_due_id'], $row['class_id'], $this, $row['account_status'], $row['cc_class_status'], $row['company_id']);
-            } 
-            else 
-            {
-                $linkStr = '';  
-                $cur_date = strtotime(date('Y-m-d'));
-                $class_end_datetime = date("Y-m-d", strtotime($row['class_end_datetime']));
-                $class_end_datetime_str = strtotime($class_end_datetime);
-                if ($cur_date >= $class_end_datetime_str) 
-                {    
-                    $check_attendance=$this->classtraineemodel->check_attendance_row($tenant_id,$row['course_id'],$row['class_id']);
-                     $check_competent=$this->classtraineemodel->check_competent($tenant_id,$row['course_id'],$row['class_id'],$row['user_id']);
-                    $linkStr = '';                    
-                    if ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') 
-                    {
-                         $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
-                        if ($status == 'Completed') 
-                        {
-                             if($check_attendance>0){
-                            $linkStr .= ' <a href="#ex7" rel="modal:open" data-course="' . $row['course_id'] . '" '
-                                 . 'data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '"data-payment="'.$row['pymnt_due_id']. '"class="training_update small_text1">Trainer Feedback</a><br/>';                            
-                            if($check_competent>0)
-                            {
-                                $linkStr .= ' <a  href="#ex6" rel="modal:open" data-course="' . $row['course_id'] . '" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '" class="training_update small_text1"><span>Trainee Feedback</span></a><br/>';
-                            }
-                             
-                        }
-                        else{
-                           $linkStr.='<form action="'.base_url().'class_trainee/mark_attendance" method="post" name="maarkatt[]"><input type="hidden" name="course_id" value="'.$row['course_id'].'" /><input type="hidden" name="class_id" value="'.$row['class_id'].'" /><input type="submit" class="red" value ="Mark Attendance" /></form><br />';
-                        }
-                        } 
-                       
-                    }    
-                    if ($row['payment_status'] != 'PYNOTREQD' &&
-                            ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR')
-                    ) 
-                    {
-                        $linkStr .= '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
-  
-                        $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> '.$TGAMT.' </span> </a><br/>';
-                    }
-                   
-                 
-                 
-                     if($check_competent>0)
-                    {
-                        $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/' . $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
-                    } 
-                
-                }
-                else 
-                {
-                    if ($row['payment_status'] != 'PYNOTREQD' &&
-                            $this->user->role_id == 'ADMN') 
-                    {
-                        $linkStr = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">'. $TGNO .' </span> </a>';
 
-                        $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> '.$TGAMT.' </span> </a><br/>';
-                    }                                   
-                }                
-                $linkStr .= get_links($row['enrolment_mode'], $row['payment_status'], $row['invoice_id'], $row['user_id'], $row['pymnt_due_id'], $row['class_id'], $this, $row['account_status'], $row['cc_class_status'],$row['company_id'],$row['att_status']);
-            }           
-            $new_tabledata[$k]['action_link'] = $linkStr;
-            $new_tabledata[$k]['referrer'] = $row['referral_details'];// referrer details
-            if($row['friend_id']!=''){
-                $new_tabledata[$k]['friend_id'] = $row['friend_id']; 
-                $res = $check_attendance=$this->classtraineemodel->get_friend_details($tenant_id,$row['course_id'],$row['class_id'],$row['user_id'],$row['friend_id']);
-                $new_tabledata[$k]['friend_details'] = $res;
-                
+            $new_tabledata = array();
+            $role_array = array("TRAINER", "COMPACT", "SLEXEC");
+            foreach ($tabledata as $k => $row) {
+                if ($row['enrolment_mode'] == 'COMPSPON') {
+                    if ($row['company_id'][0] == 'T') {
+                        $tenant_details = fetch_tenant_details($row['company_id']);
+                        $company[0]->company_name = $tenant_details->tenant_name;
+                    } else {
+                        $company = $this->company->get_company_details($tenant_id, $row['company_id']);
+                    }
+                    $new_tabledata[$k]['enroll_mode'] = $company[0]->company_name;
+                } else {
+                    $new_tabledata[$k]['enroll_mode'] = 'Individual';
+                }
+                $paidlabel = rtrim($this->course->get_metadata_on_parameter_id($row['payment_status']), ', ');
+                if ($row['payment_status'] == 'PAID') {
+                    $new_tabledata[$k]['paid'] = '<a href="javascript:;" class="small_text1 paid_href" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">' . $paidlabel . '<br> $' . number_format($row['total_amount_due'], 2, '.', '') . '</span></a>';
+                } else if ($row['payment_status'] == 'PYNOTREQD') {
+                    $new_tabledata[$k]['paid'] = '<span style="color:#ffcc66;">' . $paidlabel . '</span>';
+                } else if (in_array($this->session->userdata('userDetails')->role_id, $role_array)) {
+                    $new_tabledata[$k]['paid'] = '<span class="error">' . $paidlabel . '</span>';
+                } else {
+                    $enrol_mode = ($row['enrolment_mode'] == 'COMPSPON') ? 'company&company_id=' . $row['company_id'] : 'individual';
+                    $invoice_id = $this->classtraineemodel->get_invoice_id_for_class_trainee($row['class_id'], $row['user_id']);
+                    $get_data = '?invoice_id=' . $invoice_id . '&enrol_mode=' . $enrol_mode;
+                    $new_tabledata[$k]['paid'] = '<a href="' . base_url() . 'accounting/update_payment' . $get_data . '"><span class="error">' . $paidlabel . '<br> $' . number_format($row['total_amount_due'], 2, '.', '') . '</span></a>';
+                }
+                $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
+                $class_end_date = $this->class->get_end_date($row['class_id']);
+                if ($status == 'Completed') {
+                    $new_tabledata[$k]['status_text'] = '<span class="red">' . $status . '</span>';
+                } elseif ($status == 'Yet to Start') {
+                    $new_tabledata[$k]['status_text'] = '<span class="green">' . $status . '</span>';
+                } elseif ($status == 'In-Progress') {
+                    $cur_date = strtotime(date("Y-m-d"));
+                    $new_tabledata[$k]['status_text'] = '<span style="color:blue;">' . $status . '</span>';
+                    if ($class_end_date == $cur_date) {
+                        $new_tabledata[$k]['end_class'] = '<form name="end_class" method="get" action="' . base_url() . 'classes/end_class">'
+                                . '<input type="hidden" name="end_class" value="' . $row['class_id'] . '">'
+                                . '<button style="color:blue;" >End Class</button></form>';
+                    }
+                } else {
+                    $new_tabledata[$k]['status_text'] = $status;
+                }
+                if ($row['account_type'] == 'INTUSR') {
+                    $new_tabledata[$k]['taxcode'] = '<a href="' . base_url() . 'internal_user/view_user/' . $row['user_id'] . '">' . $row['tax_code'] . '</a>';
+                } else {
+                    $new_tabledata[$k]['taxcode'] = '<a href="' . base_url() . 'trainee/view_trainee/' . $row['user_id'] . '">' . $row['tax_code'] . '</a>';
+                }
+                $new_tabledata[$k]['name'] = $row['first_name'] . ' ' . $row['last_name'];
+                $new_tabledata[$k]['certi_coll'] = !empty($row['certificate_coll_on']) ? date('d/m/Y', strtotime($row['certificate_coll_on'])) : '';
+                $new_tabledata[$k]['class_end_datetime'] = $row['class_end_datetime'];
+                $new_tabledata[$k]['course_id'] = $row['course_id'];
+                $new_tabledata[$k]['class_id'] = $row['class_id'];
+                $new_tabledata[$k]['user_id'] = $row['user_id'];
+                $new_tabledata[$k]['feedback_answer'] = $row['feedback_answer'];
+
+                $new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'], $row['sales_executive_id']);
+
+                $new_tabledata[$k]['course_class'] = $row['crse_name'] . ' - ' . $row['class_name'];
+                $new_tabledata[$k]['duration'] = date('d/m/Y', strtotime($row['class_start_datetime'])) . ' - ' . date('d/m/Y', strtotime($row['class_end_datetime']));
+                $new_tabledata[$k]['subsidy'] = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">Update</a>';
+                $TGAMT = !empty($row['subsidy_amount']) ? "$" . $row['subsidy_amount'] : "NA";
+                $TGNO = !empty($row['tg_number']) ? $row['tg_number'] : "NA";
+                $TGNOBR = !empty($row['tg_number']) ? "<br>" : "";
+                $data['trainee_feedback'] = $this->reportsModel->get_trainee_feedback_by_user_id($tenant_id, $new_tabledata[$k]['course_id'], $new_tabledata[$k]['class_id'], $new_tabledata[$k]['user_id']);
+                $linkStr = '';
+                if ($row['account_status'] == 'PENDACT') {
+                    $linkStr = '<span style="color:red;">Account not yet activated.</span>';
+                } else if ($row['account_status'] == 'INACTIV') {
+                    $linkStr = get_links($row['enrolment_mode'], $row['payment_status'], $row['invoice_id'], $row['user_id'], $row['pymnt_due_id'], $row['class_id'], $this, $row['account_status'], $row['cc_class_status'], $row['company_id']);
+                } else {
+                    $linkStr = '';
+                    $cur_date = strtotime(date('Y-m-d'));
+                    $class_end_datetime = date("Y-m-d", strtotime($row['class_end_datetime']));
+                    $class_end_datetime_str = strtotime($class_end_datetime);
+                    if ($cur_date >= $class_end_datetime_str) {
+                        $check_attendance = $this->classtraineemodel->check_attendance_row($tenant_id, $row['course_id'], $row['class_id']);
+                        $check_competent = $this->classtraineemodel->check_competent($tenant_id, $row['course_id'], $row['class_id'], $row['user_id']);
+                        $linkStr = '';
+                        if ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') {
+                            $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
+                            if ($status == 'Completed') {
+                                if ($check_attendance > 0) {
+                                    $linkStr .= ' <a href="#ex7" rel="modal:open" data-course="' . $row['course_id'] . '" '
+                                            . 'data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '"data-payment="' . $row['pymnt_due_id'] . '"class="training_update small_text1">Trainer Feedback</a><br/>';
+                                    if ($check_competent > 0) {
+                                        $linkStr .= ' <a  href="#ex6" rel="modal:open" data-course="' . $row['course_id'] . '" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '" class="training_update small_text1"><span>Trainee Feedback</span></a><br/>';
+                                    }
+                                } else {
+                                    $linkStr.='<form action="' . base_url() . 'class_trainee/mark_attendance" method="post" name="maarkatt[]"><input type="hidden" name="course_id" value="' . $row['course_id'] . '" /><input type="hidden" name="class_id" value="' . $row['class_id'] . '" /><input type="submit" class="red" value ="Mark Attendance" /></form><br />';
+                                }
+                            }
+                        }
+                        if ($row['payment_status'] != 'PYNOTREQD' &&
+                                ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR')
+                        ) {
+                            $linkStr .= '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">' . $TGNO . ' </span> </a>';
+
+                            $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> ' . $TGAMT . ' </span> </a><br/>';
+                        }
+
+
+
+                        if ($check_competent > 0) {
+                            $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/' . $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
+                        }
+                    } else {
+                        if ($row['payment_status'] != 'PYNOTREQD' &&
+                                $this->user->role_id == 'ADMN') {
+                            $linkStr = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">' . $TGNO . ' </span> </a>';
+
+                            $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> ' . $TGAMT . ' </span> </a><br/>';
+                        }
+                    }
+                    $linkStr .= get_links($row['enrolment_mode'], $row['payment_status'], $row['invoice_id'], $row['user_id'], $row['pymnt_due_id'], $row['class_id'], $this, $row['account_status'], $row['cc_class_status'], $row['company_id'], $row['att_status']);
+                }
+                $new_tabledata[$k]['action_link'] = $linkStr;
+                $new_tabledata[$k]['referrer'] = $row['referral_details']; // referrer details
+                if ($row['friend_id'] != '') {
+                    $new_tabledata[$k]['friend_id'] = $row['friend_id'];
+                    $res = $check_attendance = $this->classtraineemodel->get_friend_details($tenant_id, $row['course_id'], $row['class_id'], $row['user_id'], $row['friend_id']);
+                    $new_tabledata[$k]['friend_details'] = $res;
+                }
             }
- 
+            $this->db->cache_off();
         }
-        $this->db->cache_off();
-       
-        
-      
-     }
         $data['tabledata'] = $new_tabledata;
         $data['sort_order'] = $order_by;
         $data['controllerurl'] = 'class_trainee/online_trainee/';
         $this->load->helper('pagination');
-        if ($sort_url) 
-        {
+        if ($sort_url) {
             $pag_sort = $order_by . '&' . $sort_url;
-        } 
-        else 
-        {
+        } else {
             $pag_sort = $order_by;
         }
-        
+
 //        $data['trainee_count'] = $totalrows;
         $total_trainee_enrolled = $this->classtraineemodel->get_total_enrolled_trainee($tenant_id);
         $data['trainee_count'] = $total_trainee_enrolled ? $total_trainee_enrolled : 00;
@@ -565,25 +481,23 @@ class Class_Trainee extends CI_Controller {
         $data['page_title'] = 'Online Class Trainee';
         $data['main_content'] = 'classtrainee/onlinetraineelist';
         $this->load->view('layout', $data);
-   
     }
+
     /* END */
-    
-      /* This function loads only notpaid invoice list of selected company skm st */
-    public function get_company_all_invoice_for_remove() 
-    {
+
+    /* This function loads only notpaid invoice list of selected company skm st */
+
+    public function get_company_all_invoice_for_remove() {
         $matches = array();
         $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
         $company = $this->input->post('company');
-        
+
         $paid = $this->input->post('paid');
-          $result = $this->classtraineemodel->get_company_notpaid_invoices_list($this->tenant_id,$company);
-        if ($result) 
-        {
-            foreach ($result as $row) 
-            {
+        $result = $this->classtraineemodel->get_company_notpaid_invoices_list($this->tenant_id, $company);
+        if ($result) {
+            foreach ($result as $row) {
                 $matches[] = array(
-                    'key' => $row->invoice_id.'#'.$row->pymnt_due_id.'#'.$row->course_id.'#'.$row->class_id.'#'.$row->company_id.'#'.$row->company_name.'#'.$row->crse_name.'#'.$row->class_name,
+                    'key' => $row->invoice_id . '#' . $row->pymnt_due_id . '#' . $row->course_id . '#' . $row->class_id . '#' . $row->company_id . '#' . $row->company_name . '#' . $row->crse_name . '#' . $row->class_name,
                     'label' => $row->invoice_id . ' (Class: ' . $row->class_name . ')',
                     'value' => $row->invoice_id,
                 );
@@ -592,11 +506,12 @@ class Class_Trainee extends CI_Controller {
         echo json_encode($matches);
         exit();
     }
-    /* skm ed*/
-    
-    
-    /* Get all taxcode of trainee who enrolled from public portal skm start*/
-    
+
+    /* skm ed */
+
+
+    /* Get all taxcode of trainee who enrolled from public portal skm start */
+
     public function get_online_alltaxcode_with_courseclass() {
         $class = $this->input->post('class');
         $course = $this->input->post('course');
@@ -614,12 +529,12 @@ class Class_Trainee extends CI_Controller {
         echo json_encode($matches);
         exit();
     }
-    
+
     /* End */
-    
-     /* Get all the trainee name which enroll from public portal skm start*/
-    
-     public function get_online_trainee_with_courseclass() {
+
+    /* Get all the trainee name which enroll from public portal skm start */
+
+    public function get_online_trainee_with_courseclass() {
         $class = $this->input->post('class');
         $course = $this->input->post('course');
         $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
@@ -636,12 +551,12 @@ class Class_Trainee extends CI_Controller {
         echo json_encode($matches);
         exit();
     }
-    
+
     /* END */
-    
-/**
- * gets the payment id
- */
+
+    /**
+     * gets the payment id
+     */
     public function get_payment_class_user() {
         $class = $this->input->post('class');
         $user = $this->input->post('user');
@@ -653,17 +568,18 @@ class Class_Trainee extends CI_Controller {
 
     /*
      * this function to display add new enroll
-      */
-    public function add_new_enrol() {    
+     */
+
+    public function add_new_enrol() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Class Trainee';
         $tenant_id = $this->tenant_id;
-        $data['privilage'] = $this->manage_tenant->get_privilage();//added by shubhranshu
+        $data['privilage'] = $this->manage_tenant->get_privilage(); //added by shubhranshu
         $data['companies'] = $this->classtraineemodel->get_company_list($tenant_id);
         $data['main_content'] = 'classtrainee/addnewenroll';
         $this->load->view('layout', $data);
     }
-    
+
     /**
      * This method will format the date for UI Display in company not paid list on enrollment.
      * @param type $data
@@ -677,6 +593,7 @@ class Class_Trainee extends CI_Controller {
         }
         return $data;
     }
+
     /**
      * This method will format the date for UI Display in change individual invoice to comapny invoice on enrollment.
      * @param type $data
@@ -689,9 +606,10 @@ class Class_Trainee extends CI_Controller {
         }
         return $data;
     }
-/**
- * get classes by course 
- */
+
+    /**
+     * get classes by course 
+     */
     public function get_classes_by_courseid() {
         $courseid = $this->input->post('courseid');
         $this->load->helper('common_helper');
@@ -709,41 +627,33 @@ class Class_Trainee extends CI_Controller {
 
     /**
      * regenerate_invoice
-      */
-    public function regenerate_invoice() 
-    {
+     */
+    public function regenerate_invoice() {
         $post_invoice = $this->input->post('invoice_hidden_id');
         $ind_post_invoice = $this->input->post('invoice_indi_hidden_id');
         $inv_type = $this->input->post('invoice_type');
-        if($inv_type == 'individual')
-        {
-            if(!empty($ind_post_invoice))
-            {
+        if ($inv_type == 'individual') {
+            if (!empty($ind_post_invoice)) {
                 $invoice = $this->classtraineemodel->re_generate_indi_invoice();
                 $this->session->set_flashdata("success", "Invoice id - $invoice has been regenerated successfully. ");
-            }else{
+            } else {
                 $this->session->set_flashdata("error", "Unable to Regenerate Invoice ! ");
             }
-        }
-        else
-        {
-            if(!empty($post_invoice)){
-            $invoice = $this->classtraineemodel->re_generate_invoice();
-            $this->session->set_flashdata("success", "Invoice id - $invoice has been regenerated successfully. ");
-            }
-            else{
+        } else {
+            if (!empty($post_invoice)) {
+                $invoice = $this->classtraineemodel->re_generate_invoice();
+                $this->session->set_flashdata("success", "Invoice id - $invoice has been regenerated successfully. ");
+            } else {
                 $this->session->set_flashdata("error", "Unable to Regenerate Invoice ! ");
             }
         }
         redirect('accounting/generate_invoice');
-        
     }
 
     /**
      * enroll booking company pdf
      */
-    public function booking_acknowledge_company_pdf($trainee_ids, $class_id, $company) 
-    {
+    public function booking_acknowledge_company_pdf($trainee_ids, $class_id, $company) {
         $tenant_id = $this->tenant_id;
         $trainee_allid = explode('-', $trainee_ids);
         $tr_count = 0;
@@ -765,9 +675,9 @@ class Class_Trainee extends CI_Controller {
         $tenant_details->tenant_state = rtrim($this->course->get_metadata_on_parameter_id($tenant_details->tenant_state), ', ');
         $tenant_details->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($tenant_details->tenant_country), ', ');
         $courseLevel = rtrim($this->course->get_metadata_on_parameter_id($courses->certi_level), ', ');
-        $data = ''; 
+        $data = '';
         $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
-        $company_details1 = $this->classtraineemodel->get_company_name($booking_details->invoice_id,$trainee_id, $class_id,$tenant_id);//added by shubhranshu to fetch the company name
+        $company_details1 = $this->classtraineemodel->get_company_name($booking_details->invoice_id, $trainee_id, $class_id, $tenant_id); //added by shubhranshu to fetch the company name
         if ($booking_details) {
             $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
             $booking_date = date('d/m/Y', strtotime($booking_details->inv_date));
@@ -775,13 +685,11 @@ class Class_Trainee extends CI_Controller {
             $booking_no = date('Y') . ' ' . $trainee_id;
             $booking_date = date('d/m/Y');
         }
-        
+
         if ($tr_count > 0) {
             $contact_details = '';
-           if($tenant_details->tenant_id =='T12')
-            {
-                if (!empty($tenant_details->contact_name))
-                {
+            if ($tenant_details->tenant_id == 'T12') {
+                if (!empty($tenant_details->contact_name)) {
                     $contact_details .=$tenant_details->contact_name . ' ';
                 }
             }
@@ -796,47 +704,45 @@ class Class_Trainee extends CI_Controller {
             if ($company[0] == 'T') {
                 $company_details->company_name = $tenant_details->tenant_name;
             }
-            
-            /* skm code start for remark. reporting time skm start bcoz of sam request for AOP(67) on 18-may-17*/
+
+            /* skm code start for remark. reporting time skm start bcoz of sam request for AOP(67) on 18-may-17 */
             $time = strtotime($classes->class_start_datetime);
             $reporting_time = date("H:i A", strtotime('-30 minutes', $time));
-                if($classes->course_id == 67 || $classes->course_id == 121)
-                {
-                     $li = "Report at center at $reporting_time to register for class.";
-                }else{
-                     $li = "Report at center at 8:30 AM to register for class.";
-                }
+            if ($classes->course_id == 67 || $classes->course_id == 121) {
+                $li = "Report at center at $reporting_time to register for class.";
+            } else {
+                $li = "Report at center at 8:30 AM to register for class.";
+            }
             /* end */
-                if($tenant_details->tenant_id == 'T02')
-                {
-                    $li2 = "<li>Payment via Paynow/ Paylah, GIRO or SkillsFuture Credit.</li><li>Dress code : Covered shoes</li>";
-                } else {
-                    $li2 = '';
-                } 
-                ///// added by shubhranshu for wablab points
-                if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
-                    $li_first = "<li>Your NRIC, work permit or will be photocopied on the class date.</li>";
-                }else{
-                    $li_first ="<li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>";
-                }
-              $message3 = '
+            if ($tenant_details->tenant_id == 'T02') {
+                $li2 = "<li>Payment via Paynow/ Paylah, GIRO or SkillsFuture Credit.</li><li>Dress code : Covered shoes</li>";
+            } else {
+                $li2 = '';
+            }
+            ///// added by shubhranshu for wablab points
+            if ($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17') {
+                $li_first = "<li>Your NRIC, work permit or will be photocopied on the class date.</li>";
+            } else {
+                $li_first = "<li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>";
+            }
+            $message3 = '
              <ol style="font-size:13px;color:#4f4b4b">
-                          '.$li_first.'
+                          ' . $li_first . '
                             
                             <li>Trim finger nails and remove nail polish.</li>
-                            <li>'.$li.'</li>
-                            '.$li2.'
+                            <li>' . $li . '</li>
+                            ' . $li2 . '
                         </ol>';
-            
+
             /* skm end */
-              $comp_var='';
-            if(!empty($company_details1) && $tenant_id =='T02'){
-                $comp_var= $company_details->company_name;
+            $comp_var = '';
+            if (!empty($company_details1) && $tenant_id == 'T02') {
+                $comp_var = $company_details->company_name;
             }
             $data = '<br><br>
             <table style="font-size:15px">
                 <tr>
-                    <td>'.$tr_count . ' Seats for your company ' . $comp_var . ' has been booked. Booking details for your employees: 
+                    <td>' . $tr_count . ' Seats for your company ' . $comp_var . ' has been booked. Booking details for your employees: 
                     ' . $trainee . ' for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'<br><br>
             <strong>Class start date:</strong>
             ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
@@ -850,13 +756,13 @@ class Class_Trainee extends CI_Controller {
             <strong>Location: </strong>
             ' . $ClassLoc . '<br><br>
             <strong>Contact Details: </strong>
-            ' . $contact_details. '<br><br>
+            ' . $contact_details . '<br><br>
             <strong>Remark: </strong>
-            ' . $message3.'</td>
+            ' . $message3 . '</td>
                 </tr>
             </table>';
         }
-        
+
         $this->load->helper('pdf_reports_helper');
         generate_booking_acknowledge_pdf($data, $tenant_details, $booking_no, $booking_date);
     }
@@ -864,8 +770,7 @@ class Class_Trainee extends CI_Controller {
     /**
      * enroll booking pdf
      */
-    public function booking_acknowledge_pdf($trainee_id, $class_id) 
-   {
+    public function booking_acknowledge_pdf($trainee_id, $class_id) {
         $tenant_id = $this->tenant_id;
         $trainee_name = $this->classtraineemodel->get_trainee_name('', '', $trainee_id, $tenant_id);
         $name = $trainee_name->first . ' ' . $trainee_name->last;
@@ -878,11 +783,10 @@ class Class_Trainee extends CI_Controller {
         $tenant_details->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($tenant_details->tenant_country), ', ');
         $courseLevel = rtrim($this->course->get_metadata_on_parameter_id($courses->certi_level), ', ');
         $contact_details = '';
-        if($tenant_details->tenant_id == 'T12')
-        {
-           if (!empty($tenant_details->contact_name)) {
-            $contact_details .=$tenant_details->contact_name . ' ';
-            }  
+        if ($tenant_details->tenant_id == 'T12') {
+            if (!empty($tenant_details->contact_name)) {
+                $contact_details .=$tenant_details->contact_name . ' ';
+            }
         }
         if (!empty($tenant_details->tenant_contact_num)) {
             $contact_details .='(Phone: ' . $tenant_details->tenant_contact_num . ', ';
@@ -892,38 +796,36 @@ class Class_Trainee extends CI_Controller {
         }
         $contact_details = rtrim($contact_details, ', ');
         //added by pritam
-       // $contact_details= explode("(",  $contact_details);
-         //end
-        
-       /* reporting time skm start bcoz of sam request for AOP(67) on 18-may-17*/
+        // $contact_details= explode("(",  $contact_details);
+        //end
+
+        /* reporting time skm start bcoz of sam request for AOP(67) on 18-may-17 */
         $time = strtotime($classes->class_start_datetime);
         $reporting_time = date("H:i A", strtotime('-30 minutes', $time));
-        if($classes->course_id == 67 || $classes->course_id == 121)
-        {
+        if ($classes->course_id == 67 || $classes->course_id == 121) {
             $li = "Report at center at $reporting_time to register for class.";
-        }else{
+        } else {
             $li = "Report at center at 8:30 AM to register for class.";
         }
         //   echo removed by shubhranshu to [revent TCPDF header sent issue.
         /* end */
-        if($tenant_details->tenant_id == 'T02')
-        {
+        if ($tenant_details->tenant_id == 'T02') {
             $li2 = "<li>Payment via Paynow/ Paylah, GIRO or SkillsFuture Credit.</li>
                     <li>Dress code : Covered shoes.</li>";
         } else {
             $li2 = '';
-        } 
-        
-        ///// added by shubhranshu for wablab points
-        if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
-            $li_first = "Your NRIC, work permit or will be photocopied on the class date.";
-        }else{
-            $li_first ="All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.";
         }
-        
+
+        ///// added by shubhranshu for wablab points
+        if ($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17') {
+            $li_first = "Your NRIC, work permit or will be photocopied on the class date.";
+        } else {
+            $li_first = "All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.";
+        }
+
 
         $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
-        $company_details = $this->classtraineemodel->get_company_name($booking_details->invoice_id,$trainee_id, $class_id,$tenant_id);//added by shubhranshu to fetch the company name
+        $company_details = $this->classtraineemodel->get_company_name($booking_details->invoice_id, $trainee_id, $class_id, $tenant_id); //added by shubhranshu to fetch the company name
         if ($booking_details) {
             $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
             $booking_date = date('d/m/Y', strtotime($booking_details->inv_date));
@@ -931,16 +833,16 @@ class Class_Trainee extends CI_Controller {
             $booking_no = date('Y') . ' ' . $trainee_id;
             $booking_date = date('d/m/Y');
         }
-        $comp_var='';
-        if(!empty($company_details) && $tenant_id =='T02'){
-            $comp_var='(Company Name:'.$company_details->company_name.')';
+        $comp_var = '';
+        if (!empty($company_details) && $tenant_id == 'T02') {
+            $comp_var = '(Company Name:' . $company_details->company_name . ')';
         }
-            
+
         $data = '<br><br>
             <table style="font-size:15px">
                 <tr>
                     <td>Your seat has been booked. Please pay the class fees on or before the class start date.
-                        Booking for <strong>' . $trainee .$comp_var. '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
+                        Booking for <strong>' . $trainee . $comp_var . '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
                         <strong>Class start date:</strong>
                         ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
                         <br><br>
@@ -952,27 +854,27 @@ class Class_Trainee extends CI_Controller {
                         <strong>Location:</strong>
                         ' . $ClassLoc . '<br><br>
                         <strong>Contact Details: </strong>
-                        ' .$contact_details. '
+                        ' . $contact_details . '
                             <br><br>
                         <strong style="font-size:13px">Remark *: </strong>
                         <ol style="font-size:13px;color:#4f4b4b">
-                            <li>'.$li_first.'</li>
+                            <li>' . $li_first . '</li>
                             <li>Trim finger nails and remove nail polish.</li>
-                            <li>'.$li.'</li>
-                            '.$li2.'
+                            <li>' . $li . '</li>
+                            ' . $li2 . '
                         </ol>
                             
                     </td>
                 </tr>
             </table>';
         ///////// below code added by shubhranshu for elearning class only for xp
-        if($tenant_details->tenant_id == 'T02'){
-            if($classes->course_id == 166 || $classes->course_id == 167){
+        if ($tenant_details->tenant_id == 'T02') {
+            if ($classes->course_id == 166 || $classes->course_id == 167) {
                 $data = '<br><br>
                 <table style="font-size:15px">
                     <tr>
                         <td>Your seat has been booked. Please pay the class fees on or before the class start date.
-                            Booking for <strong>' . $trainee .$comp_var. '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
+                            Booking for <strong>' . $trainee . $comp_var . '</strong> for \'Course: <b>' . $courses->crse_name . '</b>, Class: <b>' . $classes->class_name . '</b>, Certificate Code: ' . $courseLevel . '\'.<br><br>
                             <strong>Class start date:</strong>
                             ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
                             <br><br>
@@ -984,20 +886,20 @@ class Class_Trainee extends CI_Controller {
                             <strong>Location:</strong>
                             ' . $ClassLoc . '<br><br>
                             <strong>Contact Details: </strong>
-                            ' .$contact_details. '
+                            ' . $contact_details . '
                                 <br><br>
                             <strong style="font-size:13px">Remark *: </strong>
                             <ol style="font-size:13px;color:#4f4b4b">
-                                <li>'.$li_first.'</li>
+                                <li>' . $li_first . '</li>
                                 <li>Trim finger nails and remove nail polish.</li>
-                                '.$li2.'
+                                ' . $li2 . '
                             </ol>
                         </td>
                     </tr>
                 </table>';
             }
         }
-        
+
         $this->load->helper('pdf_reports_helper');
         generate_booking_acknowledge_pdf($data, $tenant_details, $booking_no, $booking_date);
     }
@@ -1036,7 +938,6 @@ class Class_Trainee extends CI_Controller {
         echo $available;
     }
 
-    
     /**
      * calculate gst for subsidy
      */
@@ -1047,8 +948,8 @@ class Class_Trainee extends CI_Controller {
         $classes = $this->class->get_class_details($tenant_id, $class);
         $courses = $this->course->get_course_detailse($classes->course_id);
         $invoice = $this->classtraineemodel->get_allinvoice($tenant_id, $payid);
-        $enrol_payment_due_details = $this->classtraineemodel->get_enrol_payment_due_details($payid,$user);
-        $individual_discount_amount = round((($enrol_payment_due_details->discount_rate/100) * $classes->class_fees),2);
+        $enrol_payment_due_details = $this->classtraineemodel->get_enrol_payment_due_details($payid, $user);
+        $individual_discount_amount = round((($enrol_payment_due_details->discount_rate / 100) * $classes->class_fees), 2);
         $gst_onoff = $courses->gst_on_off;
         $subsidy_after_before = $courses->subsidy_after_before;
         $class_fees = $classes->class_fees;
@@ -1078,11 +979,11 @@ class Class_Trainee extends CI_Controller {
         $payid = $this->classtraineemodel->get_payid_for_class_user($class, $user);
         $invoice = $this->classtraineemodel->get_allinvoice($tenant_id, $payid);
         $tg = $this->classtraineemodel->get_tg_number($tenant_id, $payid, $user);
-       $result = $this->classtraineemodel->update_tgnumber($tenant_id, $payid, $tg_number, $user);
+        $result = $this->classtraineemodel->update_tgnumber($tenant_id, $payid, $tg_number, $user);
         if ($result == TRUE) {
-             if($tg != ''){
-               $data = array('user_id'=>$user,'class_id'=>$class,'payment_due_id'=>$payid,'tg'=>$tg);
-                $previous_data =  json_encode($data);
+            if ($tg != '') {
+                $data = array('user_id' => $user, 'class_id' => $class, 'payment_due_id' => $payid, 'tg' => $tg);
+                $previous_data = json_encode($data);
                 user_activity(18, $user, $previous_data);
             }
             $this->db->cache_delete_all();
@@ -1093,15 +994,15 @@ class Class_Trainee extends CI_Controller {
         exit();
     }
 
-       public function update_eidnumber() {
+    public function update_eidnumber() {
         $tenant_id = $this->tenant_id;
         extract($_POST);
         $payid = $this->classtraineemodel->get_payid_for_class_user($class, $user);
-        $result = $this->classtraineemodel->update_eidnumber($tenant_id, $class, $user, $eid_number,$payid);
+        $result = $this->classtraineemodel->update_eidnumber($tenant_id, $class, $user, $eid_number, $payid);
         if ($result == TRUE) {
-             if($tg != ''){
-               $data = array('eid_number'=>$eid_number,'class_id'=>$class,'payment_due_id'=>$payid);
-                $previous_data =  json_encode($data);
+            if ($tg != '') {
+                $data = array('eid_number' => $eid_number, 'class_id' => $class, 'payment_due_id' => $payid);
+                $previous_data = json_encode($data);
                 user_activity(18, $user, $previous_data);
             }
             $this->db->cache_delete_all();
@@ -1111,6 +1012,7 @@ class Class_Trainee extends CI_Controller {
         }
         exit();
     }
+
     /**
      * calculate gst for subsidy
      */
@@ -1128,7 +1030,7 @@ class Class_Trainee extends CI_Controller {
         $feesdue = $class_fees - $invoice->total_inv_discnt;
         $gst_rate = $invoice->gst_rate;
 
-     
+
         $subsidy = ($subsidy_per * $feesdue) / 100;
         $result = $this->classtraineemodel->calculate_net_due($gst_onoff, $subsidy_after_before, $feesdue, $subsidy, $gst_rate);
         $arr = array();
@@ -1197,7 +1099,7 @@ class Class_Trainee extends CI_Controller {
      */
     public function calculate_gst_for_subsidy_percentage() {
         extract($_POST);
-       $disc_rate = ($discount_amount / $class_fees) * 100;
+        $disc_rate = ($discount_amount / $class_fees) * 100;
         $fees_due = $class_fees - $discount_amount;
         $subsidy = ($subsidy_per * $fees_due) / 100;
         $result = $this->classtraineemodel->calculate_net_due($gst_onoff, $subsidy_after_before, $fees_due, $subsidy, $gst_rate);
@@ -1258,7 +1160,7 @@ class Class_Trainee extends CI_Controller {
      * This function loads the Bulk Enrollment form.
      */
 
-    public function bulk_enrollment() { 
+    public function bulk_enrollment() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $data['companies'] = $companies = $this->classtraineemodel->get_active_tenant_company($tenant_id);
@@ -1271,10 +1173,10 @@ class Class_Trainee extends CI_Controller {
 
         if ($this->input->post('upload')) {
             ////////below added by shubhranshu to prevent enrol for invoice paid/partpaid company///////start////
-            $check_invoice = $this->classtraineemodel->check_if_invoice_paid($company,$course,$class);
-            if(!empty($check_invoice)){
+            $check_invoice = $this->classtraineemodel->check_if_invoice_paid($company, $course, $class);
+            if (!empty($check_invoice)) {
                 $this->session->set_flashdata('error', 'You can not enroll to this class since the invoice is Already paid/partpaid.');
-            }else{//////////shubhranshu code end////////////////////////////////////
+            } else {//////////shubhranshu code end////////////////////////////////////
                 $config['upload_path'] = './uploads/';
                 $config['allowed_types'] = '*';
                 $config['max_size'] = '2048';
@@ -1309,13 +1211,11 @@ class Class_Trainee extends CI_Controller {
                         }
 
                         unlink('./uploads/' . $data['file_name']);
-
                     }
                 }
             }
-            
         }
-       
+
         $data['courses'] = $disp_courses;
         $data['companies'] = $companies;
         if (!empty($course)) {
@@ -1327,11 +1227,11 @@ class Class_Trainee extends CI_Controller {
         if ($this->user->role_id == 'SLEXEC') {
             $data['salesexec_check'] = 1;
         }
-        
+
         $data['files'] = $files;
         $data['filesa'] = $filesa;
         $data['filesb'] = $filesb;
-        $data['privilage'] = $this->manage_tenant->get_privilage();//added by shubhranshu
+        $data['privilage'] = $this->manage_tenant->get_privilage(); //added by shubhranshu
         $data['page_title'] = 'Class Trainee';
         $data['main_content'] = 'classtrainee/bulkenrollment';
         //$data['sideMenuData'] = $this->sideMenu;
@@ -1358,7 +1258,7 @@ class Class_Trainee extends CI_Controller {
             $this->class_error_msg = '';
         }
         $insert_data = array();
-        $restrict_arr = array();//added by shubhranshu
+        $restrict_arr = array(); //added by shubhranshu
         foreach ($excel_data as $key => $row) {
             $status = '';
             $excel = array();
@@ -1371,9 +1271,9 @@ class Class_Trainee extends CI_Controller {
             $insert_data[$key] = $excel;
             $error_msg = $this->check_is_empty($excel);
             //////////////////added by shubhranshu/////////////////////////
-            
-            $restriction = $this->chk_nric_restriction($excel['taxcode'],'BULK_ENROL'); //added by shubhranshu to prevent restricted nric on 22/03/2019
-            if($restriction > 0){
+
+            $restriction = $this->chk_nric_restriction($excel['taxcode'], 'BULK_ENROL'); //added by shubhranshu to prevent restricted nric on 22/03/2019
+            if ($restriction > 0) {
                 $restrict_arr[] = $excel['taxcode'];
                 //$error_msg .= 'Restricted NRIC.';
             }//////////////////added by shubhranshu******/////////////////////////
@@ -1404,13 +1304,13 @@ class Class_Trainee extends CI_Controller {
             }
         }
         /////added by shubhranshu 0n 26/03/2019
-        $restrict_data=array();
+        $restrict_data = array();
         $restrict_data['flag'] = $restrict_arr ? 'true' : 'false';
         $restrict_data['restrict_arr'] = $restrict_arr;
-         ////////////////        
+        ////////////////        
         $company_details = $this->company->get_company_details($tenant_id, $company_id);
         $insert_status = $this->classtraineemodel->create_bulk_enrol($tenant_id, $insert_data, $company_id, $course, $salesexec, $class, $class_detail, $curuser_id, $company_details);
-        $insert_status['flag'] = $restrict_data['flag'];//added by shubhranshu 0n 26/03/2019
+        $insert_status['flag'] = $restrict_data['flag']; //added by shubhranshu 0n 26/03/2019
         return $insert_status;
     }
 
@@ -1461,30 +1361,26 @@ class Class_Trainee extends CI_Controller {
      * function to get company trainees
      */
     public function get_companytrainees() {
-        
+
         $tenant_id = $this->tenant_id;
         $company = $this->input->post('company');
         $class = $this->input->post('class');
-       // $trainees = '';
-       
-        $check_inovice=$this->classtraineemodel->check_invoice($tenant_id,$company,$class);
-         $check_inovice->pymnt_due_id;
-        if($check_inovice->pymnt_due_id>0)
-        {
+        // $trainees = '';
+
+        $check_inovice = $this->classtraineemodel->check_invoice($tenant_id, $company, $class);
+        $check_inovice->pymnt_due_id;
+        if ($check_inovice->pymnt_due_id > 0) {
             echo json_encode($check_inovice);
             exit();
-        }
-        else {
-        $status = $this->classtraineemodel->clean_orpham($tenant_id, $class);
-        if ($company[0] == 'T') {
-            $trainees = $this->company->get_tenent_active_users($tenant_id, $company, $class);
-        } else if ($company && $class) {
-            
-            $trainees = $this->company->get_company_trainees($tenant_id, $company, $class);
-            
-           
-        }
-        /////added by shubhranshu to check block list nric as per client requirement on 25/03/2019
+        } else {
+            $status = $this->classtraineemodel->clean_orpham($tenant_id, $class);
+            if ($company[0] == 'T') {
+                $trainees = $this->company->get_tenent_active_users($tenant_id, $company, $class);
+            } else if ($company && $class) {
+
+                $trainees = $this->company->get_company_trainees($tenant_id, $company, $class);
+            }
+            /////added by shubhranshu to check block list nric as per client requirement on 25/03/2019
 //        $block_list_nric = array();
 //        foreach($trainees as $s){ 
 //            if($this->chk_nric_restriction($s->tax_code)){
@@ -1493,15 +1389,14 @@ class Class_Trainee extends CI_Controller {
 //            }
 //        }//echo print_r($block_list_nric);exit;
 //         $trainees['blocklist'] = $block_list_nric;
-         //////////////////******/////////////////////////////////////////////////////////////////////////////
-        echo json_encode($trainees);
-        exit();
-        
+            //////////////////******/////////////////////////////////////////////////////////////////////////////
+            echo json_encode($trainees);
+            exit();
         }
     }
 
     ////// below function added by shubhranshu to speed up the re-schedule form
-    public function reschedule_company_json(){
+    public function reschedule_company_json() {
         $tenant_id = $this->tenant_id;
         $companies = $this->company->get_activeuser_companies_for_tenant($tenant_id, 1);
         if ($companies) {
@@ -1512,37 +1407,29 @@ class Class_Trainee extends CI_Controller {
                 );
             }
         }
-        
+
         echo json_encode($comp);
         exit();
     }
-    
-    
+
     /*
      * This function loads the Re-Schedule form.
      */
-    
-    
-    
-    public function re_schedule() 
-    {
+
+    public function re_schedule() {
         //$this->output->enable_profiler(true);
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $data['courses'] = $this->classtraineemodel->get_active_course_classenroll_list_by_tenant($tenant_id);
         $data['companies'] = $this->company->get_activeuser_companies_for_tenant($tenant_id, 0);
-        if ($this->input->server('REQUEST_METHOD') === 'POST') 
-        {
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $this->load->library('form_validation');
             $submit = $this->input->post('submit');
-            if ($submit == 'Search' || $submit == 'reschedule') 
-            {
+            if ($submit == 'Search' || $submit == 'reschedule') {
                 $type = $this->input->post('type');
-                if ($type == 1 || $type == 4) 
-                {
-                    $taxcode_id = ($type == 1)?$this->input->post('taxcode_id'):$this->input->post('taxcode_user_id');                    
-                    if (!empty($taxcode_id)) 
-                    {
+                if ($type == 1 || $type == 4) {
+                    $taxcode_id = ($type == 1) ? $this->input->post('taxcode_id') : $this->input->post('taxcode_user_id');
+                    if (!empty($taxcode_id)) {
                         $users = $this->classtraineemodel->get_user_details($tenant_id, $taxcode_id);
                         $name = $users->first_name . ' ' . $users->last_name . ' (' . $users->tax_code . ')';
                         $data['users'] = ($users->gender == 'FEMALE') ? 'Ms.' . $name : 'Mr.' . $name;
@@ -1552,7 +1439,7 @@ class Class_Trainee extends CI_Controller {
                         $data['active_enroll_lock_att_status'] = get_active_class_att_status($active_enroll_class);
                         $active_enroll_class_id = get_class_id($active_enroll_class);
                         //$reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, '', $active_enroll_class_id);////commented by shubhranshu
-                        $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $data['active_enroll_course_id'], $active_enroll_class_id);////added by shubhranshu to show only the enrolled course id list
+                        $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $data['active_enroll_course_id'], $active_enroll_class_id); ////added by shubhranshu to show only the enrolled course id list
                         foreach ($reschedule_enroll_class as $k => $row) {
                             if ($row->class_pymnt_enrol == 'PDENROL') {
                                 $totalbooked = $this->class->get_class_booked($row->course_id, $row->class_id, $this->tenant_id);
@@ -1576,12 +1463,9 @@ class Class_Trainee extends CI_Controller {
                         $this->form_validation->set_rules('active_class', 'Active Enrollment Class', 'required');
                         $this->form_validation->set_rules('reschedule_class', 'Reschedule Enrollment Class', 'required');
                     }
-                } 
-                else if ($type == 3) 
-                {
+                } else if ($type == 3) {
                     $taxcode_id = $this->input->post('trainee_id');
-                    if (!empty($taxcode_id)) 
-                    {
+                    if (!empty($taxcode_id)) {
                         $users = $this->classtraineemodel->get_user_details($tenant_id, $taxcode_id);
                         $name = $users->first_name . ' ' . $users->last_name . ' (' . $users->tax_code . ')';
                         $data['users'] = ($users->gender == 'FEMALE') ? 'Ms.' . $name : 'Mr.' . $name;
@@ -1591,11 +1475,9 @@ class Class_Trainee extends CI_Controller {
                         $data['active_enroll_lock_att_status'] = get_active_class_att_status($active_enroll_class);
                         $active_enroll_class_id = get_class_id($active_enroll_class);
                         //$reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, '', $active_enroll_class_id);
-                        $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $data['active_enroll_course_id'], $active_enroll_class_id);////added by shubhranshu to show only the enrolled course id list
-                        foreach ($reschedule_enroll_class as $k => $row) 
-                        {
-                            if ($row->class_pymnt_enrol == 'PDENROL') 
-                            {
+                        $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $data['active_enroll_course_id'], $active_enroll_class_id); ////added by shubhranshu to show only the enrolled course id list
+                        foreach ($reschedule_enroll_class as $k => $row) {
+                            if ($row->class_pymnt_enrol == 'PDENROL') {
                                 $totalbooked = $this->class->get_class_booked($row->course_id, $row->class_id, $this->tenant_id);
                                 if ($totalbooked >= $row->total_seats) {
                                     unset($reschedule_enroll_class[$k]);
@@ -1605,7 +1487,6 @@ class Class_Trainee extends CI_Controller {
                         $data['reschedule_enroll_class'] = get_course_class_starttime($reschedule_enroll_class);
                         $data['reschedule_enroll_course_id'] = get_course_id($reschedule_enroll_class);
                         $data['reschedule_enroll_lock_att_status'] = get_reschedule_class_att_status($reschedule_enroll_class);
-                        
                     }
                     $this->form_validation->set_rules('trainee_name', 'Trainee', 'required');
                     if ($submit == 'reschedule') {
@@ -1613,12 +1494,9 @@ class Class_Trainee extends CI_Controller {
                         $this->form_validation->set_rules('active_class', 'Active Enrollment Class', 'required');
                         $this->form_validation->set_rules('reschedule_class', 'Reschedule Enrollment Class', 'required');
                     }
-                } 
-                else 
-                {
+                } else {
                     $course_id = $this->input->post('course_id');
-                    if (!empty($course_id)) 
-                    {
+                    if (!empty($course_id)) {
                         $active_enroll_class = $this->classtraineemodel->get_active_class_enrol($tenant_id, $course_id, '');
                         $activeenroll_class = get_class_starttime($active_enroll_class);
                         if ($activeenroll_class) {
@@ -1626,7 +1504,7 @@ class Class_Trainee extends CI_Controller {
                                 $data['course_active_enroll_class'][$k] = $v;
                             }
                         }
-                       
+
                         $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $course_id, '');
                         foreach ($reschedule_enroll_class as $k => $row) {
                             if ($row->class_pymnt_enrol == 'PDENROL') {
@@ -1658,9 +1536,8 @@ class Class_Trainee extends CI_Controller {
                     $this->form_validation->set_rules('course_reschedule_class', 'Reschedule Enrollment Class', 'required');
                     $this->form_validation->set_rules('control_6[]', 'Trainee', 'required');
                 }
-               
-                if ($this->form_validation->run() == TRUE && !empty($reschedule_class)) 
-                {
+
+                if ($this->form_validation->run() == TRUE && !empty($reschedule_class)) {
                     $data['reschedule_classes'] = $class = $this->class->get_class_details($tenant_id, $reschedule_class);
 
                     $data['reshedule_courses'] = $course = $this->course->get_course_detailse($class->course_id);
@@ -1678,18 +1555,16 @@ class Class_Trainee extends CI_Controller {
                     $data['Assessor'] = $this->class->get_trainer_names($class->assessor);
                     $data['TrainingAide'] = $this->class->get_course_manager_names($class->training_aide);
                 }
-            } 
-            elseif ($submit == 'save') 
-            {
+            } elseif ($submit == 'save') {
                 $this->form_validation->set_rules('reschedule_reason', 'Reschedule reason', 'required');
                 if ($this->form_validation->run() == TRUE) {
                     $result = $this->classtraineemodel->create_reschedule();
                     //echo "final";exit;
                     if ($result == TRUE) {
                         $type = $this->input->post('type');
-                        if ($type == 1 || $type == 4) { 
+                        if ($type == 1 || $type == 4) {
                             $reschedule_class = $this->input->post('reschedule_class');
-                            $user_id = ($type == 1)?$this->input->post('taxcode_id'):$this->input->post('taxcode_user_id');
+                            $user_id = ($type == 1) ? $this->input->post('taxcode_id') : $this->input->post('taxcode_user_id');
                         } else if ($type == 3) {
                             $reschedule_class = $this->input->post('reschedule_class');
                             $user_id = $this->input->post('trainee_id');
@@ -1735,8 +1610,9 @@ class Class_Trainee extends CI_Controller {
     /*
      * This function loads the Mark Attendance form.
      */
-  public function mark_attendance($message = NULL) {
-      $data['sideMenuData'] = fetch_non_main_page_content();
+
+    public function mark_attendance($message = NULL) {
+        $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $course_id = $this->input->post('course_id');
         $class_id = $this->input->post('class_id');
@@ -1744,18 +1620,17 @@ class Class_Trainee extends CI_Controller {
         $sort_by = $this->input->get('b');
         $sort_order = $this->input->get('o');
         $class_details = $this->class->get_class_by_id($tenant_id, $course_id, $class_id);
-        
-        $from_date = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);///added by shubhranshu
-        $to_date = parse_date($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT);//added by shubhranshu
-        $week_start_date = parse_date($this->input->post('week_start'), CLIENT_DATE_FORMAT);//added by shubhranshu
+
+        $from_date = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT); ///added by shubhranshu
+        $to_date = parse_date($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT); //added by shubhranshu
+        $week_start_date = parse_date($this->input->post('week_start'), CLIENT_DATE_FORMAT); //added by shubhranshu
         //echo print_r($from_date);print_r($to_date);print_r($week_start_date);exit;
-       
+
         $week = $this->input->post('week');
         $export = $this->input->post('export');
         $export1 = $this->input->post('export1');
         $this->load->helper('attendance_helper');
-        if (!empty($export)) 
-        {
+        if (!empty($export)) {
             $class_details = $this->class->get_class_details_for_report($tenant_id, $course_id, $class_id);
             $class_start = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);
             $class_end = parse_date($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT);
@@ -1769,76 +1644,65 @@ class Class_Trainee extends CI_Controller {
                 $session_arr = array('S1' => '1', 'BRK' => '3', 'S2' => '2');
                 $class_schedule_data[date('d/m/y', strtotime($row['class_date']))][$session_arr[$row['session_type_id']]] = date('h:i A', strtotime($row['session_start_time']));
             }
-        
-            if ($export == 'xls') 
-            {
+
+            if ($export == 'xls') {
                 $results = $this->classtraineemodel->get_class_trainee_list_for_attendance($tenant_id, $course_id, $class_id, $subsidy, $class_start, $class_end, $sort_by, $sort_order);
                 $this->load->helper('export_helper');
-                 export_attendance($results, $class_details, $class_start, $class_end, $class_schedule_data);
-            } 
-            else 
-            {
+                export_attendance($results, $class_details, $class_start, $class_end, $class_schedule_data);
+            } else {
                 $results = $this->classtraineemodel->get_class_trainee_list_for_attendance($tenant_id, $course_id, $class_id, $subsidy, $class_start, $class_end, $sort_by, $sort_order);
                 $tenant_details = $this->classtraineemodel->get_tenant_masters($tenant_id);
                 $tenant_details->tenant_state = rtrim($this->course->get_metadata_on_parameter_id($tenant_details->tenant_state), ', ');
                 $tenant_details->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($tenant_details->tenant_country), ', ');
-		$mark_count = $this->classtraineemodel->get_rows_count($course_id,$class_id);
-                
-                if ($export == 'xls_week'){
+                $mark_count = $this->classtraineemodel->get_rows_count($course_id, $class_id);
+
+                if ($export == 'xls_week') {
                     $this->load->helper('export_helper');
-                    if(TENANT_ID =='T02'){
+                    if (TENANT_ID == 'T02') {
                         return generate_class_attendance_sheet_xls_xp($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
-                    }else{
+                    } else {
                         return generate_class_attendance_sheet_xls($results, $class_details, $class_start, $class_end, $tenant_details, $class_schedule_data);
                     }
-                    
                 }
                 $this->load->helper('pdf_reports_helper');
                 if ($export == 'pdf') {
                     //return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data, $mark_count);
                     //print_r($results);exit;
-                    return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data,$mark_count); // removed mark count by shubhranshu
-                    
+                    return generate_class_attendance_pdf($results, $class_details, $tenant_details, $class_schedule_data, $mark_count); // removed mark count by shubhranshu
                 } else if ($export == 'pdf_week') {
-                    if(TENANT_ID =='T02'){
+                    if (TENANT_ID == 'T02') {
                         return generate_class_attendance_sheet_pdf_xp($results, $class_details, $tenant_details, $class_schedule_data);
-                    }else{
+                    } else {
                         return generate_class_attendance_sheet_pdf($results, $class_details, $tenant_details, $class_schedule_data);
                     }
-                    
                 }
             }
-           
-        }  
-        else 
-        {
-            if($export1=='lock')
-            {   
-               $lock_msg=$this->classtraineemodel->lock_class_attendance($tenant_id,$course_id,$class_id);
-                if($lock_msg==TRUE){
+        } else {
+            if ($export1 == 'lock') {
+                $lock_msg = $this->classtraineemodel->lock_class_attendance($tenant_id, $course_id, $class_id);
+                if ($lock_msg == TRUE) {
                     $this->session->set_flashdata("success", "Succesfully Locked.");
-                }else{
-                    $this->session ->set_flashdata("error","Something went wrong while locking.");
+                } else {
+                    $this->session->set_flashdata("error", "Something went wrong while locking.");
                 }
-            }else if($export1=='unlock'){
-                $lock_msg=$this->classtraineemodel->unlock_class_attendance($tenant_id,$course_id,$class_id);
-                if($lock_msg==TRUE){
-                    $this->session->set_flashdata("success","Succesfully Unocked");
-                }else{
-                    $this->session->set_flashdata("error","Somthing went wrong while Unlocking !");
-                     
+            } else if ($export1 == 'unlock') {
+                $lock_msg = $this->classtraineemodel->unlock_class_attendance($tenant_id, $course_id, $class_id);
+                if ($lock_msg == TRUE) {
+                    $this->session->set_flashdata("success", "Succesfully Unocked");
+                } else {
+                    $this->session->set_flashdata("error", "Somthing went wrong while Unlocking !");
                 }
             }
-            
-            
-            $data = get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order,'');
-           
+
+
+            $data = get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order, '');
+
             $data['class_schedule'] = $this->class->get_all_class_schedule($tenant_id, $class_id);
-            $att = $this->classtraineemodel->get_attendance_lock_status($tenant_id,$course_id, $class_id);
-            $data['lock_status']=$att->lock_status;
-            $data['class_start_datetime']=$att->class_start_datetime;
-			$data['user'] = $this->user;
-			$data['controllerurl'] = 'class_trainee/mark_attendance';
+            $att = $this->classtraineemodel->get_attendance_lock_status($tenant_id, $course_id, $class_id);
+            $data['lock_status'] = $att->lock_status;
+            $data['class_start_datetime'] = $att->class_start_datetime;
+            $data['user'] = $this->user;
+            $data['controllerurl'] = 'class_trainee/mark_attendance';
             $data['page_title'] = 'Class Trainee Enrollment - Mark Attendance';
             $data['main_content'] = 'classtrainee/markattendance';
             //$data['week_start'] = $from_date;
@@ -1848,87 +1712,76 @@ class Class_Trainee extends CI_Controller {
             $this->load->view('layout', $data);
         }
     }
-    
+
     /* locking class attendance 
-    Author : Prit
-    Date   : 03/08/2016     */
+      Author : Prit
+      Date   : 03/08/2016 */
+
     public function lock_class_attendance() {
-            $course_id =$this->input->post('course_id');
-            $class_id  =$this->input ->post('class_id');
-            $tenant_id = $this->tenant_id;
-            $result = $this->classtraineemodel->lock_class_attendance($tenant_id,$course_id,$class_id);
-            if($result == TRUE)
-            {
-                echo $sucess = 1;
-            }
-            else
-            {
-                echo $fail =0;
-            }
-           
-          
-    }
-     /* locking class attendance 
-    Author : Prit
-    Date   : 03/08/2016     */
-    public function unlock_class_attendance() {
-            $course_id =$this->input->post('course_id');
-            $class_id  =$this->input ->post('class_id');
-            $tenant_id = $this->tenant_id;
-            $result = $this->classtraineemodel->unlock_class_attendance($tenant_id,$course_id,$class_id);
-           if($result == TRUE)
-            {
-                echo $sucess = 1;
-            }
-            else
-            {
-                echo $fail =0;
-            }
-          
-    }
-    
-// This method is to get class start date & skm code start here
-    public function get_class_date()
-    {   
-        $res = '';
-       $class_id = $this->input->post('class_id');
-       // $res = $this->classtraineemodel->get_class_stdate($class_id);
-       $res = $this->classtraineemodel->schedule_chck($class_id);
-       if($res!='')
-        {
-                if($res == TRUE)
-                {
-                    echo $xxx1 = 1;
-                }
-                else
-                {
-                    echo $xxx1 =0;
-                }
+        $course_id = $this->input->post('course_id');
+        $class_id = $this->input->post('class_id');
+        $tenant_id = $this->tenant_id;
+        $result = $this->classtraineemodel->lock_class_attendance($tenant_id, $course_id, $class_id);
+        if ($result == TRUE) {
+            echo $sucess = 1;
+        } else {
+            echo $fail = 0;
         }
     }
+
+    /* locking class attendance 
+      Author : Prit
+      Date   : 03/08/2016 */
+
+    public function unlock_class_attendance() {
+        $course_id = $this->input->post('course_id');
+        $class_id = $this->input->post('class_id');
+        $tenant_id = $this->tenant_id;
+        $result = $this->classtraineemodel->unlock_class_attendance($tenant_id, $course_id, $class_id);
+        if ($result == TRUE) {
+            echo $sucess = 1;
+        } else {
+            echo $fail = 0;
+        }
+    }
+
+// This method is to get class start date & skm code start here
+    public function get_class_date() {
+        $res = '';
+        $class_id = $this->input->post('class_id');
+        // $res = $this->classtraineemodel->get_class_stdate($class_id);
+        $res = $this->classtraineemodel->schedule_chck($class_id);
+        if ($res != '') {
+            if ($res == TRUE) {
+                echo $xxx1 = 1;
+            } else {
+                echo $xxx1 = 0;
+            }
+        }
+    }
+
     // skm code end
-    
-     /* this function get the activity log of mark attendance skm start*/ 
-    public function mark_att_log($course_id=0,$class_id=0)
-    {
+
+    /* this function get the activity log of mark attendance skm start */
+    public function mark_att_log($course_id = 0, $class_id = 0) {
         $this->load->model('Activity_Log_Model', 'activitylog');
         $course_id = $this->input->post('course_id');
         $class_id = $this->input->post('class_id');
-        
-        $course_name = $this->activitylog->get_course_name($course_id);              
+
+        $course_name = $this->activitylog->get_course_name($course_id);
         $class_name = $this->activitylog->class_name($class_id);
 
         $data = array(
-                        'course_id' => $course_id,
-                        'course_name' => $course_name->crse_name,
-                        'class_id' => $class_id,
-                        'class_name' => $class_name->class_name
-                     );
+            'course_id' => $course_id,
+            'course_name' => $course_name->crse_name,
+            'class_id' => $class_id,
+            'class_name' => $class_name->class_name
+        );
 
         $previous_data = json_encode($data);
-        user_activity(6,$class_id,$previous_data);
+        user_activity(6, $class_id, $previous_data);
     }
-    
+
     /**
      * return start and end time for given class_id as json
      */
@@ -1940,34 +1793,33 @@ class Class_Trainee extends CI_Controller {
             charset = utf-8');
         echo json_encode(array("success" => true, "data" => $data));
     }
+
     /**
      * updates attendance data
      */
-    public function mark_attendance_update() 
-    {
-       //$this->output->enable_profiler(TRUE);
-        $data['sideMenuData'] = fetch_non_main_page_content();/////added by shubhranshu
+    public function mark_attendance_update() {
+        //$this->output->enable_profiler(TRUE);
+        $data['sideMenuData'] = fetch_non_main_page_content(); /////added by shubhranshu
         $tenant_id = $this->tenant_id;
         $course_id = $this->input->post('course_id');
         $class_id = $this->input->post('class_id');
         $data_table = $this->input->post('mark_attendance');
         $trainees = $this->input->post('trainees');
-        $result = $this->classtraineemodel->update_for_mark_attendance($tenant_id, $course_id, $class_id, $data_table,$trainees);
+        $result = $this->classtraineemodel->update_for_mark_attendance($tenant_id, $course_id, $class_id, $data_table, $trainees);
 
         $message = NULL;
-        if (!empty($data_table) && count($data_table) > 0) 
-        {
-            if ($result == true) 
-            {
+        if (!empty($data_table) && count($data_table) > 0) {
+            if ($result == true) {
                 $message = 'Attendance has been updated successfully.';
             }
         }
         $this->mark_attendance($message);
     }
-/**
- * gets trainee by tax code for auto complete help 
- */
-   public function get_trainees_by_taxcode_autocomplete() {
+
+    /**
+     * gets trainee by tax code for auto complete help 
+     */
+    public function get_trainees_by_taxcode_autocomplete() {
 
         $query_string = htmlspecialchars($_GET['query'], ENT_QUOTES, 'UTF-8');
         $this->load->model('trainee_model', 'traineemodel');
@@ -1975,18 +1827,20 @@ class Class_Trainee extends CI_Controller {
         print json_encode($result);
         exit;
     }
-/**
- * get trainee by taxcode
- */
+
+    /**
+     * get trainee by taxcode
+     */
     public function get_trainees_by_taxcode() {
-       $query_string = htmlspecialchars($_GET['query'], ENT_QUOTES, 'UTF-8');
+        $query_string = htmlspecialchars($_GET['query'], ENT_QUOTES, 'UTF-8');
         $result = $this->classtraineemodel->trainee_user_list_autocomplete($query_string);
         print json_encode($result);
         exit;
     }
-/**
- * add trainee to the list
- */
+
+    /**
+     * add trainee to the list
+     */
     public function add_trainee_to_list() {
         $taxcode = $this->input->post('taxcode');
         $trainee_data = $this->classtraineemodel->get_trainee_details($taxcode);
@@ -2002,9 +1856,10 @@ class Class_Trainee extends CI_Controller {
             </tr>';
         }
     }
-/**
- * get class details
- */
+
+    /**
+     * get class details
+     */
     public function get_class_details() {
         $classid = $this->input->post('classid');
         $class_data = $this->classtraineemodel->get_class_details($classid);
@@ -2083,6 +1938,7 @@ class Class_Trainee extends CI_Controller {
         echo json_encode($matches);
         exit();
     }
+
     /**
      * function to get trainee First Name (Tax code) in autocomplete
      */
@@ -2094,8 +1950,8 @@ class Class_Trainee extends CI_Controller {
             foreach ($result as $row) {
                 $matches[] = array(
                     'key' => $row->user_id,
-                    'label' => $row->first_name . ' ' .$row->last_name. ' (' .$row->tax_code. ')',
-                    'value' => $row->first_name . ' ' .$row->last_name
+                    'label' => $row->first_name . ' ' . $row->last_name . ' (' . $row->tax_code . ')',
+                    'value' => $row->first_name . ' ' . $row->last_name
                 );
             }
         }
@@ -2162,7 +2018,7 @@ class Class_Trainee extends CI_Controller {
                 }
             }
         }
-       
+
         echo json_encode($data);
         exit();
     }
@@ -2170,6 +2026,7 @@ class Class_Trainee extends CI_Controller {
     /*
      * function to get class users
      */
+
     public function get_trainee_related_json() {
         $trainee = array();
         $tenant_id = $this->tenant_id;
@@ -2188,6 +2045,7 @@ class Class_Trainee extends CI_Controller {
         echo json_encode($trainee);
         exit();
     }
+
     /**
      * get company update payment
      */
@@ -2201,9 +2059,9 @@ class Class_Trainee extends CI_Controller {
         }
         $company_invoice = $this->classtraineemodel->company_invoice($invoice_id);
         $company_invoice->discount_label = rtrim($this->course->get_metadata_on_parameter_id($company_invoice->discount_type), ', ');
-        
+
         //$company_invoice->total_inv_amount = number_format((float)round($company_invoice->total_inv_amount,1), 2, '.', '');
-        
+
         $gst_label = ($company_invoice->total_gst > 0) ? 'GST ON, ' : 'GST OFF ';
         if ($company_invoice->total_gst > 0) {
             $gst_label .= rtrim($this->course->get_metadata_on_parameter_id($company_invoice->gst_rule), ', ');
@@ -2212,14 +2070,14 @@ class Class_Trainee extends CI_Controller {
         $company_received = $this->classtraineemodel->company_payment_refund($invoice_id);
         $user_refund = array();
         foreach ($company_received as $k => $v) {
-            $user_refund[$v->user_id] = round($v->refund_amount,2);
+            $user_refund[$v->user_id] = round($v->refund_amount, 2);
         }
         $company_invoice->user_refunded = $user_refund;
         $company_invoice->trainees = $this->classtraineemodel->get_company_trainees_by_payid($company_invoice->pymnt_due_id);
         foreach ($company_invoice->trainees as $k => $row) {
             $amount_paid = empty($user_paid[$row->user_id]) ? 0 : $user_paid[$row->user_id];
             $company_invoice->trainees[$k]->amount_paid = $amount_paid;
-            $amt_refunded = (!empty($user_refund[$row->user_id]))?$user_refund[$row->user_id]:0;
+            $amt_refunded = (!empty($user_refund[$row->user_id])) ? $user_refund[$row->user_id] : 0;
             $company_invoice->trainees[$k]->amount_remain = round(($row->total_amount_due - $amount_paid + $amt_refunded), 2);
 //             $company_invoice->trainees[$k]->amount_remain = round(($row->total_amount_due - $amount_paid + $amt_refunded), 3);skm
         }
@@ -2227,7 +2085,7 @@ class Class_Trainee extends CI_Controller {
         ///added by shubhranshu to disable the update payment dropdown for everest
         $company_invoice->tenant_id = $this->tenant_id;
         echo json_encode($company_invoice);
-        
+
         exit();
     }
 
@@ -2272,7 +2130,7 @@ class Class_Trainee extends CI_Controller {
             $company_invoice->trainees[$k]->amount_remain = round(($amount_paid - $amount_refund), 2);
         }
         $company_invoice->subsidy_type = $this->classtraineemodel->get_subsidy_type($this->tenant_id);
-        
+
         echo json_encode($company_invoice);
         exit();
     }
@@ -2288,7 +2146,7 @@ class Class_Trainee extends CI_Controller {
         if ($result) {
             foreach ($result as $row) {
                 $matches[] = array(
-                    'key' => $row->invoice_id,//Course: ' . $row->crse_name . ', 
+                    'key' => $row->invoice_id, //Course: ' . $row->crse_name . ', 
                     'label' => $row->invoice_id . ' (Class: ' . $row->class_name . ')',
                     'value' => $row->invoice_id,
                 );
@@ -2305,20 +2163,17 @@ class Class_Trainee extends CI_Controller {
     /**
      * get paid enrol_invoice for company
      */
-    public function get_company_all_invoice() 
-    {
+    public function get_company_all_invoice() {
         $matches = array();
         $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
         $company = $this->input->post('company');
         $paid = $this->input->post('paid');
         $result = $this->classtraineemodel->get_company_based_pay_invoice($this->tenant_id, $query_string, $company, 0, 1, $paid);
 
-        if ($result) 
-        {
-            foreach ($result as $row) 
-            {
+        if ($result) {
+            foreach ($result as $row) {
                 $matches[] = array(
-                    'key' => $row->invoice_id,//Course: ' . $row->crse_name . ', 
+                    'key' => $row->invoice_id, //Course: ' . $row->crse_name . ', 
                     'label' => $row->invoice_id . ' (Class: ' . $row->class_name . ')',
                     'value' => $row->invoice_id,
                 );
@@ -2340,7 +2195,7 @@ class Class_Trainee extends CI_Controller {
         if ($result) {
             foreach ($result as $row) {
                 $matches[] = array(
-                    'key' => $row->invoice_id,//Course: ' . $row->crse_name . ', 
+                    'key' => $row->invoice_id, //Course: ' . $row->crse_name . ', 
                     'label' => $row->invoice_id . ' (Class: ' . $row->class_name . ')',
                     'value' => $row->invoice_id,
                 );
@@ -2475,8 +2330,7 @@ class Class_Trainee extends CI_Controller {
     /**
      * search trainee update payment
      */
-    public function search_trainee_updatepayment() 
-    {
+    public function search_trainee_updatepayment() {
         $invoice_id = $this->input->post('invoice_id');
         $taxcode_id = $this->input->post('taxcode_id');
         $trainee_id = $this->input->post('trainee_id');
@@ -2518,7 +2372,7 @@ class Class_Trainee extends CI_Controller {
         $result['data'] = $this->classtraineemodel->search_trainee_refundpayment($invoice_id, $taxcode_id, $trainee_id, $this->tenant_id);
         if (empty($result['data'])) {
             $result['trainer'] = $this->get_trainee_name();
-        } 
+        }
         echo json_encode($result);
         exit();
     }
@@ -2564,7 +2418,7 @@ class Class_Trainee extends CI_Controller {
             $invoice_date = $this->input->post('iinvd_date');
             $invoice_id = $this->input->post('iinv_no');
         }
-        
+
         $result = $this->classtraineemodel->update_invoiced_on($invoice_id, $invoice_date);
         if ($result == TRUE) {
             $this->session->set_flashdata("success", "Invoice sent on updated successfully.");
@@ -2578,20 +2432,19 @@ class Class_Trainee extends CI_Controller {
     /**
      * get payid details
      */
-   public function get_payid_details($payid, $json_check) {
+    public function get_payid_details($payid, $json_check) {
         $tenant_id = $this->tenant_id;
         $tenant_details = $this->classtraineemodel->get_tenant_masters($tenant_id);
         //$result = $this->classtraineemodel->get_enroll_invoice($payid);
-        $result = $this->classtraineemodel->get_enroll_individual_invoice($payid);//sk1
-        
+        $result = $this->classtraineemodel->get_enroll_individual_invoice($payid); //sk1
         //added by pritam to generate previous invoice number
-         $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_indvoice($payid);
-        
+        $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_indvoice($payid);
+
         $result->invoiced_on = ($result->invoiced_on == NULL || $result->invoiced_on == '0000-00-00 00:00:00') ? '' : date('d-m-Y', strtotime($result->invoiced_on));
-        
+
         $result->personal_address_state = rtrim($this->course->get_metadata_on_parameter_id($result->personal_address_state), ', ');
         $result->personal_address_country = rtrim($this->course->get_metadata_on_parameter_id($result->personal_address_country), ', ');
-        
+
         $result->tenant_state = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_state), ', ');
         $result->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_country), ', ');
         $result->total_inv_amount = number_format($result->total_inv_amount, 2, '.', '');
@@ -2605,11 +2458,11 @@ class Class_Trainee extends CI_Controller {
         $result->total_inv_discnt_hidden = number_format($result->total_inv_discnt, 4, '.', '');
         $result->total_inv_discnt = number_format($result->total_inv_discnt, 2, '.', '');
         $result->total_inv_subsdy = number_format(($result->total_inv_subsdy), 2, '.', '');
-       
+
         $trainee_id = $this->classtraineemodel->get_trainee_by_pymnt_due_id($payid)->user_id;
-       
+
         $gst_label = ($result->total_gst) ? 'GST ON, ' : 'GST OFF, ';
-       
+
         if ($result->total_gst) {
             $gst_label .= rtrim($this->course->get_metadata_on_parameter_id($result->gst_rule), ', ');
         }
@@ -2617,68 +2470,61 @@ class Class_Trainee extends CI_Controller {
         $result->gst_label = $gst_label;
         $result->total_gst = number_format($result->total_gst, 2);
         $feesdue = $result->total_unit_fees - (($result->total_unit_fees * $result->discount_rate) / 100);
-        $result->after_gst = $this->classtraineemodel->calculate_after_before_gst($result->gst_on_off, $result->gst_rule, $feesdue, $result->total_inv_subsdy, $result->gst_rate); 
-      
+        $result->after_gst = $this->classtraineemodel->calculate_after_before_gst($result->gst_on_off, $result->gst_rule, $feesdue, $result->total_inv_subsdy, $result->gst_rate);
+
         if ($result->gst_on_off = 1 && $result->gst_rule == 'GSTBSD') {
             $result->after_discount = $result->total_unit_fees - $result->total_inv_discnt;
         } else {
             $result->after_discount = $result->total_unit_fees - $result->total_inv_discnt - $result->total_inv_subsdy;
         }
         //$paid_details = $this->classtraineemodel->get_invoice_paid_details($result->invoice_id);
-        $paid_details = $this->classtraineemodel->get_invoice_paid_details_new($result->invoice_id);///modified by shubhranshu to fix the backdate issue while update payment
-       //print_r($paid_details);exit;
+        $paid_details = $this->classtraineemodel->get_invoice_paid_details_new($result->invoice_id); ///modified by shubhranshu to fix the backdate issue while update payment
+        //print_r($paid_details);exit;
         $paid_arr = array();
         $paid_rcd_till_date = 0;
         //sfc_start
-         $result->sfc_claimed=0;
-        foreach ($paid_details as $row) 
-        {
-           
-            if($row->mode_of_pymnt=="SFC_SELF")
-            {
-              
-                $mode_of_payment=explode('_',$row->mode_of_pymnt);
-                $result->mode_of_pymnt=$mode_of_payment[1];
-                $row->other_payment;
-                 $sfc_claimed=$row->sfc_claimed;
+        $result->sfc_claimed = 0;
+        foreach ($paid_details as $row) {
 
-                 $result->sfc_claimed=number_format($sfc_claimed, 2, '.', '');
-                
+            if ($row->mode_of_pymnt == "SFC_SELF") {
+
+                $mode_of_payment = explode('_', $row->mode_of_pymnt);
+                $result->mode_of_pymnt = $mode_of_payment[1];
+                $row->other_payment;
+                $sfc_claimed = $row->sfc_claimed;
+
+                $result->sfc_claimed = number_format($sfc_claimed, 2, '.', '');
             }
-            if($row->mode_of_pymnt=="SFC_ATO")
-            {
-                $mode_of_payment=explode('_',$row->mode_of_pymnt);
-                $result->mode_of_pymnt=$mode_of_payment[1];
+            if ($row->mode_of_pymnt == "SFC_ATO") {
+                $mode_of_payment = explode('_', $row->mode_of_pymnt);
+                $result->mode_of_pymnt = $mode_of_payment[1];
                 $row->other_payment;
-                $sfc_claimed=$row->sfc_claimed;
+                $sfc_claimed = $row->sfc_claimed;
 
-                $result->sfc_claimed=number_format($sfc_claimed, 2, '.', '');
+                $result->sfc_claimed = number_format($sfc_claimed, 2, '.', '');
             }
         }
         //sfc_start
-        if (!empty($paid_details)) 
-        {
+        if (!empty($paid_details)) {
             $label = 'active';
-            foreach ($paid_details as $row) 
-            {
+            foreach ($paid_details as $row) {
                 $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
                 $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ');
-                 $other_mode = ($row->othr_mode_of_payment) ? '+'.$row->othr_mode_of_payment : '';// added by shubhranshu to display the other mode if exist 0n 19feb
+                $other_mode = ($row->othr_mode_of_payment) ? '+' . $row->othr_mode_of_payment : ''; // added by shubhranshu to display the other mode if exist 0n 19feb
                 $paid_arr[] = array(
                     'recd_on' => date('d/m/Y', strtotime($row->recd_on)),
-                    'mode' => $mode . $mode_ext.$other_mode,
+                    'mode' => $mode . $mode_ext . $other_mode,
                     'amount' => '$ ' . number_format($row->amount_recd, 2, '.', '') . ' SGD',
                 );
                 $paid_rcd_till_date = $row->amount_recd + $paid_rcd_till_date;
             }
-             $total_paid = $paid_rcd_till_date;
+            $total_paid = $paid_rcd_till_date;
 
             $result->refund_details = $refund_details = $this->classtraineemodel->get_refund_paid_details($result->invoice_id);
             $refund_amount = 0;
-            foreach ($refund_details as $k => $row) 
-            {
-                 $row->mode_of_refund;
-             
+            foreach ($refund_details as $k => $row) {
+                $row->mode_of_refund;
+
                 if ($row->refnd_reason != 'OTHERS') {
                     $result->refund_details[$k]->refnd_reason = $this->course->get_metadata_on_parameter_id($row->refnd_reason);
                 } else {
@@ -2686,15 +2532,15 @@ class Class_Trainee extends CI_Controller {
                 }
 
                 $result->refund_details[$k]->refund_on = date('d/m/Y', strtotime($row->refund_on));
-                $result->refund_details[$k]->mode_of_refund = $this->course->get_metadata_on_parameter_id($row->mode_of_refund).(($row->othr_mode_of_refund) ? ('+'.$row->othr_mode_of_refund):'');/// part added by shubhranshu
+                $result->refund_details[$k]->mode_of_refund = $this->course->get_metadata_on_parameter_id($row->mode_of_refund) . (($row->othr_mode_of_refund) ? ('+' . $row->othr_mode_of_refund) : ''); /// part added by shubhranshu
                 $refund_amount = $refund_amount + $row->amount_refund;
             }
-        
+
 
             $paid_rcd_till_date = $paid_rcd_till_date - $refund_amount;
-            
+
             $result->paid_rcd_till_date = number_format($paid_rcd_till_date, 2, '.', '');
-                 
+
             $course_manager = $this->course->get_managers($result->crse_manager, 1);
             $stripos = stripos($course_manager, ', ');
             $result->course_manager = (empty($stripos)) ? $course_manager : substr($course_manager, 0, $stripos);
@@ -2708,42 +2554,39 @@ class Class_Trainee extends CI_Controller {
             $trainee = ($trainee_name->gender == 'MALE') ? 'Mr.' . $name : 'Ms.' . $name;
             $invoice->recd_on_year = date('Y', strtotime($invoice->recd_on));
             $invoice->recd_on = date('d/m/Y', strtotime($invoice->recd_on));
-             
+
             $invoice->mode_of_pymnt = rtrim($this->course->get_metadata_on_parameter_id($invoice->mode_of_pymnt), ', ');
             $sfc_claim_id = $this->classtraineemodel->get_sfc_claim_id($result->class_id, $result->user_id, $payid, $tenant_id); // addded by shubhranshu for sfc claim id
-
-        } 
-        else {
+        } else {
             $label = 'inactive';
         }
         $result->sfc_claim_id = $sfc_claim_id; // added by shubhranshu
         $result->att_status;
         $result->enrolment_mode;
-        if((($result->total_inv_amount + $refund_amount) - $total_paid) == 0){
+        if ((($result->total_inv_amount + $refund_amount) - $total_paid) == 0) {
             $payment_label = 'PAID';
-        }else{ 
-            if($refund_amount > 0){
-                $payment_label = 'REFUNDED';  
-            } elseif($total_paid == 0){
+        } else {
+            if ($refund_amount > 0) {
+                $payment_label = 'REFUNDED';
+            } elseif ($total_paid == 0) {
                 $payment_label = 'NOT PAID';
             }
         }
-        if($result->att_status==0 && $result->enrolment_mode!="COMPSPON")
-        {
+        if ($result->att_status == 0 && $result->enrolment_mode != "COMPSPON") {
             $payment_label = $result->payment_status;
         }
-       // echo $paid_rcd_till_date."/".$result->sfc_claimed."/".$result->total_inv_amount."/<br />";
-        
-       $result->payble=$result->total_inv_amount-$paid_rcd_till_date;
-      
+        // echo $paid_rcd_till_date."/".$result->sfc_claimed."/".$result->total_inv_amount."/<br />";
+
+        $result->payble = $result->total_inv_amount - $paid_rcd_till_date;
+
         $result->subsidy_recd_date = (($result->subsidy_recd_date == '0000-00-00') || ($result->subsidy_recd_date == null)) ? '' : date('d-m-Y', strtotime($result->subsidy_recd_date));
         $result->payment_label = $payment_label;
         $subsidy_type = $this->classtraineemodel->get_subsidy_type($this->tenant_id);
         $subsidy_type_label = $this->classtraineemodel->get_subsidy_type_label($this->tenant_id, $result->subsidy_type_id);
-        $subsidy_type_label = empty($subsidy_type_label)? 'NA':$subsidy_type_label;
-       
+        $subsidy_type_label = empty($subsidy_type_label) ? 'NA' : $subsidy_type_label;
+
         $res = array('data' => $result, 'recd' => $paid_arr, 'label' => $label, 'tenant' => $tenant_details,
-            'invoice' => $invoice, 'trainee' => $trainee, 'subsidy_type' => $subsidy_type,'subsidy_type_label' => $subsidy_type_label);        
+            'invoice' => $invoice, 'trainee' => $trainee, 'subsidy_type' => $subsidy_type, 'subsidy_type_label' => $subsidy_type_label);
         if ($json_check == 0) {
             echo json_encode($res);
             exit();
@@ -2751,26 +2594,28 @@ class Class_Trainee extends CI_Controller {
             return $res;
         }
     }
-     /**
+
+    /**
      * get payid details
      */
-   /**
+
+    /**
      * get payid details
      */
-   public function get_payid_details_indv($payid, $json_check) {
+    public function get_payid_details_indv($payid, $json_check) {
         $tenant_id = $this->tenant_id;
-        
+
         $tenant_details = $this->classtraineemodel->get_tenant_masters($tenant_id);
         $result = $this->classtraineemodel->get_enroll_invoice($payid);
         //added by pritam to generate previous invoice number
-         $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_indvoice($payid);
+        $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_indvoice($payid);
         //
         $result->invoiced_on = ($result->invoiced_on == NULL || $result->invoiced_on == '0000-00-00 00:00:00') ? '' : date('d-m-Y', strtotime($result->invoiced_on));
-        
+
         $result->invoice_id = $result->invoice_id;
         $result->personal_address_state = rtrim($this->course->get_metadata_on_parameter_id($result->personal_address_state), ', ');
         $result->personal_address_country = rtrim($this->course->get_metadata_on_parameter_id($result->personal_address_country), ', ');
-        
+
         $result->tenant_state = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_state), ', ');
         $result->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_country), ', ');
         $result->total_inv_amount = number_format($result->total_inv_amount, 2, '.', '');
@@ -2784,11 +2629,11 @@ class Class_Trainee extends CI_Controller {
         $result->total_inv_discnt_hidden = number_format($result->total_inv_discnt, 4, '.', '');
         $result->total_inv_discnt = number_format($result->total_inv_discnt, 2, '.', '');
         $result->total_inv_subsdy = number_format(($result->total_inv_subsdy), 2, '.', '');
-       
+
         $trainee_id = $this->classtraineemodel->get_trainee_by_pymnt_due_id($payid)->user_id;
-       
+
         $gst_label = ($result->total_gst) ? 'GST ON, ' : 'GST OFF, ';
-       
+
         if ($result->total_gst) {
             $gst_label .= rtrim($this->course->get_metadata_on_parameter_id($result->gst_rule), ', ');
         }
@@ -2796,60 +2641,54 @@ class Class_Trainee extends CI_Controller {
         $result->gst_label = $gst_label;
         $result->total_gst = number_format($result->total_gst, 2);
         $feesdue = $result->total_unit_fees - (($result->total_unit_fees * $result->discount_rate) / 100);
-        $result->after_gst = $this->classtraineemodel->calculate_after_before_gst($result->gst_on_off, $result->gst_rule, $feesdue, $result->total_inv_subsdy, $result->gst_rate); 
-      
+        $result->after_gst = $this->classtraineemodel->calculate_after_before_gst($result->gst_on_off, $result->gst_rule, $feesdue, $result->total_inv_subsdy, $result->gst_rate);
+
         if ($result->gst_on_off = 1 && $result->gst_rule == 'GSTBSD') {
             $result->after_discount = $result->total_unit_fees - $result->total_inv_discnt;
         } else {
             $result->after_discount = $result->total_unit_fees - $result->total_inv_discnt - $result->total_inv_subsdy;
         }
         //$paid_details = $this->classtraineemodel->get_invoice_paid_details_indv($result->invoice_id);
-        $paid_details = $this->classtraineemodel->get_invoice_paid_details_indv_new($result->invoice_id);//// mmodified by shubhranshu to fix the sfc issue while giving backdate
-       
+        $paid_details = $this->classtraineemodel->get_invoice_paid_details_indv_new($result->invoice_id); //// mmodified by shubhranshu to fix the sfc issue while giving backdate
+
         $paid_arr = array();
         $paid_rcd_till_date = 0;
         //sfc_start
-        $result->sfc_claimed=0;
-        foreach ($paid_details as $row) 
-        {
-           
-            if($row->mode_of_pymnt=="SFC_SELF")
-            {
-              
-                $mode_of_payment=explode('_',$row->mode_of_pymnt);
-                $result->mode_of_pymnt=$mode_of_payment[1];
-                $result->sfc_of_pymnt=$mode_of_payment[1];
-                $result->other_payment=$row->other_payment;
-                $sfc_claimed=$row->sfc_claimed;
-                $result->othr_mode_of_payment=$row->othr_mode_of_payment;
-                $result->other_amount_recd=$row->other_amount_recd;
-                $result->recd_on=$row->recd_on;
-                
-                $result->sfc_claimed=number_format($sfc_claimed, 2, '.', '');
-                
+        $result->sfc_claimed = 0;
+        foreach ($paid_details as $row) {
+
+            if ($row->mode_of_pymnt == "SFC_SELF") {
+
+                $mode_of_payment = explode('_', $row->mode_of_pymnt);
+                $result->mode_of_pymnt = $mode_of_payment[1];
+                $result->sfc_of_pymnt = $mode_of_payment[1];
+                $result->other_payment = $row->other_payment;
+                $sfc_claimed = $row->sfc_claimed;
+                $result->othr_mode_of_payment = $row->othr_mode_of_payment;
+                $result->other_amount_recd = $row->other_amount_recd;
+                $result->recd_on = $row->recd_on;
+
+                $result->sfc_claimed = number_format($sfc_claimed, 2, '.', '');
             }
-            if($row->mode_of_pymnt=="SFC_ATO")
-            {
-                $mode_of_payment=explode('_',$row->mode_of_pymnt);
-                $result->mode_of_pymnt=$mode_of_payment[1];
-                $result->sfc_of_pymnt=$mode_of_payment[1];
-                $result->other_payment=$row->other_payment;
-                $result->othr_mode_of_payment=$row->othr_mode_of_payment;
-                $result->other_amount_recd=$row->other_amount_recd;
-                $result->recd_on=$row->recd_on;
-                $sfc_claimed=$row->sfc_claimed;
-                $result->sfc_claimed=number_format($sfc_claimed, 2, '.', '');
+            if ($row->mode_of_pymnt == "SFC_ATO") {
+                $mode_of_payment = explode('_', $row->mode_of_pymnt);
+                $result->mode_of_pymnt = $mode_of_payment[1];
+                $result->sfc_of_pymnt = $mode_of_payment[1];
+                $result->other_payment = $row->other_payment;
+                $result->othr_mode_of_payment = $row->othr_mode_of_payment;
+                $result->other_amount_recd = $row->other_amount_recd;
+                $result->recd_on = $row->recd_on;
+                $sfc_claimed = $row->sfc_claimed;
+                $result->sfc_claimed = number_format($sfc_claimed, 2, '.', '');
             }
         }
         //sfc_start
-        if (!empty($paid_details)) 
-        {
+        if (!empty($paid_details)) {
             $label = 'active';
-          
-            foreach ($paid_details as $row) 
-            {
+
+            foreach ($paid_details as $row) {
                 $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
-                $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', '); 
+                $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ');
                 $paid_arr[] = array(
                     'recd_on' => date('d/m/Y', strtotime($row->recd_on)),
                     'mode' => $mode . $mode_ext,
@@ -2857,19 +2696,18 @@ class Class_Trainee extends CI_Controller {
                 );
                 $paid_rcd_till_date = $row->amount_recd + $paid_rcd_till_date;
             }
-            
-            $result->recd_on=$row->recd_on;
-            $result->mode_of_pymnt=$row->mode_of_pymnt;
-            $result->amount_recd=$row->amount_recd;
-            
+
+            $result->recd_on = $row->recd_on;
+            $result->mode_of_pymnt = $row->mode_of_pymnt;
+            $result->amount_recd = $row->amount_recd;
+
             $total_paid = $paid_rcd_till_date;
 
             $result->refund_details = $refund_details = $this->classtraineemodel->get_refund_paid_details($result->invoice_id);
             $refund_amount = 0;
-            foreach ($refund_details as $k => $row) 
-            {
-                 $row->mode_of_refund;
-             
+            foreach ($refund_details as $k => $row) {
+                $row->mode_of_refund;
+
                 if ($row->refnd_reason != 'OTHERS') {
                     $result->refund_details[$k]->refnd_reason = $this->course->get_metadata_on_parameter_id($row->refnd_reason);
                 } else {
@@ -2881,9 +2719,9 @@ class Class_Trainee extends CI_Controller {
                 $refund_amount = $refund_amount + $row->amount_refund;
             }
             $paid_rcd_till_date = $paid_rcd_till_date - $refund_amount;
-            
+
             $result->paid_rcd_till_date = number_format($paid_rcd_till_date, 2, '.', '');
-                 
+
             $course_manager = $this->course->get_managers($result->crse_manager, 1);
             $stripos = stripos($course_manager, ', ');
             $result->course_manager = (empty($stripos)) ? $course_manager : substr($course_manager, 0, $stripos);
@@ -2899,38 +2737,35 @@ class Class_Trainee extends CI_Controller {
             $invoice->recd_on = date('d/m/Y', strtotime($invoice->recd_on));
             $invoice->mode_of_pymnt = rtrim($this->course->get_metadata_on_parameter_id($invoice->mode_of_pymnt), ', ');
             $sfc_claim_id = $this->classtraineemodel->get_sfc_claim_id($result->class_id, $result->user_id, $payid, $tenant_id); // addded by shubhranshu for sfc claim id
-            
-        } 
-        else {
+        } else {
             $label = 'inactive';
         }
         $result->sfc_claim_id = $sfc_claim_id; // added by shubhranshu
         $result->att_status;
         $result->enrolment_mode;
-        if((($result->total_inv_amount + $refund_amount) - $total_paid) == 0){
+        if ((($result->total_inv_amount + $refund_amount) - $total_paid) == 0) {
             $payment_label = 'PAID';
-        }else{ 
-            if($refund_amount > 0){
-                $payment_label = 'REFUNDED';  
-            } elseif($total_paid == 0){
+        } else {
+            if ($refund_amount > 0) {
+                $payment_label = 'REFUNDED';
+            } elseif ($total_paid == 0) {
                 $payment_label = 'NOT PAID';
             }
         }
-        if($result->att_status==0 && $result->enrolment_mode!="COMPSPON")
-        {
+        if ($result->att_status == 0 && $result->enrolment_mode != "COMPSPON") {
             $payment_label = $result->payment_status;
         }
-       // echo $paid_rcd_till_date."/".$result->sfc_claimed."/".$result->total_inv_amount."/<br />";
-        
-       $result->payble=$result->total_inv_amount-$paid_rcd_till_date;
-      
+        // echo $paid_rcd_till_date."/".$result->sfc_claimed."/".$result->total_inv_amount."/<br />";
+
+        $result->payble = $result->total_inv_amount - $paid_rcd_till_date;
+
         $result->subsidy_recd_date = (($result->subsidy_recd_date == '0000-00-00') || ($result->subsidy_recd_date == null)) ? '' : date('d-m-Y', strtotime($result->subsidy_recd_date));
         $result->payment_label = $payment_label;
         $subsidy_type = $this->classtraineemodel->get_subsidy_type($this->tenant_id);
         $subsidy_type_label = $this->classtraineemodel->get_subsidy_type_label($this->tenant_id, $result->subsidy_type_id);
-        $subsidy_type_label = empty($subsidy_type_label)? 'NA':$subsidy_type_label;
+        $subsidy_type_label = empty($subsidy_type_label) ? 'NA' : $subsidy_type_label;
         $res = array('data' => $result, 'recd' => $paid_arr, 'label' => $label, 'tenant' => $tenant_details,
-            'invoice' => $invoice, 'trainee' => $trainee, 'subsidy_type' => $subsidy_type,'subsidy_type_label' => $subsidy_type_label);        
+            'invoice' => $invoice, 'trainee' => $trainee, 'subsidy_type' => $subsidy_type, 'subsidy_type_label' => $subsidy_type_label);
         if ($json_check == 0) {
             echo json_encode($res);
             exit();
@@ -2938,12 +2773,13 @@ class Class_Trainee extends CI_Controller {
             return $res;
         }
     }
+
     /**
      * Export class trainee
      */
     public function export_classtrainee_full() {
-         $tenant_id = $this->tenant_id;
-      
+        $tenant_id = $this->tenant_id;
+
         $course = ($this->input->get('course')) ? $this->input->get('course') : '';
         $class = ($this->input->get('class')) ? $this->input->get('class') : '';
         $class_status = ($this->input->get('class_status')) ? $this->input->get('class_status') : '';
@@ -2961,8 +2797,7 @@ class Class_Trainee extends CI_Controller {
     /**
      *  export class trainee
      */
-    public function export_classtrainee_page() 
-    {
+    public function export_classtrainee_page() {
         $tenant_id = $this->tenant_id;
         $course = ($this->input->get('course')) ? $this->input->get('course') : '';
         $class = ($this->input->get('class')) ? $this->input->get('class') : '';
@@ -2985,7 +2820,7 @@ class Class_Trainee extends CI_Controller {
         $invoice = $this->input->post('invoice');
         $data = $this->classtraineemodel->company_invoice($invoice);
         $data->invoice_excess_amt = empty($data->invoice_excess_amt) ? 0 : $data->invoice_excess_amt;
-       
+
         if ($data->company_id[0] == 'T') {
             $tenant_details = fetch_tenant_details($data->company_id);
             $data->company_name = $tenant_details->tenant_name;
@@ -3003,9 +2838,9 @@ class Class_Trainee extends CI_Controller {
         $data->amount_refund = round($data->amount_refund, 2);
         $recd = $this->classtraineemodel->get_invoice_paid_details($invoice);
         foreach ($recd as $k => $row) {
-            $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number: '';
+            $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
             $recd[$k]->recd_on = date('d/m/Y', strtotime($row->recd_on));
-            $recd[$k]->mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ').$mode_ext;
+            $recd[$k]->mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ') . $mode_ext;
         }
         $res = array('data' => $data, 'recd' => $recd);
         echo json_encode($res);
@@ -3048,11 +2883,10 @@ class Class_Trainee extends CI_Controller {
         echo json_encode($res);
         exit();
     }
-    
+
     /* export public portal trainee list xls skm start */
-    
-    public function export_online_classtrainee_page() 
-    {
+
+    public function export_online_classtrainee_page() {
         $tenant_id = $this->tenant_id;
         $course = ($this->input->get('course')) ? $this->input->get('course') : '';
         $class = ($this->input->get('class')) ? $this->input->get('class') : '';
@@ -3067,14 +2901,14 @@ class Class_Trainee extends CI_Controller {
         $this->load->helper('export_helper');
         export_classtrainee_page($result, $tenant_id);
     }
-    
+
     /* skm END */
-    
-     /* Export trainee list who enrolled from public portal skm start*/
-    
+
+    /* Export trainee list who enrolled from public portal skm start */
+
     public function export_online_classtrainee_full() {
-         $tenant_id = $this->tenant_id;
-      
+        $tenant_id = $this->tenant_id;
+
         $course = ($this->input->get('course')) ? $this->input->get('course') : '';
         $class = ($this->input->get('class')) ? $this->input->get('class') : '';
         $class_status = ($this->input->get('class_status')) ? $this->input->get('class_status') : '';
@@ -3085,13 +2919,12 @@ class Class_Trainee extends CI_Controller {
         $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
         $company_id = $this->input->get('company_id');
         $result = $this->classtraineemodel->online_list_classtrainee_by_tenant_id($tenant_id, '', '1', $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
-       
+
         $this->load->helper('export_helper');
         export_classtrainee_full($result, $tenant_id);
     }
-    
+
     /* end */
-    
 
     /**
      * get_count of invoice no subsidy
@@ -3106,24 +2939,26 @@ class Class_Trainee extends CI_Controller {
         }
         echo count($result);
     }
+
     /**
      * get_count of invoice no subsidy
      */
     public function get_count_invoice() {
         $id = $this->input->post('pay_id');
         $result = $this->classtraineemodel->get_count_invoice($id);
-    
+
         echo count($result);
     }
+
     /**
      * get_count of invoice for foreigner
      */
     public function get_count_company_invoice_foreigner() {
         $invoice_id = $this->input->post('invoice');
         $subsidy = $this->input->post('subsidy');
-       
+
         $result = $this->classtraineemodel->get_company_invoice_foreigner($invoice_id);
-       
+
         echo count($result);
     }
 
@@ -3142,7 +2977,7 @@ class Class_Trainee extends CI_Controller {
             $res = $this->classtraineemodel->get_company_invoice_subsidy($invoice_id);
             $text = 'a';
         }
-          
+
         $result = $res[0];
         //added by pritam to generate previous invoice number
         $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_invoice($invoice_id);
@@ -3169,20 +3004,18 @@ class Class_Trainee extends CI_Controller {
             $result->company_details->comp_cntry = $result->tenant_country;
             $result->company_details->comp_phone = $result->tenant_contact_num;
             $result->company_details->comp_address = $result->tenant_address;
-            
-            $company_person =  $this->company->get_company_user($result->tenant_id, $result->company_id);//sk1
-            $result->company_person_name = $company_person[0]->first_name;//sk2
-            
+
+            $company_person = $this->company->get_company_user($result->tenant_id, $result->company_id); //sk1
+            $result->company_person_name = $company_person[0]->first_name; //sk2
         } else {
             $company_details = $this->company->get_company_details($this->tenant_id, $result->company_id);
             $result->company_details = $company_details[0];
             $result->company_details->comp_state = rtrim($this->course->get_metadata_on_parameter_id($result->company_details->comp_state), ', ');
             $result->company_details->comp_cntry = rtrim($this->course->get_metadata_on_parameter_id($result->company_details->comp_cntry), ', ');
             $result->company_name = $company_details[0]->company_name;
-            
-            $company_person =  $this->company->get_company_user($result->tenant_id, $result->company_id);//sk1
-            $result->company_person_name = $company_person[0]->first_name;//sk2
-            
+
+            $company_person = $this->company->get_company_user($result->tenant_id, $result->company_id); //sk1
+            $result->company_person_name = $company_person[0]->first_name; //sk2
         }
         //$result->discount_rate = round($result->discount_rate, 2);
         $result->gst_rate = round($result->gst_rate, 2);
@@ -3194,27 +3027,27 @@ class Class_Trainee extends CI_Controller {
         $company_received = $this->classtraineemodel->company_payment_recd($result->invoice_id);
         $user_paid = array();
         foreach ($company_received as $k => $v) {
-            $user_paid[$v->user_id] = round($v->amount_recd,2);
+            $user_paid[$v->user_id] = round($v->amount_recd, 2);
         }
         $company_refunded = $this->classtraineemodel->company_payment_refund($result->invoice_id);
         $user_refund = array();
         foreach ($company_refunded as $k => $v) {
-            $user_refund[$v->user_id] = round($v->refund_amount,2);
+            $user_refund[$v->user_id] = round($v->refund_amount, 2);
         }
         foreach ($res as $k => $row) {
             $received = empty($user_paid[$row->user_id]) ? 0 : $user_paid[$row->user_id];
             $refunded = empty($user_refund[$row->user_id]) ? 0 : $user_refund[$row->user_id];
             $received_amt+=$received;
             $refunded_amt+=$refunded;
-            if((($row->total_amount_due + $refunded) - $received) <= 0){
+            if ((($row->total_amount_due + $refunded) - $received) <= 0) {
                 $payment_label = 'PAID';
-            }else{ 
-                if($refunded > 0){
-                  $payment_label = 'REFUNDED';  
-                } else{ 
-                    if($received == 0){
+            } else {
+                if ($refunded > 0) {
+                    $payment_label = 'REFUNDED';
+                } else {
+                    if ($received == 0) {
                         $payment_label = 'NOT PAID';
-                    }else if($received > 0){
+                    } else if ($received > 0) {
                         $payment_label = 'PART PAID';
                     }
                 }
@@ -3227,7 +3060,7 @@ class Class_Trainee extends CI_Controller {
             $total_inv_amount += $row->total_amount_due;
             $result->total_inv_amount1 = $row->total_inv_amount;
         }
-        $result->payble_amount=$total_inv_amount+$refunded_amt-$received_amt;
+        $result->payble_amount = $total_inv_amount + $refunded_amt - $received_amt;
         $result->total_unit_fees = round($total_unitfees, 2);
         $result->total_inv_discnt = round($total_discount, 2);
         $result->total_inv_subsdy = round($total_subsidy, 2);
@@ -3237,30 +3070,30 @@ class Class_Trainee extends CI_Controller {
         $result->payment_due_details = $res;
 
         $this->load->helper('pdf_reports_helper');
-        if($tenant_id =='T17'){
+        if ($tenant_id == 'T17') {
             generate_company_pdf_invoice_everest($result);
-        }else{
+        } else {
             generate_company_pdf_invoice_all($result);
         }
     }
 
- /**
+    /**
      * function export company generate invoice for foreigner
      */
     public function gen_inv_pdf_basedon_forgeigner($invoice_id, $is_subsidy) {
         //$this->output->enable_profiler();
-         $tenant_id = $this->tenant_id;
-      
+        $tenant_id = $this->tenant_id;
+
         if (empty($invoice_id)) {
             return show_404();
         }
         if (empty($is_subsidy)) {
             $res = $this->classtraineemodel->get_company_invoice_foreigner($invoice_id);
             $text = 'f';
-        } 
-      
+        }
+
         $result = $res[0];
-          //added by pritam to generate previous invoice number
+        //added by pritam to generate previous invoice number
         $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_invoice($invoice_id);
         //
         $result->invoice_label = $text;
@@ -3285,19 +3118,18 @@ class Class_Trainee extends CI_Controller {
             $result->company_details->comp_cntry = $result->tenant_country;
             $result->company_details->comp_phone = $result->tenant_contact_num;
             $result->company_details->comp_address = $result->tenant_address;
-            
-            $company_person =  $this->company->get_company_user($this->tenant_id, $result->company_id);//sk1
-            $result->company_person_name = $company_person[0]->first_name;//sk2
-            
+
+            $company_person = $this->company->get_company_user($this->tenant_id, $result->company_id); //sk1
+            $result->company_person_name = $company_person[0]->first_name; //sk2
         } else {
             $company_details = $this->company->get_company_details($this->tenant_id, $result->company_id);
             $result->company_details = $company_details[0];
             $result->company_details->comp_state = rtrim($this->course->get_metadata_on_parameter_id($result->company_details->comp_state), ', ');
             $result->company_details->comp_cntry = rtrim($this->course->get_metadata_on_parameter_id($result->company_details->comp_cntry), ', ');
             $result->company_name = $company_details[0]->company_name;
-            
-            $company_person =  $this->company->get_company_user($this->tenant_id, $result->company_id);//sk1
-            $result->company_person_name = $company_person[0]->first_name;//sk2
+
+            $company_person = $this->company->get_company_user($this->tenant_id, $result->company_id); //sk1
+            $result->company_person_name = $company_person[0]->first_name; //sk2
         }
         //$result->discount_rate = round($result->discount_rate, 2);
         $result->gst_rate = round($result->gst_rate, 2);
@@ -3310,84 +3142,79 @@ class Class_Trainee extends CI_Controller {
         $company_received = $this->classtraineemodel->company_payment_recd_forgeiner($result->invoice_id);
         $user_paid = array();
         foreach ($company_received as $k => $v) {
-            $user_paid[$v->user_id] = round($v->amount_recd,2);
+            $user_paid[$v->user_id] = round($v->amount_recd, 2);
         }
 //        $company_refunded = $this->classtraineemodel->company_payment_refund($result->invoice_id);
         $company_refunded = $this->classtraineemodel->company_payment_refund_foreigner($result->invoice_id);
         $user_refund = array();
         foreach ($company_refunded as $k => $v) {
-            $user_refund[$v->user_id] = round($v->refund_amount,2);
+            $user_refund[$v->user_id] = round($v->refund_amount, 2);
         }
-        foreach ($res as $k => $row) 
-        {
+        foreach ($res as $k => $row) {
             $received = empty($user_paid[$row->user_id]) ? 0 : $user_paid[$row->user_id];
             $refunded = empty($user_refund[$row->user_id]) ? 0 : $user_refund[$row->user_id];
             $received_amt+=$received;
             $refunded_amt+=$refunded;
-            if((($row->total_amount_due + $refunded) - $received) <= 0){
+            if ((($row->total_amount_due + $refunded) - $received) <= 0) {
                 $payment_label = 'PAID';
-            }
-            else{ 
-                if($refunded > 0){
-                  $payment_label = 'REFUNDED';  
-                } else{ 
-                    if($received == 0){
+            } else {
+                if ($refunded > 0) {
+                    $payment_label = 'REFUNDED';
+                } else {
+                    if ($received == 0) {
                         $payment_label = 'NOT PAID';
-                    }else if($received > 0){
+                    } else if ($received > 0) {
                         $payment_label = 'PART PAID';
                     }
                 }
             }
-           
+
             $res[$k]->payment_label = $payment_label;
             $total_unitfees +=$row->class_fees;
             $total_discount += ($row->class_fees * ($result->discount_rate / 100));
             $total_gst += $row->gst_amount;
             $total_subsidy += $row->subsidy_amount;
             $total_inv_amount += $row->total_amount_due;
-             $result->total_inv_amount1 = $row->total_inv_amount;
-            
+            $result->total_inv_amount1 = $row->total_inv_amount;
         }
-        $result->payble_amount=$total_inv_amount+$refunded_amt-$received_amt;
+        $result->payble_amount = $total_inv_amount + $refunded_amt - $received_amt;
         $result->total_unit_fees = round($total_unitfees, 2);
         $result->total_inv_discnt = round($total_discount, 2);
         $result->total_inv_subsdy = round($total_subsidy, 2);
         $result->total_gst = round($total_gst, 2);
         $result->indi_disc_total = ($result->class_fees * ($result->discount_rate / 100));
         $result->total_inv_amount = round($total_inv_amount, 2);
-        
+
         $result->payment_due_details = $res;
 
         $this->load->helper('pdf_reports_helper');
-        if($tenant_id == 'T17'){
+        if ($tenant_id == 'T17') {
             generate_company_pdf_invoice_everest($result);
-        }else{
+        } else {
             generate_company_pdf_invoice_all($result);
         }
     }
+
     /**
      * function export company generate invoice
      */
-    public function export_company_generate_invoice($id) 
-    {
-         $tenant_id = $this->tenant_id;
-        
-        if (empty($id)) 
-        {
+    public function export_company_generate_invoice($id) {
+        $tenant_id = $this->tenant_id;
+
+        if (empty($id)) {
             return show_404();
         }
 //        $result = $this->classtraineemodel->get_enroll_invoice($id);
-        
+
         $result = $this->classtraineemodel->get_company_enroll_invoice($id);
-         //added by pritam to generate previous invoice number
+        //added by pritam to generate previous invoice number
         $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_invoice($result->invoice_id);
-        
-         //sk st
+
+        //sk st
         $discount = $this->classtraineemodel->get_discount($result->pymnt_due_id);
         $result->discount_label = $discount->discount_type;
         $result->discount_rate = $discount->discount_rate;
         //sk ed
-        
         //
         $result->tenant_state = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_state), ', ');
         $result->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_country), ', ');
@@ -3408,10 +3235,9 @@ class Class_Trainee extends CI_Controller {
             $result->company_details->comp_cntry = $result->tenant_country;
             $result->company_details->comp_phone = $result->tenant_contact_num;
             $result->company_details->comp_address = $result->tenant_address;
-            
-            $company_person =  $this->company->get_company_user($result->tenant_id, $result->company_id);//sk1
-            $result->company_person_name = $company_person[0]->first_name;//sk2
-            
+
+            $company_person = $this->company->get_company_user($result->tenant_id, $result->company_id); //sk1
+            $result->company_person_name = $company_person[0]->first_name; //sk2
         } else {
             $company_details = $this->company->get_company_details($this->tenant_id, $result->company_id);
             $result->company_details = $company_details[0];
@@ -3419,10 +3245,9 @@ class Class_Trainee extends CI_Controller {
             $result->company_details->comp_cntry = rtrim($this->course->get_metadata_on_parameter_id($result->company_details->comp_cntry), ', ');
 
             $result->company_name = $company_details[0]->company_name;
-            
-            $company_person =  $this->company->get_company_user($this->tenant_id, $result->company_id);//skm1
-            $result->company_person_name = $company_person[0]->first_name;//skm2
-            
+
+            $company_person = $this->company->get_company_user($this->tenant_id, $result->company_id); //skm1
+            $result->company_person_name = $company_person[0]->first_name; //skm2
         }
 
         $result->total_inv_discnt = round($result->total_inv_discnt, 2);
@@ -3434,154 +3259,132 @@ class Class_Trainee extends CI_Controller {
 
         $feesdue = $result->total_unit_fees - $result->total_inv_discnt;
         $result->payment_due_details = $this->classtraineemodel->get_company_payment_due_details($id);
-  
+
         $company_received = $this->classtraineemodel->company_payment_recd($result->invoice_id);
         $user_paid = array();
         foreach ($company_received as $k => $v) {
-            $user_paid[$v->user_id] = round($v->amount_recd,2);
+            $user_paid[$v->user_id] = round($v->amount_recd, 2);
         }
         $company_refunded = $this->classtraineemodel->company_payment_refund($result->invoice_id);
         $user_refund = array();
         foreach ($company_refunded as $k => $v) {
-            $user_refund[$v->user_id] = round($v->refund_amount,2);
+            $user_refund[$v->user_id] = round($v->refund_amount, 2);
         }
-        foreach($result->payment_due_details as $key=>$val)
-        {
+        foreach ($result->payment_due_details as $key => $val) {
             $received = empty($user_paid[$val->user_id]) ? 0 : $user_paid[$val->user_id];
             $refunded = empty($user_refund[$val->user_id]) ? 0 : $user_refund[$val->user_id];
             $inv_amt+=$val->total_amount_due;
             $received_amt+=$received;
             $refunded_amt+=$refunded;
-            if((($val->total_amount_due + $refunded) - $received) <= 0)
-            {
+            if ((($val->total_amount_due + $refunded) - $received) <= 0) {
                 $payment_label = 'PAID';
-            }
-            else
-            {  
-                
-                if($received > 0 && $val->payment_status == 'PARTPAID')
-                {
-                        $payment_label = 'PART PAID';
-                       
-                }else if($refunded > 0)
-                { 
-                  $payment_label = 'REFUNDED';  
-                } 
-                else
-                { 
-                    if($received == 0)
-                    {
+            } else {
+
+                if ($received > 0 && $val->payment_status == 'PARTPAID') {
+                    $payment_label = 'PART PAID';
+                } else if ($refunded > 0) {
+                    $payment_label = 'REFUNDED';
+                } else {
+                    if ($received == 0) {
                         $payment_label = 'NOT PAID';
-                    }
-                    else if($received > 0)
-                    {
+                    } else if ($received > 0) {
                         $payment_label = 'PART PAID';
                     }
                 }
             }
             $result->payment_due_details[$key]->payment_label = $payment_label;
         }
-        
-           $payable_amount=$inv_amt-$received_amt;      
-         $result->payble_amount=$inv_amt+$refunded_amt-$received_amt;
+
+        $payable_amount = $inv_amt - $received_amt;
+        $result->payble_amount = $inv_amt + $refunded_amt - $received_amt;
 
         $this->load->helper('pdf_reports_helper');
-        if($tenant_id =='T17'){
+        if ($tenant_id == 'T17') {
             generate_company_pdf_invoice_everest($result);
-        }else{
+        } else {
             generate_company_pdf_invoice_all($result);
         }
-        
     }
+
     ///////below 2 function has been introduce by shubhranshu to fix the report finance regenerated deleted invoice
     /// function to fetch the current invoice details
-    public function export_current_invoice_new($id,$inv) 
-    {  //echo $id.'--'.$inv;exit;
+    public function export_current_invoice_new($id, $inv) {  //echo $id.'--'.$inv;exit;
         $tenant_id = $this->tenant_id;
-        if (empty($id)) 
-        {
+        if (empty($id)) {
             return show_404();
         }
 
-        $res = $this->classtraineemodel->check_enrol_invoice_compind($id,$inv);
+        $res = $this->classtraineemodel->check_enrol_invoice_compind($id, $inv);
         //print_r($result);exit;
-       
+
         $this->load->helper('pdf_reports_helper');
         ///for enrol invoice table data current invoice
-            //echo "A ".$id.'--'.$inv;print_r($result);exit;exit;
-            
-        if($res->inv_type == "INVINDV"){
+        //echo "A ".$id.'--'.$inv;print_r($result);exit;exit;
+
+        if ($res->inv_type == "INVINDV") {
             $this->export_generate_invoice($id);
-        }else{
+        } else {
             $this->export_company_generate_invoice($id);
         }
-  
     }
-    
+
     ////added by shubhranshu
     //function to fetch the previous invoice details
-    public function export_previous_generate_invoice($id,$inv) 
-    {  //echo $id.'--'.$inv;exit;
+    public function export_previous_generate_invoice($id, $inv) {  //echo $id.'--'.$inv;exit;
         $tenant_id = $this->tenant_id;
-        if (empty($id)) 
-        {
+        if (empty($id)) {
             return show_404();
         }
 
-        $result = $this->classtraineemodel->get_enroll_old_invoice_new($id,$inv);
+        $result = $this->classtraineemodel->get_enroll_old_invoice_new($id, $inv);
         //print_r($result);exit;
-        
+
         $this->load->helper('pdf_reports_helper');
         ////for view table data previous invoice
-            //echo "B ".$id.'--'.$inv;print_r($result);exit;
-        if(($result->inv_type!="INVINDV") && (!empty($result->company_id))){
-            $data=  json_decode($result->invoice_details);
+        //echo "B ".$id.'--'.$inv;print_r($result);exit;
+        if (($result->inv_type != "INVINDV") && (!empty($result->company_id))) {
+            $data = json_decode($result->invoice_details);
             //generate_company_pdf_invoice_all($data);
-            
-            if($tenant_id =='T17'){
+
+            if ($tenant_id == 'T17') {
                 generate_company_pdf_invoice_everest($data);
-            }else{
+            } else {
                 generate_company_pdf_invoice_all($data);
             }
-        }
-         else{
-            $data =  (array)json_decode($result->invoice_details);
+        } else {
+            $data = (array) json_decode($result->invoice_details);
             //generate_pdf_invoice($data);
-            if($tenant_id =='T17'){
+            if ($tenant_id == 'T17') {
                 generate_pdf_invoice_everest($data);
-            }else{
+            } else {
                 generate_pdf_invoice($data);
             }
-         }
-  
+        }
     }
-    
-    public function export_old_generate_invoice($id,$inv) 
-    {  //echo $id.'--'.$inv;exit;
+
+    public function export_old_generate_invoice($id, $inv) {  //echo $id.'--'.$inv;exit;
         $tenant_id = $this->tenant_id;
-        if (empty($id)) 
-        {
+        if (empty($id)) {
             return show_404();
         }
 
-        $result = $this->classtraineemodel->get_enroll_old_invoice($id,$inv);
+        $result = $this->classtraineemodel->get_enroll_old_invoice($id, $inv);
         //print_r($result);exit;
-     
-       
+
+
         $this->load->helper('pdf_reports_helper');
-        
-       //if($result->company_id!=""){
-       if(($result->inv_type!="INVINDV") && (!empty($result->company_id))){
-            $data=  json_decode($result->invoice_details);
+
+        //if($result->company_id!=""){
+        if (($result->inv_type != "INVINDV") && (!empty($result->company_id))) {
+            $data = json_decode($result->invoice_details);
             generate_company_pdf_invoice_all($data);
-            
-       }
-        else{
-           
-            $data =  (array)json_decode($result->invoice_details);
+        } else {
+
+            $data = (array) json_decode($result->invoice_details);
             generate_pdf_invoice($data);
         }
     }
+
     /**
      * function export generate invoice
      */
@@ -3596,23 +3399,22 @@ class Class_Trainee extends CI_Controller {
         //print_r($result);exit;
         $this->load->helper('pdf_reports_helper');
         $tenant_id = $this->tenant_id;
-        if($tenant_id =='T17'){
+        if ($tenant_id == 'T17') {
             generate_pdf_invoice_everest($result);
-        }else{
+        } else {
             generate_pdf_invoice($result);
         }
-       
     }
 
     /**
      * function to get payment Receipt PDF
      */
-    public function export_payment_receipt($payid) {    
+    public function export_payment_receipt($payid) {
         if (empty($payid)) {
             return show_404();
         }
         //$result = $this->get_payid_details($payid, 1);
-         $result =  $this->get_payid_details_indv($payid,1);
+        $result = $this->get_payid_details_indv($payid, 1);
         $this->load->helper('pdf_reports_helper');
         generate_payment_receipt($result);
     }
@@ -3643,13 +3445,13 @@ class Class_Trainee extends CI_Controller {
         $total_paid = 0;
         foreach ($paid_details as $row) {
             $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
-            $other_mode = $row->othr_mode_of_payment ? '+'.$row->othr_mode_of_payment : '';// added by shubhranshu to display the other mode if exist 0n 19feb
+            $other_mode = $row->othr_mode_of_payment ? '+' . $row->othr_mode_of_payment : ''; // added by shubhranshu to display the other mode if exist 0n 19feb
             $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ');
             $gender = ($row->gender == 'MALE') ? 'Mr. ' : 'Ms. ';
             $name = $gender . $row->first_name . ' ' . $row->last_name;
             $paid_arr[] = array(
                 'recd_on' => date('d/m/Y', strtotime($row->recd_on)),
-                'mode' => $mode . $mode_ext.$other_mode,
+                'mode' => $mode . $mode_ext . $other_mode,
                 'name' => $name,
                 'amount' => '$ ' . number_format($row->amount_recd, 2, '.', '') . ' SGD',
             );
@@ -3715,7 +3517,6 @@ class Class_Trainee extends CI_Controller {
         exit();
     }
 
-
     function get_trainee_classes_forcourse($course) {
         $result = $this->classtraineemodel->get_trainee_classes($this->tenant_id, $course, '', '');
         foreach ($result as $k => $row) {
@@ -3769,7 +3570,7 @@ class Class_Trainee extends CI_Controller {
                     'key' => $row->user_id,
                     'label' => $row->first_name . ' ' . $row->last_name . '( Taxcode : ' . $row->tax_code . ')',
                     'value' => $row->first_name . ' ' . $row->last_name,
-                    'nric' => $row->tax_code  /* added by shubhranshu on 22/03/2019 for restriction list check*/
+                    'nric' => $row->tax_code /* added by shubhranshu on 22/03/2019 for restriction list check */
                 );
             }
         }
@@ -3823,7 +3624,7 @@ class Class_Trainee extends CI_Controller {
      * to get all taxcode
      */
     public function get_alltaxcode() {
-      
+
         $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
         $result = $this->classtraineemodel->get_alluser($this->tenant_id, '', $query_string);
         if ($result) {
@@ -3862,7 +3663,7 @@ class Class_Trainee extends CI_Controller {
         echo json_encode($get_subsidy_tg_data);
         exit();
     }
-    
+
     /**
      * function to get eid by shubhranshu
      */
@@ -3889,6 +3690,7 @@ class Class_Trainee extends CI_Controller {
     /*
      * This method is for Changing Individual Enrolment Type
      */
+
     public function change_individual_enrolment() {
         $tax_code = $this->input->post('taxcode_id');
         $reuslt['data'] = $this->classtraineemodel->get_enrolment_by_tax_code($tax_code);
@@ -3899,8 +3701,8 @@ class Class_Trainee extends CI_Controller {
     /*
      * This Method is for getting enroll invoice details used in Changing Individual Enrolment Type
      */
-    public function get_enroll_invoice_details() 
-    {
+
+    public function get_enroll_invoice_details() {
         $tenant_id = $this->tenant_id;
         $opt_type = $this->input->post('opt_type');
         $payid = $this->input->post('payid');
@@ -3912,88 +3714,75 @@ class Class_Trainee extends CI_Controller {
         $return_data['trainees'] = "";
         $return_data['error'] = "";
         $return_data['lock'] = "";
-        $lock_status= $this->classtraineemodel->get_attendance_lock_status($tenant_id,$course_id,$class_id);
-        $lock_status=$lock_status->lock_status;
-        if ($opt_type == "remvind") 
-        {
-        $result = $this->classtraineemodel->get_enroll_invoice_details($course_id, $class_id, $company_id, $tenant_id, $opt_type, $payid,$user_id);                        
-        $error = (array)$result;
-       
-             if(empty($error['msg_status']))
-            {
+        $lock_status = $this->classtraineemodel->get_attendance_lock_status($tenant_id, $course_id, $class_id);
+        $lock_status = $lock_status->lock_status;
+        if ($opt_type == "remvind") {
+            $result = $this->classtraineemodel->get_enroll_invoice_details($course_id, $class_id, $company_id, $tenant_id, $opt_type, $payid, $user_id);
+            $error = (array) $result;
+
+            if (empty($error['msg_status'])) {
                 $return_data['data1'] = $result;
-                $return_data['lock'] = $lock_status;            
-                echo json_encode($return_data); 
-            }
-        }
-          else if($opt_type == "change" || $opt_type == "new" || $opt_type == "remove_invoice" || $opt_type == "add_invoice" || $opt_type=="move_invoice")
-        {
-            $result = $this->classtraineemodel->get_enroll_invoice_details($course_id, $class_id, $company_id, $tenant_id, $opt_type, $payid,$user_id);                        
-            $error = (array)$result;
-            //print_r($result);exit;
-            if(empty($error['msg_status']))
-            {
-            $result->discount_label = rtrim($this->course->get_metadata_on_parameter_id($result->discount_type), ', ');
-            $gst_label = ($result->gst_on_off == 1) ? 'GST ON, ' : 'GST OFF, ';
-                if ($result->gst_on_off == 1) 
-                {
-                $gst_label .= rtrim($this->course->get_metadata_on_parameter_id($result->gst_rule), ', ');
-            }
-            $gst_label = rtrim($gst_label, ', ');
-            $result->gst_label = $gst_label;
-            $result->inv_date = date('d-m-Y', strtotime($result->inv_date));
-            $result->total_inv_amount = number_format($result->total_inv_amount, 2);
-            $result->total_unit_fees = number_format($result->total_unit_fees, 2);
-            $result->discount_rate = number_format($result->discount_rate, 2);
-            $result->total_inv_subsdy = number_format($result->total_inv_subsdy, 2);
-            $result->total_gst = number_format($result->total_gst, 2);
-            $result->total_inv_discnt = number_format($result->total_inv_discnt, 2);
-            $result->gst_rate = number_format($result->gst_rate, 2);
-                $result->gst_rate = $result->gst_rate;
-               
-            $return_data['data'] = $result;
                 $return_data['lock'] = $lock_status;
-            $company_id = ($company_id=="" || $company_id == 0)?$result->company_id:$company_id;
-            $return_data['trainees'] = $this->classtraineemodel->get_all_trainees_details($course_id, $class_id, $company_id, $result->pymnt_due_id);
-                if ($opt_type == 'add_invoice') 
-                {                
-                $return_data['not_enrolled_trainees'] = $this->classtraineemodel->trainee_not_enrolled_in_company_invoice($tenant_id, $course_id, $class_id, $company_id);
+                echo json_encode($return_data);
             }
-            echo json_encode($return_data); 
+        } else if ($opt_type == "change" || $opt_type == "new" || $opt_type == "remove_invoice" || $opt_type == "add_invoice" || $opt_type == "move_invoice") {
+            $result = $this->classtraineemodel->get_enroll_invoice_details($course_id, $class_id, $company_id, $tenant_id, $opt_type, $payid, $user_id);
+            $error = (array) $result;
+            //print_r($result);exit;
+            if (empty($error['msg_status'])) {
+                $result->discount_label = rtrim($this->course->get_metadata_on_parameter_id($result->discount_type), ', ');
+                $gst_label = ($result->gst_on_off == 1) ? 'GST ON, ' : 'GST OFF, ';
+                if ($result->gst_on_off == 1) {
+                    $gst_label .= rtrim($this->course->get_metadata_on_parameter_id($result->gst_rule), ', ');
+                }
+                $gst_label = rtrim($gst_label, ', ');
+                $result->gst_label = $gst_label;
+                $result->inv_date = date('d-m-Y', strtotime($result->inv_date));
+                $result->total_inv_amount = number_format($result->total_inv_amount, 2);
+                $result->total_unit_fees = number_format($result->total_unit_fees, 2);
+                $result->discount_rate = number_format($result->discount_rate, 2);
+                $result->total_inv_subsdy = number_format($result->total_inv_subsdy, 2);
+                $result->total_gst = number_format($result->total_gst, 2);
+                $result->total_inv_discnt = number_format($result->total_inv_discnt, 2);
+                $result->gst_rate = number_format($result->gst_rate, 2);
+                $result->gst_rate = $result->gst_rate;
+
+                $return_data['data'] = $result;
+                $return_data['lock'] = $lock_status;
+                $company_id = ($company_id == "" || $company_id == 0) ? $result->company_id : $company_id;
+                $return_data['trainees'] = $this->classtraineemodel->get_all_trainees_details($course_id, $class_id, $company_id, $result->pymnt_due_id);
+                if ($opt_type == 'add_invoice') {
+                    $return_data['not_enrolled_trainees'] = $this->classtraineemodel->trainee_not_enrolled_in_company_invoice($tenant_id, $course_id, $class_id, $company_id);
+                }
+                echo json_encode($return_data);
+            } else {
+
+                $return_data['error'] = $result;
+                $return_data['lock'] = $lock_status;
+                echo json_encode($return_data);
             }
-            else
-            {
-                
-            $return_data['error'] = $result;            
-                $return_data['lock'] = $lock_status;            
-            echo json_encode($return_data); 
+        } else {
+            $return_data['lock'] = $lock_status;
+            $return_data['error'] = $result;
+            echo json_encode($return_data);
         }
-    }      
-        else
-        {
-            $return_data['lock'] = $lock_status;            
-            $return_data['error'] = $result;            
-            echo json_encode($return_data); 
-        }
-    }      
+    }
+
     /*
      * This is  method is used for the enrol page - gets the data and on-change events etc.
      */
-    public function enrollment_view_page() 
-    {
+
+    public function enrollment_view_page() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $this->load->model('internal_user_model');
         $tenant_id = $this->tenant_id;
-         $loggedin_user_id =  $this->user->user_id;
+        $loggedin_user_id = $this->user->user_id;
         extract($_POST);
-       if ($search_select == 1) 
-       {
+        if ($search_select == 1) {
             $user_id = $taxcode_id;
-       } 
-       else 
-       {
+        } else {
             $user_id = $trainee_id;
-       }
+        }
         $account_type = $this->input->post('account_type');
         $this->load->library('form_validation');
         $this->form_validation->set_rules('course', 'Course', 'required');
@@ -4021,21 +3810,20 @@ class Class_Trainee extends CI_Controller {
             $data['course_manager'] = rtrim($this->course->get_managers($courses->crse_manager), ', ');
             $data['courseLevel'] = $this->course->get_metadata_on_parameter_id($courses->certi_level);
             $data['classes'] = $classes = $this->class->get_class_details($tenant_id, $class);
-            
-            
-            
-           /* get the sales executive name based on course- prit* 18-07-2016*/
+
+
+
+            /* get the sales executive name based on course- prit* 18-07-2016 */
             $course_salesexec = $this->class->get_course_salesexec1($tenant_id, $course);
-            $sales=array();
-            foreach ($course_salesexec as $value){
-                 $sales[]=$value->user_id;
-                
+            $sales = array();
+            foreach ($course_salesexec as $value) {
+                $sales[] = $value->user_id;
             }
-            $sales_executive=  implode(',', $sales);
+            $sales_executive = implode(',', $sales);
             //$data['salesexec'] = $this->class->get_class_salesexec($tenant_id, $classes->course_id, $classes->sales_executive);
             $data['salesexec'] = $this->class->get_class_salesexec($tenant_id, $classes->course_id, $sales_executive);
-            
-            
+
+
             $totalbooked = $this->class->get_class_booked($classes->course_id, $classes->class_id, $tenant_id);
             $data['available'] = $classes->total_seats - $totalbooked;
             $data['ClassPay'] = rtrim($this->course->get_metadata_on_parameter_id($classes->class_pymnt_enrol), ', ');
@@ -4050,8 +3838,8 @@ class Class_Trainee extends CI_Controller {
             $data['subsidy_type'] = $this->classtraineemodel->get_subsidy_type($tenant_id);
             if ($account_type == 'individual') {
                 $data['trainee_name'] = $this->classtraineemodel->get_notenrol_trainee_name('', '', $user_id, $tenant_id);
-                $data['discount'] = $discount = $this->classtraineemodel->calculate_discount_enroll($user_id, 0, $class, $course, $classes->class_fees); 
-                $data['feesdue'] = $feesdue = round($classes->class_fees - round((($discount['discount_rate'])/100 * ($classes->class_fees)),2),2);
+                $data['discount'] = $discount = $this->classtraineemodel->calculate_discount_enroll($user_id, 0, $class, $course, $classes->class_fees);
+                $data['feesdue'] = $feesdue = round($classes->class_fees - round((($discount['discount_rate']) / 100 * ($classes->class_fees)), 2), 2);
                 $data['gst_total'] = $this->classtraineemodel->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
                 $data['netdue'] = $this->classtraineemodel->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
             } elseif ($account_type == 'company') {
@@ -4062,13 +3850,13 @@ class Class_Trainee extends CI_Controller {
                 }
                 $data['discount'] = $discount = $this->classtraineemodel->calculate_discount_enroll(0, $company, $class, $course, $classes->class_fees);
                 $discount_label = $discount['discount_label'];
-                $discount_rate = round($discount['discount_rate'],4);
-                $discount_amount = round(($classes->class_fees * ($discount_rate / 100) ),2);
+                $discount_rate = round($discount['discount_rate'], 4);
+                $discount_amount = round(($classes->class_fees * ($discount_rate / 100)), 2);
                 if ($discount_amount > $classes->class_fees) {
                     $discount_rate = 100;
                     $discount_amount = $classes->class_fees;
                 }
-                $feesdue = round( ($classes->class_fees - $discount_amount),2);
+                $feesdue = round(($classes->class_fees - $discount_amount), 2);
                 $company_net_due = 0;
                 $company_unit_fees = 0;
                 $company_discount_amount = 0;
@@ -4079,32 +3867,30 @@ class Class_Trainee extends CI_Controller {
                 foreach ($control_6 as $user_id) {
                     $gst_total = $this->classtraineemodel->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
                     $calculated_net_due = $this->classtraineemodel->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
-                    $company_net_due = round(($company_net_due + $calculated_net_due),2);
-                    $company_unit_fees = round( ($company_unit_fees + $classes->class_fees),2);
-                    $company_discount_amount = round( ($company_discount_amount + $discount_amount),2);
-                    $company_gst_total = round( ($company_gst_total + $gst_total),2);
+                    $company_net_due = round(($company_net_due + $calculated_net_due), 2);
+                    $company_unit_fees = round(($company_unit_fees + $classes->class_fees), 2);
+                    $company_discount_amount = round(($company_discount_amount + $discount_amount), 2);
+                    $company_gst_total = round(($company_gst_total + $gst_total), 2);
                 }
                 $data['company_net_due'] = $company_net_due;
                 $data['company_unit_fees'] = $company_unit_fees;
                 $data['company_gst_total'] = $company_gst_total;
-                $data['company_discount_amount'] = round($discount_amount,2); 
-                $data['company_discount_label'] = $discount_label; 
+                $data['company_discount_amount'] = round($discount_amount, 2);
+                $data['company_discount_label'] = $discount_label;
                 $data['company_discount_rate'] = $discount_rate;
                 $data['pending_payments'] = $this->classtraineemodel->check_company_pending_payment($company);
             }
             $role = $this->internal_user_model->check_sales_exec1($loggedin_user_id);
-            if($role->role_id!=="ADMN")
-            {
-                if ($this->user->role_id == 'SLEXEC' || $this->user->role_id=='CRSEMGR' || $this->user->role_id=='TRAINER') 
-                {
+            if ($role->role_id !== "ADMN") {
+                if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') {
                     $data['salesexec_check'] = 1;
                 }
             }
-             $data['tenant_id'] = $tenant_id;
+            $data['tenant_id'] = $tenant_id;
             $data['page_title'] = 'Class Trainee';
             $data['main_content'] = 'classtrainee/enrollpayment';
-           // $data['sideMenuData'] = $this->sideMenu;
-            $data['restriction_flag'] = $this->input->post('restriction_flag');///added by shubhranshu
+            // $data['sideMenuData'] = $this->sideMenu;
+            $data['restriction_flag'] = $this->input->post('restriction_flag'); ///added by shubhranshu
             $data['privilage'] = $this->input->post('privilage'); ///added by shubhranshu
             $this->load->view('layout', $data);
         }
@@ -4113,18 +3899,18 @@ class Class_Trainee extends CI_Controller {
     /* This Method is used for the enrol page - gets the data from direct register and enroll page skm start */
 
     public function individual_enrollment_view_page() {
-		
-		$data['sideMenuData'] = fetch_non_main_page_content();
+
+        $data['sideMenuData'] = fetch_non_main_page_content();
         $this->load->model('internal_user_model');
         $tenant_id = $this->tenant_id;
-        $loggedin_user_id =  $this->user->user_id;
+        $loggedin_user_id = $this->user->user_id;
         extract($_POST);
         if ($search_select == 1) {
             $user_id = $taxcode_id;
         } else {
             $user_id = $trainee_id;
         }
-		
+
         $account_type = $this->input->post('account_type'); //sk1
         $course = $this->input->post('course_id'); //sk2
         $class = $this->input->post('class_id'); //sk3
@@ -4154,19 +3940,19 @@ class Class_Trainee extends CI_Controller {
         $data['gstrate'] = $gstrate = $this->classtraineemodel->get_gst_current();
         $data['gstlabel'] = $gst_label = ($courses->gst_on_off == 1) ? 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($courses->subsidy_after_before), ', ') : 'GST OFF';
         $data['subsidy_type'] = $this->classtraineemodel->get_subsidy_type($tenant_id);
-		
+
         if ($account_type == 'individual') {
-			
-			$data['direct'] = 1; //Added by abdulla
+
+            $data['direct'] = 1; //Added by abdulla
             $data['course'] = $course; //Added by abdulla
             $data['class'] = $class; //Added by abdulla
             $data['trainee_id'] = $user_id; //Added by abdulla
-			
-			$data['trainee_name'] = $this->classtraineemodel->get_notenrol_trainee_name('', '', $user_id, $tenant_id);		
-			$data['discount'] = $discount = $this->classtraineemodel->calculate_discount_enroll($user_id, 0, $class, $course, $classes->class_fees); 
-			$data['feesdue'] = $feesdue = round($classes->class_fees - round((($discount['discount_rate'])/100 * ($classes->class_fees)),2),2);		
-			$data['gst_total'] = $this->classtraineemodel->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
-			$data['netdue'] = $this->classtraineemodel->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
+
+            $data['trainee_name'] = $this->classtraineemodel->get_notenrol_trainee_name('', '', $user_id, $tenant_id);
+            $data['discount'] = $discount = $this->classtraineemodel->calculate_discount_enroll($user_id, 0, $class, $course, $classes->class_fees);
+            $data['feesdue'] = $feesdue = round($classes->class_fees - round((($discount['discount_rate']) / 100 * ($classes->class_fees)), 2), 2);
+            $data['gst_total'] = $this->classtraineemodel->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
+            $data['netdue'] = $this->classtraineemodel->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $feesdue, 0, $gstrate);
         } elseif ($account_type == 'company') {
             $data['company_details'] = $company_details = $this->company->get_company_details($tenant_id, $company);
             if ($company[0] == "T") {
@@ -4205,30 +3991,29 @@ class Class_Trainee extends CI_Controller {
             $data['company_discount_rate'] = $discount_rate;
             $data['pending_payments'] = $this->classtraineemodel->check_company_pending_payment($company);
         }
-		
-		$role = $this->internal_user_model->check_sales_exec1($loggedin_user_id);
-		
-        if ($role->role_id !== "ADMN") {            			
-			if ($this->user->role_id == 'SLEXEC' || $this->user->role_id=='CRSEMGR' || $this->user->role_id=='TRAINER') 
-                {
-                    $data['salesexec_check'] = 1;
-                }
+
+        $role = $this->internal_user_model->check_sales_exec1($loggedin_user_id);
+
+        if ($role->role_id !== "ADMN") {
+            if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') {
+                $data['salesexec_check'] = 1;
+            }
         }
-		
-		$data['tenant_id'] = $tenant_id;
-		$data['page_title'] = 'Class Trainee';
-		$data['main_content'] = 'classtrainee/enrollpayment';
-	   // $data['sideMenuData'] = $this->sideMenu;
-		$data['restriction_flag'] = $this->input->post('restriction_flag');///added by shubhranshu
-		$data['privilage'] = $this->input->post('privilage'); ///added by shubhranshu
-		$this->load->view('layout', $data);
+
+        $data['tenant_id'] = $tenant_id;
+        $data['page_title'] = 'Class Trainee';
+        $data['main_content'] = 'classtrainee/enrollpayment';
+        // $data['sideMenuData'] = $this->sideMenu;
+        $data['restriction_flag'] = $this->input->post('restriction_flag'); ///added by shubhranshu
+        $data['privilage'] = $this->input->post('privilage'); ///added by shubhranshu
+        $this->load->view('layout', $data);
     }
-	
-	/**
+
+    /**
      * This method generates the receipt and gets the individual enrollment data and updates the DB
      */
     public function individual_enrollment() {
-       // $this->output->enable_profiler(TRUE);
+        // $this->output->enable_profiler(TRUE);
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $loggedin_user_id = $this->session->userdata('userDetails')->user_id;
@@ -4236,12 +4021,12 @@ class Class_Trainee extends CI_Controller {
         $classes = $this->class->get_class_details($tenant_id, $class);
         $this->load->model('common_model', 'commonmodel');
         $enrollmentStatus = $this->commonmodel->is_user_enrolled($user_id, $course, $class, $tenant_id);
-        if($enrollmentStatus) {
+        if ($enrollmentStatus) {
             $res['result'] = FALSE;
             $res['error_status'] = "duplicate";
             echo json_encode($res);
             exit();
-        } 
+        }
         $result = $this->classtraineemodel->individual_enrollment_db_update($tenant_id, $loggedin_user_id, $classes->class_fees);
         $res['result'] = $result;
         if ($result == TRUE) {
@@ -4254,11 +4039,10 @@ class Class_Trainee extends CI_Controller {
             $courseLevel = rtrim($this->course->get_metadata_on_parameter_id($courses->certi_level), ', ');
             if ($mode_of_payment == '') {
                 $contact_details = '';
-               if($tenant_details->tenant_id == 'T12')
-                {
+                if ($tenant_details->tenant_id == 'T12') {
                     if (!empty($tenant_details->contact_name)) {
-                    $contact_details .=$tenant_details->contact_name . ' ';
-                }
+                        $contact_details .=$tenant_details->contact_name . ' ';
+                    }
                 }
                 if (!empty($tenant_details->tenant_contact_num)) {
                     $contact_details .='<br/>(Phone: ' . $tenant_details->tenant_contact_num . ', ';
@@ -4267,25 +4051,24 @@ class Class_Trainee extends CI_Controller {
                     $contact_details .='Email Id: ' . $tenant_details->tenant_email_id . ')';
                 }
                 $contact_details = rtrim($contact_details, ', ');
-                
-                /* reporting time skm start bcoz of sam request for AOP(67) on 18-may-17*/
+
+                /* reporting time skm start bcoz of sam request for AOP(67) on 18-may-17 */
                 $time = strtotime($classes->class_start_datetime);
                 $reporting_time = date("H:i A", strtotime('-30 minutes', $time));
-                if($course == 67 || $course == 121)
-                {
+                if ($course == 67 || $course == 121) {
                     $li = "<li>Report at center at $reporting_time to register for class</li>";
-                }else{
+                } else {
                     $li = "<li>Report at center at 8:30 AM to register for class</li>";
                 }
-                
+
                 ///////// below code added by shubhranshu for elearning class only for xp
-                if($tenant_details->tenant_id == 'T02'){
-                     if($course == 166 || $course== 167){
-                         $li ='';
-                     }
+                if ($tenant_details->tenant_id == 'T02') {
+                    if ($course == 166 || $course == 167) {
+                        $li = '';
+                    }
                 }
                 /* end */
-                if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
+                if ($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17') {
                     $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
                      for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
                     <strong>Class start date:</strong>
@@ -4306,10 +4089,10 @@ class Class_Trainee extends CI_Controller {
                            
                             <li>Your NRIC, work permit or will be photocopied on the class date</li>
                             <li>Trim finger nails and remove nail polish</li>
-                            '.$li.'
+                            ' . $li . '
                         </ol>';
-                }elseif($tenant_details->tenant_id == 'T02'){
-                        $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
+                } elseif ($tenant_details->tenant_id == 'T02') {
+                    $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
                          for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
                         <strong>Class start date:</strong>
                         ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
@@ -4328,11 +4111,11 @@ class Class_Trainee extends CI_Controller {
                             <ol>
                                 <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Trim finger nails and remove nail polish.</li>
-                                '.$li.'
+                                ' . $li . '
                                 <li>Payment via Paynow/ Paylah, GIRO or SkillsFuture Credit.</li>
                                  <li>Dress code : Covered shoes.</li>
                             </ol>';
-                }else{
+                } else {
                     $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
                          for <strong>' . $trainee . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
                         <strong>Class start date:</strong>
@@ -4353,10 +4136,10 @@ class Class_Trainee extends CI_Controller {
                                 <li> All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Your NRIC, work permit or will be photocopied on the class date</li>
                                 <li>Trim finger nails and remove nail polish</li>
-                               '.$li.'
+                               ' . $li . '
                             </ol>';
                 }
-                
+
                 $res['data'] = $data;
             } else {
                 $invoice = $this->classtraineemodel->get_invoice_for_class_trainee($class, $user_id);
@@ -4364,9 +4147,9 @@ class Class_Trainee extends CI_Controller {
                 $invoice->recd_on = date('d/m/Y', strtotime($invoice->recd_on));
                 $invoice->mode_of_pymnt = rtrim($this->course->get_metadata_on_parameter_id($invoice->mode_of_pymnt), ', ');
                 $class_start = date('M d, Y h:i A', strtotime($classes->class_start_datetime));
-				
-				$att_details = $this->classtraineemodel->get_enroll_invoice($invoice->pymnt_due_id);
-				
+
+                $att_details = $this->classtraineemodel->get_enroll_invoice($invoice->pymnt_due_id);
+
                 $res['data'] = array('class' => $classes, 'trainee' => $trainee, 'classloc' => $ClassLoc,
                     'courses' => $courses, 'class_start' => $class_start, 'invoice' => $invoice,
                     'coursemanager' => $tenant_details->contact_name, 'courselevel' => $courseLevel, 'tenant' => $tenant_details, 'att_status' => $att_details->att_status);
@@ -4379,8 +4162,7 @@ class Class_Trainee extends CI_Controller {
     /**
      * This method generates the receipt and gets the Company enrollment data 
      */
-    public function company_enrollment() 
-    {
+    public function company_enrollment() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $curuser_id = $this->session->userdata('userDetails')->user_id;
@@ -4389,16 +4171,16 @@ class Class_Trainee extends CI_Controller {
         $classes = $this->class->get_class_details($tenant_id, $class);
         $totalbooked = $this->class->get_class_booked($course, $class, $tenant_id);
         $available = ($classes->total_seats - $totalbooked);
-        $this->load->model('common_model', 'commonmodel');        
+        $this->load->model('common_model', 'commonmodel');
         $enrollmentStatus = $this->commonmodel->is_user_enrolled($data[0]["user_id"], $course, $class, $tenant_id);
-        if($enrollmentStatus) {
+        if ($enrollmentStatus) {
             $res['status'] = FALSE;
             $res['error_status'] = "duplicate";
             echo json_encode($res);
             exit();
-        } 
-        $result = $this->classtraineemodel->company_enrollment_db_update($tenant_id, $curuser_id, $company_details,$discount_changed);
-		//echo print_r($result, true);  exit;
+        }
+        $result = $this->classtraineemodel->company_enrollment_db_update($tenant_id, $curuser_id, $company_details, $discount_changed);
+        //echo print_r($result, true);  exit;
         $res['status'] = $result['status'];
         if ($result['status'] == TRUE) {
             $result['err'] = array();
@@ -4439,24 +4221,22 @@ class Class_Trainee extends CI_Controller {
             $courseLevel = rtrim($this->course->get_metadata_on_parameter_id($courses->certi_level), ', ');
             $data = '';
             if ($tr_count > 0) {
-                
-                 /* reporting time skm start bcoz of sam request for AOP(67) on 18-may-17*/
+
+                /* reporting time skm start bcoz of sam request for AOP(67) on 18-may-17 */
                 $time = strtotime($classes->class_start_datetime);
                 $reporting_time = date("H:i A", strtotime('-30 minutes', $time));
-                if($course == 67 || $course == 121)
-                {
-                     $li = "Report at center at $reporting_time to register for class";
-                }else{
-                     $li = "Report at center at 8:30 AM to register for class";
+                if ($course == 67 || $course == 121) {
+                    $li = "Report at center at $reporting_time to register for class";
+                } else {
+                    $li = "Report at center at 8:30 AM to register for class";
                 }
                 /* end */
-                
+
                 $contact_details = '';
-               if($tenant_details->tenant_id == 'T12')
-                {
+                if ($tenant_details->tenant_id == 'T12') {
                     if (!empty($tenant_details->contact_name)) {
-                    $contact_details .=$tenant_details->contact_name . ' ';
-                }
+                        $contact_details .=$tenant_details->contact_name . ' ';
+                    }
                 }
                 if (!empty($tenant_details->tenant_contact_num)) {
                     $contact_details .='<br/>(Phone: ' . $tenant_details->tenant_contact_num . ', ';
@@ -4468,11 +4248,11 @@ class Class_Trainee extends CI_Controller {
                 if ($company[0] == 'T') {
                     $company_details->company_name = $tenant_details->tenant_name;
                 }
-                if(!empty($company_details[0]->company_name)){
-                    $company_val = '(Company Name:'.$company_details[0]->company_name.')';
+                if (!empty($company_details[0]->company_name)) {
+                    $company_val = '(Company Name:' . $company_details[0]->company_name . ')';
                 }
-                 ///// added by shubhranshu for wablab points
-                if($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17'){
+                ///// added by shubhranshu for wablab points
+                if ($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17') {
                     $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details[0]->company_name . ' has been booked. Booking details for your employees: ';
                     $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
                         <strong>Class start date:</strong>
@@ -4492,11 +4272,11 @@ class Class_Trainee extends CI_Controller {
                               
                                 <li>Your NRIC, work permit or will be photocopied on the class date</li>
                                 <li>Trim finger nails and remove nail polish</li>
-                                <li>'.$li.'</li>
+                                <li>' . $li . '</li>
                             </ol>';
-                }elseif($tenant_details->tenant_id == 'T02'){
-                        $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
-                         for <strong>' . $trainee .$company_val. '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
+                } elseif ($tenant_details->tenant_id == 'T02') {
+                    $data = 'Your seat has been booked. Please pay the class fees on or before the class start date.
+                         for <strong>' . $trainee . $company_val . '</strong> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'<br><br>
                         <strong>Class start date:</strong>
                         ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
                         <br><br>
@@ -4514,12 +4294,12 @@ class Class_Trainee extends CI_Controller {
                             <ol>
                                 <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Trim finger nails and remove nail polish.</li>
-                                 '.$li.'
+                                 ' . $li . '
                                 <li>Payment via Paynow/ Paylah, GIRO or SkillsFuture Credit.</li>
                                  <li>Dress code : Covered shoes.</li>
                             </ol>';
-                }else{
-                   $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
+                } else {
+                    $data .='<div class="table-responsive payment_scroll" style="height: 50px;min-height:50px;">' . $tr_count . ' Seats for your company ' . $company_details->company_name . ' has been booked. Booking details for your employees: ';
                     $data .= '<b>' . $trainee . '</b> for \'Course: ' . $courses->crse_name . ', Class: ' . $classes->class_name . ', Certificate Code: ' . $courseLevel . '\'</div><br><br>
                         <strong>Class start date:</strong>
                         ' . date('M d, Y h:i A', strtotime($classes->class_start_datetime)) . '
@@ -4538,11 +4318,9 @@ class Class_Trainee extends CI_Controller {
                                 <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                                 <li>Your NRIC, work permit or will be photocopied on the class date</li>
                                 <li>Trim finger nails and remove nail polish</li>
-                                <li>'.$li.'</li>
+                                <li>' . $li . '</li>
                             </ol>';
                 }
-                
-                
             }
             $res['data'] = $data;
             $res['trainee_id'] = $trainee_id;
@@ -4558,78 +4336,72 @@ class Class_Trainee extends CI_Controller {
      */
     public function transaction_fail() {
         $error = $this->input->get("err");
-        if($error == "duplicate") {
-            $this->session->set_flashdata("error", "This trainee is already enrolled in the class.");            
+        if ($error == "duplicate") {
+            $this->session->set_flashdata("error", "This trainee is already enrolled in the class.");
         } else {
             $this->session->set_flashdata("error", "We have not been able to enrol the trainee(s). Please try again later.");
         }
         redirect("class_trainee");
     }
+
     /**
      *  This method gets the invoice drop down values based on the enrollment type selected.
      */
     public function get_select_box() {
-         $data['sideMenuData'] = fetch_non_main_page_content();
-        ini_set('memory_limit','256M');// added by shubhranshu since 500 error due to huge data
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        ini_set('memory_limit', '256M'); // added by shubhranshu since 500 error due to huge data
         $type = $this->input->post('type');
         $tenant_id = $this->tenant_id;
         $data = array();
         $role_array = array("COMPACT");
         if ($type == "change") {
-            
+
             $query = $this->input->post('q');
-            $change_individual = $this->classtraineemodel->get_individual_enrol_trainees($tenant_id,$query);
-            
-            
+            $change_individual = $this->classtraineemodel->get_individual_enrol_trainees($tenant_id, $query);
+
+
             $data['change_individual'] = $this->formate_change_individual($change_individual);
-        } 
-        else if($type=="remvind")
-        {
-            
+        } else if ($type == "remvind") {
+
             $query = $this->input->post('q');
-            $change_individual = $this->classtraineemodel->get_remv_individual_enrol_trainees($tenant_id,$query);
+            $change_individual = $this->classtraineemodel->get_remv_individual_enrol_trainees($tenant_id, $query);
             $data['change_individual'] = $this->formate_change_individual($change_individual);
-        }
-        
-        else if ($type == "remove_invoice" || $type == "add_invoice") {
+        } else if ($type == "remove_invoice" || $type == "add_invoice") {
             $query = $this->input->post('q');
-            $company_not_paid_invoice = $this->classtraineemodel->get_company_not_paid_invoice($tenant_id,$query);
+            $company_not_paid_invoice = $this->classtraineemodel->get_company_not_paid_invoice($tenant_id, $query);
             $data['company_not_paid_invoice'] = $this->formate_company_not_paid($company_not_paid_invoice);
-        } 
-        else if ($type == "move_invoice")
-        {
+        } else if ($type == "move_invoice") {
             $query = $this->input->post('q');
-            $company_not_paid_invoice = $this->classtraineemodel->get_company_not_paid_invoice($tenant_id,$query);
+            $company_not_paid_invoice = $this->classtraineemodel->get_company_not_paid_invoice($tenant_id, $query);
             $data['company_not_paid_invoice'] = $this->formate_company_not_paid($company_not_paid_invoice);
-        }
-        else if ($type == "to_move_invoice")
-        {
+        } else if ($type == "to_move_invoice") {
             $query = $this->input->post('q');
             $company_id = $this->input->post('company_id');
             $course_id = $this->input->post('course_id');
             $class_id = $this->input->post('class_id');
-            $company_not_paid_invoice = $this->classtraineemodel->get_company_not_paid_invoice1($tenant_id,$query,$company_id,$course_id,$class_id);
+            $company_not_paid_invoice = $this->classtraineemodel->get_company_not_paid_invoice1($tenant_id, $query, $company_id, $course_id, $class_id);
             $data['company_not_paid_invoice'] = $this->formate_company_not_paid($company_not_paid_invoice);
-        }
-        else if ($type == "new") {
+        } else if ($type == "new") {
             $data['courses'] = $this->get_active_classcourse_list_by_tenant($tenant_id);
             $data['companies'] = $this->company->get_activeuser_companies_for_tenant($tenant_id);
             $tenant_company = fetch_tenant_details($this->session->userdata('userDetails')->tenant_id);
             $tenant_obj = new stdClass;
-            if(!in_array($this->session->userdata('userDetails')->role_id,$role_array)) {
+            if (!in_array($this->session->userdata('userDetails')->role_id, $role_array)) {
                 $tenant_obj->company_id = $tenant_company->tenant_id;
                 $tenant_obj->company_name = $tenant_company->tenant_name;
-                $data['companies'][]=$tenant_obj;
-            }    
+                $data['companies'][] = $tenant_obj;
+            }
         }
         echo json_encode($data);
         exit();
-    }    /**
+    }
+
+    /**
      * This Method Merges an existing individual invoice with Company Invoice
      * @param type $opType
      */
     public function enrolment_type_change($opType) {
-        $args = array();      
+        $args = array();
         $args['tenant_id'] = $this->tenant_id;
         $args['logged_in_user_id'] = $this->user->user_id;
         $args['individual_user_id'] = $this->input->post('individual_user_id');
@@ -4644,7 +4416,7 @@ class Class_Trainee extends CI_Controller {
         $args['course_id'] = $this->input->post('course_id');
         $args['class_id'] = $this->input->post('class_id');
         ///addded by shubhranshu since the subsidy is not coming during form post to apply the subsidy during invoice cretion
-        $subsidy = $this->classtraineemodel->get_individual_enrol_trainees_subsidy($args['tenant_id'],$args['individual_payment_due_id'],$args['individual_user_id']);
+        $subsidy = $this->classtraineemodel->get_individual_enrol_trainees_subsidy($args['tenant_id'], $args['individual_payment_due_id'], $args['individual_user_id']);
         $args['subsidy_amount'] = $subsidy[0]->subsidy_amount;
         ////end --------
         if ($opType == 'mergeInvoice') {
@@ -4669,16 +4441,16 @@ class Class_Trainee extends CI_Controller {
     /**
      * This methos used for confirme the enrollment in trainee registration.
      */
-   public function enroll_pay_now() {
-       $data['sideMenuData'] = fetch_non_main_page_content();// added by shubhranshu
+    public function enroll_pay_now() {
+        $data['sideMenuData'] = fetch_non_main_page_content(); // added by shubhranshu
         $trainee_id = $this->session->userdata('new_trainee_user_id');
         $trainee_name = $this->input->post('trainee_name');
         $course_id = $this->input->post('course_id');
         $class_id = $this->input->post('class_id');
-        $enrolment_mode = ($this->input->post('enrolment_mode')) ? $this->input->post('enrolment_mode') : 'SELF';       
-        if($enrolment_mode == 'SELF'){
-             $company_id = 0;
-        }else
+        $enrolment_mode = ($this->input->post('enrolment_mode')) ? $this->input->post('enrolment_mode') : 'SELF';
+        if ($enrolment_mode == 'SELF') {
+            $company_id = 0;
+        } else
             $company_id = $this->input->post('company_id');
         $opType = $this->input->post('optype');
         $parm_array = array();
@@ -4705,12 +4477,12 @@ class Class_Trainee extends CI_Controller {
         if ($opType == 'PAYLATER') {
             $pay_status = 'NOTPAID';
         }
-        
+
         // commented below bcoz some change sk 
 //      $status = $this->classtraineemodel->enroll_db_update($trainee_id, $course_id, $class_id, $enrolment_mode, $parm_array, $company_id, $pay_status);
         $status = $this->classtraineemodel->regisetr_enroll_db_update($trainee_id, $course_id, $class_id, $enrolment_mode, $parm_array, $company_id, $pay_status);
-       
-        
+
+
         if ($status) {
             $this->session->set_flashdata("success_message", "Successfully enrolled '" . $trainee_name . "'");
         } else {
@@ -4739,17 +4511,17 @@ class Class_Trainee extends CI_Controller {
         } else {
             $this->session->set_flashdata("error", "We were not able to remove the selected trainee(s). Please try again later.");
         }
-       redirect("class_trainee");
+        redirect("class_trainee");
     }
+
     /**
      * This method removes the selected trainees from an invoice.
      */
-    public function move_company_enrollment() 
-    {
-     //   $this->output->enable_profiler(TRUE);
+    public function move_company_enrollment() {
+        //   $this->output->enable_profiler(TRUE);
         $tenant_id = $this->tenant_id;
         $logged_in_user_id = $this->user->user_id;
-        
+
         $invoice_id = $this->input->post('comp_invoice_id');
         $payment_due_id = $this->input->post('comp_pymnt_due_id');
         $company_id = $this->input->post('company_id');
@@ -4758,29 +4530,27 @@ class Class_Trainee extends CI_Controller {
         $seleced_trainee_list = $this->input->post('checked_trainees');
         $status = $this->classtraineemodel->move_company_enrollment($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
                 , $invoice_id, $payment_due_id, $seleced_trainee_list);
-        if ($status) 
-        {
-           
+        if ($status) {
+
             $trainee_name_list = $this->get_trainee_names($seleced_trainee_list, $tenant_id);
             $this->session->set_flashdata("success", "Successfully moved trainee(s) '" . $trainee_name_list . "' from the Invoice #: '" . $invoice_id . "'");
-        } 
-        else 
-        {
-           
+        } else {
+
             $this->session->set_flashdata("error", "We were not able to move the selected trainee(s). Please try again later.");
         }
-       redirect("class_trainee");
+        redirect("class_trainee");
     }
-      /**
+
+    /**
      * This method removes individual trainee from enrolment 
      * added by pritam.
      */
-      /**
+
+    /**
      * This method removes individual trainee from enrolment 
      * added by pritam.
      */
-    public function remove_ind_enrll() 
-    {
+    public function remove_ind_enrll() {
         $this->output->enable_profiler(TRUE);
         $tenant_id = $this->tenant_id;
 
@@ -4791,44 +4561,38 @@ class Class_Trainee extends CI_Controller {
         $pymnt_due_id = $this->input->post('pymnt_due_id1');
         $course_id = $this->input->post('crouse_id1');
         $class_id = $this->input->post('class_id1');
-        
-        $status = $this->classtraineemodel->remove_individual_enrollment($tenant_id, $logged_in_user_id,$user_id, $course_id, $class_id,$invoice_id, $pymnt_due_id);
-        if ($status) 
-        {
-           
+
+        $status = $this->classtraineemodel->remove_individual_enrollment($tenant_id, $logged_in_user_id, $user_id, $course_id, $class_id, $invoice_id, $pymnt_due_id);
+        if ($status) {
+
             $this->session->set_flashdata("success", "Successfully removed trainee '" . $user . "'");
-        } 
-        else 
-        {
+        } else {
             $this->session->set_flashdata("error", "We were not able to remove the selected trainee(s). Please try again later.");
         }
-       
+
         redirect("class_trainee");
     }
+
     /**
      * This method removes individual trainee from enrolment 
      * added by pritam.
      */
-    public function void_invoice() 
-    {
-        
+    public function void_invoice() {
+
         $tenant_id = $this->tenant_id;
 
         $logged_in_user_id = $this->user->user_id;
-         $invoice_id = $this->input->post('invoice_id');
-         $pymnt_due_id = $this->input->post('pymnt_due_id');
-        
-        $status = $this->classtraineemodel->void_invoice($tenant_id, $logged_in_user_id,$invoice_id, $pymnt_due_id);
-        if ($status) 
-        {
-           
-                $this->session->set_flashdata("success", "Successfully invoice is voided '" . $invoice_id . "'");
-        } 
-        else 
-        {
+        $invoice_id = $this->input->post('invoice_id');
+        $pymnt_due_id = $this->input->post('pymnt_due_id');
+
+        $status = $this->classtraineemodel->void_invoice($tenant_id, $logged_in_user_id, $invoice_id, $pymnt_due_id);
+        if ($status) {
+
+            $this->session->set_flashdata("success", "Successfully invoice is voided '" . $invoice_id . "'");
+        } else {
             $this->session->set_flashdata("error", "We were not able to voide invoice. Please try again later.");
         }
-       
+
         redirect("accounting/generate_invoice");
     }
 
@@ -4852,7 +4616,7 @@ class Class_Trainee extends CI_Controller {
     /**
      * This method adds the selected trainees from an invoice.
      */
-    public function add_to_company_enrollment() {        
+    public function add_to_company_enrollment() {
         $tenant_id = $this->tenant_id;
         $logged_in_user_id = $this->user->user_id;
         $invoice_id = $this->input->post('comp_invoice_id');
@@ -4871,7 +4635,7 @@ class Class_Trainee extends CI_Controller {
         }
         redirect("class_trainee");
     }
-    
+
     /**
      * Re-calculate - the net due
      */
@@ -4889,21 +4653,21 @@ class Class_Trainee extends CI_Controller {
         $gstrate = $this->classtraineemodel->get_gst_current();
         $data = $this->input->post('data');
         $discount_changed = $this->input->post('discount_changed');
-        if($discount_changed == 'Y'){
-            $temp_ind_discnt_amt = $discount; 
-            $discount_rate = round( (($temp_ind_discnt_amt/ $classes->class_fees) * 100), 4);
-            $discount_total = round(($classes->class_fees *($discount_rate / 100)),4);            
-          }else{
-                $discount = $this->classtraineemodel->calculate_discount_enroll(0, $company, $classes->class_id, $classes->course_id, $classes->class_fees); 
-                $discount_rate = $discount['discount_rate'];
-                $discount_total = round(($classes->class_fees *($discount_rate / 100)),4);
-                 if ($discount_total > $classes->class_fees) {
-                    $discount_rate = 100;
-                    $discount_total = $classes->class_fees;
-                }
+        if ($discount_changed == 'Y') {
+            $temp_ind_discnt_amt = $discount;
+            $discount_rate = round((($temp_ind_discnt_amt / $classes->class_fees) * 100), 4);
+            $discount_total = round(($classes->class_fees * ($discount_rate / 100)), 4);
+        } else {
+            $discount = $this->classtraineemodel->calculate_discount_enroll(0, $company, $classes->class_id, $classes->course_id, $classes->class_fees);
+            $discount_rate = $discount['discount_rate'];
+            $discount_total = round(($classes->class_fees * ($discount_rate / 100)), 4);
+            if ($discount_total > $classes->class_fees) {
+                $discount_rate = 100;
+                $discount_total = $classes->class_fees;
+            }
         }
-        $feesdue = round(($classes->class_fees - $discount_total),4);
-       $company_net_due = 0;
+        $feesdue = round(($classes->class_fees - $discount_total), 4);
+        $company_net_due = 0;
         $company_subsidy = 0;
         $company_gst = 0;
         foreach ($data as $row) {
@@ -4928,9 +4692,9 @@ class Class_Trainee extends CI_Controller {
                 echo json_encode(array('error' => 'The Net amount is negative', 'amount' => $amount, 'percentage' => $percentage));
                 exit();
             }
-            $company_net_due = $company_net_due + round($calculated_net_due, 4); 
-            $company_subsidy = $company_subsidy + round($subsidy, 4); 
-            $company_gst = $company_gst + $gst_total; 
+            $company_net_due = $company_net_due + round($calculated_net_due, 4);
+            $company_subsidy = $company_subsidy + round($subsidy, 4);
+            $company_gst = $company_gst + $gst_total;
         }
         echo json_encode(array('error' => '', 'company_net' => round($company_net_due, 4), 'amount' => $amount,
             'discount_rate' => $discount_rate,
@@ -4941,39 +4705,39 @@ class Class_Trainee extends CI_Controller {
     /**
      * This function  to get company autocomplete
      */
-    public function get_company_json(){
+    public function get_company_json() {
         $company_arr = array();
         $company = $this->input->post('q');
-         if(!empty($company)){
-            $company_arr =  common_companies_autocomplete($company);
-         }
-         echo json_encode($company_arr);
+        if (!empty($company)) {
+            $company_arr = common_companies_autocomplete($company);
+        }
+        echo json_encode($company_arr);
         exit();
     }
-    
-    public function get_eid_json(){
+
+    public function get_eid_json() {
         $eid_arr = array();
         $eid = $this->input->post('q');
-         if(!empty($eid)){
-            $eid_arr =  $this->classtraineemodel->internal_eid_list_autocomplete($eid);
-         }
-         echo json_encode($eid_arr);
+        if (!empty($eid)) {
+            $eid_arr = $this->classtraineemodel->internal_eid_list_autocomplete($eid);
+        }
+        echo json_encode($eid_arr);
         exit();
     }
-    
+
     /**
      * This function  to update trainee feedback
      */
     public function trainer_feedback($user_id, $course_id, $class_id) {
         $this->load->model('trainee_model', 'traineemodel');
-        $res = $this->classtraineemodel->get_trainer_feedback($user_id, $course_id, $class_id);// s1
+        $res = $this->classtraineemodel->get_trainer_feedback($user_id, $course_id, $class_id); // s1
         $result = $this->traineemodel->trainer_feedback($user_id, $course_id, $class_id);
         if ($result == TRUE) {
             $this->db->cache_delete_all();
-            if($res!=0){ 
-                 $previous_data = json_encode($res);//s2 
-                 user_activity(11,$user_id,$previous_data);//s3 
-             }
+            if ($res != 0) {
+                $previous_data = json_encode($res); //s2 
+                user_activity(11, $user_id, $previous_data); //s3 
+            }
             $this->session->set_flashdata("success", "Your feedback has been updated successfully.");
         } else {
             $this->session->set_flashdata("error", "We have not been able to save the feedback.Please try again later or get in touch with your Administrator.");
@@ -4981,15 +4745,16 @@ class Class_Trainee extends CI_Controller {
         $extra = '';
         $page = $this->input->post('page');
         $query_string = $this->input->post('query_string');
-        if(!empty($page)){
-            $extra .= '/'.$page;
+        if (!empty($page)) {
+            $extra .= '/' . $page;
         }
-        if(!empty($query_string)){
+        if (!empty($query_string)) {
             $extra .= $query_string;
         }
-        
+
         redirect("class_trainee$extra");
     }
+
     /**
      * For updating trainee feedback
      * @param type $user_id
@@ -5016,6 +4781,7 @@ class Class_Trainee extends CI_Controller {
         }
         redirect("class_trainee$extra");
     }
+
     /**
      * This method return subsidy_amount 
      */
@@ -5023,10 +4789,10 @@ class Class_Trainee extends CI_Controller {
         $tenant_id = $this->tenant_id;
         $subsidy_type = $this->input->post("subsidy_type");
         $subsidy_amount = $this->classtraineemodel->get_subsidy_amount($tenant_id, $subsidy_type);
-        $subsidy_amount = empty($subsidy_amount)?0:$subsidy_amount;
+        $subsidy_amount = empty($subsidy_amount) ? 0 : $subsidy_amount;
         echo $subsidy_amount;
     }
-    
+
     /**
      * function to clean_orphan data for selected class
      */
@@ -5038,6 +4804,7 @@ class Class_Trainee extends CI_Controller {
         echo $status;
         exit();
     }
+
     /**
      * This method used for changing payment mode of the invoice.
      */
@@ -5048,10 +4815,11 @@ class Class_Trainee extends CI_Controller {
         $data['main_content'] = 'classtrainee/change_payment_mode';
         $this->load->view('layout', $data);
     }
+
     /**
      * This method gets enrollment for a trainee/ company
      */
-    public function search_trainee_change_pay_mode() {        
+    public function search_trainee_change_pay_mode() {
         $taxcode_id = $this->input->post('taxcode_id');
         $trainee_id = $this->input->post('trainee_id');
         $company_id = $this->input->post('company_id');
@@ -5063,65 +4831,66 @@ class Class_Trainee extends CI_Controller {
         echo json_encode($result);
         exit();
     }
+
     /**
      * This method used for changing the payment mode of not paid enrolments.
      */
     public function change_payment_mode_update() {
         $args = array();
-        $args['tenant_id'] = $this->tenant_id;        
+        $args['tenant_id'] = $this->tenant_id;
         $args['trainee_user_id'] = $this->input->post('trainee_user_id');
         $args['payment_due_id'] = $this->input->post('payment_due_id');
         $args['payment_mode'] = $this->input->post('payment_mode');
         $args['course_id'] = $this->input->post('course_id');
         $args['class_id'] = $this->input->post('class_id');
-        $args['company_id'] = $this->input->post('company_id'); 
-        $res = $this->classtraineemodel->get_class_enrol_data($args['course_id'], $args['class_id'],$args['trainee_user_id'],$args['company_id']);
-        if(empty($args['company_id'])) {
+        $args['company_id'] = $this->input->post('company_id');
+        $res = $this->classtraineemodel->get_class_enrol_data($args['course_id'], $args['class_id'], $args['trainee_user_id'], $args['company_id']);
+        if (empty($args['company_id'])) {
             $status = $this->classtraineemodel->change_payment_mode_individual($args);
-            $account_type = '1';// 1 = individual
+            $account_type = '1'; // 1 = individual
             $act_on = $args['trainee_user_id'];
         } else {
             $status = $this->classtraineemodel->change_payment_mode_company($args);
-            $account_type = '2';// 2 = company
+            $account_type = '2'; // 2 = company
             $act_on = $args['company_id'];
-        }        
-        if($status) {
-                $course_id = $this->input->post('course_id');
-                $class_id = $this->input->post('class_id');
-                $company_id = $this->input->post('company_id');
-                $trainee_id = $this->input->post('trainee_user_id');
-                
-                if($this->input->post('payment_mode') == 'NOTPAID')
-                {
-                      $payment_mode = 'Payment required';
-                }else{ 
-                      $payment_mode = 'Payment not required';
-                }
-                $course_name = $this->activitylog->get_course_name($course_id);              
-                $class_name = $this->activitylog->class_name($class_id);
-                $company_name = $this->activitylog->company_name($company_id);
-                $trainee_name = $this->activitylog->trainee_name($trainee_id);
-                $data = array(  
-                                'course_id' => $course_id,
-                                'course_name' => $course_name->crse_name,
-                                'class_id' => $class_id,
-                                'class_name' => $class_name->class_name,
-                                'company_id' => $company_id,
-                                'company_name' => $company_name->company_name,
-                                'trainee_id' => $trainee_id,
-                                'trainee_name' => $trainee_name->first_name,
-                                'payment_mode' => $payment_mode,
-                                'details' => $res
-                             );
-                
-                $previous_data = json_encode($data);
-                user_activity(10,$act_on,$previous_data,$account_type);
+        }
+        if ($status) {
+            $course_id = $this->input->post('course_id');
+            $class_id = $this->input->post('class_id');
+            $company_id = $this->input->post('company_id');
+            $trainee_id = $this->input->post('trainee_user_id');
+
+            if ($this->input->post('payment_mode') == 'NOTPAID') {
+                $payment_mode = 'Payment required';
+            } else {
+                $payment_mode = 'Payment not required';
+            }
+            $course_name = $this->activitylog->get_course_name($course_id);
+            $class_name = $this->activitylog->class_name($class_id);
+            $company_name = $this->activitylog->company_name($company_id);
+            $trainee_name = $this->activitylog->trainee_name($trainee_id);
+            $data = array(
+                'course_id' => $course_id,
+                'course_name' => $course_name->crse_name,
+                'class_id' => $class_id,
+                'class_name' => $class_name->class_name,
+                'company_id' => $company_id,
+                'company_name' => $company_name->company_name,
+                'trainee_id' => $trainee_id,
+                'trainee_name' => $trainee_name->first_name,
+                'payment_mode' => $payment_mode,
+                'details' => $res
+            );
+
+            $previous_data = json_encode($data);
+            user_activity(10, $act_on, $previous_data, $account_type);
             $this->session->set_flashdata("success", "Enrollment mode has been updated successfully.");
         } else {
             $this->session->set_flashdata("error", "We have not been able to change the enrollment mode.Please try again later or get in touch with your Administrator.");
         }
         redirect("class_trainee/change_payment_mode");
     }
+
     /**
      * This method returns notpaid and notrequired enrollment trainees.
      */
@@ -5129,7 +4898,7 @@ class Class_Trainee extends CI_Controller {
         $matches = array();
         $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
         $type = htmlspecialchars($_POST['type'], ENT_QUOTES, 'UTF-8');
-        if($type == 'taxcode') {
+        if ($type == 'taxcode') {
             $result = $this->classtraineemodel->get_notpaid_notrequired_taxcode($this->tenant_id, $query_string, '');
             if ($result) {
                 foreach ($result as $row) {
@@ -5140,7 +4909,7 @@ class Class_Trainee extends CI_Controller {
                     );
                 }
             }
-        }else { 
+        } else {
             $result = $this->classtraineemodel->get_notpaid_notrequired_taxcode($this->tenant_id, '', $query_string);
             if ($result) {
                 foreach ($result as $row) {
@@ -5151,14 +4920,15 @@ class Class_Trainee extends CI_Controller {
                     );
                 }
             }
-        }    
+        }
         echo json_encode($matches);
         exit();
     }
+
     /**
      * function to import trainee feedback
      */
-    public function update_trainer_feedback(){
+    public function update_trainer_feedback() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $course = $this->input->post('course');
         $class = $this->input->post('class');
@@ -5184,7 +4954,7 @@ class Class_Trainee extends CI_Controller {
                 } else {
                     $excel_data = $this->excel_reader->sheets[0][cells];
                     $class_detail = $this->class->get_class_details($this->tenant_id, $class);
-                    $feedback = $this->validate_trainer_feedback($excel_data, $class, $course, $trainer);                    
+                    $feedback = $this->validate_trainer_feedback($excel_data, $class, $course, $trainer);
                     if (!empty($feedback)) {
                         $data['details'] = $feedback;
                         $this->load->helper('export');
@@ -5193,38 +4963,37 @@ class Class_Trainee extends CI_Controller {
                         $data['filesb'] = write_trainer_feedback_status($feedback, $trainer, 'failed');
                     }
                     unlink('./uploads/' . $data['file_name']);
-
                 }
             }
         }
         $data['page_title'] = 'Update Trainer Feedback';
         $data['main_content'] = 'classtrainee/updatetrainerfeedback';
         $data['courses'] = $this->reportsModel->get_class_courses($this->tenant_id);
-        if(!empty($course)){
+        if (!empty($course)) {
             $this->load->model('Course_Model', 'courseModel');
             $data['classes'] = $this->courseModel->get_classes_active_enrollment_certificate_courses($course)->result();
         }
-        if(!empty($class)){
+        if (!empty($class)) {
             $data['trainers'] = $this->classtraineemodel->get_trainer_names($class_detail->classroom_trainer);
         }
         $this->load->view('layout', $data);
     }
-    
+
     /**
      * function created to get class trainer
      */
-    public function get_classtrainer(){
+    public function get_classtrainer() {
         $class = $this->input->get('class');
         $class_details = $this->class->get_class_details($this->tenant_id, $class);
         $trainer_details = $this->classtraineemodel->get_trainer_names($class_details->classroom_trainer);
         $trainers = array();
         foreach ($trainer_details as $trainer) {
-            $trainers[] = array('user_id' => $trainer->user_id, 'trainer_name' => $trainer->first_name.' '.$trainer->last_name);
+            $trainers[] = array('user_id' => $trainer->user_id, 'trainer_name' => $trainer->first_name . ' ' . $trainer->last_name);
         }
         echo json_encode(array('success' => true, 'data' => $trainers));
         exit();
     }
-    
+
     /**
      * function to validate bulk trainer feedback
      */
@@ -5232,19 +5001,19 @@ class Class_Trainee extends CI_Controller {
         unset($excel_data[1]);
         $excel_data = array_filter($excel_data);
         $insert_data = array();
-        $fdbk_arr = array('Competent'=>'COMP_C','Not Yet Competent'=>'COMP_NYC',
-            'Exempted'=>'COMP_EX','Absent'=>'COMP_ABS','Twice Not Competent'=>'COMP_2NYC');
+        $fdbk_arr = array('Competent' => 'COMP_C', 'Not Yet Competent' => 'COMP_NYC',
+            'Exempted' => 'COMP_EX', 'Absent' => 'COMP_ABS', 'Twice Not Competent' => 'COMP_2NYC');
         foreach ($excel_data as $key => $row) {
             $status = '';
             $excel = array();
             $excel['taxcode'] = $row[1];
             $excel['fullname'] = $row[2];
-           
+
             $excel['rating'] = $fdbk_arr[trim($row[3])];
             $excel['view_rating'] = $row[3];
-            
+
             $insert_data[$key] = $excel;
-            
+
             $error_msg = $this->check_feedback_is_empty($excel, $fdbk_arr);
             if (!empty($error_msg)) {
                 $insert_data[$key]['failure_reason'] = $error_msg;
@@ -5258,40 +5027,40 @@ class Class_Trainee extends CI_Controller {
                 $error_msg .= ' Trainee credentials not found in this class.';
                 $insert_data[$key]['failure_reason'] = $error_msg;
                 $insert_data[$key]['status'] = 'FAILED';
-            }else{
+            } else {
                 $insert_data[$key]['user_id'] = $user_enrol_status->row('user_id');
             }
         }
         $insert_status = $this->classtraineemodel->update_trainer_feedback_data($this->tenant_id, $insert_data, $course, $trainer, $class);
         return $insert_status;
     }
+
     /**
      * This method checks if the mandatory fields in XLS are empty or not
      */
-   
-    private function check_feedback_is_empty($excel, $fdbk_arr) {        
+    private function check_feedback_is_empty($excel, $fdbk_arr) {
         $error_msg = '';
-        if (empty($excel['taxcode'])){
+        if (empty($excel['taxcode'])) {
             $error_msg .= 'Trainee NRIC/FIN No. is Required.';
         }
-        if (empty($excel['rating'])){
+        if (empty($excel['rating'])) {
             $error_msg .= ' Trainee Overall Rating is Required.';
-        } elseif(! in_array($excel['rating'], $fdbk_arr)){
+        } elseif (!in_array($excel['rating'], $fdbk_arr)) {
             $error_msg .=' Invalid Overall Rating.';
         }
         return $error_msg;
     }
-    
-    public function get_invoice(){
+
+    public function get_invoice() {
         $matches = array();
         $paid = $this->input->post('paid');
         $query_string = htmlspecialchars($_POST['q'], ENT_QUOTES, 'UTF-8');
-        $result = $this->classtraineemodel->get_invoice($this->tenant_id, $query_string,$paid);
+        $result = $this->classtraineemodel->get_invoice($this->tenant_id, $query_string, $paid);
         if ($result) {
             foreach ($result as $row) {
                 $matches[] = array(
                     'key' => $row->invoice_id,
-                    'label' => $row->invoice_id . ' (Name: ' . $row->first_name . ' ' . $row->last_name . ')'.$row->tax_code,
+                    'label' => $row->invoice_id . ' (Name: ' . $row->first_name . ' ' . $row->last_name . ')' . $row->tax_code,
                     'value' => $row->invoice_id
                 );
             }
@@ -5299,30 +5068,37 @@ class Class_Trainee extends CI_Controller {
         echo json_encode($matches);
         exit();
     }
-    
+
     /*  added by shubhranshu for client requirement on 21/03/2019 */
-    public function chk_nric_restriction($nric='',$operation){
-        $exists = $this->traineemodel->check_nric_restriction($nric,$operation);
+
+    public function chk_nric_restriction($nric = '', $operation) {
+        $exists = $this->traineemodel->check_nric_restriction($nric, $operation);
         if ($exists) {
             return 1;
-        } else { return 0;}
+        } else {
+            return 0;
+        }
     }
-    public function check_nric_restriction(){
+
+    public function check_nric_restriction() {
         extract($_POST);
         $tax_code = trim(($tax_code));
         $operation = trim(($operation));
-        $exists = $this->traineemodel->check_nric_restriction($tax_code,$operation);
+        $exists = $this->traineemodel->check_nric_restriction($tax_code, $operation);
         if ($exists) {
             echo 1;
-        } else { echo 0;}
-    }/*  added by shubhranshu for client requirement on 21/03/2019 */
-    
-    
+        } else {
+            echo 0;
+        }
+    }
+
+    /*  added by shubhranshu for client requirement on 21/03/2019 */
+
     /**
      * This function will check trainee enrolment status before reschedule.
      */
-    public function check_reschedule_status() {        
-        $class_id = $this->input->post("class_id");        
+    public function check_reschedule_status() {
+        $class_id = $this->input->post("class_id");
         $trainee_id = $this->input->post("trainee_id");
         $trainee_id_array = explode(",", $trainee_id);
         $status = $this->classtraineemodel->check_reschedule_status($trainee_id_array, $class_id);
@@ -5331,30 +5107,27 @@ class Class_Trainee extends CI_Controller {
     }
 
 }
+
 /**
  * function to get course_class_starttime list
  * @param type $data_arr
  * @return string
  */
 function get_course_class_starttime($data_arr) {
-    
-    if (!empty($data_arr)) 
-    {
+
+    if (!empty($data_arr)) {
         $arr = array();
-        foreach ($data_arr as $row) 
-        {
-            if($row->lock_status==1){
-                $loked="<strong>Class Attendance  :</strong> Locked(".$row->lock_status.")";
-        }else{
-            $loked="";
-        }
-            $arr[$row->class_id] = "<strong>Course Name:</strong> " . $row->crse_name . " (" . $row->course_id 
-                    . ") &nbsp;&nbsp;&nbsp;&nbsp;<strong>Class Name</strong>: " . $row->class_name . " (" . $row->class_id 
-                    . ") &nbsp;&nbsp;&nbsp;&nbsp;<strong>Start Date: </strong>" . date('d/m/Y (h:i A)', strtotime($row->class_start_datetime)) 
-                    . " ---- <strong>End Date:</strong> " . date('d/m/Y (h:i A)', strtotime($row->class_end_datetime))."<br />&nbsp;&nbsp;&nbsp;&nbsp;".$loked;
-        
-           
+        foreach ($data_arr as $row) {
+            if ($row->lock_status == 1) {
+                $loked = "<strong>Class Attendance  :</strong> Locked(" . $row->lock_status . ")";
+            } else {
+                $loked = "";
             }
+            $arr[$row->class_id] = "<strong>Course Name:</strong> " . $row->crse_name . " (" . $row->course_id
+                    . ") &nbsp;&nbsp;&nbsp;&nbsp;<strong>Class Name</strong>: " . $row->class_name . " (" . $row->class_id
+                    . ") &nbsp;&nbsp;&nbsp;&nbsp;<strong>Start Date: </strong>" . date('d/m/Y (h:i A)', strtotime($row->class_start_datetime))
+                    . " ---- <strong>End Date:</strong> " . date('d/m/Y (h:i A)', strtotime($row->class_end_datetime)) . "<br />&nbsp;&nbsp;&nbsp;&nbsp;" . $loked;
+        }
         return $arr;
     }
 }
@@ -5368,8 +5141,8 @@ function get_class_starttime($data_arr) {
     if (!empty($data_arr)) {
         $arr = array();
         foreach ($data_arr as $row) {
-          
-            $arr[$row->class_id.','.$row->lock_status] = "<strong>Class Name</strong>: " . $row->class_name . " (" . $row->class_id . ") &nbsp;&nbsp;&nbsp;&nbsp;<strong>Start Date: </strong>" . date('d/m/Y (h:i A)', strtotime($row->class_start_datetime)) . " ---- <strong>End Date:</strong> " . date('d/m/Y (h:i A)', strtotime($row->class_end_datetime));
+
+            $arr[$row->class_id . ',' . $row->lock_status] = "<strong>Class Name</strong>: " . $row->class_name . " (" . $row->class_id . ") &nbsp;&nbsp;&nbsp;&nbsp;<strong>Start Date: </strong>" . date('d/m/Y (h:i A)', strtotime($row->class_start_datetime)) . " ---- <strong>End Date:</strong> " . date('d/m/Y (h:i A)', strtotime($row->class_end_datetime));
         }
         return $arr;
     }
@@ -5404,6 +5177,7 @@ function get_course_id($data_arr) {
         return $arr;
     }
 }
+
 /**
  * function to get course id
  * @param type $data_arr
@@ -5418,69 +5192,66 @@ function get_active_class_att_status($data_arr) {
         return $arr;
     }
 }
-function get_reschedule_class_att_status($data_arr){
-     if (!empty($data_arr)) {
+
+function get_reschedule_class_att_status($data_arr) {
+    if (!empty($data_arr)) {
         $arr = array();
         foreach ($data_arr as $row) {
             $arr[$row->class_id] = $row->lock_status;
         }
         return $arr;
     }
-
 }
 
-    /**
-     * Function returns the action link.
-     * @param type $enrolment_mode
-     * @param type $payment_status
-     * @param type $invoice_id
-     * @param type $user_id
-     * @param type $pymnt_due_id
-     * @param type $class_id
-     * @param type $view_trainee_data
-     * @param type $trainee_Status
-     * @param type $classStatus
-     * @param type $company_id
-     * @return string
-     */
-    
-function get_links($enrolment_mode, $payment_status, $invoice_id, $user_id, $pymnt_due_id, $class_id, $view_trainee_data, $trainee_Status,$classStatus,$company_id, $att_status=NULL) {
-        if ($payment_status == 'PYNOTREQD') { 
-            $tempLinkStr .= '<span style="color:red">Payment Not Required</span>  <br>';
+/**
+ * Function returns the action link.
+ * @param type $enrolment_mode
+ * @param type $payment_status
+ * @param type $invoice_id
+ * @param type $user_id
+ * @param type $pymnt_due_id
+ * @param type $class_id
+ * @param type $view_trainee_data
+ * @param type $trainee_Status
+ * @param type $classStatus
+ * @param type $company_id
+ * @return string
+ */
+function get_links($enrolment_mode, $payment_status, $invoice_id, $user_id, $pymnt_due_id, $class_id, $view_trainee_data, $trainee_Status, $classStatus, $company_id, $att_status = NULL) {
+    if ($payment_status == 'PYNOTREQD') {
+        $tempLinkStr .= '<span style="color:red">Payment Not Required</span>  <br>';
+    } else {
+        $tempLinkStr = '';
+        if ($view_trainee_data->data['user']->role_id != 'ADMN') {
+            if ($trainee_Status == 'ACTIVE' && $classStatus != 'COMPLTD') {
+                $tempLinkStr = '<a href="' . base_url() . 'class_trainee/booking_acknowledge_pdf/' . $user_id . '/' . $class_id . '">Booking ACK.</a>  <br>';
+            }
+            if ($enrolment_mode == 'SELF' && $payment_status == 'PAID') {
+                $tempLinkStr .= '<a href="' . base_url() . 'class_trainee/export_payment_receipt/' . $pymnt_due_id . '">Receipt (Paid)</a>  <br>';
+            } else if ($enrolment_mode == 'COMPSPON' && $payment_status == 'PAID') {
+                $tempLinkStr .='<a href="' . base_url() . 'class_trainee/export_payment_received/' . $pymnt_due_id . '">Receipt (Paid)</a> <br>';
+            } else if ($enrolment_mode == 'COMPSPON' && $payment_status == 'PARTPAID') {
+                $tempLinkStr .='<a href="' . base_url() . 'class_trainee/export_payment_received/' . $pymnt_due_id . '">Receipt (Part Paid)</a>  <br>';
+            }
         } else {
-            $tempLinkStr = '';
-            if ($view_trainee_data->data['user']->role_id != 'ADMN') 
-            {
-                if ($trainee_Status == 'ACTIVE' && $classStatus != 'COMPLTD') 
-                {                
-                    $tempLinkStr = '<a href="' . base_url() . 'class_trainee/booking_acknowledge_pdf/' . $user_id . '/' . $class_id . '">Booking ACK.</a>  <br>';
+            if ($enrolment_mode == 'SELF' && $payment_status == 'PAID' && $att_status == '1') {
+                $tempLinkStr .= '<a href="' . base_url() . 'class_trainee/export_payment_receipt/' . $pymnt_due_id . '">Receipt</a> <br>';
+            } elseif ($enrolment_mode == 'SELF' && $payment_status == 'PAID' && $att_status == '0') {
+                $tempLinkStr .= '<i>Receipt Not Available(Trainee is absent)</i> <br>';
+            } elseif ($enrolment_mode == 'SELF' && $payment_status == 'NOTPAID') {
+                if ($trainee_Status == 'ACTIVE') {
+                    if ($classStatus != 'COMPLTD')
+                        $tempLinkStr .= '<a href="' . base_url() . 'class_trainee/booking_acknowledge_pdf/' . $user_id . '/' . $class_id . '">Booking ACK.</a> <br>';
                 }
-                if ($enrolment_mode == 'SELF' && $payment_status == 'PAID') {
-                    $tempLinkStr .= '<a href="' . base_url() . 'class_trainee/export_payment_receipt/' . $pymnt_due_id . '">Receipt (Paid)</a>  <br>';
-                } else if ($enrolment_mode == 'COMPSPON' && $payment_status == 'PAID') {
-                    $tempLinkStr .='<a href="' . base_url() . 'class_trainee/export_payment_received/' . $pymnt_due_id . '">Receipt (Paid)</a> <br>';
-                } else if ($enrolment_mode == 'COMPSPON' && $payment_status == 'PARTPAID') {
-                    $tempLinkStr .='<a href="' . base_url() . 'class_trainee/export_payment_received/' . $pymnt_due_id . '">Receipt (Part Paid)</a>  <br>';
-                }
-            } else { 
-                if ($enrolment_mode == 'SELF' && $payment_status == 'PAID' && $att_status == '1') {
-                    $tempLinkStr .= '<a href="' . base_url() . 'class_trainee/export_payment_receipt/' . $pymnt_due_id . '">Receipt</a> <br>';
-                } elseif ($enrolment_mode == 'SELF' && $payment_status == 'PAID' && $att_status == '0') {
-                    $tempLinkStr .= '<i>Receipt Not Available(Trainee is absent)</i> <br>';
-                        } elseif ($enrolment_mode == 'SELF' && $payment_status == 'NOTPAID') {
-                    if ($trainee_Status == 'ACTIVE') {
-                        if($classStatus != 'COMPLTD')
-                            $tempLinkStr .= '<a href="' . base_url() . 'class_trainee/booking_acknowledge_pdf/' . $user_id . '/' . $class_id . '">Booking ACK.</a> <br>';
-                    }
-                } elseif ($enrolment_mode == 'COMPSPON' && $payment_status == 'PAID') {
-                    $tempLinkStr .='<a href="' . base_url() . 'class_trainee/export_payment_received/' . $pymnt_due_id . '">Received</a>  <br>';
-                    if ($trainee_Status == 'ACTIVE' && $classStatus != 'COMPLTD')
-                        $tempLinkStr .='<a href="' . base_url() . 'class_trainee/booking_acknowledge_pdf/' . $user_id . '/' . $class_id . '">Booking ACK.</a> <br>';
-                } elseif ($enrolment_mode == 'COMPSPON' && ($payment_status == 'PARTPAID' || $payment_status == 'NOTPAID')) {
-                    if ($trainee_Status == 'ACTIVE' && $classStatus != 'COMPLTD')
-                        $tempLinkStr .='<a href="' . base_url() . 'class_trainee/booking_acknowledge_pdf/' . $user_id . '/' . $class_id . '">Booking ACK.</a>  <br>';
-                }
+            } elseif ($enrolment_mode == 'COMPSPON' && $payment_status == 'PAID') {
+                $tempLinkStr .='<a href="' . base_url() . 'class_trainee/export_payment_received/' . $pymnt_due_id . '">Received</a>  <br>';
+                if ($trainee_Status == 'ACTIVE' && $classStatus != 'COMPLTD')
+                    $tempLinkStr .='<a href="' . base_url() . 'class_trainee/booking_acknowledge_pdf/' . $user_id . '/' . $class_id . '">Booking ACK.</a> <br>';
+            } elseif ($enrolment_mode == 'COMPSPON' && ($payment_status == 'PARTPAID' || $payment_status == 'NOTPAID')) {
+                if ($trainee_Status == 'ACTIVE' && $classStatus != 'COMPLTD')
+                    $tempLinkStr .='<a href="' . base_url() . 'class_trainee/booking_acknowledge_pdf/' . $user_id . '/' . $class_id . '">Booking ACK.</a>  <br>';
             }
         }
-        return $tempLinkStr;
     }
+    return $tempLinkStr;
+}
