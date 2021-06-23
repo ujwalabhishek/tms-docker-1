@@ -1581,13 +1581,21 @@ class tp_gateway extends CI_Controller {
    
     public function update_cancel_enrolment_tpg() {
 
-        $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumber');
-        $feeCollectionStatus = $this->input->post('fee_collectionStatus');
+        $enrolmentReferenceNumber = $this->input->post('enrolmentReferenceNumber');
+        
+        $courseRunId = $this->input->post('courseRunId');
+        $traineeContactNumber = $this->input->post('traineeContactNumber'); 
+        $traineeEmailAddress = $this->input->post('traineeEmailAddress');
+        $employerContactFullName = $this->input->post('employerContactFullName');
+        $employerContactNumber = $this->input->post('employerContactNumber');
+        $employerEmailAddress = $this->input->post('employerEmailAddress');
+        
+        $discount_amount = $this->input->post('discount_amount');
+        $feeCollectionStatus = $this->input->post('feeCollectionStatus');
         
         //$course_id = $this->input->post('tpgCourseId');
         //$class_id = $this->input->post('tpgClassId');
         
-
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
@@ -1600,29 +1608,29 @@ class tp_gateway extends CI_Controller {
                                           "action": "Update",
                                           "course": {
                                             "run": {
-                                              "id": "10026"
+                                              "id": "'.$courseRunId.'"
                                             }
                                           },
                                           "trainee": {
                                             "contactNumber": {
                                               "countryCode": "60",
                                               "areaCode": "00",
-                                              "phoneNumber": "88881234"
+                                              "phoneNumber": "'.$traineeContactNumber.'"
                                             },
-                                            "emailAddress": "abc@abc.com"
+                                            "emailAddress": "'.$traineeEmailAddress.'"
                                           },
                                           "employer": {
-                                            "fullName": "Stephen Chua",
+                                            "fullName": "'.$employerContactFullName.'",
                                             "contactNumber": {
                                               "countryCode": "60",
                                               "areaCode": "00",
-                                              "phoneNumber": "88881234"
+                                              "phoneNumber": "'.$employerContactNumber.'"
                                             },
-                                            "emailAddress": "abc@abc.com"
+                                            "emailAddress": "'.$employerEmailAddress.'"
                                           },
                                           "fees": {
-                                            "discountAmount": "50.25",
-                                            "collectionStatus": "Full Payment"
+                                            "discountAmount": "'.$discount_amount.'",
+                                            "collectionStatus": "'.$feeCollectionStatus.'"
                                           }
                                         }
                                       }';
@@ -1638,7 +1646,7 @@ class tp_gateway extends CI_Controller {
 
         if ($tpg_response->status == 200) {
 
-            $this->session->set_flashdata("success", "The Fee Collection Status has been updated for the enrolment reference number - " . $enrolmentReferenceNumber);
+            $this->session->set_flashdata("success", "The enrolment data has been updated for reference number - " . $enrolmentReferenceNumber);
 
             redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         } else {
