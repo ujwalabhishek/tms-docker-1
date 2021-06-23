@@ -811,7 +811,7 @@ class Class_Model extends CI_Model {
      */
     public function get_course_class_for_edit($tenantId, $courseId) {
         $cur_date = date('Y-m-d');
-        $this->db->select('class_id,class_name,tpg_course_run_id');
+        $this->db->select('class_id,class_name');
         $this->db->from('course_class');
         $this->db->where('tenant_id', $tenantId);
         $this->db->where('course_id', $courseId);
@@ -830,7 +830,7 @@ class Class_Model extends CI_Model {
      */
     public function get_course_class($tenantId, $courseId, $mark_attendance = NULL, $is_allclass = 0,$classTrainee=0) {
         
-        $this->db->select('cc.class_id,cc.class_name');
+        $this->db->select('cc.class_id,cc.class_name,tpg_course_run_id');
         $this->db->from('course_class cc');
         $this->db->where('cc.tenant_id', $tenantId);
         $this->db->where('cc.course_id', $courseId);
