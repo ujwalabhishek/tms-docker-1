@@ -85,34 +85,7 @@
             </tbody>
         </table>
     </div><br>
-    <div class="bs-example">
-        <div class="table-responsive">
-            <?php if (!empty($tabledata) || !empty($class_status)) { ?>
-                <strong>Filter by Class Status:</strong>
-                <?php
-                $cls_status_options[''] = 'All';
-                $cls_status = fetch_metavalues_by_category_id(Meta_Values::CLASS_TRAINEE_FILTER);
-                foreach ($cls_status as $val):
-                    $cls_status_options[$val['parameter_id']] = $val['category_name'];
-                endforeach;
-                echo form_dropdown('class_status', $cls_status_options, $this->input->get('class_status'), 'id="class_status"');
-            }
-            ?> 
-
-            <?php if (count($tabledata) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['CLTRAINE'])) { ?>                    
-                <div class="add_button98 pull-right">
-                    <a href="<?php echo base_url(); ?>class_trainee/export_classtrainee_page<?php echo $export_url; ?>" class="small_text1" onclick="return exportValidate()">
-                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export Page Fields</span>
-                    </a> &nbsp;&nbsp; 
-                    <a href="<?php echo base_url(); ?>class_trainee/export_classtrainee_full<?php echo $export_url; ?>" class="small_text1" onclick="return exportValidate() > < span class ="label label-default black-btn">
-
-                       <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export All Fields</span>
-                    </a>
-                </div>                  
-            <?php } ?>
-        </div>
-
-    </div>
+    
     <?php echo form_close(); ?>
     <?php ?>
     <div class="bs-example">
@@ -125,21 +98,15 @@
                     $pageurl = 'class_trainee';
                     ?>
                     <tr>
-                        <th width="9%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=tu.tax_code&o=" . $ancher; ?>">NRIC/FIN No.</a></th>
-                        <th width="10%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=tup.first_name&o=" . $ancher; ?>">Name</a></th>
-                        <th width="15%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=c.crse_name&o=" . $ancher; ?>">Course / Class Detail</a></th>
-                        <th width="10%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=cc.class_start_datetime&o=" . $ancher; ?>">Class Duration</a></th>
+                        <th width="9%" class="th_header">NRIC/FIN No</th>
+                        <th width="10%" class="th_header">Name</th>
+                        <th width="15%" class="th_header">Course / Class Detail</th>
+                        <th width="10%" class="th_header">Class Duration</th>
                         <th width="6%" class="th_header">Company Name</th>
-                        <!--<?php
-                        $tenant_id = $this->session->userdata('userDetails')->tenant_id;
-                        if ($tenant_id == 'T01') {
-                            ?>
-                                                   <th width="10%" class="th_header">Sales Executive</th>
-                        <?php } ?>-->
                         <th width="12%" class="th_header">Sales Executive</th>
                         <th width="6%" class="th_header">Certi. Coll.</th>
                         <th width="10%" class="th_header">Class Status</th>
-                        <th width="9%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=ce.payment_status&o=" . $ancher; ?>">Payment</a></th>
+                        <th width="9%" class="th_header">Payment</th>
                         <th width="13%" class="th_header">Action</th>
                         <th width="13%" class="th_header">TPG</th>
                     </tr>

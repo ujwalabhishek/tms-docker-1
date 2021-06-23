@@ -1993,7 +1993,7 @@ class Class_Model extends CI_Model {
                 AND cc.class_id = '$classID'
                 AND date(cc.class_end_datetime) <= date('YYYY-MM-DD')";                
                 $result = $this->db->query($sql)->result();
-                echo $this->db_last_query();exit;
+                echo $this->db->last_query();exit;
                 return $result;
     }
 
