@@ -68,11 +68,19 @@ $(document).ready(function () {
     }); //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM///////////////
     function form_validate($retval) {
         var crse = $('#course').val();
+        var clas = $('#class').val();
         if (crse.length > 0 && crse.length == 0) {
-            disp_err('#course', '[Select Course from dropdown]');
+            $('#course').css('border', 'solid 1px red');
             $retval = false;
         } else {
-            remove_err('#course');
+            $('#course').css('border', 'nonre');
+        }
+        
+        if (clas.length > 0 && clas.length == 0) {
+            $('#class').css('border', 'solid 1px red');
+            $retval = false;
+        } else {
+            $('#class').css('border', 'nonre');
         }
         
         return $retval;

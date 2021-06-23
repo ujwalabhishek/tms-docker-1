@@ -920,7 +920,23 @@ class Classes extends CI_Controller {
         $data['page_title'] = 'TPG Assessments';
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['courses'] = $courses = $this->coursemodel->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
+        $course = $this->input->get('course');
+        $class = $this->input->get('class');
+        if (!empty($course) && !empty($class)) {
+             $this->getTraineeForAssessments($course,$class);
+             
+        }
+        
+        
+        
+        
+        
         $data['main_content'] = 'class/tpg_assessments';
         $this->load->view('layout', $data);
+    }
+    
+    private function getTraineeForAssessments($courseID,$classID){
+        $tenant_id = $this->tenant_id;
+        $trainees = $this->classmodel->get_Trainee_For_Assessments($tenant_id,$courseID,$classID);
     }
 }

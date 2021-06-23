@@ -1964,6 +1964,38 @@ class Class_Model extends CI_Model {
     public function get_class_name($tenant_id,$class_id){
     return $this->db->select('class_name')->from('course_class')->where('tenant_id',$tenant_id)->where('class_id',$class_id)->get()->row()->class_name;
     }
+    
+    public function get_Trainee_For_Assessments($tenant_id,$courseID,$classID){
+         $sql = "SELECT
+                cm.company_name,
+                c.reference_num,
+                cc.tpg_course_run_id,
+                tu.tax_code,
+                tup.first_name as fullname,
+                date('YYYY-MM-DD') as assessmentDate,
+                c.competency_code as skillCode,
+                tf.feedback_score,
+                tf.feedback_grade,
+                (CASE WHEN ce.training_score ='C' THEN 'Pass' ELSE 'Fail' END) as 'result',
+                cc.class_start_datetime,
+                cc.class_end_datetime,
+                cc.class_name,
+                ce.training_score
+                FROM ( course_class cc) 
+                JOIN course c ON c.course_id = cc.course_id 
+                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                JOIN trainer_feedback tf ON tf.class_id = cc.class_id AND tf.course_id = cc.course_id AND tf.user_id = ce.user_id
+                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                left join tms_users_pers tup on tup.user_id =ce.user_id 
+                left join company_master cm on cm.company_id=ce.company_id
+                WHERE cc . tenant_id = '$tenant_id'
+                AND c.course_id = '$courseID'
+                AND cc.class_id = '$classID'
+                AND date(cc.class_end_datetime) <= date('YYYY-MM-DD')";                
+                $result = $this->db->query($sql)->result();
+                echo $this->db_last_query();exit;
+                return $result;
+    }
 
 
 }
