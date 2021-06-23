@@ -916,6 +916,8 @@ class Classes extends CI_Controller {
     }
     
     public function tpg_assessments(){
-        
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['main_content'] = 'class/tpg_assessments';
+        $this->load->view('layout', $data);
     }
 }
