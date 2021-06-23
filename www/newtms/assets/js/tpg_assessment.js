@@ -51,6 +51,32 @@ $(document).ready(function () {
         });
     });
     
+    //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////
+    $('#search_form').on('submit',function() {
+        form_check = 1;
+        //alert("form click");
+        var status=form_validate(true);//alert(status);
+        if(status){
+        var self = $(this),
+        button = self.find('input[type="submit"],button'),
+        submitValue = button.data('submit-value');
+        button.attr('disabled','disabled').html('Please Wait..');
+        return true;
+       }else{
+           return false;
+       }
+    }); //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM///////////////
+    function form_validate($retval) {
+        var crse = $('#course').val();
+        if (crse.length > 0 && crse.length == 0) {
+            disp_err('#course', '[Select Course from dropdown]');
+            $retval = false;
+        } else {
+            remove_err('#course');
+        }
+        
+        return $retval;
+    }
 });
 
 

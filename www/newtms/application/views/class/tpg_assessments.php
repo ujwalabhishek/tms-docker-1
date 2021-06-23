@@ -23,7 +23,7 @@
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class-trainee.png"/> Class Trainee Enrollment List</h2>
     <?php
     $atr = 'id="search_form" name="search_form" method="get"';
-    echo form_open("class_trainee", $atr);
+    echo form_open("classes", $atr);
     ?>  
     <div class="table-responsive">
         <h5  class="sub_panel_heading_style"><span class="glyphicon glyphicon-search"></span> Search By</h5>
@@ -75,127 +75,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="td_heading">
-                        <?php
-                        $checked = TRUE;
-                        $checked = ($this->input->get('search_select') == 1) ? TRUE : FALSE;
-
-                        $data = array(
-                            'id' => 'search_select',
-                            'class' => 'search_select',
-                            'name' => 'search_select',
-                            'value' => 1,
-                            'checked' => $checked
-                        );
-                        echo form_radio($data);
-                        ?>
-                        &nbsp;&nbsp; NRIC/FIN No.:
-                    </td>
-                    <td width="32%">
-                        <?php
-                        $data = array(
-                            'id' => 'taxcode',
-                            'name' => 'taxcode',
-                            'value' => $this->input->get('taxcode'),
-                            'class' => 'upper_case',
-                            'style' => 'width:200px;',
-                        );
-                        echo form_input($data);
-                        $data = array(
-                            'id' => 'taxcode_id',
-                            'name' => 'taxcode_id',
-                            'value' => $this->input->get('taxcode_id'),
-                            'type' => 'hidden'
-                        );
-                        echo form_input($data);
-                        ?>
-                        <br>
-                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
-                        <span id="taxcode_err"></span>
-                    </td>
-                    <td width="15%" class="td_heading">
-                        <?php
-                        $checked = ($this->input->get('search_select') == 2) ? TRUE : FALSE;
-                        $data = array(
-                            'id' => 'search_select',
-                            'class' => 'search_select',
-                            'name' => 'search_select',
-                            'value' => 2,
-                            'checked' => $checked
-                        );
-                        echo form_radio($data);
-                        ?>
-                        &nbsp;&nbsp; 
-                        Trainee Name:</td>
-                    <td colspan="2"><?php
-                        $data = array(
-                            'id' => 'trainee',
-                            'name' => 'trainee',
-                            'value' => $this->input->get('trainee'),
-                            'class' => 'upper_case',
-                            'style' => 'width:200px;',
-                        );
-                        echo form_input($data);
-                        $data = array(
-                            'id' => 'trainee_id',
-                            'name' => 'trainee_id',
-                            'value' => $this->input->get('trainee_id'),
-                            'type' => 'hidden'
-                        );
-                        echo form_input($data);
-                        ?>
-                        <br>
-                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
-                        <span id="trainee_err"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <?php if ($this->data['user']->role_id != 'COMPACT') { ?>
-                        <td class="td_heading" width="15%"> Company Name:</td>
-                        <td colspan="" width="30%">
-                            <?php
-                            $company = array(
-                                'name' => 'company_name',
-                                'id' => 'company_name',
-                                'value' => $this->input->get('company_name'),
-                                'style' => 'width:200px;',
-                                'class' => 'upper_case',
-                                'autocomplete' => 'off'
-                            );
-                            echo form_input($company);
-                            echo form_hidden('company_id', $this->input->get('company_id'), $id = 'company_id');
-                            ?>
-                            <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
-                            <span id="company_name_err"></span>
-                        <?php } else { ?>
-                        <td colspan="5">
-                        <?php } ?>
-
-                    </td>
-
-                    <?php if ($this->data['user']->role_id != 'COMPACT') { ?>
-                        <td class="td_heading" width="15%"> Enrolment ID:</td>
-                        <td colspan="" width="30%">
-                            <?php
-                            $enrol = array(
-                                'name' => 'eidbox',
-                                'id' => 'eidbox',
-                                'value' => $this->input->get('eid'),
-                                'style' => 'width:200px;',
-                                'class' => 'upper_case',
-                                'autocomplete' => 'off'
-                            );
-                            echo form_input($enrol);
-                            echo form_hidden('eid', $this->input->get('eid'), $id = 'eid');
-                            ?>
-                            <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
-                            <span id="eid_err"></span>
-                        <?php } ?>
+                    <td colspan='2'>
                         <span class="pull-right">
                             <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
                         </span>
                     </td>
                 </tr>
+               
             </tbody>
         </table>
     </div><br>
