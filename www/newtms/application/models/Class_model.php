@@ -2008,22 +2008,9 @@ class Class_Model extends CI_Model {
         
         $today_date = date('Y-m-d');
     
-         $sql = "SELECT
-                cm.company_name,
+         $sql = "SELECT             
                 tu.user_id,
-                c.reference_num,
-                cc.tpg_course_run_id,
-                tu.tax_code,
-                tup.first_name as fullname,
-                CURDATE() as assessmentDate,
-                c.competency_code as skillCode,
-                ce.feedback_score,
-                ce.feedback_grade,
-                (CASE WHEN ce.training_score ='C' THEN 'Pass' ELSE 'Fail' END) as 'result',
-                cc.class_start_datetime,
-                cc.class_end_datetime,
-                cc.class_name,
-                ce.training_score
+                tu.tax_code
                 FROM ( course_class cc) 
                 JOIN course c ON c.course_id = cc.course_id 
                 JOIN class_enrol ce ON ce.class_id = cc.class_id 
@@ -2045,7 +2032,7 @@ class Class_Model extends CI_Model {
                 foreach ($res as $row) {
                     $result[$row->user_id] = $row->tax_code;
                 }
-                print_r($result);exit;
+               
                 return $result;
     }
 
