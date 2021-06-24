@@ -1642,7 +1642,8 @@ class Class_Model extends CI_Model {
             'venue_room' => $venue_room,
             'venue_unit' => $venue_unit,
             'venue_postalcode' => $venue_postalcode,
-            'venue_floor' => $venue_floor
+            'venue_floor' => $venue_floor,
+            'modeoftraining' => $modeoftraining
             );  
         
         $this->db->trans_start();
@@ -1974,8 +1975,8 @@ class Class_Model extends CI_Model {
                 tup.first_name as fullname,
                 date('YYYY-MM-DD') as assessmentDate,
                 c.competency_code as skillCode,
-                tf.feedback_score,
-                tf.feedback_grade,
+                ce.feedback_score,
+                ce.feedback_grade,
                 (CASE WHEN ce.training_score ='C' THEN 'Pass' ELSE 'Fail' END) as 'result',
                 cc.class_start_datetime,
                 cc.class_end_datetime,
@@ -1984,7 +1985,6 @@ class Class_Model extends CI_Model {
                 FROM ( course_class cc) 
                 JOIN course c ON c.course_id = cc.course_id 
                 JOIN class_enrol ce ON ce.class_id = cc.class_id 
-                JOIN trainer_feedback tf ON tf.class_id = cc.class_id AND tf.course_id = cc.course_id AND tf.user_id = ce.user_id
                 JOIN tms_users tu ON tu.user_id = ce.user_id 
                 left join tms_users_pers tup on tup.user_id =ce.user_id 
                 left join company_master cm on cm.company_id=ce.company_id
