@@ -145,7 +145,7 @@
                                     <br>
                                     <a href="<?php echo base_url() . 'tp_gateway//' ; ?>" ><span class="btnblue">Update/Void Asessment</span></a>
                                     <br>
-                                    <a href="<?php echo base_url() . 'tp_gateway//'; ?>" href="#view_assessment" rel="modal:open"><span class="btnblue">View Asessment</span></a>
+                                    <a href="#view_assessment" rel="modal:open"><span class="btnblue">View Asessment</span></a>
                                     
                                 </td>
                             </tr>
