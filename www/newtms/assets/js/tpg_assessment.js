@@ -30,8 +30,8 @@ $(document).ready(function () {
         $nric= $('#nric');
         $.ajax({
             type: 'post',
-            url: $baseurl + 'classes/get_enrol_trainee_list',
-            data: {course_id: $('#class').val()},
+            url: $baseurl + 'classes/get_Trainee_For_Assessments_json',
+            data: {course_id: $('#course').val(),class_id: $('#class').val()},
             dataType: "json",
             beforeSend: function () {
                 $nric.html('<option value="">Select</option>');

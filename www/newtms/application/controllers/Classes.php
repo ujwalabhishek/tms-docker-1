@@ -941,4 +941,8 @@ class Classes extends CI_Controller {
         $trainees = $this->classmodel->get_Trainee_For_Assessments($tenant_id,$courseID,$classID);
         return $trainees;
     }
+    
+    public function get_Trainee_For_Assessments_json(){
+        
+    }
 }
