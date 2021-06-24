@@ -145,7 +145,7 @@
                                     <br>
                                     <a href="<?php echo base_url() . 'tp_gateway//' ; ?>" ><span class="btnblue">Update/Void Asessment</span></a>
                                     <br>
-                                    <a href="<?php echo base_url() . 'tp_gateway//'; ?>" ><span class="btnblue">View Asessment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway//'; ?>" href="#view_assessment" rel="modal:open"><span class="btnblue">View Asessment</span></a>
                                     
                                 </td>
                             </tr>
@@ -169,14 +169,13 @@
 $atr = 'id="update_fee" name="update_fee" method="post"';
 echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
 ?>
-<div class="modal1_0001" id="abd" style="display:none;height:200px;min-height: 200px;">
-    <h2 class="panel_heading_style">Update Fee Collection Status</h2>
+<div class="modal1_0001" id="view_assessment" style="display:none;height:200px;min-height: 200px;">
+    <h2 class="panel_heading_style">TPG View Assessment</h2>
     <table class="table table-striped">
         <tbody>
             <tr>
-                <td class="td_heading">Fee Collection Status:</td>
+                <td class="td_heading">View Assessment:</td>
                 <td>
-                    <?php $enrolmentReferenceNumber = "ENR-2103-001256"; ?>
                     <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
                     <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
                     <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
@@ -191,7 +190,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
     </table>
     <span class="required required_i">* Required Fields</span>
     <div class="popup_cance89">
-        <span href="#abd" rel="modal:close"><button class="btn btn-primary enrollment_fee_save" type="submit">Submit</button></span>
+        <span href="#view_assessment" rel="modal:close"><button class="btn btn-primary enrollment_fee_save" type="submit">Submit</button></span>
     </div>
 </div>
 <script>

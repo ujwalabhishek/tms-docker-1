@@ -63,23 +63,28 @@ class Tpg_api_Model extends CI_Model {
         curl_close($curl);
     }
     
-    public function correct_live_dev_api_data($crse_ref_no,$tp_uen,$skillCode=''){
+    public function correct_live_dev_api_data($crse_ref_no,$tp_uen,$skillCode='',$nric=''){
         if(TPG_ENVIRONMENT == 'PRODUCTION'){
            $crse_ref_no = $crse_ref_no;
            $tp_uen  = $tp_uen;
            $domain=TPG_LIVE_URL;
            $skillCode = $skillCode;
+           $nric = $nric;
         }else{
           $crse_ref_no =  'TGS-2020002096';
           $tp_uen = '201000372W';
           $domain=TPG_DEV_URL;
           $skillCode='AER-MAT-2019-2.1';
+          $nric='S8195288D';
+          $dob='1981-01-10';
         }
         $data =array(
             'ref_no' => $crse_ref_no,
             'tp_uen' => $tp_uen,
             'domain' => $domain,
-            'skillcode' => $skillCode
+            'skillcode' => $skillCode,
+            'nric' => $nric,
+            'dob' => $dob
         );
         return $data;
     }
@@ -373,7 +378,7 @@ class Tpg_api_Model extends CI_Model {
     }
     
     public function create_asssessment_to_tpg($trainee,$tp_uen){
-        $retun = $this->correct_live_dev_api_data($trainee->reference_num,$tp_uen,$trainee->skillCode);
+        $retun = $this->correct_live_dev_api_data($trainee->reference_num,$tp_uen,$trainee->skillCode,$trainee->tax_code);
         
         if($trainee->tax_code_type == 'SNG_1'){
             $taxcode_type = 'NRIC';
@@ -395,7 +400,7 @@ class Tpg_api_Model extends CI_Model {
                       },
                       "trainee": {
                         "idType": "'.$taxcode_type.'",
-                        "id": "'.$trainee->tax_code.'",
+                        "id": "'.$retun[nric].'",
                         "fullName": "'.$trainee->fullname.'"
                       },
                       "result": "'.$trainee->result.'",
