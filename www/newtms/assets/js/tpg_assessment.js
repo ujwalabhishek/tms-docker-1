@@ -91,7 +91,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'post',
             url: $baseurl + 'tp_gateway/view_assessment',
-            data: {referenceNo: $('#click_assessment').data('refNo') },
+            data: {referenceNo: 'ASM-2103-000037'},//$('#click_assessment').data('refNo') },
             dataType: "json",
             beforeSend: function () {
                 
