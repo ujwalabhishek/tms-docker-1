@@ -914,7 +914,7 @@ class Classes extends CI_Controller {
         $tpg_response = $this->tpgModel->fetch_ssg_session($tenant_id,$CourseRunId,$classId,$tenant->comp_reg_no,$crse_details->crse_ref_no);
         echo $tpg_response;
     }
-    
+    ///added by shubhranshu to fetch all trainee asseessments
     public function tpg_assessments(){
         $tenant_id = $this->tenant_id;
         $data['page_title'] = 'TPG Assessments';
@@ -929,21 +929,17 @@ class Classes extends CI_Controller {
             $data['nric'] = $this->classmodel->get_Trainee_For_Assessments_json($tenant_id,$course,$class);
              
         }
-        
-        
-        
-        
-        
+
         $data['main_content'] = 'class/tpg_assessments';
         $this->load->view('layout', $data);
     }
-    
+    ///added by shubhranshu to get traine assessments
     private function getTraineeForAssessments($courseID,$classID,$userid){
         $tenant_id = $this->tenant_id;//
         $trainees = $this->classmodel->get_Trainee_For_Assessments($tenant_id,$courseID,$classID,$userid);
         return $trainees;
     }
-    
+    ///added by shubhranshu to fetch trainee for assesssment json data
     public function get_Trainee_For_Assessments_json(){
         $courseID = $this->input->post('course_id');
         $classID = $this->input->post('class_id');

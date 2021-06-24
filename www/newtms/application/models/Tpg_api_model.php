@@ -357,6 +357,37 @@ class Tpg_api_Model extends CI_Model {
         return $response;
     }
     
+    public function create_asssessment_to_tpg(){
+        $tpg_course_run_json='{
+                      "assessment": {
+                      "trainingPartner": {
+                        "code": "T16GB0003C-01",
+                        "uen": "T16GB0003C"
+                      },
+                      "course": {
+                        "referenceNumber": "TGS-0026008-ES",
+                        "run": {
+                          "id": "10226"
+                        }
+                      },
+                      "trainee": {
+                        "idType": "NRIC",
+                        "id": "S0118316H",
+                        "fullName": "Jon Chua"
+                      },
+                      "result": "Pass",
+                      "score": 80,
+                      "grade": "B",
+                      "assessmentDate": "2020-05-15",
+                      "skillCode": "TGS-MKG-234222",
+                      "conferringInstitute": {
+                        "code": "T16GB0003C-01"
+                      }
+                    }
+
+                  }';
+    }
+    
     public function updateEnrolmentReferenceNumber($course_id,$class_id,$user_id,$enrolmentReferenceNumber){
         
         if(!empty($enrolmentReferenceNumber)){

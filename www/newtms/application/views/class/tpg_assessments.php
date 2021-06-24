@@ -133,11 +133,11 @@
                                 <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
                                 <td>
                                    
-                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/' . $enrolmentReferenceNumber; ?>"><span class="btnblue">Create Asessment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Create Asessment</span></a>
                                     <br>
-                                    <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" ><span class="btnblue">Update/Void Asessment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway//' ; ?>" ><span class="btnblue">Update/Void Asessment</span></a>
                                     <br>
-                                    <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" ><span class="btnblue">View Asessment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway//'; ?>" ><span class="btnblue">View Asessment</span></a>
                                     
                                 </td>
                             </tr>

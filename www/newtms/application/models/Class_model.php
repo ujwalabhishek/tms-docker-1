@@ -1975,8 +1975,11 @@ class Class_Model extends CI_Model {
          $sql = "SELECT
                 cm.company_name,
                 c.reference_num,
+                c.course_id,
                 cc.tpg_course_run_id,
                 tu.tax_code,
+                cc.class_id,
+                ce.user_id,
                 tup.first_name as fullname,
                 CURDATE() as assessmentDate,
                 c.competency_code as skillCode,
@@ -2036,6 +2039,50 @@ class Class_Model extends CI_Model {
                     $result[$row->user_id] = $row->tax_code;
                 }
                
+                return $result;
+    }
+    
+    public function get_single_trainee_for_assessment($tenant_id,$courseID,$classID,$userid){
+        $today_date = date('Y-m-d');
+        $str='';
+        if($userid !=''){
+            $str = "AND ce.user_id = '$userid'";
+        }
+         $sql = "SELECT
+                cm.company_name,
+                c.reference_num,
+                c.course_id,
+                cc.tpg_course_run_id,
+                tu.tax_code,
+                cc.class_id,
+                ce.user_id,
+                tup.first_name as fullname,
+                CURDATE() as assessmentDate,
+                c.competency_code as skillCode,
+                ce.feedback_score,
+                ce.feedback_grade,
+                (CASE WHEN ce.training_score ='C' THEN 'Pass' ELSE 'Fail' END) as 'result',
+                cc.class_start_datetime,
+                cc.class_end_datetime,
+                cc.class_name,
+                ce.training_score
+                FROM ( course_class cc) 
+                JOIN course c ON c.course_id = cc.course_id 
+                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                left join tms_users_pers tup on tup.user_id =ce.user_id 
+                left join company_master cm on cm.company_id=ce.company_id
+                WHERE cc . tenant_id = '$tenant_id'
+                AND c.course_id = '$courseID'
+                AND cc.class_id = '$classID'
+                AND ce.feedback_grade !=''
+                AND ce.feedback_score !=0
+                AND c.competency_code !=''
+                AND c.reference_num !=''
+                AND ce.training_score !='' $str
+                AND date(cc.class_end_datetime) <= '$today_date'";                
+                $result = $this->db->query($sql)->result();
+                //echo $this->db->last_query();exit;
                 return $result;
     }
 
