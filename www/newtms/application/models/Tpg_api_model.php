@@ -385,7 +385,7 @@ class Tpg_api_Model extends CI_Model {
         $assessment_json='{
                   "assessment": {
                       "trainingPartner": {
-                        "code": "'.$retun[tp_uen].'-01",
+                        "code": "'.$retun[tp_uen].'-03",
                         "uen": "'.$retun[tp_uen].'"
                       },
                       "course": {
@@ -405,13 +405,14 @@ class Tpg_api_Model extends CI_Model {
                       "assessmentDate": "'.$trainee->assessmentDate.'",
                       "skillCode": "'.$retun[skillcode].'",
                       "conferringInstitute": {
-                        "code": "'.$retun[tp_uen].'-01"
+                        "code": "'.$retun[tp_uen].'-03"
                       }
                     }
 
                   }';
-        print_r($assessment_json);exit;
+        //print_r($assessment_json);exit;
         $encrypted_data = encrypt_decrypt('encrypt', $assessment_json);
+        echo $encrypted_data;exit;
         $api_version = 'v1';
         $url = "https://".$retun[domain]."/tpg/assessments";
         $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
