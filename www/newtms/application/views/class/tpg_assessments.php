@@ -124,14 +124,14 @@
                             <tr>                        
                                 <td><?php echo $row['taxcode']; ?></td>
 
-                                <td class="name"><?php echo $row['fullname']; ?></td>
-                                <td><?php echo $row['assessmentDate']; ?></td>
-                                <td><?php echo $row['skillCode']; ?></td>
-                                <td><?php echo $row['feedback_score'] ?></td>
-                                <td><?php echo $row['feedback_grade']; ?></td>
-                                <td><?php echo $row['result']; ?></td>
-                                <td><?php echo $row['reference_num']; ?></td>
-                                <td><?php echo $row['tpg_course_run_id']; ?></td>
+                                <td class="name"><?php echo $row->fullname; ?></td>
+                                <td><?php echo $row->assessmentDate; ?></td>
+                                <td><?php echo $row->skillCode; ?></td>
+                                <td><?php echo $row->feedback_score ?></td>
+                                <td><?php echo $row->feedback_grade; ?></td>
+                                <td><?php echo $row->result; ?></td>
+                                <td><?php echo $row->reference_num; ?></td>
+                                <td><?php echo $row->tpg_course_run_id; ?></td>
                                 <td>
                                    
                                     <a href="<?php echo base_url() . 'tp_gateway/create_assessment/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-search"></span>Create Asessment</span></a>
