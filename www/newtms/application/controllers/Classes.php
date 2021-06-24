@@ -923,7 +923,8 @@ class Classes extends CI_Controller {
         $course = $this->input->get('course');
         $class = $this->input->get('class');
         if (!empty($course) && !empty($class)) {
-             $this->getTraineeForAssessments($course,$class);
+            $data['tabledata']= $this->getTraineeForAssessments($course,$class);
+            
              
         }
         
@@ -938,5 +939,6 @@ class Classes extends CI_Controller {
     private function getTraineeForAssessments($courseID,$classID){
         $tenant_id = $this->tenant_id;//
         $trainees = $this->classmodel->get_Trainee_For_Assessments($tenant_id,$courseID,$classID);
+        return $trainees;
     }
 }
