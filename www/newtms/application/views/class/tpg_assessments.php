@@ -133,11 +133,11 @@
                                 <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
                                 <td>
                                    
-                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-search"></span>Create Asessment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/' . $enrolmentReferenceNumber; ?>" class="btn-black">Create Asessment</a>
                                     <br>
-                                    <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-retweet"></span>Update/Void Asessment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="btn-black">Update/Void Asessment</a>
                                     <br>
-                                    <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-retweet"></span>View Asessment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="btn-black">View Asessment</a>
                                     
                                 </td>
                             </tr>
@@ -217,3 +217,19 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
 <?php echo form_close(); ?>
 </div>
 
+<style>
+    .btn-blue:hover(
+    color:white;
+    background-image:-webkit-linear-gradient(top, #107ac6, #097d91);
+    border-radius: 3px;
+    )
+    
+    .btn-blue(
+       border: none;
+    color: #008cff;
+    font-size: 11px !important;
+    margin-top: 0;
+    padding: 3px 4px !important;
+    cursor: pointer;
+    )
+</style>
