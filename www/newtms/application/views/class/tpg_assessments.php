@@ -50,13 +50,13 @@
                     <td class="td_heading">Class Name:</td>
                     <td colspan='3'>
                         <?php
-                        $options = array();
-                        $options[''] = 'Select';
+                        $optionss = array();
+                        $optionss[''] = 'Select';
                         foreach ($classes as $k => $v) {
-                            $options[$k] = $v;
+                            $optionss[$k] = $v;
                         }
                         $js = 'id="class" ';
-                        echo form_dropdown('class', $options, $this->input->get('class'), $js);
+                        echo form_dropdown('class', $optionss, $this->input->get('class'), $js);
                         ?>
                     </td>
                 </tr>
