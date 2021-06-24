@@ -106,7 +106,7 @@
                         <th width="12%" class="th_header">Feedback Grade</th>
                         <th width="6%" class="th_header">Result</th>
                         <th width="10%" class="th_header">Course Ref No</th>
-                        <th width="9%" class="th_header">CourseRunID</th>
+                        <!--<th width="9%" class="th_header">CourseRunID</th>-->
                         <th width="13%" class="th_header">TPG</th>
                     </tr>
                 </thead>
@@ -122,8 +122,7 @@
                             ?>
                                                                               
                             <tr>                        
-                                <td><?php echo $row->taxcode; ?></td>
-
+                                <td><?php echo $row->tax_code; ?></td>
                                 <td class="name"><?php echo $row->fullname; ?></td>
                                 <td><?php echo $row->assessmentDate; ?></td>
                                 <td><?php echo $row->skillCode; ?></td>
@@ -131,7 +130,7 @@
                                 <td><?php echo $row->feedback_grade; ?></td>
                                 <td><?php echo $row->result; ?></td>
                                 <td><?php echo $row->reference_num; ?></td>
-                                <td><?php echo $row->tpg_course_run_id; ?></td>
+                                <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
                                 <td>
                                    
                                     <a href="<?php echo base_url() . 'tp_gateway/create_assessment/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-search"></span>Create Asessment</span></a>

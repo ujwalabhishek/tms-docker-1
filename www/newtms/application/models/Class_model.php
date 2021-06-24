@@ -1975,7 +1975,7 @@ class Class_Model extends CI_Model {
                 cc.tpg_course_run_id,
                 tu.tax_code,
                 tup.first_name as fullname,
-                date('YYYY-MM-DD') as assessmentDate,
+                CURDATE() as assessmentDate,
                 c.competency_code as skillCode,
                 ce.feedback_score,
                 ce.feedback_grade,
