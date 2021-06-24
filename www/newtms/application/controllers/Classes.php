@@ -951,6 +951,6 @@ class Classes extends CI_Controller {
         foreach ($res as $k => $v) {
             $classes_arr[] = array('key' => $k, 'value' => $v);
         }
-        echo json_encode[$classes_arr];
+        echo json_encode($classes_arr);
     }
 }
