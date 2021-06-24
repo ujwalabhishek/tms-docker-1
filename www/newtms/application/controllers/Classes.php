@@ -936,7 +936,7 @@ class Classes extends CI_Controller {
     }
     
     private function getTraineeForAssessments($courseID,$classID){
-        $tenant_id = $this->tenant_id;
+        $tenant_id = $this->tenant_id;//
         $trainees = $this->classmodel->get_Trainee_For_Assessments($tenant_id,$courseID,$classID);
     }
 }
