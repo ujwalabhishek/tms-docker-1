@@ -1967,6 +1967,8 @@ class Class_Model extends CI_Model {
     }
     
     public function get_Trainee_For_Assessments($tenant_id,$courseID,$classID){
+        $today_date = date('Y-m-d');
+    
          $sql = "SELECT
                 cm.company_name,
                 c.reference_num,
@@ -1991,7 +1993,7 @@ class Class_Model extends CI_Model {
                 WHERE cc . tenant_id = '$tenant_id'
                 AND c.course_id = '$courseID'
                 AND cc.class_id = '$classID'
-                AND date(cc.class_end_datetime) <= date('YYYY-MM-DD')";                
+                AND date(cc.class_end_datetime) <= '$today_date'";                
                 $result = $this->db->query($sql)->result();
                 echo $this->db->last_query();exit;
                 return $result;
