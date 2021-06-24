@@ -922,8 +922,9 @@ class Classes extends CI_Controller {
         $data['courses'] = $courses = $this->coursemodel->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
         $course = $this->input->get('course');
         $class = $this->input->get('class');
+        $userid = $this->input->get('nric');
         if (!empty($course) && !empty($class)) {
-            $data['tabledata']= $this->getTraineeForAssessments($course,$class);
+            $data['tabledata']= $this->getTraineeForAssessments($course,$class,$userid);
             
              
         }
@@ -936,9 +937,9 @@ class Classes extends CI_Controller {
         $this->load->view('layout', $data);
     }
     
-    private function getTraineeForAssessments($courseID,$classID){
+    private function getTraineeForAssessments($courseID,$classID,$userid){
         $tenant_id = $this->tenant_id;//
-        $trainees = $this->classmodel->get_Trainee_For_Assessments($tenant_id,$courseID,$classID);
+        $trainees = $this->classmodel->get_Trainee_For_Assessments($tenant_id,$courseID,$classID,$userid);
         return $trainees;
     }
     

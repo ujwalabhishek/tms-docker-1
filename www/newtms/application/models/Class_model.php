@@ -1966,9 +1966,12 @@ class Class_Model extends CI_Model {
     return $this->db->select('class_name')->from('course_class')->where('tenant_id',$tenant_id)->where('class_id',$class_id)->get()->row()->class_name;
     }
     
-    public function get_Trainee_For_Assessments($tenant_id,$courseID,$classID){
+    public function get_Trainee_For_Assessments($tenant_id,$courseID,$classID,$userid=''){
         $today_date = date('Y-m-d');
-    
+        $str='';
+        if($userid !=''){
+            $str = "AND ce.user_id = '$userid'";
+        }
          $sql = "SELECT
                 cm.company_name,
                 c.reference_num,
@@ -1997,7 +2000,7 @@ class Class_Model extends CI_Model {
                 AND ce.feedback_score !=0
                 AND c.competency_code !=''
                 AND c.reference_num !=''
-                AND ce.training_score !=''
+                AND ce.training_score !='' $str
                 AND date(cc.class_end_datetime) <= '$today_date'";                
                 $result = $this->db->query($sql)->result();
                 //echo $this->db->last_query();exit;
