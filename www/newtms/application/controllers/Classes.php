@@ -947,6 +947,10 @@ class Classes extends CI_Controller {
         $classID = $this->input->post('class_id');
         $tenant_id = $this->tenant_id;
         $res = $this->classmodel->get_Trainee_For_Assessments($tenant_id,$courseID,$classID);
-        echo $res;
+        $classes_arr = array();
+        foreach ($res as $k => $v) {
+            $classes_arr[] = array('key' => $k, 'value' => $v);
+        }
+        echo json_encode[$classes_arr];
     }
 }
