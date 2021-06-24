@@ -122,7 +122,7 @@
                             ?>
                                                                               
                             <tr>                        
-                                <td><?php echo $row['taxcode']; ?></td>
+                                <td><?php echo $row->taxcode; ?></td>
 
                                 <td class="name"><?php echo $row->fullname; ?></td>
                                 <td><?php echo $row->assessmentDate; ?></td>
