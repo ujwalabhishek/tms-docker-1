@@ -11,13 +11,21 @@
     }
 </style>
 <div class="col-md-10">
-    <?php
-    $class_status = $this->input->get('class_status');
+     <?php
     if ($this->session->flashdata('success')) {
         echo '<div class="success">' . $this->session->flashdata('success') . '</div>';
     }
     if ($this->session->flashdata('error')) {
         echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
+    }
+    /////display if any error from TPG site
+     if(!empty($this->session->flashdata('resp_error'))){
+        foreach($this->session->flashdata('resp_error') as $err){
+
+        echo '<div class="alert alert-danger dang">
+            <strong>'.$err->field.'</strong>'.$err->message.'
+        </div>';
+        }
     }
     ?>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class-trainee.png"/> TPG Assessment Trainee Lists</h2>

@@ -382,8 +382,7 @@ class Tpg_api_Model extends CI_Model {
         }else if($trainee->tax_code_type == 'SNG_3'){
             $taxcode_type = 'OTHERS';
         }
-        $assessment_json='{
-                  "assessment": {
+        $assessment_json='{"assessment": {
                       "trainingPartner": {
                         "code": "'.$retun[tp_uen].'-03",
                         "uen": "'.$retun[tp_uen].'"
@@ -412,12 +411,12 @@ class Tpg_api_Model extends CI_Model {
                   }';
         //print_r($assessment_json);exit;
         $encrypted_data = $this->encrypt_decrypt('encrypt', $assessment_json);
-        echo $encrypted_data;exit;
+        //echo $encrypted_data;exit;
         $api_version = 'v1';
         $url = "https://".$retun[domain]."/tpg/assessments";
         $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
-        $obj=json_decode($response);
-        return $obj;
+        $asessment_resp=json_decode($response);
+        return $asessment_resp;
         
     }
     

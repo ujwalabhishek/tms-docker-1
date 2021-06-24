@@ -2087,6 +2087,22 @@ class Class_Model extends CI_Model {
                 //echo $this->db->last_query();exit;
                 return $result[0];
     }
+    
+    public function updateAssessmentRefNo($assment_ref_no,$course_id,$class_id,$user_id,$tenant_id){
+        $this->db->trans_start();
+        $data = array('assessment_reference_No' => $assment_ref_no);
+        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        $this->db->where('user_id', $user_id);
+        $this->db->update('class_enrol', $data);
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
 
 
 }
