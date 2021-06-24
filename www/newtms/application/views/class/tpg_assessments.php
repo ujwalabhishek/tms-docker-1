@@ -66,7 +66,7 @@
                         <?php
                         $options = array();
                         $options[''] = 'Select';
-                        foreach ($classes as $k => $v) {
+                        foreach ($nric as $k => $v) {
                             $options[$k] = $v;
                         }
                         $js = 'id="nric" ';
