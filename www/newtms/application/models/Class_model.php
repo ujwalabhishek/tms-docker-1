@@ -1978,6 +1978,7 @@ class Class_Model extends CI_Model {
                 c.course_id,
                 cc.tpg_course_run_id,
                 tu.tax_code,
+                tu.tax_code_type,
                 cc.class_id,
                 ce.user_id,
                 tup.first_name as fullname,
@@ -2054,6 +2055,7 @@ class Class_Model extends CI_Model {
                 c.course_id,
                 cc.tpg_course_run_id,
                 tu.tax_code,
+                tu.tax_code_type,
                 cc.class_id,
                 ce.user_id,
                 tup.first_name as fullname,
@@ -2083,7 +2085,7 @@ class Class_Model extends CI_Model {
                 AND date(cc.class_end_datetime) <= '$today_date'";                
                 $result = $this->db->query($sql)->result();
                 //echo $this->db->last_query();exit;
-                return $result;
+                return $result[0];
     }
 
 

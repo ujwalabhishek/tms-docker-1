@@ -12,7 +12,19 @@ class Tpg_api_Model extends CI_Model {
         $this->sess_user = $this->session->userdata('userDetails'); // added by shubhranshu to het the user data
         $this->user = $this->session->userdata('userDetails');
     }
-    
+    function encrypt_decrypt($action, $string) 
+    {
+        $output = false;
+        $encrypt_method = "AES-256-CBC";
+        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+        $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
+        if ( $action == 'encrypt' ) {
+            $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
+        } else if( $action == 'decrypt' ) {
+            $output = openssl_decrypt($string, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+        }
+        return $output;
+    }
     public function curl_request($mode,$url,$encrypted_data,$api_version){
        // echo $encrypted_data;exit;
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
@@ -51,20 +63,23 @@ class Tpg_api_Model extends CI_Model {
         curl_close($curl);
     }
     
-    public function correct_live_dev_api_data($crse_ref_no,$tp_uen){
+    public function correct_live_dev_api_data($crse_ref_no,$tp_uen,$skillCode=''){
         if(TPG_ENVIRONMENT == 'PRODUCTION'){
            $crse_ref_no = $crse_ref_no;
            $tp_uen  = $tp_uen;
            $domain=TPG_LIVE_URL;
+           $skillCode = $skillCode;
         }else{
           $crse_ref_no =  'TGS-2020002096';
           $tp_uen = '201000372W';
           $domain=TPG_DEV_URL;
+          $skillCode='AER-MAT-2019-2.1';
         }
         $data =array(
             'ref_no' => $crse_ref_no,
             'tp_uen' => $tp_uen,
-            'domain' => $domain
+            'domain' => $domain,
+            'skillcode' => $skillCode
         );
         return $data;
     }
@@ -357,35 +372,52 @@ class Tpg_api_Model extends CI_Model {
         return $response;
     }
     
-    public function create_asssessment_to_tpg(){
-        $tpg_course_run_json='{
-                      "assessment": {
+    public function create_asssessment_to_tpg($trainee,$tp_uen){
+        $retun = $this->correct_live_dev_api_data($trainee->reference_num,$tp_uen,$trainee->skillCode);
+        
+        if($trainee->tax_code_type == 'SNG_1'){
+            $taxcode_type = 'NRIC';
+        }else if($trainee->tax_code_type == 'SNG_2'){
+            $taxcode_type = 'FIN';
+        }else if($trainee->tax_code_type == 'SNG_3'){
+            $taxcode_type = 'OTHERS';
+        }
+        $assessment_json='{
+                  "assessment": {
                       "trainingPartner": {
-                        "code": "T16GB0003C-01",
-                        "uen": "T16GB0003C"
+                        "code": "'.$retun[tp_uen].'-01",
+                        "uen": "'.$retun[tp_uen].'"
                       },
                       "course": {
-                        "referenceNumber": "TGS-0026008-ES",
+                        "referenceNumber": "'.$retun[ref_no].'",
                         "run": {
-                          "id": "10226"
+                          "id": "'.$trainee->tpg_course_run_id.'"
                         }
                       },
                       "trainee": {
-                        "idType": "NRIC",
-                        "id": "S0118316H",
-                        "fullName": "Jon Chua"
+                        "idType": "'.$taxcode_type.'",
+                        "id": "'.$trainee->tax_code.'",
+                        "fullName": "'.$trainee->fullname.'"
                       },
-                      "result": "Pass",
-                      "score": 80,
-                      "grade": "B",
-                      "assessmentDate": "2020-05-15",
-                      "skillCode": "TGS-MKG-234222",
+                      "result": "'.$trainee->result.'",
+                      "score": '.$trainee->feedback_score.',
+                      "grade": "'.$trainee->feedback_grade.'",
+                      "assessmentDate": "'.$trainee->assessmentDate.'",
+                      "skillCode": "'.$retun[skillcode].'",
                       "conferringInstitute": {
-                        "code": "T16GB0003C-01"
+                        "code": "'.$retun[tp_uen].'-01"
                       }
                     }
 
                   }';
+        print_r($assessment_json);exit;
+        $encrypted_data = encrypt_decrypt('encrypt', $assessment_json);
+        $api_version = 'v1';
+        $url = "https://".$retun[domain]."/tpg/assessments";
+        $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
+        $obj=json_decode($response);
+        return $obj;
+        
     }
     
     public function updateEnrolmentReferenceNumber($course_id,$class_id,$user_id,$enrolmentReferenceNumber){
