@@ -925,7 +925,7 @@ class Classes extends CI_Controller {
         $userid = $this->input->get('nric');
         if (!empty($course) && !empty($class)) {
             $data['tabledata']= $this->getTraineeForAssessments($course,$class,$userid);
-            $data['classes'] = $this->classmodel->get_Trainee_For_Assessments($tenant_id,$course,$class,$userid);
+            $data['classes'] = $this->classmodel->get_course_class($tenant_id, $course, $mark_attendance,"ACTIVE","classTrainee");
             $data['nric'] = $this->classmodel->get_Trainee_For_Assessments_json($tenant_id,$course,$class);
              
         }
