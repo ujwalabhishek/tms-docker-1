@@ -218,18 +218,18 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
 </div>
 
 <style>
-    .btn-blue:hover(
+    .btn-blue:hover{
     color:white;
     background-image:-webkit-linear-gradient(top, #107ac6, #097d91);
     border-radius: 3px;
-    )
+    }
     
-    .btn-blue(
+    .btn-blue{
        border: none;
     color: #008cff;
     font-size: 11px !important;
     margin-top: 0;
     padding: 3px 4px !important;
     cursor: pointer;
-    )
+    }
 </style>
