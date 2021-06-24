@@ -98,12 +98,12 @@ $(document).ready(function () {
             },
             success: function (res) {
                 json_data = $.parseJSON(res);
-                if (json_data != '') {
-                    if(json_data.status == 200){
+                if (json_data != '') {alert(json_data);
+                    //if(json_data.status == 200){
                         
-                    }else{
+                   // }else{
                        // $('#viewsection').hide();
-                    }
+                    //}
                    $.each(json_data.data.sessions, function(i, item) {
                        $('#ssg_sess').append('<tr><td>'+(i+1)+'</td><td>'+item.id+'</td><td>'+item.startDate+'</td><td>'+item.endDate+'</td><td>'+item.startTime+'</td><td>'+item.endTime+'</td><td>'+item.attendanceTaken+'</td></tr>');
                     });
