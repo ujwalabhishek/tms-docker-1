@@ -98,7 +98,7 @@ $(document).ready(function () {
             },
             success: function (res) {
                 json_data = $.parseJSON(res);
-                if (json_data != '') {alert(json_data.status);
+                if (json_data != '') {alert(res);
                     //if(json_data.status == 200){
                         
                    // }else{
