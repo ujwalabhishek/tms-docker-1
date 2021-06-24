@@ -923,7 +923,7 @@ class Classes extends CI_Controller {
         $course = $this->input->get('course');
         $class = $this->input->get('class');
         if (!empty($course) && !empty($class)) {
-            $data['tabledata']= print_r($this->getTraineeForAssessments($course,$class));exit;
+            $data['tabledata']= $this->getTraineeForAssessments($course,$class);
             
              
         }
