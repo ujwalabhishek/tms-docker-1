@@ -133,11 +133,11 @@
                                 <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
                                 <td>
                                    
-                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/' . $enrolmentReferenceNumber; ?>"><span class="btn-blue">Create Asessment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/' . $enrolmentReferenceNumber; ?>"><span class="btnblue">Create Asessment</span></a>
                                     <br>
-                                    <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" ><span class="btn-blue">class="btn-blue">Update/Void Asessment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" ><span class="btnblue">Update/Void Asessment</span></a>
                                     <br>
-                                    <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" ><span class="btn-blue">class="btn-blue">View Asessment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" ><span class="btnblue">View Asessment</span></a>
                                     
                                 </td>
                             </tr>
@@ -218,13 +218,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
 </div>
 
 <style>
-    .btn-blue:hover{
-    color:white;
-    background-image:-webkit-linear-gradient(top, #107ac6, #097d91);
-    border-radius: 3px;
-    }
-    
-    .btn-blue{
+    .btnblue{
        border: none;
     color: #008cff;
     font-size: 11px !important;
@@ -232,4 +226,11 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
     padding: 3px 4px !important;
     cursor: pointer;
     }
+    .btnblue:hover{
+    color:white;
+    background-image:-webkit-linear-gradient(top, #107ac6, #097d91);
+    border-radius: 3px;
+    }
+    
+    
 </style>
