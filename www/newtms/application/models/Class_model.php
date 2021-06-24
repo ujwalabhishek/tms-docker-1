@@ -2045,6 +2045,7 @@ class Class_Model extends CI_Model {
                 foreach ($res as $row) {
                     $result[$row->user_id] = $row->tax_code;
                 }
+                print_r($result);exit;
                 return $result;
     }
 
