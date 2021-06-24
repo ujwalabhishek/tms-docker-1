@@ -63,6 +63,13 @@ class tp_gateway extends CI_Controller {
 
     }
     
+    public function view_assessment(){
+        $assessment_ref_no = $this->input->post('referenceNo');
+        $asessment_resp = $this->tpgModel->view_asssessment_from_tpg($assessment_ref_no);
+        echo $asessment_resp;
+
+    }
+    
     public function handle_error($controller='',$tpg_resp=''){
          $this->session->set_flashdata('resp_error',$tpg_resp->error->details);
         //print_r($response);exit;

@@ -145,7 +145,7 @@
                                     <br>
                                     <a href="<?php echo base_url() . 'tp_gateway//' ; ?>" ><span class="btnblue">Update/Void Asessment</span></a>
                                     <br>
-                                    <a href="#view_assessment" rel="modal:open"><span class="btnblue">View Asessment</span></a>
+                                    <a href="#view_assessment" rel="modal:open" id='click_assessment' data-refNo='<?php $row->assessment_reference_No;?>'><span class="btnblue">View Asessment</span></a>
                                     
                                 </td>
                             </tr>
@@ -171,7 +171,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
 ?>
 <div class="modal1_0001" id="view_assessment" style="display:none;height:200px;min-height: 200px;">
     <h2 class="panel_heading_style">TPG View Assessment</h2>
-    <table class="table table-striped">
+    <table class="table table-striped" id='viewsection'>
         <tbody>
             <tr>
                 <td class="td_heading">View Assessment:</td>
