@@ -52,7 +52,7 @@ class tp_gateway extends CI_Controller {
         $tenant_id=$this->tenant_id;
         print_r($trainee) = $this->classModel->get_single_trainee_for_assessment($tenant_id,$course_id,$class_id,$user_id);
         exit;
-        $this->tpgModel->create_asssessment_to_tpg();
+        //$this->tpgModel->create_asssessment_to_tpg();
         
     }
     
