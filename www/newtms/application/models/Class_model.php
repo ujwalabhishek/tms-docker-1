@@ -2004,10 +2004,8 @@ class Class_Model extends CI_Model {
                 return $result;
     }
     
-    public function get_Trainee_For_Assessments_json(){
-        $courseID = $this->input->post('course_id');
-        $classID = $this->input->post('class_id');
-        $tenant_id = $this->user->tenant_id;
+    public function get_Trainee_For_Assessments_json($tenant_id,$courseID,$classID){
+        
         $today_date = date('Y-m-d');
     
          $sql = "SELECT

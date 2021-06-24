@@ -943,6 +943,10 @@ class Classes extends CI_Controller {
     }
     
     public function get_Trainee_For_Assessments_json(){
-        
+        $courseID = $this->input->post('course_id');
+        $classID = $this->input->post('class_id');
+        $tenant_id = $this->tenant_id;
+        $res = $this->classmodel->get_Trainee_For_Assessments($tenant_id,$courseID,$classID);
+        echo $res;
     }
 }
