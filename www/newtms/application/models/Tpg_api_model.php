@@ -499,9 +499,10 @@ class Tpg_api_Model extends CI_Model {
         //print_r($search_assessment_json);exit;
         $encrypted_data = $this->encrypt_decrypt('encrypt', $search_assessment_json);
         $api_version = 'v1';
-        $url = "https://".$retun[domain]."/tpg/assessments/search/";
+        $url = "https://".$retun[domain]."/tpg/assessments/search";
         $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
         $decrypted_data = $this->encrypt_decrypt('decrypt', $response);
+        print_r(json_decode($decrypted_data));exit;
         return json_decode($decrypted_data);
     }
         
