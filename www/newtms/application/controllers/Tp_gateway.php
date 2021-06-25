@@ -1732,10 +1732,10 @@ class tp_gateway extends CI_Controller {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         extract($_GET);
-        $data['courses'] = $courses = $this->course->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
+        $data['courses'] = $courses = $this->coursemodel->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
         if ($course) {
 
-            $course_classes = $this->class->get_course_class($tenant_id, $course, "", "", "classTrainee");
+            $course_classes = $this->classModel->get_course_class($tenant_id, $course, "", "", "classTrainee");
             $data['classes'] = $course_classes;
         }
         $export_url = '';
