@@ -141,11 +141,11 @@
                                 <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
                                 <td>
                                    
-                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Create Asessment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Create Assessment</span></a>
                                     <br>
-                                    <a href="<?php echo base_url() . 'tp_gateway//' ; ?>" ><span class="btnblue">Update/Void Asessment</span></a>
+                                    <a href="#update_void_assessment" rel="modal:open" id='update_assessment' data-refNo='<?php $row->assessment_reference_No;?>'><span class="btnblue">Update/Void Assessment</span></a>
                                     <br>
-                                    <a href="#view_assessment" rel="modal:open" id='click_assessment' data-refNo='<?php $row->assessment_reference_No;?>'><span class="btnblue">View Asessment</span></a>
+                                    <a href="#view_assessment" rel="modal:open" id='click_assessment' data-refNo='<?php $row->assessment_reference_No;?>'><span class="btnblue">View Assessment</span></a>
                                     
                                 </td>
                             </tr>
@@ -169,6 +169,54 @@
 $atr = 'id="update_fee" name="update_fee" method="post"';
 echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
 ?>
+<div class="modal1_0001" id="update_void_assessment" style="display:none;height:370px;min-height: 200px;width:60%">
+    <h2 class="panel_heading_style">TPG Update/Void Assessment</h2>
+    <table class="table table-striped" id=''>
+        <tbody>
+            <tr>
+                <td class="td_heading">Trainee Full Name:</td>
+                <td id='fullname1'></td>
+                <td class="td_heading">Result:</td>
+                <td id='result1'></td>
+            </tr>
+
+            <tr>
+                <td class="td_heading">Score:</td>
+                <td id='score1'></td>
+                <td class="td_heading">Grade:</td>
+                <td id='grade1'></td>
+            </tr>
+
+            <tr>
+                <td class="td_heading">Assessment Date:</td>
+                <td id='ass_date1'></td>
+                <td class="td_heading">Skill Code:</td>
+                <td id='skill_code1'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Action:</td>
+                <td>
+                    <select name="action" id="action">
+                    <option value="" selected="selected">Select</option>
+                    <option value="update">Update</option>
+                    <option value="void">Void</option>
+                    </select>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <div class="popup_cance89">
+        <a href="#view_assessment" rel="modal:close"><button tyep='submit' class='btn btn-primary'>Update/Void</button></a>
+    </div>
+</div>
+
+<?php form_close();?>
+
+
+
+
+
 <div class="modal1_0001" id="view_assessment" style="display:none;height:370px;min-height: 200px;width:60%">
     <h2 class="panel_heading_style">TPG View Assessment</h2>
     <table class="table table-striped" id='viewsection'>
@@ -240,7 +288,6 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             
         </tbody>
     </table>
-    <span class="required required_i">* Required Fields</span>
     <div class="popup_cance89">
         <a href="#view_assessment" rel="modal:close"><button class='btn btn-primary'>Close</button></a>
     </div>

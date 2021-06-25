@@ -131,6 +131,44 @@ $(document).ready(function () {
             }
         });
     });
+    
+    
+    $('#update_assessment').click(function () {
+   
+        $.ajax({
+            type: 'post',
+            url: $baseurl + 'tp_gateway/view_assessment',
+            data: {referenceNo: 'ASM-2103-000037'},//$('#click_assessment').data('refNo') },
+            dataType: "json",
+            beforeSend: function () {
+                
+            },
+            success: function (res) {
+                json_data = $.parseJSON(res);
+                if (json_data != '' && res.status == 200) {
+                    $('#fullname1').html(res.data.trainee.fullName);
+                    $('#result1').html(res.data.result);
+                    $('#score1').html(res.data.score);
+                    $('#grade1').html(res.data.grade);
+                    $('#ass_date1').html(res.data.assessmentDate);
+                    $('#skill_code1').html(res.data.skillCode);
+                    
+                    //if(json_data.status == 200){
+                        
+                   // }else{
+                       // $('#viewsection').hide();
+                    //}
+                  // $.each(json_data.data.sessions, function(i, item) {
+                   //    $('#ssg_sess').append('<tr><td>'+(i+1)+'</td><td>'+item.id+'</td><td>'+item.startDate+'</td><td>'+item.endDate+'</td><td>'+item.startTime+'</td><td>'+item.endTime+'</td><td>'+item.attendanceTaken+'</td></tr>');
+                   // });
+                }
+            }
+        });
+    });
+    
+    
+    
+    
 });
 
 
