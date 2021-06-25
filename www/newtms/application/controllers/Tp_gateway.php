@@ -1354,11 +1354,12 @@ class tp_gateway extends CI_Controller {
         $data['feeCollectionStatus'] = $feeCollectionStatus;
         $data['traineeEnrolmentDate'] = $traineeEnrolmentDate;
 
-        $data['employerUEN'] = $employerUEN;
-        $data['emploerFullName'] = $emploerFullName;
-        $data['employerEmailAddress'] = $employerEmailAddress;
-        $data['employerContactNumber'] = $employerContactNumber;
-
+        if($traineeSponsorshipType != "INDIVIDUAL") {
+            $data['employerUEN'] = $employerUEN;
+            $data['emploerFullName'] = $emploerFullName;
+            $data['employerEmailAddress'] = $employerEmailAddress;
+            $data['employerContactNumber'] = $employerContactNumber;
+        }
         $data['traineeId'] = $traineeId;
         $data['traineeEmailAddress'] = $traineeEmailAddress;
         $data['traineeIdType'] = $traineeIdType;
@@ -1378,7 +1379,7 @@ class tp_gateway extends CI_Controller {
 
         $data['tpg_json_data'] = $tpg_enrolment_json_data;
         $data['sideMenuData'] = fetch_non_main_page_content();
-        $data['page_title'] = 'TPG NEW TRAINEE ENROL';
+        $data['page_title'] = 'TPG New Trainee Enrolment';
         $data['main_content'] = 'classtrainee/enrol_trainee_tpg';
         $this->load->view('layout', $data);
     }
@@ -1710,8 +1711,8 @@ class tp_gateway extends CI_Controller {
 
         $tpg_response = json_decode($decrypted_output);
 
-        if ($tpg_response->status == 200) {            
-            
+        if ($tpg_response->status == 200) {
+
             $this->session->set_flashdata("success", "The enrolment data has been updated for reference number - " . $enrolmentReferenceNumber);
 
             redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);

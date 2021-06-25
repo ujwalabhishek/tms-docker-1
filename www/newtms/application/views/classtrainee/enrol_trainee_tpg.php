@@ -30,7 +30,7 @@
                         <input type="hidden" name="courseId" value="<?php echo $courseId; ?>" id="courseId">
                         <input type="hidden" name="classId" value="<?php echo $classId; ?>" id="classId">
                         <input type="hidden" name="userId" value="<?php echo $userId; ?>" id="userId">
-                        <label style="color:blue;font-weight:bold">New enrollment(s)</label>
+                        <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Trainee Details</h2>
                     </td>                           
                 </tr>
                 <tr class="change_span" style="">
@@ -86,27 +86,42 @@
                         <span id="ttype_err"></span>
                     </td>
                 </tr>
-
                 <tr class="new_span">
-                    <td class="td_heading" width="15%">Trainning Partner Code:<span class="required">*</span></td>
+                    <td class="td_heading" width="15%">Sponsorship Type:<span class="required">*</span></td>
+                    <td>
+                        <input type="text" name="tpuen" id="tpuen" style="" value='<?php echo $traineeSponsorshipType; ?>' disabled="disabled"/>
+                        <span id="tpuen_err"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">                            
+                        <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Training Partner Details</h2>
+                    </td>                           
+                </tr>
+                <tr class="new_span">   
+                    <td class="td_heading" width="15%">Training Partner Code:<span class="required">*</span></td>
                     <td>
                         <input type="text" name="tpcode" id="tpcode" style="" value='<?php echo $trainingPartnerCode; ?>' disabled="disabled"/>
                         <span id="tpcode_err"></span>
                     </td>
-                    <td class="td_heading" width="15%">Trainning Partner UEN:<span class="required">*</span></td>
+                    <td class="td_heading" width="15%">Training Partner UEN:<span class="required">*</span></td>
                     <td>
                         <input type="text" name="tpuen" id="tpuen" style="" value='<?php echo $trainingPartnerUEN; ?>' disabled="disabled"/>
                         <span id="tpuen_err"></span>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="4">                            
+                        <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Course Details</h2>
+                    </td>                           
+                </tr>
                 <tr class="new_span">
-                    <td class="td_heading">Course Reference No.:<span class="required">*</span></td>
+                    <td class="td_heading" width="15%">Course Reference No.:<span class="required">*</span></td>
                     <td colspan="3">                       
                         <input type="text" name="course" id="crefno" style="" value='<?php echo $courseReferenceNumber; ?>' disabled="disabled"/>
                         <span id="crefno_err"></span>
-                    </td>
-                </tr>
-                <tr class="new_span">
+                    </td>               
                     <td class="td_heading" width="15%">Course RunID:<span class="required">*</span></td>
                     <td colspan="3">
                         <input type="text" name="courserunid" id="crunid" style="" value='<?php echo $courseRunId; ?>' disabled="disabled"/>
@@ -119,9 +134,7 @@
 
                         <input type="number" name="discount_amount" id="discount_amount" value='<?php echo $feeDiscountAmount; ?>' disabled="disabled"/>
                         <span id="discount_amount_err"></span>
-                    </td>
-                </tr>
-                <tr class="new_span">
+                    </td>                
                     <td class="td_heading" width="15%">Collection Status:<span class="required">*</span></td>
                     <td colspan="3">
                         <input type="text" name="collection_status" id="collection_status" value='<?php echo $feeCollectionStatus; ?>' disabled="disabled"/>
@@ -136,6 +149,7 @@
                         <span id="enrolment_date_err"></span>
                     </td>
                 </tr>
+                <?php if($traineeSponsorshipType != "INDIVIDUAL") {?>
                 <tr>
                     <td colspan="4">
                         <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Employer Details</h2>
@@ -175,6 +189,7 @@
                         <span id="tenant_contact_num_err"></span>
                     </td>
                 </tr>
+                <?php } ?>
                 <tr class="new_span">
                     <td colspan="4" class="no-bg">
                         <div class="push_right">

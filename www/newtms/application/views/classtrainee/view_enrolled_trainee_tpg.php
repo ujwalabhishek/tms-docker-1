@@ -178,6 +178,7 @@
                         <span id="enrolment_date_err"></span>
                     </td>
                 </tr>
+                <?php if($traineeSponsorshipType != "Individual") {?>
                 <tr>
                     <td colspan="4">
                         <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Employer Details</h2>
@@ -226,6 +227,7 @@
                         <span id="tenant_email_id_err"></span>
                     </td>
                 </tr>
+                <?php } ?>
                 <tr class="new_span">
                     <td colspan="4" class="no-bg">
                         <div class="push_right">
