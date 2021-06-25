@@ -9,6 +9,19 @@
     table td{
         font-size: 11px;
     }
+    .btnblue{
+        border: none;
+        color: #008cff;
+        font-size: 11px !important;
+        margin-top: 0;
+        padding: 3px 4px !important;
+        cursor: pointer;
+    }
+    .btnblue:hover{
+        color:white;
+        background-image:-webkit-linear-gradient(top, #107ac6, #097d91);
+        border-radius: 3px;
+    }
 </style>
 <div class="col-md-10">
     <?php
@@ -234,7 +247,7 @@
                         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         if ($tenant_id == 'T01') {
                             ?>
-                                                           <th width="10%" class="th_header">Sales Executive</th>
+                                                               <th width="10%" class="th_header">Sales Executive</th>
                         <?php } ?>-->
                         <th width="8%" class="th_header">Sales Executive</th>
                         <th width="6%" class="th_header">Certi. Coll.</th>
@@ -321,10 +334,10 @@
                                 <td><?php echo $row['enroll_mode'] ?></td>
 
                                 <!--<?php if ($tenant_id == 'T01') { ?>
-                                                                   <td><?php echo $salesList; //implode("<br>",$salesList).         ?></td>
+                                                                       <td><?php echo $salesList; //implode("<br>",$salesList).          ?></td>
                                 <?php } ?>-->
 
-                                <td><?php echo $salesList; //implode("<br>",$salesList).         ?></td>
+                                <td><?php echo $salesList; //implode("<br>",$salesList).          ?></td>
                                 <td><?php echo $row['certi_coll']; ?></td>
                                 <td><?php
                                     echo $row['status_text'] . '<br />' . $row['end_class'] . '<br />'
@@ -349,11 +362,11 @@
                                     <input type="hidden" name="courseId" value="<?php echo $row['course_id']; ?>" id="courseId">
                                     <input type="hidden" name="classId" value="<?php echo $row['class_id']; ?>" id="classId">
 
-                                    <?php 
+                                    <?php
                                     $enrolmentReferenceNumber = $row['enrolmentReferenceNumber'];
                                     $feecollectionStatus = $row['feecollectionStatus'];
                                     if (empty($enrolmentReferenceNumber)) {
-                                    ?>
+                                        ?>
                                         <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
                                         <br>
                                         <?php
