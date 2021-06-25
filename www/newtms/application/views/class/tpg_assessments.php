@@ -174,18 +174,82 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
     <table class="table table-striped" id='viewsection'>
         <tbody>
             <tr>
-                <td class="td_heading">View Assessment:</td>
-                <td>
-                    <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
-                    <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
-                    <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
-                    <?php                    
-                    $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
-                    echo form_dropdown('fee_collectionStatus', $feecollectionStatus, '', $fee_collectionStatus_attr);
-                    ?>
-                    <span id="fee_collection_err"></span>
-                </td>
+                <td class="td_heading">Assessment Reference No:</td>
+                <td id='ass_ref_no'></td>
             </tr>
+            <tr>
+                <td class="td_heading">TP UEN:</td>
+                <td id='tp_uen'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">TP Name:</td>
+                <td id='tp_name'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Course Reference No:</td>
+                <td id='crs_ref_no'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Course Name:</td>
+                <td id='crs_name'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Course Run ID:</td>
+                <td id='crs_run_id'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Course Run Start Date:</td>
+                <td id='crs_run_start_date'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Course Run End Date:</td>
+                <td id='crs_run_end_date'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Trainee ID Type:</td>
+                <td id='trainee_id_type'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Trainee Id:</td>
+                <td id='trainee_id'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Trainee Full Name:</td>
+                <td id='fullname'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Result:</td>
+                <td id='result'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Score:</td>
+                <td id='score'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Grade:</td>
+                <td id='grade'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Assessment Date:</td>
+                <td id='ass_date'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Skill Code:</td>
+                <td id='skill_code'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Enrollment No:</td>
+                <td id='enrol_no'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Created On:</td>
+                <td id='created_on'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Updated On:</td>
+                <td id='updated_on'></td>
+            </tr>
+            
         </tbody>
     </table>
     <span class="required required_i">* Required Fields</span>
