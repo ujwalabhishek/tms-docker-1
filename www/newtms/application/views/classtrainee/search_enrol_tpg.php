@@ -4,6 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.0311111111111111"></script>
 <style>
     table td{
         font-size: 11px;
@@ -133,84 +134,100 @@
                         <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="trainee_err"></span>
                     </td>
-                </tr>
-                <tr>
-                    <?php if ($this->data['user']->role_id != 'COMPACT') { ?>
-                        <td class="td_heading" width="15%"> Company Name:</td>
-                        <td colspan="" width="30%">
-                            <?php
-                            $company = array(
-                                'name' => 'company_name',
-                                'id' => 'company_name',
-                                'value' => $this->input->get('company_name'),
-                                'style' => 'width:200px;',
-                                'class' => 'upper_case',
-                                'autocomplete' => 'off'
-                            );
-                            echo form_input($company);
-                            echo form_hidden('company_id', $this->input->get('company_id'), $id = 'company_id');
-                            ?>
-                            <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
-                            <span id="company_name_err"></span>
-                        <?php } else { ?>
-                        <td colspan="5">
-                        <?php } ?>
-
-                    </td>
-
-                    <?php if ($this->data['user']->role_id != 'COMPACT') { ?>
-                        <td class="td_heading" width="15%"> Enrolment ID:</td>
-                        <td colspan="" width="30%">
-                            <?php
-                            $enrol = array(
-                                'name' => 'eidbox',
-                                'id' => 'eidbox',
-                                'value' => $this->input->get('eid'),
-                                'style' => 'width:200px;',
-                                'class' => 'upper_case',
-                                'autocomplete' => 'off'
-                            );
-                            echo form_input($enrol);
-                            echo form_hidden('eid', $this->input->get('eid'), $id = 'eid');
-                            ?>
-                            <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
-                            <span id="eid_err"></span>
-                        <?php } ?>
-                        <span class="pull-right">
-                            <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
-                        </span>
-                    </td>
-                </tr>
+                </tr>                
             </tbody>
         </table>
     </div><br>
+    <?php echo form_close(); ?>
     <div class="bs-example">
         <div class="table-responsive">
-            <?php if (!empty($tabledata) || !empty($class_status)) { ?>
-                <strong>Filter by Class Status:</strong>
-                <?php
-                $cls_status_options[''] = 'All';
-                $cls_status = fetch_metavalues_by_category_id(Meta_Values::CLASS_TRAINEE_FILTER);
-                foreach ($cls_status as $val):
-                    $cls_status_options[$val['parameter_id']] = $val['category_name'];
-                endforeach;
-                echo form_dropdown('class_status', $cls_status_options, $this->input->get('class_status'), 'id="class_status"');
-            }
-            ?> 
-
-            <?php if (count($tabledata) > 0 && array_key_exists('EXP_XLS', $this->data['left_side_menu']['CLTRAINE'])) { ?>                    
-                <div class="add_button98 pull-right">
-                    <a href="<?php echo base_url(); ?>class_trainee/export_classtrainee_page<?php echo $export_url; ?>" class="small_text1" onclick="return exportValidate()">
-                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export Page Fields</span>
-                    </a> &nbsp;&nbsp; 
-                    <a href="<?php echo base_url(); ?>class_trainee/export_classtrainee_full<?php echo $export_url; ?>" class="small_text1" onclick="return exportValidate() > < span class ="label label-default black-btn">
-
-                       <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export All Fields</span>
-                    </a>
-                </div>                  
-            <?php } ?>
+            <div style="clear:both;"></div>
+            <table class="table table-striped">
+                <thead>
+                    <?php
+                    $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
+                    $pageurl = 'class_trainee';
+                    ?>
+                    <tr>
+                        <th width="9%" class="th_header">NRIC/FIN No</th>
+                        <th width="10%" class="th_header">Full Name</th>
+                        <th width="15%" class="th_header">Assessment Date</th>
+                        <th width="10%" class="th_header">Skill Code</th>
+                        <th width="6%" class="th_header">Feedback Score</th>
+                        <th width="12%" class="th_header">Feedback Grade</th>
+                        <th width="6%" class="th_header">Result</th>
+                        <th width="10%" class="th_header">Course Ref No</th>
+                        <!--<th width="9%" class="th_header">CourseRunID</th>-->
+                        <th width="13%" class="th_header">TPG</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $err_msg = 'There are no trainees enrolled to any class currently.';
+                    if (!empty($_GET)) {
+                        $err_msg = 'No data available for the search criteria entered.';
+                    }
+                    if (!empty($tabledata)) {
+                        foreach ($tabledata as $row) {
+                          
+                            ?>
+                                                                              
+                            <tr>                        
+                                <td><?php echo $row->tax_code; ?></td>
+                                <td class="name"><?php echo $row->fullname; ?></td>
+                                <td><?php echo $row->assessmentDate; ?></td>
+                                <td><?php echo $row->skillCode; ?></td>
+                                <td><?php echo $row->feedback_score ?></td>
+                                <td><?php echo $row->feedback_grade; ?></td>
+                                <td><?php echo $row->result; ?></td>
+                                <td><?php echo $row->reference_num; ?></td>
+                                <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
+                                <td>
+                                   
+                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Create Assessment</span></a>
+                                    <br>
+                                    <a href="#update_void_assessment" rel="modal:open" id='update_assessment' data-refNo='<?php echo $row->assessment_reference_No;?>' data-userid="<?php echo $row->user_id;?>" data-courseid="<?php echo $row->course_id;?>" data-classid="<?php echo $row->class_id;?>"><span class="btnblue">Update/Void Assessment</span></a>
+                                    <br>
+                                    <a href="#view_assessment" rel="modal:open" id='click_assessment' data-refNo='<?php $row->assessment_reference_No;?>'><span class="btnblue">View Assessment</span></a>
+                                    
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    } 
+                    
+                    
+                    //////data for tpg search
+                     if (!empty($tabledata_tpg)) {
+                        foreach ($tabledata_tpg->data as $row) {
+                          
+                            ?>
+                                                                              
+                            <tr>                        
+                                <td><?php echo $row->trainee->id; ?></td>
+                                <td class="name"><?php echo $row->trainee->fullName; ?></td>
+                                <td><?php echo $row->assessmentDate; ?></td>
+                                <td><?php echo $row->skillCode; ?></td>
+                                <td><?php echo $row->score ?></td>
+                                <td><?php echo $row->grade; ?></td>
+                                <td><?php echo $row->result; ?></td>
+                                <td><?php echo $row->course->referenceNumber; ?></td>
+                                <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
+                                <td>
+                                   
+                                    <span>Not Possible, While Viewing TPG Data</span>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    } 
+                    ?>
+                </tbody>
+            </table>
         </div>
-
+        <div style="clear:both;"></div><br>
+        <ul class="pagination pagination_style">
+            <?php echo $pagination; ?>
+        </ul>
     </div>
-    <?php echo form_close(); ?>    
 </div>
