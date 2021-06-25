@@ -345,14 +345,14 @@
             $("#feeDiscountAmount").addClass('error');
             retVal = false;
         } else {
-            if (valid_discount(employerContactNumber) == false) {
-                $("#discount_amount_err").text("[invalid]").addClass('error');
-                $("#feeDiscountAmount").addClass('error');
-                retVal = false;
-            } else {
+//            if (valid_discount(employerContactNumber) == false) {
+//                $("#discount_amount_err").text("[invalid]").addClass('error');
+//                $("#feeDiscountAmount").addClass('error');
+//                retVal = false;
+//            } else {
                 $("#discount_amount_err").text("").removeClass('error');
                 $("#feeDiscountAmount").removeClass('error');
-            }
+            //}
         }
 
         feeCollectionStatus = $.trim($("#feeCollectionStatus").val());
@@ -375,10 +375,11 @@
         var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
         return pattern.test(emailAddress);
     }
-    function valid_discount(discountValue) {
-        var pattern = new RegExp(/^(([0-8][0-9]?|9[0-8]?)\.\d+|[0-9][0-9]?)$/);
-        return pattern.test(discountValue);
-    }
+    
+//    function valid_discount(discountValue) {
+//        var pattern = new RegExp(/^(([0-8][0-9]?|9[0-8]?)\.\d+|[0-9][0-9]?)$/);
+//        return pattern.test(discountValue);
+//    }
 
     function valid_course_run($zip) {
         var ck_name = /^[0-9 ]+$/;
