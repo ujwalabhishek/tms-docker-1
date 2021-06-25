@@ -929,7 +929,7 @@ class Classes extends CI_Controller {
             $class_details = $this->classmodel->get_class_details($tenant_id,$class);
             $crse_details=$this->coursemodel->get_course_detailse($class_details->course_id);
             $data['tabledata_tpg'] = $this->tpgModel->search_assessments($tenant_id,$tenant->comp_reg_no,$crse_details->crse_ref_no,$class_details->tpg_course_run_id);
-            //print_r($data['tabledata_tpg']);exit;
+            print_r($data['tabledata_tpg']);exit;
         }else{
             if (!empty($course) && !empty($class)) {
                 $data['tabledata']= $this->getTraineeForAssessments($course,$class,$userid);

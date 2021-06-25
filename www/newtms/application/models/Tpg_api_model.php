@@ -502,8 +502,8 @@ class Tpg_api_Model extends CI_Model {
         $url = "https://".$retun[domain]."/tpg/assessments/search";
         $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
         $decrypted_data = $this->encrypt_decrypt('decrypt', $response);
-        print_r(json_decode($decrypted_data));exit;
-        return json_decode($decrypted_data);
+        $asessment_resp=json_decode($decrypted_data);
+        return $asessment_resp;
     }
         
 
