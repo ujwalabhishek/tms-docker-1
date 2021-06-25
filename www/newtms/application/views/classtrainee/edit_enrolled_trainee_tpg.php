@@ -68,7 +68,7 @@
                             <b>Trainee Cont. No.:<span class="required">*</span></b> 
                         </td>
                         <td> 
-                            <input type="text" name="fullname" id="contactno" style="" value='<?php echo $traineeContactNumber; ?>' />
+                            <input type="text" name="contactno" id="contactno" style="" value='<?php echo $traineeContactNumber; ?>' />
                             <span id="contactno_err"></span>
                         </td>
                     </tr>
@@ -245,3 +245,59 @@
     </form>
 </div>
 <!-- end abdulla -->
+<script>
+    $(document).ready(function () {
+        var check = 0;
+        $('#update_cancel_form').submit(function () {
+            check = 1;
+            return validateForm(true);
+        });
+        $('#update_cancel_form select,#trainee_form input').change(function () {
+            if (check == 1) {
+                return validateForm(false);
+            }
+        });
+    });
+
+    function validateForm(retVal) {
+        pers_contact_number = $.trim($("#contactno").val());
+        if (pers_contact_number == "") {
+            $("#contactno_err").text("[required]").addClass('error');
+            $("#contactno").addClass('error');
+            retVal = false;
+        } else {
+            if (valid_contact_number(pers_contact_number) == false) {
+                $("#contactno_err").text("[invalid]").addClass('error');
+                $("#contactno").addClass('error');
+                retVal = false;
+            } else {
+                $("#contactno_err").text("").removeClass('error');
+                $("#contactno").removeClass('error');
+            }
+        }
+
+        user_registered_email = $.trim($("#temail").val());
+        if (user_registered_email == "") {
+            $("#temail_err").text("[required]").addClass('error');
+            $("#temail").addClass('error');
+            retVal = false;
+        } else if (valid_email_address(pers_conf_email) == false) {
+            $("#temail_err").text("[invalid]").addClass('error');
+            $("#temail").addClass('error');
+        } else {
+            $("#temail_err").text("").removeClass('error');
+            $("#temail").removeClass('error');
+        }
+
+        return retVal;
+    }
+
+    function valid_contact_number(contactNum) {
+        return /^\d+$/.test(contactNum.replace(/[\s]/g, ''));
+    }
+    function valid_email_address(emailAddress) {
+        var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
+        return pattern.test(emailAddress);
+    }
+
+</script>
