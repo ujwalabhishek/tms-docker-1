@@ -1275,13 +1275,11 @@ class tp_gateway extends CI_Controller {
         } else {
             $traineeSponsorshipType = "INDIVIDUAL";
 
-            $tenant_details = fetch_tenant_details($tenant_id);
-echo $tenant_details->tenant_name; exit;
             //Individual
-            $employerUEN = $tenant_details->comp_reg_no;
-            $emploerFullName = $tenant_details->tenant_name;
-            $employerEmailAddress = $tenant_details->tenant_email_id;
-            $employerContactNumber = $tenant_details->tenant_contact_num;
+            $employerUEN = "";
+            $emploerFullName = "";
+            $employerEmailAddress = "";
+            $employerContactNumber = "";
         }
 
         $feeDiscountAmount = $this->input->post('feeDiscountAmount');
@@ -1297,6 +1295,7 @@ echo $tenant_details->tenant_name; exit;
         }
 
         //Training Partner
+        $tenant_details = fetch_tenant_details($tenant_id);
         $trainingPartnerUEN = $tenant_details->comp_reg_no;
         $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';
 
