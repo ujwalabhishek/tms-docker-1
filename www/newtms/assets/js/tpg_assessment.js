@@ -138,7 +138,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'post',
             url: $baseurl + 'tp_gateway/view_assessment',
-            data: {referenceNo: 'ASM-2103-000037'},//$('#click_assessment').data('refNo') },
+            data: {referenceNo: 'ASM-2103-000037'},//$('#update_assessment').data('refNo') },
             dataType: "json",
             beforeSend: function () {
                 
@@ -152,7 +152,7 @@ $(document).ready(function () {
                     $('#grade1').val(res.data.grade);
                     $('#ass_date1').val(res.data.assessmentDate);
                     $('#skill_code1').val(res.data.skillCode);
-                    
+                    $('#assmt_ref_no1').html(res.data.referenceNumber);//$('#update_assessment').data('refNo');
                     //if(json_data.status == 200){
                         
                    // }else{
@@ -166,9 +166,36 @@ $(document).ready(function () {
         });
     });
     
-    
+   
     
     
 });
+
+function updateAseessment(){
+       $('#btnarea').html("<div class='popup_cance89' id='btnarea'><button class='btn btn-primary' onclick='updateAseessment()'>Update/Void</button></div>");
+       $fullname1=$('#fullname1').html();
+       $result1=$('#result1').html();
+       $score1=$('#score1').val();
+       $grade1=$('#grade1').html();
+       $ass_date1=$('#ass_date1').val();
+       $skill_code1=$('#skill_code1').val();
+       $action=$('#action').val();
+       $assmt_ref_no1=$('#assmt_ref_no1').html();
+        $.ajax({
+            type: 'post',
+            url: $baseurl + 'tp_gateway/update_assessment',
+            data: {fullname: $fullname1,result:$result1,score:$score1,grade:$grade1,assessment_date:$ass_date1,skillcode:$skill_code1,action:$action,assmt_ref_no:$assmt_ref_no1},
+            dataType: "json",
+            beforeSend: function () {
+                
+            },
+            success: function (res) {
+                json_data = $.parseJSON(res);
+                if (json_data != '' && res.status == 200) {
+                   $('#btnarea').html("<div class='alert alert-success text-center'>Assessment Record Updated Successfully With Reference ID: "+res.data.assessment.referenceNumber+"</div>");
+                }
+            }
+        });
+   }
 
 

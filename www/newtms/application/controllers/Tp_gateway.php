@@ -70,6 +70,28 @@ class tp_gateway extends CI_Controller {
 
     }
     
+    public function update_assessment(){
+        $fullname = $this->input->post('fullname');
+        $result = $this->input->post('result');
+        $assessment_date = $this->input->post('assessment_date');
+        $score = $this->input->post('score');
+        $grade = $this->input->post('grade');
+        $skillcode = $this->input->post('skillcode');
+        $action = $this->input->post('action');
+        $assessment_ref_no = $this->input->post('assmt_ref_no');
+        $resp = $this->tpgModel->update_void_assessment_to_tpg($fullname,$result,$assessment_date,$score,$grade,$skillcode,$action,$assessment_ref_no);
+        echo $resp;exit;
+        $asessment_resp = json_decode($resp);
+        if($asessment_resp->status == 200){
+            //$this->classModel->updateAssessmentRefNo($resp->data->assessment->referenceNumber,$course_id,$class_id,$user_id,$tenant_id);
+            $this->session->set_flashdata("success", "Assessment Record Updated Successfully With Referance ID: ".$asessment_resp->data->assessment->referenceNumber); 
+        }else{
+            $controller = 'classes/tpg_assessments';
+            $this->handle_error($controller,$asessment_resp);
+        }
+        echo $resp;
+    }
+    
     public function handle_error($controller='',$tpg_resp=''){
          $this->session->set_flashdata('resp_error',$tpg_resp->error->details);
         //print_r($response);exit;
@@ -84,7 +106,7 @@ class tp_gateway extends CI_Controller {
         } else {
             $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
         }
-        redirect('classes/tpg_assessments');
+        redirect($controller);
     }
     
     function encrypt_decrypt($action, $string) 
