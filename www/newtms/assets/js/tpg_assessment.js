@@ -104,9 +104,9 @@ $(document).ready(function () {
                     $('#tp_name').html(res.data.trainingPartner.name);
                     $('#crs_ref_no').html(res.data.course.referenceNumber);
                     $('#crs_ref_no').html(res.data.course.title);
-                    $('#crs_run_id').html(res.data.run.id);
-                    $('#crs_run_start_date').html(res.data.run.startDate);
-                    $('#crs_run_end_date').html(res.data.run.endDate);
+                    $('#crs_run_id').html(res.data.course.run.id);
+                    $('#crs_run_start_date').html(res.data.course.run.startDate);
+                    $('#crs_run_end_date').html(res.data.course.run.endDate);
                     $('#trainee_id_type').html(res.data.trainee.idType.type);
                     $('#trainee_id').html(res.data.trainee.id);
                     $('#fullname').html(res.data.trainee.fullName);
