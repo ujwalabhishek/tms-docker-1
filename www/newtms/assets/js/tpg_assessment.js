@@ -98,26 +98,26 @@ $(document).ready(function () {
             },
             success: function (res) {
                 json_data = $.parseJSON(res);
-                if (json_data != '' && res.status == 200) {alert(res.course.title);
+                if (json_data != '' && res.status == 200) {
                     $('#ass_ref_no').html(res.data.referenceNumber);
                     $('#tp_uen').html(res.data.trainingPartner.uen);
                     $('#tp_name').html(res.data.trainingPartner.name);
-                    $('#crs_ref_no').html(res.course.referenceNumber);
-                    $('#crs_ref_no').html(res.course.title);
-                    $('#crs_run_id').html(res.run.id);
-                    $('#crs_run_start_date').html(res.run.startDate);
-                    $('#crs_run_end_date').html(res.run.endDate);
-                    $('#trainee_id_type').html(res.trainee.idType.type);
-                    $('#trainee_id').html(res.trainee.id);
-                    $('#fullname').html(res.trainee.fullName);
-                    $('#result').html(res.result);
-                    $('#score').html(res.score);
-                    $('#grade').html(res.grade);
-                    $('#ass_date').html(res.assessmentDate);
-                    $('#skill_code').html(res.skillCode);
-                    $('#enrol_no').html(res.enrolment.referenceNumber);
-                    $('#created_on').html(res.meta.createdOn);
-                    $('#updated_on').html(res.meta.updatedOn);
+                    $('#crs_ref_no').html(res.data.course.referenceNumber);
+                    $('#crs_ref_no').html(res.data.course.title);
+                    $('#crs_run_id').html(res.data.run.id);
+                    $('#crs_run_start_date').html(res.data.run.startDate);
+                    $('#crs_run_end_date').html(res.data.run.endDate);
+                    $('#trainee_id_type').html(res.data.trainee.idType.type);
+                    $('#trainee_id').html(res.data.trainee.id);
+                    $('#fullname').html(res.data.trainee.fullName);
+                    $('#result').html(res.data.result);
+                    $('#score').html(res.data.score);
+                    $('#grade').html(res.data.grade);
+                    $('#ass_date').html(res.data.assessmentDate);
+                    $('#skill_code').html(res.data.skillCode);
+                    $('#enrol_no').html(res.data.enrolment.referenceNumber);
+                    $('#created_on').html(res.data.meta.createdOn);
+                    $('#updated_on').html(res.data.meta.updatedOn);
                     
                     //if(json_data.status == 200){
                         
