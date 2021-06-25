@@ -98,8 +98,8 @@ $(document).ready(function () {
             },
             success: function (res) {
                 json_data = $.parseJSON(res);
-                if (json_data != '' && res.status == 200) {alert(res.referenceNumber);
-                    $('#ass_ref_no').html(res.referenceNumber);
+                if (json_data != '' && res.status == 200) {
+                    $('#ass_ref_no').html(res.data.referenceNumber);
                     $('#tp_uen').html(res.trainingPartner.uen);
                     $('#tp_name').html(res.trainingPartner.name);
                     $('#crs_ref_no').html(res.course.referenceNumber);
