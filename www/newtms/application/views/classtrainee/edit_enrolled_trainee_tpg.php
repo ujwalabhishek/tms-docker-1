@@ -182,54 +182,56 @@
                             <span id="enrolment_date_err"></span>
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="4">
-                            <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Employer Details</h2>
-                        </td>
-                    </tr>
-                    <tr class="change_span" style="">
-                        <td>                    
-                            <b>Employer Name.:<span class="required">*</span></b> 
-                        </td>   
-                        <td>
-                            <input type="text" name="employerName" id="employerName" style="" value='<?php echo $employerName; ?>' disabled="disabled"/>
-                            <span id="ename_err"></span>
-                        </td> 
+                    <?php if ($traineeSponsorshipType != "Individual") { ?>
+                        <tr>
+                            <td colspan="4">
+                                <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Employer Details</h2>
+                            </td>
+                        </tr>
+                        <tr class="change_span" style="">
+                            <td>                    
+                                <b>Employer Name.:<span class="required">*</span></b> 
+                            </td>   
+                            <td>
+                                <input type="text" name="employerName" id="employerName" style="" value='<?php echo $employerName; ?>' disabled="disabled"/>
+                                <span id="ename_err"></span>
+                            </td> 
 
-                        <td>
-                            <b>Employer UEN.:<span class="required">*</span></b> 
-                        </td>
-                        <td> 
-                            <input type="text" name="employerUEN" id="employerUEN" style="" value='<?php echo $employerUEN; ?>' disabled="disabled"/>
-                            <span id="employerUEN_err"></span>
-                        </td>
-                    </tr>
-                    <tr class="change_span" style="">
-                        <td>                    
-                            <b>Contact Name.:<span class="required">*</span></b> 
-                        </td>   
-                        <td>
-                            <input type="text" name="employerContactFullName" id="employerContactFullName" style="" value='<?php echo $employerContactFullName; ?>' />
-                            <span id="employerContactFullName_err"></span>
-                        </td> 
+                            <td>
+                                <b>Employer UEN.:<span class="required">*</span></b> 
+                            </td>
+                            <td> 
+                                <input type="text" name="employerUEN" id="employerUEN" style="" value='<?php echo $employerUEN; ?>' disabled="disabled"/>
+                                <span id="employerUEN_err"></span>
+                            </td>
+                        </tr>
+                        <tr class="change_span" style="">
+                            <td>                    
+                                <b>Contact Name.:<span class="required">*</span></b> 
+                            </td>   
+                            <td>
+                                <input type="text" name="employerContactFullName" id="employerContactFullName" style="" value='<?php echo $employerContactFullName; ?>' />
+                                <span id="employerContactFullName_err"></span>
+                            </td> 
 
-                        <td>
-                            <b>Contact No.:<span class="required">*</span></b> 
-                        </td>
-                        <td> 
-                            <input type="text" name="employerContactNumber" id="employerContactNumber" style="" value='<?php echo $employerContactNumber; ?>' />
-                            <span id="employerContactNumber_err"></span>
-                        </td>
-                    </tr>
-                    <tr class="change_span" style="">
-                        <td>                    
-                            <b>Employer Email.:<span class="required">*</span></b>
-                        </td>   
-                        <td>
-                            <input type="text" name="employerEmailAddress" id="employerEmailAddress" style="" value='<?php echo $employerEmailAddress; ?>' />
-                            <span id="employerEmailAddress_err"></span>
-                        </td>
-                    </tr>
+                            <td>
+                                <b>Contact No.:<span class="required">*</span></b> 
+                            </td>
+                            <td> 
+                                <input type="text" name="employerContactNumber" id="employerContactNumber" style="" value='<?php echo $employerContactNumber; ?>' />
+                                <span id="employerContactNumber_err"></span>
+                            </td>
+                        </tr>
+                        <tr class="change_span" style="">
+                            <td>                    
+                                <b>Employer Email.:<span class="required">*</span></b>
+                            </td>   
+                            <td>
+                                <input type="text" name="employerEmailAddress" id="employerEmailAddress" style="" value='<?php echo $employerEmailAddress; ?>' />
+                                <span id="employerEmailAddress_err"></span>
+                            </td>
+                        </tr>
+                    <?php } ?>
                     <tr class="new_span">
                         <td colspan="4" class="no-bg">
                             <div class="push_right">
@@ -350,8 +352,8 @@
 //                $("#feeDiscountAmount").addClass('error');
 //                retVal = false;
 //            } else {
-                $("#discount_amount_err").text("").removeClass('error');
-                $("#feeDiscountAmount").removeClass('error');
+            $("#discount_amount_err").text("").removeClass('error');
+            $("#feeDiscountAmount").removeClass('error');
             //}
         }
 
@@ -375,7 +377,7 @@
         var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
         return pattern.test(emailAddress);
     }
-    
+
 //    function valid_discount(discountValue) {
 //        var pattern = new RegExp(/^(([0-8][0-9]?|9[0-8]?)\.\d+|[0-9][0-9]?)$/);
 //        return pattern.test(discountValue);
@@ -385,5 +387,4 @@
         var ck_name = /^[0-9 ]+$/;
         return ck_name.test($zip);
     }
-
 </script>
