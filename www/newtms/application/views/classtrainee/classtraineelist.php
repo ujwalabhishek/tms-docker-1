@@ -226,7 +226,7 @@
                     ?>
                     <tr>
                         <th width="9%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=tu.tax_code&o=" . $ancher; ?>">NRIC/FIN No.</a></th>
-                        <th width="10%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=tup.first_name&o=" . $ancher; ?>">Name</a></th>
+                        <th width="8%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=tup.first_name&o=" . $ancher; ?>">Name</a></th>
                         <th width="15%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=c.crse_name&o=" . $ancher; ?>">Course / Class Detail</a></th>
                         <th width="10%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=cc.class_start_datetime&o=" . $ancher; ?>">Class Duration</a></th>
                         <th width="6%" class="th_header">Company Name</th>
@@ -236,12 +236,12 @@
                             ?>
                                                            <th width="10%" class="th_header">Sales Executive</th>
                         <?php } ?>-->
-                        <th width="12%" class="th_header">Sales Executive</th>
+                        <th width="8%" class="th_header">Sales Executive</th>
                         <th width="6%" class="th_header">Certi. Coll.</th>
-                        <th width="10%" class="th_header">Class Status</th>
+                        <th width="8%" class="th_header">Class Status</th>
                         <th width="9%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=ce.payment_status&o=" . $ancher; ?>">Payment</a></th>
-                        <th width="13%" class="th_header">Action</th>
-                        <th width="13%" class="th_header">TPG</th>
+                        <th width="11%" class="th_header">Action</th>
+                        <th width="16%" class="th_header">TPG</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -273,22 +273,7 @@
                                 $result_text = !empty($row['feedback_answer']) ? '<br/><b>Result:</b> ' . $row['feedback_answer'] : '';
                             }
                             $name = json_decode($row['referrer']);
-                            ?>
-                                                                                                  <!--  $tr = '<tr>
-                                                                                                    <td>' . $row['taxcode'] . '</td>
-                                                                                                    <td class="name">' . $row['name'] . '</td>
-                                                                                                    <td>' . $row['course_class'] . '</td>
-                                                                                                    <td>' . $row['duration'] . '</td>
-                                                                                                    <td>' . $row['enroll_mode'] . '</td>
-                                                                                                     <td>'.$salesList.//implode("<br>",$salesList).'</td>
-                                                                                                    '</td><td>' . $row['certi_coll'] . '</td>
-                                                                                                    <td>' . $row['status_text'] .'<br />'.$row['end_class'] .'  <br />                          
-                                                                                                    ' . $result_text . '
-                                                                                                    </td>
-                                                                                                    <td>' . $row['paid'] . '</td>
-                                                                                                    <td>'.$row['action_link'].'</td>';
-                                                                                                     $tr .= '</tr>';
-                                                                                                    echo $tr;*/-->
+                            ?>                                                                                                  
                             <tr>                        
                                 <td><?php echo $row['taxcode']; ?></td>
 
@@ -364,8 +349,11 @@
                                     <input type="hidden" name="courseId" value="<?php echo $row['course_id']; ?>" id="courseId">
                                     <input type="hidden" name="classId" value="<?php echo $row['class_id']; ?>" id="classId">
 
-                                    <?php if ($enrolmentReferenceNumber == NULL) {
-                                        ?>
+                                    <?php 
+                                    $enrolmentReferenceNumber = $row['enrolmentReferenceNumber'];
+                                    $feecollectionStatus = $row['feecollectionStatus'];
+                                    if (empty($enrolmentReferenceNumber)) {
+                                    ?>
                                         <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
                                         <br>
                                         <?php
@@ -373,9 +361,6 @@
                                     echo form_close();
                                     ?>                                    
                                     <?php
-                                    $enrolmentReferenceNumber = $row['enrolmentReferenceNumber'];
-                                    $feecollectionStatus = $row['feecollectionStatus'];
-
                                     if ($enrolmentReferenceNumber != '') {
                                         ?>                                    
                                         <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>"><span class="btnblue">View Enrolment</span></a>
