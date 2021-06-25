@@ -172,7 +172,7 @@ $(document).ready(function () {
 });
 
 function updateAseessment(){
-       $('#btnarea').html("<div class='popup_cance89' id='btnarea'><button class='btn btn-primary' onclick='updateAseessment()'>Update/Void</button></div>");
+       $('#btnarea').show();
        $fullname1=$('#fullname1').html();
        $result1=$('#result1').html();
        $score1=$('#score1').val();
@@ -192,7 +192,8 @@ function updateAseessment(){
             success: function (res) {
                 json_data = $.parseJSON(res);
                 if (json_data != '' && res.status == 200) {
-                   $('#btnarea').html("<div class='alert alert-success text-center'>Assessment Record Updated Successfully With Reference ID: "+res.data.assessment.referenceNumber+"</div>");
+                   $('#status_msg').html("<div class='alert alert-success text-center'>Assessment Record Updated Successfully With Reference ID: "+res.data.assessment.referenceNumber+"</div>");
+                    $('#btnarea').hide();
                 }
             }
         });
