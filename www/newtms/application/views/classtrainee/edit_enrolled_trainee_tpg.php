@@ -235,6 +235,7 @@
                     <tr class="new_span">
                         <td colspan="4" class="no-bg">
                             <div class="push_right">
+                                <input type="hidden" name="sponsorshipType" value="<?php echo $traineeSponsorshipType; ?>" id="sponsorshipType">
                                 <input type="hidden" name="enrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="enrolmentReferenceNumber">
                                 <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" />Update To TPG</button>
                             </div>
@@ -261,6 +262,8 @@
     });
 
     function validateForm(retVal) {
+        sponsorshipType = $.trim($("#sponsorshipType").val());
+
         pers_contact_number = $.trim($("#traineeContactNumber").val());
         if (pers_contact_number == "") {
             $("#contactno_err").text("[required]").addClass('error');
@@ -301,44 +304,47 @@
             $("#courseRunId").removeClass('error');
         }
 
-        employerContactFullName = $.trim($("#employerContactFullName").val());
-        if (employerContactFullName == "") {
-            $("#employerContactFullName_err").text("[required]").addClass('error');
-            $("#employerContactFullName").addClass('error');
-            retVal = false;
-        } else {
-            $("#employerContactFullName_err").text("").removeClass('error');
-            $("#employerContactFullName").removeClass('error');
-        }
+        if (sponsorshipType != "Individual") {
+            employerContactFullName = $.trim($("#employerContactFullName").val());
+            if (employerContactFullName == "") {
+                $("#employerContactFullName_err").text("[required]").addClass('error');
+                $("#employerContactFullName").addClass('error');
+                retVal = false;
+            } else {
+                $("#employerContactFullName_err").text("").removeClass('error');
+                $("#employerContactFullName").removeClass('error');
+            }
 
-        employerContactNumber = $.trim($("#employerContactNumber").val());
-        if (employerContactNumber == "") {
-            $("#employerContactNumber_err").text("[required]").addClass('error');
-            $("#employerContactNumber").addClass('error');
-            retVal = false;
-        } else {
-            if (valid_contact_number(employerContactNumber) == false) {
-                $("#employerContactNumber_err").text("[invalid]").addClass('error');
+            employerContactNumber = $.trim($("#employerContactNumber").val());
+            if (employerContactNumber == "") {
+                $("#employerContactNumber_err").text("[required]").addClass('error');
                 $("#employerContactNumber").addClass('error');
                 retVal = false;
             } else {
-                $("#employerContactNumber_err").text("").removeClass('error');
-                $("#employerContactNumber").removeClass('error');
+                if (valid_contact_number(employerContactNumber) == false) {
+                    $("#employerContactNumber_err").text("[invalid]").addClass('error');
+                    $("#employerContactNumber").addClass('error');
+                    retVal = false;
+                } else {
+                    $("#employerContactNumber_err").text("").removeClass('error');
+                    $("#employerContactNumber").removeClass('error');
+                }
             }
-        }
 
-        employerEmailAddress = $.trim($("#employerEmailAddress").val());
-        if (employerEmailAddress == "") {
-            $("#employerEmailAddress_err").text("[required]").addClass('error');
-            $("#employerEmailAddress").addClass('error');
-            retVal = false;
-        } else if (valid_email_address(employerEmailAddress) == false) {
-            $("#employerEmailAddress_err").text("[invalid]").addClass('error');
-            $("#employerEmailAddress").addClass('error');
-            retVal = false;
-        } else {
-            $("#employerEmailAddress_err").text("").removeClass('error');
-            $("#employerEmailAddress").removeClass('error');
+            employerEmailAddress = $.trim($("#employerEmailAddress").val());
+            if (employerEmailAddress == "") {
+                $("#employerEmailAddress_err").text("[required]").addClass('error');
+                $("#employerEmailAddress").addClass('error');
+                retVal = false;
+            } else if (valid_email_address(employerEmailAddress) == false) {
+                $("#employerEmailAddress_err").text("[invalid]").addClass('error');
+                $("#employerEmailAddress").addClass('error');
+                retVal = false;
+            } else {
+                $("#employerEmailAddress_err").text("").removeClass('error');
+                $("#employerEmailAddress").removeClass('error');
+            }
+
         }
 
         feeDiscountAmount = $.trim($("#feeDiscountAmount").val());
