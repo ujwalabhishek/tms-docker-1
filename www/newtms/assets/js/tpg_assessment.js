@@ -116,8 +116,8 @@ $(document).ready(function () {
                     $('#ass_date').html(res.data.assessmentDate);
                     $('#skill_code').html(res.data.skillCode);
                     //$('#enrol_no').html(res.data.enrolment.referenceNumber);
-                    $('#created_on').html(res.data.meta.createdOn);
-                    $('#updated_on').html(res.data.meta.updatedOn);
+                    $('#created_on').html(res.meta.createdOn);
+                    $('#updated_on').html(res.meta.updatedOn);
                     
                     //if(json_data.status == 200){
                         
