@@ -364,9 +364,9 @@
                                     <input type="hidden" name="courseId" value="<?php echo $row['course_id']; ?>" id="courseId">
                                     <input type="hidden" name="classId" value="<?php echo $row['class_id']; ?>" id="classId">
 
-                                    <?php if ($enrolmentReferenceNumber == '') {
+                                    <?php if ($enrolmentReferenceNumber == NULL) {
                                         ?>
-                                        <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" />Submit To TPG</button>
+                                        <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
                                         <br>
                                         <?php
                                     }
@@ -378,11 +378,11 @@
 
                                     if ($enrolmentReferenceNumber != '') {
                                         ?>                                    
-                                        <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-search"></span>View Enrolment</span></a>
+                                        <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>"><span class="btnblue">View Enrolment</span></a>
                                         <br>
-                                        <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>" class="small_text1"><span class="label label-default black-btn"><span class="glyphicon glyphicon-retweet"></span>Edit Enrolment</span></a>
+                                        <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>"><span class="btnblue">Edit Enrolment</span></a>
                                         <br>
-                                        <div class="button_class"><a class="small_text" rel="modal:open" href="#abd"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-file"></span>Update Fee</button></a></div>
+                                        <a rel="modal:open" href="#abd"><button type="button" class="btnblue">Update Fee</button></a>
                                     <?php } ?>
                                 </td>
                             </tr>
