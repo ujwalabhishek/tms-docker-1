@@ -465,7 +465,7 @@ class Tpg_api_Model extends CI_Model {
         if(!empty($enrolmentReferenceNumber)){
             $tenantId = $this->session->userdata('userDetails')->tenant_id;
             $data = array(
-                       'tpg_enrolment_ref_no' => $enrolmentReferenceNumber,
+                       'eid_number' => $enrolmentReferenceNumber,
                        'tpg_enrolment_status' => $enrolmentReferenceStatus
                    );
            $this->db->trans_start();
