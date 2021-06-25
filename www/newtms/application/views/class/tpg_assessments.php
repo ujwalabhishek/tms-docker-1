@@ -167,34 +167,34 @@
 </div>
 <?php
 $atr = 'id="update_fee" name="update_fee" method="post"';
-echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
+echo form_open("tp_gateway/update_void_asessment", $atr);
 ?>
-<div class="modal1_0001" id="update_void_assessment" style="display:none;height:250px;min-height: 200px;width:60%">
+<div class="modal1_0001" id="update_void_assessment" style="display:none;height:270px;min-height: 200px;width:60%">
     <h2 class="panel_heading_style">TPG Update/Void Assessment</h2>
     <table class="table table-striped" id=''>
         <tbody>
             <tr>
-                <td class="td_heading">Trainee Full Name:</td>
+                <td class="td_heading">Trainee Full Name:<span class="required">*</span></td>
                 <td id='fullname1'></td>
-                <td class="td_heading">Result:</td>
+                <td class="td_heading">Result:<span class="required">*</span></td>
                 <td id='result1'></td>
             </tr>
 
             <tr>
-                <td class="td_heading">Score:</td>
-                <td id='score1'></td>
-                <td class="td_heading">Grade:</td>
-                <td id='grade1'></td>
+                <td class="td_heading">Score:<span class="required">*</span></td>
+                <td><input type="text" name="score" value="" id='score1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
+                <td class="td_heading">Grade:<span class="required">*</span></td>
+                <td><input type="text" name="grade" value="" id='grade1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
             </tr>
 
             <tr>
-                <td class="td_heading">Assessment Date:</td>
-                <td id='ass_date1'></td>
-                <td class="td_heading">Skill Code:</td>
-                <td id='skill_code1'></td>
+                <td class="td_heading">Assessment Date:<span class="required">*</span></td>
+                <td><input type="date" name="assessment_date" value="" id='ass_date1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
+                <td class="td_heading">Skill Code:<span class="required">*</span></td>
+                <td><input type="text" name="skill_Code" value="" id='skill_code1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
             </tr>
             <tr>
-                <td class="td_heading">Action:</td>
+                <td class="td_heading">Action:<span class="required">*</span></td>
                 <td>
                     <select name="action" id="action">
                     <option value="" selected="selected">Select</option>
@@ -206,7 +206,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             
         </tbody>
     </table>
-    <div class="required required_i">* To Update "Trainee Name" &  "Result" fields, Update in edit trainee,trainer feedback for the same.</div>
+    <div class="required required_i">* To Update "Trainee Name" &  "Result" fields, Update in edit trainee,trainer feedback for the same,Then Come to update this page.</div>
     <div class="popup_cance89">
         <a href="#view_assessment" rel="modal:close"><button tyep='submit' class='btn btn-primary'>Update/Void</button></a>
     </div>

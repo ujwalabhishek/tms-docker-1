@@ -148,10 +148,10 @@ $(document).ready(function () {
                 if (json_data != '' && res.status == 200) {
                     $('#fullname1').html(res.data.trainee.fullName);
                     $('#result1').html(res.data.result);
-                    $('#score1').html(res.data.score);
-                    $('#grade1').html(res.data.grade);
-                    $('#ass_date1').html(res.data.assessmentDate);
-                    $('#skill_code1').html(res.data.skillCode);
+                    $('#score1').val(res.data.score);
+                    $('#grade1').val(res.data.grade);
+                    $('#ass_date1').val(res.data.assessmentDate);
+                    $('#skill_code1').val(res.data.skillCode);
                     
                     //if(json_data.status == 200){
                         
