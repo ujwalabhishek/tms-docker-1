@@ -495,7 +495,7 @@ class Tpg_api_Model extends CI_Model {
                                   "pageSize": 50
                                 }
                               }';
-        
+        print_r($search_assessment_json);exit;
         $encrypted_data = $this->encrypt_decrypt('encrypt', $search_assessment_json);
         $api_version = 'v1';
         $url = "https://".$retun[domain]."/tpg/assessments/search/";
