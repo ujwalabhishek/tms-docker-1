@@ -1726,27 +1726,6 @@ class tp_gateway extends CI_Controller {
             }
             redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         }
-    }
-    
-    public function tpg_search_enrolment() {
-        $data['sideMenuData'] = fetch_non_main_page_content();
-        $tenant_id = $this->tenant_id;
-        extract($_GET);
-        $data['courses'] = $courses = $this->coursemodel->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
-        if ($course) {
-
-            $course_classes = $this->classModel->get_course_class($tenant_id, $course, "", "", "classTrainee");
-            $data['classes'] = $course_classes;
-        }
-        $export_url = '';
-        $sort_url = '';
-        $data['error_msg'] = 'Kindly apply filter to fetch the trainees'; ////ssp/////
-        
-        
-        
-        $data['page_title'] = 'Class Trainee';
-        $data['main_content'] = 'classtrainee/search_enrol_tpg';
-        $this->load->view('layout', $data);
-    }
+    }    
 
 }
