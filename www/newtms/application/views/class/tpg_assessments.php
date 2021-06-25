@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.0001"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.00001"></script>
 <style>
     table td{
         font-size: 11px;
@@ -52,6 +52,7 @@
                         $js = 'id="course" ';
                         echo form_dropdown('course', $options, $this->input->get('course'), $js);
                         ?>
+                        <span id="course_err"></span>
                     </td>                    
                 </tr>                
                 <tr>
@@ -66,6 +67,7 @@
                         $js = 'id="class" ';
                         echo form_dropdown('class', $optionss, $this->input->get('class'), $js);
                         ?>
+                         <span id="class_err"></span>
                     </td>
                 </tr>
                 <tr>
@@ -80,6 +82,7 @@
                         $js = 'id="nric" ';
                         echo form_dropdown('nric', $options, $this->input->get('nric'), $js);
                         ?>
+                         <span id="nric_err"></span>
                     </td>
                     <td class="td_heading">Search Assessment In:</td>
                     <td>

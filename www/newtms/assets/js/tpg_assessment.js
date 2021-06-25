@@ -70,17 +70,20 @@ $(document).ready(function () {
         var crse = $('#course').val();
         var clas = $('#class').val();
         if (crse ==null || crse == '') {
-            $('#course').css('border', 'solid 1px red');
+           
+            disp_err('#course', '[Required]');
             $retval = false;
         } else {
-            $('#course').css('border', 'solid 1px #bcbcbc');
+            remove_err('#course');
+       
         }
         
         if (clas == null || clas == 0) {
-            $('#class').css('border', 'solid 1px red');
+            disp_err('#class', '[Required]');
             $retval = false;
         } else {
-            $('#class').css('border', 'solid 1px #bcbcbc');
+             remove_err('#class');
+            
         }
         
         return $retval;
