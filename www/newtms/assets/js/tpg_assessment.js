@@ -167,6 +167,7 @@ $(document).ready(function () {
     });
     
    function updateAseessment(){
+       $('#btnarea').html("<div class='popup_cance89' id='btnarea'><button class='btn btn-primary' onclick='updateAseessment()'>Update/Void</button></div>");
        $fullname1=$('#fullname1').html();
        $result1=$('#result1').html();
        $score1=$('#score1').val();
@@ -186,12 +187,7 @@ $(document).ready(function () {
             success: function (res) {
                 json_data = $.parseJSON(res);
                 if (json_data != '' && res.status == 200) {
-                    $('#fullname1').html(res.data.trainee.fullName);
-                    $('#result1').html(res.data.result);
-                    $('#score1').val(res.data.score);
-                    $('#grade1').val(res.data.grade);
-                    $('#ass_date1').val(res.data.assessmentDate);
-                    $('#skill_code1').val(res.data.skillCode);
+                   $('#btnarea').html("<div class='alert alert-success text-center'>Assessment Record Updated Successfully With Reference ID: "+res.data.assessment.referenceNumber+"</div>");
                 }
             }
         });

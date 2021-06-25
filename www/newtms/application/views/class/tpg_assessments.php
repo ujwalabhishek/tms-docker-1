@@ -168,7 +168,7 @@
 
 <div class="modal1_0001" id="update_void_assessment" style="display:none;height:270px;min-height: 200px;width:60%">
     <h2 class="panel_heading_style">TPG Update/Void Assessment</h2>
-    <table class="table table-striped" id=''>
+    <table class="table table-striped" id='tblarea'>
         <tbody>
             <tr>
                 <td class="td_heading">Trainee Full Name:<span class="required">*</span></td>
@@ -206,7 +206,7 @@
         </tbody>
     </table>
     <div class="required required_i">* To Update "Trainee Name" &  "Result" fields, Update in edit trainee,trainer feedback for the same,Then Come to update this page.</div>
-    <div class="popup_cance89">
+    <div class="popup_cance89" id="btnarea">
         <button class='btn btn-primary' onclick="updateAseessment()">Update/Void</button>
     </div>
 </div>
