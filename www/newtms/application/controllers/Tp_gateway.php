@@ -80,6 +80,7 @@ class tp_gateway extends CI_Controller {
         $action = $this->input->post('action');
         $assessment_ref_no = $this->input->post('assmt_ref_no');
         $resp = $this->tpgModel->update_void_assessment_to_tpg($fullname,$result,$assessment_date,$score,$grade,$skillcode,$action,$assessment_ref_no);
+        echo $resp;exit;
         $asessment_resp = json_decode($resp);
         if($asessment_resp->status == 200){
             //$this->classModel->updateAssessmentRefNo($resp->data->assessment->referenceNumber,$course_id,$class_id,$user_id,$tenant_id);
