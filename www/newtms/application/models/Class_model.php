@@ -2090,7 +2090,30 @@ class Class_Model extends CI_Model {
     
     public function updateAssessmentRefNo($assment_ref_no,$course_id,$class_id,$user_id,$tenant_id){
         $this->db->trans_start();
-        $data = array('assessment_reference_No' => $assment_ref_no);
+        $data = array(
+            'assessment_reference_No' => $assment_ref_no,
+            'assessment_date' => date('Y-m-d')
+            );
+        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        $this->db->where('user_id', $user_id);
+        $this->db->update('class_enrol', $data);
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
+    
+    public function updateAssessmentData($score,$assessment_date,$grade,$user_id,$class_id,$course_id,$tenant_id){
+        $this->db->trans_start();
+        $data = array(
+            'feedback_score' => $score,
+            'feedback_grade' => $grade,
+            'assessment_date' => date('Y-m-d', strtotime($assessment_date))
+            );
         $this->db->where('tenant_id', $tenant_id);
         $this->db->where('course_id', $course_id);
         $this->db->where('class_id', $class_id);

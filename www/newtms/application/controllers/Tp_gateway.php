@@ -71,6 +71,7 @@ class tp_gateway extends CI_Controller {
     }
     
     public function update_assessment(){
+        $tenant_id=$this->tenant_id;
         $fullname = $this->input->post('fullname');
         $result = $this->input->post('result');
         $assessment_date = $this->input->post('assessment_date');
@@ -79,17 +80,16 @@ class tp_gateway extends CI_Controller {
         $skillcode = $this->input->post('skillcode');
         $action = $this->input->post('action');
         $assessment_ref_no = $this->input->post('assmt_ref_no');
+        $user_id = $this->input->post('user_id');
+        $class_id = $this->input->post('class_id');
+        $course_id = $this->input->post('course_id');
         $resp = $this->tpgModel->update_void_assessment_to_tpg($fullname,$result,$assessment_date,$score,$grade,$skillcode,$action,$assessment_ref_no);
-        echo $resp;exit;
-        $asessment_resp = json_decode($resp);
-        if($asessment_resp->status == 200){
-            //$this->classModel->updateAssessmentRefNo($resp->data->assessment->referenceNumber,$course_id,$class_id,$user_id,$tenant_id);
-            $this->session->set_flashdata("success", "Assessment Record Updated Successfully With Referance ID: ".$asessment_resp->data->assessment->referenceNumber); 
-        }else{
-            $controller = 'classes/tpg_assessments';
-            $this->handle_error($controller,$asessment_resp);
+        $obj_resp= json_decode($resp);
+        if($obj_resp->status == 200){
+             $this->classModel->updateAssessmentData($score,$assessment_date,$grade,$user_id,$class_id,$course_id,$tenant_id);
         }
-        echo $resp;
+        echo $resp;exit;
+       
     }
     
     public function handle_error($controller='',$tpg_resp=''){
