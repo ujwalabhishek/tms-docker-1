@@ -169,7 +169,7 @@
 $atr = 'id="update_fee" name="update_fee" method="post"';
 echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
 ?>
-<div class="modal1_0001" id="view_assessment" style="display:none;height:360px;min-height: 200px;width:60%">
+<div class="modal1_0001" id="view_assessment" style="display:none;height:370px;min-height: 200px;width:60%">
     <h2 class="panel_heading_style">TPG View Assessment</h2>
     <table class="table table-striped" id='viewsection'>
         <tbody>
