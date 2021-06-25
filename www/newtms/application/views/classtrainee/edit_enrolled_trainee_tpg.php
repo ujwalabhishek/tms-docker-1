@@ -251,7 +251,7 @@
             check = 1;
             return validateForm(true);
         });
-        $('#update_cancel_form select,#trainee_form input').change(function () {
+        $('#update_cancel_form select,#update_cancel_form input').change(function () {
             if (check == 1) {
                 return validateForm(false);
             }
