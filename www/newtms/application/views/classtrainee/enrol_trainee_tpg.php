@@ -85,15 +85,7 @@
                         <input type="text" name="fullname" id="ttype" style="" value='<?php echo $traineeIdType; ?>' disabled="disabled"/>
                         <span id="ttype_err"></span>
                     </td>
-                </tr>
-                <tr class="new_span">
-                    <td class="td_heading" width="15%">Sponsorship Type:<span class="required">*</span></td>
-                    <td>
-                        <input type="text" name="tpuen" id="tpuen" style="" value='<?php echo $traineeSponsorshipType; ?>' disabled="disabled"/>
-                        <span id="tpuen_err"></span>
-                    </td>
-                </tr>
-
+                </tr>                
                 <tr>
                     <td colspan="4">                            
                         <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Training Partner Details</h2>
@@ -118,7 +110,7 @@
                 </tr>
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Course Reference No.:<span class="required">*</span></td>
-                    <td colspan="3">                       
+                    <td>                       
                         <input type="text" name="course" id="crefno" style="" value='<?php echo $courseReferenceNumber; ?>' disabled="disabled"/>
                         <span id="crefno_err"></span>
                     </td>               
@@ -130,15 +122,13 @@
                 </tr>
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Discount Amount:<span class="required">*</span></td>
-                    <td colspan="3">
-
+                    <td>
                         <input type="number" name="discount_amount" id="discount_amount" value='<?php echo $feeDiscountAmount; ?>' disabled="disabled"/>
                         <span id="discount_amount_err"></span>
                     </td>                
                     <td class="td_heading" width="15%">Collection Status:<span class="required">*</span></td>
-                    <td colspan="3">
+                    <td>
                         <input type="text" name="collection_status" id="collection_status" value='<?php echo $feeCollectionStatus; ?>' disabled="disabled"/>
-
                         <span id="discount_amount_err"></span>
                     </td>
                 </tr>
