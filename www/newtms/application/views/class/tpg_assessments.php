@@ -237,10 +237,10 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
                 <td class="td_heading">Skill Code:</td>
                 <td id='skill_code'></td>
             </tr>
-            <tr>
+<!--            <tr>
                 <td class="td_heading">Enrollment No:</td>
                 <td id='enrol_no'></td>
-            </tr>
+            </tr>-->
             <tr>
                 <td class="td_heading">Created On:</td>
                 <td id='created_on'></td>

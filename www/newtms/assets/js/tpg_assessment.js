@@ -103,7 +103,7 @@ $(document).ready(function () {
                     $('#tp_uen').html(res.data.trainingPartner.uen);
                     $('#tp_name').html(res.data.trainingPartner.name);
                     $('#crs_ref_no').html(res.data.course.referenceNumber);
-                    $('#crs_ref_no').html(res.data.course.title);
+                    $('#crs_name').html(res.data.course.title);
                     $('#crs_run_id').html(res.data.course.run.id);
                     $('#crs_run_start_date').html(res.data.course.run.startDate);
                     $('#crs_run_end_date').html(res.data.course.run.endDate);
@@ -115,7 +115,7 @@ $(document).ready(function () {
                     $('#grade').html(res.data.grade);
                     $('#ass_date').html(res.data.assessmentDate);
                     $('#skill_code').html(res.data.skillCode);
-                    $('#enrol_no').html(res.data.enrolment.referenceNumber);
+                    //$('#enrol_no').html(res.data.enrolment.referenceNumber);
                     $('#created_on').html(res.data.meta.createdOn);
                     $('#updated_on').html(res.data.meta.updatedOn);
                     
