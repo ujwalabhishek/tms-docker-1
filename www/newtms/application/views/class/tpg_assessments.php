@@ -206,6 +206,7 @@
         </tbody>
     </table>
     <div class="required required_i">* To Update "Trainee Name" &  "Result" fields, Update in edit trainee,trainer feedback for the same,Then Come to update this page.</div>
+    <div id="status_msg"></div>
     <div class="popup_cance89" id="btnarea">
         <button class='btn btn-primary' onclick="updateAseessment()">Update/Void</button>
     </div>
