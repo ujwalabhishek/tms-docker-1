@@ -1410,8 +1410,10 @@ class tp_gateway extends CI_Controller {
         $tpg_response = json_decode($tpg_enrolment_decoded);
 
         if ($tpg_response->status == 200) {
+            
+            print_r($tpg_response);
             $enrolmentReferenceNumber = $tpg_response->data->enrolment[0]->referenceNumber;
-
+print_r($enrolmentReferenceNumber); 
             $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber);
 
             if ($updated) {

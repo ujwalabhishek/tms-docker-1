@@ -462,6 +462,12 @@ class Tpg_api_Model extends CI_Model {
     
     public function updateEnrolmentReferenceNumber($course_id,$class_id,$user_id,$enrolmentReferenceNumber){
         
+        echo "Course Id - ".$course_id;
+        echo "Class Id - ".$class_id;
+        echo "User Id - ".$user_id;
+        echo "enrolmentReferenceNumber - ".$enrolmentReferenceNumber; exit;
+        
+        
         if(!empty($enrolmentReferenceNumber)){
             $tenantId = $this->session->userdata('userDetails')->tenant_id;
             $data = array(
