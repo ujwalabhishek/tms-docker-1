@@ -206,7 +206,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             
         </tbody>
     </table>
-     <span class="required required_i">* To Update "Trainee Name" &  "Result" fields, Update in edit trainee,trainer feedback for the same</span>
+    <div class="required required_i">* To Update "Trainee Name" &  "Result" fields, Update in edit trainee,trainer feedback for the same.</div>
     <div class="popup_cance89">
         <a href="#view_assessment" rel="modal:close"><button tyep='submit' class='btn btn-primary'>Update/Void</button></a>
     </div>
