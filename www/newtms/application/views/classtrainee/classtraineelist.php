@@ -359,6 +359,7 @@
                                     <input type="hidden" name="enrolmentMode" value="<?php echo $row['enrolment_mode']; ?>" id="enrolmentMode">
                                     <input type="hidden" name="paymentStatus" value="<?php echo $row['payment_status']; ?>" id="paymentStatus">
                                     <input type="hidden" name="companyId" value="<?php echo $row['company_id']; ?>" id="companyId">
+                                    <input type="hidden" name="feeDiscountAmount" value="<?php echo $row['feeDiscountAmount']; ?>" id="feeDiscountAmount">
 
                                     <input type="hidden" name="courseId" value="<?php echo $row['course_id']; ?>" id="courseId">
                                     <input type="hidden" name="classId" value="<?php echo $row['class_id']; ?>" id="classId">

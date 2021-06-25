@@ -151,6 +151,7 @@ class Class_Trainee extends CI_Controller {
                 $new_tabledata[$k]['reference_num'] = $row['reference_num'];
                 $new_tabledata[$k]['external_reference_number'] = $row['external_reference_number'];
                 $new_tabledata[$k]['tpg_course_run_id'] = $row['tpg_course_run_id'];
+                $new_tabledata[$k]['feeDiscountAmount'] = round((($row['discount_rate'] / 100) * $row['class_fees']), 2);
              
                 if ($row['payment_status'] == 'PAID') {
                     $feeCollectionStatus_options[''] = 'Select';
