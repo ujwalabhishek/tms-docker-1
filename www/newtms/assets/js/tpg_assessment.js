@@ -69,14 +69,14 @@ $(document).ready(function () {
     function form_validate($retval) {
         var crse = $('#course').val();
         var clas = $('#class').val();
-        if (crse.length > 0 && crse.length == 0) {
+        if (crse ==null || crse == '') {
             $('#course').css('border', 'solid 1px red');
             $retval = false;
         } else {
             $('#course').css('border', 'solid 1px #bcbcbc');
         }
         
-        if (clas.length > 0 && clas.length == 0) {
+        if (clas == null || clas == 0) {
             $('#class').css('border', 'solid 1px red');
             $retval = false;
         } else {

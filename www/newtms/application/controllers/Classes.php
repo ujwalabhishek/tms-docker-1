@@ -923,13 +923,22 @@ class Classes extends CI_Controller {
         $course = $this->input->get('course');
         $class = $this->input->get('class');
         $userid = $this->input->get('nric');
-        if (!empty($course) && !empty($class)) {
-            $data['tabledata']= $this->getTraineeForAssessments($course,$class,$userid);
+        $searchAssessment = $this->input->get('searchAssessment');
+        if($searchAssessment == 'tpg'){
+            $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
+            $class_details = $this->classmodel->get_class_details($tenant_id,$class);
+            $crse_details=$this->coursemodel->get_course_detailse($class_details->course_id);
             $data['classes'] = $this->classmodel->get_course_class($tenant_id, $course, $mark_attendance,"ACTIVE","classTrainee");
-            $data['nric'] = $this->classmodel->get_Trainee_For_Assessments_json($tenant_id,$course,$class);
-             
-        }
+            $data['tabledata_tpg'] = $this->tpgModel->search_assessments($tenant_id,$tenant->comp_reg_no,$crse_details->crse_ref_no,$class_details->tpg_course_run_id);
+            //print_r($data['tabledata_tpg']);exit;
+        }else{
+            if (!empty($course) && !empty($class)) {
+                $data['tabledata']= $this->getTraineeForAssessments($course,$class,$userid);
+                $data['classes'] = $this->classmodel->get_course_class($tenant_id, $course, $mark_attendance,"ACTIVE","classTrainee");
+                $data['nric'] = $this->classmodel->get_Trainee_For_Assessments_json($tenant_id,$course,$class);
 
+            }
+        }
         $data['main_content'] = 'class/tpg_assessments';
         $this->load->view('layout', $data);
     }

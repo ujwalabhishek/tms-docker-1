@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?11111.00000000"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.0001"></script>
 <style>
     table td{
         font-size: 11px;
@@ -70,7 +70,7 @@
                 </tr>
                 <tr>
                     <td class="td_heading">Trainee NRIC:</td>
-                    <td colspan='3'>
+                    <td>
                         <?php
                         $options = array();
                         $options[''] = 'Select';
@@ -81,9 +81,22 @@
                         echo form_dropdown('nric', $options, $this->input->get('nric'), $js);
                         ?>
                     </td>
+                    <td class="td_heading">Search Assessment In:</td>
+                    <td>
+                         <?php
+                            $assm_options= array(
+                                'tms' => 'TMS',
+                                'tpg' => 'TPG'
+                            );
+                        
+                        $asid = 'id="searchAssessment" ';
+                        echo form_dropdown('searchAssessment', $assm_options, $this->input->get('searchAssessment'), $asid);
+                        ?>
+                    </td>
                 </tr>
+                
                 <tr>
-                    <td colspan='2'>
+                    <td colspan='4'>
                         <span class="pull-right">
                             <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
                         </span>
@@ -151,10 +164,33 @@
                             </tr>
                             <?php
                         }
-                    } else {
-                        $err_msg = $error_msg ? $error_msg : $err_msg; /// added by shubhranshu to remove the classtrainee list on 26/11/2018
-                        echo '<tr><td colspan="11" class="error" style="text-align: center">' . $err_msg . '</td></tr>';
-                    }
+                    } 
+                    
+                    
+                    //////data for tpg search
+                     if (!empty($tabledata_tpg)) {
+                        foreach ($tabledata_tpg->data as $row) {
+                          
+                            ?>
+                                                                              
+                            <tr>                        
+                                <td><?php echo $row->trainee->id; ?></td>
+                                <td class="name"><?php echo $row->trainee->fullName; ?></td>
+                                <td><?php echo $row->assessmentDate; ?></td>
+                                <td><?php echo $row->skillCode; ?></td>
+                                <td><?php echo $row->score ?></td>
+                                <td><?php echo $row->grade; ?></td>
+                                <td><?php echo $row->result; ?></td>
+                                <td><?php echo $row->course->referenceNumber; ?></td>
+                                <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
+                                <td>
+                                   
+                                    <span>Not Possible, While Viewing TPG Data</span>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    } 
                     ?>
                 </tbody>
             </table>
