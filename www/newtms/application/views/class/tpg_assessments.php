@@ -169,7 +169,7 @@
 $atr = 'id="update_fee" name="update_fee" method="post"';
 echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
 ?>
-<div class="modal1_0001" id="view_assessment" style="display:none;height:200px;min-height: 200px;">
+<div class="modal1_0001" id="view_assessment" style="display:none;height:200px;min-height: 200px;width:60%">
     <h2 class="panel_heading_style">TPG View Assessment</h2>
     <table class="table table-striped" id='viewsection'>
         <tbody>
@@ -254,7 +254,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
     </table>
     <span class="required required_i">* Required Fields</span>
     <div class="popup_cance89">
-        <span href="#view_assessment" rel="modal:close"><button class="btn btn-primary enrollment_fee_save" type="submit">Submit</button></span>
+        <a href="#view_assessment" rel="modal:close">Close</a>
     </div>
 </div>
 <script>
