@@ -48,30 +48,28 @@ class tp_gateway extends CI_Controller {
         }
     }
 
-    public function create_assessment($course_id,$class_id,$user_id){
-        $tenant_id=$this->tenant_id;
-        $trainee = $this->classModel->get_single_trainee_for_assessment($tenant_id,$course_id,$class_id,$user_id);
+    public function create_assessment($course_id, $class_id, $user_id) {
+        $tenant_id = $this->tenant_id;
+        $trainee = $this->classModel->get_single_trainee_for_assessment($tenant_id, $course_id, $class_id, $user_id);
         $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
-        $asessment_resp = $this->tpgModel->create_asssessment_to_tpg($trainee,$tenant->comp_reg_no);
-        if($asessment_resp->status == 200){
-            $this->classModel->updateAssessmentRefNo($asessment_resp->data->assessment->referenceNumber,$course_id,$class_id,$user_id,$tenant_id);
-            $this->session->set_flashdata("success", "Assessment Created Successfully With Referance ID: ".$asessment_resp->data->assessment->referenceNumber); 
-        }else{
+        $asessment_resp = $this->tpgModel->create_asssessment_to_tpg($trainee, $tenant->comp_reg_no);
+        if ($asessment_resp->status == 200) {
+            $this->classModel->updateAssessmentRefNo($asessment_resp->data->assessment->referenceNumber, $course_id, $class_id, $user_id, $tenant_id);
+            $this->session->set_flashdata("success", "Assessment Created Successfully With Referance ID: " . $asessment_resp->data->assessment->referenceNumber);
+        } else {
             $controller = 'classes/tpg_assessments';
-            $this->handle_error($controller,$asessment_resp);
+            $this->handle_error($controller, $asessment_resp);
         }
-
     }
-    
-    public function view_assessment(){
+
+    public function view_assessment() {
         $assessment_ref_no = $this->input->post('referenceNo');
         $asessment_resp = $this->tpgModel->view_asssessment_from_tpg($assessment_ref_no);
         echo $asessment_resp;
-
     }
-    
-    public function update_assessment(){
-        $tenant_id=$this->tenant_id;
+
+    public function update_assessment() {
+        $tenant_id = $this->tenant_id;
         $fullname = $this->input->post('fullname');
         $result = $this->input->post('result');
         $assessment_date = $this->input->post('assessment_date');
@@ -83,17 +81,17 @@ class tp_gateway extends CI_Controller {
         $user_id = $this->input->post('user_id');
         $class_id = $this->input->post('class_id');
         $course_id = $this->input->post('course_id');
-        $resp = $this->tpgModel->update_void_assessment_to_tpg($fullname,$result,$assessment_date,$score,$grade,$skillcode,$action,$assessment_ref_no);
-        $obj_resp= json_decode($resp);
-        if($obj_resp->status == 200){
-             $this->classModel->updateAssessmentData($score,$assessment_date,$grade,$user_id,$class_id,$course_id,$tenant_id);
+        $resp = $this->tpgModel->update_void_assessment_to_tpg($fullname, $result, $assessment_date, $score, $grade, $skillcode, $action, $assessment_ref_no);
+        $obj_resp = json_decode($resp);
+        if ($obj_resp->status == 200) {
+            $this->classModel->updateAssessmentData($score, $assessment_date, $grade, $user_id, $class_id, $course_id, $tenant_id);
         }
-        echo $resp;exit;
-       
+        echo $resp;
+        exit;
     }
-    
-    public function handle_error($controller='',$tpg_resp=''){
-         $this->session->set_flashdata('resp_error',$tpg_resp->error->details);
+
+    public function handle_error($controller = '', $tpg_resp = '') {
+        $this->session->set_flashdata('resp_error', $tpg_resp->error->details);
         //print_r($response);exit;
         if ($response->status == 400) {
             $this->session->set_flashdata('error', "Oops! Bad request!");
@@ -108,23 +106,20 @@ class tp_gateway extends CI_Controller {
         }
         redirect($controller);
     }
-    
-    function encrypt_decrypt($action, $string) 
-    {
+
+    function encrypt_decrypt($action, $string) {
         $output = false;
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
-        if ( $action == 'encrypt' ) {
+        if ($action == 'encrypt') {
             $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
-        } else if( $action == 'decrypt' ) {
+        } else if ($action == 'decrypt') {
             $output = openssl_decrypt($string, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
         }
         return $output;
     }
 
-
-    
     public function curl_request($mode, $url, $encrypted_data, $api_version) {
         //$encrypted_data='ggrR1uwMpea4GWQbhu6+iZ/KZvwhlblrRspkqEg9dVszEjqIiDKnWe4u6PfsD/ntzFfbazfu1I6YmomjmsaCCXPEdJ6sPmrVDyxgVvnScrn6XhZXRQMRpXCSwC5PUh0SXEyr/jw0HtsOFT0JseoJ7nxj8qM/rKv4e9OhNmrIysykBlfEAZ3MsCfnZL9O7kpsVvi2yANJfNoVYBSAs6hUdHc5jlvn2tmLf7kKMNiaP/z+qusGppVZfbvXPq2LNaLl/osEJZDASgGbzJOwLxzDG90E9cyTqhoeREl5KxUud37U41Gx0ufui2bGzA9meFdK6sWefTdIFIfZlh7MK7xKfEyDaTZTyYTObC2p8/PoLq9RAfcRPFCCvOYAFIMB2din+XQ+u+ZqMHzF0cz6A/HPdkSpze2NB96EJwhUXHF5tMMgwq7kKc/ELg6etD8FDrai/klmj7svqsBYfm7fJTwMXDvTWnNWbRhT94JT9RpWGq2V6Gph/16CuAMYt0QZ1mEkzV27m149P5QrPGXvd4CDqSE7lR55Kfs6CujYx4s4PyP7naOEPBUn7DCb6Bv6bJSM6B+K+dAhMArlf1Ov6yKepX0qRzq/XU140sM3xpQs0+/dTLWiiYM5WmIAbj5Ohb0KX9tpccfQ/xo8Xn6sU0mJx5xslh48il1aQOhz/54iAI0+WR8Pf3+x7R/3U6V4tasaWlhPhqdPfzkPbwsSbKK4b/g7UZCU0XgNY0l4ELK+swnh/zv0nzJlHji7a8B0elxAZCRU2EOA+JZDjyEHC1xSNPnss8hNc3c9y3RcmTG6H3EjrPth19e8M3jvSsYGNi0JhoGaojPaXRsCjwI6qHhU2uvn5CmNPvVxxzI5v+0sI46oIoijBfrkZEIFElu6nVwcvFm5b+/nZhM2VuUhO85UIA==';
         $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
@@ -1303,7 +1298,7 @@ class tp_gateway extends CI_Controller {
 
         //Training Partner
         $trainingPartnerUEN = $tenant_details->comp_reg_no;
-        $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';     
+        $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';
 
         $tpg_enrolment_json = array(
             "enrolment" => array(
@@ -1410,7 +1405,7 @@ class tp_gateway extends CI_Controller {
         $tpg_response = json_decode($tpg_enrolment_decoded);
 
         if ($tpg_response->status == 200) {
-            
+
             //print_r($tpg_response);
             $enrolmentReferenceNumber = $tpg_response->data->enrolment->referenceNumber;
             $enrolmentReferenceStatus = $tpg_response->data->enrolment->status;
@@ -1563,8 +1558,8 @@ class tp_gateway extends CI_Controller {
         }
     }
 
-    public function edit_enrolment_tpg ($enrolmentReferenceNumber) {
-        
+    public function edit_enrolment_tpg($enrolmentReferenceNumber) {
+
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
@@ -1612,7 +1607,7 @@ class tp_gateway extends CI_Controller {
 
             $data['feeDiscountAmount'] = $tpg_response->data->enrolment->trainee->fees->discountAmount;
             $data['feeCollectionStatus'] = $tpg_response->data->enrolment->trainee->fees->collectionStatus;
-            
+
             $feeCollectionStatus_options[''] = 'Select';
             $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
             $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
@@ -1620,7 +1615,7 @@ class tp_gateway extends CI_Controller {
             $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
 
             $data['feeCollectionStatus_options'] = $feeCollectionStatus_options;
-            
+
             $data['traineeEnrolmentDate'] = $tpg_response->data->enrolment->trainee->enrolmentDate;
 
             $data['traineeSponsorshipType'] = $tpg_response->data->enrolment->trainee->sponsorshipType;
@@ -1645,24 +1640,30 @@ class tp_gateway extends CI_Controller {
             redirect('class_trainee');
         }
     }
-   
+
     public function update_cancel_enrolment_tpg() {
 
         $enrolmentReferenceNumber = $this->input->post('enrolmentReferenceNumber');
-        
         $courseRunId = $this->input->post('courseRunId');
-        $traineeContactNumber = $this->input->post('traineeContactNumber'); 
+        $traineeContactNumber = $this->input->post('traineeContactNumber');
         $traineeEmailAddress = $this->input->post('traineeEmailAddress');
-        $employerContactFullName = $this->input->post('employerContactFullName');
-        $employerContactNumber = $this->input->post('employerContactNumber');
-        $employerEmailAddress = $this->input->post('employerEmailAddress');
-        
-        $discount_amount = $this->input->post('discount_amount');
+        $feeDiscountAmount = $this->input->post('feeDiscountAmount');
         $feeCollectionStatus = $this->input->post('feeCollectionStatus');
-        
+        $sponsorshipType = $this->input->post('sponsorshipType');
+
+        if ($sponsorshipType != "Individual") {
+            $employerContactFullName = $this->input->post('employerContactFullName');
+            $employerContactNumber = $this->input->post('employerContactNumber');
+            $employerEmailAddress = $this->input->post('employerEmailAddress');
+        } else {
+            $employerContactFullName = "";
+            $employerContactNumber = "";
+            $employerEmailAddress = "";
+        }
+
         //$course_id = $this->input->post('tpgCourseId');
         //$class_id = $this->input->post('tpgClassId');
-        
+
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
@@ -1675,29 +1676,29 @@ class tp_gateway extends CI_Controller {
                                           "action": "Update",
                                           "course": {
                                             "run": {
-                                              "id": "'.$courseRunId.'"
+                                              "id": "' . $courseRunId . '"
                                             }
                                           },
                                           "trainee": {
                                             "contactNumber": {
                                               "countryCode": "60",
                                               "areaCode": "00",
-                                              "phoneNumber": "'.$traineeContactNumber.'"
+                                              "phoneNumber": "' . $traineeContactNumber . '"
                                             },
-                                            "emailAddress": "'.$traineeEmailAddress.'"
+                                            "emailAddress": "' . $traineeEmailAddress . '"
                                           },
                                           "employer": {
-                                            "fullName": "'.$employerContactFullName.'",
+                                            "fullName": "' . $employerContactFullName . '",
                                             "contactNumber": {
                                               "countryCode": "65",
                                               "areaCode": "00",
-                                              "phoneNumber": "'.$employerContactNumber.'"
+                                              "phoneNumber": "' . $employerContactNumber . '"
                                             },
-                                            "emailAddress": "'.$employerEmailAddress.'"
+                                            "emailAddress": "' . $employerEmailAddress . '"
                                           },
                                           "fees": {
-                                            "discountAmount": "'.$discount_amount.'",
-                                            "collectionStatus": "'.$feeCollectionStatus.'"
+                                            "discountAmount": "' . $feeDiscountAmount . '",
+                                            "collectionStatus": "' . $feeCollectionStatus . '"
                                           }
                                         }
                                       }';
@@ -1708,10 +1709,12 @@ class tp_gateway extends CI_Controller {
 
         $decrypted_output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
-        $tpg_response = json_decode($decrypted_output);        
+        $tpg_response = json_decode($decrypted_output);
 
         if ($tpg_response->status == 200) {
 
+            print_r($tpg_response); exit;
+            
             $this->session->set_flashdata("success", "The enrolment data has been updated for reference number - " . $enrolmentReferenceNumber);
 
             redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
@@ -1729,6 +1732,6 @@ class tp_gateway extends CI_Controller {
             }
             redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         }
-    }    
+    }
 
 }
