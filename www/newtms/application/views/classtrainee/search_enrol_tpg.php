@@ -134,7 +134,14 @@
                         <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="trainee_err"></span>
                     </td>
-                </tr>                
+                </tr>
+                <tr>
+                    <td colspan='4'>
+                        <span class="pull-right">
+                            <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
+                        </span>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div><br>
