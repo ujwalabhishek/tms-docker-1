@@ -1276,7 +1276,7 @@ class tp_gateway extends CI_Controller {
             $traineeSponsorshipType = "INDIVIDUAL";
 
             $tenant_details = fetch_tenant_details($tenant_id);
-
+echo $tenant_details->tenant_name; exit;
             //Individual
             $employerUEN = $tenant_details->comp_reg_no;
             $emploerFullName = $tenant_details->tenant_name;
@@ -1711,9 +1711,7 @@ class tp_gateway extends CI_Controller {
 
         $tpg_response = json_decode($decrypted_output);
 
-        if ($tpg_response->status == 200) {
-
-            print_r($tpg_response); exit;
+        if ($tpg_response->status == 200) {            
             
             $this->session->set_flashdata("success", "The enrolment data has been updated for reference number - " . $enrolmentReferenceNumber);
 
