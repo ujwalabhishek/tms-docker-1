@@ -166,7 +166,12 @@ $(document).ready(function () {
         });
     });
     
-   function updateAseessment(){
+   
+    
+    
+});
+
+function updateAseessment(){
        $('#btnarea').html("<div class='popup_cance89' id='btnarea'><button class='btn btn-primary' onclick='updateAseessment()'>Update/Void</button></div>");
        $fullname1=$('#fullname1').html();
        $result1=$('#result1').html();
@@ -192,8 +197,5 @@ $(document).ready(function () {
             }
         });
    }
-    
-    
-});
 
 
