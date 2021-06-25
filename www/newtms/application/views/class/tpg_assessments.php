@@ -70,7 +70,7 @@
                 </tr>
                 <tr>
                     <td class="td_heading">Trainee NRIC:</td>
-                    <td colspan='3'>
+                    <td>
                         <?php
                         $options = array();
                         $options[''] = 'Select';
@@ -81,7 +81,15 @@
                         echo form_dropdown('nric', $options, $this->input->get('nric'), $js);
                         ?>
                     </td>
+                    <td class="td_heading">Search Assessment In:</td>
+                    <td>
+                        <select name="searchAssessment" id="searchAssessment">
+                            <option value="tms" selected>TMS</option>
+                            <option value="tpg">TPG</option>
+                        </select>
+                    </td>
                 </tr>
+                
                 <tr>
                     <td colspan='2'>
                         <span class="pull-right">
@@ -151,10 +159,33 @@
                             </tr>
                             <?php
                         }
-                    } else {
-                        $err_msg = $error_msg ? $error_msg : $err_msg; /// added by shubhranshu to remove the classtrainee list on 26/11/2018
-                        echo '<tr><td colspan="11" class="error" style="text-align: center">' . $err_msg . '</td></tr>';
-                    }
+                    } 
+                    
+                    
+                    //////data for tpg search
+                     if (!empty($tabledata_tpg)) {
+                        foreach ($tabledata_tpg->data as $row) {
+                          
+                            ?>
+                                                                              
+                            <tr>                        
+                                <td><?php echo $row->trainee->id; ?></td>
+                                <td class="name"><?php echo $row->trainee->fullName; ?></td>
+                                <td><?php echo $row->assessmentDate; ?></td>
+                                <td><?php echo $row->skillCode; ?></td>
+                                <td><?php echo $row->feedback_score ?></td>
+                                <td><?php echo $row->grade; ?></td>
+                                <td><?php echo $row->score; ?></td>
+                                <td><?php echo $row->course->referenceNumber; ?></td>
+                                <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
+                                <td>
+                                   
+                                    <span>No Possible, While Viewing TPG Data</span>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    } 
                     ?>
                 </tbody>
             </table>

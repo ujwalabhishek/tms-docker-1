@@ -460,6 +460,49 @@ class Tpg_api_Model extends CI_Model {
         return $decrypted_data;
     }
     
+    public function search_assessments($tenant_id,$tp_uen,$crs_ref_no,$crs_run_id){
+        $retun = $this->correct_live_dev_api_data($crs_ref_no,$tp_uen);
+         $search_assessment_json='{"assessments": {
+                                  "trainingPartner": {
+                                    "uen": "'.$retun[tp_uen].'",
+                                    "code": "'.$retun[tp_uen].'-03"
+                                  },
+                                  "course": {
+                                    "referenceNumber": "'.$retun[ref_no].'",
+                                    "run": {
+                                      "id": "'.$crs_run_id.'"
+                                    }
+                                  },
+                                  "trainee": {
+                                    "id": ""
+                                  },
+                                  "skillCode": "",
+                                  "enrolment": {
+                                    "referenceNumber": ""
+                                  }
+                                },
+                                "meta": {
+                                  "lastUpdateDateFrom": "",
+                                  "lastUpdateDateTo": ""
+                                },
+                                "sortBy": {
+                                  "field": "updatedOn",
+                                  "order": "asc"
+                                },
+                                "parameters": {
+                                  "page": 0,
+                                  "pageSize": 50
+                                }
+                              }';
+        
+        $encrypted_data = $this->encrypt_decrypt('encrypt', $search_assessment_json);
+        $api_version = 'v1';
+        $url = "https://".$retun[domain]."/tpg/assessments/search/";
+        $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
+        $decrypted_data = $this->encrypt_decrypt('decrypt', $response);
+        return json_decode($decrypted_data);
+    }
+    
     public function updateEnrolmentReferenceNumber($course_id,$class_id,$user_id,$enrolmentReferenceNumber){
         
         if(!empty($enrolmentReferenceNumber)){
