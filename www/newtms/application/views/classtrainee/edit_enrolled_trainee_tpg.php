@@ -376,7 +376,7 @@
         return pattern.test(emailAddress);
     }
     function valid_discount(discountValue) {
-        var pattern = new RegExp(/^(([1-8][0-9]?|9[0-8]?)\.\d+|[1-9][0-9]?)$/);
+        var pattern = new RegExp(/^(([1-8][1-9]?|9[1-8]?)\.\d+|[1-9][0-9]?)$/);
         return pattern.test(discountValue);
     }
 
