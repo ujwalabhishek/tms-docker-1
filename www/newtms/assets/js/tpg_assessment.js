@@ -166,12 +166,8 @@ $(document).ready(function () {
         });
     });
     
-   
     
-    
-});
-
-function updateAseessment(){
+    $('#updateAseessment').click(function () {
        $('#btnarea').show();
        $('#status_msg').html('');
        $fullname1=$('#fullname1').html();
@@ -203,6 +199,12 @@ function updateAseessment(){
                 }
             }
         });
-   }
+   });
+   
+    
+    
+});
+
+
 
 
