@@ -1281,21 +1281,7 @@ class tp_gateway extends CI_Controller {
 
         //Training Partner
         $trainingPartnerUEN = $tenant_details->comp_reg_no;
-        $trainingPartnerCode = $tenant_details->comp_reg_no . '-01';
-
-        if (TPG_ENVIRONMENT == 'PRODUCTION') {
-            $courseReferenceNumber = $courseReferenceNumber;
-            $courseRunId = $courseRunId;
-            $trainingPartnerUEN = $trainingPartnerUEN;
-            $trainingPartnerCode = $trainingPartnerCode;
-            $employerUEN = $employerUEN;
-        } else {
-            $courseReferenceNumber = 'TGS-2020002110';
-            $courseRunId = '49842';
-            $trainingPartnerUEN = '201000372W';
-            $trainingPartnerCode = '201000372W-03';
-            $employerUEN = '201000372W';
-        }
+        $trainingPartnerCode = $tenant_details->comp_reg_no . '-01';        
 
         $tpg_enrolment_json = array(
             "enrolment" => array(
@@ -1696,8 +1682,7 @@ class tp_gateway extends CI_Controller {
 
         $decrypted_output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
-        $tpg_response = json_decode($decrypted_output);
-        print_r($tpg_response); exit;
+        $tpg_response = json_decode($decrypted_output);        
 
         if ($tpg_response->status == 200) {
 
