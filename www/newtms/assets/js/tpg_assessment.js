@@ -100,8 +100,8 @@ $(document).ready(function () {
                 json_data = $.parseJSON(res);
                 if (json_data != '' && res.status == 200) {
                     $('#ass_ref_no').html(res.data.referenceNumber);
-                    $('#tp_uen').html(res.trainingPartner.uen);
-                    $('#tp_name').html(res.trainingPartner.name);
+                    $('#tp_uen').html(res.data.trainingPartner.uen);
+                    $('#tp_name').html(res.data.trainingPartner.name);
                     $('#crs_ref_no').html(res.course.referenceNumber);
                     $('#crs_ref_no').html(res.course.title);
                     $('#crs_run_id').html(res.run.id);
