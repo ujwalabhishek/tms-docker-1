@@ -1689,7 +1689,7 @@ class tp_gateway extends CI_Controller {
                                           "employer": {
                                             "fullName": "'.$employerContactFullName.'",
                                             "contactNumber": {
-                                              "countryCode": "60",
+                                              "countryCode": "65",
                                               "areaCode": "00",
                                               "phoneNumber": "'.$employerContactNumber.'"
                                             },

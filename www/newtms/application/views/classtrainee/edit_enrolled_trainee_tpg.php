@@ -68,7 +68,7 @@
                             <b>Trainee Cont. No.:<span class="required">*</span></b> 
                         </td>
                         <td> 
-                            <input type="text" name="contactno" id="contactno" style="" value='<?php echo $traineeContactNumber; ?>' />
+                            <input type="text" name="traineeContactNumber" id="traineeContactNumber" style="" value='<?php echo $traineeContactNumber; ?>' />
                             <span id="contactno_err"></span>
                         </td>
                     </tr>
@@ -78,7 +78,7 @@
                             <b>Trainee Email.:<span class="required">*</span></b> 
                         </td>   
                         <td>
-                            <input type="text" name="temail" id="temail" style="" value='<?php echo $traineeEmailAddress; ?>'/>
+                            <input type="text" name="traineeEmailAddress" id="traineeEmailAddress" style="" value='<?php echo $traineeEmailAddress; ?>'/>
                             <span id="temail_err"></span>
                         </td> 
 
@@ -160,8 +160,7 @@
                     <tr class="new_span">
                         <td class="td_heading" width="15%">Discount Amount:<span class="required">*</span></td>
                         <td colspan="3">
-                            <input type="text" name="discount_amount" id="discount_amount" value='<?php echo $feeDiscountAmount; ?>' />
-
+                            <input type="text" name="feeDiscountAmount" id="feeDiscountAmount" value='<?php echo $feeDiscountAmount; ?>' />
                             <span id="discount_amount_err"></span>
                         </td>
                     </tr>
@@ -260,33 +259,110 @@
     });
 
     function validateForm(retVal) {
-        pers_contact_number = $.trim($("#contactno").val());
+        pers_contact_number = $.trim($("#traineeContactNumber").val());
         if (pers_contact_number == "") {
             $("#contactno_err").text("[required]").addClass('error');
-            $("#contactno").addClass('error');
+            $("#traineeContactNumber").addClass('error');
             retVal = false;
         } else {
             if (valid_contact_number(pers_contact_number) == false) {
                 $("#contactno_err").text("[invalid]").addClass('error');
-                $("#contactno").addClass('error');
+                $("#traineeContactNumber").addClass('error');
                 retVal = false;
             } else {
                 $("#contactno_err").text("").removeClass('error');
-                $("#contactno").removeClass('error');
+                $("#traineeContactNumber").removeClass('error');
             }
         }
 
-        user_registered_email = $.trim($("#temail").val());
+        user_registered_email = $.trim($("#traineeEmailAddress").val());
         if (user_registered_email == "") {
             $("#temail_err").text("[required]").addClass('error');
-            $("#temail").addClass('error');
+            $("#traineeEmailAddress").addClass('error');
             retVal = false;
-        } else if (valid_email_address(pers_conf_email) == false) {
+        } else if (valid_email_address(user_registered_email) == false) {
             $("#temail_err").text("[invalid]").addClass('error');
-            $("#temail").addClass('error');
+            $("#traineeEmailAddress").addClass('error');
+            retVal = false;
         } else {
             $("#temail_err").text("").removeClass('error');
-            $("#temail").removeClass('error');
+            $("#traineeEmailAddress").removeClass('error');
+        }
+
+        courseRunId = $.trim($("#courseRunId").val());
+        if (courseRunId == "") {
+            $("#crunid_err").text("[required]").addClass('error');
+            $("#courseRunId").addClass('error');
+            retVal = false;
+        } else {
+            $("#crunid_err").text("").removeClass('error');
+            $("#courseRunId").removeClass('error');
+        }
+
+        employerContactFullName = $.trim($("#employerContactFullName").val());
+        if (employerContactFullName == "") {
+            $("#employerContactFullName_err").text("[required]").addClass('error');
+            $("#employerContactFullName").addClass('error');
+            retVal = false;
+        } else {
+            $("#employerContactFullName_err").text("").removeClass('error');
+            $("#employerContactFullName").removeClass('error');
+        }
+
+        employerContactNumber = $.trim($("#employerContactNumber").val());
+        if (employerContactNumber == "") {
+            $("#employerContactNumber_err").text("[required]").addClass('error');
+            $("#employerContactNumber").addClass('error');
+            retVal = false;
+        } else {
+            if (valid_contact_number(employerContactNumber) == false) {
+                $("#employerContactNumber_err").text("[invalid]").addClass('error');
+                $("#employerContactNumber").addClass('error');
+                retVal = false;
+            } else {
+                $("#employerContactNumber_err").text("").removeClass('error');
+                $("#employerContactNumber").removeClass('error');
+            }
+        }
+
+        employerEmailAddress = $.trim($("#employerEmailAddress").val());
+        if (employerEmailAddress == "") {
+            $("#employerEmailAddress_err").text("[required]").addClass('error');
+            $("#employerEmailAddress").addClass('error');
+            retVal = false;
+        } else if (valid_email_address(employerEmailAddress) == false) {
+            $("#employerEmailAddress_err").text("[invalid]").addClass('error');
+            $("#employerEmailAddress").addClass('error');
+            retVal = false;
+        } else {
+            $("#employerEmailAddress_err").text("").removeClass('error');
+            $("#employerEmailAddress").removeClass('error');
+        }
+
+        feeDiscountAmount = $.trim($("#feeDiscountAmount").val());
+        if (feeDiscountAmount == "") {
+            $("#discount_amount_err").text("[required]").addClass('error');
+            $("#feeDiscountAmount").addClass('error');
+            retVal = false;
+        } else {
+            if (valid_discount(employerContactNumber) == false) {
+                $("#discount_amount_err").text("[invalid]").addClass('error');
+                $("#feeDiscountAmount").addClass('error');
+                retVal = false;
+            } else {
+                $("#discount_amount_err").text("").removeClass('error');
+                $("#feeDiscountAmount").removeClass('error');
+            }
+        }
+
+        feeCollectionStatus = $.trim($("#feeCollectionStatus").val());
+        if (feeCollectionStatus == "") {
+            $("#class_type_err").text("[required]").addClass('error');
+            $("#feeCollectionStatus").addClass('error');
+            retVal = false;
+        } else {
+            $("#class_type_err").text("").removeClass('error');
+            $("#feeCollectionStatus").removeClass('error');
         }
 
         return retVal;
@@ -298,6 +374,15 @@
     function valid_email_address(emailAddress) {
         var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
         return pattern.test(emailAddress);
+    }
+    function valid_discount(discountValue) {
+        var pattern = new RegExp(/^(([1-8][0-9]?|9[0-8]?)\.\d+|[1-9][0-9]?)$/);
+        return pattern.test(discountValue);
+    }
+
+    function valid_course_run($zip) {
+        var ck_name = /^[0-9 ]+$/;
+        return ck_name.test($zip);
     }
 
 </script>
