@@ -176,7 +176,7 @@ $(document).ready(function () {
        $fullname1=$('#fullname1').html();
        $result1=$('#result1').html();
        $score1=$('#score1').val();
-       $grade1=$('#grade1').html();
+       $grade1=$('#grade1').val();
        $ass_date1=$('#ass_date1').val();
        $skill_code1=$('#skill_code1').val();
        $action=$('#action').val();
