@@ -173,7 +173,7 @@ $(document).ready(function () {
 
 function updateAseessment(){
        $('#btnarea').show();
-        $('#status_msg').html('');
+       $('#status_msg').html('');
        $fullname1=$('#fullname1').html();
        $result1=$('#result1').html();
        $score1=$('#score1').val();
