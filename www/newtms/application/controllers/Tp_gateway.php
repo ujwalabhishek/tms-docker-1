@@ -1410,9 +1410,12 @@ class tp_gateway extends CI_Controller {
         $tpg_response = json_decode($tpg_enrolment_decoded);
 
         if ($tpg_response->status == 200) {
-            $enrolmentReferenceNumber = $tpg_response->data->enrolment[0]->referenceNumber;
+            
+            //print_r($tpg_response);
+            $enrolmentReferenceNumber = $tpg_response->data->enrolment->referenceNumber;
+            $enrolmentReferenceStatus = $tpg_response->data->enrolment->status;
 
-            $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber);
+            $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber, $enrolmentReferenceStatus);
 
             if ($updated) {
                 $this->session->set_flashdata("success", "Enrolment has been created with reference number - " . $enrolmentReferenceNumber);
@@ -1726,27 +1729,6 @@ class tp_gateway extends CI_Controller {
             }
             redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         }
-    }
-    
-    public function tpg_search_enrolment() {
-        $data['sideMenuData'] = fetch_non_main_page_content();
-        $tenant_id = $this->tenant_id;
-        extract($_GET);
-        $data['courses'] = $courses = $this->coursemodel->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
-        if ($course) {
-
-            $course_classes = $this->classModel->get_course_class($tenant_id, $course, "", "", "classTrainee");
-            $data['classes'] = $course_classes;
-        }
-        $export_url = '';
-        $sort_url = '';
-        $data['error_msg'] = 'Kindly apply filter to fetch the trainees'; ////ssp/////
-        
-        
-        
-        $data['page_title'] = 'Class Trainee';
-        $data['main_content'] = 'classtrainee/search_enrol_tpg';
-        $this->load->view('layout', $data);
-    }
+    }    
 
 }

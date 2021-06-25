@@ -460,6 +460,7 @@ class Tpg_api_Model extends CI_Model {
         return $decrypted_data;
     }
     
+
     public function search_assessments($tenant_id,$tp_uen,$crs_ref_no,$crs_run_id){
         $retun = $this->correct_live_dev_api_data($crs_ref_no,$tp_uen);
          $search_assessment_json='{"assessments": {
@@ -502,13 +503,16 @@ class Tpg_api_Model extends CI_Model {
         $decrypted_data = $this->encrypt_decrypt('decrypt', $response);
         return json_decode($decrypted_data);
     }
-    
-    public function updateEnrolmentReferenceNumber($course_id,$class_id,$user_id,$enrolmentReferenceNumber){
         
+
+    public function updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber, $enrolmentReferenceStatus){
+                        
+
         if(!empty($enrolmentReferenceNumber)){
             $tenantId = $this->session->userdata('userDetails')->tenant_id;
             $data = array(
-                       'tpg_enrolment_ref_no' => $enrolmentReferenceNumber
+                       'tpg_enrolment_ref_no' => $enrolmentReferenceNumber,
+                       'tpg_enrolment_status' => $enrolmentReferenceStatus
                    );
            $this->db->trans_start();
            $this->db->where('tenant_id', $tenantId);
