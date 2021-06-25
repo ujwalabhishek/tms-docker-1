@@ -98,7 +98,7 @@ $(document).ready(function () {
             },
             success: function (res) {
                 json_data = $.parseJSON(res);
-                if (json_data != '') {alert(res.status);
+                if (json_data != '' && res.status == 200) {alert(res.referenceNumber);
                     $('#ass_ref_no').html(res.referenceNumber);
                     $('#tp_uen').html(res.trainingPartner.uen);
                     $('#tp_name').html(res.trainingPartner.name);
