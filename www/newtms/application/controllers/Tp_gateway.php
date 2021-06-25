@@ -1411,12 +1411,11 @@ class tp_gateway extends CI_Controller {
 
         if ($tpg_response->status == 200) {
             
-            print_r($tpg_response);
+            //print_r($tpg_response);
             $enrolmentReferenceNumber = $tpg_response->data->enrolment->referenceNumber;
             $enrolmentReferenceStatus = $tpg_response->data->enrolment->status;
-print_r($enrolmentReferenceNumber);
-print_r($enrolmentReferenceStatus);
-            $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber);
+
+            $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber, $enrolmentReferenceStatus);
 
             if ($updated) {
                 $this->session->set_flashdata("success", "Enrolment has been created with reference number - " . $enrolmentReferenceNumber);
