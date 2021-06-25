@@ -83,15 +83,20 @@
                     </td>
                     <td class="td_heading">Search Assessment In:</td>
                     <td>
-                        <select name="searchAssessment" id="searchAssessment">
-                            <option value="tms" selected>TMS</option>
-                            <option value="tpg">TPG</option>
-                        </select>
+                         <?php
+                            $assm_options= array(
+                                'tms' => 'TMS',
+                                'tpg' => 'TPG'
+                            );
+                        
+                        $asid = 'id="searchAssessment" ';
+                        echo form_dropdown('searchAssessment', $assm_options, $this->input->get('searchAssessment'), $asid);
+                        ?>
                     </td>
                 </tr>
                 
                 <tr>
-                    <td colspan='2'>
+                    <td colspan='4'>
                         <span class="pull-right">
                             <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
                         </span>
@@ -173,14 +178,14 @@
                                 <td class="name"><?php echo $row->trainee->fullName; ?></td>
                                 <td><?php echo $row->assessmentDate; ?></td>
                                 <td><?php echo $row->skillCode; ?></td>
-                                <td><?php echo $row->feedback_score ?></td>
+                                <td><?php echo $row->score ?></td>
                                 <td><?php echo $row->grade; ?></td>
-                                <td><?php echo $row->score; ?></td>
+                                <td><?php echo $row->result; ?></td>
                                 <td><?php echo $row->course->referenceNumber; ?></td>
                                 <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
                                 <td>
                                    
-                                    <span>No Possible, While Viewing TPG Data</span>
+                                    <span>Not Possible, While Viewing TPG Data</span>
                                 </td>
                             </tr>
                             <?php
