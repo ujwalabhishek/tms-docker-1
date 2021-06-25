@@ -437,6 +437,29 @@ class Tpg_api_Model extends CI_Model {
         return $decrypted_data;
     }
     
+    public function update_void_assessment_to_tpg($fullname,$result,$assessment_date,$score,$grade,$skillcode,$action,$assessment_ref_no){
+        $update_assessment_json='{"assessment": {
+                              "grade": "'.$grade.'",
+                              "score": '.$score.',
+                              "action": "'.$action.'",
+                              "result": "'.$result.'",
+                              "trainee": {
+                                "fullName": "'.$fullname.'"
+                              },
+                              "skillCode": "'.$skillcode.'",
+                              "assessmentDate": "'.date('Y-m-d',strtotime($assessment_date)).'"
+                            }
+                        }';
+        
+        $retun = $this->correct_live_dev_api_data('','');
+        $encrypted_data = $this->encrypt_decrypt('encrypt', $update_assessment_json);
+        $api_version = 'v1';
+        $url = "https://".$retun[domain]."/tpg/assessments/details/".$assessment_ref_no;
+        $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
+        $decrypted_data = $this->encrypt_decrypt('decrypt', $response);
+        return $decrypted_data;
+    }
+    
     public function updateEnrolmentReferenceNumber($course_id,$class_id,$user_id,$enrolmentReferenceNumber){
         
         if(!empty($enrolmentReferenceNumber)){

@@ -165,10 +165,7 @@
         </ul>
     </div>
 </div>
-<?php
-$atr = 'id="update_fee" name="update_fee" method="post"';
-echo form_open("tp_gateway/update_void_asessment", $atr);
-?>
+
 <div class="modal1_0001" id="update_void_assessment" style="display:none;height:270px;min-height: 200px;width:60%">
     <h2 class="panel_heading_style">TPG Update/Void Assessment</h2>
     <table class="table table-striped" id=''>
@@ -189,7 +186,7 @@ echo form_open("tp_gateway/update_void_asessment", $atr);
 
             <tr>
                 <td class="td_heading">Assessment Date:<span class="required">*</span></td>
-                <td><input type="date" name="assessment_date" value="" id='ass_date1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
+                <td><input type="date" name="assessment_date" value="" id='ass_date1' style="line-height: 14px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
                 <td class="td_heading">Skill Code:<span class="required">*</span></td>
                 <td><input type="text" name="skill_Code" value="" id='skill_code1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
             </tr>
@@ -202,17 +199,19 @@ echo form_open("tp_gateway/update_void_asessment", $atr);
                     <option value="void">Void</option>
                     </select>
                 </td>
+                <td class="td_heading">Assessment Ref No:<span class="required">*</span></td>
+                <td id='assmt_ref_no1'></td>
             </tr>
             
         </tbody>
     </table>
     <div class="required required_i">* To Update "Trainee Name" &  "Result" fields, Update in edit trainee,trainer feedback for the same,Then Come to update this page.</div>
     <div class="popup_cance89">
-        <a href="#view_assessment" rel="modal:close"><button tyep='submit' class='btn btn-primary'>Update/Void</button></a>
+        <button class='btn btn-primary' onclick="updateAseessment()">Update/Void</button>
     </div>
 </div>
 
-<?php form_close();?>
+
 
 
 
