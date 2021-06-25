@@ -159,7 +159,7 @@
                                    
                                     <a href="<?php echo base_url() . 'tp_gateway/create_assessment/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Create Assessment</span></a>
                                     <br>
-                                    <a href="#update_void_assessment" rel="modal:open" id='update_assessment' data-refNo='<?php $row->assessment_reference_No;?>'><span class="btnblue">Update/Void Assessment</span></a>
+                                    <a href="#update_void_assessment" rel="modal:open" id='update_assessment' data-refNo='<?php echo $row->assessment_reference_No;?>' data-userid="<?php echo $row->user_id;?>" data-courseid="<?php echo $row->course_id;?>" data-classid="<?php echo $row->class_id;?>"><span class="btnblue">Update/Void Assessment</span></a>
                                     <br>
                                     <a href="#view_assessment" rel="modal:open" id='click_assessment' data-refNo='<?php $row->assessment_reference_No;?>'><span class="btnblue">View Assessment</span></a>
                                     
@@ -244,7 +244,7 @@
             
         </tbody>
     </table>
-    <div class="required required_i">* To Update "Trainee Name" &  "Result" fields, Update in edit trainee,trainer feedback for the same,Then Come to update this page.</div>
+    <div class="required required_i">* To Update "Trainee Name" &  "Result" & "Skill Code" fields, Update in edit trainee,trainer feedback,Edit Course for the same,Then Come to update this page.</div>
     <div id="status_msg"></div>
     <div class="popup_cance89" id="btnarea">
         <button class='btn btn-primary' id="updateAseessment">Update/Void</button>

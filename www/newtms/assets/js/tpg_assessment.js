@@ -176,15 +176,18 @@ $(document).ready(function () {
        $fullname1=$('#fullname1').html();
        $result1=$('#result1').html();
        $score1=$('#score1').val();
-       $grade1=$('#grade1').html();
+       $grade1=$('#grade1').val();
        $ass_date1=$('#ass_date1').val();
        $skill_code1=$('#skill_code1').val();
        $action=$('#action').val();
        $assmt_ref_no1=$('#assmt_ref_no1').html();
+       $courseid=$('#update_assessment').data('courseid');
+       $userid=$('#update_assessment').data('userid');
+       $classid=$('#update_assessment').data('classid');
         $.ajax({
             type: 'post',
             url: $baseurl + 'tp_gateway/update_assessment',
-            data: {fullname: $fullname1,result:$result1,score:$score1,grade:$grade1,assessment_date:$ass_date1,skillcode:$skill_code1,action:$action,assmt_ref_no:$assmt_ref_no1},
+            data: {course_id:$courseid,class_id:$classid,user_id:$userid,fullname: $fullname1,result:$result1,score:$score1,grade:$grade1,assessment_date:$ass_date1,skillcode:$skill_code1,action:$action,assmt_ref_no:$assmt_ref_no1},
             dataType: "json",
             beforeSend: function () {
                 

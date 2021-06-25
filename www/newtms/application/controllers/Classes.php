@@ -960,4 +960,6 @@ class Classes extends CI_Controller {
         }
         echo json_encode($classes_arr);
     }
+    
+   
 }
