@@ -1267,7 +1267,7 @@ class tp_gateway extends CI_Controller {
             $employerContactNumber = $tenant_details->tenant_contact_num;
         }
 
-        $feeDiscountAmount = "";
+        $feeDiscountAmount = $this->input->post('feeDiscountAmount');
         $paymentStatus = $this->input->post('paymentStatus');
         if ($paymentStatus == 'PAID') {
             $feeCollectionStatus = "Full Payment";
@@ -1281,7 +1281,7 @@ class tp_gateway extends CI_Controller {
 
         //Training Partner
         $trainingPartnerUEN = $tenant_details->comp_reg_no;
-        $trainingPartnerCode = $tenant_details->comp_reg_no . '-01';        
+        $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';     
 
         $tpg_enrolment_json = array(
             "enrolment" => array(
@@ -1308,7 +1308,7 @@ class tp_gateway extends CI_Controller {
                         "phoneNumber" => $traineeContactNumber
                     ),
                     "emailAddress" => $traineeEmailAddress,
-                    "sponsorshipType" => "EMPLOYER",
+                    "sponsorshipType" => $traineeSponsorshipType,
                     "employer" => array(
                         "uen" => $employerUEN,
                         "contact" => array(
@@ -1322,7 +1322,7 @@ class tp_gateway extends CI_Controller {
                         )
                     ),
                     "fees" => array(
-                        "discountAmount" => '2',
+                        "discountAmount" => $feeDiscountAmount,
                         "collectionStatus" => $feeCollectionStatus
                     ),
                     "enrolmentDate" => $traineeEnrolmentDate
@@ -1353,7 +1353,8 @@ class tp_gateway extends CI_Controller {
         $data['courseReferenceNumber'] = $courseReferenceNumber;
         $data['courseRunId'] = $courseRunId;
 
-        $data['$traineeSponsorshipType'] = $traineeSponsorshipType;
+        $data['traineeSponsorshipType'] = $traineeSponsorshipType;
+        $data['feeDiscountAmount'] = $feeDiscountAmount;
 
         $data['courseId'] = $this->input->post('courseId');
         $data['classId'] = $this->input->post('classId');
