@@ -281,6 +281,10 @@ class Class_Trainee extends CI_Controller {
         $sort_url = '';
         $data['error_msg'] = 'Kindly apply filter to fetch the trainees'; ////ssp/////
         
+        if (!empty($_GET)) {
+            
+        }
+        
         
         
         $data['page_title'] = 'Class Trainee';
