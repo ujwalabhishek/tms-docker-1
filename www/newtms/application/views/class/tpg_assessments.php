@@ -176,64 +176,54 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             <tr>
                 <td class="td_heading">Assessment Reference No:</td>
                 <td id='ass_ref_no'></td>
-            </tr>
-            <tr>
                 <td class="td_heading">TP UEN:</td>
                 <td id='tp_uen'></td>
             </tr>
+
             <tr>
                 <td class="td_heading">TP Name:</td>
                 <td id='tp_name'></td>
-            </tr>
-            <tr>
                 <td class="td_heading">Course Reference No:</td>
                 <td id='crs_ref_no'></td>
             </tr>
             <tr>
                 <td class="td_heading">Course Name:</td>
                 <td id='crs_name'></td>
-            </tr>
-            <tr>
                 <td class="td_heading">Course Run ID:</td>
                 <td id='crs_run_id'></td>
             </tr>
+
             <tr>
                 <td class="td_heading">Course Run Start Date:</td>
                 <td id='crs_run_start_date'></td>
-            </tr>
-            <tr>
                 <td class="td_heading">Course Run End Date:</td>
                 <td id='crs_run_end_date'></td>
             </tr>
+
             <tr>
                 <td class="td_heading">Trainee ID Type:</td>
                 <td id='trainee_id_type'></td>
-            </tr>
-            <tr>
                 <td class="td_heading">Trainee Id:</td>
                 <td id='trainee_id'></td>
             </tr>
+
             <tr>
                 <td class="td_heading">Trainee Full Name:</td>
                 <td id='fullname'></td>
-            </tr>
-            <tr>
                 <td class="td_heading">Result:</td>
                 <td id='result'></td>
             </tr>
+
             <tr>
                 <td class="td_heading">Score:</td>
                 <td id='score'></td>
-            </tr>
-            <tr>
                 <td class="td_heading">Grade:</td>
                 <td id='grade'></td>
             </tr>
+
             <tr>
                 <td class="td_heading">Assessment Date:</td>
                 <td id='ass_date'></td>
-            </tr>
-            <tr>
                 <td class="td_heading">Skill Code:</td>
                 <td id='skill_code'></td>
             </tr>
@@ -244,8 +234,6 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             <tr>
                 <td class="td_heading">Created On:</td>
                 <td id='created_on'></td>
-            </tr>
-            <tr>
                 <td class="td_heading">Updated On:</td>
                 <td id='updated_on'></td>
             </tr>
