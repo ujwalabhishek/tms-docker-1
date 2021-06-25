@@ -197,8 +197,8 @@ function updateAseessment(){
                     $('#btnarea').hide();
                 }else{
                     $('#status_msg').html("<div class='alert alert-warning text-center'>"+res.error.message+"</div>");
-                    $.each(res.error.details, function(field, msg) {
-                        $('#status_msg').append("<div class='alert alert-danger text-center'>"+field.field+" : "+msg.message+"</div>");
+                    $.each(res.error.details, function(fld, msg) {
+                        $('#status_msg').append("<div class='alert alert-danger text-center'>"+fld.field+" : "+msg.message+"</div>");
                     });
                 }
             }
