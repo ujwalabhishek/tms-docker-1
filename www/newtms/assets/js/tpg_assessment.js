@@ -173,6 +173,7 @@ $(document).ready(function () {
 
 function updateAseessment(){
        $('#btnarea').show();
+        $('#status_msg').html('');
        $fullname1=$('#fullname1').html();
        $result1=$('#result1').html();
        $score1=$('#score1').val();
@@ -194,6 +195,11 @@ function updateAseessment(){
                 if (json_data != '' && res.status == 200) {
                    $('#status_msg').html("<div class='alert alert-success text-center'>Assessment Record Updated Successfully With Reference ID: "+res.data.assessment.referenceNumber+"</div>");
                     $('#btnarea').hide();
+                }else{
+                    $('#status_msg').html("<div class='alert alert-warning text-center'>"+res.error.message+"</div>");
+                    $.each(res.error.details, function(i, msg) {
+                        $('#status_msg').append("<div class='alert alert-danger text-center'>"+msg.field+" : "+msg.message+"</div>");
+                    });
                 }
             }
         });
