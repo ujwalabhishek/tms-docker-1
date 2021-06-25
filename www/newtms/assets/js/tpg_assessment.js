@@ -76,7 +76,7 @@ $(document).ready(function () {
             $('#course').css('border', 'solid 1px #bcbcbc');
         }
         
-        if (clss == null || clas == 0) {
+        if (clas == null || clas == 0) {
             $('#class').css('border', 'solid 1px red');
             $retval = false;
         } else {
