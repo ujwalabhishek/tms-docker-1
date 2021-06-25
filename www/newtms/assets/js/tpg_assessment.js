@@ -134,7 +134,8 @@ $(document).ready(function () {
     
     
     $('#update_assessment').click(function () {
-   
+        $('#btnarea').show();
+        $('#status_msg').html('');
         $.ajax({
             type: 'post',
             url: $baseurl + 'tp_gateway/view_assessment',
@@ -168,8 +169,7 @@ $(document).ready(function () {
     
     
     $('#updateAseessment').click(function () {
-       $('#btnarea').show();
-       $('#status_msg').html('');
+       
        $fullname1=$('#fullname1').html();
        $result1=$('#result1').html();
        $score1=$('#score1').val();
