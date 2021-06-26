@@ -315,7 +315,8 @@ class Class_Trainee extends CI_Controller {
 
         $data['idType_options'] = $idType_options;
 
-
+        $date_from = $this->input->get('from_date');
+        $date_to = $this->input->get('to_date');
 
 
         $export_url = '';
