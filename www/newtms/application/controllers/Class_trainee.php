@@ -315,12 +315,14 @@ class Class_Trainee extends CI_Controller {
 
         $data['idType_options'] = $idType_options;
 
-        $date_from = $this->input->get('from_date');
-        $date_to = $this->input->get('to_date');
         $course = $this->input->get('course');
         $class = $this->input->get('class');
+        $date_from = $this->input->get('from_date');
+        $date_to = $this->input->get('to_date');        
+        $traineeIdType = $this->input->get('idType');
+        $sponsorshipType = $this->input->get('sponsorshipType');
+        $feeCollectionStatus = $this->input->get('feeCollectionStatus');
         $traineeId = $this->input->get('taxcode');
-        $traineeIdType = $this->input->get('taxcode');
         
         $class_details = $this->class->get_class_details($tenant_id,$class);
         $crse_details=$this->course->get_course_detailse($class_details->course_id);
@@ -367,7 +369,7 @@ class Class_Trainee extends CI_Controller {
                                           "trainee": {
                                             "id": "' . $traineeId . '",
                                             "fees": {
-                                              "feeCollectionStatus": ""
+                                              "feeCollectionStatus": "' . $feeCollectionStatus . '"
                                             },
                                             "idType": {
                                               "type": "' . $traineeIdType . '"
@@ -376,7 +378,7 @@ class Class_Trainee extends CI_Controller {
                                               "uen": ""
                                             },
                                             "enrolmentDate": "",
-                                            "sponsorshipType": ""
+                                            "sponsorshipType": "' . $sponsorshipType . '"
                                           },
                                           "trainingPartner": {
                                             "uen": "' . $trainingPartnerUEN . '",
