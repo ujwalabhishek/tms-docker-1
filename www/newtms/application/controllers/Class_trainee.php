@@ -395,7 +395,7 @@ class Class_Trainee extends CI_Controller {
                                         },
                                         "parameters": {
                                           "page": 0,
-                                          "pageSize": "' . $pageSize . '"
+                                          "pageSize": ' . $pageSize . '
                                         }
                                       }';
 print_r($tpg_search_json_data); exit;
