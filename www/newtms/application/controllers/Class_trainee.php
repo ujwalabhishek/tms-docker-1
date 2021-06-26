@@ -386,11 +386,11 @@ class Class_Trainee extends CI_Controller {
                                           }
                                         },
                                         "parameters": {
-                                          "page": 1,
-                                          "pageSize": 1
+                                          "page": 0,
+                                          "pageSize": 50
                                         }
                                       }';
-
+print_r($tpg_search_json_data); exit;
             $encrypted_output = openssl_encrypt($tpg_search_json_data, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
 
             $request = $this->curl_request('POST', $url, $encrypted_output, $api_version);
@@ -400,7 +400,7 @@ class Class_Trainee extends CI_Controller {
             $tpg_response = json_decode($decrypted_output);
 
             $data['tabledata_tpg'] = $tpg_response;
-            print_r($decrypted_output); exit;
+            
         }
 
         if (empty($data['tabledata_tpg'])) {
