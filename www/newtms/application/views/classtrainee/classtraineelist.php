@@ -420,8 +420,8 @@ echo form_open("tp_gateway/edit_enrolment_tpg", $atr);
                     <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
                     <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
                     <?php
-                    $editEnrolmentAction_attr = 'id="editEnrolmentAction"';
-                    echo form_dropdown('editEnrolmentAction', $editEnrolmentAction, '', $editEnrolmentAction_attr);
+                    $editEnrolmentAction_attr = 'id="edit_EnrolmentAction"';
+                    echo form_dropdown('edit_EnrolmentAction', $editEnrolmentAction, '', $editEnrolmentAction_attr);
                     ?>
                     <span id="enrolment_action_err"></span>
                 </td>
@@ -447,9 +447,9 @@ echo form_open("tp_gateway/edit_enrolment_tpg", $atr);
         });
     });
 
-    function validateFee(retVal) {
-        fee_status = $.trim($("#fee_collectionStatus").val());
-        if (fee_status == "") {
+    function validateAction(retVal) {
+        edit_enrolment = $.trim($("#edit_EnrolmentAction").val());
+        if (edit_enrolment == "") {
             $("#enrolment_action_err").text("[required]").addClass('error');
             $("#enrolment_action_err").addClass('error');
             retVal = false;

@@ -1558,7 +1558,17 @@ class tp_gateway extends CI_Controller {
         }
     }
 
-    public function edit_enrolment_tpg($enrolmentReferenceNumber) {
+    public function edit_enrolment_tpg() {
+        
+        $editEnrolmentAction = $this->input->post('edit_enrolment_action');
+        
+        if($editEnrolmentAction == "Update") {
+            echo "Update"; exit;
+        } else {
+            echo "Cancel"; exit;
+        }
+        
+        $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumber');
 
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
