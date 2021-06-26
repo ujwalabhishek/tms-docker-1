@@ -154,7 +154,7 @@
                     </td>                    
                 </tr>
                 <tr>
-                    <td class="td_heading">No. of results per page:</td>
+                    <td class="td_heading">No. Of Results Per Page:</td>
                     <td colspan="3">
                         <?php
                         $attr = 'id="noResultsPerPage"';
