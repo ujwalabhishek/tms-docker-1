@@ -3,6 +3,8 @@
     $baseurl = '<?php echo base_url(); ?>';
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
+    
+    var CLIENT_DATE_FORMAT = 'yy-mm-dd';
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.0311111111111111"></script>
 <style>

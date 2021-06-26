@@ -319,6 +319,8 @@ class Class_Trainee extends CI_Controller {
         $date_to = $this->input->get('to_date');
         $course = $this->input->get('course');
         $class = $this->input->get('class');
+        $traineeId = $this->input->get('taxcode');
+        $traineeIdType = $this->input->get('taxcode');
         
         $class_details = $this->class->get_class_details($tenant_id,$class);
         $crse_details=$this->course->get_course_detailse($class_details->course_id);
@@ -363,12 +365,12 @@ class Class_Trainee extends CI_Controller {
                                           },
                                           "status": "Confirmed",
                                           "trainee": {
-                                            "id": "",
+                                            "id": "' . $traineeId . '",
                                             "fees": {
                                               "feeCollectionStatus": ""
                                             },
                                             "idType": {
-                                              "type": "NRIC"
+                                              "type": "' . $traineeIdType . '"
                                             },
                                             "employer": {
                                               "uen": ""
