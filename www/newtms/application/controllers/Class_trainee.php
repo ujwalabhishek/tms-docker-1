@@ -293,7 +293,7 @@ class Class_Trainee extends CI_Controller {
             $course_classes = $this->class->get_course_class($tenant_id, $course, "", "", "classTrainee");
             $data['classes'] = $course_classes;
         }
-print_r($course_classes); exit;
+
         $feeCollectionStatus_options[''] = 'Select';
         $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
         $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
@@ -317,6 +317,14 @@ print_r($course_classes); exit;
 
         $date_from = $this->input->get('from_date');
         $date_to = $this->input->get('to_date');
+        $course = $this->input->get('course');
+        $class = $this->input->get('class');
+        
+        $class_details = $this->class->get_class_details($tenant_id,$class);
+        $crse_details=$this->course->get_course_detailse($class_details->course_id);
+        
+        $course_run_id = $class_details->tpg_course_run_id;
+        $crse_ref_no = $crse_details->crse_ref_no;
 
 
         $export_url = '';
@@ -349,9 +357,9 @@ print_r($course_classes); exit;
                                         "enrolment": {
                                           "course": {
                                             "run": {
-                                              "id": ""
+                                              "id": "' . $course_run_id . '"
                                             },
-                                            "referenceNumber": ""
+                                            "referenceNumber": "' . $crse_ref_no . '"
                                           },
                                           "status": "Confirmed",
                                           "trainee": {
