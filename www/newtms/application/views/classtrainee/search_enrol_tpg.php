@@ -165,13 +165,13 @@
                     $pageurl = 'class_trainee';
                     ?>
                     <tr>                        
-                        <th width="12%" class="th_header">Trainee Name</th>
-                        <th width="6%" class="th_header">Trainee ID</th>
+                        <th width="10%" class="th_header">Trainee Name</th>
+                        <th width="8%" class="th_header">Trainee ID</th>
                         <th width="10%" class="th_header">Course Ref No</th>
-                        <th width="10%" class="th_header">Course Title</th>
-                        <th width="15%" class="th_header">Course Run ID</th>
-                        <th width="10%" class="th_header">Course Start Date</th>
-                        <th width="6%" class="th_header">Course End Date</th>
+                        <th width="12%" class="th_header">Course Title</th>
+                        <th width="10%" class="th_header">Course Run ID</th>
+                        <th width="8%" class="th_header">Course Start Date</th>
+                        <th width="8%" class="th_header">Course End Date</th>
                         <th width="9%" class="th_header">Enrolment Reference No.</th>
                         <th width="6%" class="th_header">Sponsorship Type</th>
                         <th width="6%" class="th_header">Fee Collection Status</th>
