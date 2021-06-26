@@ -330,7 +330,6 @@ class Class_Trainee extends CI_Controller {
         $course_run_id = $class_details->tpg_course_run_id;
         $crse_ref_no = $crse_details->crse_ref_no;
 
-
         $export_url = '';
         $sort_url = '';
         $data['error_msg'] = 'Kindly apply filter to fetch the trainees'; ////ssp/////
