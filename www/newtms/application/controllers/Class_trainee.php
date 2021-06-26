@@ -323,8 +323,8 @@ class Class_Trainee extends CI_Controller {
             
             $tpg_search_json_data = '{
                                         "meta": {
-                                          "lastUpdateDateTo": "2020-02-01",
-                                          "lastUpdateDateFrom": "2020-01-01"
+                                          "lastUpdateDateTo": "2021-06-29",
+                                          "lastUpdateDateFrom": "2021-06-01"
                                         },
                                         "sortBy": {
                                           "field": "updatedOn",
@@ -349,8 +349,8 @@ class Class_Trainee extends CI_Controller {
                                             "employer": {
                                               "uen": "G01234567S"
                                             },
-                                            "enrolmentDate": "2020-05-15",
-                                            "sponsorshipType": "EMPLOYER"
+                                            "enrolmentDate": "",
+                                            "sponsorshipType": ""
                                           },
                                           "trainingPartner": {
                                             "uen": "' . $trainingPartnerUEN . '",
