@@ -364,7 +364,10 @@
 
                                     <?php
                                     $enrolmentReferenceNumber = $row['enrolmentReferenceNumber'];
-                                    $feecollectionStatus = $row['feecollectionStatus'];
+                                    $feecollectionStatus = $row['feecollectionStatus_options'];
+                                    $feecollectionStatus_val = $row['feecollectionStatus_val'];
+                                    
+                                    $editEnrolmentAction = $row['editEnrolmentAction'];
                                     if (empty($enrolmentReferenceNumber)) {
                                         ?>
                                         <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
@@ -407,11 +410,11 @@ $atr = 'id="edit_enrolment_action" name="edit_enrolment_action" method="post"';
 echo form_open("tp_gateway/edit_enrolment_tpg", $atr);
 ?>
 <div class="modal1_0001" id="edit_enrolment" style="display:none;height:200px;min-height: 200px;">
-    <h2 class="panel_heading_style">Update Fee Collection Status</h2>
+    <h2 class="panel_heading_style">Update Enrolment Action</h2>
     <table class="table table-striped">
         <tbody>
             <tr>
-                <td class="td_heading">Fee Collection Status:</td>
+                <td class="td_heading">Select Action of the selected enrolment:</td>
                 <td>                    
                     <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
                     <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
