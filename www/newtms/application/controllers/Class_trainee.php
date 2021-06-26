@@ -359,7 +359,7 @@ class Class_Trainee extends CI_Controller {
                                         },
                                         "parameters": {
                                           "page": 0,
-                                          "pageSize": 1
+                                          "pageSize": 20
                                         }
                                       }';
 
