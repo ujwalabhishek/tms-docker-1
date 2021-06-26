@@ -317,8 +317,7 @@ class Class_Trainee extends CI_Controller {
                 
         $noResultsPerPage_options['25'] = '25';
         $noResultsPerPage_options['50'] = '50';
-        $noResultsPerPage_options['100'] = '100';
-        $noResultsPerPage_options['150'] = '150';
+        $noResultsPerPage_options['100'] = '100';       
 
         $data['noResultsPerPage_options'] = $noResultsPerPage_options;
         
@@ -405,6 +404,8 @@ class Class_Trainee extends CI_Controller {
                                           "pageSize": ' . $pageSize . '
                                         }
                                       }';            
+            
+            print_r($tpg_search_json_data); exit;
             
             $encrypted_output = openssl_encrypt($tpg_search_json_data, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
 
