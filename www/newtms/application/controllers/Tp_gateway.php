@@ -1727,9 +1727,7 @@ class tp_gateway extends CI_Controller {
                                             "collectionStatus": "' . $feeCollectionStatus . '"
                                           }
                                         }
-                                      }';
-        
-        echo "aaa - ".$tpg_enrolment_json_data; exit;
+                                      }';                
 
         $encrypted_output = openssl_encrypt($tpg_enrolment_json_data, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
 
