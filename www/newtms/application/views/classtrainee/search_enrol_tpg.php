@@ -82,8 +82,7 @@
                         <?php
                         $attr = 'id="idType"';
                         echo form_dropdown('idType', $idType_options, '', $attr);
-                        ?>
-                        <span id="class_type_err"></span>
+                        ?>                       
                         <?php echo form_error('idType', '<div class="error">', '</div>'); ?>
                     </td>
                     <td class="td_heading">Sponsorship Type:</td>
@@ -91,11 +90,20 @@
                         <?php
                         $attr = 'id="sponsorshipType"';
                         echo form_dropdown('sponsorshipType', $sponsorshipType_options, '', $attr);
-                        ?>
-                        <span id="class_type_err"></span>
+                        ?>                        
                         <?php echo form_error('sponsorshipType', '<div class="error">', '</div>'); ?>
                     </td>
-                </tr>    
+                </tr>
+                <tr>
+                    <td class="td_heading">Payment Status:</td>
+                    <td>
+                        <?php
+                        $attr = 'id="feeCollectionStatus"';
+                        echo form_dropdown('feeCollectionStatus', $feeCollectionStatus_options, '', $attr);
+                        ?>                        
+                        <?php echo form_error('feeCollectionStatus', '<div class="error">', '</div>'); ?>
+                    </td>                    
+                </tr>
                 <tr>
                     <td class="td_heading">
                         <?php
