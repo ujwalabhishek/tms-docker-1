@@ -96,7 +96,7 @@
                 </tr>
                 <tr>
                     <td class="td_heading">Payment Status:</td>
-                    <td>
+                    <td colspan="3">
                         <?php
                         $attr = 'id="feeCollectionStatus"';
                         echo form_dropdown('feeCollectionStatus', $feeCollectionStatus_options, '', $attr);

@@ -292,7 +292,7 @@ class Class_Trainee extends CI_Controller {
         $sponsorshipType_options['EMPLOYER'] = 'Employer';
 
         $data['sponsorshipType_options'] = $sponsorshipType_options;
-        
+
         $idType_options[''] = 'Select';
         $idType_options['NRIC'] = 'NRIC';
         $idType_options['FIN'] = 'FIN';
@@ -357,6 +357,16 @@ class Class_Trainee extends CI_Controller {
                                           "pageSize": 20
                                         }
                                       }';
+
+            $encrypted_output = openssl_encrypt($tpg_search_json_data, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
+
+            $request = $this->curl_request('POST', $url, $encrypted_output, $api_version);
+
+            $decrypted_output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+
+            $tpg_response = json_decode($decrypted_output);
+            
+            print_r($tpg_response); exit;
         }
 
 
