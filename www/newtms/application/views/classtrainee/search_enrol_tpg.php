@@ -199,8 +199,8 @@
                                 <td><?php echo $row->enrolment->course->run->endDate; ?></td>
                                 <td><?php echo $row->enrolment->referenceNumber; ?></td>
                                 <td><?php echo $row->enrolment->trainee->sponsorshipType; ?></td>
-                                <td><?php echo $row->enrolment->trainee->fee->discountAmount; ?></td>
-                                <td><?php echo $row->enrolment->trainee->fee->collectionStatus; ?></td>
+                                <td><?php echo $row->enrolment->trainee->fees->discountAmount; ?></td>
+                                <td><?php echo $row->enrolment->trainee->fees->collectionStatus; ?></td>
                                 <td><?php echo $row->enrolment->trainee->enrolmentDate; ?></td>
                             </tr>
                             <?php
