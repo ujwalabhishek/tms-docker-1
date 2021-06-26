@@ -293,7 +293,7 @@ class Class_Trainee extends CI_Controller {
             $course_classes = $this->class->get_course_class($tenant_id, $course, "", "", "classTrainee");
             $data['classes'] = $course_classes;
         }
-
+print_r($course_classes); exit;
         $feeCollectionStatus_options[''] = 'Select';
         $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
         $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
@@ -339,8 +339,8 @@ class Class_Trainee extends CI_Controller {
 
             $tpg_search_json_data = '{
                                         "meta": {
-                                          "lastUpdateDateTo": "2021-06-29",
-                                          "lastUpdateDateFrom": "2021-06-01"
+                                          "lastUpdateDateTo": "' . $date_to . '",
+                                          "lastUpdateDateFrom": "' . $date_from . '"
                                         },
                                         "sortBy": {
                                           "field": "updatedOn",
