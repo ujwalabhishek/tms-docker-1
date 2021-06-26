@@ -2,6 +2,18 @@
  * This js file included in class trainee list page
  */
 $(document).ready(function() {
+    
+    $("#input_from_date").datepicker({
+        dateFormat: CLIENT_DATE_FORMAT,
+        onSelect: function (newDate, obj) {
+            $('#input_to_date').datepicker('option', 'minDate', $.datepicker.parseDate(CLIENT_DATE_FORMAT, newDate));
+        }
+    });
+
+    $("#input_to_date").datepicker({
+        dateFormat: CLIENT_DATE_FORMAT
+    });
+    
     $('.search_select').change(function() {
         $('#taxcode').val('');
         $('#taxcode_id').val('');

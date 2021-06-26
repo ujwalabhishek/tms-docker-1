@@ -4,19 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
     
-    var CLIENT_DATE_FORMAT = 'dd/mm/yy';
-    
-    $("#input_from_date").datepicker({
-        dateFormat: CLIENT_DATE_FORMAT,
-        onSelect: function (newDate, obj) {
-            $('#input_to_date').datepicker('option', 'minDate', $.datepicker.parseDate(CLIENT_DATE_FORMAT, newDate));
-        }
-    });
-
-    $("#input_to_date").datepicker({
-        dateFormat: CLIENT_DATE_FORMAT
-    });
-    
+    var CLIENT_DATE_FORMAT = 'dd/mm/yy';            
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.0311111111111111"></script>
 <style>
