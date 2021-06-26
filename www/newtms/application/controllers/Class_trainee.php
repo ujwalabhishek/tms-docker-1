@@ -372,7 +372,7 @@ class Class_Trainee extends CI_Controller {
             $tpg_response = json_decode($decrypted_output);
             
             $data['tabledata_tpg'] = $tpg_response;
-            print_r($tpg_response); exit;
+            print_r($decrypted_output); exit;
         }
         
         $data['page_title'] = 'Class Trainee';
