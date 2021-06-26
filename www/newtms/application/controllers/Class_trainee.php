@@ -333,21 +333,21 @@ class Class_Trainee extends CI_Controller {
                                         "enrolment": {
                                           "course": {
                                             "run": {
-                                              "id": "10026"
+                                              "id": ""
                                             },
-                                            "referenceNumber": "TGS-0026008-ES"
+                                            "referenceNumber": ""
                                           },
                                           "status": "Confirmed",
                                           "trainee": {
-                                            "id": "S0118316H",
+                                            "id": "",
                                             "fees": {
-                                              "feeCollectionStatus": "Full Payment"
+                                              "feeCollectionStatus": ""
                                             },
                                             "idType": {
                                               "type": "NRIC"
                                             },
                                             "employer": {
-                                              "uen": "G01234567S"
+                                              "uen": ""
                                             },
                                             "enrolmentDate": "",
                                             "sponsorshipType": ""
