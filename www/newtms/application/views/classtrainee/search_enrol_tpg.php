@@ -155,7 +155,7 @@
                 </tr>
                 <tr>
                     <td class="td_heading">No. of results per page:</td>
-                    <td>
+                    <td colspan="3">
                         <?php
                         $attr = 'id="noResultsPerPage"';
                         echo form_dropdown('noResultsPerPage', $noResultsPerPage_options, '', $attr);
