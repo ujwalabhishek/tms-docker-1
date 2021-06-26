@@ -205,6 +205,8 @@
                             </tr>
                             <?php
                         }
+                    } else {
+                        echo '<tr><td colspan="17" class="error" style="text-align: center">' . $error_msg . '</td></tr>';
                     }
                     ?>
                 </tbody>
