@@ -113,7 +113,7 @@
                         ?>
                         &nbsp;&nbsp; NRIC/FIN No.:
                     </td>
-                    <td width="32%" colspan="3">
+                    <td colspan="3">
                         <?php
                         $data = array(
                             'id' => 'taxcode',
