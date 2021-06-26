@@ -400,7 +400,7 @@ class Class_Trainee extends CI_Controller {
             $tpg_response = json_decode($decrypted_output);
 
             $data['tabledata_tpg'] = $tpg_response;
-            //print_r($decrypted_output); exit;
+            print_r($decrypted_output); exit;
         }
 
         if (empty($data['tabledata_tpg'])) {
