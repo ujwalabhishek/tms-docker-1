@@ -66,14 +66,14 @@
                     <td class="td_heading">Period From:</td>
                     <td>
                         <?php
-                        $attr_js = 'id="input_from_date" placeholder="dd/mm/yyyy"';
+                        $attr_js = 'id="input_from_date" placeholder="yyyy-mm-dd"';
                         echo form_input('from_date', $this->input->get('from_date'), $attr_js);
                         ?>
                     </td>
                     <td class="td_heading">To:</td>
                     <td>
                         <?php
-                        $attr_js = 'id="input_to_date" placeholder="dd/mm/yyyy"';
+                        $attr_js = 'id="input_to_date" placeholder="yyyy-mm-dd"';
                         echo form_input('to_date', $this->input->get('to_date'), $attr_js);
                         ?>
                     </td>                    
@@ -98,13 +98,20 @@
                 </tr>
                 <tr>
                     <td class="td_heading">Payment Status:</td>
-                    <td colspan="3">
+                    <td>
                         <?php
                         $attr = 'id="feeCollectionStatus"';
                         echo form_dropdown('feeCollectionStatus', $feeCollectionStatus_options, '', $attr);
                         ?>                        
                         <?php echo form_error('feeCollectionStatus', '<div class="error">', '</div>'); ?>
-                    </td>                    
+                    </td>
+                    <td class="td_heading">Enrolment Date:</td>
+                    <td>
+                        <?php
+                        $attr_js = 'id="input_enrol_date" placeholder="yyyy-mm-dd"';
+                        echo form_input('enrol_date', $this->input->get('enrol_date'), $attr_js);
+                        ?>
+                    </td> 
                 </tr>
                 <tr>
                     <td class="td_heading">

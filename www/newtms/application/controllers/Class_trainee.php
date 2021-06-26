@@ -320,6 +320,7 @@ class Class_Trainee extends CI_Controller {
         $date_from = $this->input->get('from_date');
         $date_to = $this->input->get('to_date');        
         $traineeIdType = $this->input->get('idType');
+        $enrolmentDate = $this->input->get('enrol_date');
         $sponsorshipType = $this->input->get('sponsorshipType');
         $feeCollectionStatus = $this->input->get('feeCollectionStatus');
         $traineeId = $this->input->get('taxcode');
@@ -332,7 +333,7 @@ class Class_Trainee extends CI_Controller {
 
         $export_url = '';
         $sort_url = '';
-        $data['error_msg'] = 'Kindly apply filter to fetch the trainees'; ////ssp/////
+
 
         if (!empty($_GET)) {
 
@@ -376,7 +377,7 @@ class Class_Trainee extends CI_Controller {
                                             "employer": {
                                               "uen": ""
                                             },
-                                            "enrolmentDate": "",
+                                            "enrolmentDate": "' . $enrolmentDate . '",
                                             "sponsorshipType": "' . $sponsorshipType . '"
                                           },
                                           "trainingPartner": {
@@ -403,7 +404,7 @@ class Class_Trainee extends CI_Controller {
         }
 
         if (empty($data['tabledata_tpg'])) {
-            $data['error_msg'] = 'There are no trainees enrolled to any class currently.';
+            $data['error_msg'] = 'Kindly apply filter to fetch the trainees';
         } else {
             $data['error_msg'] = 'Please Select a Filter to Display The Data.';
         }

@@ -14,6 +14,10 @@ $(document).ready(function() {
         dateFormat: CLIENT_DATE_FORMAT
     });
     
+    $("#input_enrol_date").datepicker({
+        dateFormat: CLIENT_DATE_FORMAT
+    });
+    
     $('.search_select').change(function() {
         $('#taxcode').val('');
         $('#taxcode_id').val('');
