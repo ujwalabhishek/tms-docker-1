@@ -1560,13 +1560,7 @@ class tp_gateway extends CI_Controller {
 
     public function edit_enrolment_tpg() {
         
-        $editEnrolmentAction = $this->input->post('edit_EnrolmentAction');
-        
-        if($editEnrolmentAction == "Update") {
-            echo "Update"; exit;
-        } else {
-            echo "Cancel"; exit;
-        }
+        $editEnrolmentAction = $this->input->post('edit_EnrolmentAction');       
         
         $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumber');
 
