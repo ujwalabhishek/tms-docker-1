@@ -154,6 +154,16 @@
                     </td>                    
                 </tr>
                 <tr>
+                    <td class="td_heading">No. of results per page:</td>
+                    <td>
+                        <?php
+                        $attr = 'id="noResultsPerPage"';
+                        echo form_dropdown('noResultsPerPage', $noResultsPerPage_options, '', $attr);
+                        ?>                        
+                        <?php echo form_error('noResultsPerPage', '<div class="error">', '</div>'); ?>
+                    </td>
+                </tr>
+                <tr>
                     <td colspan='4'>
                         <span class="pull-right">
                             <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>

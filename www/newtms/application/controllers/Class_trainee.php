@@ -314,6 +314,13 @@ class Class_Trainee extends CI_Controller {
         $idType_options['Others'] = 'Others';
 
         $data['idType_options'] = $idType_options;
+                
+        $noResultsPerPage_options['25'] = '25';
+        $noResultsPerPage_options['50'] = '50';
+        $noResultsPerPage_options['100'] = '100';
+        $noResultsPerPage_options['150'] = '150';
+
+        $data['noResultsPerPage_options'] = $noResultsPerPage_options;
 
         $course = $this->input->get('course');
         $class = $this->input->get('class');
@@ -324,6 +331,7 @@ class Class_Trainee extends CI_Controller {
         $sponsorshipType = $this->input->get('sponsorshipType');
         $feeCollectionStatus = $this->input->get('feeCollectionStatus');
         $traineeId = $this->input->get('taxcode');
+        $pageSize = $this->input->get('noResultsPerPage');
         
         $class_details = $this->class->get_class_details($tenant_id,$class);
         $crse_details=$this->course->get_course_detailse($class_details->course_id);
@@ -387,7 +395,7 @@ class Class_Trainee extends CI_Controller {
                                         },
                                         "parameters": {
                                           "page": 0,
-                                          "pageSize": 50
+                                          "pageSize": ' . $pageSize . '
                                         }
                                       }';
 print_r($tpg_search_json_data); exit;
