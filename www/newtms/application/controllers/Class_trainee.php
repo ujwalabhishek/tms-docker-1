@@ -371,11 +371,10 @@ class Class_Trainee extends CI_Controller {
 
             $tpg_response = json_decode($decrypted_output);
             
-            print_r($tpg_response); exit;
+            $data['tabledata_tpg'] = $tpg_response;
+            //print_r($tpg_response); exit;
         }
-
-
-
+        
         $data['page_title'] = 'Class Trainee';
         $data['main_content'] = 'classtrainee/search_enrol_tpg';
         $this->load->view('layout', $data);

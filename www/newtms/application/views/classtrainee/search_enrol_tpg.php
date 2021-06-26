@@ -164,17 +164,19 @@
                     $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
                     $pageurl = 'class_trainee';
                     ?>
-                    <tr>
-                        <th width="9%" class="th_header">NRIC/FIN No</th>
-                        <th width="10%" class="th_header">Full Name</th>
-                        <th width="15%" class="th_header">Assessment Date</th>
-                        <th width="10%" class="th_header">Skill Code</th>
-                        <th width="6%" class="th_header">Feedback Score</th>
-                        <th width="12%" class="th_header">Feedback Grade</th>
-                        <th width="6%" class="th_header">Result</th>
+                    <tr>                        
+                        <th width="12%" class="th_header">Trainee Name</th>
+                        <th width="6%" class="th_header">Trainee ID</th>
                         <th width="10%" class="th_header">Course Ref No</th>
-                        <!--<th width="9%" class="th_header">CourseRunID</th>-->
-                        <th width="13%" class="th_header">TPG</th>
+                        <th width="10%" class="th_header">Course Title</th>
+                        <th width="15%" class="th_header">Course Run ID</th>
+                        <th width="10%" class="th_header">Course Start Date</th>
+                        <th width="6%" class="th_header">Course End Date</th>
+                        <th width="9%" class="th_header">Enrolment Reference No.</th>
+                        <th width="6%" class="th_header">Sponsorship Type</th>
+                        <th width="6%" class="th_header">Fee Collection Status</th>
+                        <th width="6%" class="th_header">Discount</th>
+                        <th width="6%" class="th_header">Enrolment Date</th>                                                                  
                     </tr>
                 </thead>
                 <tbody>
@@ -183,54 +185,24 @@
                     if (!empty($_GET)) {
                         $err_msg = 'No data available for the search criteria entered.';
                     }
-                    if (!empty($tabledata)) {
-                        foreach ($tabledata as $row) {
-                            ?>
-
-                            <tr>                        
-                                <td><?php echo $row->tax_code; ?></td>
-                                <td class="name"><?php echo $row->fullname; ?></td>
-                                <td><?php echo $row->assessmentDate; ?></td>
-                                <td><?php echo $row->skillCode; ?></td>
-                                <td><?php echo $row->feedback_score ?></td>
-                                <td><?php echo $row->feedback_grade; ?></td>
-                                <td><?php echo $row->result; ?></td>
-                                <td><?php echo $row->reference_num; ?></td>
-                                <!--<td><?php //echo $row->tpg_course_run_id;   ?></td>-->
-                                <td>
-
-                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/' . $row->course_id . '/' . $row->class_id . '/' . $row->user_id; ?>"><span class="btnblue">Create Assessment</span></a>
-                                    <br>
-                                    <a href="#update_void_assessment" rel="modal:open" id='update_assessment' data-refNo='<?php echo $row->assessment_reference_No; ?>' data-userid="<?php echo $row->user_id; ?>" data-courseid="<?php echo $row->course_id; ?>" data-classid="<?php echo $row->class_id; ?>"><span class="btnblue">Update/Void Assessment</span></a>
-                                    <br>
-                                    <a href="#view_assessment" rel="modal:open" id='click_assessment' data-refNo='<?php $row->assessment_reference_No; ?>'><span class="btnblue">View Assessment</span></a>
-
-                                </td>
-                            </tr>
-                            <?php
-                        }
-                    }
-
-
                     //////data for tpg search
                     if (!empty($tabledata_tpg)) {
                         foreach ($tabledata_tpg->data as $row) {
                             ?>
 
-                            <tr>                        
+                            <tr>
+                                <td class="name" ><?php echo $row->trainee->fullName; ?></td>
                                 <td><?php echo $row->trainee->id; ?></td>
-                                <td class="name"><?php echo $row->trainee->fullName; ?></td>
-                                <td><?php echo $row->assessmentDate; ?></td>
-                                <td><?php echo $row->skillCode; ?></td>
-                                <td><?php echo $row->score ?></td>
-                                <td><?php echo $row->grade; ?></td>
-                                <td><?php echo $row->result; ?></td>
                                 <td><?php echo $row->course->referenceNumber; ?></td>
-                                <!--<td><?php //echo $row->tpg_course_run_id;   ?></td>-->
-                                <td>
-
-                                    <span>Not Possible, While Viewing TPG Data</span>
-                                </td>
+                                <td><?php echo $row->course->title; ?></td>
+                                <td><?php echo $row->course->run->id; ?></td>
+                                <td><?php echo $row->course->startDate; ?></td>
+                                <td><?php echo $row->course->endDate; ?></td>
+                                <td><?php echo $row->enrolment->referenceNumber; ?></td>
+                                <td><?php echo $row->sponsorshipType; ?></td>
+                                <td><?php echo $row->fee->discountAmount; ?></td>
+                                <td><?php echo $row->fee->collectionStatus; ?></td>
+                                <td><?php echo $row->enrolmentDate; ?></td>
                             </tr>
                             <?php
                         }
