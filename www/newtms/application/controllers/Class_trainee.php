@@ -323,8 +323,8 @@ class Class_Trainee extends CI_Controller {
         $data['noResultsPerPage_options'] = $noResultsPerPage_options;
         
         $enrolmentStatus_options[''] = 'Select';
-        $enrolmentStatus_options['NRIC'] = 'NRIC';
-        $enrolmentStatus_options['FIN'] = 'FIN';        
+        $enrolmentStatus_options['Confirmed'] = 'Confirmed';
+        $enrolmentStatus_options['Cancelled'] = 'Cancelled';        
 
         $data['enrolmentStatus_options'] = $enrolmentStatus_options;
 
