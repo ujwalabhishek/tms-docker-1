@@ -375,6 +375,45 @@ class Class_Trainee extends CI_Controller {
         $data['main_content'] = 'classtrainee/search_enrol_tpg';
         $this->load->view('layout', $data);
     }
+    
+    public function curl_request($mode, $url, $encrypted_data, $api_version) {
+        //$encrypted_data='ggrR1uwMpea4GWQbhu6+iZ/KZvwhlblrRspkqEg9dVszEjqIiDKnWe4u6PfsD/ntzFfbazfu1I6YmomjmsaCCXPEdJ6sPmrVDyxgVvnScrn6XhZXRQMRpXCSwC5PUh0SXEyr/jw0HtsOFT0JseoJ7nxj8qM/rKv4e9OhNmrIysykBlfEAZ3MsCfnZL9O7kpsVvi2yANJfNoVYBSAs6hUdHc5jlvn2tmLf7kKMNiaP/z+qusGppVZfbvXPq2LNaLl/osEJZDASgGbzJOwLxzDG90E9cyTqhoeREl5KxUud37U41Gx0ufui2bGzA9meFdK6sWefTdIFIfZlh7MK7xKfEyDaTZTyYTObC2p8/PoLq9RAfcRPFCCvOYAFIMB2din+XQ+u+ZqMHzF0cz6A/HPdkSpze2NB96EJwhUXHF5tMMgwq7kKc/ELg6etD8FDrai/klmj7svqsBYfm7fJTwMXDvTWnNWbRhT94JT9RpWGq2V6Gph/16CuAMYt0QZ1mEkzV27m149P5QrPGXvd4CDqSE7lR55Kfs6CujYx4s4PyP7naOEPBUn7DCb6Bv6bJSM6B+K+dAhMArlf1Ov6yKepX0qRzq/XU140sM3xpQs0+/dTLWiiYM5WmIAbj5Ohb0KX9tpccfQ/xo8Xn6sU0mJx5xslh48il1aQOhz/54iAI0+WR8Pf3+x7R/3U6V4tasaWlhPhqdPfzkPbwsSbKK4b/g7UZCU0XgNY0l4ELK+swnh/zv0nzJlHji7a8B0elxAZCRU2EOA+JZDjyEHC1xSNPnss8hNc3c9y3RcmTG6H3EjrPth19e8M3jvSsYGNi0JhoGaojPaXRsCjwI6qHhU2uvn5CmNPvVxxzI5v+0sI46oIoijBfrkZEIFElu6nVwcvFm5b+/nZhM2VuUhO85UIA==';
+        $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/key.pem";
+        //print_r($data);exit;
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => $mode,
+            CURLOPT_SSLCERT => $pemfile,
+            CURLOPT_SSLCERTTYPE => 'PEM',
+            CURLOPT_SSLKEY => $keyfile,
+            CURLOPT_POSTFIELDS => $encrypted_data,
+            CURLOPT_HTTPHEADER => array(
+                "Authorization:  ",
+                "Cache-Control: no-cache",
+                "Content-Type: application/json",
+                "x-api-version: $api_version"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        if ($response === false) {
+            print_r(curl_error($curl));
+            exit;
+        } else {
+            //print_r($response);exit;
+            return $response;
+        }
+        curl_close($curl);
+    }
 
     ///by shubhranshu for client requirement for declaration data to save
     public function save_declaration_trainee_data() {
