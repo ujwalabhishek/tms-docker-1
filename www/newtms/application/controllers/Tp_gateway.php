@@ -1583,7 +1583,7 @@ class tp_gateway extends CI_Controller {
             $data['tpgCourseId'] = $this->input->post('tpgCourseId');
             $data['tpgClassId'] = $this->input->post('tpgClassId');
             $data['tpgUserId'] = $this->input->post('tpgUserId');
-            
+
             //echo "aaa" . print_r($tpg_response);
             //exit;
 
@@ -1656,20 +1656,32 @@ class tp_gateway extends CI_Controller {
         $course_id = $this->input->post('tpgCourseId');
         $class_id = $this->input->post('tpgClassId');
         $user_id = $this->input->post('tpgUserId');
-                
-        //Send params to API
-        $courseRunId = $this->input->post('courseRunId');
-        $traineeContactNumber = $this->input->post('traineeContactNumber');
-        $traineeEmailAddress = $this->input->post('traineeEmailAddress');
-        $feeDiscountAmount = $this->input->post('feeDiscountAmount');
-        $feeCollectionStatus = $this->input->post('feeCollectionStatus');
+
         $sponsorshipType = $this->input->post('sponsorshipType');
 
-        if ($sponsorshipType != "Individual") {
-            $employerContactFullName = $this->input->post('employerContactFullName');
-            $employerContactNumber = $this->input->post('employerContactNumber');
-            $employerEmailAddress = $this->input->post('employerEmailAddress');
+        if ($editEnrolmentAction == 'Update') {
+            //Send params to API
+            $courseRunId = $this->input->post('courseRunId');
+            $traineeContactNumber = $this->input->post('traineeContactNumber');
+            $traineeEmailAddress = $this->input->post('traineeEmailAddress');
+            $feeDiscountAmount = $this->input->post('feeDiscountAmount');
+            $feeCollectionStatus = $this->input->post('feeCollectionStatus');
+
+            if ($sponsorshipType != "Individual") {
+                $employerContactFullName = $this->input->post('employerContactFullName');
+                $employerContactNumber = $this->input->post('employerContactNumber');
+                $employerEmailAddress = $this->input->post('employerEmailAddress');
+            } else {
+                $employerContactFullName = "";
+                $employerContactNumber = "";
+                $employerEmailAddress = "";
+            }
         } else {
+            $courseRunId = "";
+            $traineeContactNumber = "";
+            $traineeEmailAddress = "";
+            $feeDiscountAmount = "";
+            $feeCollectionStatus = "";
             $employerContactFullName = "";
             $employerContactNumber = "";
             $employerEmailAddress = "";
@@ -1730,7 +1742,6 @@ class tp_gateway extends CI_Controller {
             if ($editEnrolmentAction == 'Update') {
 
                 $this->session->set_flashdata("success", "The enrolment data has been updated for reference number - " . $enrolmentReferenceNumber);
-                
             } else {
 
                 //print_r($tpg_response);
