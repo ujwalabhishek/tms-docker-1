@@ -237,6 +237,7 @@
                             <div class="push_right">
                                 <input type="hidden" name="sponsorshipType" value="<?php echo $traineeSponsorshipType; ?>" id="sponsorshipType">
                                 <input type="hidden" name="enrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="enrolmentReferenceNumber">
+                                <input type="hidden" name="editEnrolmentAction" value="<?php echo $editEnrolmentAction; ?>" id="editEnrolmentAction">
                                 <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" />Update To TPG</button>
                             </div>
                         </td>

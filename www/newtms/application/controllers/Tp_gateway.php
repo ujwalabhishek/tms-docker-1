@@ -1585,7 +1585,7 @@ class tp_gateway extends CI_Controller {
 
         if ($tpg_response->status == 200) {
             $data['enrolmentReferenceNumber'] = $enrolmentReferenceNumber;
-
+            $data['editEnrolmentAction'] = $editEnrolmentAction;
             //echo "aaa" . print_r($tpg_response);
             //exit;
 
@@ -1654,6 +1654,7 @@ class tp_gateway extends CI_Controller {
     public function update_cancel_enrolment_tpg() {
 
         $enrolmentReferenceNumber = $this->input->post('enrolmentReferenceNumber');
+        $editEnrolmentAction = $this->input->post('editEnrolmentAction');
         $courseRunId = $this->input->post('courseRunId');
         $traineeContactNumber = $this->input->post('traineeContactNumber');
         $traineeEmailAddress = $this->input->post('traineeEmailAddress');
@@ -1683,7 +1684,7 @@ class tp_gateway extends CI_Controller {
 
         $tpg_enrolment_json_data = '{
                                         "enrolment": {
-                                          "action": "Update",
+                                          "action": "' . $editEnrolmentAction . '",
                                           "course": {
                                             "run": {
                                               "id": "' . $courseRunId . '"
