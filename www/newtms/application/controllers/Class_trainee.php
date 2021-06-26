@@ -329,7 +329,7 @@ class Class_Trainee extends CI_Controller {
         $crse_details=$this->course->get_course_detailse($class_details->course_id);
         
         $course_run_id = $class_details->tpg_course_run_id;
-        $crse_ref_no = $crse_details->crse_ref_no;
+        $crse_ref_no = $crse_details->reference_num;
 
         $export_url = '';
         $sort_url = '';
