@@ -321,6 +321,12 @@ class Class_Trainee extends CI_Controller {
         $noResultsPerPage_options['150'] = '150';
 
         $data['noResultsPerPage_options'] = $noResultsPerPage_options;
+        
+        $enrolmentStatus_options[''] = 'Select';
+        $enrolmentStatus_options['NRIC'] = 'NRIC';
+        $enrolmentStatus_options['FIN'] = 'FIN';        
+
+        $data['enrolmentStatus_options'] = $enrolmentStatus_options;
 
         $course = $this->input->get('course');
         $class = $this->input->get('class');
@@ -330,6 +336,7 @@ class Class_Trainee extends CI_Controller {
         $enrolmentDate = $this->input->get('enrol_date');
         $sponsorshipType = $this->input->get('sponsorshipType');
         $feeCollectionStatus = $this->input->get('feeCollectionStatus');
+        $enrolmentStatus = $this->input->get('enrolmentStatus');
         $traineeId = $this->input->get('taxcode');
         $pageSize = $this->input->get('noResultsPerPage');
         
@@ -373,7 +380,7 @@ class Class_Trainee extends CI_Controller {
                                             },
                                             "referenceNumber": "' . $crse_ref_no . '"
                                           },
-                                          "status": "Confirmed",
+                                          "status": "' . $enrolmentStatus . '",
                                           "trainee": {
                                             "id": "' . $traineeId . '",
                                             "fees": {
@@ -399,6 +406,8 @@ class Class_Trainee extends CI_Controller {
                                         }
                                       }';
 
+            print_r($tpg_response); exit;
+            
             $encrypted_output = openssl_encrypt($tpg_search_json_data, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
 
             $request = $this->curl_request('POST', $url, $encrypted_output, $api_version);
@@ -406,8 +415,6 @@ class Class_Trainee extends CI_Controller {
             $decrypted_output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
             $tpg_response = json_decode($decrypted_output);
-
-            print_r($tpg_response); exit;
             
             $data['tabledata_tpg'] = $tpg_response; 
             

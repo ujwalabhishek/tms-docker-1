@@ -114,6 +114,16 @@
                     </td> 
                 </tr>
                 <tr>
+                    <td class="td_heading">Enrolment Status:</td>
+                    <td>
+                        <?php
+                        $attr = 'id="enrolmentStatus"';
+                        echo form_dropdown('enrolmentStatus', $enrolmentStatus_options, '', $attr);
+                        ?>                        
+                        <?php echo form_error('enrolmentStatus', '<div class="error">', '</div>'); ?>
+                    </td>                    
+                </tr>
+                <tr>
                     <td class="td_heading">
                         <?php
                         $checked = TRUE;
