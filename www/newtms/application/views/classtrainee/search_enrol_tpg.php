@@ -195,13 +195,13 @@
                                 <td><?php echo $row->enrolment->course->referenceNumber; ?></td>
                                 <td><?php echo $row->enrolment->course->title; ?></td>
                                 <td><?php echo $row->enrolment->course->run->id; ?></td>
-                                <td><?php echo $row->enrolment->course->startDate; ?></td>
-                                <td><?php echo $row->enrolment->course->endDate; ?></td>
+                                <td><?php echo $row->enrolment->course->run->startDate; ?></td>
+                                <td><?php echo $row->enrolment->course->run->endDate; ?></td>
                                 <td><?php echo $row->enrolment->referenceNumber; ?></td>
-                                <td><?php echo $row->enrolment->sponsorshipType; ?></td>
-                                <td><?php echo $row->enrolment->fee->discountAmount; ?></td>
-                                <td><?php echo $row->enrolment->fee->collectionStatus; ?></td>
-                                <td><?php echo $row->enrolment->enrolmentDate; ?></td>
+                                <td><?php echo $row->enrolment->trainee->sponsorshipType; ?></td>
+                                <td><?php echo $row->enrolment->trainee->fee->discountAmount; ?></td>
+                                <td><?php echo $row->enrolment->trainee->fee->collectionStatus; ?></td>
+                                <td><?php echo $row->enrolment->trainee->enrolmentDate; ?></td>
                             </tr>
                             <?php
                         }
