@@ -316,6 +316,11 @@ class Class_Trainee extends CI_Controller {
             $api_version = 'v1';
             $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/search";
 
+            //Training Partner
+        $tenant_details = fetch_tenant_details($tenant_id);
+        $trainingPartnerUEN = $tenant_details->comp_reg_no;
+        $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';
+            
             $tpg_search_json_data = '{
                                         "meta": {
                                           "lastUpdateDateTo": "2020-02-01",
@@ -348,8 +353,8 @@ class Class_Trainee extends CI_Controller {
                                             "sponsorshipType": "EMPLOYER"
                                           },
                                           "trainingPartner": {
-                                            "uen": "T16GB0003C",
-                                            "code": "T16GB0003C-01"
+                                            "uen": "' . $trainingPartnerUEN . '",
+                                            "code": "' . $trainingPartnerCode . '"
                                           }
                                         },
                                         "parameters": {
