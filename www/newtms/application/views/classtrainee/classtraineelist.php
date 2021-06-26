@@ -380,6 +380,8 @@
                                         <br>
                                         <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>"><span class="btnblue">Edit Enrolment</span></a>
                                         <br>
+                                        <a rel="modal:open" href="#edit_enrolment"><button type="button" class="btnblue"><span class="btnblue">Edit Enrolment</button></a>
+                                        <br>
                                         <a rel="modal:open" href="#abd"><button type="button" class="btnblue">Update Fee</button></a>
                                     <?php } ?>
                                 </td>
@@ -401,6 +403,64 @@
     </div>
 </div>
 <?php
+$atr = 'id="edit_enrolment_action" name="edit_enrolment_action" method="post"';
+echo form_open("tp_gateway/edit_enrolment_tpg", $atr);
+?>
+<div class="modal1_0001" id="edit_enrolment" style="display:none;height:200px;min-height: 200px;">
+    <h2 class="panel_heading_style">Update Fee Collection Status</h2>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td class="td_heading">Fee Collection Status:</td>
+                <td>                    
+                    <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
+                    <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
+                    <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
+                    <?php
+                    $editEnrolmentAction_attr = 'id="editEnrolmentAction"';
+                    echo form_dropdown('editEnrolmentAction', $editEnrolmentAction, '', $editEnrolmentAction_attr);
+                    ?>
+                    <span id="enrolment_action_err"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <span class="required required_i">* Required Fields</span>
+    <div class="popup_cance89">
+        <span href="#edit_enrolment" rel="modal:close"><button class="btn btn-primary edit_enrolment_action" type="submit">Submit</button></span>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var check = 0;
+        $('#edit_enrolment_action').submit(function () {
+            check = 1;
+            return validateAction(true);
+        });
+        $('#edit_enrolment_action select').change(function () {
+            if (check == 1) {
+                return validateAction(false);
+            }
+        });
+    });
+
+    function validateFee(retVal) {
+        fee_status = $.trim($("#fee_collectionStatus").val());
+        if (fee_status == "") {
+            $("#enrolment_action_err").text("[required]").addClass('error');
+            $("#enrolment_action_err").addClass('error');
+            retVal = false;
+        } else {
+            $("#enrolment_action_err").text("").removeClass('error');
+            $("#enrolment_action_err").removeClass('error');
+            retVal = true;
+        }
+        return retVal;
+    }
+</script>
+<?php echo form_close(); ?>
+
+<?php
 $atr = 'id="update_fee" name="update_fee" method="post"';
 echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
 ?>
@@ -416,7 +476,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
                     <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
                     <?php
                     $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
-                    echo form_dropdown('fee_collectionStatus', $feecollectionStatus, '', $fee_collectionStatus_attr);
+                    echo form_dropdown('fee_collectionStatus', $feecollectionStatus, $feecollectionStatus_val, $fee_collectionStatus_attr);
                     ?>
                     <span id="fee_collection_err"></span>
                 </td>

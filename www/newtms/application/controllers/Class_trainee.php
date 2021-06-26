@@ -165,8 +165,23 @@ class Class_Trainee extends CI_Controller {
                     $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
                     $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
                 }
+                $new_tabledata[$k]['feecollectionStatus_options'] = $feeCollectionStatus_options;
 
-                $new_tabledata[$k]['feecollectionStatus'] = $feeCollectionStatus_options;
+                if ($row['payment_status'] == 'PAID') {
+                    $feecollectionStatus_val = "Full Payment";
+                } else if ($row['payment_status'] == 'NOTPAID') {
+                    $feecollectionStatus_val = "Pending Payment";
+                } else if ($row['payment_status'] == 'PARTPAID') {
+                    $feecollectionStatus_val = "Partial Payment";
+                } else if ($paymentStatus == 'PYNOTREQD') {
+                    $feecollectionStatus_val = "Pending Payment";
+                }
+                $new_tabledata[$k]['feecollectionStatus_val'] = $feecollectionStatus_val;
+
+                $editEnrolmentAction_options[''] = 'Select';
+                $editEnrolmentAction_options['Update'] = 'Update';
+                $editEnrolmentAction_options['Cancel'] = 'Cancel';
+                $new_tabledata[$k]['editEnrolmentAction'] = $editEnrolmentAction_options;
 
                 $new_tabledata[$k]['enrolmentReferenceNumber'] = $row['eid_number'];
 
