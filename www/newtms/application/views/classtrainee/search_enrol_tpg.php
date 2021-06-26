@@ -189,7 +189,6 @@
                     if (!empty($tabledata_tpg)) {
                         foreach ($tabledata_tpg->data as $row) {
                             ?>
-
                             <tr>
                                 <td class="name" ><?php echo $row->trainee->fullName; ?></td>
                                 <td><?php echo $row->trainee->id; ?></td>
