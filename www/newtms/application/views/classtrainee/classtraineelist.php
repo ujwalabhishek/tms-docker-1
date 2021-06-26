@@ -380,9 +380,7 @@
                                     if ($enrolmentReferenceNumber != '') {
                                         ?>                                    
                                         <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>"><span class="btnblue">View Enrolment</span></a>
-                                        <br>
-                                        <a href="<?php echo base_url() . 'tp_gateway/edit_enrolment_tpg/' . $enrolmentReferenceNumber; ?>"><span class="btnblue">Edit Enrolment</span></a>
-                                        <br>
+                                        <br>                                                                                
                                         <a rel="modal:open" href="#edit_enrolment"><button type="button" class="btnblue"><span class="btnblue">Edit Enrolment</button></a>
                                         <br>
                                         <a rel="modal:open" href="#abd"><button type="button" class="btnblue">Update Fee</button></a>
