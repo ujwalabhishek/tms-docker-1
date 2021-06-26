@@ -1666,6 +1666,8 @@ class tp_gateway extends CI_Controller {
             $traineeEmailAddress = $this->input->post('traineeEmailAddress');
             $feeDiscountAmount = $this->input->post('feeDiscountAmount');
             $feeCollectionStatus = $this->input->post('feeCollectionStatus');
+            
+            echo "aaa - ".$feeCollectionStatus; exit;
 
             if ($sponsorshipType != "Individual") {
                 $employerContactFullName = $this->input->post('employerContactFullName');
