@@ -6,7 +6,17 @@
 <div class="col-md-10 right-minheight">
     <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
     <h2 class="panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> TPG Trainee Enrolled Details</h2>
-    <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span>Update Enrollment Details</h2>
+    <?php
+    if ($editEnrolmentAction == "Update") {
+        $buttonName = "Update To TPG";
+        ?>
+        <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span>Update Enrollment Details</h2>
+        <?php
+    } else {
+        $buttonName = "Cancel";
+        ?>
+        <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span>Cancel Enrollment Details</h2>
+    <?php } ?>
     <form action="<?php echo base_url(); ?>tp_gateway/update_cancel_enrolment_tpg" method="post" name ="update_cancel_form" id ="update_cancel_form">
         <div class="table-responsive">
             <?php
@@ -238,7 +248,7 @@
                                 <input type="hidden" name="sponsorshipType" value="<?php echo $traineeSponsorshipType; ?>" id="sponsorshipType">
                                 <input type="hidden" name="enrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="enrolmentReferenceNumber">
                                 <input type="hidden" name="editEnrolmentAction" value="<?php echo $editEnrolmentAction; ?>" id="editEnrolmentAction">
-                                <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" />Update To TPG</button>
+                                <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" /><?php echo $buttonName; ?></button>
                             </div>
                         </td>
                     </tr>                
