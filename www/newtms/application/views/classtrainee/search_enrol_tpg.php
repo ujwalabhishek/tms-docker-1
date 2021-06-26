@@ -190,18 +190,18 @@
                         foreach ($tabledata_tpg->data as $row) {
                             ?>
                             <tr>
-                                <td class="name" ><?php echo $row->trainee->fullName; ?></td>
-                                <td><?php echo $row->trainee->id; ?></td>
-                                <td><?php echo $row->course->referenceNumber; ?></td>
-                                <td><?php echo $row->course->title; ?></td>
-                                <td><?php echo $row->course->run->id; ?></td>
-                                <td><?php echo $row->course->startDate; ?></td>
-                                <td><?php echo $row->course->endDate; ?></td>
+                                <td class="name" ><?php echo $row->enrolment->trainee->fullName; ?></td>
+                                <td><?php echo $row->enrolment->trainee->id; ?></td>
+                                <td><?php echo $row->enrolment->course->referenceNumber; ?></td>
+                                <td><?php echo $row->enrolment->course->title; ?></td>
+                                <td><?php echo $row->enrolment->course->run->id; ?></td>
+                                <td><?php echo $row->enrolment->course->startDate; ?></td>
+                                <td><?php echo $row->enrolment->course->endDate; ?></td>
                                 <td><?php echo $row->enrolment->referenceNumber; ?></td>
-                                <td><?php echo $row->sponsorshipType; ?></td>
-                                <td><?php echo $row->fee->discountAmount; ?></td>
-                                <td><?php echo $row->fee->collectionStatus; ?></td>
-                                <td><?php echo $row->enrolmentDate; ?></td>
+                                <td><?php echo $row->enrolment->sponsorshipType; ?></td>
+                                <td><?php echo $row->enrolment->fee->discountAmount; ?></td>
+                                <td><?php echo $row->enrolment->fee->collectionStatus; ?></td>
+                                <td><?php echo $row->enrolment->enrolmentDate; ?></td>
                             </tr>
                             <?php
                         }
