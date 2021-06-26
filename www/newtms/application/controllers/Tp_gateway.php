@@ -1354,7 +1354,7 @@ class tp_gateway extends CI_Controller {
         $data['feeCollectionStatus'] = $feeCollectionStatus;
         $data['traineeEnrolmentDate'] = $traineeEnrolmentDate;
 
-        if($traineeSponsorshipType != "INDIVIDUAL") {
+        if ($traineeSponsorshipType != "INDIVIDUAL") {
             $data['employerUEN'] = $employerUEN;
             $data['emploerFullName'] = $emploerFullName;
             $data['employerEmailAddress'] = $employerEmailAddress;
@@ -1559,9 +1559,9 @@ class tp_gateway extends CI_Controller {
     }
 
     public function edit_enrolment_tpg() {
-        
-        $editEnrolmentAction = $this->input->post('edit_EnrolmentAction');       
-        
+
+        $editEnrolmentAction = $this->input->post('edit_EnrolmentAction');
+
         $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumber');
 
         $encrypt_method = "AES-256-CBC";
@@ -1580,6 +1580,10 @@ class tp_gateway extends CI_Controller {
         if ($tpg_response->status == 200) {
             $data['enrolmentReferenceNumber'] = $enrolmentReferenceNumber;
             $data['editEnrolmentAction'] = $editEnrolmentAction;
+            $data['tpgCourseId'] = $this->input->post('tpgCourseId');
+            $data['tpgClassId'] = $this->input->post('tpgClassId');
+            $data['tpgUserId'] = $this->input->post('tpgUserId');
+            
             //echo "aaa" . print_r($tpg_response);
             //exit;
 
@@ -1649,11 +1653,16 @@ class tp_gateway extends CI_Controller {
 
         $enrolmentReferenceNumber = $this->input->post('enrolmentReferenceNumber');
         $editEnrolmentAction = $this->input->post('editEnrolmentAction');
+        $course_id = $this->input->post('tpgCourseId');
+        $class_id = $this->input->post('tpgClassId');
+        $user_id = $this->input->post('tpgUserId');
+                
+        //Send params to API
         $courseRunId = $this->input->post('courseRunId');
         $traineeContactNumber = $this->input->post('traineeContactNumber');
         $traineeEmailAddress = $this->input->post('traineeEmailAddress');
         $feeDiscountAmount = $this->input->post('feeDiscountAmount');
-        $feeCollectionStatus = $this->input->post('feeCollectionStatus');       
+        $feeCollectionStatus = $this->input->post('feeCollectionStatus');
         $sponsorshipType = $this->input->post('sponsorshipType');
 
         if ($sponsorshipType != "Individual") {
@@ -1718,7 +1727,22 @@ class tp_gateway extends CI_Controller {
 
         if ($tpg_response->status == 200) {
 
-            $this->session->set_flashdata("success", "The enrolment data has been updated for reference number - " . $enrolmentReferenceNumber);
+            if ($editEnrolmentAction == 'Update') {
+
+                $this->session->set_flashdata("success", "The enrolment data has been updated for reference number - " . $enrolmentReferenceNumber);
+                
+            } else {
+
+                //print_r($tpg_response);
+                $enrolmentReferenceNumber = $tpg_response->data->enrolment->referenceNumber;
+                $enrolmentReferenceStatus = $tpg_response->data->enrolment->status;
+
+                $updated = $this->tpgModel->cancelEnrolment($course_id, $class_id, $user_id, $enrolmentReferenceNumber, $enrolmentReferenceStatus);
+
+                if ($updated) {
+                    $this->session->set_flashdata("success", "Enrolment has been cancelled for reference number - " . $enrolmentReferenceNumber);
+                }
+            }
 
             redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
         } else {

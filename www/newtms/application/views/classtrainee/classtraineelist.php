@@ -416,6 +416,7 @@ echo form_open("tp_gateway/edit_enrolment_tpg", $atr);
                 <td>                    
                     <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
                     <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
+                    <input type="hidden" name="tpgUserId" value="<?php echo $row['user_id']; ?>" id="tpgUserId">
                     <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
                     <?php
                     $editEnrolmentAction_attr = 'id="edit_EnrolmentAction"';

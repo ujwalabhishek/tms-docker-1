@@ -9,11 +9,13 @@
     <?php
     if ($editEnrolmentAction == "Update") {
         $buttonName = "Update To TPG";
+        $disabled = "";
         ?>
         <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span>Update Enrollment Details</h2>
         <?php
     } else {
         $buttonName = "Cancel";
+        $disabled = "disabled='disabled'";
         ?>
         <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span>Cancel Enrollment Details</h2>
     <?php } ?>
@@ -78,7 +80,7 @@
                             <b>Trainee Cont. No.:<span class="required">*</span></b> 
                         </td>
                         <td> 
-                            <input type="text" name="traineeContactNumber" id="traineeContactNumber" style="" value='<?php echo $traineeContactNumber; ?>' />
+                            <input type="text" name="traineeContactNumber" id="traineeContactNumber" style="" value='<?php echo $traineeContactNumber; ?>' <?php echo $disabled; ?> />
                             <span id="contactno_err"></span>
                         </td>
                     </tr>
@@ -88,7 +90,7 @@
                             <b>Trainee Email.:<span class="required">*</span></b> 
                         </td>   
                         <td>
-                            <input type="text" name="traineeEmailAddress" id="traineeEmailAddress" style="" value='<?php echo $traineeEmailAddress; ?>'/>
+                            <input type="text" name="traineeEmailAddress" id="traineeEmailAddress" style="" value='<?php echo $traineeEmailAddress; ?>' <?php echo $disabled; ?>/>
                             <span id="temail_err"></span>
                         </td> 
 
@@ -144,7 +146,7 @@
                         </td>
                         <td class="td_heading" width="15%">Course RunID:<span class="required">*</span></td>
                         <td>
-                            <input type="text" name="courseRunId" id="courseRunId" style="" value='<?php echo $courseRunId; ?>' />
+                            <input type="text" name="courseRunId" id="courseRunId" style="" value='<?php echo $courseRunId; ?>' <?php echo $disabled; ?>/>
                             <span id="crunid_err"></span>
                         </td>
                     </tr>                
@@ -170,7 +172,7 @@
                     <tr class="new_span">
                         <td class="td_heading" width="15%">Discount Amount:<span class="required">*</span></td>
                         <td colspan="3">
-                            <input type="text" name="feeDiscountAmount" id="feeDiscountAmount" value='<?php echo $feeDiscountAmount; ?>' />
+                            <input type="text" name="feeDiscountAmount" id="feeDiscountAmount" value='<?php echo $feeDiscountAmount; ?>' <?php echo $disabled; ?>/>
                             <span id="discount_amount_err"></span>
                         </td>
                     </tr>
@@ -220,7 +222,7 @@
                                 <b>Contact Name.:<span class="required">*</span></b> 
                             </td>   
                             <td>
-                                <input type="text" name="employerContactFullName" id="employerContactFullName" style="" value='<?php echo $employerContactFullName; ?>' />
+                                <input type="text" name="employerContactFullName" id="employerContactFullName" style="" value='<?php echo $employerContactFullName; ?>' <?php echo $disabled; ?>/>
                                 <span id="employerContactFullName_err"></span>
                             </td> 
 
@@ -228,7 +230,7 @@
                                 <b>Contact No.:<span class="required">*</span></b> 
                             </td>
                             <td> 
-                                <input type="text" name="employerContactNumber" id="employerContactNumber" style="" value='<?php echo $employerContactNumber; ?>' />
+                                <input type="text" name="employerContactNumber" id="employerContactNumber" style="" value='<?php echo $employerContactNumber; ?>' <?php echo $disabled; ?>/>
                                 <span id="employerContactNumber_err"></span>
                             </td>
                         </tr>
@@ -237,7 +239,7 @@
                                 <b>Employer Email.:<span class="required">*</span></b>
                             </td>   
                             <td>
-                                <input type="text" name="employerEmailAddress" id="employerEmailAddress" style="" value='<?php echo $employerEmailAddress; ?>' />
+                                <input type="text" name="employerEmailAddress" id="employerEmailAddress" style="" value='<?php echo $employerEmailAddress; ?>' <?php echo $disabled; ?>/>
                                 <span id="employerEmailAddress_err"></span>
                             </td>
                         </tr>
@@ -247,6 +249,9 @@
                             <div class="push_right">
                                 <input type="hidden" name="sponsorshipType" value="<?php echo $traineeSponsorshipType; ?>" id="sponsorshipType">
                                 <input type="hidden" name="enrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="enrolmentReferenceNumber">
+                                <input type="hidden" name="tpgCourseId" value="<?php echo $tpgCourseId; ?>" id="tpgCourseId">
+                                <input type="hidden" name="tpgClassId" value="<?php echo $tpgClassId; ?>" id="tpgClassId">
+                                <input type="hidden" name="tpgUserId" value="<?php echo $tpgUserId; ?>" id="tpgUserId">
                                 <input type="hidden" name="editEnrolmentAction" value="<?php echo $editEnrolmentAction; ?>" id="editEnrolmentAction">
                                 <button type="submit" value="Submit" class="btn btn-xs btn-primary no-mar" title="Submit" /><?php echo $buttonName; ?></button>
                             </div>
