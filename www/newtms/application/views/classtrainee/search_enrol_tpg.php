@@ -61,6 +61,42 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="td_heading">Period From:</td>
+                    <td>
+                        <?php
+                        $attr_js = 'id="input_from_date" placeholder="dd/mm/yyyy"';
+                        echo form_input('from_date', $this->input->get('from_date'), $attr_js);
+                        ?>
+                    </td>
+                    <td class="td_heading">To:</td>
+                    <td>
+                        <?php
+                        $attr_js = 'id="input_to_date" placeholder="dd/mm/yyyy"';
+                        echo form_input('to_date', $this->input->get('to_date'), $attr_js);
+                        ?>
+                    </td>                    
+                </tr>
+                <tr>
+                    <td class="td_heading">Trainee ID Type:</td>
+                    <td>
+                        <?php
+                        $attr = 'id="idType"';
+                        echo form_dropdown('idType', $idType_options, '', $attr);
+                        ?>
+                        <span id="class_type_err"></span>
+                        <?php echo form_error('idType', '<div class="error">', '</div>'); ?>
+                    </td>
+                    <td class="td_heading">Sponsorship Type:</td>
+                    <td>
+                        <?php
+                        $attr = 'id="sponsorshipType"';
+                        echo form_dropdown('sponsorshipType', $sponsorshipType_options, '', $attr);
+                        ?>
+                        <span id="class_type_err"></span>
+                        <?php echo form_error('sponsorshipType', '<div class="error">', '</div>'); ?>
+                    </td>
+                </tr>    
+                <tr>
                     <td class="td_heading">
                         <?php
                         $checked = TRUE;
@@ -98,42 +134,7 @@
                         <br>
                         <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="taxcode_err"></span>
-                    </td>
-                    <td width="15%" class="td_heading">
-                        <?php
-                        $checked = ($this->input->get('search_select') == 2) ? TRUE : FALSE;
-                        $data = array(
-                            'id' => 'search_select',
-                            'class' => 'search_select',
-                            'name' => 'search_select',
-                            'value' => 2,
-                            'checked' => $checked
-                        );
-                        echo form_radio($data);
-                        ?>
-                        &nbsp;&nbsp; 
-                        Trainee Name:</td>
-                    <td colspan="2"><?php
-                        $data = array(
-                            'id' => 'trainee',
-                            'name' => 'trainee',
-                            'value' => $this->input->get('trainee'),
-                            'class' => 'upper_case',
-                            'style' => 'width:200px;',
-                        );
-                        echo form_input($data);
-                        $data = array(
-                            'id' => 'trainee_id',
-                            'name' => 'trainee_id',
-                            'value' => $this->input->get('trainee_id'),
-                            'type' => 'hidden'
-                        );
-                        echo form_input($data);
-                        ?>
-                        <br>
-                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
-                        <span id="trainee_err"></span>
-                    </td>
+                    </td>                    
                 </tr>
                 <tr>
                     <td colspan='4'>
@@ -176,9 +177,8 @@
                     }
                     if (!empty($tabledata)) {
                         foreach ($tabledata as $row) {
-                          
                             ?>
-                                                                              
+
                             <tr>                        
                                 <td><?php echo $row->tax_code; ?></td>
                                 <td class="name"><?php echo $row->fullname; ?></td>
@@ -188,28 +188,27 @@
                                 <td><?php echo $row->feedback_grade; ?></td>
                                 <td><?php echo $row->result; ?></td>
                                 <td><?php echo $row->reference_num; ?></td>
-                                <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
+                                <!--<td><?php //echo $row->tpg_course_run_id;   ?></td>-->
                                 <td>
-                                   
-                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Create Assessment</span></a>
+
+                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/' . $row->course_id . '/' . $row->class_id . '/' . $row->user_id; ?>"><span class="btnblue">Create Assessment</span></a>
                                     <br>
-                                    <a href="#update_void_assessment" rel="modal:open" id='update_assessment' data-refNo='<?php echo $row->assessment_reference_No;?>' data-userid="<?php echo $row->user_id;?>" data-courseid="<?php echo $row->course_id;?>" data-classid="<?php echo $row->class_id;?>"><span class="btnblue">Update/Void Assessment</span></a>
+                                    <a href="#update_void_assessment" rel="modal:open" id='update_assessment' data-refNo='<?php echo $row->assessment_reference_No; ?>' data-userid="<?php echo $row->user_id; ?>" data-courseid="<?php echo $row->course_id; ?>" data-classid="<?php echo $row->class_id; ?>"><span class="btnblue">Update/Void Assessment</span></a>
                                     <br>
-                                    <a href="#view_assessment" rel="modal:open" id='click_assessment' data-refNo='<?php $row->assessment_reference_No;?>'><span class="btnblue">View Assessment</span></a>
-                                    
+                                    <a href="#view_assessment" rel="modal:open" id='click_assessment' data-refNo='<?php $row->assessment_reference_No; ?>'><span class="btnblue">View Assessment</span></a>
+
                                 </td>
                             </tr>
                             <?php
                         }
-                    } 
-                    
-                    
+                    }
+
+
                     //////data for tpg search
-                     if (!empty($tabledata_tpg)) {
+                    if (!empty($tabledata_tpg)) {
                         foreach ($tabledata_tpg->data as $row) {
-                          
                             ?>
-                                                                              
+
                             <tr>                        
                                 <td><?php echo $row->trainee->id; ?></td>
                                 <td class="name"><?php echo $row->trainee->fullName; ?></td>
@@ -219,15 +218,15 @@
                                 <td><?php echo $row->grade; ?></td>
                                 <td><?php echo $row->result; ?></td>
                                 <td><?php echo $row->course->referenceNumber; ?></td>
-                                <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
+                                <!--<td><?php //echo $row->tpg_course_run_id;   ?></td>-->
                                 <td>
-                                   
+
                                     <span>Not Possible, While Viewing TPG Data</span>
                                 </td>
                             </tr>
                             <?php
                         }
-                    } 
+                    }
                     ?>
                 </tbody>
             </table>

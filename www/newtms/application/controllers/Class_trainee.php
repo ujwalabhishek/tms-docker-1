@@ -152,7 +152,7 @@ class Class_Trainee extends CI_Controller {
                 $new_tabledata[$k]['external_reference_number'] = $row['external_reference_number'];
                 $new_tabledata[$k]['tpg_course_run_id'] = $row['tpg_course_run_id'];
                 $new_tabledata[$k]['feeDiscountAmount'] = round((($row['discount_rate'] / 100) * $row['class_fees']), 2);
-             
+
                 if ($row['payment_status'] == 'PAID') {
                     $feeCollectionStatus_options[''] = 'Select';
                     $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
@@ -162,12 +162,12 @@ class Class_Trainee extends CI_Controller {
                 } else {
                     $feeCollectionStatus_options[''] = 'Select';
                     $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
-                    $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';                    
+                    $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
                     $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
                 }
-                
+
                 $new_tabledata[$k]['feecollectionStatus'] = $feeCollectionStatus_options;
-                
+
                 $new_tabledata[$k]['enrolmentReferenceNumber'] = $row['eid_number'];
 
                 //$new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'],$row['sales_executive_id']);
@@ -266,8 +266,9 @@ class Class_Trainee extends CI_Controller {
         $data['main_content'] = 'classtrainee/classtraineelist';
         $this->load->view('layout', $data);
     }
-    
+
     public function tpg_search_enrolment() {
+
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         extract($_GET);
@@ -277,16 +278,89 @@ class Class_Trainee extends CI_Controller {
             $course_classes = $this->class->get_course_class($tenant_id, $course, "", "", "classTrainee");
             $data['classes'] = $course_classes;
         }
+
+        $feeCollectionStatus_options[''] = 'Select';
+        $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
+        $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
+        $feeCollectionStatus_options['Full Payment'] = 'Full Payment';
+        $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
+
+        $data['feeCollectionStatus_options'] = $feeCollectionStatus_options;
+
+        $sponsorshipType_options[''] = 'Select';
+        $sponsorshipType_options['INDIVIDUAL'] = 'Individual';
+        $sponsorshipType_options['EMPLOYER'] = 'Employer';
+
+        $data['sponsorshipType_options'] = $sponsorshipType_options;
+        
+        $idType_options[''] = 'Select';
+        $idType_options['NRIC'] = 'NRIC';
+        $idType_options['FIN'] = 'FIN';
+        $idType_options['Others'] = 'Others';
+
+        $data['idType_options'] = $idType_options;
+
+
+
+
         $export_url = '';
         $sort_url = '';
         $data['error_msg'] = 'Kindly apply filter to fetch the trainees'; ////ssp/////
-        
+
         if (!empty($_GET)) {
-            
+
+            $encrypt_method = "AES-256-CBC";
+            $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+            $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
+
+            $api_version = 'v1';
+            $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/search";
+
+            $tpg_search_json_data = '{
+                                        "meta": {
+                                          "lastUpdateDateTo": "2020-02-01",
+                                          "lastUpdateDateFrom": "2020-01-01"
+                                        },
+                                        "sortBy": {
+                                          "field": "updatedOn",
+                                          "order": "asc"
+                                        },
+                                        "enrolment": {
+                                          "course": {
+                                            "run": {
+                                              "id": "10026"
+                                            },
+                                            "referenceNumber": "TGS-0026008-ES"
+                                          },
+                                          "status": "Confirmed",
+                                          "trainee": {
+                                            "id": "S0118316H",
+                                            "fees": {
+                                              "feeCollectionStatus": "Full Payment"
+                                            },
+                                            "idType": {
+                                              "type": "NRIC"
+                                            },
+                                            "employer": {
+                                              "uen": "G01234567S"
+                                            },
+                                            "enrolmentDate": "2020-05-15",
+                                            "sponsorshipType": "EMPLOYER"
+                                          },
+                                          "trainingPartner": {
+                                            "uen": "T16GB0003C",
+                                            "code": "T16GB0003C-01"
+                                          }
+                                        },
+                                        "parameters": {
+                                          "page": 0,
+                                          "pageSize": 20
+                                        }
+                                      }';
         }
-        
-        
-        
+
+
+
         $data['page_title'] = 'Class Trainee';
         $data['main_content'] = 'classtrainee/search_enrol_tpg';
         $this->load->view('layout', $data);
