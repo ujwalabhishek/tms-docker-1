@@ -1415,7 +1415,7 @@ class tp_gateway extends CI_Controller {
             if ($updated) {
                 $this->session->set_flashdata("success", "Enrolment has been created with reference number - " . $enrolmentReferenceNumber);
             }
-            redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
+            redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         } else {
             if ($tpg_response->status == 400) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
@@ -1428,7 +1428,7 @@ class tp_gateway extends CI_Controller {
             } else {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             }
-            redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
+            redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
     }
 
@@ -1541,7 +1541,7 @@ class tp_gateway extends CI_Controller {
 
             $this->session->set_flashdata("success", "The Fee Collection Status has been updated for the enrolment reference number - " . $enrolmentReferenceNumber);
 
-            redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
+            redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         } else {
             if ($tpg_response->status == 400) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
@@ -1554,7 +1554,7 @@ class tp_gateway extends CI_Controller {
             } else {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             }
-            redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
+            redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
     }
 
@@ -1755,7 +1755,7 @@ class tp_gateway extends CI_Controller {
                 }
             }
 
-            redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
+            redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         } else {
             if ($tpg_response->status == 400) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
@@ -1768,7 +1768,7 @@ class tp_gateway extends CI_Controller {
             } else {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             }
-            redirect('class_trainee?course_id=' . $course_id . '&class=' . $class_id);
+            redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
     }
 

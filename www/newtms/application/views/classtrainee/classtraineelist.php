@@ -435,7 +435,7 @@ echo form_open("tp_gateway/edit_enrolment_tpg", $atr);
             </tr>
         </tbody>
     </table>
-    <span class="required required_i">* Note : once canceled the enrolled trainee with TPG, cannot be rolled back.</span>
+    <span class="required required_i">* Note : Once canceled the enrolled trainee with TPG, cannot be rolled back.</span>
     <div class="popup_cance89">
         <span href="#edit_enrolment" rel="modal:close"><button class="btn btn-primary edit_enrolment_action" type="submit">Submit</button></span>
     </div>
