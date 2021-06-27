@@ -368,6 +368,7 @@
                                     $enrolmentReferenceNumber = $row['enrolmentReferenceNumber'];
                                     $feecollectionStatus = $row['feecollectionStatus_options'];
                                     $feecollectionStatus_val = $row['feecollectionStatus_val'];
+                                    $enrolmentStatus = $row['enrolmentStatus'];
                                     
                                     $editEnrolmentAction = $row['editEnrolmentAction'];
                                     if (empty($enrolmentReferenceNumber)) {
@@ -380,12 +381,17 @@
                                     ?>                                    
                                     <?php
                                     if ($enrolmentReferenceNumber != '') {
-                                        ?>                                    
-                                        <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>"><span class="btnblue">View Enrolment</span></a>
-                                        <br>                                                                                
+                                        ?>                        
+                                        <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>"><button class="btnblue">View Enrolment</button></a>
+                                        <br>
+                                        <?php if($enrolmentStatus == "Cancelled") {?>
+                                        <span style="color:red"><i>This enrolment is Cancelled.</i></span>
+                                        <?php } ?>
+                                        <?php if($enrolmentStatus == "Confirmed") {?>
                                         <a rel="modal:open" href="#edit_enrolment"><button type="button" class="btnblue">Edit Enrolment</button></a>
                                         <br>
                                         <a rel="modal:open" href="#abd"><button type="button" class="btnblue">Update Fee</button></a>
+                                        <?php } ?>
                                     <?php } ?>
                                 </td>
                             </tr>
