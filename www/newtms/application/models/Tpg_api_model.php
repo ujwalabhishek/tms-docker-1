@@ -355,7 +355,7 @@ class Tpg_api_Model extends CI_Model {
         $obj=json_decode($response);
         return $obj;
     }
-    
+    //// added by shubhranshu to get course run id
     public function getCourseByRunId($tpg_course_run_id){
         $api_version = 'v1.3';
          $retun = $this->correct_live_dev_api_data('','');
@@ -376,7 +376,7 @@ class Tpg_api_Model extends CI_Model {
         //$obj=json_decode($response);
         return $response;
     }
-    
+    //// added by shubhranshu to cancel tpg assessmement
     public function create_asssessment_to_tpg($trainee,$tp_uen){
         $retun = $this->correct_live_dev_api_data($trainee->reference_num,$tp_uen,$trainee->skillCode,$trainee->tax_code);
         
@@ -425,7 +425,7 @@ class Tpg_api_Model extends CI_Model {
         return $asessment_resp;
         
     }
-    
+    //// added by shubhranshu to view assessment from tpg
     public function view_asssessment_from_tpg($assessment_ref_no){
         $retun = $this->correct_live_dev_api_data('','');
         $api_version = 'v1';
@@ -436,7 +436,7 @@ class Tpg_api_Model extends CI_Model {
         //$obj=json_decode($response);
         return $decrypted_data;
     }
-    
+    //// added by shubhranshu to update void assessment to tpg
     public function update_void_assessment_to_tpg($fullname,$result,$assessment_date,$score,$grade,$skillcode,$action,$assessment_ref_no){
         $update_assessment_json='{"assessment": {
                               "grade": "'.$grade.'",
@@ -460,7 +460,7 @@ class Tpg_api_Model extends CI_Model {
         return $decrypted_data;
     }
     
-
+    //// added by shubhranshu to search assessment
     public function search_assessments($tenant_id,$tp_uen,$crs_ref_no,$crs_run_id){
         $crs_run_id='';
         $retun = $this->correct_live_dev_api_data($crs_ref_no,$tp_uen);
