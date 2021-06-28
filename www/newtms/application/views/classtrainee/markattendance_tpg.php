@@ -1,1060 +1,375 @@
-<style>#select_course_id{width:500px;}#select_class_id{width:200px;}
-.overlay {
-background: #959191;
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    height: 900px;
-    left: 0;
-    opacity: 0.8;
-    z-index: 9999999999;
-}
-#loading-img {
-    background: url(assets/images/loading_1.gif) center center no-repeat;
-    height: 100%;
-    background-size:123px;
-
-}
-</style> 
-<?php
-$this->load->helper('common_helper');
-
-$ci = & get_instance();
-$ci->load->model('class_model');
-$post_course_id = $this->input->post('course_id');
-$post_class_id = $this->input->post('class_id');
-
-$tenant_id = $this->session->userdata('userDetails')->tenant_id;
-$check_attendance = check_attendance_row($tenant_id, $post_course_id, $post_class_id);
-
-$value_of_schedule_class = count($class_schedule);
-$start_class = date_create_from_format("d/m/Y", $class_start);
-$end_class = date_create_from_format("d/m/Y", $class_end);
-if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condition on line no : 526
-    $attendance_status = $this->input->post('attendance_status');
-    $start_class = date_create_from_format("d/m/Y", $class_start);
-    $end_class = date_create_from_format("d/m/Y", $class_end);
-    $from_date_post_value = set_value('from_date');
-    $from_date = empty($from_date_post_value) ? $class_start : $from_date_post_value;
-    $to_date_post_value = set_value('to_date');
-    $to_date = empty($to_date_post_value) ? $class_start : $to_date_post_value;
-
-    $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
-
-    function check_for_session_checked($session_data, $date, $is_first) {
-        $format_date = $date->format('Y-m-d');
-        if (isset($session_data[$format_date])) {
-            $session_by_date_data = $session_data[$format_date];
-            if ($is_first) {
-                return $session_by_date_data['session_01'] == '1';
-            } else {
-                return $session_by_date_data['session_02'] == '1';
-            }
-        }
-        return false;
+<script>
+    $siteurl = '<?php echo site_url(); ?>';
+    $baseurl = '<?php echo base_url(); ?>';
+    $role_check = '<?php echo $this->data['user']->role_id; ?>';
+    $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
+</script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_mark_attendance.js?0.000001"></script>
+<style>
+    table td{
+        font-size: 11px;
     }
+</style>
+<div class="col-md-10">
+     <?php
+    if ($this->session->flashdata('success')) {
+        echo '<div class="success">' . $this->session->flashdata('success') . '</div>';
+    }
+    if ($this->session->flashdata('error')) {
+        echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
+    }
+    /////display if any error from TPG site
+     if(!empty($this->session->flashdata('resp_error'))){
+        foreach($this->session->flashdata('resp_error') as $err){
 
-    function check_class_date_range(DateTime $start_class, DateTime $end_class, DateTime $curr_date) {
-        return $curr_date <= $end_class && $curr_date >= $start_class && $curr_date <= new DateTime();
+        echo '<div class="alert alert-danger dang">
+            <strong>'.$err->field.'</strong>'.$err->message.'
+        </div>';
+        }
     }
     ?>
-    <script type="text/javascript">
-        var CLIENT_DATE_FORMAT = 'dd/mm/yy';
-        var SITE_URL = '<?php echo site_url(); ?>';
-        var class_start = '<?php echo $class_start; ?>';
-        var class_end = '<?php echo $class_end; ?>';
-        var pageurl = '<?php echo $controllerurl; ?>';
-        var ancher = '<?php echo $ancher; ?>';
-    </script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/mark_attendance.js"></script>
-    <div class="overlay">
-        <div id="loading-img"></div>
-    </div>
-    <div class="col-md-10">
-       
-        <h2 class="panel_heading_style"><span class="glyphicon glyphicon-pencil"></span> <?php echo $page_title; ?></h2>
-        <?php
-        if (!empty($message)) {
-            echo "<div class='success'>" . $message . "</div>";
-        }
-        ?>
+    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class-trainee.png"/> TPG MARK ATTENDANCE</h2>
+    <?php
+    $atr = 'id="search_form" name="search_form" method="get"';
+    echo form_open("class_trainee/mark_attendance_tpg", $atr);
+    ?>  
+    <div class="table-responsive">
+        <h5  class="sub_panel_heading_style"><span class="glyphicon glyphicon-search"></span> Search By</h5>
+
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td class="td_heading">Course Name:</td>
+                    <td colspan="3">
+                        <?php
+                        $options = array();
+                        $options[''] = 'Select';
+
+                        foreach ($courses as $k => $v) {
+                            $options[$k] = $v;
+                        }
+
+                        $js = 'id="course" ';
+                        echo form_dropdown('course', $options, $this->input->get('course'), $js);
+                        ?>
+                        <span id="course_err"></span>
+                    </td>                    
+                </tr>                
+                <tr>
+                    <td class="td_heading">Class Name:</td>
+                    <td colspan='3'>
+                        <?php
+                        $optionss = array();
+                        $optionss[''] = 'Select';
+                        foreach ($classes as $k => $v) {
+                            $optionss[$k] = $v;
+                        }
+                        $js = 'id="class" ';
+                        echo form_dropdown('class', $optionss, $this->input->get('class'), $js);
+                        ?>
+                         <span id="class_err"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_heading">Trainee NRIC:</td>
+                    <td>
+                        <?php
+                        $options = array();
+                        $options[''] = 'Select';
+                        foreach ($nric as $k => $v) {
+                            $options[$k] = $v;
+                        }
+                        $js = 'id="nric" ';
+                        echo form_dropdown('nric', $options, $this->input->get('nric'), $js);
+                        ?>
+                        <input type='hidden' name='nric_id' id='nric_id' value>
+                         <span id="nric_err"></span>
+                    </td>
+                    
+                </tr>
+                
+                <tr>
+                    <td colspan='4'>
+                        <span class="pull-right">
+                            <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
+                        </span>
+                    </td>
+                </tr>
+               
+            </tbody>
+        </table>
+    </div><br>
+    
+    <?php echo form_close(); ?>
+    <?php ?>
+    <div class="bs-example">
         <div class="table-responsive">
-            <span class="error" id="markAttendanceSubmitErrorForm"></span>
-            <?php
-            $atr = 'id="search_form" name="search_form"';
-            echo form_open($controllerurl, $atr);
-            echo form_hidden('orientation', 'P', 'orientation');
-            ?>
+            <div style="clear:both;"></div>
             <table class="table table-striped">
-
+                <thead>
+                    <?php
+                    $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
+                    $pageurl = 'class_trainee';
+                    ?>
+                    <tr>
+                        <th width="9%" class="th_header">NRIC/FIN No</th>
+                        <th width="10%" class="th_header">Full Name</th>
+                        <th width="10%" class="th_header">Assessment Date</th>
+                        <th width="10%" class="th_header">Skill Code</th>
+                        <th width="6%" class="th_header">Score</th>
+                        <th width="6%" class="th_header">Grade</th>
+                        <th width="6%" class="th_header">Result</th>
+                        <th width="10%" class="th_header">Course Ref No</th>
+                        <th width="9%" class="th_header">Assmt Ref No</th>
+                        <th width="9%" class="th_header">Enlmt Ref No</th>
+                        <th width="17%" class="th_header">TPG</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr>
-                        <td class="td_heading">Course Name:<span class="required">*</span></td>
-                        <td>
-                            <?php echo form_dropdown("course_id", $courses, set_value('course_id'), 'id="select_course_id"') ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td_heading">Class Name:<span class="required">*</span></td>
-
-                        <td colspan='3'>
-                            <?php
-                            $attr_js = 'id="select_class_id"';
-                            echo form_dropdown('class_id', $classes, set_value('class_id'), $attr_js);
+                    <?php
+                    $err_msg = 'There are no trainees enrolled to any class currently.';
+                    if (!empty($_GET)) {
+                        $err_msg = 'No data available for the search criteria entered.';
+                    }
+                    if (!empty($tabledata)) {
+                        foreach ($tabledata as $row) {
+                          
                             ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td_heading">Subsidy</td>
-                        <td <?php echo ($is_report_page) ? '' : "colspan='2'"; ?>>                        
+                                                                              
+                            <tr>                        
+                                <td><?php echo $row->tax_code; ?></td>
+                                <td class="name"><?php echo $row->fullname; ?></td>
+                                <td><?php echo $row->assessmentDate; ?></td>
+                                <td><?php echo $row->skillCode; ?></td>
+                                <td><?php echo $row->feedback_score ?></td>
+                                <td><?php echo $row->feedback_grade; ?></td>
+                                <td><?php echo $row->result; ?></td>
+                                <td><?php echo $row->reference_num; ?></td>
+                                <td><?php echo $row->assessment_reference_No; ?></td>
+                                <td><?php echo $row->eid_number; ?></td>
+                                <td>
+                                   
+                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Create Assessment</span></a>
+                                    <br>
+                                    <a href="#update_void_assessment" rel="modal:open" id='update_assessment' data-refNo='<?php echo $row->assessment_reference_No;?>' data-userid="<?php echo $row->user_id;?>" data-courseid="<?php echo $row->course_id;?>" data-classid="<?php echo $row->class_id;?>"><span class="btnblue">Update/Void Assessment</span></a>
+                                    <br>
+                                    <a href="#view_assessment" rel="modal:open" id='click_assessment' data-refNo='<?php echo $row->assessment_reference_No;?>'><span class="btnblue">View Assessment</span></a>
+                                    
+                                </td>
+                            </tr>
                             <?php
-                            $subsidy_array = array('' => 'All', 'ws' => 'With Subsidy', 'wts' => 'Without Subsidy', 'fr' => 'Foreginer');
-                            $attr_js = 'id="subsidy">';
-                            echo form_dropdown('subsidy', $subsidy_array, $subsidy, $attr_js);
+                        }
+                    } 
+                    
+                    
+                    //////data for tpg search
+                     if (!empty($tabledata_tpg)) {
+                        foreach ($tabledata_tpg->data as $row) {
+                          
                             ?>
-                        </td>
-                        <?php if ($is_report_page) { ?>
-                            <td class="td_heading">Attendance Status:</td>
-                            <td>                        
-                                <?php
-                                $att_array = array('' => 'All', 'pr' => 'Present', 'ab' => 'Absent');
-                                $attr_js = 'id="attendance_status">';
-                                echo form_dropdown('attendance_status', $att_array, $this->input->post('attendance_status'), $attr_js);
-                                ?>
-                            </td>
-                        <?php } ?>
-                        <td>
+                                                                              
+                            <tr>                        
+                                <td><?php echo $row->trainee->id; ?></td>
+                                <td class="name"><?php echo $row->trainee->fullName; ?></td>
+                                <td><?php echo $row->assessmentDate; ?></td>
+                                <td><?php echo $row->skillCode; ?></td>
+                                <td><?php echo $row->score ?></td>
+                                <td><?php echo $row->grade; ?></td>
+                                <td><?php echo $row->result; ?></td>
+                                <td><?php echo $row->course->referenceNumber; ?></td>
+                                <td><?php echo $row->referenceNumber; ?></td>
+                                <td><?php echo $row->enrolment->referenceNumber; ?></td>
+                                <td>
+                                    <input type='hidden' value='<?php echo $row->course->run->id;?>'>
+                                    <span>No Action, While Viewing TPG Data</span>
+                                </td>
+                            </tr>
                             <?php
-                            $attr_js = 'id="input_to_date" style="width:40%;"';
-                            ?>
-
-                            <div class="pull-right">
-                                <?php
-                                echo form_hidden('week_start', $week_start);
-                                echo form_hidden('week_end', $week_end);
-                                echo form_hidden('week', null);
-                                echo form_hidden('export', null);
-                                echo form_hidden('export1', null);
-                                ?>
-                                <button id="markAttendanceSubmit" class="btn btn-xs btn-primary no-mar" name="markattendance_search_button" title="Search" value="Search"><span class="glyphicon glyphicon-search"></span> Search</button>
-                            </div>
-                        </td>
-                    </tr>
+                        }
+                    } 
+                    ?>
                 </tbody>
             </table>
-            <?php echo form_close(); ?>
         </div>
-        <br>
-        <?php
-        $check_classid = $this->input->post('class_id');
-        if (empty($tabledata) && !empty($check_classid) && empty($attendance_status)) {
-            ?>
-            <table class="table table-striped">
-                <tr class="danger">
-                    <td colspan="10" style="color:red;text-align: center;">There are no students enrolled for the class.</td>
-                </tr>
-            </table>
-            <?php
-        }
+        <div style="clear:both;"></div><br>
+        <ul class="pagination pagination_style">
+            <?php echo $pagination; ?>
+        </ul>
+    </div>
+</div>
 
-        //Restrict the class schedule
-        $data_arr = array();
-        $datas_arr_list = array();
-        foreach ($class_schedule as $row) {
-            $data_arr[$row['class_date']][] = array(
-                'session' => $row['session_type_id'],
-                'start' => $row['session_start_time'],
-                'end' => $row['session_end_time']
-            );
-            $datas_arr_list[] = $row['class_date'];
-        }
+<div class="modal1_0001" id="update_void_assessment" style="display:none;height:270px;min-height: 200px;width:60%">
+    <h2 class="panel_heading_style">TPG Update/Void Assessment</h2>
+    <table class="table table-striped" id='tblarea'>
+        <tbody>
+            <tr>
+                <td class="td_heading">Trainee Full Name:<span class="required">*</span></td>
+                <td id='fullname1'></td>
+                <td class="td_heading">Result:<span class="required">*</span></td>
+                <td id='result1'></td>
+            </tr>
 
-        if (!empty($tabledata) || !empty($attendance_status)) {
-            $week_start_date = date_create_from_format("d/m/Y", $week_start);
-            $week_end_date = date_create_from_format("d/m/Y", $week_end);
+            <tr>
+                <td class="td_heading">Score:<span class="required">*</span></td>
+                <td><input type="text" name="score" value="" id='score1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
+                <td class="td_heading">Grade:<span class="required">*</span></td>
+                <td><input type="text" name="grade" value="" id='grade1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
+            </tr>
 
-            usort($datas_arr_list, function($a, $b) {
-                $dateTimestamp1 = strtotime($a);
-                $dateTimestamp2 = strtotime($b);
+            <tr>
+                <td class="td_heading">Assessment Date:<span class="required">*</span></td>
+                <td><input type="date" name="assessment_date" value="" id='ass_date1' style="line-height: 14px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
+                <td class="td_heading">Skill Code:<span class="required">*</span></td>
+                <td><input type="text" name="skill_Code" value="" id='skill_code1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Action:<span class="required">*</span></td>
+                <td>
+                    <select name="action" id="action">
+                    <option value="" selected="selected">Select</option>
+                    <option value="update">Update</option>
+                    <option value="void">Void</option>
+                    </select>
+                </td>
+                <td class="td_heading">Assessment Ref No:<span class="required">*</span></td>
+                <td id='assmt_ref_no1'></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <div class="required required_i">* To Update "Trainee Name" &  "Result" & "Skill Code" fields, Update in edit trainee,trainer feedback,Edit Course for the same,Then Come to update this page.</div>
+    <div id="status_msg"></div>
+    <div class="popup_cance89" id="btnarea">
+        <button class='btn btn-primary' id="updateAseessment">Update/Void</button>
+    </div>
+</div>
 
-                return $dateTimestamp1 < $dateTimestamp2 ? -1 : 1;
+
+
+
+
+
+
+<div class="modal1_0001" id="view_assessment" style="display:none;height:370px;min-height: 200px;width:60%">
+    <h2 class="panel_heading_style">TPG View Assessment</h2>
+    <table class="table table-striped" id='viewsection'>
+        <tbody>
+            <tr>
+                <td class="td_heading">Assessment Reference No:</td>
+                <td id='ass_ref_no'></td>
+                <td class="td_heading">TP UEN:</td>
+                <td id='tp_uen'></td>
+            </tr>
+
+            <tr>
+                <td class="td_heading">TP Name:</td>
+                <td id='tp_name'></td>
+                <td class="td_heading">Course Reference No:</td>
+                <td id='crs_ref_no'></td>
+            </tr>
+            <tr>
+                <td class="td_heading">Course Name:</td>
+                <td id='crs_name'></td>
+                <td class="td_heading">Course Run ID:</td>
+                <td id='crs_run_id'></td>
+            </tr>
+
+            <tr>
+                <td class="td_heading">Course Run Start Date:</td>
+                <td id='crs_run_start_date'></td>
+                <td class="td_heading">Course Run End Date:</td>
+                <td id='crs_run_end_date'></td>
+            </tr>
+
+            <tr>
+                <td class="td_heading">Trainee ID Type:</td>
+                <td id='trainee_id_type'></td>
+                <td class="td_heading">Trainee Id:</td>
+                <td id='trainee_id'></td>
+            </tr>
+
+            <tr>
+                <td class="td_heading">Trainee Full Name:</td>
+                <td id='fullname'></td>
+                <td class="td_heading">Result:</td>
+                <td id='result'></td>
+            </tr>
+
+            <tr>
+                <td class="td_heading">Score:</td>
+                <td id='score'></td>
+                <td class="td_heading">Grade:</td>
+                <td id='grade'></td>
+            </tr>
+
+            <tr>
+                <td class="td_heading">Assessment Date:</td>
+                <td id='ass_date'></td>
+                <td class="td_heading">Skill Code:</td>
+                <td id='skill_code'></td>
+            </tr>
+<!--            <tr>
+                <td class="td_heading">Enrollment No:</td>
+                <td id='enrol_no'></td>
+            </tr>-->
+            <tr>
+                <td class="td_heading">Created On:</td>
+                <td id='created_on'></td>
+                <td class="td_heading">Updated On:</td>
+                <td id='updated_on'></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <div class="popup_cance89">
+        <a href="#view_assessment" rel="modal:close"><button class='btn btn-primary'>Close</button></a>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+            var check = 0;
+            $('#update_fee').submit(function() {
+                check = 1;
+                return validateFee(true);
             });
-
-            $ifPrevWeekDisabled = $week_start_date->format("Y-m-d") <= $datas_arr_list[0];
-            $ifNextWeekDisabled = $week_end_date->format("Y-m-d") >= end($datas_arr_list);
-
-            //$ifPrevWeekDisabled = $week_start_date <= $start_class;
-            //$ifNextWeekDisabled = $week_end_date >= $end_class;
-
-            $same_values = $start_class == $end_class;
-            if ($same_values == 1) {
-                $ifPrevWeekDisabled = $same_values;
-                $ifNextWeekDisabled = $same_values;
-            }
-            if ($is_report_page) {
-                ?>
-                <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Course Class Details</h2>
-                <div class="highlight2 table-responsive">
-                    <table class="table table-striped">
-                        <tbody>
-                            <tr>
-                                <td class="td_heading">Course Code:</td>
-                                <td><label class="label_font"><?php echo $class_details->competency_code ?></label></td>
-                                <td class="td_heading">Course Name:</td>
-                                <td><label class="label_font"><?php echo $class_details->crse_name ?></label></td>
-                                <td class="td_heading">Course Manager:</td>
-                                <td><label class="label_font"><?php echo $class_details->crse_manager ?></label></td>
-                            </tr>
-                            <tr>
-                                <td class="td_heading">Class Name:</td>
-                                <td><label class="label_font"><?php echo $class_details->class_name ?></label></td>
-                                <td class="td_heading">Start Date & Time:</td>
-                                <td><label class="label_font"><?php echo $class_details->class_start_date_formatted ?></label></td>
-                                <td class="td_heading">End Date & Time:</td>
-                                <td><label class="label_font"><?php echo $class_details->class_end_date_formatted ?></label></td>
-                            </tr>
-                            <tr>
-                                <td class="td_heading">Classroom Trainer:</td>
-                                <td><label class="label_font"><?php echo $class_details->classroom_trainer ?></label></td>
-                                <td class="td_heading">Lab Trainer:</td>
-                                <td><label class="label_font"><?php echo $class_details->lab_trainer ?></label></td>
-                                <td class="td_heading">Assessor:</td>
-                                <td><label class="label_font"><?php echo $class_details->assessor ?></label></td>
-                            </tr>
-                            <tr>
-                                <td class="td_heading">Total Seats:</td>
-                                <td><label class="label_font"><?php echo $class_details->total_seats ?></label></td>
-                                <td class="td_heading">Total Booked:</td>
-                                <td colspan="3"><label class="label_font"><?php echo $class_details->total_booked_seats; ?></label></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div style="clear:both;"></div><br>
-        <?php } ?>
-            <div class="row_dim1">
-            <?php if ($is_report_page) { ?>
-                    <span class="required required_i">AB - Absent &nbsp;&nbsp;&nbsp;<span class="green">P- Present</span></span>
-                <?php } ?>
-                <div class="add_button space_style">
-                <?php
-                $current_date_time = strtotime(date("Y-m-d H:i:s"));
-                $class_start_date_time = strtotime($class_start_datetime);
-                if (!$is_report_page) {
-
-                    if (($user->user_id == 82169) || ($user->user_id == 53401) || ($user->user_id == 82171) || ($user->user_id == 1) || ($user->user_id == 2)) {
-                        if ($lock_status == 0) {
-                            echo $this->session->flashdata('success');
-                            if (strtotime($class_start_date) <= strtotime(date('Y-m-d'))) {
-                                ?>
-                                    <button id="lock_attendance" class="label label-primary black-btn mar-bot" style="">
-                                        <span class="glyphicon glyphicon-compressed"></span>Lock Attendance
-                                    </button>
-
-                                    <?php
-                                }
-                            }
-                            if ($lock_status == 1) {
-                                ?>
-                                <button id="unlock_attendance" class="label label-primary black-btn mar-bot" style="">
-                                    <span class="glyphicon glyphicon-magnet"></span>&nbsp;Unlock Attendance
-                                </button><?php
-                            }
-                        }
-                        ?>
-
-                        <button id="export_to_pdf_week_but" class="label label-default black-btn mar-bot"><span class="glyphicon glyphicon-repeat"></span> Generate ManualAttendance Sheet</button>
-                        &nbsp;&nbsp;
-                        <?php
-                        if ($user->role_id != 'CRSEMGR') {
-                            ?>
-                            <button id="export_to_pdf_week_xls" class="label label-default black-btn mar-bot"><span class="glyphicon glyphicon-repeat"></span> Generate ManualAttendance XLS</button>
-                            &nbsp;&nbsp;<?php } ?>
-                        <?php
-                    }
-                    if (strtotime($class_start_date) <= strtotime(date('Y-m-d'))) {
-
-                        if ($user->role_id != 'CRSEMGR') {
-                            ?>
-                            <button id="export_to_xls_but" class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export to XLS</button>
-                            &nbsp;&nbsp; <?php } ?>
-
-
-                        <button id="export_to_pdf_but" class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export to PDF</button>
-                        <?php }
-                    ?>
-                </div>
-                <div style="clear:both;"></div>
-        <?php
-        if (strtotime($class_start_date) <= strtotime(date('Y-m-d')) || $is_report_page) {
-            ?>
-                    <div class="scroll">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="th_header sort_header" sort="tu.tax_code" width="5%"><span style="color:#000000;">NRIC / FIN No.</span></th>
-                                    <th class="th_header sort_header" sort="name" width="20%"><span style="color:#000000;">Trainee Name</span></th>
-                                    <th colspan="7" align="center">
-                                        <button class="btn btn-info nxt pull-left" <?php echo ($ifPrevWeekDisabled ? "disabled" : "") ?> type="button" id="prev_week_but"><span class="glyphicon glyphicon-backward"></span> Prev Week </button>
-                                        <b class="pad-top-1 display-d">Class Dates for the period <?php echo $week_start_date->format('d F Y') ?> to
-                    <?php echo $week_end_date->format('d F Y') ?> </b>
-                                        <button class="btn btn-info nxt pull-right" <?php echo ($ifNextWeekDisabled ? "disabled" : "") ?> type="button" id="next_week_but">Next Week <span class="glyphicon glyphicon-forward"></span></button>
-                            <!--<div>Check All:<input type="checkbox" id='checkall'></div>  added by shubhranshu--->
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="sub_head">
-                                    <td colspan="2">&nbsp;</td>
-            <?php
-            $days = array();
-
-            for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {
-
-                if ($data_arr[$curr_day->format('Y-m-d')][0]['session'] == 'S1') {
-                    ?>
-                                            <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
-                    <?php $days[] = clone $curr_day; ?>
-
-                                            <?php
-                                        } elseif ($start_class->format('Y-m-d') == $end_class->format('Y-m-d') && $curr_day->format('Y-m-d') == $start_class->format('Y-m-d')) {
-                                            ?>
-                                            <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
-                                            <?php $days[] = clone $curr_day; ?>
-
-                                            <?php
-                                        }
-                                    }
-
-                                    $days_count = count($days);
-                                    ?>
-                                </tr>
-                                    <?php
-                                    if (count($tabledata) == 0) {
-                                        echo '<tr><td align="center" colspan="' . ($i + 2) . '" style="color:red">No result found for the search criteria.</td></tr>';
-                                    } else {
-                                        $i = 0;
-                                        $trainees = array();
-                                        foreach ($tabledata as $key => $data) {
-                                            $trainees[] = $key;
-
-                                            $color = $i % 2 == 0 ? 'white' : 'grey';
-                                            ?>
-                                        <tr class="<?php echo $color ?>">
-                                            <td <?php echo ($class_session_day == '1' ? '' : 'rowspan="2"') ?>>
-                                                <span style=" float:left;"><?php echo $data['record']['tax_code'] ?></span>
-                                            </td>
-                                            <td <?php echo ($class_session_day == '1' ? '' : 'rowspan="2"') ?>>
-                                                <span style="float:left;"><?php echo $data['record']['name'] ?></span>
-                                            </td>
-                                        <?php
-                                        for ($day = 0; $day < $days_count; $day++) {
-                                            $cur_date = $days[$day];
-                                            $ses_date = $cur_date->format('Y-m-d');
-                                            ?>
-                                                <td align="center"><?php if ($data_arr[$ses_date][0]['session'] == 'S1' || $same_values == 1) { ?><?php echo ($is_report_page ? '' : 'Session 1') ?> <?php } ?>
-                                            <?php
-                                            //echo $days_count;
-                                            if (check_class_date_range($start_class, $end_class, $cur_date)) {
-                                                $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);
-
-                                                if ($is_report_page) {
-                                                    if ($check_attendance < 1) {
-                                                        echo '<span class="green">P</span>';
-                                                    } else {
-                                                        if ($checkbox_value) {
-                                                            echo '<span class="green">P</span>';
-                                                        } else {
-                                                            echo '<span class="red">AB</span>';
-                                                        }
-                                                    }
-                                                } else {
-                                                    if ($data_arr[$ses_date][0]['session'] == 'S1' || $same_values == 1) {
-                                                        echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);
-                                                    }
-                                                }
-                                            }
-                                            ?>
-                                                </td>
-                                                    <?php
-                                                }
-                                                ?>
-                                        </tr>
-                                                <?php
-                                                if ($class_session_day == '2') {
-                                                    ?>
-                                            <tr class="<?php echo $color ?>">
-                                                    <?php
-                                                    for ($day = 0; $day < $days_count; $day++) {
-                                                        $cur_date = $days[$day];
-                                                        $ses_date = $cur_date->format('Y-m-d');
-                                                        //print_r($data_arr);
-                                                        ?>
-                                                    <td align="center"><?php if ($data_arr[$ses_date][1]['session'] == 'S2' || $data_arr[$ses_date][2]['session'] == 'S2' || $same_values == 1) { ?><?php echo ($is_report_page ? '' : 'Session 2') ?> <?php } ?>
-                                                        <?php
-                                                        if (check_class_date_range($start_class, $end_class, $cur_date)) {
-                                                            $checkbox_value = check_for_session_checked($data, $cur_date, FALSE);
-                                                            if ($is_report_page) {
-
-                                                                if ($data_arr[$ses_date][1]['session'] == 'S2' or $data_arr[$ses_date][2]['session']) {
-                                                                    if ($check_attendance < 1) {
-                                                                        echo '<span class="green">P</span>';
-                                                                    } else {
-                                                                        if ($checkbox_value) {
-                                                                            echo '<span class="green">P</span>';
-                                                                        } else {
-                                                                            echo '<span class="red">AB</span>';
-                                                                        }
-                                                                    }
-                                                                }
-                                                            } else {
-                                                                if ($data_arr[$ses_date][1]['session'] == 'S2' || $data_arr[$ses_date][2]['session'] == 'S2' || $same_values == 1) {
-                                                                    echo form_checkbox("mark_attendance[$key][$ses_date][session_02]", '1', $checkbox_value);
-                                                                }
-                                                            }
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                <?php
-                                            }
-                                            ?>
-                                            </tr>
-                                                <?php
-                                            }
-                                            $i++;
-                                        }
-                                    }
-                                    ?>
-
-                            </tbody>
-                        </table>
-                    </div>            
-                    <div style="clear:both;"></div>
-                    <br>
-                                        <?php
-                                        if (!$is_report_page) {
-                                            $atr = 'id="update_form" name="update_form"';
-                                            echo form_open("class_trainee/mark_attendance_update", $atr);
-                                            echo form_hidden('course_id', set_value('course_id'));
-                                            echo form_hidden('class_id', set_value('class_id'));
-                                            echo form_hidden('subsidy', set_value('subsidy'));
-                                            $trainees = array();
-                                            foreach ($tabledata as $key => $data) {
-                                                echo form_hidden('trainees[]', $key);
-                                            }
-                                            echo form_hidden('from_date', $from_date);
-                                            echo form_hidden('to_date', $to_date);
-                                            echo form_hidden('week_start', $week_start);
-                                            echo form_hidden('week_end', $week_end);
-                                            if ($lock_status == 0) {
-                                                ?>
-                            <div class="button_class">
-                                <button id="update_button" type="button" class="btn btn-primary" act>
-                                    <span class="glyphicon glyphicon-upload"></span> Update Attendance</button>
-                            </div>
-                                                <?php
-                                            }
-                                            if ($lock_status == 1) {
-                                                ?>
-                            <div class="button_class">
-                                <button id="update_button" type="button" class="btn btn-primary" disabled="disabled">
-                                    <span class="glyphicon glyphicon-upload"></span> Update Attendance</button>
-                            </div>
-                            <div style="background-color: whitesmoke;text-align-last: center;"> 
-                                <label class="red">Can`t update the attendance because attendance is locked. Please Contact to administrator to unlock it. </label>
-                            </div>
-                                            <?php
-                                        }
-                                        echo form_close();
-                                    }
-                                } else {
-                                    ?>
-                    <div class="scroll"> 
-                        <label class="red">This class has not yet started. You will only be able to print the manual attendance sheet for the class at point of time. </label>
-                    </div>
-                                <?php
-                            }
-                            ?>
-            </div>
-        <?php
-    }
-    ?>
-
-    </div>
-
-    <div class="modal" id="ex1" style="display:none;">
-        <p>
-        <h2 class="panel_heading_style">Heading Goes Here...</h2>
-        Detail Goes here.  <br>
-
-        <div class="popup_cancel">
-            <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Cancel</button></a></div></p>
-    </div>
-
-    <div class="modal1_052" id="ex3" style="display:none;">
-        <p>
-        <h2 class="panel_heading_style">Attendance Sheet</h2>
-        <div class="scroll_new_popup">
-            <div class="popup_cancel9">
-                <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Print</button></a></div>
-            <img src="<?php echo base_url(); ?>assets/images/excelpopup.png" border="0" width="1070px" height="501px"><br>
-            <div class="popup_cancel9">
-                <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Print</button></a></div></p>
-        </div>
-    </div>
-
-    <div class="modal_991" id="ex5" style="display:none;">
-        <div class="markattendanceexcel"><img src="<?php echo base_url(); ?>assets/images/markattendanceexcel.png" border="0" width="1016px;"></div>
-    </div>
-    <div class="modal-inv" id="ex13" style="display:none;width:25%">
-        <p>
-        <h2 class="panel_heading_style">Select PRINT Orientation:</h2>
-        <div>
-    <?php
-    $data = array('name' => 'select_pdf_print', 'class' => 'select_pdf_print');
-    echo form_radio($data, 'L', TRUE, $extra);
-    echo '&nbsp; &nbsp; Landscape'
-    ?>
-        </div>
-        <div>
-            <?php
-            $data = array('name' => 'select_pdf_print', 'class' => 'select_pdf_print');
-            echo form_radio($data, 'P', FALSE, $extra);
-            echo '&nbsp; &nbsp; Portrait';
-            ?>
-            <span id="with_subsidy_err"></span>
-        </div>
-        <div class="popup_cancel popup_cancel001">
-            <span href="#" rel="modal:close"><button class="btn btn-primary attendance_print" type="button">Print</button></span></div>
-    </p>
-    </div>
-    <script>
-        $(document).ready(function () {
-            $('#export_to_pdf_week_but').click(function () {
-                $('#ex13').modal();
-                return false;
-            })
-            $('.attendance_print').click(function () {
-                $val = $('.select_pdf_print:checked').val();
-                $('input[name=export]').val("pdf_week");
-                var form = $('#search_form');
-                $('#orientation').val($val);
-                form.submit();
-                $('input[name=export]').val("");
-            })
+            $('#update_fee select').change(function() {
+                if (check == 1) {
+                    return validateFee(false);
+                }
+            });
         });
-    </script>
-    <?php
-} else {
-
-    $attendance_status = $this->input->post('attendance_status');
-    $start_class = date_create_from_format("d/m/Y", $class_start);
-    $end_class = date_create_from_format("d/m/Y", $class_end);
-    $from_date_post_value = set_value('from_date');
-    $from_date = empty($from_date_post_value) ? $class_start : $from_date_post_value;
-    $to_date_post_value = set_value('to_date');
-    $to_date = empty($to_date_post_value) ? $class_start : $to_date_post_value;
-
-    $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
-    // skm st
-
-    $date_1 = str_replace('/', '-', $class_start);
-    $date_2 = str_replace('/', '-', $class_end);
-    $x = date('Y-m-d', strtotime($date_1));
-    $x1 = date('Y-m-d', strtotime($date_2));
-
-    $class_st_date = strtotime($x); //echo "<br/>";
-    $class_ed_date = strtotime($x1);
-    //$class_ed_date =  strtotime($y);
-    if ($class_st_date == $class_ed_date) {
-        $xxx = 1;
-    } else {
-        $today_date = strtotime(CONST_DATE); //echo "<br/>";
-        if ($today_date >= $class_st_date) {//or $class_st_date == $class_ed_date)
-            $xxx = 1;
-        } else {
-            $xxx = 0;
-        }
-    }
-
-// skm ed
-    function check_for_session_checked($session_data, $date, $is_first) {
-        $format_date = $date->format('Y-m-d');
-        if (isset($session_data[$format_date])) {
-            $session_by_date_data = $session_data[$format_date];
-            if ($is_first) {
-                return $session_by_date_data['session_01'] == '1';
+        
+        function validateFee(retVal) {
+            fee_status = $.trim($("#fee_collectionStatus").val());
+            if (fee_status == "") {
+                $("#fee_collection_err").text("[required]").addClass('error');
+                $("#fee_collection_err").addClass('error');
+                retVal = false;
             } else {
-                return $session_by_date_data['session_02'] == '1';
+                $("#fee_collection_err").text("").removeClass('error');
+                $("#fee_collection_err").removeClass('error');
+                retVal = true;
             }
+            return retVal;
         }
-        return false;
+</script>
+<?php echo form_close(); ?>
+</div>
+
+<style>
+    .btnblue{
+       border: none;
+    color: #008cff;
+    font-size: 11px !important;
+    margin-top: 0;
+    padding: 3px 4px !important;
+    cursor: pointer;
     }
-
-    function check_class_date_range(DateTime $start_class, DateTime $end_class, DateTime $curr_date) {
-        return $curr_date <= $end_class && $curr_date >= $start_class && $curr_date <= new DateTime();
+    .btnblue:hover{
+    color:white;
+    background-image:-webkit-linear-gradient(top, #107ac6, #097d91);
+    border-radius: 3px;
     }
-    ?>
-    <script type="text/javascript">
-        var CLIENT_DATE_FORMAT = 'dd/mm/yy';
-        var SITE_URL = '<?php echo site_url(); ?>';
-        var class_start = '<?php echo $class_start; ?>';
-        var class_end = '<?php echo $class_end; ?>';
-        var pageurl = '<?php echo $controllerurl; ?>';
-        var ancher = '<?php echo $ancher; ?>';
-    </script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/mark_attendance.js"></script>
-    <div class="overlay">
-        <div id="loading-img"></div>
-    </div>
-    <div class="col-md-10">
-      
-        <h2 class="panel_heading_style"><span class="glyphicon glyphicon-pencil"></span> <?php echo $page_title; ?></h2>
-    <?php
-    if (!empty($message)) {
-        echo "<div class='success'>" . $message . "</div>";
-    }
-    ?>
-        <div class="table-responsive">
-            <span class="error" id="markAttendanceSubmitErrorForm"></span>
-    <?php
-    $atr = 'id="search_form" name="search_form"';
-    echo form_open($controllerurl, $atr);
-    echo form_hidden('orientation', 'P', 'orientation');
-    ?>
-            <table class="table table-striped">
-
-                <tbody>
-                    <tr>
-                        <td class="td_heading">Course Name:<span class="required">*</span></td>
-                        <td>
-    <?php echo form_dropdown("course_id", $courses, set_value('course_id'), 'id="select_course_id"') ?>
-                        </td>
-
-                        <td class="td_heading">Class Name:<span class="required">*</span></td>
-
-                        <td colspan='3'>
-    <?php
-    $attr_js = 'id="select_class_id">';
-    echo form_dropdown('class_id', $classes, set_value('class_id'), $attr_js);
-    ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td_heading">Subsidy</td>
-                        <td <?php echo ($is_report_page) ? '' : "colspan='2'"; ?>>                        
-    <?php
-    $subsidy_array = array('' => 'All', 'ws' => 'With Subsidy', 'wts' => 'Without Subsidy', 'fr' => 'Foreginer');
-    $attr_js = 'id="subsidy">';
-    echo form_dropdown('subsidy', $subsidy_array, $subsidy, $attr_js);
-    ?>
-                        </td>
-    <?php if ($is_report_page) { ?>
-                            <td class="td_heading">Attendance Status:</td>
-                            <td>                        
-        <?php
-        $att_array = array('' => 'All', 'pr' => 'Present', 'ab' => 'Absent');
-        $attr_js = 'id="attendance_status">';
-        echo form_dropdown('attendance_status', $att_array, $this->input->post('attendance_status'), $attr_js);
-        ?>
-                            </td>
-    <?php } ?>
-                        <td>
-    <?php
-    $attr_js = 'id="input_to_date" style="width:40%;"';
-    ?>
-
-                            <div class="pull-right">
-    <?php
-    echo form_hidden('week_start', $week_start);
-    echo form_hidden('week_end', $week_end);
-    echo form_hidden('week', null);
-    echo form_hidden('export', null);
-    echo form_hidden('export1', null);
-    ?>
-                                <button id="markAttendanceSubmit" class="btn btn-xs btn-primary no-mar" name="markattendance_search_button" title="Search" value="Search">
-                                    <span class="glyphicon glyphicon-search"></span> Search
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <?php echo form_close(); ?>
-        </div>
-        <br>
-    <?php
-    if ($xxx == 1) {
-        $check_classid = $this->input->post('class_id');
-        if (empty($tabledata) && !empty($check_classid) && empty($attendance_status)) {
-            ?>
-                <table class="table table-striped">
-                    <tr class="danger">
-                        <td colspan="10" style="color:red;text-align: center;">There are no students enrolled for the class.</td>
-                    </tr>
-                </table>
-                                    <?php
-                                }
-                                if (!empty($tabledata) || !empty($attendance_status)) {
-                                    $week_start_date = date_create_from_format("d/m/Y", $week_start);
-                                    $week_end_date = date_create_from_format("d/m/Y", $week_end);
-
-                                    $ifPrevWeekDisabled = $week_start_date <= $start_class;
-                                    $ifNextWeekDisabled = $week_end_date >= $end_class;
-
-                                    if ($is_report_page) {
-                                        ?>
-                    <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Course Class Details</h2>
-                    <div class="highlight2 table-responsive">
-                        <table class="table table-striped">
-                            <tbody>
-                                <tr>
-                                    <td class="td_heading">Course Code:</td>
-                                    <td><label class="label_font"><?php echo $class_details->competency_code ?></label></td>
-                                    <td class="td_heading">Course Name:</td>
-                                    <td><label class="label_font"><?php echo $class_details->crse_name ?></label></td>
-                                    <td class="td_heading">Course Manager:</td>
-                                    <td><label class="label_font"><?php echo $class_details->crse_manager ?></label></td>
-                                </tr>
-                                <tr>
-                                    <td class="td_heading">Class Name:</td>
-                                    <td><label class="label_font"><?php echo $class_details->class_name ?></label></td>
-                                    <td class="td_heading">Start Date & Time:</td>
-                                    <td><label class="label_font"><?php echo $class_details->class_start_date_formatted ?></label></td>
-                                    <td class="td_heading">End Date & Time:</td>
-                                    <td><label class="label_font"><?php echo $class_details->class_end_date_formatted ?></label></td>
-                                </tr>
-                                <tr>
-                                    <td class="td_heading">Classroom Trainer:</td>
-                                    <td><label class="label_font"><?php echo $class_details->classroom_trainer ?></label></td>
-                                    <td class="td_heading">Lab Trainer:</td>
-                                    <td><label class="label_font"><?php echo $class_details->lab_trainer ?></label></td>
-                                    <td class="td_heading">Assessor:</td>
-                                    <td><label class="label_font"><?php echo $class_details->assessor ?></label></td>
-                                </tr>
-                                <tr>
-                                    <td class="td_heading">Total Seats:</td>
-                                    <td><label class="label_font"><?php echo $class_details->total_seats ?></label></td>
-                                    <td class="td_heading">Total Booked:</td>
-                                    <td colspan="3"><label class="label_font"><?php echo $class_details->total_booked_seats; ?></label></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div style="clear:both;"></div><br>
-                <?php } ?>
-                <div class="row_dim1">
-                <?php if ($is_report_page) { ?>
-                        <span class="required required_i">AB - Absent &nbsp;&nbsp;&nbsp;<span class="green">P- Present</span></span>
-                <?php } ?>
-                    <div class="add_button space_style">
-                <?php
-                //echo $this->session->flashdata('success');
-                $current_date_time = strtotime(date("Y-m-d H:i:s"));
-                $class_start_date_time = strtotime($class_start_datetime);
-                if (!$is_report_page) {
-
-                    if (($user->user_id == 82169) || ($user->user_id == 53401) || ($user->user_id == 82171) || ($user->user_id == 1) || ($user->user_id == 2)) {
-                        if ($lock_status == 0) {
-                            //echo $this->session->flashdata('success');
-                            if (strtotime($class_start_date) <= strtotime(date('Y-m-d'))) {
-                                ?>
-                                        <button id="lock_attendance" class="label label-primary black-btn mar-bot" style="">
-                                            <span class="glyphicon glyphicon-compressed"></span>Lock Attendance
-                                        </button>
-
-                                <?php
-                            }
-                        }
-                        if ($lock_status == 1) {
-                            ?>
-                                    <button id="unlock_attendance" class="label label-primary black-btn mar-bot" style="">
-                                        <span class="glyphicon glyphicon-magnet"></span>&nbsp;Unlock Attendance
-                                    </button><?php
-                        }
-                    }
-                    ?>
-                            <span id="lock_message" style="display:none;">Class atendance is successfully locked</span>
-                            <button id="export_to_pdf_week_but" class="label label-default black-btn mar-bot">
-                                <span class="glyphicon glyphicon-repeat"></span> Generate ManualAttendance Sheet</button>
-                            &nbsp;&nbsp;
-                <?php if ($user->role_id != 'CRSEMGR') { ?>
-                                <button id="export_to_pdf_week_xls" class="label label-default black-btn mar-bot"><span class="glyphicon glyphicon-repeat"></span> Generate ManualAttendance XLS</button>
-                                &nbsp;&nbsp;
-                <?php } ?>
-                <?php
-            }
-            if (strtotime($class_start_date) <= strtotime(date('Y-m-d'))) {
-                ?>
-                <?php if ($user->role_id != 'CRSEMGR') { ?>
-                                <button id="export_to_xls_but" class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export to XLS</button>
-                                &nbsp;&nbsp;
-                <?php } ?>
-                            <button id="export_to_pdf_but" class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export to PDF</button>
-                <?php }
-            ?>
-                    </div>
-                    <div style="clear:both;"></div>
-            <?php
-            if (strtotime($class_start_date) <= strtotime(date('Y-m-d')) || $is_report_page) {
-                ?>
-                        <div class="scroll">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="th_header sort_header" sort="tu.tax_code" width="5%"><span style="color:#000000;">NRIC / FIN No.</span></th>
-                                        <th class="th_header sort_header" sort="name" width="20%"><span style="color:#000000;">Trainee Name</span></th>
-                                        <th colspan="7" align="center">
-                                            <button class="btn btn-info nxt pull-left" <?php echo ($ifPrevWeekDisabled ? "disabled" : "") ?> type="button" id="prev_week_but"><span class="glyphicon glyphicon-backward"></span> Prev Week </button>
-                                            <b class="pad-top-1 display-d">Class Dates for the period <?php echo $week_start_date->format('d F Y') ?> to
-                        <?php echo $week_end_date->format('d F Y') ?> </b>
-                                            <button class="btn btn-info nxt pull-right" <?php echo ($ifNextWeekDisabled ? "disabled" : "") ?> type="button" id="next_week_but">Next Week <span class="glyphicon glyphicon-forward"></span></button>
-                                        <!--<div>Check All:<input type="checkbox" id='checkall1'></div>-->
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="sub_head">
-                                        <td colspan="2">&nbsp;</td>
-                            <?php
-                            $days = array();
-
-                            for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {
-                                ?>
-                                            <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
-                                <?php $days[] = clone $curr_day; ?>
-
-                                <?php
-                            }
-
-                            $days_count = count($days);
-                            ?>
-                                    </tr>
-                            <?php
-                            if (count($tabledata) == 0) {
-                                echo '<tr><td align="center" colspan="' . ($i + 2) . '" style="color:red">No result found for the search criteria.</td></tr>';
-                            } else {
-                                $i = 0;
-                                $trainees = array();
-                                foreach ($tabledata as $key => $data) {
-                                    $trainees[] = $key;
-
-                                    $color = $i % 2 == 0 ? 'white' : 'grey';
-                                    ?>
-                                            <tr class="<?php echo $color ?>">
-                                                <td <?php echo ($class_session_day == '1' ? '' : 'rowspan="2"') ?>>
-                                                    <span style=" float:left;"><?php echo $data['record']['tax_code'] ?></span>
-                                                </td>
-                                                <td <?php echo ($class_session_day == '1' ? '' : 'rowspan="2"') ?>>
-                                                    <span style="float:left;"><?php echo $data['record']['name'] ?></span>
-                                                </td>
-                                    <?php
-                                    for ($day = 0; $day < $days_count; $day++) {
-                                        ?>
-                                                    <td align="center"><?php echo ($is_report_page ? '' : 'Session 1') ?>
-                                        <?php
-                                        $cur_date = $days[$day];
-                                        if (check_class_date_range($start_class, $end_class, $cur_date)) {
-                                            $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);
-                                            $ses_date = $cur_date->format('Y-m-d');
-                                            if ($is_report_page) {
-                                                if ($check_attendance < 1) {
-                                                    echo '<span class="green">P</span>';
-                                                } else {
-                                                    if ($checkbox_value) {
-                                                        echo '<span class="green">P</span>';
-                                                    } else {
-                                                        echo '<span class="red">AB</span>';
-                                                    }
-                                                }
-                                            } else {
-                                                echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);
-                                            }
-                                        }
-                                        ?>
-                                                    </td>
-                            <?php
-                        }
-                        ?>
-                                            </tr>
-                                                        <?php
-                                                        if ($class_session_day == '2') {
-                                                            ?>
-                                                <tr class="<?php echo $color ?>">
-                            <?php
-                            for ($day = 0; $day < $days_count; $day++) {
-                                ?>
-                                                        <td align="center"><?php echo ($is_report_page ? '' : 'Session 2') ?>
-                                                        <?php
-                                                        $cur_date = $days[$day];
-                                                        if (check_class_date_range($start_class, $end_class, $cur_date)) {
-                                                            $checkbox_value = check_for_session_checked($data, $cur_date, FALSE);
-                                                            $ses_date = $cur_date->format('Y-m-d');
-                                                            if ($is_report_page) {
-                                                                if ($check_attendance < 1) {
-                                                                    echo '<span class="green">P</span>';
-                                                                } else {
-                                                                    if ($checkbox_value) {
-                                                                        echo '<span class="green">P</span>';
-                                                                    } else {
-                                                                        echo '<span class="red">AB</span>';
-                                                                    }
-                                                                }
-                                                            } else {
-                                                                echo form_checkbox("mark_attendance[$key][$ses_date][session_02]", '1', $checkbox_value);
-                                                            }
-                                                        }
-                                                        ?>
-                                                        </td>
-                                                    <?php
-                                                }
-                                                ?>
-                                                </tr>
-                                                <?php
-                                            }
-                                            $i++;
-                                        }
-                                    }
-                                    ?>
-
-                                </tbody>
-                            </table>
-                        </div>            
-                        <div style="clear:both;"></div>
-                        <br>
-                                        <?php
-                                        if (!$is_report_page) {
-                                            $atr = 'id="update_form" name="update_form"';
-                                            echo form_open("class_trainee/mark_attendance_update", $atr);
-                                            echo form_hidden('course_id', set_value('course_id'));
-                                            echo form_hidden('class_id', set_value('class_id'));
-                                            echo form_hidden('subsidy', set_value('subsidy'));
-                                            $trainees = array();
-                                            foreach ($tabledata as $key => $data) {
-                                                echo form_hidden('trainees[]', $key);
-                                            }
-                                            echo form_hidden('from_date', $from_date);
-                                            echo form_hidden('to_date', $to_date);
-                                            echo form_hidden('week_start', $week_start);
-                                            echo form_hidden('week_end', $week_end);
-                                            if ($lock_status == 0) {
-                                                ?>
-                                <div class="button_class">
-                                    <button id="update_button" type="button" class="btn btn-primary act">
-                                        <span class="glyphicon glyphicon-upload"></span> Update Attendance</button>
-                                </div>
-                                                    <?php
-                                                }if ($lock_status == 1) {
-                                                    ?>
-                                <div>
-                                    <div class="button_class">
-                                        <button id="update_button" type="button" class="btn btn-primary" disabled="disabled">
-                                            <span class="glyphicon glyphicon-upload"></span> Update Attendance</button>
-                                    </div>
-                                    <br /><br /><br />
-                                    <div style="background-color: whitesmoke;text-align-last: center;"> 
-                                        <label class="red"><i>Can`t update the attendance because attendance is locked. Please Contact to administrator to unlock it.</i> </label>
-                                    </div>
-                                </div>
-                                                    <?php
-                                                }
-                                                echo form_close();
-                                            }
-                                        } else {
-                                            ?>
-                        <div class="scroll"> 
-                            <label class="red">This class has not yet started. You will only be able to print the manual attendance sheet for the class at point of time. </label>
-                        </div>
-                                    <?php
-                                }
-                                ?>
-                </div>
-                                    <?php
-                                }
-                                ?>
-
-        </div>
-
-        <div class="modal" id="ex1" style="display:none;">
-            <p>
-            <h2 class="panel_heading_style">Heading Goes Here...</h2>
-            Detail Goes here.  <br>
-
-            <div class="popup_cancel">
-                <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Cancel</button></a></div></p>
-        </div>
-
-        <div class="modal1_052" id="ex3" style="display:none;">
-            <p>
-            <h2 class="panel_heading_style">Attendance Sheet</h2>
-            <div class="scroll_new_popup">
-                <div class="popup_cancel9">
-                    <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Print</button></a></div>
-                <img src="<?php echo base_url(); ?>assets/images/excelpopup.png" border="0" width="1070px" height="501px"><br>
-                <div class="popup_cancel9">
-                    <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Print</button></a></div></p>
-            </div>
-        </div>
-
-        <div class="modal_991" id="ex5" style="display:none;">
-            <div class="markattendanceexcel"><img src="<?php echo base_url(); ?>assets/images/markattendanceexcel.png" border="0" width="1016px;"></div>
-        </div>
-        <div class="modal-inv" id="ex13" style="display:none;width:25%">
-            <p>
-            <h2 class="panel_heading_style">Select PRINT Orientation:</h2>
-            <div>
-                                    <?php
-                                    $data = array('name' => 'select_pdf_print', 'class' => 'select_pdf_print');
-                                    echo form_radio($data, 'L', TRUE, $extra);
-                                    echo '&nbsp; &nbsp; Landscape'
-                                    ?>
-            </div>
-            <div>
-                            <?php
-                            $data = array('name' => 'select_pdf_print', 'class' => 'select_pdf_print');
-                            echo form_radio($data, 'P', FALSE, $extra);
-                            echo '&nbsp; &nbsp; Portrait';
-                            ?>
-                <span id="with_subsidy_err"></span>
-            </div>
-            <div class="popup_cancel popup_cancel001">
-                <span href="#" rel="modal:close"><button class="btn btn-primary attendance_print" type="button">Print</button></span></div>
-        </p>
-        </div>
-        <script>
-            $(document).ready(function () {
-                $('#export_to_pdf_week_but').click(function () {
-                    $('#ex13').modal();
-                    return false;
-                })
-                $('.attendance_print').click(function () {
-                    $val = $('.select_pdf_print:checked').val();
-                    $('input[name=export]').val("pdf_week");
-                    var form = $('#search_form');
-                    $('#orientation').val($val);
-                    form.submit();
-                    $('input[name=export]').val("");
-                })
-            });
-        </script>
-                <?php
-            } else {
-                $courseid = $this->input->post('course_id');
-                $classid = $this->input->post('class_id');
-                ?>
-        <form action="<?php echo base_url(); ?>classes/edit_class" method="post" name ="my_form" id ="my_form">   
-            <table class="table table-striped"> 
-                <tr class="danger">
-
-                <input type="hidden" class="class_id"  name="class_id"  value="<?php echo $classid; ?>"/>
-                <input type="hidden" class="course_id" name="course_id"  value="<?php echo $courseid; ?>"/>
-                <td colspan="" style="color:red;text-align: center;">Please Schedule The Class First.
-                    &nbsp;&nbsp;&nbsp;<input type="submit"  value ="Schedule Class" /></td>
-                </tr>
-            </table>
-        </form> 
-        <?php
-    }
-} // previous code ends
+    
+    
+</style>
