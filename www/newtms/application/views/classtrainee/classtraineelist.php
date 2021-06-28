@@ -549,6 +549,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         $("#fee_collectionStatus").empty();
         if (paymentstatusfee == 'PAID') {
            var myOptions = {
+                '' : 'Select',
                 'Pending Payment': 'Pending Payment',
                 'Partial Payment': 'Partial Payment',
                 'Full Payment': 'Full Payment',
@@ -556,6 +557,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             };
         } else {
           var myOptions = {
+                '' : 'Select',
                 'Pending Payment': 'Pending Payment',
                 'Partial Payment': 'Partial Payment',                
                 'Cancelled': 'Cancelled'
