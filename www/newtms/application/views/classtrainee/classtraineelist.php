@@ -464,6 +464,7 @@ echo form_open("tp_gateway/edit_enrolment_tpg", $atr);
         $user = $this.data('user');
         $paymentstatus = $this.data('paymentstatus');
         $enrolrefnum = $this.data('enrolrefnum');
+        
         $('#tpgCourseId').val($course);
         $('#tpgClassId').val($class);
         $('#tpgUserId').val($user);
@@ -566,7 +567,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
                     $('<option></option>').val(val).html(text)
                     );
         });
-        $("#fee_collectionStatus").val($feecollectval);
+        //$("#fee_collectionStatus").val($feecollectval);
         
         $('#abd').modal();
     });
