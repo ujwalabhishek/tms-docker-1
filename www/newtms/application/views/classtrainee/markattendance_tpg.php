@@ -23,7 +23,7 @@
         foreach($this->session->flashdata('resp_error') as $err){
 
         echo '<div class="alert alert-danger dang">
-            <strong>'.$err->field.'</strong>'.$err->message.'
+            <strong>'.$err->field.': </strong>'.$err->message.'
         </div>';
         }
     }
