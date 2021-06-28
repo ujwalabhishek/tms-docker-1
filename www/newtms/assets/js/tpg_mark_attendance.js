@@ -30,7 +30,7 @@ $(document).ready(function () {
         $nric= $('#nric');
         $.ajax({
             type: 'post',
-            url: $baseurl + 'classes/get_Trainee_For_Assessments_json',
+            url: $baseurl + 'classes/get_enrolled_trainee',
             data: {course_id: $('#course').val(),class_id: $('#class').val()},
             dataType: "json",
             beforeSend: function () {
@@ -71,6 +71,7 @@ $(document).ready(function () {
     function form_validate($retval) {
         var crse = $('#course').val();
         var clas = $('#class').val();
+        var nric = $('#nric').val();
         if (crse ==null || crse == '') {
            
             disp_err('#course', '[Required]');
@@ -85,6 +86,14 @@ $(document).ready(function () {
             $retval = false;
         } else {
              remove_err('#class');
+            
+        }
+        
+         if (nric == null || nric == 0) {
+            disp_err('#nric', '[Required]');
+            $retval = false;
+        } else {
+             remove_err('#nric');
             
         }
         

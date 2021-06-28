@@ -14673,5 +14673,32 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
             return $results[0];
         }
     }
+    
+    public function get_enrolled_trainee($tenant_id,$courseID,$classID){
+        
+        $today_date = date('Y-m-d');
+    
+         $sql = "SELECT             
+                tu.user_id,
+                tu.tax_code
+                FROM ( course_class cc) 
+                JOIN course c ON c.course_id = cc.course_id 
+                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                left join tms_users_pers tup on tup.user_id =ce.user_id 
+                left join company_master cm on cm.company_id=ce.company_id
+                WHERE cc . tenant_id = '$tenant_id'
+                AND c.course_id = '$courseID'
+                AND cc.class_id = '$classID'
+                AND date(cc.class_end_datetime) <= '$today_date'";                
+                $res = $this->db->query($sql)->result();
+                //echo $this->db->last_query();exit;
+                $result = array();
+                foreach ($res as $row) {
+                    $result[$row->user_id] = $row->tax_code;
+                }
+               
+                return $result;
+    }
 
 }

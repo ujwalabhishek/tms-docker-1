@@ -1998,7 +1998,18 @@ class Class_Trainee extends CI_Controller {
 
         $this->load->view('layout', $data);
     }
-
+    
+     public function get_enrolled_trainee(){
+        $courseID = $this->input->post('course_id');
+        $classID = $this->input->post('class_id');
+        $tenant_id = $this->tenant_id;
+        $res = $this->classtraineemodel->get_Trainee_For_Assessments_json($tenant_id,$courseID,$classID);
+        $classes_arr = array();
+        foreach ($res as $k => $v) {
+            $classes_arr[] = array('key' => $k, 'value' => $v);
+        }
+        echo json_encode($classes_arr);
+    }
     /* locking class attendance 
       Author : Prit
       Date   : 03/08/2016 */
