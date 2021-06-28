@@ -1771,5 +1771,13 @@ class tp_gateway extends CI_Controller {
             redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
     }
-
+    
+    /*
+     * Upload course session attendance API
+     */
+    public function mark_attendance_tpg() {
+        
+        
+        
+    }    
 }

@@ -30,7 +30,8 @@ $tms_route['CLTRAINE']['ops'] = array(
     'RESCHD' => 're_schedule',
     'UPDT_TRFDB'=>'update_trainer_feedback',
     'CHG_PYMODE'=>'change_payment_mode',
-    'STPGENR' => 'tpg_search_enrolment');
+    'STPGENR' => 'tpg_search_enrolment',
+    'MATTPG' => 'mark_attendance_tpg');
 //------------------------ Company mapping -------------------------------------
 $tms_route['COMP']['controller_name'] = 'company';
 $tms_route['COMP']['ops'] = array('ADD' => 'add_new_company', 'EDIT' => 'edit_company');
