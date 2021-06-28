@@ -536,7 +536,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         $coursefee = $this.data('coursefee');
         $classfee = $this.data('classfee');
         $enrolrefnumfee = $this.data('enrolrefnumfee');
-        $paymentstatusfee = $this.data('paymentstatusfee');
+        paymentstatusfee = $this.data('paymentstatusfee');
         $feecollectval = $this.data('feecollectval');
 
         $('#tpgCourseIdfee').val($coursefee);
@@ -546,17 +546,17 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         //$('#fee_collectionStatus').val($feecollectval);
         //$('#fee_collectionStatus').prop('selected').val($feecollectval);
         
-        if ($paymentstatusfee == 'PAID') {
+        if (paymentstatusfee == 'PAID') {
             var myOptions = {
                 PendingPayment: 'Pending Payment',
                 PartialPayment: 'Partial Payment',
+                FullPayment: 'Full Payment',
                 Cancelled: 'Cancelled'
             };
         } else {
             var myOptions = {
                 PendingPayment: 'Pending Payment',
-                PartialPayment: 'Partial Payment',
-                FullPayment: 'Full Payment',
+                PartialPayment: 'Partial Payment',                
                 Cancelled: 'Cancelled'
             };
         }
@@ -567,7 +567,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
                     $('<option></option>').val(val).html(text)
                     );
         });
-        $("#fee_collectionStatus").val($feecollectval);        
+        //$("#fee_collectionStatus").val($feecollectval);        
 
         $('#abd').modal();
     });
