@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.00001"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.000001"></script>
 <style>
     table td{
         font-size: 11px;
@@ -163,7 +163,7 @@
                                     <br>
                                     <a href="#update_void_assessment" rel="modal:open" id='update_assessment' data-refNo='<?php echo $row->assessment_reference_No;?>' data-userid="<?php echo $row->user_id;?>" data-courseid="<?php echo $row->course_id;?>" data-classid="<?php echo $row->class_id;?>"><span class="btnblue">Update/Void Assessment</span></a>
                                     <br>
-                                    <a href="#view_assessment" rel="modal:open" id='click_assessment' data-refNo='<?php $row->assessment_reference_No;?>'><span class="btnblue">View Assessment</span></a>
+                                    <a href="#view_assessment" rel="modal:open" id='click_assessment' data-refNo='<?php echo $row->assessment_reference_No;?>'><span class="btnblue">View Assessment</span></a>
                                     
                                 </td>
                             </tr>
