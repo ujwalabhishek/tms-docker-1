@@ -247,7 +247,7 @@
                         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         if ($tenant_id == 'T01') {
                             ?>
-                                                                                   <th width="10%" class="th_header">Sales Executive</th>
+                                                                                       <th width="10%" class="th_header">Sales Executive</th>
                         <?php } ?>-->
                         <th width="8%" class="th_header">Sales Executive</th>
                         <th width="6%" class="th_header">Certi. Coll.</th>
@@ -334,10 +334,10 @@
                                 <td><?php echo $row['enroll_mode'] ?></td>
 
                                 <!--<?php if ($tenant_id == 'T01') { ?>
-                                                                                           <td><?php echo $salesList; //implode("<br>",$salesList).               ?></td>
+                                                                                               <td><?php echo $salesList; //implode("<br>",$salesList).                ?></td>
                                 <?php } ?>-->
 
-                                <td><?php echo $salesList; //implode("<br>",$salesList).               ?></td>
+                                <td><?php echo $salesList; //implode("<br>",$salesList).                ?></td>
                                 <td><?php echo $row['certi_coll']; ?></td>
                                 <td><?php
                                     echo $row['status_text'] . '<br />' . $row['end_class'] . '<br />'
@@ -538,16 +538,23 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         $enrolrefnumfee = $this.data('enrolrefnumfee');
         $paymentstatusfee = $this.data('paymentstatusfee');
         $feecollectval = $this.data('feecollectval');
-        
+
         $('#tpgCourseIdfee').val($coursefee);
         $('#tpgClassIdfee').val($classfee);
         $('#tpgEnrolmentReferenceNumberfee').val($enrolrefnumfee);
         //$('#fee_collectionStatus').val($feecollectst);
         //$('#fee_collectionStatus').val($feecollectval);
         //$('#fee_collectionStatus').prop('selected').val($feecollectval);
-        $('#fee_collectionStatus').append(
-                $('<option></option>').val("aaa").html(text)
-                );
+        var myOptions = {
+            val1: 'Blue',
+            val2: 'Orange'
+        };
+        var mySelect = $('#fee_collectionStatus');
+        $.each(myOptions, function (val, text) {
+            mySelect.append(
+                    $('<option></option>').val(val).html(text)
+                    );
+        });
 
         $('#abd').modal();
     });
