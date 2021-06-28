@@ -545,16 +545,17 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         //$('#fee_collectionStatus').val($feecollectst);
         //$('#fee_collectionStatus').val($feecollectval);
         //$('#fee_collectionStatus').prop('selected').val($feecollectval);
-        var myOptions = "";
+        
+        $("#fee_collectionStatus").empty();
         if (paymentstatusfee == 'PAID') {
-             myOptions = {
+           var myOptions = {
                 PendingPayment: 'Pending Payment',
                 PartialPayment: 'Partial Payment',
                 FullPayment: 'Full Payment',
                 Cancelled: 'Cancelled'
             };
         } else {
-             myOptions = {
+          var myOptions = {
                 PendingPayment: 'Pending Payment',
                 PartialPayment: 'Partial Payment',                
                 Cancelled: 'Cancelled'
