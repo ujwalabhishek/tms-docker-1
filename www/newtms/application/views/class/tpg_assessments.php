@@ -190,8 +190,8 @@
                                 <td><?php echo $row->referenceNumber; ?></td>
                                 <td><?php echo $row->enrolment->referenceNumber; ?></td>
                                 <td>
-                                   
-                                    <span>Not Possible, While Viewing TPG Data</span>
+                                    <input type='hidden' value='<?php echo $row->course->run->id;?>'>
+                                    <span>No Action, While Viewing TPG Data</span>
                                 </td>
                             </tr>
                             <?php

@@ -462,7 +462,7 @@ class Tpg_api_Model extends CI_Model {
     
     //// added by shubhranshu to search assessment
     public function search_assessments($tenant_id,$tp_uen,$crs_ref_no,$crs_run_id){
-        $crs_run_id='';
+        
         $retun = $this->correct_live_dev_api_data($crs_ref_no,$tp_uen);
          $search_assessment_json='{"assessments": {
                                   "trainingPartner": {
