@@ -1927,11 +1927,34 @@ class Class_Trainee extends CI_Controller {
         $class_id = $this->input->post('class_id');
 
         $class_details = $this->class->get_class_by_id($tenant_id, $course_id, $class_id);
+        
+        $from_date = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT); ///added by shubhranshu
+        $to_date = parse_date($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT); //added by shubhranshu
+        $week_start_date = parse_date($this->input->post('week_start'), CLIENT_DATE_FORMAT); //added by shubhranshu
+
+        $week = $this->input->post('week');
+        $export = $this->input->post('export');
+        $export1 = $this->input->post('export1');
+        $this->load->helper('attendance_helper');
+        if (!empty($export)) {
+            
+        } else {
+            
+        }
+
+        $data = get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order, '');
+
+        $data['class_schedule'] = $this->class->get_all_class_schedule($tenant_id, $class_id);
+        $att = $this->classtraineemodel->get_attendance_lock_status($tenant_id, $course_id, $class_id);
+        $data['lock_status'] = $att->lock_status;
+        $data['class_start_datetime'] = $att->class_start_datetime;
+        $data['user'] = $this->user;
+
 
         $data['controllerurl'] = 'class_trainee/mark_attendance_tpg';
         $data['page_title'] = 'Class Trainee Enrollment - Mark Attendance TPG';
         $data['main_content'] = 'classtrainee/markattendance_tpg';
-        
+
         $this->load->view('layout', $data);
     }
 
