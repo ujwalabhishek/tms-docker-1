@@ -105,6 +105,8 @@
     <div class="bs-example">
         <div class="table-responsive">
             <div style="clear:both;"></div>
+            <div style='color:grey'>Attn Status Code: 1-Confirmed,2-Unconfirmed,3-Rejected ,4-TP Voided</div>
+            <div style='color:grey'>ID Type: SB-Singapore Blue Identification Card, SP-Singapore Pink Identification Card, SO-Fin/Work Permit/SAF 11B, OT-Others</div>
             <table class="table table-striped">
                 <thead>
                     <?php
@@ -114,7 +116,7 @@
                     <tr>
                         <th width="9%" class="th_header">Session ID</th>
                         <th width="10%" class="th_header">Attn Status Code
-                            <div style='color:grey'>1-Confirmed,2-Unconfirmed,3-Rejected ,4-TP Voided</div>
+                            
                         </th>
                         <th width="10%" class="th_header">Name</th>
                         <th width="6%" class="th_header">Email</th>
