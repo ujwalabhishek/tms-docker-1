@@ -505,7 +505,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
                     //$fee_collectionStatus_attr = 'id="fee_collectionStatus"';
                     //echo form_dropdown('fee_collectionStatus', $feecollectionStatus, $feecollectionStatus_val, $fee_collectionStatus_attr);
                     ?>
-                    <select id='fee_collectionStatus'>
+                    <select id='fee_collectionStatus' name="fee_collectionStatus">
                         <option value="">Select</option>                        
                     </select>
                     <span id="fee_collection_err"></span>
