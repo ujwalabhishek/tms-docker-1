@@ -154,7 +154,7 @@
                                 <td><?php echo $row->feedback_grade; ?></td>
                                 <td><?php echo $row->result; ?></td>
                                 <td><?php echo $row->reference_num; ?></td>
-                                <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
+                                <td><?php echo $row->referenceNumber; ?></td>
                                 <td>
                                    
                                     <a href="<?php echo base_url() . 'tp_gateway/create_assessment/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Create Assessment</span></a>
