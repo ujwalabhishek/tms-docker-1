@@ -545,16 +545,16 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         //$('#fee_collectionStatus').val($feecollectst);
         //$('#fee_collectionStatus').val($feecollectval);
         //$('#fee_collectionStatus').prop('selected').val($feecollectval);
-        
+        var myOptions = "";
         if (paymentstatusfee == 'PAID') {
-            var myOptions = {
+             myOptions = {
                 PendingPayment: 'Pending Payment',
                 PartialPayment: 'Partial Payment',
                 FullPayment: 'Full Payment',
                 Cancelled: 'Cancelled'
             };
         } else {
-            var myOptions = {
+             myOptions = {
                 PendingPayment: 'Pending Payment',
                 PartialPayment: 'Partial Payment',                
                 Cancelled: 'Cancelled'
@@ -562,13 +562,13 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         }
         
         var mySelect = $('#fee_collectionStatus');
-        if ($('#fee_collectionStatus option[value=""]').length == 0) {
+        //if ($('#fee_collectionStatus option[value=""]').length == 0) {
             $.each(myOptions, function (val, text) {
                 mySelect.append(
                         $('<option></option>').val(val).html(text)
                         );
             });
-        }
+        //}
         //$("#fee_collectionStatus").val($feecollectval);        
 
         $('#abd').modal();
