@@ -47,6 +47,7 @@ class tp_gateway extends CI_Controller {
             return $this->coursemodel->get_metadata_on_parameter_id($venue);
         }
     }
+
     //// added by shubhranshu to create assessment
     public function create_assessment($course_id, $class_id, $user_id) {
         $tenant_id = $this->tenant_id;
@@ -61,12 +62,14 @@ class tp_gateway extends CI_Controller {
             $this->handle_error($controller, $asessment_resp);
         }
     }
+
 //// added by shubhranshu to view assessment
     public function view_assessment() {
         $assessment_ref_no = $this->input->post('referenceNo');
         $asessment_resp = $this->tpgModel->view_asssessment_from_tpg($assessment_ref_no);
         echo $asessment_resp;
     }
+
     //// added by shubhranshu toupdate assessment
     public function update_assessment() {
         $tenant_id = $this->tenant_id;
@@ -89,6 +92,7 @@ class tp_gateway extends CI_Controller {
         echo $resp;
         exit;
     }
+
     //// added by shubhranshu to handle the error
     public function handle_error($controller = '', $tpg_resp = '') {
         $this->session->set_flashdata('resp_error', $tpg_resp->error->details);
@@ -106,6 +110,7 @@ class tp_gateway extends CI_Controller {
         }
         redirect($controller);
     }
+
     //// added by shubhranshu to encrypt and decrypt the data for payload and response
     function encrypt_decrypt($action, $string) {
         $output = false;
@@ -119,6 +124,7 @@ class tp_gateway extends CI_Controller {
         }
         return $output;
     }
+
     //// added by shubhranshu to make a curl request
     public function curl_request($mode, $url, $encrypted_data, $api_version) {
         //$encrypted_data='ggrR1uwMpea4GWQbhu6+iZ/KZvwhlblrRspkqEg9dVszEjqIiDKnWe4u6PfsD/ntzFfbazfu1I6YmomjmsaCCXPEdJ6sPmrVDyxgVvnScrn6XhZXRQMRpXCSwC5PUh0SXEyr/jw0HtsOFT0JseoJ7nxj8qM/rKv4e9OhNmrIysykBlfEAZ3MsCfnZL9O7kpsVvi2yANJfNoVYBSAs6hUdHc5jlvn2tmLf7kKMNiaP/z+qusGppVZfbvXPq2LNaLl/osEJZDASgGbzJOwLxzDG90E9cyTqhoeREl5KxUud37U41Gx0ufui2bGzA9meFdK6sWefTdIFIfZlh7MK7xKfEyDaTZTyYTObC2p8/PoLq9RAfcRPFCCvOYAFIMB2din+XQ+u+ZqMHzF0cz6A/HPdkSpze2NB96EJwhUXHF5tMMgwq7kKc/ELg6etD8FDrai/klmj7svqsBYfm7fJTwMXDvTWnNWbRhT94JT9RpWGq2V6Gph/16CuAMYt0QZ1mEkzV27m149P5QrPGXvd4CDqSE7lR55Kfs6CujYx4s4PyP7naOEPBUn7DCb6Bv6bJSM6B+K+dAhMArlf1Ov6yKepX0qRzq/XU140sM3xpQs0+/dTLWiiYM5WmIAbj5Ohb0KX9tpccfQ/xo8Xn6sU0mJx5xslh48il1aQOhz/54iAI0+WR8Pf3+x7R/3U6V4tasaWlhPhqdPfzkPbwsSbKK4b/g7UZCU0XgNY0l4ELK+swnh/zv0nzJlHji7a8B0elxAZCRU2EOA+JZDjyEHC1xSNPnss8hNc3c9y3RcmTG6H3EjrPth19e8M3jvSsYGNi0JhoGaojPaXRsCjwI6qHhU2uvn5CmNPvVxxzI5v+0sI46oIoijBfrkZEIFElu6nVwcvFm5b+/nZhM2VuUhO85UIA==';
@@ -1614,14 +1620,33 @@ class tp_gateway extends CI_Controller {
             $data['employerEmailAddress'] = $tpg_response->data->enrolment->trainee->employer->contact->email->full;
 
             $data['feeDiscountAmount'] = $tpg_response->data->enrolment->trainee->fees->discountAmount;
-            $data['feeCollectionStatus'] = $tpg_response->data->enrolment->trainee->fees->collectionStatus;
+            //$data['feeCollectionStatus'] = $tpg_response->data->enrolment->trainee->fees->collectionStatus;
 
-            $feeCollectionStatus_options[''] = 'Select';
-            $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
-            $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
-            $feeCollectionStatus_options['Full Payment'] = 'Full Payment';
-            $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
+            $paymentStatus = $this->input->post('tmsPaymentStatus');
+            
+            if ($paymentStatus == 'PAID') {
+                $data['feeCollectionStatus'] = "Full Payment";
+            } else if ($paymentStatus == 'NOTPAID') {
+                $data['feeCollectionStatus'] = "Pending Payment";
+            } else if ($paymentStatus == 'PARTPAID') {
+                $data['feeCollectionStatus'] = "Partial Payment";
+            } else if ($paymentStatus == 'PYNOTREQD') {
+                $data['feeCollectionStatus'] = "Pending Payment";
+            }
 
+            if ($paymentStatus == 'PAID') {
+                $feeCollectionStatus_options[''] = 'Select';
+                $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
+                $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
+                $feeCollectionStatus_options['Full Payment'] = 'Full Payment';
+                $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
+            } else {
+                $feeCollectionStatus_options[''] = 'Select';
+                $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
+                $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
+                $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
+            }
+            
             $data['feeCollectionStatus_options'] = $feeCollectionStatus_options;
 
             $data['traineeEnrolmentDate'] = $tpg_response->data->enrolment->trainee->enrolmentDate;
@@ -1665,7 +1690,7 @@ class tp_gateway extends CI_Controller {
             $traineeContactNumber = $this->input->post('traineeContactNumber');
             $traineeEmailAddress = $this->input->post('traineeEmailAddress');
             $feeDiscountAmount = $this->input->post('feeDiscountAmount');
-            $feeCollectionStatus = $this->input->post('feeCollectionStatus');                        
+            $feeCollectionStatus = $this->input->post('feeCollectionStatus');
 
             if ($sponsorshipType != "Individual") {
                 $employerContactFullName = $this->input->post('employerContactFullName');
@@ -1727,7 +1752,7 @@ class tp_gateway extends CI_Controller {
                                             "collectionStatus": "' . $feeCollectionStatus . '"
                                           }
                                         }
-                                      }';                
+                                      }';
 
         $encrypted_output = openssl_encrypt($tpg_enrolment_json_data, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
 
@@ -1770,5 +1795,6 @@ class tp_gateway extends CI_Controller {
             }
             redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
-    }            
+    }
+
 }

@@ -180,7 +180,7 @@
                         <td class="td_heading" width="15%">Collection Status:<span class="required">*</span></td>
                         <td colspan="3">
                             <?php
-                            $attr = 'id="feeCollectionStatus"';
+                            $attr = 'id="feeCollectionStatus" '.$disabled;
                             echo form_dropdown('feeCollectionStatus', $feeCollectionStatus_options, $feeCollectionStatus, $attr);
                             ?>
                             <span id="class_type_err"></span>
