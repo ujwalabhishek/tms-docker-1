@@ -30,7 +30,7 @@ $(document).ready(function () {
         $nric= $('#nric');
         $.ajax({
             type: 'post',
-            url: $baseurl + 'classes/get_enrolled_trainee',
+            url: $baseurl + 'class_trainee/get_enrolled_trainee',
             data: {course_id: $('#course').val(),class_id: $('#class').val()},
             dataType: "json",
             beforeSend: function () {
