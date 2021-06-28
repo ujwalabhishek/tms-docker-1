@@ -1929,7 +1929,7 @@ class Class_Trainee extends CI_Controller {
         $class = $this->input->get('class');
         $userid = $this->input->get('nric');
         
-        if(!empty($course) && !empty($class) && !empty($userid)){
+        if(!empty($course) && !empty($class) && !empty($userid)){echo "";exit;
             $data['tabledata'] = $this->classtraineemodel->get_trainee_sessions_data($tenant_id,$course,$class,$userid);
         }
 
