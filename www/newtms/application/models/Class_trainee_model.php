@@ -14700,5 +14700,38 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                
                 return $result;
     }
+    
+    function get_trainee_sessions_data($tenant_id,$course,$class,$userid){
+        $today_date = date('Y-m-d');
+        $sql = "select tu.user_id,
+                ce.course_id,
+                ce.class_id,
+                concat(tup.first_name,' ',tup.last_name) as fullname,
+                tu.registered_email_id,
+                tup.contact_number,
+                cc.total_classroom_duration,
+                cc.survey_language,
+                tu.tax_code,
+                tu.tax_code_type,
+                cs.tpg_session_id,
+                ca.session_01,
+                ca.session_02,
+                tup.nationality as idtype,
+                cc.tpg_course_run_id
+                FROM course_class cc
+                JOIN course c ON c.course_id = cc.course_id 
+                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                left join tms_users_pers tup on tup.user_id =ce.user_id 
+                LEFT JOIN class_schld cs ON cs.class_id = cc.class_id and cs.tenant_id = ce.tenant_id and cs.course_id = c.course_id
+                JOIN class_attendance ca ON ca.class_id = cc.class_id and ca.user_id = ce.user_id and ca.course_id = c.course_id
+                WHERE cc . tenant_id = '$tenant_id'
+                AND c.course_id = '$courseID'
+                AND cc.class_id = '$classID'
+                AND date(cc.class_end_datetime) <= '$today_date'";                
+                $res = $this->db->query($sql)->result();
+                
+                return $res;
+    }
 
 }

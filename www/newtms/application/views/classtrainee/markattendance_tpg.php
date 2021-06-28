@@ -109,7 +109,7 @@
                 <thead>
                     <?php
                     $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
-                    $pageurl = 'class_trainee';
+                    
                     ?>
                     <tr>
                         <th width="9%" class="th_header">Session ID</th>
@@ -135,14 +135,24 @@
                             ?>
                                                                               
                             <tr>                        
-                                <td><?php echo $row->tax_code; ?></td>
-                                <td class="name"><?php echo $row->fullname; ?></td>
-                                <td><?php echo $row->assessmentDate; ?></td>
-                                <td><?php echo $row->skillCode; ?></td>
-                                <td><?php echo $row->feedback_score ?></td>
-                                <td><?php echo $row->feedback_grade; ?></td>
-                                <td><?php echo $row->result; ?></td>
-                                <td><?php echo $row->reference_num; ?></td>
+                                <td><?php echo $row->tpg_session_id; ?></td>
+                                <td class="name"><?php echo $row->session_01; ?></td>
+                                <td><?php echo $row->fullname; ?></td>
+                                <td><?php echo $row->registered_email_id; ?></td>
+                                <td><?php 
+                                if($row->tax_code_type='SNG_1' && $row->idtype =='SG'){
+                                    $idtype= 'SP';///singaporean pink
+                                }elseif($row->tax_code_type='SNG_1' && $row->idtype =='NS'){
+                                    $idtype= 'SB';/// permanent residence
+                                }else if($row->tax_code_type='SNG_2'){
+                                    $idtype= 'SO'; //// FIN
+                                } else{
+                                    $idtype= 'OT'; /////Others
+                                }
+                                echo $idtype ?></td>
+                                <td><?php echo $row->contact_number; ?></td>
+                                <td><?php echo $row->total_classroom_duration; ?></td>
+                                <td><?php echo $row->survey_language; ?></td>
      
                                 <td>
                                    

@@ -1928,6 +1928,10 @@ class Class_Trainee extends CI_Controller {
         $course = $this->input->get('course');
         $class = $this->input->get('class');
         $userid = $this->input->get('nric');
+        
+        if(!empty($course) && !empty($class) && !empty($userid)){
+            $data['tabledata'] = $this->classtraineemodel->get_trainee_sessions_data($tenant_id,$course,$class,$userid);
+        }
 
 //        if (!empty($export)) {
 //            
@@ -1992,7 +1996,7 @@ class Class_Trainee extends CI_Controller {
         //$data['class_start_datetime'] = $att->class_start_datetime;
         //$data['user'] = $this->user;
 
-        $data['controllerurl'] = 'class_trainee/mark_attendance_tpg';
+
 
         $data['main_content'] = 'classtrainee/markattendance_tpg';
 
