@@ -1821,7 +1821,7 @@ class tp_gateway extends CI_Controller {
             $this->session->set_flashdata("success", "Attendance Uploaded Successfully To TPG ");
         }else{
             $controller = 'class_trainee/mark_attendance_tpg';
-            $this->handle_error($controller, $asessment_resp);
+            $this->handle_error($controller, $obj_resp);
         }
         
     }
