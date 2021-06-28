@@ -600,7 +600,7 @@ class Tpg_api_Model extends CI_Model {
         $url = "https://".$retun[domain]."/courses/runs/".$tpg_course_run_id."/sessions/attendance";
         $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
         //$decrypted_data = $this->encrypt_decrypt('decrypt', $response);
-        //print_r($response);exit;
+        print_r($response);exit;
         $attn_resp=json_decode($response);
         return $attn_resp;
             
