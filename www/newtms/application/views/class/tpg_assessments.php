@@ -131,6 +131,7 @@
                         <th width="6%" class="th_header">Result</th>
                         <th width="10%" class="th_header">Course Ref No</th>
                         <th width="9%" class="th_header">Assmt Ref No</th>
+                        <th width="9%" class="th_header">Enlmt Ref No</th>
                         <th width="13%" class="th_header">TPG</th>
                     </tr>
                 </thead>
@@ -154,7 +155,8 @@
                                 <td><?php echo $row->feedback_grade; ?></td>
                                 <td><?php echo $row->result; ?></td>
                                 <td><?php echo $row->reference_num; ?></td>
-                                <td><?php echo $row->referenceNumber; ?></td>
+                                <td><?php echo $row->assessment_reference_No; ?></td>
+                                <td><?php echo $row->eid_number; ?></td>
                                 <td>
                                    
                                     <a href="<?php echo base_url() . 'tp_gateway/create_assessment/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Create Assessment</span></a>
@@ -185,7 +187,8 @@
                                 <td><?php echo $row->grade; ?></td>
                                 <td><?php echo $row->result; ?></td>
                                 <td><?php echo $row->course->referenceNumber; ?></td>
-                                 <td><?php echo $row->referenceNumber; ?></td>
+                                <td><?php echo $row->referenceNumber; ?></td>
+                                <td><?php echo $row->enrolment->referenceNumber; ?></td>
                                 <td>
                                    
                                     <span>Not Possible, While Viewing TPG Data</span>
