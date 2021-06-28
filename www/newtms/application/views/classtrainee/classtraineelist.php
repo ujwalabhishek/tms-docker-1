@@ -549,16 +549,16 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         $("#fee_collectionStatus").empty();
         if (paymentstatusfee == 'PAID') {
            var myOptions = {
-                PendingPayment: 'Pending Payment',
-                PartialPayment: 'Partial Payment',
-                FullPayment: 'Full Payment',
-                Cancelled: 'Cancelled'
+                'Pending Payment': 'Pending Payment',
+                'Partial Payment': 'Partial Payment',
+                'Full Payment': 'Full Payment',
+                'Cancelled': 'Cancelled'
             };
         } else {
           var myOptions = {
-                PendingPayment: 'Pending Payment',
-                PartialPayment: 'Partial Payment',                
-                Cancelled: 'Cancelled'
+                'Pending Payment': 'Pending Payment',
+                'Partial Payment': 'Partial Payment',                
+                'Cancelled': 'Cancelled'
             };
         }
         
@@ -570,7 +570,7 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
                         );
             });
         //}
-        //$("#fee_collectionStatus").val($feecollectval);        
+        $("#fee_collectionStatus").val($feecollectval);        
 
         $('#abd').modal();
     });
