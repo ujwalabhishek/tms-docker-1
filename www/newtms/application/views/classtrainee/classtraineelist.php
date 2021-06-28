@@ -393,9 +393,9 @@
                                         <span style="color:red"><i>This enrolment is Cancelled.</i></span>
                                         <?php } ?>
                                         <?php if($enrolmentStatus == "Confirmed") {?>
-                                        <a href="javascript:;" rel="modal:open" href="#edit_enrolment" data-class="<?php echo $tpgClassId; ?>" data-course="<?php echo $tpgCourseId; ?>" data-user="<?php echo $tmsUserId; ?>" data-paymentstatus="<?php echo $tmsPaymentStatus; ?>" data-enrolrefnum="<?php echo $enrolmentReferenceNumber; ?>"><button type="button" class="btnblue">Edit Enrolment</button></a>
+                                        <a rel="modal:open" href="#edit_enrolment" data-class="<?php echo $tpgClassId; ?>" data-course="<?php echo $tpgCourseId; ?>" data-user="<?php echo $tmsUserId; ?>" data-paymentstatus="<?php echo $tmsPaymentStatus; ?>" data-enrolrefnum="<?php echo $enrolmentReferenceNumber; ?>"><button type="button" class="btnblue">Edit Enrolment</button></a>
                                         <br>
-                                        <a href="javascript:;" rel="modal:open" href="#abd"><button type="button" class="btnblue">Update Fee</button></a>
+                                        <a rel="modal:open" href="#abd"><button type="button" class="btnblue">Update Fee</button></a>
                                         <?php } ?>
                                     <?php } ?>
                                 </td>
