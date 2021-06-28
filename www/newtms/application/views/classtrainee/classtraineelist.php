@@ -370,6 +370,11 @@
                                     $feecollectionStatus_val = $row['feecollectionStatus_val'];
                                     $enrolmentStatus = $row['enrolmentStatus'];
                                     
+                                    $tmsUserId = $row['user_id'];
+                                    $tmsPaymentStatus = $row['payment_status'];
+                                    $tpgCourseId = $row['course_id'];
+                                    $tpgClassId = $row['class_id'];
+                                    
                                     $editEnrolmentAction = $row['editEnrolmentAction'];
                                     if (empty($enrolmentReferenceNumber)) {
                                         ?>
@@ -422,10 +427,10 @@ echo form_open("tp_gateway/edit_enrolment_tpg", $atr);
             <tr>
                 <td class="td_heading">Choose action for selected enrolment:</td>
                 <td>                    
-                    <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
-                    <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
-                    <input type="hidden" name="tpgUserId" value="<?php echo $row['user_id']; ?>" id="tpgUserId">
-                    <input type="hidden" name="tmsPaymentStatus" value="<?php echo $row['payment_status']; ?>" id="tmsPaymentStatus">
+                    <input type="hidden" name="tpgCourseId" value="<?php echo $tpgCourseId; ?>" id="tpgCourseId">
+                    <input type="hidden" name="tpgClassId" value="<?php echo $tpgClassId; ?>" id="tpgClassId">
+                    <input type="hidden" name="tpgUserId" value="<?php echo $tmsUserId; ?>" id="tpgUserId">
+                    <input type="hidden" name="tmsPaymentStatus" value="<?php echo $tmsPaymentStatus; ?>" id="tmsPaymentStatus">
                     <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
                     <?php
                     $editEnrolmentAction_attr = 'id="edit_EnrolmentAction"';
@@ -482,8 +487,8 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             <tr>
                 <td class="td_heading">Fee Collection Status:</td>
                 <td>                    
-                    <input type="hidden" name="tpgCourseId" value="<?php echo $row['course_id']; ?>" id="tpgCourseId">
-                    <input type="hidden" name="tpgClassId" value="<?php echo $row['class_id']; ?>" id="tpgClassId">
+                    <input type="hidden" name="tpgCourseId" value="<?php echo $tpgCourseId; ?>" id="tpgCourseId">
+                    <input type="hidden" name="tpgClassId" value="<?php echo $tpgClassId; ?>" id="tpgClassId">
                     <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
                     <?php
                     $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
