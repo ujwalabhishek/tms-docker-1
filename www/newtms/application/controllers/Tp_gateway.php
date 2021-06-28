@@ -1515,9 +1515,9 @@ class tp_gateway extends CI_Controller {
 
     public function update_fee_collection_tpg() {
 
-        $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumber');
-        $course_id = $this->input->post('tpgCourseId');
-        $class_id = $this->input->post('tpgClassId');
+        $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumberfee');
+        $course_id = $this->input->post('tpgCourseIdfee');
+        $class_id = $this->input->post('tpgClassIdfee');
         $feeCollectionStatus = $this->input->post('fee_collectionStatus');
 
         $encrypt_method = "AES-256-CBC";
