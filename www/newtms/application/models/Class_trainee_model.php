@@ -14692,7 +14692,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 AND cc.class_id = '$classID'
                 AND date(cc.class_end_datetime) <= '$today_date'";                
                 $res = $this->db->query($sql)->result();
-                //echo $this->db->last_query();exit;
+                echo $this->db->last_query();exit;
                 $result = array();
                 foreach ($res as $row) {
                     $result[$row->user_id] = $row->tax_code;
