@@ -315,23 +315,23 @@ class Class_Trainee extends CI_Controller {
         $idType_options['Others'] = 'Others';
 
         $data['idType_options'] = $idType_options;
-                
+
         $noResultsPerPage_options['25'] = '25';
         $noResultsPerPage_options['50'] = '50';
-        $noResultsPerPage_options['100'] = '100';       
+        $noResultsPerPage_options['100'] = '100';
 
         $data['noResultsPerPage_options'] = $noResultsPerPage_options;
-        
+
         $enrolmentStatus_options[''] = 'Select';
         $enrolmentStatus_options['Confirmed'] = 'Confirmed';
-        $enrolmentStatus_options['Cancelled'] = 'Cancelled';        
+        $enrolmentStatus_options['Cancelled'] = 'Cancelled';
 
         $data['enrolmentStatus_options'] = $enrolmentStatus_options;
 
         $course = $this->input->get('course');
         $class = $this->input->get('class');
         $date_from = $this->input->get('from_date');
-        $date_to = $this->input->get('to_date');        
+        $date_to = $this->input->get('to_date');
         $traineeIdType = $this->input->get('idType');
         $enrolmentDate = $this->input->get('enrol_date');
         $sponsorshipType = $this->input->get('sponsorshipType');
@@ -339,10 +339,10 @@ class Class_Trainee extends CI_Controller {
         $enrolmentStatus = $this->input->get('enrolmentStatus');
         $traineeId = $this->input->get('taxcode');
         $pageSize = $this->input->get('noResultsPerPage');
-        
-        $class_details = $this->class->get_class_details($tenant_id,$class);
-        $crse_details=$this->course->get_course_detailse($class_details->course_id);
-        
+
+        $class_details = $this->class->get_class_details($tenant_id, $class);
+        $crse_details = $this->course->get_course_detailse($class_details->course_id);
+
         $course_run_id = $class_details->tpg_course_run_id;
         $crse_ref_no = $crse_details->reference_num;
 
@@ -404,8 +404,8 @@ class Class_Trainee extends CI_Controller {
                                           "page": 0,
                                           "pageSize": ' . $pageSize . '
                                         }
-                                      }';                        
-            
+                                      }';
+
             $encrypted_output = openssl_encrypt($tpg_search_json_data, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
 
             $request = $this->curl_request('POST', $url, $encrypted_output, $api_version);
@@ -413,9 +413,8 @@ class Class_Trainee extends CI_Controller {
             $decrypted_output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
             $tpg_response = json_decode($decrypted_output);
-            
-            $data['tabledata_tpg'] = $tpg_response; 
-            
+
+            $data['tabledata_tpg'] = $tpg_response;
         }
 
         if (empty($data['tabledata_tpg'])) {
@@ -1915,6 +1914,22 @@ class Class_Trainee extends CI_Controller {
                 $data['message'] = $message;
             $this->load->view('layout', $data);
         }
+    }
+
+    /*
+     * Upload course session attendance API
+     */
+
+    public function mark_attendance_tpg() {
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $tenant_id = $this->tenant_id;
+        $course_id = $this->input->post('course_id');
+        $class_id = $this->input->post('class_id');
+
+
+        $data['controllerurl'] = 'class_trainee/mark_attendance_tpg';
+        $data['page_title'] = 'Class Trainee Enrollment - Mark Attendance TPG';
+        $data['main_content'] = 'classtrainee/markattendance_tpg';
     }
 
     /* locking class attendance 
