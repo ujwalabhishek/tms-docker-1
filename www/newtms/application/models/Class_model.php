@@ -1980,6 +1980,8 @@ class Class_Model extends CI_Model {
                 tu.tax_code,
                 tu.tax_code_type,
                 cc.class_id,
+                ce.eid_number,
+                ce.assessment_reference_No,
                 ce.user_id,
                 tup.first_name as fullname,
                 CURDATE() as assessmentDate,
