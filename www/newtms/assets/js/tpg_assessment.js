@@ -61,6 +61,8 @@ $(document).ready(function () {
         button = self.find('input[type="submit"],button'),
         submitValue = button.data('submit-value');
         button.attr('disabled','disabled').html('Please Wait..');
+        $nric_id= ($('#nric>option:selected').text() == 'All') ? '' : $('#nric>option:selected').text();
+        $('#nric_id').val($nric_id);
         return true;
        }else{
            return false;

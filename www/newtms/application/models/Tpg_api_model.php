@@ -144,7 +144,7 @@ class Tpg_api_Model extends CI_Model {
     
     ///////////////////////////////API MODEL START///////////////////////////////////////////
     ///// api added  by shubhranshu create a courserun inside SSG system
-    public function create_courserun_tpg($tenant_id, $userId,$tp_uen){
+    public function create_courserun_tpg($tenant_id,$tp_uen){
         extract($_POST);
        $crse_ref_no= $this->input->post('crse_ref_no');
        $modeoftraining= $this->input->post('modeoftraining');
@@ -306,7 +306,7 @@ class Tpg_api_Model extends CI_Model {
                   }';
        
        
-        ///print_r($tpg_course_run_json);exit;
+        print_r($tpg_course_run_json);exit;
         $api_version = 'v1.3';
         $url = "https://".$retun[domain]."/courses/runs";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);

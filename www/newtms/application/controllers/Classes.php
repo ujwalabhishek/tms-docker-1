@@ -172,7 +172,7 @@ class Classes extends CI_Controller {
                     }                                     
                 }
                 $tenant = $this->classTraineeModel->get_tenant_masters($tenantId);
-                $tpg_response = $this->tpgModel->create_courserun_tpg($tenantId, $userId,$tenant->comp_reg_no);
+                $tpg_response = $this->tpgModel->create_courserun_tpg($tenantId,$tenant->comp_reg_no);
                 
                 if($tpg_response->status == 200){
                     $tpg_course_run_id = $tpg_response->data->runs[0]->id;

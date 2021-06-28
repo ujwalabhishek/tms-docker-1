@@ -82,6 +82,7 @@
                         $js = 'id="nric" ';
                         echo form_dropdown('nric', $options, $this->input->get('nric'), $js);
                         ?>
+                        <input type='hidden' name='nric_id' id='nric_id' value>
                          <span id="nric_err"></span>
                     </td>
                     <td class="td_heading">Search Assessment In:</td>
