@@ -185,7 +185,7 @@
                                 <td><?php echo $row->grade; ?></td>
                                 <td><?php echo $row->result; ?></td>
                                 <td><?php echo $row->course->referenceNumber; ?></td>
-                                <!--<td><?php //echo $row->tpg_course_run_id; ?></td>-->
+                                 <td><?php echo $row->referenceNumber; ?></td>
                                 <td>
                                    
                                     <span>Not Possible, While Viewing TPG Data</span>
