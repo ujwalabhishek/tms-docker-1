@@ -1945,7 +1945,7 @@ class Class_Trainee extends CI_Controller {
             $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
             $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
 
-            $api_version = 'v1';
+            $api_version = 'v1.3';
             $url = "https://" . TPG_DEV_URL . "/courses/runs/" . $course_run_id . "/sessions/attendance";
 
             $tpg_sess_att_json_data = '{
