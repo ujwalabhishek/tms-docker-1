@@ -1933,18 +1933,6 @@ class Class_Trainee extends CI_Controller {
             $data['tabledata'] = $this->classtraineemodel->get_trainee_sessions_data($tenant_id,$course,$class,$userid);
         }
 
-        
-
-        //$data = get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order, '');
-
-        //$data['class_schedule'] = $this->class->get_all_class_schedule($tenant_id, $class_id);
-        //$att = $this->classtraineemodel->get_attendance_lock_status($tenant_id, $course_id, $class_id);
-        //$data['lock_status'] = $att->lock_status;
-        //$data['class_start_datetime'] = $att->class_start_datetime;
-        //$data['user'] = $this->user;
-
-
-
         $data['main_content'] = 'classtrainee/markattendance_tpg';
 
         $this->load->view('layout', $data);

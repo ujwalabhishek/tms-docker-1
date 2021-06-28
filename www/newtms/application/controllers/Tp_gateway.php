@@ -1797,7 +1797,7 @@ class tp_gateway extends CI_Controller {
         }
     }
     
-    
+    /////added by shubhranshu fro submit attendance to tpg
     function submit_attendance(){
         $tenant_id = $this->tenant_id;
         $tpg_session_id = $this->input->post('tpg_session_id');
