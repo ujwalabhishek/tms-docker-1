@@ -1817,10 +1817,11 @@ class tp_gateway extends CI_Controller {
         $tpg_course_run_id = $this->input->post('tpg_course_run_id');
         $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $obj_resp=$this->tpgModel->submit_attendance_to_tpg($tenant->comp_reg_no,$tpg_course_run_id,$tax_code,$crs_reference_num,$tenant_id,$user_id,$course_id,$class_id,$survey_language,$noOfHours,$tpgCourseId,$tpg_session_id,$attn_status_code,$fullname,$registered_email_id,$idtype,$mobileNo);
+        $controller = 'class_trainee/mark_attendance_tpg';
         if ($obj_resp->status == 200) {
             $this->session->set_flashdata("success", "Attendance Uploaded Successfully To TPG ");
+            redirect($controller);
         }else{
-            $controller = 'class_trainee/mark_attendance_tpg';
             $this->handle_error($controller, $obj_resp);
         }
         
