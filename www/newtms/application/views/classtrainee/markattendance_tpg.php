@@ -114,14 +114,13 @@
                     <tr>
                         <th width="9%" class="th_header">Session ID</th>
                         <th width="10%" class="th_header">Status Code</th>
-                        <th width="10%" class="th_header">Assessment Date</th>
                         <th width="10%" class="th_header">Name</th>
                         <th width="6%" class="th_header">Email</th>
                         <th width="6%" class="th_header">ID Type</th>
                         <th width="6%" class="th_header">MobileNo</th>
                         <th width="10%" class="th_header">No Of Hours</th>
                         <th width="9%" class="th_header">Survey Language</th>
-
+                        <th width="9%" class="th_header">TPG</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -144,8 +143,7 @@
                                 <td><?php echo $row->feedback_grade; ?></td>
                                 <td><?php echo $row->result; ?></td>
                                 <td><?php echo $row->reference_num; ?></td>
-                                <td><?php echo $row->assessment_reference_No; ?></td>
-                                <td><?php echo $row->eid_number; ?></td>
+     
                                 <td>
                                    
                                     <a href="<?php echo base_url() . 'tp_gateway/submit_attendance/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Submit Attendance</span></a>
