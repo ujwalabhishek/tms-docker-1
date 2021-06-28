@@ -504,9 +504,9 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             <tr>
                 <td class="td_heading">Fee Collection Status:</td>
                 <td>                    
-                    <input type="hidden" name="tpgCourseIdfee" value="" id="tpgCourseId">
-                    <input type="hidden" name="tpgClassIdfee" value="" id="tpgClassId">
-                    <input type="hidden" name="tpgEnrolmentReferenceNumberfee" value="" id="tpgEnrolmentReferenceNumber">
+                    <input type="hidden" name="tpgCourseIdfee" value="" id="tpgCourseIdfee">
+                    <input type="hidden" name="tpgClassIdfee" value="" id="tpgClassIdfee">
+                    <input type="hidden" name="tpgEnrolmentReferenceNumberfee" value="" id="tpgEnrolmentReferenceNumberfee">
                     <?php
                     $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
                     echo form_dropdown('fee_collectionStatus', $feecollectionStatus, $feecollectionStatus_val, $fee_collectionStatus_attr);
