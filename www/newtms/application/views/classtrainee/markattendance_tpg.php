@@ -112,17 +112,16 @@
                     $pageurl = 'class_trainee';
                     ?>
                     <tr>
-                        <th width="9%" class="th_header">NRIC/FIN No</th>
-                        <th width="10%" class="th_header">Full Name</th>
+                        <th width="9%" class="th_header">Session ID</th>
+                        <th width="10%" class="th_header">Status Code</th>
                         <th width="10%" class="th_header">Assessment Date</th>
-                        <th width="10%" class="th_header">Skill Code</th>
-                        <th width="6%" class="th_header">Score</th>
-                        <th width="6%" class="th_header">Grade</th>
-                        <th width="6%" class="th_header">Result</th>
-                        <th width="10%" class="th_header">Course Ref No</th>
-                        <th width="9%" class="th_header">Assmt Ref No</th>
-                        <th width="9%" class="th_header">Enlmt Ref No</th>
-                        <th width="17%" class="th_header">TPG</th>
+                        <th width="10%" class="th_header">Name</th>
+                        <th width="6%" class="th_header">Email</th>
+                        <th width="6%" class="th_header">ID Type</th>
+                        <th width="6%" class="th_header">MobileNo</th>
+                        <th width="10%" class="th_header">No Of Hours</th>
+                        <th width="9%" class="th_header">Survey Language</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -149,45 +148,17 @@
                                 <td><?php echo $row->eid_number; ?></td>
                                 <td>
                                    
-                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Create Assessment</span></a>
-                                    <br>
-                                    <a href="#update_void_assessment" rel="modal:open" id='update_assessment' data-refNo='<?php echo $row->assessment_reference_No;?>' data-userid="<?php echo $row->user_id;?>" data-courseid="<?php echo $row->course_id;?>" data-classid="<?php echo $row->class_id;?>"><span class="btnblue">Update/Void Assessment</span></a>
-                                    <br>
-                                    <a href="#view_assessment" rel="modal:open" id='click_assessment' data-refNo='<?php echo $row->assessment_reference_No;?>'><span class="btnblue">View Assessment</span></a>
-                                    
+                                    <a href="<?php echo base_url() . 'tp_gateway/submit_attendance/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Submit Attendance</span></a>
+                           
                                 </td>
                             </tr>
                             <?php
                         }
                     } 
                     
-                    
-                    //////data for tpg search
-                     if (!empty($tabledata_tpg)) {
-                        foreach ($tabledata_tpg->data as $row) {
-                          
-                            ?>
-                                                                              
-                            <tr>                        
-                                <td><?php echo $row->trainee->id; ?></td>
-                                <td class="name"><?php echo $row->trainee->fullName; ?></td>
-                                <td><?php echo $row->assessmentDate; ?></td>
-                                <td><?php echo $row->skillCode; ?></td>
-                                <td><?php echo $row->score ?></td>
-                                <td><?php echo $row->grade; ?></td>
-                                <td><?php echo $row->result; ?></td>
-                                <td><?php echo $row->course->referenceNumber; ?></td>
-                                <td><?php echo $row->referenceNumber; ?></td>
-                                <td><?php echo $row->enrolment->referenceNumber; ?></td>
-                                <td>
-                                    <input type='hidden' value='<?php echo $row->course->run->id;?>'>
-                                    <span>No Action, While Viewing TPG Data</span>
-                                </td>
-                            </tr>
-                            <?php
-                        }
-                    } 
-                    ?>
+
+                   
+                    ?>                  
                 </tbody>
             </table>
         </div>
