@@ -1926,10 +1926,13 @@ class Class_Trainee extends CI_Controller {
         $course_id = $this->input->post('course_id');
         $class_id = $this->input->post('class_id');
 
+        $class_details = $this->class->get_class_by_id($tenant_id, $course_id, $class_id);
 
         $data['controllerurl'] = 'class_trainee/mark_attendance_tpg';
         $data['page_title'] = 'Class Trainee Enrollment - Mark Attendance TPG';
         $data['main_content'] = 'classtrainee/markattendance_tpg';
+        
+        $this->load->view('layout', $data);
     }
 
     /* locking class attendance 
