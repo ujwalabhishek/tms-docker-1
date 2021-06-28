@@ -188,7 +188,7 @@ class Tpg_api_Model extends CI_Model {
         if (!empty($schlded_date)) {    
             foreach ($schlded_date as $k => $v) {
                 if($schlded_session_type[$k] != 'BRK'){
-                    $dates = date('YMD', strtotime($schlded_date[$k]));
+                    $dates = date('Ymd', strtotime($schlded_date[$k]));
                     $starttime = date("H:m", strtotime($schlded_start_time[$k]));
                     $endtime = date("H:m", strtotime($schlded_end_time[$k]));
                     $session_arr[] = array(
@@ -262,12 +262,12 @@ class Tpg_api_Model extends CI_Model {
                           "sequenceNumber": 0,
                           "modeOfTraining": "'.$modeoftraining.'",
                           "registrationDates": {
-                            "opening": "'.date("YMD", strtotime($reg_open_date)).'",
-                            "closing": "'.date("YMD", strtotime($reg_close_date)).'"
+                            "opening": "'.date("Ymd", strtotime($reg_open_date)).'",
+                            "closing": "'.date("Ymd", strtotime($reg_close_date)).'"
                           },
                           "courseDates": {
-                            "start": "'.date("YMD", strtotime($crse_start_date)).'",
-                            "end": "'.date("YMD", strtotime($crse_end_date)).'"
+                            "start": "'.date("Ymd", strtotime($crse_start_date)).'",
+                            "end": "'.date("Ymd", strtotime($crse_end_date)).'"
                           },
                           "scheduleInfoType": {
                             "code": "01",
