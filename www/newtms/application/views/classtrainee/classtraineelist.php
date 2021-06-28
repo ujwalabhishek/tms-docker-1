@@ -3,9 +3,7 @@
     $baseurl = '<?php echo base_url(); ?>';
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
-
-    var CLIENT_DATE_FORMAT = 'yy-mm-dd';
-</script>
+    var CLIENT_DATE_FORMAT = 'yy-mm-dd';</script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.0311111111111111"></script>
 <style>
     table td{
@@ -249,7 +247,7 @@
                         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         if ($tenant_id == 'T01') {
                             ?>
-                                                                   <th width="10%" class="th_header">Sales Executive</th>
+                                                                                   <th width="10%" class="th_header">Sales Executive</th>
                         <?php } ?>-->
                         <th width="8%" class="th_header">Sales Executive</th>
                         <th width="6%" class="th_header">Certi. Coll.</th>
@@ -336,10 +334,10 @@
                                 <td><?php echo $row['enroll_mode'] ?></td>
 
                                 <!--<?php if ($tenant_id == 'T01') { ?>
-                                                                           <td><?php echo $salesList; //implode("<br>",$salesList).           ?></td>
+                                                                                           <td><?php echo $salesList; //implode("<br>",$salesList).               ?></td>
                                 <?php } ?>-->
 
-                                <td><?php echo $salesList; //implode("<br>",$salesList).           ?></td>
+                                <td><?php echo $salesList; //implode("<br>",$salesList).               ?></td>
                                 <td><?php echo $row['certi_coll']; ?></td>
                                 <td><?php
                                     echo $row['status_text'] . '<br />' . $row['end_class'] . '<br />'
@@ -395,7 +393,7 @@
                                         <?php if ($enrolmentStatus == "Confirmed") { ?>
                                             <a href="javascript:;" class="edit_enrolment" data-class="<?php echo $tpgClassId; ?>" data-course="<?php echo $tpgCourseId; ?>" data-user="<?php echo $tmsUserId; ?>" data-paymentstatus="<?php echo $tmsPaymentStatus; ?>" data-enrolrefnum="<?php echo $enrolmentReferenceNumber; ?>"><button type="button" class="btnblue">Edit Enrolment</button></a>
                                             <br>
-                                            <a href="javascript:;" class="abd" data-classfee="<?php echo $tpgClassId; ?>" data-coursefee="<?php echo $tpgCourseId; ?>" data-enrolrefnumfee="<?php echo $enrolmentReferenceNumber; ?>" data-feecollectval="<?php echo $feecollectionStatus_val; ?>"><button type="button" class="btnblue">Update Fee</button></a>
+                                            <a href="javascript:;" class="abd" data-classfee="<?php echo $tpgClassId; ?>" data-coursefee="<?php echo $tpgCourseId; ?>" data-enrolrefnumfee="<?php echo $enrolmentReferenceNumber; ?>" data-paymentstatusfee="<?php echo $tmsPaymentStatus; ?>" data-feecollectval="<?php echo $feecollectionStatus_val; ?>"><button type="button" class="btnblue">Update Fee</button></a>
                                         <?php } ?>
                                     <?php } ?>
                                 </td>
@@ -459,24 +457,20 @@ echo form_open("tp_gateway/edit_enrolment_tpg", $atr);
             }
         });
     });
-
     $('.edit_enrolment').click(function () {
         $this = $(this);
         $course = $this.data('course');
         $class = $this.data('class');
-        $user = $this.data('user');        
+        $user = $this.data('user');
         $paymentstatus = $this.data('paymentstatus');
         $enrolrefnum = $this.data('enrolrefnum');
-        
         $('#tpgCourseId').val($course);
         $('#tpgClassId').val($class);
         $('#tpgUserId').val($user);
         $('#tmsPaymentStatus').val($paymentstatus);
         $('#tpgEnrolmentReferenceNumber').val($enrolrefnum);
-                
         $('#edit_enrolment').modal();
     });
-
     function validateAction(retVal) {
         edit_enrolment = $.trim($("#edit_EnrolmentAction").val());
         if (edit_enrolment == "") {
@@ -508,9 +502,12 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
                     <input type="hidden" name="tpgClassIdfee" value="" id="tpgClassIdfee">
                     <input type="hidden" name="tpgEnrolmentReferenceNumberfee" value="" id="tpgEnrolmentReferenceNumberfee">
                     <?php
-                    $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
-                    echo form_dropdown('fee_collectionStatus', $feecollectionStatus, $feecollectionStatus_val, $fee_collectionStatus_attr);
+                    //$fee_collectionStatus_attr = 'id="fee_collectionStatus"';
+                    //echo form_dropdown('fee_collectionStatus', $feecollectionStatus, $feecollectionStatus_val, $fee_collectionStatus_attr);
                     ?>
+                    <select id='fee_collectionStatus'>
+                        <option value="">Select</option>                        
+                    </select>
                     <span id="fee_collection_err"></span>
                 </td>
             </tr>
@@ -534,14 +531,13 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             }
         });
     });
-    
     $('.abd').click(function () {
         $this = $(this);
         $coursefee = $this.data('coursefee');
-        $classfee = $this.data('classfee');        
+        $classfee = $this.data('classfee');
         $enrolrefnumfee = $this.data('enrolrefnumfee');
-        $feecollectst = $this.data('feecollectst');
-        $feecollectval = $this.data('feecollectval'); 
+        $paymentstatusfee = $this.data('paymentstatusfee');
+        $feecollectval = $this.data('feecollectval');
         
         $('#tpgCourseIdfee').val($coursefee);
         $('#tpgClassIdfee').val($classfee);
@@ -549,10 +545,12 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         //$('#fee_collectionStatus').val($feecollectst);
         //$('#fee_collectionStatus').val($feecollectval);
         //$('#fee_collectionStatus').prop('selected').val($feecollectval);
-                
+        $('#fee_collectionStatus').append(
+                $('<option></option>').val("aaa").html(text)
+                );
+
         $('#abd').modal();
     });
-
     function validateFee(retVal) {
         fee_status = $.trim($("#fee_collectionStatus").val());
         if (fee_status == "") {
@@ -1087,8 +1085,6 @@ if ($tenant_id == 'T20' || $tenant_id == 'T17') {
 
                 // initialize the sum (total price) to zero
                 var sum = 0;
-
-
                 // we use jQuery each() to loop through all the textbox with 'price' class
                 // and compute the sum for each loop
                 var i = 0;
@@ -1097,13 +1093,10 @@ if ($tenant_id == 'T20' || $tenant_id == 'T17') {
                     i++;
                 });
                 var average = Math.round(sum / i);
-
                 // set the computed value to 'totalPrice' textbox
 
                 $('#rating').val(average);
-
-            });
-        </script>
+            });</script>
     </p>
     </div>
 
@@ -1304,8 +1297,6 @@ if ($tenant_id == 'T20' || $tenant_id == 'T17') {
 
                 // initialize the sum (total price) to zero
                 var sum = 0;
-
-
                 // we use jQuery each() to loop through all the textbox with 'price' class
                 // and compute the sum for each loop
                 var i = 0;
@@ -1314,13 +1305,10 @@ if ($tenant_id == 'T20' || $tenant_id == 'T17') {
                     i++;
                 });
                 var average = Math.round(sum / i);
-
                 // set the computed value to 'totalPrice' textbox
 
                 $('#rating').val(average);
-
             });
-
             $(document).ready(function () {
                 // $('#trainee').attr('disabled', 'disabled');
                 // $('#taxcode').attr('disabled', 'disabled');
