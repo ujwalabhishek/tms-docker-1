@@ -1924,7 +1924,7 @@ class Class_Trainee extends CI_Controller {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $data['page_title'] = 'TPG Mark Attendance';
-        $data['courses'] = $this->coursemodel->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
+        $data['courses'] = $this->course->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
         $course = $this->input->get('course');
         $class = $this->input->get('class');
         $userid = $this->input->get('nric');
