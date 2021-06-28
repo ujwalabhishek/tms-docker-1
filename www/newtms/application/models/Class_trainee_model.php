@@ -14726,7 +14726,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 LEFT JOIN class_schld cs ON cs.class_id = cc.class_id and cs.tenant_id = ce.tenant_id and cs.course_id = c.course_id
                 JOIN class_attendance ca ON ca.class_id = cc.class_id and ca.user_id = ce.user_id and ca.course_id = c.course_id
                 WHERE cc . tenant_id = '$tenant_id'
-                AND c.course_id = '$course'$userid
+                AND c.course_id = '$course'
                 AND cc.class_id = '$class'
                 AND ce.class_id = '$userid'
                 AND date(cc.class_end_datetime) <= '$today_date'";                
