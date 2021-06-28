@@ -467,6 +467,7 @@ class Classes extends CI_Controller {
         $this->form_validation->set_rules('display_class', 'Check box', 'trim');
         $this->form_validation->set_rules('languages', 'Languages', 'required');
         $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
+        $this->form_validation->set_rules('tpg_course_run_id', 'TPG Course Run ID', 'trim|numeric|is_unique[course_class.tpg_course_run_id]');
         $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
         $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
         $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'required');
