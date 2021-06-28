@@ -247,7 +247,7 @@
                         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         if ($tenant_id == 'T01') {
                             ?>
-                                                                                       <th width="10%" class="th_header">Sales Executive</th>
+                                                                                               <th width="10%" class="th_header">Sales Executive</th>
                         <?php } ?>-->
                         <th width="8%" class="th_header">Sales Executive</th>
                         <th width="6%" class="th_header">Certi. Coll.</th>
@@ -334,10 +334,10 @@
                                 <td><?php echo $row['enroll_mode'] ?></td>
 
                                 <!--<?php if ($tenant_id == 'T01') { ?>
-                                                                                               <td><?php echo $salesList; //implode("<br>",$salesList).                ?></td>
+                                                                                                       <td><?php echo $salesList; //implode("<br>",$salesList).                  ?></td>
                                 <?php } ?>-->
 
-                                <td><?php echo $salesList; //implode("<br>",$salesList).                ?></td>
+                                <td><?php echo $salesList; //implode("<br>",$salesList).                  ?></td>
                                 <td><?php echo $row['certi_coll']; ?></td>
                                 <td><?php
                                     echo $row['status_text'] . '<br />' . $row['end_class'] . '<br />'
@@ -545,17 +545,29 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         //$('#fee_collectionStatus').val($feecollectst);
         //$('#fee_collectionStatus').val($feecollectval);
         //$('#fee_collectionStatus').prop('selected').val($feecollectval);
-        var myOptions = {
-            val1: 'Blue',
-            val2: 'Orange'
-        };
+        if ($paymentstatusfee == 'PAID') {
+            var myOptions = {
+                Pending Payment: 'Pending Payment',
+                Partial Payment: 'Partial Payment',
+                Cancelled: 'Cancelled'
+            };
+        } else {
+            var myOptions = {
+                Pending Payment: 'Pending Payment',
+                Partial Payment: 'Partial Payment',
+                Full Payment: 'Full Payment',
+                Cancelled: 'Cancelled'
+            };
+        }
+        
         var mySelect = $('#fee_collectionStatus');
         $.each(myOptions, function (val, text) {
             mySelect.append(
                     $('<option></option>').val(val).html(text)
                     );
         });
-
+        $("#fee_collectionStatus").val($feecollectval);
+        
         $('#abd').modal();
     });
     function validateFee(retVal) {
