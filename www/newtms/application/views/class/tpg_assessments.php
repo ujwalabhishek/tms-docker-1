@@ -124,7 +124,7 @@
                     <tr>
                         <th width="9%" class="th_header">NRIC/FIN No</th>
                         <th width="10%" class="th_header">Full Name</th>
-                        <th width="15%" class="th_header">Assessment Date</th>
+                        <th width="10%" class="th_header">Assessment Date</th>
                         <th width="10%" class="th_header">Skill Code</th>
                         <th width="6%" class="th_header">Score</th>
                         <th width="6%" class="th_header">Grade</th>
@@ -132,7 +132,7 @@
                         <th width="10%" class="th_header">Course Ref No</th>
                         <th width="9%" class="th_header">Assmt Ref No</th>
                         <th width="9%" class="th_header">Enlmt Ref No</th>
-                        <th width="13%" class="th_header">TPG</th>
+                        <th width="17%" class="th_header">TPG</th>
                     </tr>
                 </thead>
                 <tbody>
