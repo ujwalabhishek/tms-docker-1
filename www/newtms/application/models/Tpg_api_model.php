@@ -188,9 +188,9 @@ class Tpg_api_Model extends CI_Model {
         if (!empty($schlded_date)) {    
             foreach ($schlded_date as $k => $v) {
                 if($schlded_session_type[$k] != 'BRK'){
-                    $dates = date('Ymd', strtotime($schlded_date[$k]));
-                    $starttime = date("h:i", strtotime($schlded_start_time[$k]));
-                    $endtime = date("h:i", strtotime($schlded_end_time[$k]));
+                    $dates = date('YMD', strtotime($schlded_date[$k]));
+                    $starttime = date("H:m", strtotime($schlded_start_time[$k]));
+                    $endtime = date("H:m", strtotime($schlded_end_time[$k]));
                     $session_arr[] = array(
                      "startDate" => "$dates",
                      "endDate" => "$dates",
@@ -262,12 +262,12 @@ class Tpg_api_Model extends CI_Model {
                           "sequenceNumber": 0,
                           "modeOfTraining": "'.$modeoftraining.'",
                           "registrationDates": {
-                            "opening": "'.date("Ymd", strtotime($reg_open_date)).'",
-                            "closing": "'.date("Ymd", strtotime($reg_close_date)).'"
+                            "opening": "'.date("YMD", strtotime($reg_open_date)).'",
+                            "closing": "'.date("YMD", strtotime($reg_close_date)).'"
                           },
                           "courseDates": {
-                            "start": "'.date("Ymd", strtotime($crse_start_date)).'",
-                            "end": "'.date("Ymd", strtotime($crse_end_date)).'"
+                            "start": "'.date("YMD", strtotime($crse_start_date)).'",
+                            "end": "'.date("YMD", strtotime($crse_end_date)).'"
                           },
                           "scheduleInfoType": {
                             "code": "01",
@@ -306,7 +306,7 @@ class Tpg_api_Model extends CI_Model {
                   }';
        
        
-        print_r($tpg_course_run_json);exit;
+        //print_r($tpg_course_run_json);exit;
         $api_version = 'v1.3';
         $url = "https://".$retun[domain]."/courses/runs";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
