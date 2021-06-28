@@ -14731,7 +14731,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 AND ce.class_id = '$userid'
                 AND date(cc.class_end_datetime) <= '$today_date'";                
                 $res = $this->db->query($sql)->result();
-                
+                echo $this->db->last_query();exit;
                 return $res;
     }
 
