@@ -113,7 +113,9 @@
                     ?>
                     <tr>
                         <th width="9%" class="th_header">Session ID</th>
-                        <th width="10%" class="th_header">Attn Status Code</th>
+                        <th width="10%" class="th_header">Attn Status Code
+                            <div style='color:grey'>1-Confirmed,2-Unconfirmed,3-Rejected ,4-TP Voided</div>
+                        </th>
                         <th width="10%" class="th_header">Name</th>
                         <th width="6%" class="th_header">Email</th>
                         <th width="6%" class="th_header">ID Type</th>
