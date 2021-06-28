@@ -395,7 +395,7 @@
                                         <?php if ($enrolmentStatus == "Confirmed") { ?>
                                             <a href="javascript:;" class="edit_enrolment" data-class="<?php echo $tpgClassId; ?>" data-course="<?php echo $tpgCourseId; ?>" data-user="<?php echo $tmsUserId; ?>" data-paymentstatus="<?php echo $tmsPaymentStatus; ?>" data-enrolrefnum="<?php echo $enrolmentReferenceNumber; ?>"><button type="button" class="btnblue">Edit Enrolment</button></a>
                                             <br>
-                                            <a href="javascript:;" class="abd" data-classfee="<?php echo $tpgClassId; ?>" data-coursefee="<?php echo $tpgCourseId; ?>" data-enrolrefnumfee="<?php echo $enrolmentReferenceNumber; ?>" data-feecollectst="<?php echo $feecollectionStatus; ?>" data-feecollectval="<?php echo $feecollectionStatus_val; ?>"><button type="button" class="btnblue">Update Fee</button></a>
+                                            <a href="javascript:;" class="abd" data-classfee="<?php echo $tpgClassId; ?>" data-coursefee="<?php echo $tpgCourseId; ?>" data-enrolrefnumfee="<?php echo $enrolmentReferenceNumber; ?>" data-feecollectval="<?php echo $feecollectionStatus_val; ?>"><button type="button" class="btnblue">Update Fee</button></a>
                                         <?php } ?>
                                     <?php } ?>
                                 </td>
@@ -546,9 +546,9 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         $('#tpgCourseIdfee').val($coursefee);
         $('#tpgClassIdfee').val($classfee);
         $('#tpgEnrolmentReferenceNumberfee').val($enrolrefnumfee);
-        $('#fee_collectionStatus').val($feecollectst);
+        //$('#fee_collectionStatus').val($feecollectst);
         //$('#fee_collectionStatus').val($feecollectval);
-        $('#fee_collectionStatus').prop('selected').val($feecollectval);
+        //$('#fee_collectionStatus').prop('selected').val($feecollectval);
                 
         $('#abd').modal();
     });
