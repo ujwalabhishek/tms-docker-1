@@ -1927,7 +1927,7 @@ class Class_Trainee extends CI_Controller {
         $class_id = $this->input->post('class_id');
 
         $class_details = $this->class->get_class_by_id($tenant_id, $course_id, $class_id);
-        
+
         $from_date = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT); ///added by shubhranshu
         $to_date = parse_date($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT); //added by shubhranshu
         $week_start_date = parse_date($this->input->post('week_start'), CLIENT_DATE_FORMAT); //added by shubhranshu
@@ -1936,7 +1936,57 @@ class Class_Trainee extends CI_Controller {
         $export = $this->input->post('export');
         $export1 = $this->input->post('export1');
         $this->load->helper('attendance_helper');
+
         if (!empty($export)) {
+            
+            $course_run_id = $class_details->tpg_course_run_id;
+
+            $encrypt_method = "AES-256-CBC";
+            $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+            $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
+
+            $api_version = 'v1';
+            $url = "https://" . TPG_DEV_URL . "/courses/runs/" . $course_run_id . "/sessions/attendance";
+
+            $tpg_sess_att_json_data = '{
+                                        "uen": "TxxxxxxxxN",
+                                        "course": {
+                                          "sessionID": "TEST 166-41618-S1",
+                                          "attendance": {
+                                            "status": {
+                                              "code": 1
+                                            },
+                                            "trainee": {
+                                              "id": "S1234567H",
+                                              "name": "Tom",
+                                              "email": "abc@test.com",
+                                              "idType": {
+                                                "code": "SB"
+                                              },
+                                              "contactNumber": {
+                                                "mobile": "85858585",
+                                                "areaCode": null,
+                                                "countryCode": 65
+                                              },
+                                              "numberOfHours": 3.5,
+                                              "surveyLanguage": {
+                                                "code": "EL"
+                                              }
+                                            }
+                                          },
+                                          "referenceNumber": "XX-TxxxxxxxxN-01-TEST 166"
+                                        },
+                                        "corppassId": "SxxxxxxxT"
+                                      }';
+            
+            $encrypted_output = openssl_encrypt($tpg_sess_att_json_data, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
+
+            $request = $this->curl_request('POST', $url, $encrypted_output, $api_version);
+
+            $decrypted_output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+
+            $tpg_response = json_decode($decrypted_output);
+            
             
         } else {
             
@@ -1949,7 +1999,6 @@ class Class_Trainee extends CI_Controller {
         $data['lock_status'] = $att->lock_status;
         $data['class_start_datetime'] = $att->class_start_datetime;
         $data['user'] = $this->user;
-
 
         $data['controllerurl'] = 'class_trainee/mark_attendance_tpg';
         $data['page_title'] = 'Class Trainee Enrollment - Mark Attendance TPG';
