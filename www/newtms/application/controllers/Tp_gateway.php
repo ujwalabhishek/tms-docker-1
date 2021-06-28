@@ -1796,5 +1796,34 @@ class tp_gateway extends CI_Controller {
             redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
     }
+    
+    
+    function submit_attendance(){
+        $tenant_id = $this->tenant_id;
+        $tpg_session_id = $this->input->post('tpg_session_id');
+        $attn_status_code = $this->input->post('attn_status_code');
+        $fullname = $this->input->post('fullname');
+        $registered_email_id = $this->input->post('registered_email_id');
+        $idtype = $this->input->post('idtype');
+        $mobileNo = $this->input->post('mobileNo');
+        $tpgCourseId = $this->input->post('tpgCourseId');
+        $noOfHours = $this->input->post('noOfHours');
+        $survey_language = $this->input->post('survey_language');
+        $class_id = $this->input->post('class_id');
+        $course_id= $this->input->post('course_id');
+        $user_id = $this->input->post('user_id');
+        $tax_code = $this->input->post('tax_code');
+        $crs_reference_num = $this->input->post('crs_reference_num');
+        $tpg_course_run_id = $this->input->post('tpg_course_run_id');
+        $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
+        $obj_resp=$this->tpgModel->submit_attendance_to_tpg($tenant->comp_reg_no,$tpg_course_run_id,$tax_code,$crs_reference_num,$tenant_id,$user_id,$course_id,$class_id,$survey_language,$noOfHours,$tpgCourseId,$tpg_session_id,$attn_status_code,$fullname,$registered_email_id,$idtype,$mobileNo);
+        if ($obj_resp->status == 200) {
+            $this->session->set_flashdata("success", "Attendance Uploaded Successfully To TPG ");
+        }else{
+            $controller = 'class_trainee/mark_attendance_tpg';
+            $this->handle_error($controller, $asessment_resp);
+        }
+        
+    }
 
 }
