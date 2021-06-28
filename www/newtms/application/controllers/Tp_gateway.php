@@ -97,13 +97,13 @@ class tp_gateway extends CI_Controller {
     public function handle_error($controller = '', $tpg_resp = '') {
         $this->session->set_flashdata('resp_error', $tpg_resp->error->details);
         //print_r($response);exit;
-        if ($response->status == 400) {
+        if ($tpg_resp->status == 400) {
             $this->session->set_flashdata('error', "Oops! Bad request!");
-        } elseif ($response->status == 403) {
+        } elseif ($tpg_resp->status == 403) {
             $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
-        } elseif ($response->status == 404) {
+        } elseif ($tpg_resp->status == 404) {
             $this->session->set_flashdata('error', "Oops! Not Found!");
-        } elseif ($response->status == 500) {
+        } elseif ($tpg_resp->status == 500) {
             $this->session->set_flashdata('error', "Oops! Internal Error!!");
         } else {
             $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
@@ -1817,7 +1817,6 @@ class tp_gateway extends CI_Controller {
         $tpg_course_run_id = $this->input->post('tpg_course_run_id');
         $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $obj_resp=$this->tpgModel->submit_attendance_to_tpg($tenant->comp_reg_no,$tpg_course_run_id,$tax_code,$crs_reference_num,$tenant_id,$user_id,$course_id,$class_id,$survey_language,$noOfHours,$tpgCourseId,$tpg_session_id,$attn_status_code,$fullname,$registered_email_id,$idtype,$mobileNo);
-        print_r($obj_resp);exit;
         if ($obj_resp->status == 200) {
             $this->session->set_flashdata("success", "Attendance Uploaded Successfully To TPG ");
         }else{
