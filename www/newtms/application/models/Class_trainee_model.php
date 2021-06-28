@@ -14706,6 +14706,8 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $sql = "select tu.user_id,
                 ce.course_id,
                 ce.class_id,
+                c.reference_num,
+                cc.tpg_course_run_id,
                 concat(tup.first_name,' ',tup.last_name) as fullname,
                 tu.registered_email_id,
                 tup.contact_number,

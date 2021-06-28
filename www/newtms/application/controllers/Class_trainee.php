@@ -1933,60 +1933,7 @@ class Class_Trainee extends CI_Controller {
             $data['tabledata'] = $this->classtraineemodel->get_trainee_sessions_data($tenant_id,$course,$class,$userid);
         }
 
-//        if (!empty($export)) {
-//            
-//            $course_run_id = $class_details->tpg_course_run_id;
-//
-//            $encrypt_method = "AES-256-CBC";
-//            $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
-//            $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
-//
-//            $api_version = 'v1.3';
-//            $url = "https://" . TPG_DEV_URL . "/courses/runs/" . $course_run_id . "/sessions/attendance";
-//
-//            $tpg_sess_att_json_data = '{
-//                                        "uen": "TxxxxxxxxN",
-//                                        "course": {
-//                                          "sessionID": "TEST 166-41618-S1",
-//                                          "attendance": {
-//                                            "status": {
-//                                              "code": 1
-//                                            },
-//                                            "trainee": {
-//                                              "id": "S1234567H",
-//                                              "name": "Tom",
-//                                              "email": "abc@test.com",
-//                                              "idType": {
-//                                                "code": "SB"
-//                                              },
-//                                              "contactNumber": {
-//                                                "mobile": "85858585",
-//                                                "areaCode": null,
-//                                                "countryCode": 65
-//                                              },
-//                                              "numberOfHours": 3.5,
-//                                              "surveyLanguage": {
-//                                                "code": "EL"
-//                                              }
-//                                            }
-//                                          },
-//                                          "referenceNumber": "XX-TxxxxxxxxN-01-TEST 166"
-//                                        },
-//                                        "corppassId": "SxxxxxxxT"
-//                                      }';
-//            
-//            $encrypted_output = openssl_encrypt($tpg_sess_att_json_data, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
-//
-//            $request = $this->curl_request('POST', $url, $encrypted_output, $api_version);
-//
-//            $decrypted_output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
-//
-//            $tpg_response = json_decode($decrypted_output);
-//            
-//            
-//        } else {
-//            
-//        }
+        
 
         //$data = get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order, '');
 
