@@ -395,7 +395,7 @@
                                         <?php if ($enrolmentStatus == "Confirmed") { ?>
                                             <a href="javascript:;" class="edit_enrolment" data-class="<?php echo $tpgClassId; ?>" data-course="<?php echo $tpgCourseId; ?>" data-user="<?php echo $tmsUserId; ?>" data-paymentstatus="<?php echo $tmsPaymentStatus; ?>" data-enrolrefnum="<?php echo $enrolmentReferenceNumber; ?>"><button type="button" class="btnblue">Edit Enrolment</button></a>
                                             <br>
-                                            <a href="javascript:;" class="abd" data-class="<?php echo $tpgClassId; ?>" data-course="<?php echo $tpgCourseId; ?>" data-enrolrefnum="<?php echo $enrolmentReferenceNumber; ?>"><button type="button" class="btnblue">Update Fee</button></a>
+                                            <a href="javascript:;" class="abd" data-classfee="<?php echo $tpgClassId; ?>" data-coursefee="<?php echo $tpgCourseId; ?>" data-enrolrefnumfee="<?php echo $enrolmentReferenceNumber; ?>"><button type="button" class="btnblue">Update Fee</button></a>
                                         <?php } ?>
                                     <?php } ?>
                                 </td>
@@ -504,9 +504,9 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             <tr>
                 <td class="td_heading">Fee Collection Status:</td>
                 <td>                    
-                    <input type="hidden" name="tpgCourseId" value="" id="tpgCourseId">
-                    <input type="hidden" name="tpgClassId" value="" id="tpgClassId">
-                    <input type="hidden" name="tpgEnrolmentReferenceNumber" value="" id="tpgEnrolmentReferenceNumber">
+                    <input type="hidden" name="tpgCourseIdfee" value="" id="tpgCourseId">
+                    <input type="hidden" name="tpgClassIdfee" value="" id="tpgClassId">
+                    <input type="hidden" name="tpgEnrolmentReferenceNumberfee" value="" id="tpgEnrolmentReferenceNumber">
                     <?php
                     $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
                     echo form_dropdown('fee_collectionStatus', $feecollectionStatus, $feecollectionStatus_val, $fee_collectionStatus_attr);
@@ -537,13 +537,13 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
     
     $('.abd').click(function () {
         $this = $(this);
-        $course = $this.data('course');
-        $class = $this.data('class');        
-        $enrolrefnum = $this.data('enrolrefnum');
+        $coursefee = $this.data('coursefee');
+        $classfee = $this.data('classfee');        
+        $enrolrefnumfee = $this.data('enrolrefnumfee');
         
-        $('#tpgCourseId').val($course);
-        $('#tpgClassId').val($class);
-        $('#tpgEnrolmentReferenceNumber').val($enrolrefnum);
+        $('#tpgCourseIdfee').val($coursefee);
+        $('#tpgClassIdfee').val($classfee);
+        $('#tpgEnrolmentReferenceNumberfee').val($enrolrefnumfee);
                 
         $('#abd').modal();
     });
