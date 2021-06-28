@@ -14673,7 +14673,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
             return $results[0];
         }
     }
-    
+    //// added by shubhranshu to fetch all trainee that are enrolled to the class
     public function get_enrolled_trainee($tenant_id,$courseID,$classID){
         
         $today_date = date('Y-m-d');
@@ -14700,7 +14700,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                
                 return $result;
     }
-    
+    //////addded by shubhranshu to get the trainee session data for mark attendance to tpg
     function get_trainee_sessions_data($tenant_id,$course,$class,$userid){
         $today_date = date('Y-m-d');
         $sql = "select tu.user_id,
