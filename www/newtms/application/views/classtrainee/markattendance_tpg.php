@@ -177,7 +177,7 @@
                                     <input type="hidden" name="crs_reference_num" value="<?php echo $row->reference_num; ?>" id="crs_reference_num">
                                     <input type="hidden" name="tax_code" value="<?php echo $row->tax_code; ?>" id="tax_code">
                                      <input type="hidden" name="tpg_course_run_id" value="<?php echo $row->tpg_course_run_id; ?>" id="tpg_course_run_id">
-                                    <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit Attendance</button>
+                                    <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
                                         
                                     <?php
                                     }
