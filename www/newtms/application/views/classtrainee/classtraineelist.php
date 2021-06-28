@@ -3,7 +3,7 @@
     $baseurl = '<?php echo base_url(); ?>';
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
-    
+
     var CLIENT_DATE_FORMAT = 'yy-mm-dd';
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?0.0311111111111111"></script>
@@ -249,7 +249,7 @@
                         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         if ($tenant_id == 'T01') {
                             ?>
-                                                               <th width="10%" class="th_header">Sales Executive</th>
+                                                                   <th width="10%" class="th_header">Sales Executive</th>
                         <?php } ?>-->
                         <th width="8%" class="th_header">Sales Executive</th>
                         <th width="6%" class="th_header">Certi. Coll.</th>
@@ -336,10 +336,10 @@
                                 <td><?php echo $row['enroll_mode'] ?></td>
 
                                 <!--<?php if ($tenant_id == 'T01') { ?>
-                                                                       <td><?php echo $salesList; //implode("<br>",$salesList).          ?></td>
+                                                                           <td><?php echo $salesList; //implode("<br>",$salesList).           ?></td>
                                 <?php } ?>-->
 
-                                <td><?php echo $salesList; //implode("<br>",$salesList).          ?></td>
+                                <td><?php echo $salesList; //implode("<br>",$salesList).           ?></td>
                                 <td><?php echo $row['certi_coll']; ?></td>
                                 <td><?php
                                     echo $row['status_text'] . '<br />' . $row['end_class'] . '<br />'
@@ -369,12 +369,12 @@
                                     $feecollectionStatus = $row['feecollectionStatus_options'];
                                     $feecollectionStatus_val = $row['feecollectionStatus_val'];
                                     $enrolmentStatus = $row['enrolmentStatus'];
-                                    
+
                                     $tmsUserId = $row['user_id'];
                                     $tmsPaymentStatus = $row['payment_status'];
                                     $tpgCourseId = $row['course_id'];
                                     $tpgClassId = $row['class_id'];
-                                    
+
                                     $editEnrolmentAction = $row['editEnrolmentAction'];
                                     if (empty($enrolmentReferenceNumber)) {
                                         ?>
@@ -389,13 +389,13 @@
                                         ?>                        
                                         <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>"><button class="btnblue">View Enrolment</button></a>
                                         <br>
-                                        <?php if($enrolmentStatus == "Cancelled") {?>
-                                        <span style="color:red"><i>This enrolment is Cancelled.</i></span>
+                                        <?php if ($enrolmentStatus == "Cancelled") { ?>
+                                            <span style="color:red"><i>This enrolment is Cancelled.</i></span>
                                         <?php } ?>
-                                        <?php if($enrolmentStatus == "Confirmed") {?>
-                                        <a rel="modal:open" href="#edit_enrolment" data-class="<?php echo $tpgClassId; ?>" data-course="<?php echo $tpgCourseId; ?>" data-user="<?php echo $tmsUserId; ?>" data-paymentstatus="<?php echo $tmsPaymentStatus; ?>" data-enrolrefnum="<?php echo $enrolmentReferenceNumber; ?>"><button type="button" class="btnblue">Edit Enrolment</button></a>
-                                        <br>
-                                        <a rel="modal:open" href="#abd"><button type="button" class="btnblue">Update Fee</button></a>
+                                        <?php if ($enrolmentStatus == "Confirmed") { ?>
+                                            <a href="javascript:;" class="edit_enrolment" data-class="<?php echo $tpgClassId; ?>" data-course="<?php echo $tpgCourseId; ?>" data-user="<?php echo $tmsUserId; ?>" data-paymentstatus="<?php echo $tmsPaymentStatus; ?>" data-enrolrefnum="<?php echo $enrolmentReferenceNumber; ?>"><button type="button" class="btnblue">Edit Enrolment</button></a>
+                                            <br>
+                                            <a href="javascript:;" class="abd" data-classfee="<?php echo $tpgClassId; ?>" data-coursefee="<?php echo $tpgCourseId; ?>" data-enrolrefnumfee="<?php echo $enrolmentReferenceNumber; ?>"><button type="button" class="btnblue">Update Fee</button></a>
                                         <?php } ?>
                                     <?php } ?>
                                 </td>
@@ -427,11 +427,11 @@ echo form_open("tp_gateway/edit_enrolment_tpg", $atr);
             <tr>
                 <td class="td_heading">Choose action for selected enrolment:</td>
                 <td>                    
-                    <input type="hidden" name="tpgCourseId" value="<?php echo $tpgCourseId; ?>" id="tpgCourseId">
-                    <input type="hidden" name="tpgClassId" value="<?php echo $tpgClassId; ?>" id="tpgClassId">
-                    <input type="hidden" name="tpgUserId" value="<?php echo $tmsUserId; ?>" id="tpgUserId">
-                    <input type="hidden" name="tmsPaymentStatus" value="<?php echo $tmsPaymentStatus; ?>" id="tmsPaymentStatus">
-                    <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
+                    <input type="hidden" name="tpgCourseId" value="" id="tpgCourseId">
+                    <input type="hidden" name="tpgClassId" value="" id="tpgClassId">
+                    <input type="hidden" name="tpgUserId" value="" id="tpgUserId">
+                    <input type="hidden" name="tmsPaymentStatus" value="" id="tmsPaymentStatus">
+                    <input type="hidden" name="tpgEnrolmentReferenceNumber" value="" id="tpgEnrolmentReferenceNumber">
                     <?php
                     $editEnrolmentAction_attr = 'id="edit_EnrolmentAction"';
                     echo form_dropdown('edit_EnrolmentAction', $editEnrolmentAction, '', $editEnrolmentAction_attr);
@@ -458,6 +458,23 @@ echo form_open("tp_gateway/edit_enrolment_tpg", $atr);
                 return validateAction(false);
             }
         });
+    });
+
+    $('.edit_enrolment').click(function () {
+        $this = $(this);
+        $course = $this.data('course');
+        $class = $this.data('class');
+        $user = $this.data('user');        
+        $paymentstatus = $this.data('paymentstatus');
+        $enrolrefnum = $this.data('enrolrefnum');
+        
+        $('#tpgCourseId').val($course);
+        $('#tpgClassId').val($class);
+        $('#tpgUserId').val($user);
+        $('#tmsPaymentStatus').val($paymentstatus);
+        $('#tpgEnrolmentReferenceNumber').val($enrolrefnum);
+                
+        $('#edit_enrolment').modal();
     });
 
     function validateAction(retVal) {
@@ -487,9 +504,9 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
             <tr>
                 <td class="td_heading">Fee Collection Status:</td>
                 <td>                    
-                    <input type="hidden" name="tpgCourseId" value="<?php echo $tpgCourseId; ?>" id="tpgCourseId">
-                    <input type="hidden" name="tpgClassId" value="<?php echo $tpgClassId; ?>" id="tpgClassId">
-                    <input type="hidden" name="tpgEnrolmentReferenceNumber" value="<?php echo $enrolmentReferenceNumber; ?>" id="tpgEnrolmentReferenceNumber">
+                    <input type="hidden" name="tpgCourseIdfee" value="" id="tpgCourseIdfee">
+                    <input type="hidden" name="tpgClassIdfee" value="" id="tpgClassIdfee">
+                    <input type="hidden" name="tpgEnrolmentReferenceNumberfee" value="" id="tpgEnrolmentReferenceNumberfee">
                     <?php
                     $fee_collectionStatus_attr = 'id="fee_collectionStatus"';
                     echo form_dropdown('fee_collectionStatus', $feecollectionStatus, $feecollectionStatus_val, $fee_collectionStatus_attr);
@@ -516,6 +533,19 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
                 return validateFee(false);
             }
         });
+    });
+    
+    $('.abd').click(function () {
+        $this = $(this);
+        $coursefee = $this.data('coursefee');
+        $classfee = $this.data('classfee');        
+        $enrolrefnumfee = $this.data('enrolrefnumfee');
+        
+        $('#tpgCourseIdfee').val($coursefee);
+        $('#tpgClassIdfee').val($classfee);
+        $('#tpgEnrolmentReferenceNumberfee').val($enrolrefnumfee);
+                
+        $('#abd').modal();
     });
 
     function validateFee(retVal) {
