@@ -562,11 +562,13 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         }
         
         var mySelect = $('#fee_collectionStatus');
-        $.each(myOptions, function (val, text) {
-            mySelect.append(
-                    $('<option></option>').val(val).html(text)
-                    );
-        });
+        if ($('#fee_collectionStatus option[value=""]').length == 0) {
+            $.each(myOptions, function (val, text) {
+                mySelect.append(
+                        $('<option></option>').val(val).html(text)
+                        );
+            });
+        }
         //$("#fee_collectionStatus").val($feecollectval);        
 
         $('#abd').modal();
