@@ -87,7 +87,7 @@
                 </tr>
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Session ID:<span class="required">*</span></td>
-                    <td>
+                    <td colspan="3">
                         <?php echo $sessionId; ?>
                     </td>
                 </tr> 
