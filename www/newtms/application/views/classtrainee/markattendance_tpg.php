@@ -114,6 +114,7 @@
                     ?>
                     <tr>
                         <th width="9%" class="th_header">Class Date</th>
+                        <th width="9%" class="th_header">Session</th>
                         <th width="9%" class="th_header">Session ID</th>
                         <th width="10%" class="th_header">Attn Status Code                            
                         </th>
@@ -136,7 +137,16 @@
                         foreach ($tabledata as $row) {
                             ?>
 
-                            <tr>   <td><?php echo $row->class_date; ?></td>                     
+                            <tr>   
+                                <td><?php echo $row->class_date; ?></td>
+                                <td class="name"><?php
+                                    if ($row->session_type_id == 'S1') {
+                                        echo "Session 1";
+                                    } else {
+                                        echo "Session 2";
+                                    }
+                                    ?>
+                                </td>
                                 <td><?php echo $row->tpg_session_id; ?></td>
                                 <td class="name"><?php
                                     if ($row->session_type_id == 'S1') {
