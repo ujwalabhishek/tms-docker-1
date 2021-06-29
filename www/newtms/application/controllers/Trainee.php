@@ -308,7 +308,7 @@ class Trainee extends CI_Controller {
             $valid = TRUE;
             $country_of_residence = $this->input->post('country_of_residence');
             $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
-            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|exact_length[8]');
+            $this->form_validation->set_rules('pers_contact_phone', 'Contact Number', 'required|exact_length[8]');
             if ($country_of_residence == 'IND') {
                 $tax_code = $this->input->post("PAN");
                 $this->form_validation->set_rules('PAN', 'PAN Number', 'required|max_length[15]');
