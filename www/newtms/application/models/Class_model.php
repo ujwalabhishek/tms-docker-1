@@ -1643,6 +1643,7 @@ class Class_Model extends CI_Model {
                         'session_start_time' => $session_start_time,
                         'session_end_time' => $session_end_time
                         );
+                         $ct +=1;
                     }else{
                         $class_date = date('Y-m-d', strtotime($schlded_date[$k]));
                         $session_start_time = $schlded_start_time[$k] . ':00';
@@ -1659,7 +1660,7 @@ class Class_Model extends CI_Model {
                     }
                     
                     $this->db->insert('class_schld', $class_schld_data);
-                    $ct +=1;
+                   
                 }
             }
             if (isset($def_schlded_date)) {
