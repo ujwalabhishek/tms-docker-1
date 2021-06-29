@@ -496,10 +496,10 @@ class Classes extends CI_Controller {
             $previous_data = json_encode($result);
             
             $result = $this->classmodel->update_class($tenant_id, $user_id);
-            if ($result == TRUE) {
+            if ($result == TRUE) {echo "error";exit;
                  user_activity(5,$class_id,$previous_data);
                 $this->session->set_flashdata("success", "Class updated successfully.");
-            } else {
+            } else {echo "error1";exit;
                 $this->session->set_flashdata("error", "Unable to update class. Please try again later.");
             }
         }
