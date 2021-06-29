@@ -181,7 +181,7 @@
                                 <td>
                                     <?php
                                     if($row->tpg_uploaded_status == 1){?>
-                                       <span>Already Uploaded</span>
+                                       
                                         <a href="#view_session_attn" rel="modal:open" id="click_attendance" data-tpgSessionId="<?php echo $row->tpg_session_id;?>" data-crsRefNo="<?php echo $row->reference_num;?>" data-tpgCrsRunid="<?php echo $row->tpg_course_run_id;?>"><span class="btnblue">View Session</span></a>                                
                                      
                                     <?php
