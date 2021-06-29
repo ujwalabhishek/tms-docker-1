@@ -169,18 +169,22 @@
                                         $idtype = 'Others(OT)'; /////Others
                                     }
                                     echo $idtype
-                                    ?></td>
+                                    ?>
+                                </td>
                                 <td><?php echo $row->contact_number; ?></td>
                                 <td><?php echo $row->total_classroom_duration; ?></td>
                                 <td><?php echo $row->survey_language; ?></td>
-
                                 <td>
                                     <?php
                                     $atr = 'id="submit_attendance_form" name="submit_attendance" method="post"';
                                     echo form_open("tp_gateway/submit_attendance", $atr);
                                     ?>
-                                    <input type="hidden" name="tpg_session_id" value="<?php echo $row->tpg_session_id; ?>" id="tpg_session_id">
-                                    <input type="hidden" name="attn_status_code" value="<?php echo $row->session_01; ?>" id="attn_status_code">
+                                    <input type="hidden" name="tpg_session_id" value="<?php echo $row->tpg_session_id; ?>" id="tpg_session_id">                                    
+                                    <?php if ($row->session_type_id == 'S1') { ?>
+                                        <input type="hidden" name="attn_status_code" value="<?php echo $row->session_01; ?>" id="attn_status_code">
+                                    <?php } else { ?>
+                                        <input type="hidden" name="attn_status_code" value="<?php echo $row->session_02; ?>" id="attn_status_code">
+                                    <?php } ?>                                                                                                            
                                     <input type="hidden" name="fullname" value="<?php echo $row->fullname; ?>" id="fullname">
                                     <input type="hidden" name="registered_email_id" value="<?php echo $row->registered_email_id; ?>" id="registered_email_id">
                                     <input type="hidden" name="idtype" value="<?php echo $idtype; ?>" id="idtype">
@@ -194,12 +198,10 @@
                                     <input type="hidden" name="tax_code" value="<?php echo $row->tax_code; ?>" id="tax_code">
                                     <input type="hidden" name="tpg_course_run_id" value="<?php echo $row->tpg_course_run_id; ?>" id="tpg_course_run_id">
                                     <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
-
                                     <?php
                                 }
                                 echo form_close();
-                                ?>  
-
+                                ?>
                             </td>
                         </tr>
                         <?php
