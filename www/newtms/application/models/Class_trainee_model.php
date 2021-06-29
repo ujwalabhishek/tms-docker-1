@@ -14736,5 +14736,19 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 //echo $this->db->last_query();exit;
                 return $res;
     }
+    
+    function update_feedback($tenant_id,$user_id,$course_id,$class_id){
+        $data =array(
+                'feedback_score' => $feedback_score,
+                'feedback_grade' => $feedback_grade
+        );
+        $this->db->where('tenant_id',$tenant_id);
+        $this->db->where('course_id',$course_id);
+        $this->db->where('class_id',$class_id);
+         $this->db->where('user_id',$user_id);
+        $status=$this->db->update('class_enrol',$data);
+        echo $this->db->last_query();exit;
+        return $status;
+    }
 
 }
