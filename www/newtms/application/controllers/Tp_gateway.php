@@ -1840,7 +1840,7 @@ class tp_gateway extends CI_Controller {
         
     }
     
-    public function retrieve_course_sess_att($tpg_course_run_id,$courseReferenceNumber, $sessionId) {
+    public function retrieve_course_sess_att($tpg_course_run_id, $courseReferenceNumber, $sessionId) {
         
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
