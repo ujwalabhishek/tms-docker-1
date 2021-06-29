@@ -181,6 +181,8 @@ $(document).ready(function () {
                         $resu = 'Fail';
                     }
                     $('#tms_result').html($resu);
+                    $('#score1').html(res.data.score);
+                    $('#grade1').html(res.data.grade);
                     $('#tms_score').html(res.data.tms_score);
                     $('#tms_grade').html(res.data.tms_grade);
                     $('#ass_date1').val(res.data.assessmentDate);
