@@ -1272,7 +1272,7 @@ class tp_gateway extends CI_Controller {
             $traineeSponsorshipType = "EMPLOYER";
 
             $company = $this->companyModel->get_company_details($tenant_id, $companyId);
-
+print_r($company); exit;
             //Employer
             $employerUEN = $company[0]->comp_regist_num;
             $emploerFullName = $company[0]->company_name;
