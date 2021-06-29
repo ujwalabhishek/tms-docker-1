@@ -623,7 +623,7 @@ echo form_open("classes/add_new_class", $atr);
         </div>
     </div>
     <br>
-    <div class="row marketing class_display_none" style="">
+    <div class="row marketing class_display_none" style="display:none;">
         <div class="col-lg-6">
              <span id="dis-error"></span>
             <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule 
@@ -683,7 +683,7 @@ echo form_open("classes/add_new_class", $atr);
         </div>
     </div>
     <span class="required required_i">* Required Fields</span>
-    <div class="button_class class_display_none" style="">
+    <div class="button_class class_display_none" style="display: none;">
         <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-saved"></span>&nbsp;Save</button> &nbsp; &nbsp; 
     </div>
 </div>
