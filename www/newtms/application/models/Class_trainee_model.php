@@ -14386,7 +14386,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 ce.class_id,
                 c.reference_num,
                 cc.tpg_course_run_id,
-                concat(tup.first_name,' ',tup.last_name) as fullname,
+                tup.first_name as fullname,
                 tu.registered_email_id,
                 tup.contact_number,
                 cc.total_classroom_duration,
@@ -14407,7 +14407,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 JOIN course c ON c.course_id = cc.course_id 
                 JOIN class_enrol ce ON ce.class_id = cc.class_id 
                 JOIN tms_users tu ON tu.user_id = ce.user_id 
-                left join tms_users_pers tup on tup.user_id =ce.user_id 
+                left join tms_users_pers tup on tup.user_id =tu.user_id 
                 LEFT JOIN class_schld cs ON cs.class_id = cc.class_id and cs.tenant_id = ce.tenant_id and cs.course_id = c.course_id
                 JOIN class_attendance ca ON ca.class_id = cc.class_id and ca.user_id = ce.user_id and ca.course_id = c.course_id
                 WHERE cc . tenant_id = '$tenant_id'

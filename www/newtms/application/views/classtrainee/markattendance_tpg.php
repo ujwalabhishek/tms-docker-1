@@ -149,13 +149,13 @@
                                 <td><?php echo $row->registered_email_id; ?></td>
                                 <td><?php
                                     if ($row->tax_code_type = 'SNG_1' && $row->idtype == 'SG') {
-                                        $idtype = 'SP'; ///singaporean pink
+                                        $idtype = 'NRIC(SP)'; ///singaporean pink
                                     } elseif ($row->tax_code_type = 'SNG_1' && $row->idtype == 'NS') {
-                                        $idtype = 'SB'; /// permanent residence
+                                        $idtype = 'NRIC(SB)'; /// permanent residence
                                     } else if ($row->tax_code_type = 'SNG_2') {
-                                        $idtype = 'SO'; //// FIN
+                                        $idtype = 'FIN(SO)'; //// FIN
                                     } else {
-                                        $idtype = 'OT'; /////Others
+                                        $idtype = 'Others(OT)'; /////Others
                                     }
                                     echo $idtype
                                     ?></td>
