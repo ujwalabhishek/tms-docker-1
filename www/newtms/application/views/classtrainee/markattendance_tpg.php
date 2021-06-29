@@ -161,12 +161,16 @@
                                 <td><?php
                                     if ($row->tax_code_type = 'SNG_1' && $row->idtype == 'SG') {
                                         $idtype = 'NRIC(SP)'; ///singaporean pink
+                                        $idtypes ='SP';
                                     } elseif ($row->tax_code_type = 'SNG_1' && $row->idtype == 'NS') {
                                         $idtype = 'NRIC(SB)'; /// permanent residence
+                                         $idtypes ='SB';
                                     } else if ($row->tax_code_type = 'SNG_2') {
                                         $idtype = 'FIN(SO)'; //// FIN
+                                         $idtypes ='SO';
                                     } else {
                                         $idtype = 'Others(OT)'; /////Others
+                                         $idtypes ='OT';
                                     }
                                     echo $idtype
                                     ?>
@@ -187,7 +191,7 @@
                                     <?php } ?>                                                                                                            
                                     <input type="hidden" name="fullname" value="<?php echo $row->fullname; ?>" id="fullname">
                                     <input type="hidden" name="registered_email_id" value="<?php echo $row->registered_email_id; ?>" id="registered_email_id">
-                                    <input type="hidden" name="idtype" value="<?php echo $idtype; ?>" id="idtype">
+                                    <input type="hidden" name="idtype" value="<?php echo $idtypes; ?>" id="idtype">
                                     <input type="hidden" name="mobileNo" value="<?php echo $row->contact_number; ?>" id="mobileNo">
                                     <input type="hidden" name="noOfHours" value="<?php echo $row->total_classroom_duration; ?>" id="noOfHours">
                                     <input type="hidden" name="survey_language" value="<?php echo $row->survey_language; ?>" id="survey_language">
