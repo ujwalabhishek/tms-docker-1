@@ -1267,12 +1267,12 @@ class tp_gateway extends CI_Controller {
 
         $enrolmentMode = $this->input->post('enrolmentMode');
         $tenant_id = $this->tenant_id;
-        $companyId = $this->input->post('company_id');
+        $companyId = $this->input->post('companyId');
         if ($enrolmentMode == 'COMPSPON') {
             $traineeSponsorshipType = "EMPLOYER";
 
             $company = $this->companyModel->get_company_details($tenant_id, $companyId);
-print_r($company); exit;
+
             //Employer
             $employerUEN = $company[0]->comp_regist_num;
             $emploerFullName = $company[0]->company_name;
