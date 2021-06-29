@@ -1862,7 +1862,30 @@ class tp_gateway extends CI_Controller {
 
         $tpg_response = json_decode($output);
         
-        print_r($tpg_response); exit;
+        print_r($output); exit;
+        
+        if ($tpg_response->status == 200) {
+            
+            $data['referenceNumber'] = $tpg_response->data->courseRun->courseDates->end;
+            $data['referenceNumber'] = $tpg_response->data->courseRun->courseDates->start;
+            $data['status'] = $tpg_response->data->enrolment->status;
+            
+            
+            
+        } else {
+            if ($tpg_response->status == 400) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 403) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 404) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 500) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } else {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            }
+            redirect('class_trainee');
+        }
         
     }
     
