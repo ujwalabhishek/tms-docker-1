@@ -1629,10 +1629,11 @@ class Class_Model extends CI_Model {
             if (!empty($schlded_date)) {
                 $ct =1;
                 foreach ($schlded_date as $k => $v) {
-                    $class_date = date('Y-m-d', strtotime($schlded_date[$k]));
-                    $session_start_time = $schlded_start_time[$k] . ':00';
-                    $session_end_time = $schlded_end_time[$k] . ':00';
-                    $class_schld_data = array(
+                    if($schlded_session_type[$k] != 'BRK'){
+                        $class_date = date('Y-m-d', strtotime($schlded_date[$k]));
+                        $session_start_time = $schlded_start_time[$k] . ':00';
+                        $session_end_time = $schlded_end_time[$k] . ':00';
+                        $class_schld_data = array(
                         'tenant_id' => $tenantId,
                         'course_id' => $class_course,
                         'class_id' => $class_id,
@@ -1641,7 +1642,22 @@ class Class_Model extends CI_Model {
                         'tpg_session_id' => $crse_ref_no.'-'.$tpg_course_run_id.'-S'.$ct,
                         'session_start_time' => $session_start_time,
                         'session_end_time' => $session_end_time
-                    );
+                        );
+                    }else{
+                        $class_date = date('Y-m-d', strtotime($schlded_date[$k]));
+                        $session_start_time = $schlded_start_time[$k] . ':00';
+                        $session_end_time = $schlded_end_time[$k] . ':00';
+                        $class_schld_data = array(
+                        'tenant_id' => $tenantId,
+                        'course_id' => $class_course,
+                        'class_id' => $class_id,
+                        'class_date' => $class_date,
+                        'session_type_id' => $schlded_session_type[$k],
+                        'session_start_time' => $session_start_time,
+                        'session_end_time' => $session_end_time
+                        );
+                    }
+                    
                     $this->db->insert('class_schld', $class_schld_data);
                     $ct +=1;
                 }
