@@ -180,7 +180,7 @@
                                 <td><?php echo $row->survey_language; ?></td>
                                 <td>
                                     <?php
-                                    if($row->tpg_uploaded_status == 0){
+                                    if($row->tpg_uploaded_status == 1){
                                         echo "Already Uploaded";
                                     }else{
                                     $atr = 'id="submit_attendance_form" name="submit_attendance" method="post"';
