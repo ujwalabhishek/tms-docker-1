@@ -164,8 +164,8 @@ $(document).ready(function () {
                     $('#score1').val(res.data.score);
                     $('#grade1').val(res.data.grade);
                     $('#ass_date1').val(res.data.assessmentDate);
-                    $('#skill_code1').val(res.data.skillCode);
-                    $('#tms_skill_code').val(res.data.tms_skill_code);
+                    $('#skill_code1').html(res.data.skillCode);
+                    $('#tms_skill_code').html(res.data.tms_skill_code);
                     $('#tms_fullname').html(res.data.trainee.tms_fullname);
                     $('#assmt_ref_no1').html(res.data.referenceNumber);//$('#update_assessment').data('refNo');
                     //if(json_data.status == 200){
