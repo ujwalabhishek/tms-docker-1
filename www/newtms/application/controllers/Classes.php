@@ -142,6 +142,7 @@ class Classes extends CI_Controller {
             $this->form_validation->set_rules('modeoftraining', 'modeoftraining', 'required');
             $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
             $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
+            $this->form_validation->set_rules('survey_language', 'survey_language', 'required|alpha');
             $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
             $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'trim|numeric|required');///modified by shubhranshu for trainer validation
             $this->form_validation->set_rules('crs_admin_email', 'Course Admin Email', 'trim|required|valid_email|max_length[30]');
