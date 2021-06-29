@@ -180,6 +180,9 @@
                                 <td><?php echo $row->survey_language; ?></td>
                                 <td>
                                     <?php
+                                    if($row->tpg_uploaded_status == 0){
+                                        echo "Already Uploaded";
+                                    }else{
                                     $atr = 'id="submit_attendance_form" name="submit_attendance" method="post"';
                                     echo form_open("tp_gateway/submit_attendance", $atr);
                                     ?>
@@ -203,7 +206,8 @@
                                     <input type="hidden" name="tpg_course_run_id" value="<?php echo $row->tpg_course_run_id; ?>" id="tpg_course_run_id">
                                     <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
                                     <?php
-                                }
+                                        }
+                                    }
                                 echo form_close();
                                 ?>
                             </td>

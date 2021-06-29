@@ -14395,6 +14395,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 tu.tax_code_type,
                 cs.tpg_session_id, 
                 cs.session_type_id,
+                cs.tpg_uploaded_status,
                 cs.class_date,
                 (CASE 
                     WHEN cs.session_type_id like '%S1%' THEN ca.session_01 ELSE 0 END
