@@ -468,7 +468,7 @@ class Classes extends CI_Controller {
         $this->form_validation->set_rules('display_class', 'Check box', 'trim');
         $this->form_validation->set_rules('languages', 'Languages', 'required');
         $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
-        $this->form_validation->set_rules('tpg_course_run_id', 'TPG Course Run ID', 'trim|numeric|is_unique[course_class.tpg_course_run_id]');
+        $this->form_validation->set_rules('tpg_course_run_id', 'TPG Course Run ID', 'trim|numeric');
         $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
         $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
         $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'required');
@@ -496,10 +496,10 @@ class Classes extends CI_Controller {
             $previous_data = json_encode($result);
             
             $result = $this->classmodel->update_class($tenant_id, $user_id);
-            if ($result == TRUE) {echo "error";exit;
+            if ($result == TRUE) {
                  user_activity(5,$class_id,$previous_data);
                 $this->session->set_flashdata("success", "Class updated successfully.");
-            } else {echo "error1";exit;
+            } else {
                 $this->session->set_flashdata("error", "Unable to update class. Please try again later.");
             }
         }
