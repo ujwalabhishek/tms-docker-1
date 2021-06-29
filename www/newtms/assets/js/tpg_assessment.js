@@ -104,7 +104,7 @@ $(document).ready(function () {
             },
             success: function (res) {
                 json_data = $.parseJSON(res);
-                if (json_data != '' && res.status == 200) {
+                if (json_data != '') {
                     $('#ass_ref_no').html(res.data.referenceNumber);
                     $('#tp_uen').html(res.data.trainingPartner.uen);
                     $('#tp_name').html(res.data.trainingPartner.name);
@@ -133,6 +133,26 @@ $(document).ready(function () {
                   // $.each(json_data.data.sessions, function(i, item) {
                    //    $('#ssg_sess').append('<tr><td>'+(i+1)+'</td><td>'+item.id+'</td><td>'+item.startDate+'</td><td>'+item.endDate+'</td><td>'+item.startTime+'</td><td>'+item.endTime+'</td><td>'+item.attendanceTaken+'</td></tr>');
                    // });
+                }else{
+                     $('#ass_ref_no').html('');
+                    $('#tp_uen').html('');
+                    $('#tp_name').html('');
+                    $('#crs_ref_no').html('');
+                    $('#crs_name').html('');
+                    $('#crs_run_id').html('');
+                    $('#crs_run_start_date').html('');
+                    $('#crs_run_end_date').html('');
+                    $('#trainee_id_type').html('');
+                    $('#trainee_id').html('');
+                    $('#fullname').html('');
+                    $('#result').html('');
+                    $('#score').html('');
+                    $('#grade').html('');
+                    $('#ass_date').html('');
+                    $('#skill_code').html('');
+                    //$('#enrol_no').html(res.data.enrolment.referenceNumber);
+                    $('#created_on').html('');
+                    $('#updated_on').html('');
                 }
             }
         });
