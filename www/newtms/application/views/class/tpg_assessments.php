@@ -255,7 +255,7 @@
             
         </tbody>
     </table>
-    <div class="required required_i">* To Update "Trainee Name" &  "Result" & "Skill Code" fields, Update in edit trainee,trainer feedback,Edit Course for the same,Then Come to update this page.</div>
+    <div class="required required_i">* To Update "Trainee Name" &  "Result" & "Skill Code" & "Score" & "Grade" fields, Update in edit trainee,trainer feedback,Edit Course,trainer feedback,trainer feedback for the same,Then Come to update this page.</div>
     <div id="status_msg"></div>
     <div class="popup_cance89" id="btnarea">
         <button class='btn btn-primary' id="updateAseessment">Update/Void</button>
