@@ -4977,7 +4977,6 @@ class Class_Trainee extends CI_Controller {
                 $previous_data = json_encode($res); //s2 
                 user_activity(11, $user_id, $previous_data); //s3 
             }
-            $this->classtraineemodel->update_feedback($tenant_id,$user_id,$course_id,$class_id,$feedback_score,$feedback_grade);
             $this->session->set_flashdata("success", "Your feedback has been updated successfully.");
         } else {
             $this->session->set_flashdata("error", "We have not been able to save the feedback.Please try again later or get in touch with your Administrator.");

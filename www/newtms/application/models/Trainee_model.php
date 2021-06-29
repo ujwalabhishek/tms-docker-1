@@ -2338,6 +2338,28 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                         $this->db->where('user_id', $user_id);
                         $update_result = $this->db->update("class_enrol", $feedback_data);
                     }
+                    if ($key == 'feedback_score') {
+                        $feedback_data = array(
+                            'feedback_score' => $value,
+                            
+                        );
+                        $this->db->where('tenant_id', $this->user->tenant_id);
+                        $this->db->where('course_id', $course_id);
+                        $this->db->where('class_id', $class_id);
+                        $this->db->where('user_id', $user_id);
+                        $update_result = $this->db->update("class_enrol", $feedback_data);
+                    }
+                    if ($key == 'feedback_grade') {
+                        $feedback_data = array(
+                            'feedback_grade' => $value,
+                            
+                        );
+                        $this->db->where('tenant_id', $this->user->tenant_id);
+                        $this->db->where('course_id', $course_id);
+                        $this->db->where('class_id', $class_id);
+                        $this->db->where('user_id', $user_id);
+                        $update_result = $this->db->update("class_enrol", $feedback_data);
+                    }
                     if ($key == 'CERTCOLDT') {
                         $certi_coll_date = (empty($value)) ? NULL : date('Y-m-d H:i:s', strtotime($value));
                         $enrol_data = array(
