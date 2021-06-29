@@ -595,6 +595,10 @@ $(document).ready(function() {
                         $('#collected_on').val(item.feedback_answer);
                     if (item.feedback_question_id == 'DTCOMMEMP')
                         $('#new_entrance').val(item.feedback_answer);
+                    if (item.feedback_question_id == 'FSCORE')
+                        $('#feedback_score option[value="' + item.feedback_answer + '"]').attr("selected", "selected");
+                    if (item.feedback_question_id == 'FGRADE')
+                        $('#feedback_grade option[value="' + item.feedback_answer + '"]').attr("selected", "selected");
                     if (item.feedback_question_id == 'SATSRATE')
                         $('#satisfaction_rating option[value="' + item.feedback_answer + '"]').attr("selected", "selected");
                     if (item.feedback_question_id == 'COMMNTS')
