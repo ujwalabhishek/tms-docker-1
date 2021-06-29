@@ -137,7 +137,7 @@ class Trainee extends CI_Controller {
             $this->form_validation->set_rules('user_name', 'Username', 'required|max_length[15]|callback_check_unique_username');
             $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
             $this->form_validation->set_rules('pers_second_name', 'Secondname', 'max_length[100]');
-            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|max_length[50]');
+            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|exact_length[8]');
             $this->form_validation->set_rules('pers_alternate_email', 'Email', 'valid_email');
             $this->form_validation->set_rules('pers_alternate_contact_number', 'Alternater Contact Number', 'max_length[50]');
             $this->form_validation->set_rules('pers_gender', 'Gender', 'required');
@@ -308,6 +308,7 @@ class Trainee extends CI_Controller {
             $valid = TRUE;
             $country_of_residence = $this->input->post('country_of_residence');
             $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
+            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|exact_length[8]');
             if ($country_of_residence == 'IND') {
                 $tax_code = $this->input->post("PAN");
                 $this->form_validation->set_rules('PAN', 'PAN Number', 'required|max_length[15]');
