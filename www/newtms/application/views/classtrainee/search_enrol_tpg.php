@@ -203,8 +203,8 @@
                         <th width="8%" class="th_header">Course End Date</th>
                         <th width="9%" class="th_header">Enrolment Reference No.</th>
                         <th width="6%" class="th_header">Sponsorship Type</th>
-                        <th width="6%" class="th_header">Fee Collection Status</th>
                         <th width="6%" class="th_header">Discount</th>
+                        <th width="6%" class="th_header">Fee Collection Status</th>                        
                         <th width="6%" class="th_header">Enrolment Date</th>                                                                  
                     </tr>
                 </thead>
