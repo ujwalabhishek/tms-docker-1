@@ -1861,8 +1861,8 @@ class tp_gateway extends CI_Controller {
 
         $tpg_response = json_decode($output);
 
-        //print_r($output);
-        //exit;
+        print_r($tpg_response);
+        exit;
 
         if ($tpg_response->status == 200) {
 
@@ -1896,6 +1896,8 @@ class tp_gateway extends CI_Controller {
 
             //Sessions
             $data['sessionEndDate'] = $tpg_response->data->courseRun->sessions->endDate;
+            print_r($output);
+            exit;
             $data['sessionEndTime'] = $tpg_response->data->courseRun->sessions->endTime;
             $data['sessionId'] = $tpg_response->data->courseRun->sessions->id;
             $data['sessionStartDate'] = $tpg_response->data->courseRun->sessions->startDate;
