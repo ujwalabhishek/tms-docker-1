@@ -177,8 +177,10 @@ $(document).ready(function () {
                     $('#result1').html(res.data.result);
                     if(res.data.tms_result == "C"){
                         $resu = 'Pass';
+                    }else if(res.data.tms_result == "EX"){
+                        $resu = 'exempt';
                     }else{
-                        $resu = 'Fail';
+                         $resu = 'fail';
                     }
                     $('#tms_result').html($resu);
                     $('#score1').html(res.data.score);
