@@ -66,9 +66,12 @@ class tp_gateway extends CI_Controller {
 
 //// added by shubhranshu to view assessment
     public function view_assessment() {
+         $tenant_id = $this->tenant_id;
         $assessment_ref_no = $this->input->post('referenceNo');
         $asessment_resp = $this->tpgModel->view_asssessment_from_tpg($assessment_ref_no);
-        echo $asessment_resp;
+        $trainees = $this->classModel->get_tms_trainee_assessments($assessment_ref_no,$tenant_id);
+        echo $trainees;exit;
+        //echo $asessment_resp;
     }
 
     //// added by shubhranshu toupdate assessment

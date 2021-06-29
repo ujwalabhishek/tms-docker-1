@@ -2094,6 +2094,41 @@ class Class_Model extends CI_Model {
             return TRUE;
         }
     }
+    
+    public function get_tms_trainee_assessments($assessment_ref_no,$tenant_id){
+
+         $sql = "SELECT
+                cm.company_name,
+                c.reference_num,
+                c.course_id,
+                cc.tpg_course_run_id,
+                tu.tax_code,
+                tu.tax_code_type,
+                cc.class_id,
+                ce.eid_number,
+                ce.assessment_reference_No,
+                ce.user_id,
+                tup.first_name as fullname,
+                CURDATE() as assessmentDate,
+                c.competency_code as skillCode,
+                ce.feedback_score,
+                ce.feedback_grade,
+                (CASE WHEN ce.training_score ='C' THEN 'Pass' ELSE 'Fail' END) as 'result',
+                cc.class_start_datetime,
+                cc.class_end_datetime,
+                cc.class_name,
+                ce.training_score
+                FROM ( course_class cc) 
+                JOIN course c ON c.course_id = cc.course_id 
+                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                left join tms_users_pers tup on tup.user_id =ce.user_id 
+                left join company_master cm on cm.company_id=ce.company_id
+                WHERE cc . tenant_id = '$tenant_id' AND assessment_reference_No='$assessment_ref_no'";             
+                $result = $this->db->query($sql)->result();
+                //echo $this->db->last_query();exit;
+                return $result;
+    }
 
 
 }
