@@ -23,16 +23,14 @@
                         <b>Course Title. :<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="nric" style="" value='<?php echo $title; ?>' disabled="disabled"/>
-                        <span id="nric_err"></span>
+                        <?php echo $title; ?>
                     </td> 
 
                     <td>
                         <b>Coure Reference Number:<span class="required">*</span></b> 
                     </td>
                     <td> 
-                        <input type="text" name="fullname" id="fullname" style="" value='<?php echo $referenceNumber; ?>' disabled="disabled"/>
-                        <span id="fullname_err"></span>
+                        <?php echo $referenceNumber; ?>
                     </td>
                 </tr>
 
@@ -41,16 +39,14 @@
                         <b>Course Run ID:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="nric" style="" value='<?php echo $courseRunId; ?>' disabled="disabled"/>
-                        <span id="nric_err"></span>
+                        <?php echo $courseRunId; ?>
                     </td> 
 
                     <td>
                         <b>External Reference Number.:<span class="required">*</span></b> 
                     </td>
                     <td> 
-                        <input type="text" name="fullname" id="fullname" style="" value='<?php echo $externalReferenceNumber; ?>' disabled="disabled"/>
-                        <span id="fullname_err"></span>
+                        <?php echo $externalReferenceNumber; ?>
                     </td>
                 </tr>
 
@@ -109,13 +105,9 @@
                 <tr class="new_span">
                     <td class="td_heading">Venue:<span class="required">*</span></td>
                     <td>                        
-                        <?php echo $venueBlock . ', ' . $venueBuilding; ?>,</br>
-                        <?php echo $venueFloor; ?>,</br>
-                        <?php echo $venuePostalCode; ?>,</br>
-                        <?php echo $venueRoom; ?></br>
-                        <?php echo $venueStreet; ?></br>
-                        <?php echo $venueUnit; ?></br>                        
-                        <span id="crefno_err"></span>
+                        <?php echo $venueBlock . ' ' . $venueBuilding.' Floor : '.$venueFloor.' '.$venuePostalCode; ?>
+                        ,</br>                        
+                        <?php echo $venueRoom. ' ' .$venueStreet.' Unit : '.$venueUnit; ?>                                                
                     </td>                                    
                 </tr>
                 <tr class="new_span">
