@@ -402,7 +402,7 @@ class Tpg_api_Model extends CI_Model {
                       },
                       "trainee": {
                         "idType": "'.$taxcode_type.'",
-                        "id": "'.$retun[nric].'",
+                        "id": "'.$trainee->tax_code.'",
                         "fullName": "'.$trainee->fullname.'"
                       },
                       "result": "'.$trainee->result.'",
