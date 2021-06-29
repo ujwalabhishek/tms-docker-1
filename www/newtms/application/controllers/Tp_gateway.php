@@ -70,7 +70,7 @@ class tp_gateway extends CI_Controller {
         $assessment_ref_no = $this->input->post('referenceNo');
         $asessment_resp = $this->tpgModel->view_asssessment_from_tpg($assessment_ref_no);
         $trainees = $this->classModel->get_tms_trainee_assessments($assessment_ref_no,$tenant_id);
-        echo $trainees;exit;
+        print_r( $trainees);exit;
         //echo $asessment_resp;
     }
 
