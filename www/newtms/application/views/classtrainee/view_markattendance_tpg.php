@@ -69,7 +69,7 @@
                     <td>                    
                         <b>Mode of Training.:<span class="required">*</span></b> 
                     </td>   
-                    <td>
+                    <td colspan="3">
                         <?php echo $modeOfTraining; ?>
                     </td>                    
                 </tr> 
