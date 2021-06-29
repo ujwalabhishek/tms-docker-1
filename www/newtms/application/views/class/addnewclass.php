@@ -431,7 +431,7 @@ echo form_open("classes/add_new_class", $atr);
                     </tr>
                     <tr>                        
                         <td class="td_heading"> Venue Building:<span class="required">*</span></td>
-                        <td colspan='5'>
+                        <td colspan='3'>
                             <label class="label_font">
                                 <?php
                                 $venue_building = array(
@@ -445,6 +445,21 @@ echo form_open("classes/add_new_class", $atr);
                                 ?>
                             </label>
                             <span id="venue_building_err"></span>
+                        </td>
+                         <td class="td_heading"> Survey Language:<span class="required">*</span></td>
+                        <td>
+                            <label class="label_font">
+                                <?php
+                                $survey_language = array();
+                                $survey_language['']='Please Choose';
+                                $survey_language[] ='EL- English';
+                                $survey_language[] ='MN- Mandarin';
+                                $survey_language[] ='MY- Malay';
+                                $survey_language[] ='TM- Tamil';
+                                echo form_dropdown('survey_language', $survey_language, $this->input->post('survey_language'), 'id="survey_language"');
+                                ?>
+                            </label>
+                            <span id="survey_language_err"></span>
                         </td>
                     </tr>
                 

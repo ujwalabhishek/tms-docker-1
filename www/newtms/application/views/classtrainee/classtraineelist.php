@@ -743,6 +743,26 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                         ?>                    
                     </td>
                 </tr>
+                 <tr>
+                    <td class="td_heading">Feedback Score:</td>
+                    <td>                    
+                        <?php
+                        $feedback_score = array('' => 'Select', '10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50,'60' => 60, '70' => 70, '80' => 80, '90' => 90, '100' => 100);
+                        $feedback_score_attr = 'id="feedback_score" "required"';
+                        echo form_dropdown('feedback_score', $feedback_score, '', $feedback_score_attr);
+                        ?>   
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_heading">Feedback Grade:</td>
+                    <td>                    
+                        <?php
+                        $feedback_grade = array('' => 'Select', 'A' => 'A', 'B' => 'B', 'C' =>'C', 'D' => 'D', 'E' => 'E','F' => 'F');
+                        $feedback_grade_attr = 'id="feedback_grade" "required"';
+                        echo form_dropdown('feedback_grade', $feedback_grade, '', $feedback_grade_attr);
+                        ?>   
+                    </td>
+                </tr>
                 <tr>
                     <td class="td_heading"><?php echo get_catname_by_parm('SATSRATE'); ?>:</td>
                     <td>                    

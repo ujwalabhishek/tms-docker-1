@@ -614,6 +614,13 @@ function validate() {
     } else {
         remove_err('#modeoftraining');
     }
+    $survey_language= $('#survey_language').val();
+    if ($survey_language.length == 0) {
+        disp_err('#survey_language');
+        $retval = false;
+    } else {
+        remove_err('#survey_language');
+    }
     $cls_venue = $('#cls_venue').val();
     if ($cls_venue.length == 0) {
         disp_err('#cls_venue');
