@@ -91,12 +91,13 @@ $(document).ready(function () {
         return $retval;
     }
     
-    $('#click_assessment').click(function () {
-   
+
+    $('[href="#view_assessment"]').click(function(){
+
         $.ajax({
             type: 'post',
             url: $baseurl + 'tp_gateway/view_assessment',
-            data: {referenceNo: $('#click_assessment').attr("data-refno") },
+            data: {referenceNo: $(this).attr('data-refno') },
             dataType: "json",
             beforeSend: function () {
                 
@@ -138,13 +139,13 @@ $(document).ready(function () {
     });
     
     
-    $('#update_assessment').click(function () {
+    $('[href="#update_void_assessment"]').click(function(){
         $('#btnarea').show();
         $('#status_msg').html('');
         $.ajax({
             type: 'post',
             url: $baseurl + 'tp_gateway/view_assessment',
-            data: {referenceNo: $('#update_assessment').attr("data-refno")},
+            data: {referenceNo: $(this).attr('data-refno')},
             dataType: "json",
             beforeSend: function () {
                 
