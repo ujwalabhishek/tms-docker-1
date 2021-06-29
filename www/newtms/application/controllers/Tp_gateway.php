@@ -1861,8 +1861,8 @@ class tp_gateway extends CI_Controller {
 
         $tpg_response = json_decode($output);
 
-        print_r($tpg_response);
-        exit;
+        //print_r($tpg_response);
+        //exit;
 
         if ($tpg_response->status == 200) {
 
@@ -1895,23 +1895,21 @@ class tp_gateway extends CI_Controller {
             $data['title'] = $tpg_response->data->courseRun->title;
 
             //Sessions
-            $data['sessionEndDate'] = $tpg_response->data->courseRun->sessions->endDate;
-            print_r($output);
-            exit;
-            $data['sessionEndTime'] = $tpg_response->data->courseRun->sessions->endTime;
-            $data['sessionId'] = $tpg_response->data->courseRun->sessions->id;
-            $data['sessionStartDate'] = $tpg_response->data->courseRun->sessions->startDate;
-            $data['sessionStartTime'] = $tpg_response->data->courseRun->sessions->startTime;
+            $data['sessionEndDate'] = $tpg_response->data->courseRun->sessions[0]->endDate;            
+            $data['sessionEndTime'] = $tpg_response->data->courseRun->sessions[0]->endTime;
+            $data['sessionId'] = $tpg_response->data->courseRun->sessions[0]->id;
+            $data['sessionStartDate'] = $tpg_response->data->courseRun->sessions[0]->startDate;
+            $data['sessionStartTime'] = $tpg_response->data->courseRun->sessions[0]->startTime;
 
             //venue
-            $data['venueBlock'] = $tpg_response->data->courseRun->sessions->venue->block;
-            $data['venueBuilding'] = $tpg_response->data->courseRun->sessions->venue->building;
-            $data['venueFloor'] = $tpg_response->data->courseRun->sessions->venue->floor;
-            $data['venuePostalCode'] = $tpg_response->data->courseRun->sessions->venue->postalCode;
-            $data['venueRoom'] = $tpg_response->data->courseRun->sessions->venue->room;
-            $data['venueStreet'] = $tpg_response->data->courseRun->sessions->venue->street;
-            $data['venueUnit'] = $tpg_response->data->courseRun->sessions->venue->unit;
-            $data['venueWheelChairAccess'] = $tpg_response->data->courseRun->sessions->venue->wheelChairAccess;
+            $data['venueBlock'] = $tpg_response->data->courseRun->sessions[0]->venue->block;
+            $data['venueBuilding'] = $tpg_response->data->courseRun->sessions[0]->venue->building;
+            $data['venueFloor'] = $tpg_response->data->courseRun->sessions[0]->venue->floor;
+            $data['venuePostalCode'] = $tpg_response->data->courseRun->sessions[0]->venue->postalCode;
+            $data['venueRoom'] = $tpg_response->data->courseRun->sessions[0]->venue->room;
+            $data['venueStreet'] = $tpg_response->data->courseRun->sessions[0]->venue->street;
+            $data['venueUnit'] = $tpg_response->data->courseRun->sessions[0]->venue->unit;
+            $data['venueWheelChairAccess'] = $tpg_response->data->courseRun->sessions[0]->venue->wheelChairAccess;
 
             $data['sideMenuData'] = fetch_non_main_page_content();
             $data['page_title'] = 'TPG View Course Session Attendance';
