@@ -66,17 +66,17 @@ class tp_gateway extends CI_Controller {
 
 //// added by shubhranshu to view assessment
     public function view_assessment() {
-         $tenant_id = $this->tenant_id;
+        $tenant_id = $this->tenant_id;
         $assessment_ref_no = $this->input->post('referenceNo');
         $asessment_resp = $this->tpgModel->view_asssessment_from_tpg($assessment_ref_no);
-        $trainees = $this->classModel->get_tms_trainee_assessments($assessment_ref_no,$tenant_id);
+        $trainees = $this->classModel->get_tms_trainee_assessments($assessment_ref_no, $tenant_id);
         $arr_json = json_decode($asessment_resp);
-        $arr_json->data->trainee->tms_fullname =$trainees[0]->fullname;
-        $arr_json->data->tms_result =$trainees[0]->training_score;
-        $arr_json->data->tms_result =$trainees[0]->training_score;
-        $arr_json->data->tms_skill_code =$trainees[0]->skillCode;
-        $arr_json->data->tms_grade =$trainees[0]->feedback_grade;
-        $arr_json->data->tms_score =$trainees[0]->feedback_score;
+        $arr_json->data->trainee->tms_fullname = $trainees[0]->fullname;
+        $arr_json->data->tms_result = $trainees[0]->training_score;
+        $arr_json->data->tms_result = $trainees[0]->training_score;
+        $arr_json->data->tms_skill_code = $trainees[0]->skillCode;
+        $arr_json->data->tms_grade = $trainees[0]->feedback_grade;
+        $arr_json->data->tms_score = $trainees[0]->feedback_score;
         //print_r( json_encode($arr_json));exit;
         echo json_encode($arr_json);
     }
@@ -1634,7 +1634,7 @@ class tp_gateway extends CI_Controller {
             //$data['feeCollectionStatus'] = $tpg_response->data->enrolment->trainee->fees->collectionStatus;
 
             $paymentStatus = $this->input->post('tmsPaymentStatus');
-            
+
             if ($paymentStatus == 'PAID') {
                 $data['feeCollectionStatus'] = "Full Payment";
             } else if ($paymentStatus == 'NOTPAID') {
@@ -1657,7 +1657,7 @@ class tp_gateway extends CI_Controller {
                 $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
                 $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
             }
-            
+
             $data['feeCollectionStatus_options'] = $feeCollectionStatus_options;
 
             $data['traineeEnrolmentDate'] = $tpg_response->data->enrolment->trainee->enrolmentDate;
@@ -1807,9 +1807,9 @@ class tp_gateway extends CI_Controller {
             redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
     }
-    
+
     /////added by shubhranshu fro submit attendance to tpg
-    function submit_attendance(){
+    function submit_attendance() {
         $tenant_id = $this->tenant_id;
         $tpg_session_id = $this->input->post('tpg_session_id');
         $attn_status_code = $this->input->post('attn_status_code');
@@ -1821,57 +1821,101 @@ class tp_gateway extends CI_Controller {
         $noOfHours = $this->input->post('noOfHours');
         $survey_language = $this->input->post('survey_language');
         $class_id = $this->input->post('class_id');
-        $course_id= $this->input->post('course_id');
+        $course_id = $this->input->post('course_id');
         $user_id = $this->input->post('user_id');
         $tax_code = $this->input->post('tax_code');
         $crs_reference_num = $this->input->post('crs_reference_num');
         $tpg_course_run_id = $this->input->post('tpg_course_run_id');
         $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
-        $obj_resp=$this->tpgModel->submit_attendance_to_tpg($tenant->comp_reg_no,$tpg_course_run_id,$tax_code,$crs_reference_num,$tenant_id,$user_id,$course_id,$class_id,$survey_language,$noOfHours,$tpgCourseId,$tpg_session_id,$attn_status_code,$fullname,$registered_email_id,$idtype,$mobileNo);
+        $obj_resp = $this->tpgModel->submit_attendance_to_tpg($tenant->comp_reg_no, $tpg_course_run_id, $tax_code, $crs_reference_num, $tenant_id, $user_id, $course_id, $class_id, $survey_language, $noOfHours, $tpgCourseId, $tpg_session_id, $attn_status_code, $fullname, $registered_email_id, $idtype, $mobileNo);
         $controller = 'class_trainee/mark_attendance_tpg';
-        
+
         if ($obj_resp->status == 200) {
-            $this->classTraineeModel->uploadTmsClassShdl($tenant_id,$course_id,$class_id,$tpg_session_id);///update tms record
+            $this->classTraineeModel->uploadTmsClassShdl($tenant_id, $course_id, $class_id, $tpg_session_id); ///update tms record
             $this->session->set_flashdata("success", "Attendance Uploaded Successfully To TPG ");
             redirect($controller);
-        }else{
+        } else {
             $this->handle_error($controller, $obj_resp);
         }
-        
     }
-    
+
     public function retrieve_course_sess_att($tpg_course_run_id, $courseReferenceNumber, $sessionId) {
-        
+
         $tenant_id = $this->tenant_id;
         $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
-                
+
         $retun = $this->correct_live_dev_api_data($courseReferenceNumber, $tenant->comp_reg_no);
-        
+
         $uen = $retun['tp_uen'];
-                
+
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
 
         $api_version = 'v1.3';
-        $url = "https://" . TPG_DEV_URL . "/courses/runs/".$tpg_course_run_id."/sessions/attendance?uen=".$uen."&courseReferenceNumber=".$courseReferenceNumber."&sessionId=".$sessionId;
+        $url = "https://" . TPG_DEV_URL . "/courses/runs/" . $tpg_course_run_id . "/sessions/attendance?uen=" . $uen . "&courseReferenceNumber=" . $courseReferenceNumber . "&sessionId=" . $sessionId;
 
         $request = $this->curl_request('GET', $url, "", $api_version);
 
         $output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
         $tpg_response = json_decode($output);
-        
-        print_r($output); exit;
-        
+
+        //print_r($output);
+        //exit;
+
         if ($tpg_response->status == 200) {
-            
-            $data['referenceNumber'] = $tpg_response->data->courseRun->courseDates->end;
-            $data['referenceNumber'] = $tpg_response->data->courseRun->courseDates->start;
-            $data['status'] = $tpg_response->data->enrolment->status;
-            
-            
-            
+
+            $data['courseEndDate'] = $tpg_response->data->courseRun->courseDates->end;
+            $data['courseStartDate'] = $tpg_response->data->courseRun->courseDates->start;
+            $data['externalReferenceNumber'] = $tpg_response->data->courseRun->externalReferenceNumber;
+            $modeOfTraining = $tpg_response->data->courseRun->modeOfTraining;
+            if ($modeOfTraining == 1) {
+                $modeOfTraining = "Classroom";
+            } else if ($modeOfTraining == 2) {
+                $modeOfTraining = "Asynchronous eLearning";
+            } else if ($modeOfTraining == 3) {
+                $modeOfTraining = "In-house";
+            } else if ($modeOfTraining == 4) {
+                $modeOfTraining = "On-the-Job";
+            } else if ($modeOfTraining == 5) {
+                $modeOfTraining = "Practical / Practicum";
+            } else if ($modeOfTraining == 6) {
+                $modeOfTraining = "Supervised Field";
+            } else if ($modeOfTraining == 7) {
+                $modeOfTraining = "Traineeship";
+            } else if ($modeOfTraining == 8) {
+                $modeOfTraining = "Assessment";
+            } else if ($modeOfTraining == 9) {
+                $modeOfTraining = "Synchronous eLearning";
+            }
+            $data['modeOfTraining'] = $modeOfTraining;
+            $data['courseRunId'] = $tpg_response->data->courseRun->id;
+            $data['referenceNumber'] = $tpg_response->data->courseRun->referenceNumber;
+            $data['title'] = $tpg_response->data->courseRun->title;
+
+            //Sessions
+            $data['sessionEndDate'] = $tpg_response->data->courseRun->sessions->endDate;
+            $data['sessionEndTime'] = $tpg_response->data->courseRun->sessions->endTime;
+            $data['sessionId'] = $tpg_response->data->courseRun->sessions->id;
+            $data['sessionStartDate'] = $tpg_response->data->courseRun->sessions->startDate;
+            $data['sessionStartTime'] = $tpg_response->data->courseRun->sessions->startTime;
+
+            //venue
+            $data['venueBlock'] = $tpg_response->data->courseRun->sessions->venue->block;
+            $data['venueBuilding'] = $tpg_response->data->courseRun->sessions->venue->building;
+            $data['venueFloor'] = $tpg_response->data->courseRun->sessions->venue->floor;
+            $data['venuePostalCode'] = $tpg_response->data->courseRun->sessions->venue->postalCode;
+            $data['venueRoom'] = $tpg_response->data->courseRun->sessions->venue->room;
+            $data['venueStreet'] = $tpg_response->data->courseRun->sessions->venue->street;
+            $data['venueUnit'] = $tpg_response->data->courseRun->sessions->venue->unit;
+            $data['venueWheelChairAccess'] = $tpg_response->data->courseRun->sessions->venue->wheelChairAccess;
+
+            $data['sideMenuData'] = fetch_non_main_page_content();
+            $data['page_title'] = 'TPG View Course Session Attendance';
+            $data['main_content'] = 'classtrainee/view_markattendance_tpg';
+
+            $this->load->view('layout', $data);
         } else {
             if ($tpg_response->status == 400) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
@@ -1886,26 +1930,25 @@ class tp_gateway extends CI_Controller {
             }
             redirect('class_trainee');
         }
-        
     }
-    
-    public function correct_live_dev_api_data($crse_ref_no,$tp_uen,$skillCode='',$nric=''){
-        if(TPG_ENVIRONMENT == 'PRODUCTION'){
-           $crse_ref_no = $crse_ref_no;
-           $tp_uen  = $tp_uen;
-           $domain=TPG_LIVE_URL;
-           $skillCode = $skillCode;
-           $nric = $nric;
-        }else{
-          $crse_ref_no =  'TGS-2020002096';
-          $tp_uen = '201000372W';
-          $domain=TPG_DEV_URL;
-          $skillCode='AER-MAT-2019-2.1';
-          $nric='S8195288D';
-          $dob='1981-01-10';
-          $corpassid='S5883425D';
+
+    public function correct_live_dev_api_data($crse_ref_no, $tp_uen, $skillCode = '', $nric = '') {
+        if (TPG_ENVIRONMENT == 'PRODUCTION') {
+            $crse_ref_no = $crse_ref_no;
+            $tp_uen = $tp_uen;
+            $domain = TPG_LIVE_URL;
+            $skillCode = $skillCode;
+            $nric = $nric;
+        } else {
+            $crse_ref_no = 'TGS-2020002096';
+            $tp_uen = '201000372W';
+            $domain = TPG_DEV_URL;
+            $skillCode = 'AER-MAT-2019-2.1';
+            $nric = 'S8195288D';
+            $dob = '1981-01-10';
+            $corpassid = 'S5883425D';
         }
-        $data =array(
+        $data = array(
             'ref_no' => $crse_ref_no,
             'tp_uen' => $tp_uen,
             'domain' => $domain,
