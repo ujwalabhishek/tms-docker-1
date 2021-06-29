@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.0111"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.0000111"></script>
 <style>
     table td{
         font-size: 11px;
@@ -215,7 +215,7 @@
     <table class="table table-striped" id='tblarea'>
         <tbody>
             <tr>
-                <td class="td_heading">TPG Trainee Full Name:<span class="required">*</span></td>
+                <td class="td_heading">Trainee Full Name:<span class="required">*</span></td>
                 <td  colspan='3'> "<span id='fullname1'></span>"<span> Will Changed To : "</span> <b><span id="tms_fullname"></span>"</b></td>
             </tr>
             <tr>
@@ -226,13 +226,15 @@
                 <td class="td_heading">Skill Code:<span class="required">*</span></td>
                 <td colspan='3'>"<span id='skill_code1'></span>"<span> Will Changed To : "</span> <b><span id="tms_skill_code"></span>"</b></td>
             </tr>
-            <tr>
+             <tr>
                 <td class="td_heading">Score:<span class="required">*</span></td>
-                <td><input type="text" name="score" value="" id='score1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
-                <td class="td_heading">Grade:<span class="required">*</span></td>
-                <td><input type="text" name="grade" value="" id='grade1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
+                <td colspan='3'>"<span id='score1'></span>"<span> Will Changed To : "</span> <b><span id="tms_score"></span>"</b></td>
             </tr>
-
+             <tr>
+                <td class="td_heading">Grade:<span class="required">*</span></td>
+                <td colspan='3'>"<span id='grade1'></span>"<span> Will Changed To : "</span> <b><span id="tms_grade"></span>"</b></td>
+            </tr>
+            
             <tr>
                 <td class="td_heading">Assessment Date:<span class="required">*</span></td>
                 <td colspan="3"><input type="date" name="assessment_date" value="" id='ass_date1' style="line-height: 14px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
@@ -253,7 +255,7 @@
             
         </tbody>
     </table>
-    <div class="required required_i">* To Update "Trainee Name" &  "Result" & "Skill Code" fields, Update in edit trainee,trainer feedback,Edit Course for the same,Then Come to update this page.</div>
+    <div class="required required_i">* To Update "Trainee Name" &  "Result" & "Skill Code" & "Score" & "Grade" fields, Update in edit trainee,trainer feedback,Edit Course,trainer feedback,trainer feedback for the same,Then Come to update this page.</div>
     <div id="status_msg"></div>
     <div class="popup_cance89" id="btnarea">
         <button class='btn btn-primary' id="updateAseessment">Update/Void</button>

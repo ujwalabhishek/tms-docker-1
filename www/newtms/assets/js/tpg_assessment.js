@@ -177,12 +177,16 @@ $(document).ready(function () {
                     $('#result1').html(res.data.result);
                     if(res.data.tms_result == "C"){
                         $resu = 'Pass';
+                    }else if(res.data.tms_result == "EX"){
+                        $resu = 'Exempt';
                     }else{
-                        $resu = 'Fail';
+                         $resu = 'Fail';
                     }
                     $('#tms_result').html($resu);
-                    $('#score1').val(res.data.score);
-                    $('#grade1').val(res.data.grade);
+                    $('#score1').html(res.data.score);
+                    $('#grade1').html(res.data.grade);
+                    $('#tms_score').html(res.data.tms_score);
+                    $('#tms_grade').html(res.data.tms_grade);
                     $('#ass_date1').val(res.data.assessmentDate);
                     $('#skill_code1').html(res.data.skillCode);
                     $('#tms_skill_code').html(res.data.tms_skill_code);
@@ -206,8 +210,8 @@ $(document).ready(function () {
        
        $fullname1=$('#tms_fullname').html();
        $result1=$('#tms_result').html();
-       $score1=$('#tms_result').val();
-       $grade1=$('#grade1').val();
+       $score1=$('#tms_score').html();
+       $grade1=$('#tms_grade').html();
        $ass_date1=$('#ass_date1').val();
        $skill_code1=$('#tms_skill_code').html();
        $action=$('#action').val();

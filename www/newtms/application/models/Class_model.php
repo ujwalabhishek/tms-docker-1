@@ -1954,7 +1954,7 @@ class Class_Model extends CI_Model {
                 c.competency_code as skillCode,
                 ce.feedback_score,
                 ce.feedback_grade,
-                (CASE WHEN ce.training_score ='C' THEN 'Pass' ELSE 'Fail' END) as 'result',
+                (CASE WHEN ce.training_score ='C' THEN 'Pass' WHEN ce.training_score ='EX' THEN 'Exempt' ELSE 'Fail' END) as 'result',
                 cc.class_start_datetime,
                 cc.class_end_datetime,
                 cc.class_name,
