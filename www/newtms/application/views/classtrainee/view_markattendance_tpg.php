@@ -55,16 +55,14 @@
                         <b>Course Start Date.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="dob" style="" value='<?php echo $courseStartDate; ?>' disabled="disabled"/>
-                        <span id="dob_err"></span>
+                        <?php echo $courseStartDate; ?>
                     </td> 
 
                     <td>
                         <b>Course End Date:<span class="required">*</span></b> 
                     </td>
                     <td> 
-                        <input type="text" name="fullname" id="contactno" style="" value='<?php echo $courseEndDate; ?>' disabled="disabled"/>
-                        <span id="contactno_err"></span>
+                        <?php echo $courseEndDate; ?>
                     </td>
                 </tr>
                 <tr class="change_span" style="">
@@ -72,8 +70,7 @@
                         <b>Mode of Training.:<span class="required">*</span></b> 
                     </td>   
                     <td>
-                        <input type="text" name="change_taxcode_autocomplete" id="dob" style="" value='<?php echo $modeOfTraining; ?>' disabled="disabled"/>
-                        <span id="dob_err"></span>
+                        <?php echo $modeOfTraining; ?>
                     </td>                    
                 </tr> 
                 <tr>
@@ -112,7 +109,7 @@
                 </tr>
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Wheel Chair Access<span class="required">*</span></td>
-                    <td>
+                    <td colspan="3">
                         <?php
                         if ($venueWheelChairAccess) {
                             echo "Yes";
