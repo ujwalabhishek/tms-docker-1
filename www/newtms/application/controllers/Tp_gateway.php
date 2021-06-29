@@ -1835,5 +1835,22 @@ class tp_gateway extends CI_Controller {
         }
         
     }
+    
+    public function retrieve_course_sess_att($tpg_course_run_id, $uen, $courseReferenceNumber, $sessionId) {
+        
+        $encrypt_method = "AES-256-CBC";
+        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+        $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
+
+        $api_version = 'v1.3';
+        $url = "https://" . TPG_DEV_URL . "/courses/runs/".$tpg_course_run_id."/sessions/attendance?uen=".$uen."&courseReferenceNumber=".$courseReferenceNumber."&sessionId=".$sessionId;
+
+        $request = $this->curl_request('GET', $url, "", $api_version);
+
+        $output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+
+        $tpg_response = json_decode($output);
+        
+    }
 
 }
