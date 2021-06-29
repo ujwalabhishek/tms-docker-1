@@ -155,10 +155,12 @@ $(document).ready(function () {
                 if (json_data != '' && res.status == 200) {
                     $('#fullname1').html(res.data.trainee.fullName);
                     $('#result1').html(res.data.result);
+                    $('#tms_result').html(res.data.tms_result);
                     $('#score1').val(res.data.score);
                     $('#grade1').val(res.data.grade);
                     $('#ass_date1').val(res.data.assessmentDate);
                     $('#skill_code1').val(res.data.skillCode);
+                    $('#tms_fullname').val(res.data.trainee.tms_fullName);
                     $('#assmt_ref_no1').html(res.data.referenceNumber);//$('#update_assessment').data('refNo');
                     //if(json_data.status == 200){
                         

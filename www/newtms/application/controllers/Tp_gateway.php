@@ -72,7 +72,7 @@ class tp_gateway extends CI_Controller {
         $trainees = $this->classModel->get_tms_trainee_assessments($assessment_ref_no,$tenant_id);
         $arr_json = json_decode($asessment_resp);
         $arr_json->data->trainee->tms_fullname =$trainees[0]->fullname;
-        $arr_json->data->tms_score =$trainees[0]->training_score;
+        $arr_json->data->tms_result =$trainees[0]->training_score;
         //print_r( json_encode($arr_json));exit;
         echo json_encode($arr_json);
     }
