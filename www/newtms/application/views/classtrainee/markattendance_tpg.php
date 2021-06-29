@@ -180,10 +180,12 @@
                                 <td><?php echo $row->survey_language; ?></td>
                                 <td>
                                     <?php
-                                    if($row->tpg_uploaded_status == 1){
-                                        echo "Already Uploaded";
-                                    }else{
-                                    $atr = 'id="submit_attendance_form" name="submit_attendance" method="post"';
+                                    if($row->tpg_uploaded_status == 1){?>
+                                       <span>Already Uploaded</span>
+                                        <a href="#view_session_attn" rel="modal:open" id="click_attendance" data-tpgSessionId="<?php echo $row->tpg_session_id;?>" data-crsRefNo="<?php echo $row->reference_num;?>" data-tpgCrsRunid="<?php echo $row->tpg_course_run_id;?>"><span class="btnblue">View Session</span></a>                                
+                                     }else{
+                                    <?php
+                                        $atr = 'id="submit_attendance_form" name="submit_attendance" method="post"';
                                     echo form_open("tp_gateway/submit_attendance", $atr);
                                     ?>
                                     <input type="hidden" name="tpg_session_id" value="<?php echo $row->tpg_session_id; ?>" id="tpg_session_id">                                    
@@ -225,60 +227,12 @@
     </div>
 </div>
 
-<div class="modal1_0001" id="update_void_assessment" style="display:none;height:270px;min-height: 200px;width:60%">
-    <h2 class="panel_heading_style">TPG Update/Void Assessment</h2>
-    <table class="table table-striped" id='tblarea'>
-        <tbody>
-            <tr>
-                <td class="td_heading">Trainee Full Name:<span class="required">*</span></td>
-                <td id='fullname1'></td>
-                <td class="td_heading">Result:<span class="required">*</span></td>
-                <td id='result1'></td>
-            </tr>
-
-            <tr>
-                <td class="td_heading">Score:<span class="required">*</span></td>
-                <td><input type="text" name="score" value="" id='score1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
-                <td class="td_heading">Grade:<span class="required">*</span></td>
-                <td><input type="text" name="grade" value="" id='grade1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
-            </tr>
-
-            <tr>
-                <td class="td_heading">Assessment Date:<span class="required">*</span></td>
-                <td><input type="date" name="assessment_date" value="" id='ass_date1' style="line-height: 14px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
-                <td class="td_heading">Skill Code:<span class="required">*</span></td>
-                <td><input type="text" name="skill_Code" value="" id='skill_code1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
-            </tr>
-            <tr>
-                <td class="td_heading">Action:<span class="required">*</span></td>
-                <td>
-                    <select name="action" id="action">
-                        <option value="" selected="selected">Select</option>
-                        <option value="update">Update</option>
-                        <option value="void">Void</option>
-                    </select>
-                </td>
-                <td class="td_heading">Assessment Ref No:<span class="required">*</span></td>
-                <td id='assmt_ref_no1'></td>
-            </tr>
-
-        </tbody>
-    </table>
-    <div class="required required_i">* To Update "Trainee Name" &  "Result" & "Skill Code" fields, Update in edit trainee,trainer feedback,Edit Course for the same,Then Come to update this page.</div>
-    <div id="status_msg"></div>
-    <div class="popup_cance89" id="btnarea">
-        <button class='btn btn-primary' id="updateAseessment">Update/Void</button>
-    </div>
-</div>
 
 
 
 
-
-
-
-<div class="modal1_0001" id="view_assessment" style="display:none;height:370px;min-height: 200px;width:60%">
-    <h2 class="panel_heading_style">TPG View Assessment</h2>
+<div class="modal1_0001" id="view_session_attn" style="display:none;height:370px;min-height: 200px;width:60%">
+    <h2 class="panel_heading_style">TPG Retrive Course Session Attendance</h2>
     <table class="table table-striped" id='viewsection'>
         <tbody>
             <tr>
