@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.0000000001"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.1"></script>
 <style>
     table td{
         font-size: 11px;
@@ -216,13 +216,16 @@
         <tbody>
             <tr>
                 <td class="td_heading">TPG Trainee Full Name:<span class="required">*</span></td>
-                <td  colspan='3'> <span id='fullname1'></span><span> Will Changed To : "</span> <b><span id="tms_fullname"></span>"</b></td>
+                <td  colspan='3'> "<span id='fullname1'></span>"<span> Will Changed To : "</span> <b><span id="tms_fullname"></span>"</b></td>
             </tr>
             <tr>
                 <td class="td_heading">Result:<span class="required">*</span></td>
-                <td colspan='3'><span id='result1'></span><span> Will Changed To : "</span> <b><span id="tms_result"></span>"</b><</td>
+                <td colspan='3'>"<span id='result1'></span>"<span> Will Changed To : "</span> <b><span id="tms_result"></span>"</b></td>
             </tr>
-
+            <tr>
+                <td class="td_heading">Skill Code:<span class="required">*</span></td>
+                <td colspan='3'>"<span id='skill_code1'></span>"<span> Will Changed To : "</span> <b><span id="tms_skill_code"></span>"</b></td>
+            </tr>
             <tr>
                 <td class="td_heading">Score:<span class="required">*</span></td>
                 <td><input type="text" name="score" value="" id='score1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
@@ -232,9 +235,8 @@
 
             <tr>
                 <td class="td_heading">Assessment Date:<span class="required">*</span></td>
-                <td><input type="date" name="assessment_date" value="" id='ass_date1' style="line-height: 14px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
-                <td class="td_heading">Skill Code:<span class="required">*</span></td>
-                <td><input type="text" name="skill_Code" value="" id='skill_code1' style="width:200px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
+                <td colspan="3"><input type="date" name="assessment_date" value="" id='ass_date1' style="line-height: 14px;" class="upper_case ui-autocomplete-input" autocomplete="off"></td>
+               
             </tr>
             <tr>
                 <td class="td_heading">Action:<span class="required">*</span></td>

@@ -165,7 +165,8 @@ $(document).ready(function () {
                     $('#grade1').val(res.data.grade);
                     $('#ass_date1').val(res.data.assessmentDate);
                     $('#skill_code1').val(res.data.skillCode);
-                    $('#tms_fullname').val(res.data.trainee.tms_fullname);
+                    $('#tms_skill_code').val(res.data.tms_skill_code);
+                    $('#tms_fullname').html(res.data.trainee.tms_fullname);
                     $('#assmt_ref_no1').html(res.data.referenceNumber);//$('#update_assessment').data('refNo');
                     //if(json_data.status == 200){
                         
@@ -188,7 +189,7 @@ $(document).ready(function () {
        $score1=$('#tms_result').val();
        $grade1=$('#grade1').val();
        $ass_date1=$('#ass_date1').val();
-       $skill_code1=$('#skill_code1').val();
+       $skill_code1=$('#tms_skill_code').html();
        $action=$('#action').val();
        $assmt_ref_no1=$('#assmt_ref_no1').html();
        $courseid=$('#update_assessment').data('courseid');

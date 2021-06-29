@@ -73,6 +73,8 @@ class tp_gateway extends CI_Controller {
         $arr_json = json_decode($asessment_resp);
         $arr_json->data->trainee->tms_fullname =$trainees[0]->fullname;
         $arr_json->data->tms_result =$trainees[0]->training_score;
+        $arr_json->data->tms_result =$trainees[0]->training_score;
+        $arr_json->data->tms_skill_code =$trainees[0]->skillCode;
         //print_r( json_encode($arr_json));exit;
         echo json_encode($arr_json);
     }
