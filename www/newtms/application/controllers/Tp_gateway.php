@@ -70,8 +70,11 @@ class tp_gateway extends CI_Controller {
         $assessment_ref_no = $this->input->post('referenceNo');
         $asessment_resp = $this->tpgModel->view_asssessment_from_tpg($assessment_ref_no);
         $trainees = $this->classModel->get_tms_trainee_assessments($assessment_ref_no,$tenant_id);
-        print_r( $trainees);exit;
-        //echo $asessment_resp;
+        $arr_json = json_decode($asessment_resp);
+        $arr_json->data->trainee->tms_fullname =$trainees[0]->fullname;
+        $arr_json->data->tms_score =$trainees[0]->training_score;
+        //print_r( json_encode($arr_json));exit;
+        echo json_encode($arr_json);
     }
 
     //// added by shubhranshu toupdate assessment
