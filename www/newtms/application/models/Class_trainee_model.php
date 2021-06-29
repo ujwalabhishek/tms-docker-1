@@ -14421,5 +14421,17 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->last_query();exit;
         return $res;
     }
+    
+    function uploadTmsClassShdl($tenant_id,$course_id,$class_id,$tpg_session_id){
+        $data = array(
+            'tpg_uploaded_status' => 1
+        );
+        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        $this->db->where('tpg_session_id', $tpg_session_id);
+        $status=$this->db->update('class_schld', $data);
+        return $status;
+    }
 
 }
