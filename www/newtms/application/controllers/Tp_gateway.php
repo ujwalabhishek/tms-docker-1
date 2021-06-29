@@ -1842,6 +1842,13 @@ class tp_gateway extends CI_Controller {
     
     public function retrieve_course_sess_att($tpg_course_run_id, $courseReferenceNumber, $sessionId) {
         
+        $tenant_id = $this->tenant_id;
+        $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
+                
+        $retun = $this->correct_live_dev_api_data($courseReferenceNumber, $tenant->comp_reg_no);
+        
+        $uen = $retun['tp_uen'];
+                
         $encrypt_method = "AES-256-CBC";
         $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
@@ -1857,6 +1864,34 @@ class tp_gateway extends CI_Controller {
         
         print_r($tpg_response); exit;
         
+    }
+    
+    public function correct_live_dev_api_data($crse_ref_no,$tp_uen,$skillCode='',$nric=''){
+        if(TPG_ENVIRONMENT == 'PRODUCTION'){
+           $crse_ref_no = $crse_ref_no;
+           $tp_uen  = $tp_uen;
+           $domain=TPG_LIVE_URL;
+           $skillCode = $skillCode;
+           $nric = $nric;
+        }else{
+          $crse_ref_no =  'TGS-2020002096';
+          $tp_uen = '201000372W';
+          $domain=TPG_DEV_URL;
+          $skillCode='AER-MAT-2019-2.1';
+          $nric='S8195288D';
+          $dob='1981-01-10';
+          $corpassid='S5883425D';
+        }
+        $data =array(
+            'ref_no' => $crse_ref_no,
+            'tp_uen' => $tp_uen,
+            'domain' => $domain,
+            'skillcode' => $skillCode,
+            'nric' => $nric,
+            'dob' => $dob,
+            'corpassid' => $corpassid
+        );
+        return $data;
     }
 
 }
