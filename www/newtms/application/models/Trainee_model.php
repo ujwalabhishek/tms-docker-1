@@ -2338,7 +2338,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                         $this->db->where('user_id', $user_id);
                         $update_result = $this->db->update("class_enrol", $feedback_data);
                     }
-                    if ($key == 'feedback_score') {
+                    if ($key == 'FSCORE') {
                         $feedback_data = array(
                             'feedback_score' => $value,
                             
@@ -2349,7 +2349,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                         $this->db->where('user_id', $user_id);
                         $update_result = $this->db->update("class_enrol", $feedback_data);
                     }
-                    if ($key == 'feedback_grade') {
+                    if ($key == 'FGRADE') {
                         $feedback_data = array(
                             'feedback_grade' => $value,
                             
