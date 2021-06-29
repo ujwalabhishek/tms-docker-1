@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.0111"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.00111"></script>
 <style>
     table td{
         font-size: 11px;
@@ -215,7 +215,7 @@
     <table class="table table-striped" id='tblarea'>
         <tbody>
             <tr>
-                <td class="td_heading">TPG Trainee Full Name:<span class="required">*</span></td>
+                <td class="td_heading">Trainee Full Name:<span class="required">*</span></td>
                 <td  colspan='3'> "<span id='fullname1'></span>"<span> Will Changed To : "</span> <b><span id="tms_fullname"></span>"</b></td>
             </tr>
             <tr>

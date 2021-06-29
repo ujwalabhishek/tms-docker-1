@@ -206,7 +206,7 @@ $(document).ready(function () {
        
        $fullname1=$('#tms_fullname').html();
        $result1=$('#tms_result').html();
-       $score1=$('#tms_result').val();
+       $score1=$('#score1').val();
        $grade1=$('#grade1').val();
        $ass_date1=$('#ass_date1').val();
        $skill_code1=$('#tms_skill_code').html();
