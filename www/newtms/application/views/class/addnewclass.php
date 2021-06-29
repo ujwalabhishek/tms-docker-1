@@ -452,10 +452,10 @@ echo form_open("classes/add_new_class", $atr);
                                 <?php
                                 $survey_language = array();
                                 $survey_language['']='Please Choose';
-                                $survey_language[] ='EL- English';
-                                $survey_language[] ='MN- Mandarin';
-                                $survey_language[] ='MY- Malay';
-                                $survey_language[] ='TM- Tamil';
+                                $survey_language['EL'] ='EL- English';
+                                $survey_language['MN'] ='MN- Mandarin';
+                                $survey_language['MY'] ='MY- Malay';
+                                $survey_language['TM'] ='TM- Tamil';
                                 echo form_dropdown('survey_language', $survey_language, $this->input->post('survey_language'), 'id="survey_language"');
                                 ?>
                             </label>
