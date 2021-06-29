@@ -210,7 +210,7 @@
     </div>
 </div>
 
-<div class="modal1_0001" id="update_void_assessment" style="display:none;height:270px;min-height: 200px;width:60%">
+<div class="modal1_0001" id="update_void_assessment" style="display:none;height:350px;min-height: 200px;width:60%">
     <h2 class="panel_heading_style">TPG Update/Void Assessment</h2>
     <table class="table table-striped" id='tblarea'>
         <tbody>
