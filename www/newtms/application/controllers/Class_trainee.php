@@ -4969,13 +4969,15 @@ class Class_Trainee extends CI_Controller {
         $this->load->model('trainee_model', 'traineemodel');
         $res = $this->classtraineemodel->get_trainer_feedback($user_id, $course_id, $class_id); // s1
         $result = $this->traineemodel->trainer_feedback($user_id, $course_id, $class_id);
+        $feedback_score = $this->input->post('feedback_score');
+        $feedback_grade = $this->input->post('feedback_grade');
         if ($result == TRUE) {
             $this->db->cache_delete_all();
             if ($res != 0) {
                 $previous_data = json_encode($res); //s2 
                 user_activity(11, $user_id, $previous_data); //s3 
             }
-            $this->classtraineemodel->update_feedback($tenant_id,$user_id,$course_id,$class_id);
+            $this->classtraineemodel->update_feedback($tenant_id,$user_id,$course_id,$class_id,$feedback_score,$feedback_grade);
             $this->session->set_flashdata("success", "Your feedback has been updated successfully.");
         } else {
             $this->session->set_flashdata("error", "We have not been able to save the feedback.Please try again later or get in touch with your Administrator.");

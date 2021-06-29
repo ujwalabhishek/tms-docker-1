@@ -14737,7 +14737,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 return $res;
     }
     
-    function update_feedback($tenant_id,$user_id,$course_id,$class_id){
+    function update_feedback($tenant_id,$user_id,$course_id,$class_id,$feedback_score,$feedback_grade){
         $data =array(
                 'feedback_score' => $feedback_score,
                 'feedback_grade' => $feedback_grade
