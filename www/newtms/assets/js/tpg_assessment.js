@@ -155,12 +155,17 @@ $(document).ready(function () {
                 if (json_data != '' && res.status == 200) {
                     $('#fullname1').html(res.data.trainee.fullName);
                     $('#result1').html(res.data.result);
-                    $('#tms_result').html(res.data.tms_result);
+                    if(res.data.tms_result == "C"){
+                        $resu = 'Pass';
+                    }else{
+                        $resu = 'Fail';
+                    }
+                    $('#tms_result').html($resu);
                     $('#score1').val(res.data.score);
                     $('#grade1').val(res.data.grade);
                     $('#ass_date1').val(res.data.assessmentDate);
                     $('#skill_code1').val(res.data.skillCode);
-                    $('#tms_fullname').val(res.data.trainee.tms_fullName);
+                    $('#tms_fullname').val(res.data.trainee.tms_fullname);
                     $('#assmt_ref_no1').html(res.data.referenceNumber);//$('#update_assessment').data('refNo');
                     //if(json_data.status == 200){
                         
@@ -178,9 +183,9 @@ $(document).ready(function () {
     
     $('#updateAseessment').click(function () {
        
-       $fullname1=$('#fullname1').html();
-       $result1=$('#result1').html();
-       $score1=$('#score1').val();
+       $fullname1=$('#tms_fullname').html();
+       $result1=$('#tms_result').html();
+       $score1=$('#tms_result').val();
        $grade1=$('#grade1').val();
        $ass_date1=$('#ass_date1').val();
        $skill_code1=$('#skill_code1').val();
