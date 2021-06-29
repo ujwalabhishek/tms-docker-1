@@ -123,7 +123,7 @@
                 <tr class="new_span">
                     <td colspan="4" class="no-bg">
                         <div class="push_right">
-                            <a href="<?php echo base_url() . 'class_trainee'; ?>" class="small_text1"><span class="label label-default black-btn">Back</span></a>
+                            <a href="<?php echo base_url() . 'class_trainee/mark_attendance_tpg'; ?>" class="small_text1"><span class="label label-default black-btn">Back</span></a>
                         </div>
                     </td>
                 </tr>                
