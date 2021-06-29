@@ -106,27 +106,27 @@ $CI->load->model('class_model');
                         </button>
                     </td>
                 </tr>
-                <tr>
+<!--                <tr>
                     <td width="15%" colspan="-1" class="td_heading">Course Run ID:</td>
                     <td colspan="4">
                         <?php
-                        $class_options = array();
-                        $crsrunid_js = 'id="tpg_course_run_id"';
-                        $tpg_course_run_id_options[''] = 'Select';
-                        if (!empty($courseRunId)) {
-                            $crsrunid_js = $crsrunid_js;
-                            $tpg_course_run_id_options[''] = 'All';
-                        } else {
-                            //$crsrunid_js = $crsrunid_js . ' disabled="disabled"';
-                        }
-                        foreach ($courseRunId as $k => $v) {
-                            $tpg_course_run_id_options[$k] = $v;
-                        }
-                        echo form_dropdown('tpg_course_run_id', $tpg_course_run_id_options, $this->input->get('tpg_course_run_id'), $crsrunid_js);
+//                        $class_options = array();
+//                        $crsrunid_js = 'id="tpg_course_run_id"';
+//                        $tpg_course_run_id_options[''] = 'Select';
+//                        if (!empty($courseRunId)) {
+//                            $crsrunid_js = $crsrunid_js;
+//                            $tpg_course_run_id_options[''] = 'All';
+//                        } else {
+//                            //$crsrunid_js = $crsrunid_js . ' disabled="disabled"';
+//                        }
+//                        foreach ($courseRunId as $k => $v) {
+//                            $tpg_course_run_id_options[$k] = $v;
+//                        }
+//                        echo form_dropdown('tpg_course_run_id', $tpg_course_run_id_options, $this->input->get('tpg_course_run_id'), $crsrunid_js);
                         ?>
                     </td>
                     
-                </tr>
+                </tr>-->
                 <tr>
                     <td width="24%" class="td_heading">Filter by Class Status:</td>
                     <td colspan="6">
