@@ -11,7 +11,7 @@
     }
 </style>
 <div class="col-md-10">
-     <?php
+    <?php
     if ($this->session->flashdata('success')) {
         echo '<div class="success">' . $this->session->flashdata('success') . '</div>';
     }
@@ -19,11 +19,11 @@
         echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
     }
     /////display if any error from TPG site
-     if(!empty($this->session->flashdata('resp_error'))){
-        foreach($this->session->flashdata('resp_error') as $err){
+    if (!empty($this->session->flashdata('resp_error'))) {
+        foreach ($this->session->flashdata('resp_error') as $err) {
 
-        echo '<div class="alert alert-danger dang">
-            <strong>'.$err->field.': </strong>'.$err->message.'
+            echo '<div class="alert alert-danger dang">
+            <strong>' . $err->field . ': </strong>' . $err->message . '
         </div>';
         }
     }
@@ -67,7 +67,7 @@
                         $js = 'id="class" ';
                         echo form_dropdown('class', $optionss, $this->input->get('class'), $js);
                         ?>
-                         <span id="class_err"></span>
+                        <span id="class_err"></span>
                     </td>
                 </tr>
                 <tr>
@@ -83,11 +83,11 @@
                         echo form_dropdown('nric', $options, $this->input->get('nric'), $js);
                         ?>
                         <input type='hidden' name='nric_id' id='nric_id' value>
-                         <span id="nric_err"></span>
+                        <span id="nric_err"></span>
                     </td>
-                    
+
                 </tr>
-                
+
                 <tr>
                     <td colspan='4'>
                         <span class="pull-right">
@@ -95,11 +95,11 @@
                         </span>
                     </td>
                 </tr>
-               
+
             </tbody>
         </table>
     </div><br>
-    
+
     <?php echo form_close(); ?>
     <?php ?>
     <div class="bs-example">
@@ -111,12 +111,10 @@
                 <thead>
                     <?php
                     $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
-                    
                     ?>
                     <tr>
                         <th width="9%" class="th_header">Session ID</th>
-                        <th width="10%" class="th_header">Attn Status Code
-                            
+                        <th width="10%" class="th_header">Attn Status Code                            
                         </th>
                         <th width="10%" class="th_header">Name</th>
                         <th width="6%" class="th_header">Email</th>
@@ -135,31 +133,38 @@
                     }
                     if (!empty($tabledata)) {
                         foreach ($tabledata as $row) {
-                          
                             ?>
-                                                                              
+
                             <tr>                        
                                 <td><?php echo $row->tpg_session_id; ?></td>
-                                <td class="name"><?php echo $row->session_01; ?></td>
+                                <td class="name"><?php
+                                    if ($row->session_type_id == 'S1') {
+                                        echo $row->session_01;
+                                    } else {
+                                        echo $row->session_02;
+                                    }
+                                    ?>
+                                </td>
                                 <td><?php echo $row->fullname; ?></td>
                                 <td><?php echo $row->registered_email_id; ?></td>
-                                <td><?php 
-                                if($row->tax_code_type='SNG_1' && $row->idtype =='SG'){
-                                    $idtype= 'SP';///singaporean pink
-                                }elseif($row->tax_code_type='SNG_1' && $row->idtype =='NS'){
-                                    $idtype= 'SB';/// permanent residence
-                                }else if($row->tax_code_type='SNG_2'){
-                                    $idtype= 'SO'; //// FIN
-                                } else{
-                                    $idtype= 'OT'; /////Others
-                                }
-                                echo $idtype ?></td>
+                                <td><?php
+                                    if ($row->tax_code_type = 'SNG_1' && $row->idtype == 'SG') {
+                                        $idtype = 'SP'; ///singaporean pink
+                                    } elseif ($row->tax_code_type = 'SNG_1' && $row->idtype == 'NS') {
+                                        $idtype = 'SB'; /// permanent residence
+                                    } else if ($row->tax_code_type = 'SNG_2') {
+                                        $idtype = 'SO'; //// FIN
+                                    } else {
+                                        $idtype = 'OT'; /////Others
+                                    }
+                                    echo $idtype
+                                    ?></td>
                                 <td><?php echo $row->contact_number; ?></td>
                                 <td><?php echo $row->total_classroom_duration; ?></td>
                                 <td><?php echo $row->survey_language; ?></td>
-     
+
                                 <td>
-                                   <?php
+                                    <?php
                                     $atr = 'id="submit_attendance_form" name="submit_attendance" method="post"';
                                     echo form_open("tp_gateway/submit_attendance", $atr);
                                     ?>
@@ -171,24 +176,23 @@
                                     <input type="hidden" name="mobileNo" value="<?php echo $row->contact_number; ?>" id="mobileNo">
                                     <input type="hidden" name="noOfHours" value="<?php echo $row->total_classroom_duration; ?>" id="noOfHours">
                                     <input type="hidden" name="survey_language" value="<?php echo $row->survey_language; ?>" id="survey_language">
-                                    <input type="hidden" name="class_id" value="<?php echo  $row->class_id; ?>" id="class_id">
+                                    <input type="hidden" name="class_id" value="<?php echo $row->class_id; ?>" id="class_id">
                                     <input type="hidden" name="course_id" value="<?php echo $row->course_id; ?>" id="course_id">
                                     <input type="hidden" name="user_id" value="<?php echo $row->user_id; ?>" id="user_id">
                                     <input type="hidden" name="crs_reference_num" value="<?php echo $row->reference_num; ?>" id="crs_reference_num">
                                     <input type="hidden" name="tax_code" value="<?php echo $row->tax_code; ?>" id="tax_code">
-                                     <input type="hidden" name="tpg_course_run_id" value="<?php echo $row->tpg_course_run_id; ?>" id="tpg_course_run_id">
+                                    <input type="hidden" name="tpg_course_run_id" value="<?php echo $row->tpg_course_run_id; ?>" id="tpg_course_run_id">
                                     <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
-                                        
-                                    <?php
-                                    }
-                                    echo form_close();
-                                    ?>  
- 
-                                </td>
-                            </tr>
-                            <?php
-                        }
 
+                                    <?php
+                                }
+                                echo form_close();
+                                ?>  
+
+                            </td>
+                        </tr>
+                        <?php
+                    }
                     ?>                  
                 </tbody>
             </table>
@@ -228,15 +232,15 @@
                 <td class="td_heading">Action:<span class="required">*</span></td>
                 <td>
                     <select name="action" id="action">
-                    <option value="" selected="selected">Select</option>
-                    <option value="update">Update</option>
-                    <option value="void">Void</option>
+                        <option value="" selected="selected">Select</option>
+                        <option value="update">Update</option>
+                        <option value="void">Void</option>
                     </select>
                 </td>
                 <td class="td_heading">Assessment Ref No:<span class="required">*</span></td>
                 <td id='assmt_ref_no1'></td>
             </tr>
-            
+
         </tbody>
     </table>
     <div class="required required_i">* To Update "Trainee Name" &  "Result" & "Skill Code" fields, Update in edit trainee,trainer feedback,Edit Course for the same,Then Come to update this page.</div>
@@ -320,7 +324,7 @@
                 <td class="td_heading">Updated On:</td>
                 <td id='updated_on'></td>
             </tr>
-            
+
         </tbody>
     </table>
     <div class="popup_cance89">
@@ -328,50 +332,50 @@
     </div>
 </div>
 <script>
-    $(document).ready(function() {
-            var check = 0;
-            $('#update_fee').submit(function() {
-                check = 1;
-                return validateFee(true);
-            });
-            $('#update_fee select').change(function() {
-                if (check == 1) {
-                    return validateFee(false);
-                }
-            });
+    $(document).ready(function () {
+        var check = 0;
+        $('#update_fee').submit(function () {
+            check = 1;
+            return validateFee(true);
         });
-        
-        function validateFee(retVal) {
-            fee_status = $.trim($("#fee_collectionStatus").val());
-            if (fee_status == "") {
-                $("#fee_collection_err").text("[required]").addClass('error');
-                $("#fee_collection_err").addClass('error');
-                retVal = false;
-            } else {
-                $("#fee_collection_err").text("").removeClass('error');
-                $("#fee_collection_err").removeClass('error');
-                retVal = true;
+        $('#update_fee select').change(function () {
+            if (check == 1) {
+                return validateFee(false);
             }
-            return retVal;
+        });
+    });
+
+    function validateFee(retVal) {
+        fee_status = $.trim($("#fee_collectionStatus").val());
+        if (fee_status == "") {
+            $("#fee_collection_err").text("[required]").addClass('error');
+            $("#fee_collection_err").addClass('error');
+            retVal = false;
+        } else {
+            $("#fee_collection_err").text("").removeClass('error');
+            $("#fee_collection_err").removeClass('error');
+            retVal = true;
         }
+        return retVal;
+    }
 </script>
 <?php echo form_close(); ?>
 </div>
 
 <style>
     .btnblue{
-       border: none;
-    color: #008cff;
-    font-size: 11px !important;
-    margin-top: 0;
-    padding: 3px 4px !important;
-    cursor: pointer;
+        border: none;
+        color: #008cff;
+        font-size: 11px !important;
+        margin-top: 0;
+        padding: 3px 4px !important;
+        cursor: pointer;
     }
     .btnblue:hover{
-    color:white;
-    background-image:-webkit-linear-gradient(top, #107ac6, #097d91);
-    border-radius: 3px;
+        color:white;
+        background-image:-webkit-linear-gradient(top, #107ac6, #097d91);
+        border-radius: 3px;
     }
-    
-    
+
+
 </style>
