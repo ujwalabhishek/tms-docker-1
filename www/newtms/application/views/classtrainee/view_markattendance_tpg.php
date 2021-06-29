@@ -88,20 +88,17 @@
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Session ID:<span class="required">*</span></td>
                     <td>
-                        <input type="text" name="tpuen" id="tpuen" style="" value='<?php echo $sessionId; ?>' disabled="disabled"/>
-                        <span id="tpuen_err"></span>
+                        <?php echo $sessionId; ?>
                     </td>
                 </tr> 
                 <tr class="new_span">
                     <td class="td_heading" width="15%">Session Start Date & Time:<span class="required">*</span></td>
                     <td>
-                        <input type="text" name="tpcode" id="tpcode" style="" value='<?php echo $sessionStartDate . ' ' . $sessionStartTime; ?>' disabled="disabled"/>
-                        <span id="tpcode_err"></span>
+                       <?php echo $sessionStartDate . ' ' . $sessionStartTime; ?>
                     </td>
                     <td class="td_heading" width="15%">Session End Date & Time:<span class="required">*</span></td>
                     <td>
-                        <input type="text" name="tpuen" id="tpuen" style="" value='<?php echo $sessionEndDate . ' ' . $sessionEndTime; ?>' disabled="disabled"/>
-                        <span id="tpuen_err"></span>
+                        <?php echo $sessionEndDate . ' ' . $sessionEndTime; ?>
                     </td>
                 </tr>                               
                 <tr>
@@ -111,15 +108,13 @@
                 </tr>
                 <tr class="new_span">
                     <td class="td_heading">Venue:<span class="required">*</span></td>
-                    <td>                       
-                        <textarea type="text" name="course" id="crefno" style="" disabled="disabled"/>
-                        <?php echo $venueBlock . ' ' . $venueBuilding; ?></br>
-                        <?php echo $venueFloor; ?></br>
-                        <?php echo $venuePostalCode; ?></br>
+                    <td>                        
+                        <?php echo $venueBlock . ', ' . $venueBuilding; ?>,</br>
+                        <?php echo $venueFloor; ?>,</br>
+                        <?php echo $venuePostalCode; ?>,</br>
                         <?php echo $venueRoom; ?></br>
                         <?php echo $venueStreet; ?></br>
-                        <?php echo $venueUnit; ?></br>
-                        </textarea>
+                        <?php echo $venueUnit; ?></br>                        
                         <span id="crefno_err"></span>
                     </td>                                    
                 </tr>
