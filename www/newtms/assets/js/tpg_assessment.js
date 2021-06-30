@@ -97,7 +97,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'post',
             url: $baseurl + 'tp_gateway/view_assessment',
-            data: {referenceNo: $(this).attr('data-refno') },
+            data: {tpgSessionId: $(this).attr('data-tpgSessionId'),crsRefNo: $(this).attr('data-crsRefNo'),tpgCrsRunid: $(this).attr('data-tpgCrsRunid') },
             dataType: "json",
             beforeSend: function () {
                 
