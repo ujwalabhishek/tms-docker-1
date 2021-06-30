@@ -142,9 +142,7 @@
                 <tr class="new_span">
                     <td class="td_heading">Venue:</td>
                     <td colspan="3">                        
-                        <?php echo $venueBlock . ' ' . $venueBuilding.' Floor : '.$venueFloor.' '.$venuePostalCode; ?>
-                        ,</br>                        
-                        <?php echo $venueRoom. ' ' .$venueStreet.' Unit : '.$venueUnit; ?>                                                
+                        <?php echo $venueBlock . ' ' . $venueBuilding.' Floor : '.$venueFloor.' '.$venuePostalCode .' '.$venueRoom. ' ' .$venueStreet.' Unit : '.$venueUnit; ?>                                                
                     </td>                                    
                 </tr>
                 <tr class="new_span">
