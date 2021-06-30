@@ -165,7 +165,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'post',
             url: $baseurl + 'tp_gateway/view_assessment',
-            data: {referenceNo: $(this).attr('data-refno')},
+            data: {refNo: $(this).attr('data-refno')},
             dataType: "json",
             beforeSend: function () {
                 
