@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.0000111"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_assessment.js?0.00070111"></script>
 <style>
     table td{
         font-size: 11px;
