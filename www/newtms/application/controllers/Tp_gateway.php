@@ -1912,7 +1912,8 @@ class tp_gateway extends CI_Controller {
             $data['SessionnumberOfHours'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->numberOfHours;
             $data['SessionsentToTraqom'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->sentToTraqom;
             $data['Sessionstatus'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->status;
-    
+            $data['SessioneditedByTP'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->editedByTP;
+            
             
             ///trainee
             $data['TraineeaccountType'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->accountType;

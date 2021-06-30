@@ -126,9 +126,15 @@
                     <td>                    
                         <b>Session Status.:</b> 
                     </td>   
-                    <td colspan="3">
+                    <td>
                         <?php echo $Sessionstatus; ?>
-                    </td>     
+                    </td>  
+                    <td>                    
+                        <b>Edited By TP.:</b> 
+                    </td>   
+                    <td>
+                        <?php echo $SessioneditedByTP; ?>
+                    </td>  
                     
                 </tr> 
                 
