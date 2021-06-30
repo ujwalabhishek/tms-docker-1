@@ -431,7 +431,7 @@ class Tpg_api_Model extends CI_Model {
     public function view_asssessment_from_tpg($assessment_ref_no){
         $retun = $this->correct_live_dev_api_data('','');
         $api_version = 'v1';
-        $url = "https://".$retun[domain]."/tpg/assessments/details/".$assessment_ref_no;
+        $url = "https://".$retun['domain']."/tpg/assessments/details/".$assessment_ref_no;
         $response = $this->curl_request('GET',$url,'',$api_version);
         $decrypted_data = $this->encrypt_decrypt('decrypt', $response);
         //print_r($response);echo $url;exit;
@@ -456,7 +456,7 @@ class Tpg_api_Model extends CI_Model {
         $retun = $this->correct_live_dev_api_data('','');
         $encrypted_data = $this->encrypt_decrypt('encrypt', $update_assessment_json);
         $api_version = 'v1';
-        $url = "https://".$retun[domain]."/tpg/assessments/details/".$assessment_ref_no;
+        $url = "https://".$retun['domain']."/tpg/assessments/details/".$assessment_ref_no;
         $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
         $decrypted_data = $this->encrypt_decrypt('decrypt', $response);
         return $decrypted_data;
