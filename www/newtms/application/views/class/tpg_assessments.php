@@ -160,7 +160,7 @@
                                 <td><?php echo $row->eid_number; ?></td>
                                 <td>
                                    <?php if(empty($row->assessment_reference_No)){?>
-                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Create Assessment</span></a>
+                                    <a href="<?php echo base_url() . 'tp_gateway/create_assessment/'.$row->course_id.'/'.$row->class_id.'/'.$row->user_id ; ?>"><span class="btnblue">Submit Assessment</span></a>
                                     <br>
                                    <?php }else{?>
                                     <a href="#update_void_assessment" rel="modal:open" id='update_assessment' data-refNo='<?php echo $row->assessment_reference_No;?>' data-userid="<?php echo $row->user_id;?>" data-courseid="<?php echo $row->course_id;?>" data-classid="<?php echo $row->class_id;?>"><span class="btnblue">Update/Void Assessment</span></a>
