@@ -116,7 +116,7 @@ class tp_gateway extends CI_Controller {
         } elseif ($tpg_resp->status == 500) {
             $this->session->set_flashdata('error', "Oops! Internal Error!!");
         } else {
-            $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
+            $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
         }
         redirect($controller);
     }
@@ -992,7 +992,7 @@ class tp_gateway extends CI_Controller {
         } elseif ($response->status == 500) {
             $this->session->set_flashdata('error', "Oops! Internal Error!!");
         } else {
-            $this->session->set_flashdata('error', "Oops ! Something Went Wrong Contact System Administrator");
+            $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
         }
 
         $data['sideMenuData'] = fetch_non_main_page_content();
@@ -1442,7 +1442,7 @@ class tp_gateway extends CI_Controller {
             } elseif ($tpg_response->status == 500) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             } else {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
             }
             redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
@@ -1517,7 +1517,7 @@ class tp_gateway extends CI_Controller {
             } elseif ($tpg_response->status == 500) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             } else {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
             }
             redirect('class_trainee');
         }
@@ -1568,7 +1568,7 @@ class tp_gateway extends CI_Controller {
             } elseif ($tpg_response->status == 500) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             } else {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
             }
             redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
@@ -1678,7 +1678,7 @@ class tp_gateway extends CI_Controller {
             } elseif ($tpg_response->status == 500) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             } else {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
             }
             redirect('class_trainee');
         }
@@ -1801,7 +1801,7 @@ class tp_gateway extends CI_Controller {
             } elseif ($tpg_response->status == 500) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             } else {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
             }
             redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
@@ -1852,7 +1852,7 @@ class tp_gateway extends CI_Controller {
 
         $response = $this->encrypt_decrypt('decrypt', $response);
         $tpg_response = json_decode($response);
-        
+
 
         //print_r(json_decode($tpg_response));
         //exit;
@@ -1888,7 +1888,7 @@ class tp_gateway extends CI_Controller {
             $data['title'] = $tpg_response->data->courseRun->title;
 
             //Sessions
-            $data['sessionEndDate'] = $tpg_response->data->courseRun->sessions[0]->endDate;            
+            $data['sessionEndDate'] = $tpg_response->data->courseRun->sessions[0]->endDate;
             $data['sessionEndTime'] = $tpg_response->data->courseRun->sessions[0]->endTime;
             $data['sessionId'] = $tpg_response->data->courseRun->sessions[0]->id;
             $data['sessionStartDate'] = $tpg_response->data->courseRun->sessions[0]->startDate;
@@ -1903,8 +1903,7 @@ class tp_gateway extends CI_Controller {
             $data['venueStreet'] = $tpg_response->data->courseRun->sessions[0]->venue->street;
             $data['venueUnit'] = $tpg_response->data->courseRun->sessions[0]->venue->unit;
             $data['venueWheelChairAccess'] = $tpg_response->data->courseRun->sessions[0]->venue->wheelChairAccess;
-            
-            
+
             //attendance
             $data['SessionEntryMode'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->entryMode;
             $data['SessionAttendanceId'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->id;
@@ -1912,8 +1911,7 @@ class tp_gateway extends CI_Controller {
             $data['SessionsentToTraqom'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->sentToTraqom;
             $data['Sessionstatus'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->status;
             $data['SessioneditedByTP'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->editedByTP;
-            
-            
+
             ///trainee
             $data['TraineeaccountType'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->accountType;
             $data['TraineecontactNumber'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->contactNumber->mobile;
@@ -1923,11 +1921,6 @@ class tp_gateway extends CI_Controller {
             $data['TraineeindividualId'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->individualId;
             $data['Traineename'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->name;
             $data['TraineesurveyLanguageCode'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->surveyLanguage->description;
-            
-            
-            
-            
-            
             
             $data['sideMenuData'] = fetch_non_main_page_content();
             $data['page_title'] = 'TPG View Course Session Attendance';
@@ -1944,7 +1937,7 @@ class tp_gateway extends CI_Controller {
             } elseif ($tpg_response->status == 500) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
             } else {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
             }
             redirect('class_trainee');
         }

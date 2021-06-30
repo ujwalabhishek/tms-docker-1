@@ -203,7 +203,7 @@ class Classes extends CI_Controller {
                     }elseif($tpg_response->status == 500){
                         $this->session->set_flashdata('error',"Oops! Internal Error!!");
                     }else{
-                        $this->session->set_flashdata('error',"Oops ! Something Went Wrong Contact System Administrator"); 
+                        $this->session->set_flashdata('error',"TPG is not responding. Please, check back again."); 
                     }
                     $data['error'] = $tpg_response->error->details;
                     $data['display'] = 'display:block;';
@@ -261,7 +261,7 @@ class Classes extends CI_Controller {
                     }elseif($tpg_response->status == 500){
                         $this->session->set_flashdata('error',"Oops! Internal Error!!");
                     }else{
-                        $this->session->set_flashdata('error',"Oops ! Something Went Wrong Contact System Administrator"); 
+                        $this->session->set_flashdata('error',"TPG is not responding. Please, check back again."); 
                     }
                      $this->session->set_flashdata('resp_error',$tpg_response->error->details);
                 }
