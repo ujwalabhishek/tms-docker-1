@@ -1910,7 +1910,31 @@ class tp_gateway extends CI_Controller {
             $data['venueStreet'] = $tpg_response->data->courseRun->sessions[0]->venue->street;
             $data['venueUnit'] = $tpg_response->data->courseRun->sessions[0]->venue->unit;
             $data['venueWheelChairAccess'] = $tpg_response->data->courseRun->sessions[0]->venue->wheelChairAccess;
-
+            
+            
+            //attendance
+            $data['SessionEntryMode'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->entryMode;
+            $data['SessionAttendanceId'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->venue->id;
+            $data['SessionnumberOfHours'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->numberOfHours;
+            $data['SessionsentToTraqom'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->sentToTraqom;
+            $data['Sessionstatus'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->status;
+    
+            
+            ///trainee
+            $data['TraineeaccountType'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->accountType;
+            $data['TraineecontactNumber'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->contactNumber->mobile;
+            $data['Traineeemail'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->email;
+            $data['Traineeid'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->id;
+            $data['TraineeidType'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->idType;
+            $data['TraineeindividualId'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->individualId;
+            $data['Traineename'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->name;
+            $data['TraineesurveyLanguageCode'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->surveyLanguage->description;
+            
+            
+            
+            
+            
+            
             $data['sideMenuData'] = fetch_non_main_page_content();
             $data['page_title'] = 'TPG View Course Session Attendance';
             $data['main_content'] = 'classtrainee/view_markattendance_tpg';

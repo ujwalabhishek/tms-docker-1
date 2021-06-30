@@ -93,7 +93,47 @@
                     <td>
                         <?php echo $sessionEndDate . ' ' . $sessionEndTime; ?>
                     </td>
-                </tr>                               
+                </tr>        
+                <tr>
+                    <td>                    
+                        <b>Entry Mode.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <?php echo $SessionEntryMode; ?>
+                    </td>     
+                    <td>                    
+                        <b>Attendance ID.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <?php echo $SessionAttendanceId; ?>
+                    </td>  
+                </tr> 
+                <tr>
+                    <td>                    
+                        <b>No Of Hours.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <?php echo $SessionnumberOfHours; ?>
+                    </td>     
+                    <td>                    
+                        <b>Session To Traqam.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <?php echo $SessionsentToTraqom; ?>
+                    </td>  
+                </tr> 
+                <tr>
+                    <td>                    
+                        <b>Session Status.:<span class="required">*</span></b> 
+                    </td>   
+                    <td colspan="3">
+                        <?php echo $Sessionstatus; ?>
+                    </td>     
+                    
+                </tr> 
+                
+                
+                
                 <tr>
                     <td colspan="4">                            
                         <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Venue Details</h2>
@@ -120,6 +160,71 @@
                         <span id="tpcode_err"></span>
                     </td>
                 </tr> 
+                
+                
+                 <tr>
+                    <td colspan="4">                            
+                        <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Trainee Details</h2>
+                    </td>                           
+                </tr>
+                <tr>
+                    <td>                    
+                        <b>Account Type.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <?php echo $TraineeaccountType; ?>
+                    </td>     
+                    <td>                    
+                        <b>Contact Number.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <?php echo $TraineecontactNumber; ?>
+                    </td>  
+                </tr> 
+                 <tr>
+                    <td>                    
+                        <b>Email.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <?php echo $Traineeemail; ?>
+                    </td>     
+                    <td>                    
+                        <b>ID.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <?php echo $Traineeid; ?>
+                    </td>  
+                </tr> 
+                <tr>
+                    <td>                    
+                        <b>ID Type.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <?php echo $TraineeidType; ?>
+                    </td>     
+                    <td>                    
+                        <b>ID.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <?php echo $TraineeindividualId; ?>
+                    </td>  
+                </tr> 
+                <tr>
+                    <td>                    
+                        <b>Name.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <?php echo $Traineename; ?>
+                    </td>     
+                    <td>                    
+                        <b>Survey Language.:<span class="required">*</span></b> 
+                    </td>   
+                    <td>
+                        <?php echo $TraineesurveyLanguageCode; ?>
+                    </td>  
+                </tr> 
+                
+                
                 <tr class="new_span">
                     <td colspan="4" class="no-bg">
                         <div class="push_right">
