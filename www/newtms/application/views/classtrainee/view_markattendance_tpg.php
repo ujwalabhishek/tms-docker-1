@@ -20,14 +20,14 @@
                 </tr>
                 <tr class="change_span" style="">
                     <td>                    
-                        <b>Course Title. :<span class="required">*</span></b> 
+                        <b>Course Title. :</b> 
                     </td>   
                     <td>
                         <?php echo $title; ?>
                     </td> 
 
                     <td>
-                        <b>Coure Reference Number:<span class="required">*</span></b> 
+                        <b>Coure Reference Number:</b> 
                     </td>
                     <td> 
                         <?php echo $referenceNumber; ?>
@@ -36,14 +36,14 @@
 
                 <tr class="change_span" style="">
                     <td>                    
-                        <b>Course Run ID:<span class="required">*</span></b> 
+                        <b>Course Run ID:</b> 
                     </td>   
                     <td>
                         <?php echo $courseRunId; ?>
                     </td> 
 
                     <td>
-                        <b>External Reference Number.:<span class="required">*</span></b> 
+                        <b>External Reference Number.:</b> 
                     </td>
                     <td> 
                         <?php echo $externalReferenceNumber; ?>
@@ -52,14 +52,14 @@
 
                 <tr class="change_span" style="">
                     <td>                    
-                        <b>Course Start Date.:<span class="required">*</span></b> 
+                        <b>Course Start Date.:</b> 
                     </td>   
                     <td>
                         <?php echo $courseStartDate; ?>
                     </td> 
 
                     <td>
-                        <b>Course End Date:<span class="required">*</span></b> 
+                        <b>Course End Date:</b> 
                     </td>
                     <td> 
                         <?php echo $courseEndDate; ?>
@@ -67,7 +67,7 @@
                 </tr>
                 <tr class="change_span" style="">
                     <td>                    
-                        <b>Mode of Training.:<span class="required">*</span></b> 
+                        <b>Mode of Training.:</b> 
                     </td>   
                     <td colspan="3">
                         <?php echo $modeOfTraining; ?>
@@ -79,30 +79,30 @@
                     </td>                           
                 </tr>
                 <tr class="new_span">
-                    <td class="td_heading" width="15%">Session ID:<span class="required">*</span></td>
+                    <td class="td_heading" width="15%">Session ID:</td>
                     <td colspan="3">
                         <?php echo $sessionId; ?>
                     </td>
                 </tr> 
                 <tr class="new_span">
-                    <td class="td_heading" width="15%">Session Start Date & Time:<span class="required">*</span></td>
+                    <td class="td_heading" width="15%">Session Start Date & Time:</td>
                     <td>
                        <?php echo $sessionStartDate . ' ' . $sessionStartTime; ?>
                     </td>
-                    <td class="td_heading" width="15%">Session End Date & Time:<span class="required">*</span></td>
+                    <td class="td_heading" width="15%">Session End Date & Time:</td>
                     <td>
                         <?php echo $sessionEndDate . ' ' . $sessionEndTime; ?>
                     </td>
                 </tr>        
                 <tr>
                     <td>                    
-                        <b>Entry Mode.:<span class="required">*</span></b> 
+                        <b>Entry Mode.:</b> 
                     </td>   
                     <td>
                         <?php echo $SessionEntryMode; ?>
                     </td>     
                     <td>                    
-                        <b>Attendance ID.:<span class="required">*</span></b> 
+                        <b>Attendance ID.:</b> 
                     </td>   
                     <td>
                         <?php echo $SessionAttendanceId; ?>
@@ -110,13 +110,13 @@
                 </tr> 
                 <tr>
                     <td>                    
-                        <b>No Of Hours.:<span class="required">*</span></b> 
+                        <b>No Of Hours.:</b> 
                     </td>   
                     <td>
                         <?php echo $SessionnumberOfHours; ?>
                     </td>     
                     <td>                    
-                        <b>Session To Traqam.:<span class="required">*</span></b> 
+                        <b>Session To Traqam.:</b> 
                     </td>   
                     <td>
                         <?php echo $SessionsentToTraqom; ?>
@@ -124,7 +124,7 @@
                 </tr> 
                 <tr>
                     <td>                    
-                        <b>Session Status.:<span class="required">*</span></b> 
+                        <b>Session Status.:</b> 
                     </td>   
                     <td colspan="3">
                         <?php echo $Sessionstatus; ?>
@@ -140,7 +140,7 @@
                     </td>                           
                 </tr>
                 <tr class="new_span">
-                    <td class="td_heading">Venue:<span class="required">*</span></td>
+                    <td class="td_heading">Venue:</td>
                     <td>                        
                         <?php echo $venueBlock . ' ' . $venueBuilding.' Floor : '.$venueFloor.' '.$venuePostalCode; ?>
                         ,</br>                        
@@ -148,7 +148,7 @@
                     </td>                                    
                 </tr>
                 <tr class="new_span">
-                    <td class="td_heading" width="15%">Wheel Chair Access<span class="required">*</span></td>
+                    <td class="td_heading" width="15%">Wheel Chair Access</td>
                     <td colspan="3">
                         <?php
                         if ($venueWheelChairAccess) {
@@ -169,13 +169,13 @@
                 </tr>
                 <tr>
                     <td>                    
-                        <b>Account Type.:<span class="required">*</span></b> 
+                        <b>Account Type.:</b> 
                     </td>   
                     <td>
                         <?php echo $TraineeaccountType; ?>
                     </td>     
                     <td>                    
-                        <b>Contact Number.:<span class="required">*</span></b> 
+                        <b>Contact Number.:</b> 
                     </td>   
                     <td>
                         <?php echo $TraineecontactNumber; ?>
@@ -183,13 +183,13 @@
                 </tr> 
                  <tr>
                     <td>                    
-                        <b>Email.:<span class="required">*</span></b> 
+                        <b>Email.:</b> 
                     </td>   
                     <td>
                         <?php echo $Traineeemail; ?>
                     </td>     
                     <td>                    
-                        <b>ID.:<span class="required">*</span></b> 
+                        <b>ID.:</b> 
                     </td>   
                     <td>
                         <?php echo $Traineeid; ?>
@@ -197,13 +197,13 @@
                 </tr> 
                 <tr>
                     <td>                    
-                        <b>ID Type.:<span class="required">*</span></b> 
+                        <b>ID Type.:</b> 
                     </td>   
                     <td>
                         <?php echo $TraineeidType; ?>
                     </td>     
                     <td>                    
-                        <b>ID.:<span class="required">*</span></b> 
+                        <b>Individual ID.:</b> 
                     </td>   
                     <td>
                         <?php echo $TraineeindividualId; ?>
@@ -211,13 +211,13 @@
                 </tr> 
                 <tr>
                     <td>                    
-                        <b>Name.:<span class="required">*</span></b> 
+                        <b>Name.:</b> 
                     </td>   
                     <td>
                         <?php echo $Traineename; ?>
                     </td>     
                     <td>                    
-                        <b>Survey Language.:<span class="required">*</span></b> 
+                        <b>Survey Language.:</b> 
                     </td>   
                     <td>
                         <?php echo $TraineesurveyLanguageCode; ?>
