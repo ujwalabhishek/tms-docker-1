@@ -68,9 +68,9 @@ class tp_gateway extends CI_Controller {
     public function view_assessment() {
         $tenant_id = $this->tenant_id;
         $assessment_ref_no = $this->input->post('referenceNo');
-        $asessment_resp = $this->tpgModel->view_asssessment_from_tpg($assessment_ref_no);
+        $asessment_resp = $this->tpgModel->view_asssessment_from_tpg($assessment_ref_no);echo "ss";exit;
         $trainees = $this->classModel->get_tms_trainee_assessments($assessment_ref_no, $tenant_id);
-        $arr_json = json_decode($asessment_resp);echo "ss";exit;
+        $arr_json = json_decode($asessment_resp);
         $arr_json->data->trainee->tms_fullname = $trainees[0]->fullname;
         $arr_json->data->tms_result = $trainees[0]->training_score;
         $arr_json->data->tms_result = $trainees[0]->training_score;
