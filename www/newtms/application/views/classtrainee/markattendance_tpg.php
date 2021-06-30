@@ -161,16 +161,16 @@
                                 <td><?php
                                     if ($row->tax_code_type = 'SNG_1' && $row->idtype == 'SG') {
                                         $idtype = 'NRIC(SP)'; ///singaporean pink
-                                        $idtypes ='SP';
+                                        $idtypes = 'SP';
                                     } elseif ($row->tax_code_type = 'SNG_1' && $row->idtype == 'NS') {
                                         $idtype = 'NRIC(SB)'; /// permanent residence
-                                         $idtypes ='SB';
+                                        $idtypes = 'SB';
                                     } else if ($row->tax_code_type = 'SNG_2') {
                                         $idtype = 'FIN(SO)'; //// FIN
-                                         $idtypes ='SO';
+                                        $idtypes = 'SO';
                                     } else {
                                         $idtype = 'Others(OT)'; /////Others
-                                         $idtypes ='OT';
+                                        $idtypes = 'OT';
                                     }
                                     echo $idtype
                                     ?>
@@ -179,38 +179,35 @@
                                 <td><?php echo $row->total_classroom_duration; ?></td>
                                 <td><?php echo $row->survey_language; ?></td>
                                 <td>
-                                    <?php
-                                    if($row->tpg_uploaded_status == 1){?>
-                                       
-                                        <a href="#view_session_attn" rel="modal:open" id="click_attendance" data-tpgSessionId="<?php echo $row->tpg_session_id;?>" data-crsRefNo="<?php echo $row->reference_num;?>" data-tpgCrsRunid="<?php echo $row->tpg_course_run_id;?>"><span class="btnblue">View Session</span></a>                                
-                                     
-                                    <?php
-                                    }else{
+                                    <?php if ($row->tpg_uploaded_status == 1) { ?>                                                                               
+                                        <a href="<?php echo base_url() . 'tp_gateway/retrieve_course_sess_att/' . $row->tpg_course_run_id . '/' . $row->reference_num . '/' . $row->tpg_session_id; ?>"><button class="btnblue">View Session</button></a>
+                                        <?php
+                                    } else {
                                         $atr = 'id="submit_attendance_form" name="submit_attendance" method="post"';
-                                    echo form_open("tp_gateway/submit_attendance", $atr);
-                                    ?>
-                                    <input type="hidden" name="tpg_session_id" value="<?php echo $row->tpg_session_id; ?>" id="tpg_session_id">                                    
-                                    <?php if ($row->session_type_id == 'S1') { ?>
-                                        <input type="hidden" name="attn_status_code" value="<?php echo $row->session_01; ?>" id="attn_status_code">
-                                    <?php } else { ?>
-                                        <input type="hidden" name="attn_status_code" value="<?php echo $row->session_02; ?>" id="attn_status_code">
-                                    <?php } ?>                                                                                                            
-                                    <input type="hidden" name="fullname" value="<?php echo $row->fullname; ?>" id="fullname">
-                                    <input type="hidden" name="registered_email_id" value="<?php echo $row->registered_email_id; ?>" id="registered_email_id">
-                                    <input type="hidden" name="idtype" value="<?php echo $idtypes; ?>" id="idtype">
-                                    <input type="hidden" name="mobileNo" value="<?php echo $row->contact_number; ?>" id="mobileNo">
-                                    <input type="hidden" name="noOfHours" value="<?php echo $row->total_classroom_duration; ?>" id="noOfHours">
-                                    <input type="hidden" name="survey_language" value="<?php echo $row->survey_language; ?>" id="survey_language">
-                                    <input type="hidden" name="class_id" value="<?php echo $row->class_id; ?>" id="class_id">
-                                    <input type="hidden" name="course_id" value="<?php echo $row->course_id; ?>" id="course_id">
-                                    <input type="hidden" name="user_id" value="<?php echo $row->user_id; ?>" id="user_id">
-                                    <input type="hidden" name="crs_reference_num" value="<?php echo $row->reference_num; ?>" id="crs_reference_num">
-                                    <input type="hidden" name="tax_code" value="<?php echo $row->tax_code; ?>" id="tax_code">
-                                    <input type="hidden" name="tpg_course_run_id" value="<?php echo $row->tpg_course_run_id; ?>" id="tpg_course_run_id">
-                                    <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
-                                    <?php
-                                        }
+                                        echo form_open("tp_gateway/submit_attendance", $atr);
+                                        ?>
+                                        <input type="hidden" name="tpg_session_id" value="<?php echo $row->tpg_session_id; ?>" id="tpg_session_id">                                    
+                                        <?php if ($row->session_type_id == 'S1') { ?>
+                                            <input type="hidden" name="attn_status_code" value="<?php echo $row->session_01; ?>" id="attn_status_code">
+                                        <?php } else { ?>
+                                            <input type="hidden" name="attn_status_code" value="<?php echo $row->session_02; ?>" id="attn_status_code">
+                                        <?php } ?>                                                                                                            
+                                        <input type="hidden" name="fullname" value="<?php echo $row->fullname; ?>" id="fullname">
+                                        <input type="hidden" name="registered_email_id" value="<?php echo $row->registered_email_id; ?>" id="registered_email_id">
+                                        <input type="hidden" name="idtype" value="<?php echo $idtypes; ?>" id="idtype">
+                                        <input type="hidden" name="mobileNo" value="<?php echo $row->contact_number; ?>" id="mobileNo">
+                                        <input type="hidden" name="noOfHours" value="<?php echo $row->total_classroom_duration; ?>" id="noOfHours">
+                                        <input type="hidden" name="survey_language" value="<?php echo $row->survey_language; ?>" id="survey_language">
+                                        <input type="hidden" name="class_id" value="<?php echo $row->class_id; ?>" id="class_id">
+                                        <input type="hidden" name="course_id" value="<?php echo $row->course_id; ?>" id="course_id">
+                                        <input type="hidden" name="user_id" value="<?php echo $row->user_id; ?>" id="user_id">
+                                        <input type="hidden" name="crs_reference_num" value="<?php echo $row->reference_num; ?>" id="crs_reference_num">
+                                        <input type="hidden" name="tax_code" value="<?php echo $row->tax_code; ?>" id="tax_code">
+                                        <input type="hidden" name="tpg_course_run_id" value="<?php echo $row->tpg_course_run_id; ?>" id="tpg_course_run_id">
+                                        <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
+                                        <?php
                                     }
+                                }
                                 echo form_close();
                                 ?>
                             </td>
