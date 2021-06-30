@@ -2143,7 +2143,7 @@ class Class_Model extends CI_Model {
                 left join company_master cm on cm.company_id=ce.company_id
                 WHERE cc . tenant_id = '$tenant_id' AND assessment_reference_No='$assessment_ref_no'";             
                 $result = $this->db->query($sql)->result();
-                echo $this->db->last_query();exit;
+                
                 return $result;
     }
 
