@@ -1364,7 +1364,7 @@ class tp_gateway extends CI_Controller {
         );
 
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-        //print_r($object);exit;
+        print_r($tpg_enrolment_json);exit;
         $data['trainingPartnerCode'] = $trainingPartnerCode;
         $data['trainingPartnerUEN'] = $trainingPartnerUEN;
 
