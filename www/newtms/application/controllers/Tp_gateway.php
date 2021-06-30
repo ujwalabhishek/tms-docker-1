@@ -1846,20 +1846,14 @@ class tp_gateway extends CI_Controller {
 
         $retun = $this->correct_live_dev_api_data($courseReferenceNumber, $tenant->comp_reg_no);
 
-        $uen = $retun['tp_uen'];
-
-        $encrypt_method = "AES-256-CBC";
-        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
-        $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
-
         $api_version = 'v1.3';
-        $url = "https://" . TPG_DEV_URL . "/courses/runs/" . $tpg_course_run_id . "/sessions/attendance?uen=" . $uen . "&courseReferenceNumber=" . $courseReferenceNumber . "&sessionId=" . $sessionId;
-echo $url;exit;
-        $request = $this->curl_request('GET', $url, "", $api_version);
+        $url = "https://" . TPG_DEV_URL . "/courses/runs/" . $tpg_course_run_id . "/sessions/attendance?uen=" . $retun['tp_uen'] . "&courseReferenceNumber=" . $courseReferenceNumber . "&sessionId=" . $sessionId;
 
-        $output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+        $response = $this->curl_request('GET', $url, "", $api_version);
 
-        $tpg_response = json_decode($output);
+        $tpg_response = encrypt_decrypt('decrypt', $response);
+
+        
 
         print_r($tpg_response);
         //exit;
