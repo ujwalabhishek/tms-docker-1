@@ -1851,8 +1851,8 @@ class tp_gateway extends CI_Controller {
 
         $response = $this->curl_request('GET', $url, "", $api_version);
 
-        $tpg_response = $this->encrypt_decrypt('decrypt', $response);
-
+        $response = $this->encrypt_decrypt('decrypt', $response);
+        $tpg_response = json_decode($response);
         
 
         //print_r(json_decode($tpg_response));
