@@ -1854,7 +1854,7 @@ class tp_gateway extends CI_Controller {
 
         $api_version = 'v1.3';
         $url = "https://" . TPG_DEV_URL . "/courses/runs/" . $tpg_course_run_id . "/sessions/attendance?uen=" . $uen . "&courseReferenceNumber=" . $courseReferenceNumber . "&sessionId=" . $sessionId;
-
+echo $url;exit;
         $request = $this->curl_request('GET', $url, "", $api_version);
 
         $output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
