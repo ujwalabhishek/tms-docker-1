@@ -683,7 +683,7 @@ echo form_open("classes/add_new_class", $atr);
         </div>
     </div>
     <span class="required required_i">* Required Fields</span>
-    <div class="button_class class_display_none" style="display: none;">
+    <div class="button_class class_display_none" style="<?php echo ($display ?? 'display:none;');?>">
         <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-saved"></span>&nbsp;Save</button> &nbsp; &nbsp; 
     </div>
 </div>
