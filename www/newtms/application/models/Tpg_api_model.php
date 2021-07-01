@@ -595,12 +595,12 @@ class Tpg_api_Model extends CI_Model {
                                       }';
             
         $encrypted_data = $this->encrypt_decrypt('encrypt', $tpg_attn_json_data);
-        //echo $encrypted_data;exit;
+        echo $tpg_attn_json_data;exit;
         $api_version = 'v1.3';
         $url = "https://".$retun[domain]."/courses/runs/".$tpg_course_run_id."/sessions/attendance";
         $response = $this->curl_request('POST',$url,$encrypted_data,$api_version);
         //$decrypted_data = $this->encrypt_decrypt('decrypt', $response);
-        print_r($response);exit;
+        //print_r($response);exit;
         $attn_resp=json_decode($response);
         return $attn_resp;
             
