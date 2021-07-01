@@ -935,6 +935,9 @@ echo form_open("classes/add_new_class", $atr);
         if($tax_error == 1) {            
             $("#class_course").trigger("change");
         }
+        <?php if(!empty($display)){?>
+        $('#class_course').val('<?php echo $this->input->post('class_course');?>').trigger('change');
+        <?php } ?>
     });    
 </script>
 <style>
