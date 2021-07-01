@@ -300,7 +300,7 @@ echo form_open("classes/add_new_class", $atr);
                             <?php
                             $languages_options[''] = 'Select';
                             $languages_js = 'id="languages" maxlength="10"';
-                            echo form_dropdown('languages', $languages_options, '', $languages_js);
+                            echo form_dropdown('languages', $languages_options, $this->input->post('languages'), $languages_js);
                             ?>
                             <span id="languages_err"></span>
                         </td>
