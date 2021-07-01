@@ -14367,6 +14367,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 WHERE cc . tenant_id = '$tenant_id'
                 AND c.course_id = '$courseID'
                 AND cc.class_id = '$classID'
+                AND ce.eid_number != '' OR ce.eid_number IS NOT NULL
                 AND date(cc.class_end_datetime) <= '$today_date'";
         $res = $this->db->query($sql)->result();
         //echo $this->db->last_query();exit;
