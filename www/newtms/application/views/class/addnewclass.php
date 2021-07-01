@@ -623,7 +623,7 @@ echo form_open("classes/add_new_class", $atr);
         </div>
     </div>
     <br>
-    <div class="row marketing class_display_none" style="display:none;">
+    <div class="row marketing class_display_none" style="<?php echo ($display ?? 'display:none;');?>">
         <div class="col-lg-6">
              <span id="dis-error"></span>
             <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule 
