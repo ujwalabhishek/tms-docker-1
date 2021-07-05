@@ -3446,6 +3446,7 @@ class Class_Trainee extends CI_Controller {
 //        $result = $this->classtraineemodel->get_enroll_invoice($id);
 
         $result = $this->classtraineemodel->get_company_enroll_invoice($id);
+        echo $result->inv_date; exit;
         //added by pritam to generate previous invoice number
         $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_invoice($result->invoice_id);
 
