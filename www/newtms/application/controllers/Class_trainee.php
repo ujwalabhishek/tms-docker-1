@@ -262,7 +262,9 @@ class Class_Trainee extends CI_Controller {
                     $linkStr .= get_links($row['enrolment_mode'], $row['payment_status'], $row['invoice_id'], $row['user_id'], $row['pymnt_due_id'], $row['class_id'], $this, $row['account_status'], $row['cc_class_status'], $row['company_id'], $row['att_status']);
                 }
                 //////add by shubhranshu to save enrollment id on 18/03/2021
-                $linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">' . $EIDNO . ' </span> </a><br/>';
+                //Commented by abdulla nofal - Since, it's being updated from TPG.
+                //$linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">' . $EIDNO . ' </span> </a><br/>';
+                $linkStr .= 'EID No: <span style="font-weight:normal;color:#000">' . $EIDNO . ' </span><br/>';
                 $new_tabledata[$k]['action_link'] = $linkStr;
                 $new_tabledata[$k]['referrer'] = $row['referral_details'];
             }
