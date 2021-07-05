@@ -3226,7 +3226,8 @@ class Class_Trainee extends CI_Controller {
         $result->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_country), ', ');
 
         $result->inv_year = date('Y', strtotime($result->inv_date));
-        $result->inv_date = date('d/m/Y', strtotime($result->inv_date));
+        //Commented by Abdulla Nofal
+        //$result->inv_date = date('d/m/Y', strtotime($result->inv_date));
         $result->discount_label = rtrim($this->course->get_metadata_on_parameter_id($result->discount_type), ', ');
         if ($result->total_gst) {
             $result->gst_label = 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($result->gst_rule), ', ');
@@ -3340,7 +3341,8 @@ class Class_Trainee extends CI_Controller {
         $result->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_country), ', ');
 
         $result->inv_year = date('Y', strtotime($result->inv_date));
-        $result->inv_date = date('d/m/Y', strtotime($result->inv_date));
+        //Commented by Abdulla Nofal
+        //$result->inv_date = date('d/m/Y', strtotime($result->inv_date));
         $result->discount_label = rtrim($this->course->get_metadata_on_parameter_id($result->discount_type), ', ');
         if ($result->total_gst) {
             $result->gst_label = 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($result->gst_rule), ', ');
@@ -3446,7 +3448,6 @@ class Class_Trainee extends CI_Controller {
 //        $result = $this->classtraineemodel->get_enroll_invoice($id);
 
         $result = $this->classtraineemodel->get_company_enroll_invoice($id);
-        echo $result->inv_date.' '.date('d/m/Y', strtotime($result->inv_date)); exit;
         //added by pritam to generate previous invoice number
         $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_invoice($result->invoice_id);
 
@@ -3459,8 +3460,8 @@ class Class_Trainee extends CI_Controller {
         $result->tenant_state = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_state), ', ');
         $result->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_country), ', ');
         $result->inv_year = date('Y', strtotime($result->inv_date));
-        $result->inv_date = date('d/m/Y', strtotime($result->inv_date));
-        echo $result->inv_date; exit;
+        //Commented by Abdulla Nofal
+        //$result->inv_date = date('d/m/Y', strtotime($result->inv_date));
         $result->discount_label = rtrim($this->course->get_metadata_on_parameter_id($result->discount_type), ', ');
         if ($result->total_gst) {
             $result->gst_label = 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($result->gst_rule), ', ');
