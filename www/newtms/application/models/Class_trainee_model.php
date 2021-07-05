@@ -4591,7 +4591,7 @@ class Class_Trainee_Model extends CI_Model {
                         ->join('tenant_master tm', 'tm.tenant_id=ce.tenant_id')
                         ->where('ei.pymnt_due_id', $payid)
                         ->get()->row();
-
+echo print_r($result, true); exit;
         return $result;
     }
 
