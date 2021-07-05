@@ -3459,6 +3459,7 @@ class Class_Trainee extends CI_Controller {
         $result->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_country), ', ');
         $result->inv_year = date('Y', strtotime($result->inv_date));
         $result->inv_date = date('d/m/Y', strtotime($result->inv_date));
+        echo $result->inv_date; exit;
         $result->discount_label = rtrim($this->course->get_metadata_on_parameter_id($result->discount_type), ', ');
         if ($result->total_gst) {
             $result->gst_label = 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($result->gst_rule), ', ');
