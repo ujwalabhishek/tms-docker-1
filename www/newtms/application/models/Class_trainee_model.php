@@ -14396,7 +14396,10 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 tu.tax_code_type,
                 cs.tpg_session_id, 
                 cs.session_type_id,
-                cs.tpg_uploaded_status,
+                (CASE 
+                    WHEN cs.session_type_id like '%S1%' THEN ca.session_01_tpg_uploaded_status ELSE ca.session_02_tpg_uploaded_status END
+                ) as tpg_uploaded_status,
+                
                 cs.class_date,
                 (CASE 
                     WHEN cs.session_type_id like '%S1%' THEN ca.session_01 ELSE 0 END
@@ -14425,15 +14428,22 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         return $res;
     }
     
-    function uploadTmsClassShdl($tenant_id,$course_id,$class_id,$tpg_session_id){
-        $data = array(
-            'tpg_uploaded_status' => 1
-        );
+    function uploadTmsClassShdl($tenant_id,$course_id,$class_id,$tpg_session_id,$user_id){
+        if (strpos($tpg_session_id, 'S1') !== false) {
+            $data = array(
+                'session_01_tpg_uploaded_status' => 1
+            );
+        }else if(strpos($tpg_session_id, 'S2') !== false){
+            $data = array(
+                'session_02_tpg_uploaded_status' => 1
+            );
+        }
+        
         $this->db->where('tenant_id', $tenant_id);
         $this->db->where('course_id', $course_id);
         $this->db->where('class_id', $class_id);
-        $this->db->where('tpg_session_id', $tpg_session_id);
-        $status=$this->db->update('class_schld', $data);
+        $this->db->where('user_id', $user_id);
+        $status=$this->db->update('class_attendance', $data);
         return $status;
     }
 
