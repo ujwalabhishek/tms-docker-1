@@ -205,10 +205,11 @@
                                         <input type="hidden" name="tax_code" value="<?php echo $row->tax_code; ?>" id="tax_code">
                                         <input type="hidden" name="tpg_course_run_id" value="<?php echo $row->tpg_course_run_id; ?>" id="tpg_course_run_id">
                                         <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
+                                        echo form_close();
                                         <?php
                                     }
                                 }
-                                echo form_close();
+                                
                                 ?>
                             </td>
                         </tr>
