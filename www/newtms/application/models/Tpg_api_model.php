@@ -562,7 +562,9 @@ class Tpg_api_Model extends CI_Model {
     function submit_attendance_to_tpg($tp_uen,$tpg_course_run_id,$tax_code,$crs_reference_num,$tenant_id,$user_id,$course_id,$class_id,$survey_language,$noOfHours,$tpgCourseId,$tpg_session_id,$attn_status_code,$fullname,$registered_email_id,$idtype,$mobileNo){
         
             $retun = $this->correct_live_dev_api_data($crs_reference_num,$tp_uen);
-           
+           if($attn_status_code == 0){//for absent
+               $attn_status_code= 2;///2-unconfirmed
+           }
 
             $tpg_attn_json_data = '{"uen": "'.$retun[tp_uen].'",
                                         "course": {
