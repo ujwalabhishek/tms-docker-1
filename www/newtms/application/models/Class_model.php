@@ -1663,26 +1663,34 @@ class Class_Model extends CI_Model {
                    
                 }
             }
-            if (isset($def_schlded_date)) {
-                $assmnt_date = date('Y-m-d', strtotime($def_schlded_date));
-                $assmnt_start_time = $def_schlded_start_time . ':00';
-                $assmnt_end_time = $def_schlded_end_time . ':00';
-                $def_schlded_venue_oth = empty($def_schlded_venue_oth) ? NULL : $def_schlded_venue_oth;
-                $class_assmnt_data = array(
-                    'tenant_id' => $tenantId,
-                    'course_id' => $class_course,
-                    'class_id' => $class_id,
-                    'assmnt_date' => $assmnt_date,
-                    'assmnt_start_time' => $assmnt_start_time,
-                    'assmnt_end_time' => $assmnt_end_time,
-                    'assessor_id' => rtrim($def_schlded_assessor, ','),
-                    'assmnt_venue' => $def_schlded_venue,
-                    'assmnt_type' => 'DEFAULT',
+            if (isset($assmnt_date)) {
+                foreach ($assmnt_date as $k => $v) {
+                    $assmnt_date = date('Y-m-d', strtotime($v));
+                    $assmt_start_time = $assmnt_start_time[$k] . ':00';
+                    $assmt_end_time = $assmnt_end_time[$k] . ':00';
+                    $assm_venue_oth = (empty($ass_venue_oth[$k]))?NULL:$ass_venue_oth[$k];
+                    $class_assmnt_data = array(
+                        'tenant_id' => $tenantId,
+                        'course_id' => $class_course,
+                        'class_id' => $class_id,
+                        'assmnt_date' => $assmnt_date,
+                        'assmnt_start_time' => $assmt_start_time,
+                        'assmnt_end_time' => $assmt_end_time,
+                        'assessor_id' => rtrim($assmnt_assessor[$k], ','),
+                        'assmnt_venue' => $ass_venue[$k],
+                        'assmnt_type' => 'CUSTOM',
+                       
+                        'assmnt_venue_oth' => strtoupper($assm_venue_oth),
+                    );
+                    $this->db->insert('class_assmnt_schld', $class_assmnt_data);
+                    $assmnt_id = $this->db->insert_id();
+                   
+                  
                     
-                    'assmnt_venue_oth' => strtoupper($def_schlded_venue_oth)
-                );
-                $this->db->insert('class_assmnt_schld', $class_assmnt_data);
+                }
             }
+            
+            
             $this->db->trans_complete();
             if ($this->db->trans_status() === FALSE) {
                 return FALSE;
