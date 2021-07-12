@@ -1174,11 +1174,8 @@ function ass_attach() {
                 <input type="hidden" value="' + $ass_venue + '" name="ass_venue[]" class="ass_venue">\
                 <input type="hidden" value="' + $ass_venue_oth + '" name="ass_venue_oth[]" class="ass_venue_oth">\
                  <td class="a_button">\
-                    <a href="#ex2" rel="modal:open" class="small_text ass_edit">\
-                        <input type="button" data-edit="' + $count + '" value="E" style="color:#000000; text-decoration:none;" />\
-                    </a><br>\
                     <a href="#ex9" rel="modal:open" class="small_text delete_color ass_delete">\
-                        <input type="button" data-del="' + $count + '" value="D" style="color:#000000; text-decoration:none;" />\
+                        <input type="button" data-del="' + $count + '" value="Delete" style="color:#000000; text-decoration:none;" />\
                     </a>\
                 </td>\
                 <td>' + $ass_date + '</td>\
