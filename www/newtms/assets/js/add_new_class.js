@@ -1178,13 +1178,10 @@ function ass_attach() {
                 <td>' + $ass_start_time + ' - ' + $ass_end_time + '</td>\
                 <td>' + $ass_venue_text + '</td>';
     $html3 = '</tr>';
-    if ($('#ass_editid').val().length > 0) {
-        $val = $('#ass_editid').val();
-        $('.ass_tr' + $val).html($html2);
-    } else {
-        $cnt++;
-        $('.def_schld_div .table-responsive table tbody').append($html1 + $html2 + $html3);
-    }
+   
+    $cnt++;
+    $('.def_schld_div .table-responsive table tbody').append($html1 + $html2 + $html3);
+    
     assmnt_data_clear();
 }
 function assmnt_data_clear() {

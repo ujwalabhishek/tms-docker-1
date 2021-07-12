@@ -8,7 +8,7 @@
     $js_role = '<?php echo $role; ?>';   
     $js_tenant = '<?php echo TENANT_ID; ?>';  
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.00088997077889908114598"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.000889970778889908114598"></script>
 <?php
 $this->load->helper('form');
 $this->load->helper('metavalues_helper');
@@ -665,12 +665,12 @@ echo form_open("classes/add_new_class", $atr);
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th width="8%">Action</th>
-                                <th width="18%">Assmnt. Date</th>
+                                <th width="">Action</th>
+                                <th width="">Assmnt. Date</th>
                               
-                                <th width="30%">Assessor</th>
-                                <th width="20%">Assmnt. Time</th>
-                                <th width="20%">Assmnt. Venue</th>
+                                <th width="">Assessor</th>
+                                <th width="">Assmnt. Time</th>
+                                <th width="">Assmnt. Venue</th>
                             </tr>
                         </thead>
                         <tbody>
