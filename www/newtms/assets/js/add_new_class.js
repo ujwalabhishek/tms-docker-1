@@ -767,6 +767,7 @@ function def_schld_attach() {
 $schld_count = 1;
 function schld_attach() {
     $schld_date = $('#schld_date').val();
+    $modeoftraining = $('#modeoftraining').val();
     $schld_session_type = $('#schld_session_type').val();
     $schld_session_type_text = $('#schld_session_type option[value="' + $schld_session_type + '"]').text();
     $schld_start_time = $('#schld_start_time').val();
@@ -782,6 +783,7 @@ function schld_attach() {
     }
     $html = '<tr class="schld_tr' + $schld_count + ' schlddate_' + $schld_date + '" data-session="' + $schld_session_type + '" data-date="' + $schld_date + '" data-count="' + $schld_count + '">\
                 <input type="hidden" value="' + $schld_date + '" name="schlded_date[]" class="schlded_date">\
+                <input type="hidden" value="' + $modeoftraining + '" name="mode_of_training[]" class="schlded_session_type">\\n\
                 <input type="hidden" value="' + $schld_session_type + '" name="schlded_session_type[]" class="schlded_session_type">\
                 <input type="hidden" value="' + $schld_start_time + '" name="schlded_start_time[]" class="schlded_start_time">\
                 <input type="hidden" value="' + $schld_end_time + '" name="schlded_end_time[]" class="schlded_end_time">\
