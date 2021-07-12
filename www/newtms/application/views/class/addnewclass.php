@@ -8,7 +8,7 @@
     $js_role = '<?php echo $role; ?>';   
     $js_tenant = '<?php echo TENANT_ID; ?>';  
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.000878114598"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.0008798114598"></script>
 <?php
 $this->load->helper('form');
 $this->load->helper('metavalues_helper');
@@ -687,7 +687,7 @@ echo form_open("classes/add_new_class", $atr);
         <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-saved"></span>&nbsp;Save</button> &nbsp; &nbsp; 
     </div>
 </div>
-<div class="modalassessment009911" id="ex1" style="display:none;">
+<div class="modalassessment009911" id="ex1" style="display:none;height: 300px;">
     <h2 class="panel_heading_style">Add Class / Lab Schedule</h2>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -842,14 +842,10 @@ echo form_open("classes/add_new_class", $atr);
                     <span id="control_8_err"></span>
                 </td>
             </tr>
-            <tr>
-                <td class="td_heading">Select Trainees:<span class="red">*</span></td>
-                <td class="select_trainee">
-                </td>
-            </tr>
+            
             <tr>
                 <td class="td_heading">Venue:<span class="red">*</span></td>
-                <td>
+                <td style="width: 200px;">
                     <?php
                     $ass_venue_options[''] = 'Select';
                     $cls_venue = fetch_metavalues_by_category_id(Meta_Values::LOCATION);
