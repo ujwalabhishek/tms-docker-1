@@ -150,7 +150,7 @@
                             <tr>                        
                                 <td><?php echo $row->tax_code; ?></td>
                                 <td class="name"><?php echo $row->fullname; ?></td>
-                                <td><?php echo $row->assessmentDate; ?></td>
+                                <td><?php echo $row->assmnt_date ?? $row->assessmentDate; ?></td>
                                 <td><?php echo $row->skillCode; ?></td>
                                 <td><?php echo $row->feedback_score ?></td>
                                 <td><?php echo $row->feedback_grade; ?></td>

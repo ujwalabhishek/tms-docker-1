@@ -1974,6 +1974,7 @@ class Class_Model extends CI_Model {
                 tu.tax_code_type,
                 cc.class_id,
                 ce.eid_number,
+                cas.assmnt_date,
                 ce.assessment_reference_No,
                 ce.user_id,
                 tup.first_name as fullname,
@@ -1992,6 +1993,7 @@ class Class_Model extends CI_Model {
                 JOIN tms_users tu ON tu.user_id = ce.user_id 
                 left join tms_users_pers tup on tup.user_id =ce.user_id 
                 left join company_master cm on cm.company_id=ce.company_id
+                left join class_assmnt_schld cas on cas.course_id = cc.course_id and cas.class_id = cc.class_id and cas.tenant_id = cc.tenant_id
                 WHERE cc . tenant_id = '$tenant_id'
                 AND c.course_id = '$courseID'
                 AND cc.class_id = '$classID'
