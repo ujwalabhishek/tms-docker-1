@@ -1009,6 +1009,61 @@ $(document).ready(function() {
     $('.ass_save').click(function() {
         return ass_form_validate(true);
     });
+    $(document).on('click', '.ass_delete', function() {
+        $val = $(this).children('input').data('del');
+        $('.schld_alert_yes').attr('data-count', $val);
+        $('.schld_alert_yes').attr('data-check', 'ass');
+    });
+    
+    $(document).on('click', '.ass_edit', function() {
+        $edit_id = $(this).children('input').data('edit');
+        $div = $('.ass_tr' + $edit_id);
+        $('#ass_date').val($div.children('.assmnt_date').val());
+        $('#ass_start_time').val($div.children('.assmnt_start_time').val());
+        $('#ass_end_time').val($div.children('.assmnt_end_time').val());
+        $('input[name="control_2[]"]').removeAttr('disabled');
+        $('#control_2').next('.multiSelectOptions label').removeAttr('style');
+        $('#control_2').next('.multiSelectOptions').children('label').children('input').removeAttr('checked');
+        $('.err_span').remove();
+        $('input[name="checking_trainee[]"]').each(function(i) {
+            $val = $(this).val();
+            $('input[name="control_2[]"][value="' + $val + '"]').attr('disabled', 'disabled').removeAttr('checked');
+            $('input[name="control_2[]"][value="' + $val + '"]').parent().css('display', 'none');
+        });
+        $('.ass_tr' + $edit_id + ' input[name="checking_trainee[]"]').each(function(i) {
+            $val = $(this).val();
+            $('input[name="control_2[]"][value="' + $val + '"]').removeAttr('disabled').attr('checked', 'checked');
+            $('input[name="control_2[]"][value="' + $val + '"]').parent().removeAttr('style')
+        })
+        $('#ass_editid').val($edit_id);
+        $('#control_8').next('.multiSelectOptions').children('label').children('input').removeAttr('checked');
+        $assessor = $('.ass_tr' + $edit_id + ' .assmnt_assessor').val();
+        $('.ass_tr' + $edit_id + ' input[name="checking_assessor[]"]').each(function(i) {
+            $val = $(this).val();
+            $('input[name="control_8[]"][value="' + $val + '"]').attr('checked', 'checked');
+        })
+        $('input[name="control_8[]"]').attr('disabled', 'disabled');
+        $('#control_8').next('.multiSelectOptions').children('label').css('display', 'none');
+        $('#control_8').next('.multiSelectOptions').children('.selectAll').removeAttr('style');
+        $('input[name="control_7[]"]:checked').each(function(i) {
+            $val = $(this).val();
+            $('input[name="control_8[]"][value="' + $val + '"]').removeAttr('disabled');
+            $('input[name="control_8[]"][value="' + $val + '"]').parent().removeAttr('style');
+        });
+        $('input[name="control_8[]"]:disabled').each(function(i) {
+            $(this).removeAttr('checked');
+        });
+        $length = $('input[name="control_8[]"]').not(':disabled').length;
+        if (parseInt($length) == 0) {
+            $('#ex231').modal();
+            return false;
+        }
+        $('#ass_venue').val($div.children('.ass_venue').val());
+        if ($div.children('.ass_venue').val() == 'OTH') {
+            $('.assven_oth_span').show();
+            $('#ass_venue_oth').val($div.children('.ass_venue_oth').val());
+        }
+    });
 })
 function scroll_to_top() {
     $('html,body').animate({scrollTop: $('body').offset().top}, "fast");
@@ -1146,3 +1201,4 @@ function assmnt_data_clear() {
     $('.assven_oth_span').hide();
     $('#ass_venue_oth').val('');
 }
+
