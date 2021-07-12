@@ -8,7 +8,7 @@
     $js_role = '<?php echo $role; ?>';   
     $js_tenant = '<?php echo TENANT_ID; ?>';  
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.00114598"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.008114598"></script>
 <?php
 $this->load->helper('form');
 $this->load->helper('metavalues_helper');
@@ -693,6 +693,26 @@ echo form_open("classes/add_new_class", $atr);
         <table class="table table-striped">
             <tbody>
                 <tr>
+                    <tr>
+                    <td class="td_heading">Mode Of Training:<span class="required">*</span></td>
+                        <td width="20%">
+                        <?php
+                        $modeoftraining = array();
+                        $modeoftraining[''] = 'Please Choose';
+                        $modeoftraining[1] = '1-Classroom';
+                        $modeoftraining[2] = '2-Asynchronous eLearning';
+                        $modeoftraining[3] = '3-In-house';
+                        $modeoftraining[4] = '4-On-the-Job';
+                        $modeoftraining[5] = '5-Practical / Practicum';
+                        $modeoftraining[6] = '6-Supervised Field';
+                        $modeoftraining[7] = '7-Traineeship';
+                        $modeoftraining[8] = '8-Assessment';
+                        $modeoftraining[9] = '9-Synchronous eLearning';
+                        echo form_dropdown('modeoftraining', $modeoftraining, $this->input->post('modeoftraining'), 'id="modeoftraining"');
+                        ?>
+                        <span id="modeoftraining_err"></span>
+                    </td>
+                </tr>
                     <td class="td_heading">Date:<span class="required">*</span></td>
                     <td><?php
                         $schld_date = array(

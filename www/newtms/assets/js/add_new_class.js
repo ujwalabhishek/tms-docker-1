@@ -185,10 +185,10 @@ $(document).ready(function() {
         $('#ex11').modal();
         return false;
     });
-    $('.alert_message1').click(function() {
-        $('#ex12').modal();
-        return false;
-    });
+//    $('.alert_message1').click(function() {
+//        $('#ex12').modal();
+//        return false;
+//    });
    
     $('.close_reminder_popup').click(function() {
         return reminder_popup_validate();
