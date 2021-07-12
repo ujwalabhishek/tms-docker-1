@@ -1075,7 +1075,7 @@ function ass_form_validate($retVal) {
     }
     return $retVal;
 }
-
+$cnt = 100;
 function ass_attach() {
     if ($('#ass_editid').val().length > 0) {
         $count = $('#ass_editid').val();
