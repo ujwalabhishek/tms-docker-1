@@ -1640,6 +1640,7 @@ class Class_Model extends CI_Model {
                         'class_date' => $class_date,
                         'session_type_id' => $schlded_session_type[$k],
                         'tpg_session_id' => $crse_ref_no.'-'.$tpg_course_run_id.'-S'.$ct,
+                        'mode_of_training' => $mode_of_training[$k],
                         'session_start_time' => $session_start_time,
                         'session_end_time' => $session_end_time
                         );
@@ -1674,6 +1675,7 @@ class Class_Model extends CI_Model {
                         'course_id' => $class_course,
                         'class_id' => $class_id,
                         'assmnt_date' => $assmnt_date,
+                         'mode_of_training' => '8',
                         'assmnt_start_time' => $assmt_start_time,
                         'assmnt_end_time' => $assmt_end_time,
                         'assessor_id' => rtrim($assmnt_assessor[$k], ','),
