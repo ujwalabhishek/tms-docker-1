@@ -218,7 +218,7 @@ class Tpg_api_Model extends CI_Model {
         }
         
        
-        if (!empty($assmnt_date[])) {    
+        if (!empty($assmnt_date)) {    
             foreach ($assmnt_date as $k => $v) {
                
                     $assdates = date('Ymd', strtotime($assmnt_date[$k]));
