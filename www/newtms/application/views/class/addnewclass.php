@@ -304,27 +304,7 @@ echo form_open("classes/add_new_class", $atr);
                             ?>
                             <span id="languages_err"></span>
                         </td>
-                        <td width="20%" class="td_heading">Mode Of Training:<span class="required">*</span></td>
-                        <td width="20%">
-                        <?php
                         
-                        $modeoftraining = array();
-                        $modeoftraining[''] = 'Please Choose';
-                        $modeoftraining[1] = '1-Classroom';
-                        $modeoftraining[2] = '2-Asynchronous eLearning';
-                        $modeoftraining[3] = '3-In-house';
-                        $modeoftraining[4] = '4-On-the-Job';
-                        $modeoftraining[5] = '5-Practical / Practicum';
-                        $modeoftraining[6] = '6-Supervised Field';
-                        $modeoftraining[7] = '7-Traineeship';
-                        $modeoftraining[8] = '8-Assessment';
-                        $modeoftraining[9] = '9-Synchronous eLearning';
-                        echo form_dropdown('modeoftraining', $modeoftraining, $this->input->post('modeoftraining'), 'id="modeoftraining"');
-                        ?>
-                    
-                        <span id="modeoftraining_err"></span>
-                
-                        </td>
 <!--                        <td class="td_heading">Sales Executive:</td>
                         <td><?php
                             $sales_exec_options[''] = 'Select';                            
@@ -657,9 +637,7 @@ echo form_open("classes/add_new_class", $atr);
         <div class="col-lg-6">
             <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Assessment Schedule 
                 <span class="label label-default push_right black-btn"><a href="#ex2" rel="modal:open" class="small_text alert_message1"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Assessment Schedule</a></span>
-                &nbsp;&nbsp;<span class="label label-default push_right moving_right black-btn"><a href="#ex3" rel="modal:open" class="small_text add_def_schld_form alert_message">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                        Default Schedule</a></span></h4>
+                &nbsp;&nbsp;</h4>
             <div class="scroll_schedule1 def_schld_div">
                 <div class="table-responsive  table-scroll-x">
                     <table class="table table-striped">

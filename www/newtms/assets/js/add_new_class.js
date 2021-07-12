@@ -613,13 +613,7 @@ function validate() {
     } else {
         remove_err('#languages');
     }
-    $modeoftraining = $('#modeoftraining').val();
-    if ($modeoftraining.length == 0) {
-        disp_err('#modeoftraining');
-        $retval = false;
-    } else {
-        remove_err('#modeoftraining');
-    }
+    
     $survey_language= $('#survey_language').val();
     if ($survey_language.length == 0) {
         disp_err('#survey_language');
