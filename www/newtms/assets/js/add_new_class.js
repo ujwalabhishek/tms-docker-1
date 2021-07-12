@@ -1093,17 +1093,9 @@ function ass_attach() {
         $assessor_hidden += '<input type="hidden" value="' + $(this).val() + '" name="checking_assessor[]">';
         $assessortext += $(this).parent().text() + ',';
     })
-    $trainee = '';
-    $traineetext = '';
-    $trainee_hidden = '';
-    $('input[name="control_2[]"]:checked').each(function() {
-        $trainee += $(this).val() + ',';
-        $trainee_hidden += '<input type="hidden" value="' + $(this).val() + '" name="checking_trainee[]">';
-        
-        $traineetext += $(this).parent().text() + ', ';
-    })
+    
     $assessortext = $assessortext.replace(/,+$/, '');
-    $traineetext = $traineetext.replace(/,+$/, '');
+   
     $ass_venue = $('#ass_venue').val();
     $ass_venue_text = $('#ass_venue option[value="' + $ass_venue + '"]').text();
     $ass_venue_oth = $('#ass_venue_oth').val();
@@ -1111,7 +1103,7 @@ function ass_attach() {
         $ass_venue_text += "(" + $ass_venue_oth + ")";
     }
     $html1 = '<tr class="ass_tr' + $count + '">';
-    $html2 = $trainee_hidden + $assessor_hidden + '\
+    $html2 = $assessor_hidden + '\
                 <input type="hidden" value="' + $ass_date + '" name="assmnt_date[]" class="assmnt_date">\
                 <input type="hidden" value="' + $ass_start_time + '" name="assmnt_start_time[]" class="assmnt_start_time">\
                 <input type="hidden" value="' + $ass_end_time + '" name="assmnt_end_time[]" class="assmnt_end_time">\
@@ -1127,7 +1119,6 @@ function ass_attach() {
                     </a>\
                 </td>\
                 <td>' + $ass_date + '</td>\
-                <td>' + $traineetext + '</td>\
                 <td>' + $assessortext + '</td>\
                 <td>' + $ass_start_time + ' - ' + $ass_end_time + '</td>\
                 <td>' + $ass_venue_text + '</td>';
