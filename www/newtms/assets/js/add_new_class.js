@@ -2,6 +2,7 @@
  * This js file included in  add_new_class form
  */
 $(document).ready(function() {
+     $start_date_check = check_start_or_today();
     $('.form_reset').click(function() {
         $('#AddclassForm')[0].reset();
         $('.error_text').text('');
@@ -272,6 +273,25 @@ $(document).ready(function() {
             }
         });
     });
+    
+    $("#ass_date").datepicker({
+        dateFormat: 'dd-mm-yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '-50:+50',
+        minDate: $start_date_check,
+        maxDate: $('#end_date').val(),
+                onClose: function() {
+                    $(this).trigger("change");
+                }
+    });
+    $('#ass_start_time').timepicker({
+        showLeadingZero: false,
+        onSelect: asstpStartSelect,
+    });
+    $('#ass_end_time').timepicker({
+        showLeadingZero: false,
+    }); 
     $("#start_date").datepicker({
         dateFormat: 'dd-mm-yy',
         changeMonth: true,
@@ -989,4 +1009,12 @@ $(document).ready(function() {
 })
 function scroll_to_top() {
     $('html,body').animate({scrollTop: $('body').offset().top}, "fast");
+}
+function asstpStartSelect(time, endTimePickerInst) {
+    $('#ass_end_time').timepicker('option', {
+        minTime: {
+            hour: endTimePickerInst.hours,
+            minute: endTimePickerInst.minutes
+        }
+    });
 }
