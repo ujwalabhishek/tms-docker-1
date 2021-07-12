@@ -1015,6 +1015,32 @@ $(document).ready(function() {
         $('.schld_alert_yes').attr('data-check', 'ass');
     });
     
+    $('.schld_alert_yes').click(function() {
+        if ($(this).is("[data-count]")) {
+            $count = $(this).attr('data-count');
+            $check = $(this).attr('data-check');
+            if ($check == 'ass') {
+                $('.ass_tr' + $count).remove();
+            }
+            if ($count == 'default-assessment') {
+                default_data_clear();
+
+                $('.def_schld_div .table-responsive table tbody tr').remove();
+            } else {
+                $date = $('.schld_tr' + $count).attr('data-date');
+                $('.schld_tr' + $count).remove();
+                if ($('tr').hasClass('schlddate_' + $date)) {
+                    $rowspan_td = $('.schlddate_' + $date + ':first td:first');
+                    $rowspan = $rowspan_td.attr('rowspan');
+                    $rowspan_td.attr('rowspan', --($rowspan));
+                    $delete = '<a href="#ex9" rel="modal:open" class="small_text delete_color schld_delete"><input type="button" value="Delete" style="color:#000000; text-decoration:none;" /></a>';
+                    $('.schlddate_' + $date + ':last td:last').html($delete);
+                }
+                $('.schld_alert_yes').removeAttr('data-count');
+            }
+        }
+    });
+    
     $(document).on('click', '.ass_edit', function() {
         $edit_id = $(this).children('input').data('edit');
         $div = $('.ass_tr' + $edit_id);
