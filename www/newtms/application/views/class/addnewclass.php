@@ -854,7 +854,7 @@ echo form_open("classes/add_new_class", $atr);
                     endforeach;
                     
                     $ass_venue_options['OTH'] = 'Others';
-                    echo form_dropdown('ass_venue', $ass_venue_options, '', 'id="ass_venue" maxlength="250" style="height:420px;"');
+                    echo form_dropdown('ass_venue', $ass_venue_options, '', 'id="ass_venue" maxlength="250" style="width:200px;"');
                     ?>
                     <span id="ass_venue_err"></span>
                     <br/>
@@ -866,7 +866,7 @@ echo form_open("classes/add_new_class", $atr);
                             'name' => 'ass_venue_oth',
                             'id' => 'ass_venue_oth',
                             'maxlength' => '250',
-                            'style' => 'width:220px;height:420px;',
+                            'style' => 'width:220px;',
                             
                             'class' => 'upper_case',
                             'maxlength'=>'250',
