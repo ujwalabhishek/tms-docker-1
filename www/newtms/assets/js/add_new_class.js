@@ -1006,6 +1006,9 @@ $(document).ready(function() {
     $(document).on('click', '*[href="#ex1"]', function() {
         scroll_to_top();
     });
+    $('.ass_save').click(function() {
+        return ass_form_validate(true);
+    });
 })
 function scroll_to_top() {
     $('html,body').animate({scrollTop: $('body').offset().top}, "fast");
@@ -1017,4 +1020,148 @@ function asstpStartSelect(time, endTimePickerInst) {
             minute: endTimePickerInst.minutes
         }
     });
+}
+function ass_form_validate($retVal) {
+
+    $ass_date = $('#ass_date').val();
+    if ($ass_date.length == 0) {
+        disp_err('#ass_date');
+        $retVal = false;
+    } else {
+        remove_err('#ass_date');
+    }
+    $ass_start_time = $.trim($('#ass_start_time').val());
+    if ($ass_start_time.length == 0) {
+        disp_err('#ass_start_time');
+        $retVal = false;
+    } else {
+        remove_err('#ass_start_time');
+    }
+    $ass_end_time = $.trim($('#ass_end_time').val());
+    if ($ass_end_time.length == 0) {
+        disp_err('#ass_end_time');
+        $retVal = false;
+    } else if (parseInt($ass_start_time.replace(':', '')) >= parseInt($ass_end_time.replace(':', ''))) {
+        disp_err('#ass_end_time', '[cannot be same or less than start time]');
+        $retVal = false;
+    } else {
+        remove_err('#ass_end_time');
+    }
+    $assessor = '';
+    $('input[name="control_8[]"]:checked').each(function() {
+        $assessor += $(this).val();
+    })
+    if ($assessor.length == 0) {
+        disp_err('#control_8');
+        $retVal = false;
+    } else {
+        remove_err('#control_8');
+    }
+    $trainee = '';
+    $('input[name="control_2[]"]:checked').each(function() {
+        $trainee += $(this).val();
+    })
+    if ($trainee.length == 0) {
+        disp_err('#control_2');
+        $retVal = false;
+    } else {
+        remove_err('#control_2');
+    }
+    $ass_venue = $('#ass_venue').val();
+	$ass_venue_oth = $('#ass_venue_oth').val();
+    if ($ass_venue.length == 0) {
+        disp_err('#ass_venue');
+        $retVal = false;
+    } else if ($ass_venue == 'OTH' && $ass_venue_oth.trim().length == 0) {
+        disp_err('#ass_venue_oth');
+        $retVal = false;
+    } else {
+        remove_err('#ass_venue_oth');
+        remove_err('#ass_venue');
+    }
+    if ($retVal == true) {
+        ass_attach();
+    }
+    return $retVal;
+}
+
+function ass_attach() {
+    if ($('#ass_editid').val().length > 0) {
+        $count = $('#ass_editid').val();
+    } else {
+        $count = $cnt;
+    }
+    $ass_date = $('#ass_date').val();
+    $ass_start_time = $('#ass_start_time').val();
+    $ass_end_time = $('#ass_end_time').val();
+    $assessor = '';
+    $assessortext = '';
+    $assessor_hidden = '';
+    $('input[name="control_8[]"]:checked').each(function() {
+        $assessor += $(this).val() + ',';
+        $assessor_hidden += '<input type="hidden" value="' + $(this).val() + '" name="checking_assessor[]">';
+        $assessortext += $(this).parent().text() + ',';
+    })
+    $trainee = '';
+    $traineetext = '';
+    $trainee_hidden = '';
+    $('input[name="control_2[]"]:checked').each(function() {
+        $trainee += $(this).val() + ',';
+        $trainee_hidden += '<input type="hidden" value="' + $(this).val() + '" name="checking_trainee[]">';
+        
+        $traineetext += $(this).parent().text() + ', ';
+    })
+    $assessortext = $assessortext.replace(/,+$/, '');
+    $traineetext = $traineetext.replace(/,+$/, '');
+    $ass_venue = $('#ass_venue').val();
+    $ass_venue_text = $('#ass_venue option[value="' + $ass_venue + '"]').text();
+    $ass_venue_oth = $('#ass_venue_oth').val();
+    if ($ass_venue == 'OTH') {
+        $ass_venue_text += "(" + $ass_venue_oth + ")";
+    }
+    $html1 = '<tr class="ass_tr' + $count + '">';
+    $html2 = $trainee_hidden + $assessor_hidden + '\
+                <input type="hidden" value="' + $ass_date + '" name="assmnt_date[]" class="assmnt_date">\
+                <input type="hidden" value="' + $ass_start_time + '" name="assmnt_start_time[]" class="assmnt_start_time">\
+                <input type="hidden" value="' + $ass_end_time + '" name="assmnt_end_time[]" class="assmnt_end_time">\
+                <input type="hidden" value="' + $assessor + '" name="assmnt_assessor[]" class="assmnt_assessor">\
+                <input type="hidden" value="' + $trainee + '" name="assmnt_trainee[]" class="assmnt_trainee">\
+                <input type="hidden" value="' + $ass_venue + '" name="ass_venue[]" class="ass_venue">\
+                <input type="hidden" value="' + $ass_venue_oth + '" name="ass_venue_oth[]" class="ass_venue_oth">\
+                 <td class="a_button">\
+                    <a href="#ex2" rel="modal:open" class="small_text ass_edit">\
+                        <input type="button" data-edit="' + $count + '" value="E" style="color:#000000; text-decoration:none;" />\
+                    </a><br>\
+                    <a href="#ex9" rel="modal:open" class="small_text delete_color ass_delete">\
+                        <input type="button" data-del="' + $count + '" value="D" style="color:#000000; text-decoration:none;" />\
+                    </a>\
+                </td>\
+                <td>' + $ass_date + '</td>\
+                <td>' + $traineetext + '</td>\
+                <td>' + $assessortext + '</td>\
+                <td>' + $ass_start_time + ' - ' + $ass_end_time + '</td>\
+                <td>' + $ass_venue_text + '</td>';
+    $html3 = '</tr>';
+    if ($('#ass_editid').val().length > 0) {
+        $val = $('#ass_editid').val();
+        $('.ass_tr' + $val).html($html2);
+    } else {
+        $cnt++;
+        $('.def_schld_div .table-responsive table tbody').append($html1 + $html2 + $html3);
+    }
+    assmnt_data_clear();
+}
+function assmnt_data_clear() {
+    $('#ass_date').val('');
+    $('#ass_start_time').val('');
+    $('#ass_end_time').val('');
+    $('#control_8').children('span').text('Select Option');
+    $('#control_8').next('.multiSelectOptions').children('label.selectAll').children('input').removeAttr('checked');
+    $('input[name="control_8[]"]').removeAttr('checked');
+    $('input[name="control_2[]"]').removeAttr('checked');
+    $('#control_2').children('span').text('Select Option');
+    $('#control_2').next('.multiSelectOptions').children('label.selectAll').children('input').removeAttr('checked');
+    $('#ass_venue').val('');
+    $('.assven_oth_span').hide();
+    $('#ass_venue_oth').val('');
 }

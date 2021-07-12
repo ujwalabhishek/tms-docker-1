@@ -8,7 +8,7 @@
     $js_role = '<?php echo $role; ?>';   
     $js_tenant = '<?php echo TENANT_ID; ?>';  
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.0008798114598"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.00087098114598"></script>
 <?php
 $this->load->helper('form');
 $this->load->helper('metavalues_helper');
@@ -854,7 +854,7 @@ echo form_open("classes/add_new_class", $atr);
                     endforeach;
                     
                     $ass_venue_options['OTH'] = 'Others';
-                    echo form_dropdown('ass_venue', $ass_venue_options, '', 'id="ass_venue" maxlength="250" style="width:200px;"');
+                    echo form_dropdown('ass_venue', $ass_venue_options, '', 'id="ass_venue" maxlength="250" style="width:152px;"');
                     ?>
                     <span id="ass_venue_err"></span>
                     <br/>
