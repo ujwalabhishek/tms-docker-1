@@ -777,7 +777,7 @@ echo form_open("classes/add_new_class", $atr);
     <div class="button_class"><a href="#" rel="modal:close"><button class="btn btn-primary schld_save" type="button"><span class="glyphicon glyphicon-saved"></span>&nbsp;Save</button></a> &nbsp; &nbsp; <a href="#" rel="modal:close"><button class="btn btn-primary schld_cancel" type="button"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel/ Delete</button></a></div>
 </p></div>
 
-<div class="modalassessment" id="ex2" style="display:none;height:420px;">
+<div class="modalassessment" id="ex2" style="display:none;">
     <p>
     <h2 class="panel_heading_style">Assessment Schedule</h2>
     <table class="table table-striped">
@@ -854,7 +854,7 @@ echo form_open("classes/add_new_class", $atr);
                     endforeach;
                     
                     $ass_venue_options['OTH'] = 'Others';
-                    echo form_dropdown('ass_venue', $ass_venue_options, '', 'id="ass_venue" maxlength="250"');
+                    echo form_dropdown('ass_venue', $ass_venue_options, '', 'id="ass_venue" maxlength="250" style="height:420px;"');
                     ?>
                     <span id="ass_venue_err"></span>
                     <br/>
@@ -866,7 +866,7 @@ echo form_open("classes/add_new_class", $atr);
                             'name' => 'ass_venue_oth',
                             'id' => 'ass_venue_oth',
                             'maxlength' => '250',
-                            'style' => 'width:220px;',
+                            'style' => 'width:220px;height:420px;',
                             
                             'class' => 'upper_case',
                             'maxlength'=>'250',
