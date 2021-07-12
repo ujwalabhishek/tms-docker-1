@@ -1057,16 +1057,7 @@ function ass_form_validate($retVal) {
     } else {
         remove_err('#control_8');
     }
-    $trainee = '';
-    $('input[name="control_2[]"]:checked').each(function() {
-        $trainee += $(this).val();
-    })
-    if ($trainee.length == 0) {
-        disp_err('#control_2');
-        $retVal = false;
-    } else {
-        remove_err('#control_2');
-    }
+    
     $ass_venue = $('#ass_venue').val();
 	$ass_venue_oth = $('#ass_venue_oth').val();
     if ($ass_venue.length == 0) {
