@@ -757,12 +757,8 @@ function def_schld_attach() {
                 <input type="hidden" value="' + $assessor + '" name="def_schlded_assessor" class="def_schlded_assessor">\
                 <input type="hidden" value="' + $def_schld_venue + '" name="def_schlded_venue" class="def_schlded_venue">\
                <input type="hidden" value="' + $def_schld_venue_oth + '" name="def_schlded_venue_oth" class="def_schlded_venue_oth">\
- 			   <td class="a_button">\
-                    <a class="small_text" rel="modal:open" href="#ex3">\
-                    <input type="button" value="E" style="color:#000000; text-decoration:none;" />\
-                    </a><br>\
                     <a href="#ex9" rel="modal:open" class="small_text delete_color def_schld_delete">\
-                    <input type="button" value="D" style="color:#000000; text-decoration:none;" />\
+                    <input type="button" value="Delete" style="color:#000000; text-decoration:none;" />\
                     </a>\
                 </td>\
                 <td>' + $def_date + '</td>\
