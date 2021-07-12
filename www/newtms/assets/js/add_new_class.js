@@ -1116,7 +1116,6 @@ function ass_attach() {
                 <input type="hidden" value="' + $ass_start_time + '" name="assmnt_start_time[]" class="assmnt_start_time">\
                 <input type="hidden" value="' + $ass_end_time + '" name="assmnt_end_time[]" class="assmnt_end_time">\
                 <input type="hidden" value="' + $assessor + '" name="assmnt_assessor[]" class="assmnt_assessor">\
-                <input type="hidden" value="' + $trainee + '" name="assmnt_trainee[]" class="assmnt_trainee">\
                 <input type="hidden" value="' + $ass_venue + '" name="ass_venue[]" class="ass_venue">\
                 <input type="hidden" value="' + $ass_venue_oth + '" name="ass_venue_oth[]" class="ass_venue_oth">\
                  <td class="a_button">\
