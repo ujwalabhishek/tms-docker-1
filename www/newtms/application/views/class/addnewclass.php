@@ -656,7 +656,7 @@ echo form_open("classes/add_new_class", $atr);
         </div>
         <div class="col-lg-6">
             <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Assessment Schedule 
-                <span class="label label-default push_right black-btn"><a href="#ex2" rel="modal:open" class="small_text"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Assessment Schedule</a></span>
+                <span class="label label-default push_right black-btn"><a href="#ex2" rel="modal:open" class="small_text alert_message1"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Assessment Schedule</a></span>
                 &nbsp;&nbsp;<span class="label label-default push_right moving_right black-btn"><a href="#ex3" rel="modal:open" class="small_text add_def_schld_form alert_message">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                         Default Schedule</a></span></h4>
