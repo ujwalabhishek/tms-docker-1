@@ -1324,7 +1324,7 @@ abstract class CI_DB_query_builder extends CI_DB_driver {
 
 		return $this;
 	}
-
+        
 	// --------------------------------------------------------------------
 
 	/**
@@ -2804,5 +2804,11 @@ abstract class CI_DB_query_builder extends CI_DB_driver {
 			'qb_limit'	=> FALSE
 		));
 	}
+        
+        /// added by shubhranshu for framework upgrade
+        function return_query()
+        {
+            return $this->_compile_select();
+        } 
 
 }

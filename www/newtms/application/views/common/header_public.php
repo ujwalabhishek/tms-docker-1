@@ -9,7 +9,7 @@
                 <img class="logo" src="<?php echo base_url(); ?>logos/<?php echo $this->session->userdata('public_tenant_details')->Logo; ?>" border="0" style="max-width: 200px;" height="64">
                 <?php }?>
                 <div class="training1">
-        <img src="<?php echo base_url(); ?>assets/images/<?php echo $this->session->userdata('public_tenant_details')->ApplicationName;?>" border="0" title="Training Management System">
+        <img src="<?php echo base_url(); ?>assets/images/<?php echo $this->session->userdata('public_tenant_details')->ApplicationName;?>" border="0" title="Training Management as a Service (TMaaS)">
     </div>       
         <div class="right_date">
             

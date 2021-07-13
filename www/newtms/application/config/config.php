@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+date_default_timezone_set('Asia/Singapore');
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -488,7 +488,7 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'local';
+$config['time_reference'] = 'Asia/Singapore';  /// added by shubhranshu for singapore time
 
 /*
 |--------------------------------------------------------------------------
@@ -521,3 +521,5 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['wsq_courses'] = array('95','115','67','66','65','98','100','97','101','102','103');// wsq courses added by shubhranshu

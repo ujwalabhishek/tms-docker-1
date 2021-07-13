@@ -2,6 +2,7 @@
 
 class Tenant_Model extends CI_Model
 {
+    //public $db;
     /**
      * Get tenant details by tenant id
      * @param type $tenant_id
@@ -9,6 +10,7 @@ class Tenant_Model extends CI_Model
      */
     public function get_tenant_details($tenant_id)
     {
+        
         $this->db->select('*');
         $this->db->from('tenant_master ten');
 

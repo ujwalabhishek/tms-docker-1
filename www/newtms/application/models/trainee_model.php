@@ -7,12 +7,13 @@
 class Trainee_Model extends CI_Model {
 
     private $user;
-
+    
     public function __construct() {
         parent::__construct();
         $this->load->library('bcrypt');
         $this->load->helper('common');
         $this->user = $this->session->userdata('userDetails');
+        
     }
 
     /**
@@ -38,12 +39,12 @@ class Trainee_Model extends CI_Model {
             $extra_where .= " and com.company_id='$company_id'";
             $extra_where .= " and com_mst.company_status='ACTIVE'";
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
             $extra_query .=" inner join class_enrol ce on ce.tenant_id = pers.tenant_id and ce.user_id = pers.user_id";
-            $extra_where .= " and ce.sales_executive_id='" . $this->data['user']->user_id . "'";
+            $extra_where .= " and ce.sales_executive_id='" . $this->user->user_id . "'";
             $extra_group_by .= " group by ce.user_id";
-        } elseif ($this->data['user']->role_id == 'TRAINER') {
-            $extra_query .=" inner join course_class ccl on ccl.tenant_id = pers.tenant_id and FIND_IN_SET(" . $this->data['user']->user_id . ",ccl.classroom_trainer)
+        } elseif ($this->user->role_id == 'TRAINER') {
+            $extra_query .=" inner join course_class ccl on ccl.tenant_id = pers.tenant_id and FIND_IN_SET(" . $this->user->user_id . ",ccl.classroom_trainer)
                        inner join class_enrol ce on ce.tenant_id = pers.tenant_id and ce.user_id = pers.user_id and
                        ccl.course_id = ce.course_id AND ccl.class_id = ce.class_id";
             $extra_group_by .= " group by ce.user_id";
@@ -121,10 +122,10 @@ class Trainee_Model extends CI_Model {
         if ($company_id) {
             $this->db->where('com.company_id', $company_id);
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
             $this->traineelist_querychange();
         }
-        if ($this->data['user']->role_id == 'TRAINER') {
+        if ($this->user->role_id == 'TRAINER') {
             $this->trainer_traineelist_querychange();
         }
          $result = $this->db->get()->num_rows();
@@ -166,15 +167,15 @@ class Trainee_Model extends CI_Model {
             $extra_where .= " and com.company_id='$company_id'";
             $extra_where .= " and com_mst.company_status='ACTIVE'";
         }
-        if ($this->data['user']->role_id == 'SLEXEC') 
+        if ($this->user->role_id == 'SLEXEC') 
         {
             $extra_query .=" inner join class_enrol ce on ce.tenant_id = pers.tenant_id and ce.user_id = pers.user_id";
-            $extra_where .= " and ce.sales_executive_id='" . $this->data['user']->user_id . "'";
+            $extra_where .= " and ce.sales_executive_id='" . $this->user->user_id . "'";
             $extra_group_by .= " group by ce.user_id";
         } 
-        elseif ($this->data['user']->role_id == 'TRAINER') 
+        elseif ($this->user->role_id == 'TRAINER') 
         {
-            $extra_query .=" inner join course_class ccl on ccl.tenant_id = pers.tenant_id and FIND_IN_SET(" . $this->data['user']->user_id . ",ccl.classroom_trainer)
+            $extra_query .=" inner join course_class ccl on ccl.tenant_id = pers.tenant_id and FIND_IN_SET(" . $this->user->user_id . ",ccl.classroom_trainer)
                        inner join class_enrol ce on ce.tenant_id = pers.tenant_id and ce.user_id = pers.user_id and
                        ccl.course_id = ce.course_id AND ccl.class_id = ce.class_id";
             $extra_group_by .= " group by ce.user_id";
@@ -275,10 +276,10 @@ class Trainee_Model extends CI_Model {
         if ($company_id) {
             $this->db->where('com.company_id', $company_id);
         }
-       if ($this->data['user']->role_id == 'SLEXEC') {
+       if ($this->user->role_id == 'SLEXEC') {
             $this->traineelist_querychange();
         }
-         if ($this->data['user']->role_id == 'TRAINER') {
+         if ($this->user->role_id == 'TRAINER') {
             $this->trainer_traineelist_querychange();
         }
         if ($sort_by) {
@@ -328,12 +329,12 @@ class Trainee_Model extends CI_Model {
             $extra_where .= " and com.company_id='$company_id'";
             $extra_where .= " and com_mst.company_status='ACTIVE'";
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
             $extra_query .=" inner join class_enrol ce on ce.tenant_id = pers.tenant_id and ce.user_id = pers.user_id";
-            $extra_where .= " and ce.sales_executive_id='" . $this->data['user']->user_id . "'";
+            $extra_where .= " and ce.sales_executive_id='" . $this->user->user_id . "'";
             $extra_group_by .= " group by ce.user_id";
-        } elseif ($this->data['user']->role_id == 'TRAINER') {
-            $extra_query .=" inner join course_class ccl on ccl.tenant_id = pers.tenant_id and FIND_IN_SET(" . $this->data['user']->user_id . ",ccl.classroom_trainer)
+        } elseif ($this->user->role_id == 'TRAINER') {
+            $extra_query .=" inner join course_class ccl on ccl.tenant_id = pers.tenant_id and FIND_IN_SET(" . $this->user->user_id . ",ccl.classroom_trainer)
                        inner join class_enrol ce on ce.tenant_id = pers.tenant_id and ce.user_id = pers.user_id and
                        ccl.course_id = ce.course_id AND ccl.class_id = ce.class_id";
             $extra_group_by .= " group by ce.user_id";
@@ -445,10 +446,10 @@ class Trainee_Model extends CI_Model {
         if ($company_id) {
             $this->db->where('com.company_id', $company_id);
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
             $this->traineelist_querychange();
         }
-         if ($this->data['user']->role_id == 'TRAINER') {
+         if ($this->user->role_id == 'TRAINER') {
             $this->trainer_traineelist_querychange();
         }
         if ($sort_by) {
@@ -550,8 +551,8 @@ public function get_training_details_new($user_id = NULL, $limit = NULL, $offset
             return FALSE;
         } else {
             $trainer_condition = '';
-             if ($this->data['user']->role_id == 'TRAINER') {
-                $trainer_condition = "AND FIND_IN_SET(" . $this->data['user']->user_id . ",cls.classroom_trainer)";
+             if ($this->user->role_id == 'TRAINER') {
+                $trainer_condition = "AND FIND_IN_SET(" . $this->user->user_id . ",cls.classroom_trainer)";
             }
             $this->db->select("enrol.enrol_status,epd.att_status as attn_stats, enrol.user_id,enrol.pymnt_due_id,enrol.tenant_id, enrol.course_id, enrol.class_id, "
                     . "enrol.enrolled_on, enrol.enrolment_mode,"
@@ -596,8 +597,8 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             return FALSE;
         } else {
             $trainer_condition = '';
-             if ($this->data['user']->role_id == 'TRAINER') {
-                $trainer_condition = "AND FIND_IN_SET(" . $this->data['user']->user_id . ",cls.classroom_trainer)";
+             if ($this->user->role_id == 'TRAINER') {
+                $trainer_condition = "AND FIND_IN_SET(" . $this->user->user_id . ",cls.classroom_trainer)";
             }
             $this->db->select("enrol.enrol_status, enrol.user_id,enrol.pymnt_due_id,enrol.tenant_id, enrol.course_id, enrol.class_id, "
                     . "enrol.enrolled_on, enrol.enrolment_mode,"
@@ -639,8 +640,8 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             return FALSE;
         } else {
             $trainer_condition = '';
-            if ($this->data['user']->role_id == 'TRAINER') {
-                $trainer_condition = "AND FIND_IN_SET(" . $this->data['user']->user_id . ",cls.classroom_trainer)";
+            if ($this->user->role_id == 'TRAINER') {
+                $trainer_condition = "AND FIND_IN_SET(" . $this->user->user_id . ",cls.classroom_trainer)";
             }
             $this->db->select("enrol.enrol_status, enrol.user_id, enrol.course_id, enrol.class_id, enrol.enrolled_on, enrol.enrolment_type,"
                     . "enrol.pymnt_due_id, enrol.payment_status,enrol.trainee_feedback_rating, crse.crse_name,cls.class_name,"
@@ -655,8 +656,8 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $this->db->where_in('enrol.enrol_status', array('ENRLBKD', 'ENRLACT'));
             $this->db->order_by('enrol.enrolled_on', 'DESC');
             $this->db->group_by('enrol.class_id');
-            if ($this->data['user']->role_id == 'SLEXEC') {
-                $this->db->where('enrol.sales_executive_id', $this->data['user']->user_id);
+            if ($this->user->role_id == 'SLEXEC') {
+                $this->db->where('enrol.sales_executive_id', $this->user->user_id);
             }
             $result = $this->db->get();
             return $result->result_array();
@@ -742,9 +743,9 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         $this->db->join('tms_users_discount tud', 'tud.course_id = c.course_id and tud.user_id="' . $userid . '"', 'LEFT');
         $this->db->where('c.tenant_id', $tenantid);
         
-        if ($this->data['user']->role_id == 'CRSEMGR')
+        if ($this->user->role_id == 'CRSEMGR')
         {
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
         $this->db->where('c.crse_status', 'ACTIVE');
         $this->db->order_by("c.crse_name");  
@@ -761,6 +762,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
      public function save_user_data() 
     {
         $tenant_id = $this->user->tenant_id;
+        
         foreach ($this->input->post() as $key => $value)
         {
             if(!is_array($value)) 
@@ -771,6 +773,10 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             {
                 $$key = $value;
             }
+        }
+        if($NRIC == "SNG_4") /////added by shubhranshu for client requirement on 16/12/2019
+        {
+            $NRIC = 'SNG_3';
         }
         if($this->user->role_id == 'COMPACT') 
         {
@@ -796,9 +802,10 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                 $other_identi_type = $NRIC_OTHER;
                 $other_identi_code = $tax_code;
             }
+           
             if( $this->user->tenant_id=='T02')
             {
-                    $taxcode_prefix = 'XPR';
+                    $taxcode_prefix = 'XP';
             }
             if($this->user->tenant_id=='T03')
            {
@@ -807,6 +814,22 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             if($this->user->tenant_id=='T04')
             {
                     $taxcode_prefix = 'FL';
+            }
+            if($this->user->tenant_id=='T22')
+            {
+                    $taxcode_prefix = 'CD';
+            }
+            if($this->user->tenant_id=='T20')
+            {
+                    $taxcode_prefix = 'WB';
+            }
+            if($this->user->tenant_id=='T12')
+            {
+                    $taxcode_prefix = 'AR';
+            }
+            if($this->user->tenant_id=='T17')
+            {
+                    $taxcode_prefix = 'EV';
             }
         }
         
@@ -886,6 +909,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         {
             
             $assign_company1 =explode("/",$assign_company);
+//            print_r($assign_company1);exit;
             $assign_company=$assign_company1[0];
             $assign_company2=$assign_company1[1];
             $company_data = array(
@@ -903,6 +927,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                 'last_modified_by' => $this->user->user_id,
                 'last_modified_on' => $dateTime
             );
+//            print_r($company_data);exit;
             $this->db->insert('tenant_company_users', $company_data);
         }
        
@@ -1083,7 +1108,13 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
        $this->db->where('enrolment_mode','COMPSPON');
        $res=$this->db->get()->row();
        //echo $this->db->last_query();exit;
-       return $res;
+       if(!empty($res)){
+           return $res;
+       }else{
+            $res['payment_status']='NULL';
+           return $res;
+       }
+       
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
    /**
@@ -1143,15 +1174,34 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
              $taxcode = strtoupper($taxcode);
         }
        // /////////////////////////////////////////////////////////////
+        
         if($this->user->tenant_id == 'T02') {
-            $user_name = "XPR".$taxcode;
+            $user_name = "XPZ".$taxcode;
         } else if($this->user->tenant_id == 'T03'){
             $user_name = "CAI".$taxcode;
         } else if($this->user->tenant_id == 'T04'){
             $user_name = "FL".$taxcode;
+        }else if($this->user->tenant_id == 'T22'){
+            $user_name = "CD".$taxcode;
+        }else if($this->user->tenant_id == 'T20'){
+            $user_name = "WB".$taxcode;
+        }else if($this->user->tenant_id == 'T17'){
+            $user_name = "EV".$taxcode;
+        }else if($this->user->tenant_id == 'T12'){
+            $user_name = "AR".$taxcode;
         } else {
             $user_name = $taxcode;
-        }        
+        }
+        /////////below code added by shubhranshu to check & unique NRIC/////
+        if(strlen($user_name) > 13){
+            $user_name = substr($user_name,0,8);
+        }
+        
+        $check_username_unique = $this->is_username_unique($user_name);
+        
+        if($check_username_unique >0){
+            $user_name = $user_name.date('is');
+        }////////////////////////////////////ssp end///////////////////////////////////
         $tms_users_data = array(
             'tenant_id' => $this->user->tenant_id,
             'account_type' => 'TRAINE',
@@ -1236,10 +1286,28 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         );
         $this->db->insert('tms_users_pers', $tms_users_pers_data);
         //// added by shubhranshu to update the tax code and other identi code as taxcode on 03/12/2018//////
+        if($this->user->tenant_id == 'T02') {
+            $no_tax_tax_code = "XPZ".$user_id;
+        } else if($this->user->tenant_id == 'T03'){
+            $no_tax_tax_code = "CAI".$user_id;
+        } else if($this->user->tenant_id == 'T04'){
+            $no_tax_tax_code = "FL".$user_id;
+        }else if($this->user->tenant_id == 'T22'){
+            $no_tax_tax_code = "CD".$user_id;
+        }else if($this->user->tenant_id == 'T20'){
+            $no_tax_tax_code = "WB".$user_id;
+        }else if($this->user->tenant_id == 'T17'){
+            $no_tax_tax_code = "EV".$user_id;
+        }else if($this->user->tenant_id == 'T12'){
+            $no_tax_tax_code = "AR".$user_id;
+        }else {
+            $no_tax_tax_code = $user_id;
+        }
+        
         if($other_identi_type == 'NOTAXCODE' && $taxcodetype == "SNG_3"){
             $notaxcode_data = array(
-                'other_identi_code' => $user_id,
-                'tax_code' => $user_id
+                'other_identi_code' => $no_tax_tax_code,
+                'tax_code' => $no_tax_tax_code
             );
             $this->db->where('user_id', $user_id);
             $this->db->update('tms_users', $notaxcode_data);
@@ -1250,6 +1318,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $status['status'] = FALSE;
             return $status;
         }
+        
          $user_details = array('username' => $user_name,
             'email' => $EmailId, 'password' => $password,
             'firstname' => strtoupper($firstname), 'lastname' => strtoupper($lastname),
@@ -1257,23 +1326,28 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
          if(!empty($EmailId)) {
             $this->send_trainy_email($user_details, $bypassemail);
         }
+        $status['userid_for_notax'] = $no_tax_tax_code;// added userid by shubhranshu to fetch the user_id if notaxcode
         $status['status'] = TRUE;
         $status['password'] = $password;
-         $status['username'] = $user_name;
+        $status['username'] = $user_name;
         return $status;
+    }
+    
+    public function is_username_unique($username) {
+        return $this->db->select('user_name')->get_where('tms_users', array('user_name' => $username), 1)->num_rows();
     }
     /**
      * function to deactivate trainee
      * @return boolean
      */
     public function deactivate_trainee() {
-        foreach ($this->input->post() as $key => $value) {
-            $$key = $value;
-        }
+        
         $tenant_id = $this->user->tenant_id;
         $user_id = $this->input->post('userid');
+        $reason_for_deactivation = $this->input->post('reason_for_deactivation');
+        $other_reason_for_deactivation = $this->input->post('other_reason_for_deactivation');
         $company_id = $this->input->post('hiddencompanyid');
-        $this->db->trans_start();
+        //$this->db->trans_start();
         if (!empty($company_id)) {
             $deactive = array(
                 'acct_deacti_date_time' => date('Y-m-d H:i:s'),
@@ -1298,12 +1372,13 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $this->db->where('tenant_id', $tenant_id);
             $this->db->update('tms_users', $deactive);
         }
-        $this->db->trans_complete();
-        if ($this->db->trans_status() === FALSE) {
-            return FALSE;
-        } else {
+        //$this->db->trans_complete();
+        //echo $this->db->last_query();exit;
+        //if ($this->db->trans_status() === FALSE) {
+            //return FALSE;
+       // } else {
             return TRUE;
-        }
+        //}
     }
 
     /**
@@ -1380,7 +1455,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             }
             if( $this->user->tenant_id=='T02')
             {
-                    $taxcode_prefix = 'XPR';
+                    $taxcode_prefix = 'XP';
             }
             if($this->user->tenant_id=='T03')
             {
@@ -1388,6 +1463,18 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             }
             if($this->user->tenant_id=='T04'){
                     $taxcode_prefix = 'FL';
+            }
+            if($this->user->tenant_id=='T22'){
+                    $taxcode_prefix = 'CD';
+            }
+            if($this->user->tenant_id=='T20'){
+                    $taxcode_prefix = 'WB';
+            }
+            if($this->user->tenant_id=='T17'){
+                    $taxcode_prefix = 'EV';
+            }
+            if($this->user->tenant_id=='T12'){
+                    $taxcode_prefix = 'AR';
             }
         }
         if ($country_of_residence == 'USA')
@@ -1468,6 +1555,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $new_array = array('account_status' => 'ACTIVE', 'acc_activation_type' => 'EMACRQ');
         }
         $date = date('Y-m-d H:i:s');
+        
         $data = array(
             'country_of_residence' => $country_of_residence,
             'tax_code_type' => $tax_code_type,
@@ -1479,6 +1567,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             'last_modified_by' => $this->user->user_id,
             'last_modified_on' => $date,
                 ) + $new_array;
+        //print_r($data);exit;
         $this->db->trans_start();
         $user_id = $this->input->post('userid');
         $this->db->where('user_id', $user_id);
@@ -1775,7 +1864,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             $this->db->where("usr.account_status != 'INACTIV'");
             $this->db->where('usr.tenant_id', $this->user->tenant_id);
             $this->db->like('pers.first_name', $tax_code, 'both');
-             if ($this->data['user']->role_id == 'SLEXEC') { 
+             if ($this->user->role_id == 'SLEXEC') { 
                 $this->traineelist_querychange();
                 $this->db->limit(200);
                 $this->db->get();
@@ -1787,7 +1876,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                 $query2 = $this->db->last_query();
                 $query = $this->db->query("(" . $query1 . ") UNION (" . $query2 . ")");
                 $results = $query->result();
-             } else if ($this->data['user']->role_id == 'CRSEMGR') {
+             } else if ($this->user->role_id == 'CRSEMGR') {
                 $this->crsemgr_traineelist_querychange();
                 $this->db->limit(200);
                 $this->db->get();
@@ -2084,6 +2173,19 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             if(empty($result['trainee'])){
                 $result['trainee'] = 0;
             }
+            //////below code was added by shubhranshu for xp for attrition option start-----
+            if(TENANT_ID=='T02'){
+                $qr =$this->db->query("select att.user_id as user_id,SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) / (select count(cs.class_id) 
+                    from class_schld cs where cs.course_id='$course' and cs.class_id='$class' and cs.tenant_id='T02' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
+                    from class_attendance att
+                    join course_class cc on cc.class_id='$class' and cc.course_id='$course' and cc.tenant_id='T02'
+                    where att.class_id='$class' and att.course_id='$course' and att.user_id='$user'
+                    group by att.user_id,att.class_id");
+                    //having attendence <= 0.50");
+                $result['att_percentage'] =$qr->result_array()[0][attendence];
+            }
+            //////below code was added by shubhranshu for xp for attrition option end-----
+            //echo $this->db->last_query();print_r($result);exit;
             return $result;
         }
         else 
@@ -2144,6 +2246,20 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             if(empty($result['trainee'])){
                 $result['trainee'] = 0;
             }
+            
+            //////below code was added by shubhranshu for xp2 for attrition option start-----
+            if(TENANT_ID=='T02'){
+                $qr =$this->db->query("select att.user_id as user_id,SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) / (select count(cs.class_id) 
+                    from class_schld cs where cs.course_id='$course' and cs.class_id='$class' and cs.tenant_id='T02' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
+                    from class_attendance att
+                    join course_class cc on cc.class_id='$class' and cc.course_id='$course' and cc.tenant_id='T02'
+                    where att.class_id='$class' and att.course_id='$course' and att.user_id='$user'
+                    group by att.user_id,att.class_id
+                    having attendence <= 0.50");
+                $result['att_percentage'] =$qr->result_array()[0][attendence];
+            }
+            //////below code was added by shubhranshu for xp2 for attrition option end-----
+            
             return $result;
         }
     }
@@ -2215,6 +2331,28 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                             'training_score' => $value,
                             'trainer_fdbck_by' => $this->user->user_id,
                             'trainer_fdbck_on' => date('Y-m-d H:i:s'),
+                        );
+                        $this->db->where('tenant_id', $this->user->tenant_id);
+                        $this->db->where('course_id', $course_id);
+                        $this->db->where('class_id', $class_id);
+                        $this->db->where('user_id', $user_id);
+                        $update_result = $this->db->update("class_enrol", $feedback_data);
+                    }
+                    if ($key == 'FSCORE') {
+                        $feedback_data = array(
+                            'feedback_score' => $value,
+                            
+                        );
+                        $this->db->where('tenant_id', $this->user->tenant_id);
+                        $this->db->where('course_id', $course_id);
+                        $this->db->where('class_id', $class_id);
+                        $this->db->where('user_id', $user_id);
+                        $update_result = $this->db->update("class_enrol", $feedback_data);
+                    }
+                    if ($key == 'FGRADE') {
+                        $feedback_data = array(
+                            'feedback_grade' => $value,
+                            
                         );
                         $this->db->where('tenant_id', $this->user->tenant_id);
                         $this->db->where('course_id', $course_id);
@@ -2446,14 +2584,14 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
      */
     private function traineelist_querychange() {
         $this->db->join('class_enrol ce', 'ce.tenant_id = pers.tenant_id AND ce.user_id = pers.user_id');
-        $this->db->where('ce.sales_executive_id', $this->data['user']->user_id);
+        $this->db->where('ce.sales_executive_id', $this->user->user_id);
         $this->db->group_by('ce.user_id');
     }
    /**
     * role based access for trainer.
     */
     private function trainer_traineelist_querychange() {
-        $this->db->join('course_class ccl', 'ccl.tenant_id = pers.tenant_id AND FIND_IN_SET(' . $this->data['user']->user_id . ',ccl.classroom_trainer)');
+        $this->db->join('course_class ccl', 'ccl.tenant_id = pers.tenant_id AND FIND_IN_SET(' . $this->user->user_id . ',ccl.classroom_trainer)');
         $this->db->join('class_enrol ce', 'ce.tenant_id = pers.tenant_id AND ce.user_id = pers.user_id'
                 . ' AND ccl.course_id = ce.course_id AND ccl.class_id = ce.class_id');
         $this->db->group_by('ce.user_id');
@@ -2462,7 +2600,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
  * role based access for crsemgr.
  */
     private function crsemgr_traineelist_querychange() {
-        $this->db->join('course crse', 'crse.tenant_id = pers.tenant_id  AND FIND_IN_SET(' . $this->data['user']->user_id . ',crse.crse_manager)');
+        $this->db->join('course crse', 'crse.tenant_id = pers.tenant_id  AND FIND_IN_SET(' . $this->user->user_id . ',crse.crse_manager)');
         $this->db->join('course_class ccl', 'ccl.tenant_id = crse.tenant_id AND ccl.course_id = crse.course_id');
         $this->db->join('class_enrol ce', 'ce.tenant_id = pers.tenant_id AND ce.user_id = pers.user_id'
                 . ' AND ccl.course_id = ce.course_id AND ccl.class_id = ce.class_id');
@@ -2614,7 +2752,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         
         $this->db->trans_start();
         
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
             $delete_courses = array();
             foreach($disc_perc as $k=>$row){
                 if(!empty($row) || !empty($disc_amt[$k])){
@@ -2725,7 +2863,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             'tenant_id' => $this->user->tenant_id,
             'enrolled_by_user_id' => $this->user->user_id,
             'role_id' => $this->user->role_id,
-            'operation' => $operation,
+	    'operation' => $operation,
             'enrolled_by_user_name' => $this->user->user_name,
             'first_name' => $this->user->first_name,
             'last_name' => $this->user->last_name ? $this->user->last_name : '',
@@ -2737,7 +2875,4 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         }
         return $row;
     }/*  added by shubhranshu for client requirement on 21/03/2019 */
-
 }
-
-

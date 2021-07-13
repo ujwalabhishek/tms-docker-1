@@ -10,7 +10,7 @@ class Scheduler extends CI_Controller {
         $this->load->model('class_model', 'class');
         $this->load->library('email');
         $this->load->helper('common_helper');
-        $this->load->model('Tenant_Model', 'tenant');
+        $this->load->model('tenant_model', 'tenant');
     }
     public function recalculation(){ 
         $table = $this->scheduler->get_data_for_recalc();

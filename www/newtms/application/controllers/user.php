@@ -39,6 +39,37 @@ class User extends CI_Controller {
          $class_id = $this->input->post('class_id');
         $year = time() + 31536000;
         setcookie('remember_me', $_POST['username'], $year);
+       
+        $captcha = $this->input->post('captcha');
+        //////below block of code added by shubhranshu for google captcha
+        $google_response = $this->input->post('g-recaptcha-response');
+        $google_api_url = 'https://www.google.com/recaptcha/api/siteverify?response='.$google_response.'&secret='.GOOGLE_CAPTCHA_SECRETKEY.'';
+        $response = file_get_contents($google_api_url);
+        $response = json_decode($response);
+        if($response->success != 1){
+            if(count($response->{'error-codes'}) > 0){
+                if($response->{'error-codes'}[0] == 'timeout-or-duplicate'){
+                    $this->session->set_flashdata('invalid_captcha', 'Google Captcha Timeout');
+                }else if($response->{'error-codes'}[0] == 'bad-request'){
+                     $this->session->set_flashdata('invalid_captcha', 'Bad Request for Google Captcha');
+                }else if($response->{'error-codes'}[0] == 'invalid-input-response'){
+                     $this->session->set_flashdata('invalid_captcha', 'Google Captcha Invalid Response');
+                }else if($response->{'error-codes'}[0] == 'missing-input-response'){
+                     $this->session->set_flashdata('invalid_captcha', 'Kindly Verify Google Captcha');
+                }else if($response->{'error-codes'}[0] == 'invalid-input-secret'){
+                     $this->session->set_flashdata('invalid_captcha', 'Google Captcha Invalid Secret');
+                }else if($response->{'error-codes'}[0] == 'missing-input-secret'){
+                     $this->session->set_flashdata('invalid_captcha', 'Google Captcha Missing Secret');
+                }
+            }
+            redirect('course_public/class_member_check');
+        }
+//        if(strtolower($captcha) != strtolower($this->session->userdata('public_captcha_key'))){//added by shubhranshu
+//            $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
+//            redirect('course_public/class_member_check');//added by shubhranshu
+//             
+//        }//added by shubhranshu
+        
         $resp = $this->user_model->check_public_user_valid();
 
         if (empty($resp)) {
@@ -50,28 +81,32 @@ class User extends CI_Controller {
             }else { redirect('course_public/class_member_check');}
             
         } else {
+            
+                $this->session->unset_userdata('public_captcha_key');//added by shubhranshu
+                unlink(FCPATH .'captcha/'.$this->session->userdata('public_captcha_file')); // added by shubhranshu to delete the captcha file 
+               
                 $this->session->set_userdata('userDetails', $resp);
                 if (!empty($course_id) && is_numeric($course_id)) {
                     
                 $user_id = $resp->user_id; // retrive user_id when user loggedin successfully
-                $result = $this->course_model->is_user_enrolled1($user_id,$class_id,$course_id);// check user already enrolled in selected course & class.
+                $result = $this->course_public_model->is_user_enrolled1($user_id,$class_id,$course_id);// check user already enrolled in selected course & class.
        
-                if($result == 0)
-                {
-                     redirect("course/class_enroll1/$course_id/$class_id");
-                     
-                }else{
-                    
-                    $res = $this->course_model->class_name($course_id,$class_id); // get the name for class based on courseid and class id
-                    $error = 'You Are Already Enrolled In - '. "' $res->class_name '".' Class';
-                    $this->session->set_flashdata('error', $error);
-                    redirect("course/course_class_schedule/$course_id");
-                }
+                    if($result == 0)
+                    {
+                         redirect("course_public/class_enroll1/$course_id/$class_id");
+
+                    }else{
+
+                        $res = $this->course_public_model->class_name($course_id,$class_id); // get the name for class based on courseid and class id
+                        $error = 'You Are Already Enrolled In - '. "' $res->class_name '".' Class';
+                        $this->session->set_flashdata('error', $error);
+                        redirect("course_public/course_class_schedule/$course_id");
+                    }
                 
-            } else {
-                //redirect('user/dashboard');
-                redirect("course_public");
-            }
+                } else {
+                    //redirect('user/dashboard');
+                    redirect("course_public");
+                }
         }
     }
     
@@ -186,7 +221,7 @@ class User extends CI_Controller {
                 $course_id = $this->input->post('course_id');
                 $class_id = $this->input->post('class_id');
     //  
-                $res = $this->course_model->save_imp_trainee();
+                $res = $this->course_public_model->save_imp_trainee();
 
                 echo $uid = $res['user_id'];
                 $tax_code = $res['tax_code'];
@@ -211,7 +246,7 @@ class User extends CI_Controller {
          $username = $this->input->post('username');
          $argument = $this->input->post('argument');
          $radio = $this->input->post('radio');
-         $res = $this->course_model->check_match_found($username,$argument,$radio);
+         $res = $this->course_public_model->check_match_found($username,$argument,$radio);
      
     }
     
@@ -221,7 +256,7 @@ class User extends CI_Controller {
          $argument = $this->input->post('argument');
          $radio = $this->input->post('radio');
          
-         $this->course_model->check_match_found1($username,$argument,$radio);
+         $this->course_public_model->check_match_found1($username,$argument,$radio);
          return;    
      
     }
@@ -235,25 +270,25 @@ class User extends CI_Controller {
          $radio = $this->input->post('radio');
          if($radio == 2)
          {
-              $this->course_model->check_existing_emailDetails($nric,$argument,$radio);
+              $this->course_public_model->check_existing_emailDetails($nric,$argument,$radio);
 
          }elseif($radio == 3) {
-              $this->course_model->check_existing_contactDetails($nric,$argument,$radio);
+              $this->course_public_model->check_existing_contactDetails($nric,$argument,$radio);
          }  else {
-             $this->course_model->check_existing_dobDetails($nric,$argument,$radio);
+             $this->course_public_model->check_existing_dobDetails($nric,$argument,$radio);
          }
         
          return;    
      
     }//END
     
-    public function check_user_enrollment($user_id,$course_id,$class_id)
+    public function check_user_enrollment($user_id='',$course_id='',$class_id='')
     {
          $user_id = $this->input->post('user_id');
          $course_id = $this->input->post('course_id');
          $class_id = $this->input->post('class_id');
          
-         $res = $this->course_model->check_user_enrollment($user_id,$course_id,$class_id);
+         $res = $this->course_public_model->check_user_enrollment($user_id,$course_id,$class_id);
          
     }
     
@@ -272,7 +307,7 @@ class User extends CI_Controller {
 //           $course_id = $this->input->post('course_id');
 //           $class_id = $this->input->post('class_id');
 //           $registration = $this->input->post('registration');
-//            $res = $this->course_model->save_imp_trainee();
+//            $res = $this->course_public_model->save_imp_trainee();
 //         
 //            $uid = $res['user_id'];
 //            $tax_code = $res['tax_code'];
@@ -349,20 +384,24 @@ class User extends CI_Controller {
     
     /* This Method is Use to Register the Trainee skm*/
     public function reg_trainee() { 
-   
+        extract($_POST);
         $data['page_title'] = 'Trainee Register';
         $registration = '';
         if ($this->input->server('REQUEST_METHOD') === 'POST')
         {
-            
-            $res = $this->course_model->save_reg_trainee();
+            if(strtolower($captcha) != strtolower($this->session->userdata('public_captcha_key'))){//added by shubhranshu
+                $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
+                redirect('course_public/register');//added by shubhranshu
+
+            }//added by shubhranshu
+            $res = $this->course_public_model->save_reg_trainee();
         
            $user_id = $res;
             if ($user_id=='') {
                 
                             $error = 'Unable to Register, Please try again !';
                             $this->session->set_flashdata('error', $error);
-                            return redirect('course/register');
+                            return redirect('course_public/register');
                         }
                         else
                         {
@@ -378,7 +417,7 @@ class User extends CI_Controller {
                             }
                             $success = 'Thanks for the registration';
                             $this->session->set_flashdata('success', $success);
-                            return redirect('course');
+                            return redirect('course_public');
                                 
                             
                         }  
@@ -399,7 +438,7 @@ class User extends CI_Controller {
             $registration = $this->input->post('registration');
             $relation = $this->input->post('relationship');
 
-            $res = $this->course_model->loggedin_enroll_someone(); 
+            $res = $this->course_public_model->loggedin_enroll_someone(); 
             if($res['user_id']!=0)
             {
            
@@ -414,7 +453,7 @@ class User extends CI_Controller {
             }else{
                 $error = 'We are not able to complete the enrollment in the class. Please try again later or contact your Administrator.';                             
                 $this->session->set_flashdata('error', $error);
-                return redirect('course/register_enroll/'.$course_id.'/'.$class_id); 
+                return redirect('course_public/register_enroll/'.$course_id.'/'.$class_id); 
             }
               
             }
@@ -426,12 +465,12 @@ class User extends CI_Controller {
         $taxcode = $tax_code;
         $res_found1 = $this->input->post('res_found1');
 
-            $taxcode_details = $this->course_model->validate_taxcode_data(trim($taxcode));
+            $taxcode_details = $this->course_public_model->validate_taxcode_data(trim($taxcode));
             
-            $data['class_details'] = $class_details = $this->course_model->get_class_details($class_id);
-            $data['course_details'] = $course_details = $this->course_model->course_basic_details($class_details->course_id);
+            $data['class_details'] = $class_details = $this->course_public_model->get_class_details($class_id);
+            $data['course_details'] = $course_details = $this->course_public_model->course_basic_details($class_details->course_id);
 
-           $is_enrolled = $this->course_model->is_user_enrolled1($taxcode_details->user_id, $class_id, $course_id);
+           $is_enrolled = $this->course_public_model->is_user_enrolled1($taxcode_details->user_id, $class_id, $course_id);
             
             $data['user_id'] = $user_id; 
             $data['refer_id'] = $friend_id; 
@@ -448,7 +487,7 @@ class User extends CI_Controller {
             
             $data['discount_type']='DISINDVI';
             $data['discount_rate'] = $class_details->class_discount;
-            $data['indv_class_details'] = $indv_class_details = $this->course_model->get_indv_class_details($course_id,$user_id);
+            $data['indv_class_details'] = $indv_class_details = $this->course_public_model->get_indv_class_details($course_id,$user_id);
             $data['discount_amount'] = $discount_total = round(($class_details->class_discount / 100) * $class_details->class_fees, 2);
             $feesdue=$class_details->class_fees;
             if($discount_total>0)
@@ -483,7 +522,7 @@ class User extends CI_Controller {
 //            }
             /* end*/
             
-            $data['gst_rate'] = $gst_rate = $this->course_model->get_gst_current();
+            $data['gst_rate'] = $gst_rate = $this->course_public_model->get_gst_current();
             
             
             //$data['feesdue'] = $feesdue = $class_details->class_fees - ($discount_total);           
@@ -496,32 +535,20 @@ class User extends CI_Controller {
             $data['classloc'] = ($class_details->classroom_location == 'OTH') ? 'Others (' . $class_details->classroom_venue_oth . ')' : $meta_result[$class_details->classroom_location];
             $data['gst_onoff'] = $course_details->gst_on_off;
             $data['gst_rule'] =  $course_details->subsidy_after_before;
-          
-//
-            
-         
 
             if ($is_enrolled == 0) { 
-
-               
-                    
-                        //Update additional information- Added for CR03
-                        //echo $result1 = $this->course_model->update_additional_information($data);
 
                         $data['enrol_status'] = 'ENRLBKD';
                         $data['pay_status'] = 'NOTPAID';
 //                        echo "<br/>"; print_r($data);
-                        $result = $this->course_model->create_new_enroll($data);
-                        
-                       
-                        
+                        $result = $this->course_public_model->create_new_enroll($data);
 //                        exit();
                         if ($result["status"] == FALSE) {
                             $error = 'We were not able to complete the enrollment in the class. Please try again later or contact your Administrator.';
 //                                Click <a href="' . base_url() . 'course/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
                             $this->session->set_flashdata('error', $error);
                             //return redirect('course/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
-                            return redirect('course/course_class_schedule/' . $class_details->course_id);
+                            return redirect('course_public/course_class_schedule/' . $class_details->course_id);
                             
                         } else {
 //                            echo "else part"; echo "<br/>";
@@ -539,16 +566,14 @@ class User extends CI_Controller {
                             }
                             
                            
-                             $message = 'You have successfully booked a seat. Click <a href="' . base_url() . 'course/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
+                             $message = 'You have successfully booked a seat. Click <a href="' . base_url() . 'course_public/course_class_schedule/' . $class_details->course_id . '">here</a> to go back to the Course-Class list.';
                              $data['success_message'] = $message;
                             
                             // skm start fetch user details when register with course aand class
                             
                             $course_name = $this->user_model->course_name($data['course_id']);
                             $user_result = $this->user_model->r_userDetails($data['user_id']);
-                            
-                            
-                            
+
                             $user_mailer_details = array('username' => $this->input->post('user_name'),
                                                 'email' => $this->input->post('frnd_registered_email'), 
                                                 'password' => $user_password,
@@ -567,14 +592,14 @@ class User extends CI_Controller {
                                                         'lastname' => strtoupper($res->last_name),
                                                         'email' => $res->registered_email_id
                                                       );
-                                    $this->course_model->send_reg_someone_referance_email($r_someone, $user_mailer_details, 'BPEMAC'); // referance
-                                    $this->course_model->send_reg_someone_referal_email($r_someone, $user_mailer_details, 'BPEMAC'); // referance referal
-                                    $this->course_model->send_tenant_mail($user_details, 'BPEMAC'); // tenent email
+                                    $this->course_public_model->send_reg_someone_referance_email($r_someone, $user_mailer_details, 'BPEMAC'); // referance
+                                    $this->course_public_model->send_reg_someone_referal_email($r_someone, $user_mailer_details, 'BPEMAC'); // referance referal
+                                    $this->course_public_model->send_tenant_mail($user_details, 'BPEMAC'); // tenent email
                                   
                             }
                             else
                             {
-                                $this->course_model->send_trainee_email($user_mailer_details, 'BPEMAC');
+                                $this->course_public_model->send_trainee_email($user_mailer_details, 'BPEMAC');
                             }
                             
                             if(!empty($friend_id))
@@ -592,8 +617,8 @@ class User extends CI_Controller {
                                                         'r_firstname' => strtoupper($res->first_name),
                                                         'r_email' => $res->registered_email_id
                                                       );
-                                    $this->course_model->send_referance_email_someone($user_details, 'BPEMAC'); 
-                                    $this->course_model->send_referal_email_someone($user_details, 'BPEMAC'); 
+                                    $this->course_public_model->send_referance_email_someone($user_details, 'BPEMAC'); 
+                                    $this->course_public_model->send_referal_email_someone($user_details, 'BPEMAC'); 
                             }  else {
                                 $user_details = array(
                                               'email' => $user_result->registered_email_id,
@@ -608,7 +633,7 @@ class User extends CI_Controller {
                                             );
                             
                                 
-                                 $this->course_model->send_reg_enroll($user_details, 'BPEMAC'); 
+                                 $this->course_public_model->send_reg_enroll($user_details, 'BPEMAC'); 
                                   
                             }
 //                      
@@ -639,7 +664,7 @@ class User extends CI_Controller {
                 $error = 'You are already enrolled in this class \'' . $course_details->crse_name . ' - ' . $class_details->class_name . '\'.';
                 $this->session->set_flashdata('error', $error);
                 //return redirect('course/class_enroll/' . $class_details->course_id . '/' . $class_details->class_id);
-                return redirect('course/course_class_schedule/' . $class_details->course_id);
+                return redirect('course_public/course_class_schedule/' . $class_details->course_id);
                 
             }
   }
@@ -648,17 +673,17 @@ class User extends CI_Controller {
         $tenant_id = TENANT_ID;
         $trainee_id = $this->input->post('user_id');
         $class_id = $this->input->post('class_id');
-        $trainee_det = $this->course_model->get_user_data($trainee_id);
+        $trainee_det = $this->course_public_model->get_user_data($trainee_id);
         $trainee_name = $trainee_det->first_name . ' ' . $trainee_det->last_name;
         $trainee = ($trainee_det->gender == 'MALE') ? 'Mr. ' . $trainee_name : 'Ms. ' . $trainee_name;
-        $class_details = $this->course_model->get_class_details($class_id);
+        $class_details = $this->course_public_model->get_class_details($class_id);
         $meta_map = $this->meta_values->get_param_map();
         $ClassLoc = ($class_details->classroom_location == 'OTH') ? 'Others (' . $class_details->classroom_venue_oth . ')' : $meta_map[$class_details->classroom_location];
-        $course_details = $this->course_model->course_basic_details($class_details->course_id);
-        $course_manager = $this->course_model->get_managers($course_details->crse_manager);
+        $course_details = $this->course_public_model->course_basic_details($class_details->course_id);
+        $course_manager = $this->course_public_model->get_managers($course_details->crse_manager);
         $length = stripos($course_manager, ', ');
         $coursemanager = (!empty($length)) ? substr($course_manager, 0, $length) : $course_manager;
-        $tenant_details = $this->course_model->get_tenant_masters($tenant_id);
+        $tenant_details = $this->course_public_model->get_tenant_masters($tenant_id);
 
         $tenant_details->tenant_country = $meta_map[$tenant_details->tenant_country];
         $courseLevel = $meta_map[$course_details->certi_level];
@@ -676,7 +701,7 @@ class User extends CI_Controller {
         $contact_details = rtrim($contact_details, ', ');
         $message = 'A seat has been temporarily booked. Please pay the class fees on or before the class start date.
             Temporary booking for <strong>' . $trainee . '</strong> for \'Course: ' . $course_details->crse_name . ', Class: ' . $class_details->class_name . ', Certificate Code: ' . $courseLevel . '\'.';
-        $booking_details = $this->course_model->get_paydue_invoice($trainee_id, $class_id);
+        $booking_details = $this->course_public_model->get_paydue_invoice($trainee_id, $class_id);
 
         $message2 = '<p><font style="font-size:14px; font-weight:bold;">Received</font> with thanks SGD \'<b>' . number_format($booking_details->total_inv_amount, 2, '.', '') . '</b>\' from <b>\'' . $trainee . '\' </b> for  <b>\'' . $course_details->crse_name . ' - ' . $class_details->class_name . '\'</b>. Mode of payment:<b>' . ONLINE . '</b></p>'; 
         
@@ -691,13 +716,24 @@ class User extends CI_Controller {
                  $li = "Report at center at 8:30 AM to register for class";
             }
         /* end */
-          $message3 = '<strong>Remark *: </strong>
+            $message3 = '<strong>Remark *: </strong>
              <ol>
                             <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                             <li>Your NRIC, work permit or will be photocopied on the class date</li>
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
                         </ol>';
+            
+            if(TENANT_ID == 'T20'){////added by shubhranshu due to points fow wablab
+                $message3 = '<strong>Remark *: </strong>
+             <ol>
+                        
+                            <li>Your NRIC, work permit or will be photocopied on the class date</li>
+                            <li>Trim finger nails and remove nail polish</li>
+                            <li>'.$li.'</li>
+                        </ol>';
+            }
+          
         /* skm end */
         if ($booking_details) {
             $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
@@ -734,7 +770,7 @@ class User extends CI_Controller {
                 $taxcode = $tax_code;
 
                 if (!empty($taxcode)) {
-                   $taxcode_details = $this->course_model->validate_taxcode_data(trim($taxcode));
+                   $taxcode_details = $this->course_public_model->validate_taxcode_data(trim($taxcode));
                 }
 //                print_r($taxcode_details);
                 $error = '';
@@ -756,7 +792,7 @@ class User extends CI_Controller {
                                 . ' Kindly get in touch with your administrator to activate your account before proceeding with enrollment.';
                     } elseif (trim($taxcode_details->tenant_id) != TENANT_ID) {
 
-                        $tenant_master_result_set = $this->course_model->get_tenant_name(trim($taxcode_details->tenant_id));
+                        $tenant_master_result_set = $this->course_public_model->get_tenant_name(trim($taxcode_details->tenant_id));
 
                         if (empty($tenant_master_result_set)) {
                             $error = 'Your details have been found linked to an invalid training institute.'
@@ -787,10 +823,10 @@ class User extends CI_Controller {
                         
                     } else {
                       
-                        $data['class_details'] = $class_details = $this->course_model->get_class_details($class_id);
+                        $data['class_details'] = $class_details = $this->course_public_model->get_class_details($class_id);
                       
-                        $data['course_details'] = $course_details = $this->course_model->course_basic_details($class_details->course_id);
-                         $is_enrolled = $this->course_model->is_user_enrolled1($taxcode_details->user_id, $class_id, $course_id);
+                        $data['course_details'] = $course_details = $this->course_public_model->course_basic_details($class_details->course_id);
+                         $is_enrolled = $this->course_public_model->is_user_enrolled1($taxcode_details->user_id, $class_id, $course_id);
                         
                         
                         if ($is_enrolled!= 0) {
@@ -817,7 +853,7 @@ class User extends CI_Controller {
                             $data['trainee_data'] = $taxcode_details;
                             $data['discount_total'] = $discount_total = round(($class_details->class_discount / 100) * $class_details->class_fees, 2);
                             $data['feesdue'] = $feesdue = $class_details->class_fees - ($discount_total);
-                            $data['gst_rate'] = $gst_rate = $this->course_model->get_gst_current();
+                            $data['gst_rate'] = $gst_rate = $this->course_public_model->get_gst_current();
                             $data['totalgst'] = $totalgst = ($course_details->gst_on_off == 1) ? round(($feesdue * $gst_rate) / 100, 2) : 0;
                             $data['net_due'] = $net_due = $feesdue + $totalgst;
                             $meta_result = $this->meta_values->get_param_map();
@@ -918,8 +954,8 @@ class User extends CI_Controller {
         }
         $value = array();
         if ($val == 1) {
-            $this->load->model('course_model');
-            $value = $this->course_model->get_user_id_from_taxcode($tax_code);
+            $this->load->model('course_public_model');
+            $value = $this->course_public_model->get_user_id_from_taxcode($tax_code);
             $this->load->model('meta_values');
             $meta_map = $this->meta_values->get_param_map();
             $value->personal_address_country = $meta_map[$value->personal_address_country];
@@ -1471,6 +1507,9 @@ class User extends CI_Controller {
      */
 
     public function forgot_password() {
+        $this->session->unset_userdata('public_captcha_key');///added by shubhranshu
+        unlink(FCPATH .'captcha/'.$this->session->userdata('public_captcha_file')); // added by shubhranshu to delete the captcha file
+        $data['captcha']=$this->generateCaptcha(); // added by shubhranshu for capctha entry
         $data['page_title'] = 'Forgot Password';
         $this->load->view('forgot_password', $data);
     }
@@ -1478,10 +1517,45 @@ class User extends CI_Controller {
      * This method for generating mail in forgot password.
    
      */
+    /// below function was added by shubhranshu for captcha validation
+    public function generateCaptcha(){
+        $this->load->helper('captcha');
+        $vals = array(
+                'word'          => '',
+                'img_path'      => FCPATH.'captcha/',
+                'img_url'       => base_url().'captcha/',
+                'font_path'     => FCPATH .'assets/fonts/ATBramley-Medium.ttf',
+                'img_width'     => '131',
+                'img_height'    => 30,
+                'expiration'    => 7200,
+                'word_length'   => 6,
+                'font_size'     => 16,
+                'img_id'        => 'Imageid',
+                'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
+                // White background and border, black text and red grid
+                'colors'        => array(
+                        'background' => array(255, 255, 255),
+                        'border' => array(255, 255, 255),
+                        'text' => array(0, 0, 0),
+                        'grid' => array(255, 40, 40)
+                )
+        );
+        
+        $cap = create_captcha($vals);
+        $this->session->set_userdata('public_captcha_file', $cap['filename']);
+        $this->session->set_userdata('public_captcha_key', $cap['word']);
+        
+        return $cap['image'];
+    }/////////////////////////end ssp///////////////////////
     public function get_forgot_password() {
         // get the email id and DOB from the form and the forgot param i.e. username or password
         extract($_POST);
+        if(strtolower($captcha) != strtolower($this->session->userdata('public_captcha_key'))){//added by shubhranshu
+            $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
+            redirect('user/forgot_password');//added by shubhranshu
+             
+        }//added by shubhranshu
         $password = random_key_generation();
         $encrypted_password = $this->bcrypt->hash_password($password);
         $result = $this->user_model->validate_forgot_pwd($forgot, $email, $dob, $encrypted_password, $password);
@@ -1612,6 +1686,11 @@ class User extends CI_Controller {
      */
 
     public function add_refer_trainee() {
+
+        
+        if($this->session->userdata('userDetails')->user_id==""){
+            redirect("course_public/class_member_check");
+        }
         $data['page_title'] = 'Trainee Register';
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $country_of_residence = $this->input->post('country_of_residence');
@@ -1646,6 +1725,42 @@ class User extends CI_Controller {
         }
         $data['main_content'] = 'user/refer_trainee';
         $this->load->view('layout_public', $data);
+    }
+    
+    
+    ///// added by shubhranshu for add new trainee from public portal
+    public function add_new_trainee($course_id=null,$class_id=null) { 
+   
+            $data['page_title'] = 'Trainee Register';
+            $registration = '';
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            
+            $course_id = $this->input->post('course_id');
+            $class_id = $this->input->post('class_id');
+            $registration = $this->input->post('registration');
+            $relation = $this->input->post('relationship');
+
+            $res = $this->course_public_model->loggedin_enroll_someone(); 
+                if($res['user_id']!=0)
+                {
+                   
+                   $error= "<div style='color:green;font-weight: bold;text-align:center;padding: 9px;'>Congratulation! Trainee Registration Successful</div>";
+                            
+                        
+                    $uid = $res["user_id"];
+                    $tax_code = $res['tax_code'];
+                    $friend_id = $res['friend_id']; 
+                    $user_password = $res['user_password'];
+                    $this->session->set_flashdata('error', $error);
+                    return redirect('course_public/class_member_check_elearning'); 
+                }else{
+                      $error= "<div style='color:red;font-weight: bold;text-align:center;padding: 9px;'>Oops!!. Please try again later or contact your Administrator</div>";
+                                          
+                    $this->session->set_flashdata('error', $error);
+                    return redirect('course_public/class_member_check_elearning'); 
+                }
+              
+            }
     }
 
     

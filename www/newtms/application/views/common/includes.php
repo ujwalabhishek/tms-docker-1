@@ -4,7 +4,7 @@
   var tenant_id = "<?php print $this->session->userdata('userDetails')->tenant_id; ?>";
 </script>
 <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
-<link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>assets/css/style.css?version=1.0000" rel="stylesheet">
 <link href="<?php echo base_url(); ?>assets/css/glyphicons.css" rel="stylesheet">
 <script src="<?php echo base_url(); ?>assets/js/ajax.jquery.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.validate.min.js"></script>

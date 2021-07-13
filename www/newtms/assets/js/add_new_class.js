@@ -266,7 +266,9 @@ $(document).ready(function() {
                 });
                 text = text.slice(0,-2);                
                 $('#control_3').children('span').text(text);
-                $('#control_3').attr('title',text);                             
+                $('#control_3').attr('title',text);   
+                $('#crs_admin_email').val(res.crse_admin_email);  
+                $('#crse_ref_no').val(res.crse_ref_no); 
             }
         });
     });
@@ -514,6 +516,65 @@ function validate() {
     } else {
         remove_err('#minimum_students');
     }
+    $crs_admin_email = $.trim($('#crs_admin_email').val());
+    if(!valid_email_address($crs_admin_email)){
+        disp_err('#crs_admin_email', '[Invalid Email Address]');
+        $retval = false;
+    }else {
+        remove_err('#crs_admin_email');
+    }
+    $venue_floor=$('#venue_floor').val();
+        if ($venue_floor == null || $venue_floor == '') {
+            $("#venue_floor_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_floor_err").text("").removeClass('error');
+        }
+        $venue_building=$('#venue_building').val();
+        if ($venue_building == null || $venue_building == '') {
+            $("#venue_building_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_building_err").text("").removeClass('error');
+        }
+        $venue_unit=$('#venue_unit').val();
+        if ($venue_unit == null || $venue_unit == '') {
+            $("#venue_unit_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_unit_err").text("").removeClass('error');
+        }
+        $venue_postalcode=$('#venue_postalcode').val();
+        if ($venue_postalcode == null || $venue_postalcode == '') {
+            $("#venue_postalcode_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_postalcode_err").text("").removeClass('error');
+        }
+        
+        $venue_room = $('#venue_room').val();
+        if ($venue_room == null || $venue_room == '') {
+            $("#venue_room_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_room_err").text("").removeClass('error');
+        }
+        
+        $venue_block = $('#venue_block').val();
+        if ($venue_block == null || $venue_block == '') {
+            $("#venue_block_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_block_err").text("").removeClass('error');
+        }
+        
+        $venue_street = $('#venue_street').val();
+        if ($venue_street == null || $venue_street == '') {
+            $("#venue_street_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_street_err").text("").removeClass('error');
+        }
     $fees = $.trim($('#fees').val());
     if ($fees.length == 0) {
         disp_err('#fees');
@@ -546,6 +607,20 @@ function validate() {
     } else {
         remove_err('#languages');
     }
+    $modeoftraining = $('#modeoftraining').val();
+    if ($modeoftraining.length == 0) {
+        disp_err('#modeoftraining');
+        $retval = false;
+    } else {
+        remove_err('#modeoftraining');
+    }
+    $survey_language= $('#survey_language').val();
+    if ($survey_language.length == 0) {
+        disp_err('#survey_language');
+        $retval = false;
+    } else {
+        remove_err('#survey_language');
+    }
     $cls_venue = $('#cls_venue').val();
     if ($cls_venue.length == 0) {
         disp_err('#cls_venue');
@@ -574,6 +649,15 @@ function validate() {
     } else {
         remove_err('#control_5');
     }
+    $schlded_date = $('.schlded_date').val();
+
+    if($schlded_date === undefined && $js_tenant == 'T02'){
+        $(".marketing #dis-error").html('<span id="dis-error" class="error">You must create atleast one class Schedule.</span>');
+        $retval = false;
+    } else {
+         $(".marketing #dis-error").html('');
+    }
+    
     return $retval;
 }
 

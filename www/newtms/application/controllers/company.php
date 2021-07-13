@@ -11,7 +11,7 @@ class Company extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('company_model', 'companymodel');
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $this->load->model('common_model', 'commonmodel');
         $this->load->model('meta_values');
         $this->load->helper('metavalues');
@@ -273,7 +273,7 @@ class Company extends CI_Controller {
      */
     public function check_username($arg_username = '') {
         extract($_POST);
-        $user_name = trim(($username));
+        $user_name = trim($username);
         if ($arg_username != '') {
             $user_name = $arg_username;
         }
@@ -661,7 +661,7 @@ class Company extends CI_Controller {
         } else {
             $this->db->order_by('cm.last_modified_on', 'DESC');
         }
-        $query = $this->db->return_query();
+        $query = $this->db->get_compiled_select(); // changed by shubhranshu for CI update
         $data = $this->db->query($query)->result();
         $excel_titles = array('Company Name', 'Registration No.', 'Business Type', 'Size', 'Country', 'Address', 'Phone Number', 'Fax Number', 'Local Discount', 'Foreign Discount', 'SME Type', 'Company Attn.', 'Company Email', 'Total Registered Trainees', 'Total Active Trainees', 'SCN', 'Last Activity', 'Company Status');
         $excel_data = array();
@@ -796,13 +796,13 @@ class Company extends CI_Controller {
             if ($data[$i]->tax_code_type && $data[$i]->tax_code) {
                 if ($data[$i]->tax_code_type != 'OTHERS') {
                     $type = get_param_value($data[$i]->tax_code_type);
-                    $tax_code_nric = $type->category_name . ' - ' . $data[$i]->tax_code;
+                    $tax_code_nric = $type->category_name . ' - ' . $this->mask_format($data[$i]->tax_code);
                 }
             }
             if ($data[$i]->other_identi_type && $data[$i]->other_identi_code) {
                 $tax_code_type = get_param_value($data[$i]->tax_code_type);
                 $type = get_param_value($data[$i]->other_identi_type);
-                $tax_code_nric = $tax_code_type->category_name . ' - ' . $type->category_name . ' - ' . $data[$i]->other_identi_code;
+                $tax_code_nric = $tax_code_type->category_name . ' - ' . $type->category_name . ' - ' . $this->mask_format($data[$i]->other_identi_code);
             }
             $excel_data[$i][] = $tax_code_nric;
             if ($data[$i]->acc_activation_type == 'BPEMAC') {
@@ -854,6 +854,18 @@ class Company extends CI_Controller {
     /**
      * method to reactivate company
      */
+    
+    /*shubhranshu  start: replace nric first 5 character with mask */
+    function mask_format($nric) {  
+        if(is_numeric($nric) == 1){
+            return $nric;
+        }else{
+            $new_nric = substr_replace($nric,'XXXXX',0,5);   
+            //$new_nric = substr_replace($nric,'XXXX',5);        
+            return $new_nric;
+        }   
+    }
+    /* shubhranshu end */
     public function reactivate_company() {
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $reason_for_reactivation = $this->input->post('reason_for_reactivation');
@@ -917,6 +929,24 @@ class Company extends CI_Controller {
                 $this->session->set_flashdata("error", "Unable to reset password. Try again.");
             }
             redirect('company/view_company/'.$company_id);
+        }
+    }
+    ///////function created by shubhranshu to test email
+    public function sendnewmail(){
+        $this->load->library('email');
+
+        $this->email->from('biipmisg2020@gmail.com');
+        $this->email->to('sspklo@mailinator.com');
+        //$this->email->cc('another@another-example.com');
+        //$this->email->bcc('them@their-example.com');
+
+        $this->email->subject('Email Test');
+        $this->email->message('Testing the email class.');
+
+        if($this->email->send()){
+            echo "mail sent";exit;
+        }else{
+           echo $this->email->print_debugger(); 
         }
     }
 

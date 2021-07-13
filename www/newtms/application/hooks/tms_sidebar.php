@@ -20,7 +20,7 @@ class Tms_sidebar {
                 'copyrighttext' => 'Copyright 2015',
                 'currency' => '',
                 'country' => '',
-                'applicationname' => 'TMS1.png',
+                'applicationname' => 'tms1.png',
                 'tenant_name' => $CI->session->userdata('userDetails')->user_name,
                 'website_url' => '',
                 'tenant_email_id' => $CI->session->userdata('userDetails')->registered_email_id

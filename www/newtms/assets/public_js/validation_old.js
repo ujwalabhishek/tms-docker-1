@@ -59,7 +59,7 @@ function check_taxcode_nric(e,id) {
         
         $.ajax({
           
-            url: baseurl + "course/check_nric_no_cc",
+            url: baseurl + "course_public/check_nric_no_cc",
             type: "post",
             data: {taxcode_nric: e, course_id: $course_id, class_id: $class_id},
             async: false,
@@ -98,7 +98,7 @@ function check_taxcode_nric(e,id) {
                 else if(res == 1){
                                 if($flag == 1)
                                 {   
-                                   $("#user_exists_class_msg").html('This Person is already enrolled in this class.Click <a href='+$baseurl+'course/course_class_schedule/'+$course_id+'>here</a> to go back to the Class list.');
+                                   $("#user_exists_class_msg").html('This Person is already enrolled in this class.Click <a href='+$baseurl+'course_public/course_class_schedule/'+$course_id+'>here</a> to go back to the Class list.');
                                    $("#user_class_msg").show();
                                    $('#nric_found_msg').hide();
                                    $('#flag_row_hide').hide(); // it hide relationship row
@@ -734,7 +734,7 @@ function check_referal_nric_code(e,id) {
     else
     {
         $.ajax({
-                url: baseurl + "course/check_referal_nric",
+                url: baseurl + "course_public/check_referal_nric",
                 type: "post",
                 dataType: 'json',
                 async: false,
@@ -833,7 +833,7 @@ function check_referal_nric45(e,id) {
     {
          $.ajax({
           
-            url: baseurl + "course/check_referal_nric",
+            url: baseurl + "course_public/check_referal_nric",
             type: "post",
             dataType: 'json',
             async: false,
@@ -1020,7 +1020,7 @@ function check_captcha(e,id) {
     }  else {
         $.ajax({
           
-            url: baseurl + "course/captcha_match1",
+            url: baseurl + "course_public/captcha_match1",
             type: "post",
             data: "captcha="+e,
             async: false,

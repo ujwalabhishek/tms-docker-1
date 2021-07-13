@@ -48,6 +48,8 @@ defined('FOPEN_WRITE_CREATE')                   OR define('FOPEN_WRITE_CREATE', 
 defined('FOPEN_READ_WRITE_CREATE')              OR define('FOPEN_READ_WRITE_CREATE', 'a+b');
 defined('FOPEN_WRITE_CREATE_STRICT')            OR define('FOPEN_WRITE_CREATE_STRICT', 'xb');
 defined('FOPEN_READ_WRITE_CREATE_STRICT')       OR define('FOPEN_READ_WRITE_CREATE_STRICT', 'x+b');
+define('PAY_D_ENROL','PDENROL');
+define('PAY_A_ENROL', 'PAENROL');
 
 /*
 |--------------------------------------------------------------------------
@@ -91,7 +93,7 @@ define('RECORDS_PER_PAGE', 50);
 define('ACTIVE', 'ACTIVE'); //Added for DMS
 define('ARCHIVED', 'INACTIVE'); //Added for DMS
 
-define('FROM_EMAIL_ID', 'enquiries@xprienz.com');
+define('FROM_EMAIL_ID', 'biipmisg2020@gmail.com');
 define('INBOX_MAIL_NAME', 'TMS'); 
 define('NOTIFICATION_MAIL_SUBJECT', 'Notification from TMS Administrator');
 
@@ -127,12 +129,12 @@ define('ROLE_PRIORITY_ARRAY', 'ADMN,CRSEMGR,TRAINER,SLEXEC');
  * Date time formats
  */
 
-define('CLIENT_DATE_FORMAT',							'd/m/Y');
-define('SERVER_DATE_TIME_FORMAT',						'Y-m-d H:i:s');
+define('CLIENT_DATE_FORMAT','d/m/Y');
+define('SERVER_DATE_TIME_FORMAT','Y-m-d H:i:s');
 
 //define('APP_ADMN_LOGIN_LINK', "https://tms.xxxx.com/tmsadmin"); 
 define('ENROL_PYMNT_DUE', "enrol_pymnt_due"); 
-define('TENANT_ID', "T02"); 
+//define('TENANT_ID', $this->session->userdata('master_tenant_id')); 
 define('METADATA', "metadata_id"); 
 define('RESETPWD', "1234"); 
 define('RECORDS_IN_MAIN_PAGE',10);
@@ -142,5 +144,18 @@ define('RECORDS_IN_MAIN_PAGE',10);
 
 /* For DMS */
 define('ASSMNT_TEMAPLTE_ID', "assmnt_template_id");
+//paypal
+define('SANDBOX', 0);
+define('ONLINE', 'ONLINE');//11/12/14-MODE OF PAYMENT
+define('ENROL_PYMNT_DUE', "enrol_pymnt_due"); 
 
-////added by shubhranshu ////////////////
+////added by shubhranshu for google captcha////////////////
+define('GOOGLE_CAPTCHA_SITEKEY', "6Le7puAUAAAAAPUPDMn2d98Zf6ABHAB1fen1Te-R"); 
+define('GOOGLE_CAPTCHA_SECRETKEY', "6Le7puAUAAAAAISg1yqxoXAur7FxGj5u9a-OSd66"); 
+/////added by shubhranshu for NSA courses mail send to anther mail id for FRCS
+define('FRCSMAILID', "nsadivya@mailinator.com"); 
+////added by shubhranshu for TPG Gateway Environment variable
+//define('TPG_ENVIRONMENT', "PRODUCTION"); 
+define('TPG_ENVIRONMENT', "DEVELOPEMENT");
+define('TPG_LIVE_URL', "api.ssg-wsg.sg");
+define('TPG_DEV_URL', "uat-api.ssg-wsg.sg");

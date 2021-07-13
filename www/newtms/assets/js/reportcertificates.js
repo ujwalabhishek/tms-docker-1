@@ -2,6 +2,7 @@
  * This js file includes in reports Certificates page
  */
 $(document).ready(function() {
+   
     $("#start_date").datepicker({
         dateFormat: 'dd-mm-yy',
         changeMonth: true,
@@ -97,7 +98,8 @@ $(document).ready(function() {
             $div = $('#trainee');
         } else if ($val == 2) {
             $div = $('#invoice');
-	   $div = $('#status');
+	   $div1 = $('#status');
+           $div1.removeAttr('disabled');
         }
         $div.removeAttr('disabled');
     });
@@ -215,6 +217,16 @@ $(document).ready(function() {
         ///////added by shubhranshu to prevent multiple clicks////////////////
 
     });
+    
+    // added by shubhranshu
+
+        $( "#displayText" ).click(function() {
+          $( "#alertmsg" ).show();
+        });
+         $( "#displayText1" ).click(function() {
+          $( "#alertmsg" ).show();
+        });
+    
     $('#wda_report_form input').change(function() {
         if (search_check == 1) {
             return validate(false);
@@ -241,8 +253,19 @@ $(document).ready(function() {
             }else{
                 $('#search_error').removeClass('error').text('');
         }///////added by shubhranshu to vaildate search operation////////////////
+        check_remove_id();///////added by shubhranshu//
         return retval;
     }
+    /////////////added by shubhranshu///////////////////////
+    function check_remove_id(){
+        
+        $trainee = $('#trainee').val();
+        if($trainee == ''){
+           $('#trainee_id').val(''); 
+        }
+        
+    }/////////////////////////////////////////////////////////////////////////////////////
+    
     function disp_err($id, $text) {
         $text = typeof $text !== 'undefined' ? $text : '[required]';
         $($id).addClass('error');

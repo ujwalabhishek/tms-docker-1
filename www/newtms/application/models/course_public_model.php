@@ -12,7 +12,7 @@ class Course_Public_Model extends CI_Model {
         parent::__construct();
 
         $this->load->helper('common');
-
+        
         $this->load->library('bcrypt');
     }
     /*
@@ -666,7 +666,7 @@ class Course_Public_Model extends CI_Model {
 
         $this->db->select('crs.crse_name, crs.crse_manager,c_cls.class_id, c_cls.course_id, c_cls.total_seats, c_cls.classroom_trainer,c_cls.class_name, c_cls.class_start_datetime,c_cls.class_end_datetime, c_cls.description,c_cls.classroom_venue_oth,
 
-                c_cls.total_classroom_duration, c_cls.total_lab_duration,c_cls.assmnt_duration,c_cls.class_fees,c_cls.classroom_location, c_cls.lab_location ,c_cls.class_language,c_cls.class_pymnt_enrol,c_cls.class_status,c_cls.training_aide');
+                c_cls.total_classroom_duration, c_cls.total_lab_duration,c_cls.assmnt_duration,c_cls.class_fees,c_cls.classroom_location, c_cls.lab_location,c_cls.lab_venue_oth ,c_cls.class_language,c_cls.class_pymnt_enrol,c_cls.class_status,c_cls.training_aide');
 
         $this->db->from('course_class c_cls');
 
@@ -1228,7 +1228,7 @@ class Course_Public_Model extends CI_Model {
 
         $this->db->where('user_id', $user_id);
 
-        $this->db->where('tenant_id', TENANT_ID);
+        $this->db->where('tenant_id', $this->session->userdata('userDetails')->tenant_id);///modified by shubhranshu
 
         $sql = $this->db->get()->row();
 
@@ -2610,7 +2610,7 @@ class Course_Public_Model extends CI_Model {
 //                    }
 //
 //        }
-
+        $this->load->model('user_model');
         /* Check existing user details skm start */
         if ($res_found1 == 1 && $taxcode_found != '') {
 
@@ -2763,11 +2763,15 @@ class Course_Public_Model extends CI_Model {
         }//end
         //$this->db->trans_start();
 
+         ////Added by shubhranshu if the first NRIC not exist then only need to insert data
+        if(empty($taxcode_found)){
+            $this->db->insert('tms_users', $tms_users_data);
+            $user_id = $this->db->insert_id();
+        }
+        //////////////////////shubhranshu code end
+        
 
-
-        $this->db->insert('tms_users', $tms_users_data);
-
-        $user_id = $this->db->insert_id();
+        
 
 
 
@@ -2835,8 +2839,12 @@ class Course_Public_Model extends CI_Model {
         );
 
 
-
-        $this->db->insert('tms_users_pers', $tms_users_pers_data);
+       ////Added by shubhranshu if the first NRIC not exist then only need to insert data
+        if(empty($taxcode_found)){
+             $this->db->insert('tms_users_pers', $tms_users_pers_data);
+        }
+        //////////////////////shubhranshu code end
+       
 
 
 
@@ -3159,21 +3167,9 @@ class Course_Public_Model extends CI_Model {
 
         /* when user loggedin and enroll for some */
 
-//        if(!empty($loggedin) && !empty($this->session->userdata('userDetails')->user_id))
-//        {
-//                $user_data = $this->user_model->r_userDetails($r_user_id);
-//                $r_someone = array(
-//                                    'firstname' => strtoupper($user_data->first_name),
-//                                    'lastname' => strtoupper($user_data->last_name),
-//                                    'email' => $user_data->registered_email_id
-//                                  );
-//                $this->send_reg_someone_referance_email($r_someone, $user_details, 'BPEMAC'); // referance
-//                $this->send_reg_someone_referal_email($r_someone, $user_details, 'BPEMAC'); // referance referal
-//                $this->send_tenant_mail($user_details, 'BPEMAC'); // tenent email
-//                $data = array('tax_code'=>$tax_code,'user_id'=>$user_id,'friend_id'=>$r_user_id);
-//                return $data;
-//        }
-
+  
+        $this->send_reg_someone_referance_email($r_someone, $user_details, 'BPEMAC'); // send mail
+               
         $data = array(
             'tax_code' => $tax_code,
             'user_id' => $user_id,
@@ -4731,7 +4727,7 @@ class Course_Public_Model extends CI_Model {
 
 
 
-        //$this->send_tenant_mail($enrolled_user_data, 'enrol'); 
+        $this->send_tenant_mail($enrolled_user_data, 'enrol'); 
 
 
 
@@ -5335,6 +5331,11 @@ class Course_Public_Model extends CI_Model {
             $body .= $footer_data;
         }
 
+        // added by shubhranshu for FRCS requirement dt 18.05.2021 to send mail to different mail id for NSA courses!
+        if ((strpos($traineedata[1][0]['crse_name'], 'NSA') !== false) && TENANT_ID == 'T24') {
+            $tenant_details->tenant_email_id = FRCSMAILID;
+        }
+        
         return send_mail($tenant_details->tenant_email_id, '', $subject, $body);
     }
 
@@ -5552,17 +5553,36 @@ class Course_Public_Model extends CI_Model {
 
 
      */
+    ////added by shubhranshu for everest invoice id changes
     private function generate_invoice_id() {
 
-        $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.", "T16" => "XPR.B.");
+        //$date_array = explode("-",$class_start_date);
 
-        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id", "T16" => "xprienz3_invoice_id");
+        $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.","T17" => "EVI","T20" => "WABLAB","T23" => "DEMO", "T24" => "RLIS");
 
-        $tenant_id = TENANT_ID;
+        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id","T17" => "ei_new_invoice_id","T20" => "wablab_invoice_id","T23" => "demo_invoice_id", "T24" => "rlis_invoice_id");
+
+        $tenant_id = $this->tenant_id ?? TENANT_ID;
 
         $invoice_id_tmp = get_max_lookup($lookup_table[$tenant_id]);
 
-        $invoice_id = $pre_fix_array[$tenant_id] . $invoice_id_tmp;
+        if($tenant_id == 'T17'){
+            if(strlen($invoice_id_tmp)== 1){
+                $invoice_id_tmp = '000'.$invoice_id_tmp;
+            }elseif(strlen($invoice_id_tmp)== 2){
+                $invoice_id_tmp = '00'.$invoice_id_tmp;
+            }elseif(strlen($invoice_id_tmp)== 3){
+                $invoice_id_tmp = '0'.$invoice_id_tmp;
+            }elseif(strlen($invoice_id_tmp)== 4){
+                $invoice_id_tmp = $invoice_id_tmp;
+            }else{
+                $invoice_id_tmp = $invoice_id_tmp;
+            }
+            
+            $invoice_id = $pre_fix_array[$tenant_id] .'-20'.date('y').'-'.date('m').$invoice_id_tmp;
+        }else{
+            $invoice_id = $pre_fix_array[$tenant_id] . $invoice_id_tmp;
+        }
 
         return $invoice_id;
     }
@@ -5711,7 +5731,7 @@ class Course_Public_Model extends CI_Model {
     public function get_course_list_home($limit=NULL, $offset=NULL, $search_value = NULL) {
 
         $tenant_id = TENANT_ID;
-
+      
         $date = date('Y-m-d h:i A');
         $time = date("H:i:s", strtotime($date));
         $today = date('Y-m-d') . ' ' . $time;
@@ -5752,8 +5772,151 @@ class Course_Public_Model extends CI_Model {
             $this->db->limit($limit, $limitvalue);
         }
 
-        return $this->db->get()->result();
+         return $this->db->get()->result();
+        
     }
+    
+    public function get_all_course_class_list($tenant_id,$limit = NULL, $offset = NULL, $sort_by = NULL, $sort_order = NULL)
+    {
+
+        $date = date('Y-m-d h:i A');
+        $time = date("H:i:s", strtotime($date));
+        $today_date = date('Y-m-d').' '.$time; 
+        
+        if ($offset < 0 || empty($tenant_id)) {
+
+            return;
+        }       
+
+        $this->db->select('crs.crse_name, crs.crse_manager,c_cls.class_id, c_cls.course_id, c_cls.total_seats, c_cls.classroom_trainer,c_cls.class_name, c_cls.class_start_datetime,c_cls.class_end_datetime, c_cls.description,c_cls.classroom_venue_oth,
+
+                c_cls.total_classroom_duration, c_cls.total_lab_duration,c_cls.assmnt_duration,c_cls.class_fees,c_cls.classroom_location, c_cls.lab_location ,c_cls.class_language,c_cls.class_pymnt_enrol,c_cls.class_status,c_cls.training_aide');
+
+        $this->db->from('course_class c_cls');
+
+        $this->db->join('course crs', 'crs.course_id = c_cls.course_id and c_cls.tenant_id=crs.tenant_id'); 
+
+        $this->db->where('crs.crse_status', 'ACTIVE');
+
+        $this->db->where('c_cls.class_status !=', 'INACTIV');
+
+        $this->db->where('crs.display_on_portal', '1');
+
+        $this->db->where('c_cls.display_class_public', '1');
+
+        $this->db->where('c_cls.tenant_id', $tenant_id);
+
+        $this->db->where('c_cls.class_start_datetime >= ', $today_date);
+
+        if ($sort_by) {
+
+            $this->db->order_by($sort_by, $sort_order);
+
+        } else {
+
+            $this->db->order_by('c_cls.class_start_datetime', 'ASC');
+
+        }
+        
+        if ($limit == $offset) {
+
+            $this->db->limit($offset);
+
+        } else if ($limit > 0) {
+
+            $limitvalue = $offset - $limit;
+
+            $this->db->limit($limit, $limitvalue);
+
+        }
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+
+    }
+    
+    /* skm end */
+    
+    /* skm start : get count of all course and class list */
+    public function get_all_course_class_list_count($tenant_id,$limit = NULL, $offset = NULL, $sort_by = NULL, $sort_order = NULL)
+    {
+
+        $date = date('Y-m-d h:i A');
+        $time = date("H:i:s", strtotime($date));
+        $today_date = date('Y-m-d').' '.$time; 
+        
+        if ($offset < 0 || empty($tenant_id)) {
+
+            return;
+        }       
+
+        $this->db->select('crs.crse_name, crs.crse_manager,c_cls.class_id, c_cls.course_id, c_cls.total_seats, c_cls.classroom_trainer,c_cls.class_name, c_cls.class_start_datetime,c_cls.class_end_datetime, c_cls.description,c_cls.classroom_venue_oth,
+
+                c_cls.total_classroom_duration, c_cls.total_lab_duration,c_cls.assmnt_duration,c_cls.class_fees,c_cls.classroom_location, c_cls.lab_location ,c_cls.class_language,c_cls.class_pymnt_enrol,c_cls.class_status,c_cls.training_aide');
+
+        $this->db->from('course_class c_cls');
+
+        $this->db->join('course crs', 'crs.course_id = c_cls.course_id and c_cls.tenant_id=crs.tenant_id'); 
+
+        $this->db->where('crs.crse_status', 'ACTIVE');
+
+        $this->db->where('c_cls.class_status !=', 'INACTIV');
+
+        $this->db->where('crs.display_on_portal', '1');
+
+        $this->db->where('c_cls.display_class_public', '1');
+
+        $this->db->where('c_cls.tenant_id', $tenant_id);
+
+        $this->db->where('c_cls.class_start_datetime >= ', $today_date);
+
+        if ($sort_by) {
+
+            $this->db->order_by($sort_by, $sort_order);
+
+        } else {
+
+            $this->db->order_by('c_cls.class_start_datetime', 'ASC');
+
+        }
+
+        $query = $this->db->get();
+
+        return $query->num_rows();
+
+    }
+    
+    ///////////added by shubhranshu for new requirement for elearning
+    public function check_taxcode_exists_public($taxcode, $course_id, $class_id) {
+        $tenant_id = TENANT_ID;
+        $this->db->select('tu.user_id,tu.tax_code,tup.first_name');
+
+        $this->db->from('tms_users tu');
+        $this->db->join('tms_users_pers tup','tup.user_id=tu.user_id and tup.tenant_id=tu.tenant_id');
+        $this->db->where('tu.tax_code', $taxcode);
+
+        $this->db->where('tu.tenant_id', $tenant_id);
+
+        
+        $sql = $this->db->get();
+
+        $data = $sql->row();
+        $res = $this->nric_exits_cc($taxcode, $course_id, $class_id);
+        if ($res == 1) {
+            echo 1; // already enrolled
+        } else {
+            if ($sql->num_rows() > 0) {
+                echo json_encode($data);
+            } else {
+                echo 0;  
+            }
+        }
+        
+       exit();
+    }
+    
+
 
 }
 

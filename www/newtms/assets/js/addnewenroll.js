@@ -26,8 +26,8 @@ $(document).ready(function() {
     $('#search_enrolment').click(function()     
     {
         ///////added by shubhranshu to prevent multiple clicks////////////////
-        $('#search_enrolment').attr('disabled','disabled');
-        $('#search_enrolment').text('Please Wait..');
+//        $('#search_enrolment').attr('disabled','disabled');
+//        $('#search_enrolment').text('Please Wait..');
          ///////added by shubhranshu to prevent multiple clicks////////////////
         $val = $('.enrollment_type:checked').val();
         $change_taxcode = '';
@@ -324,6 +324,8 @@ $(document).ready(function() {
             $subsidy_amount = $($id).find('option:selected').attr("subsidy_amount");
             $unit_fees = $($id).find('option:selected').attr("unit_fees");
             $individual_user_id = $($id).val();
+            
+              
             if ($payid.length > 0) 
             {
                 $('#pymnt_due_id').val($payid);
@@ -376,8 +378,8 @@ $(document).ready(function() {
                         var error = res.error;
                         var lock= res.lock;
                         ///////added by shubhranshu to prevent multiple clicks////////////////
-                        $('#search_enrolment').removeAttr('disabled');
-                        $('#search_enrolment').html('<span class="glyphicon glyphicon-retweet"></span>&nbsp;Search');
+                        //$('#search_enrolment').removeAttr('disabled');
+                        //$('#search_enrolment').html('<span class="glyphicon glyphicon-retweet"></span>&nbsp;Search');
                         ///////added by shubhranshu to prevent multiple clicks////////////////
                         if(lock == 1){
                             $('.attendance_lock').show();
@@ -873,7 +875,7 @@ $(document).ready(function() {
                 } 
                 else 
                 {
-                    disp_err('#control_6', '[There are no unassigned trainees available.]');
+                    disp_err('#control_6', '[There are no assigned trainees available.]');
                     $('.search_button').hide();
                 }
             }
@@ -1311,6 +1313,7 @@ function get_select_box($type)
                            </option>';
                        
                         $('#change_taxcode').append($value);
+                       
                     });
                     $('#change_taxcode').hide();
                     $('#change_taxcode_autocomplete').show();

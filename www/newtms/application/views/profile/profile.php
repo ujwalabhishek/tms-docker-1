@@ -419,6 +419,7 @@ $this->load->model('meta_values');
                                 'maxlength' => '50',
                                 'value' => $user_list_values->off_email_id,
                                 'onblur' => 'javascript:validate_office_email(this.value,this.id);',
+                                'disabled' =>true,
                                 'style' => 'width:250px',
                             );
                             echo form_input($attr);

@@ -910,6 +910,18 @@ function validate() {
         {
             $("#dis-error").html('');
         } // skm code end when date is more then
+        
+        
+        $schlded_date = $('.schlded_date').val();
+
+    if($schlded_date === undefined && $js_tenant == 'T02'){
+        $(".marketing #dis-error").html('<span id="dis-error" class="error">You must create atleast one class Schedule.</span>');
+        $retval = false;
+    } else {
+         $(".marketing #dis-error").html('');
+    }
+    
+    
     return $retval;
 }
 

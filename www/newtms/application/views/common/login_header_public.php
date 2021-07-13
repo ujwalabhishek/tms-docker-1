@@ -1,5 +1,30 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.validate.js"></script> 
-<div class="container container_style">
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.validate.js"></script>
+
+<div class="container-fluid bg-3 text-center header-box">
+    <div class="containers">
+        <div class="row">
+            <div class="col-sm-2">
+               <a href="<?php echo base_url()?>" class='pull-left'>
+                <img class="logo" src="<?php echo base_url()?>logos/<?php echo TENANT_LOGO;?>" border="0">
+                </a>
+            </div>
+            <div class="col-sm-7 header-ttl"><p>Training Management as a Service (TMaaS)</p></div>
+            <div class="col-sm-3" style='font-size:34px'>
+                <a title="Join Now" href="<?php echo site_url(); ?>login/administrator" class="btn btn-sm btn-primary"><span style='color:white'>Admin Login<span class="glyphicon glyphicon-chevron-right"></span></span> </a>
+                <a title="Join Now" href="<?php echo site_url(); ?>course_public/class_member_check" class="btn btn-sm btn-primary"><span style='color:white'>Trainee LogIn<span class="glyphicon glyphicon-chevron-right"></span></span> </a>
+                <a href="<?php echo site_url(); ?>" title="Home" style="width: 50px;"><img src="<?php echo site_url(); ?>assets/images/home.png" border="0" style="margin-top:4px;"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+ 
+
+<!--<div class="container container_style">
     <div class="masthead">
         <h3 class="text-muted h3_logo"><a href="<?php echo site_url(); ?>" title="Home" >
                 <?php
@@ -13,7 +38,7 @@
         
         <div class="training1">
             <a href="<?php echo site_url(); ?>" title="Home" >
-            <img src="<?php echo base_url(); ?>assets/images/TMS1.png" border="0" title="Training Management System">
+            <img src="<?php echo base_url(); ?>assets/images/tms1.png" border="0" title="Training Management System">
         </a>
         </div>
                 <?php 
@@ -41,7 +66,7 @@
                         </tr>  
                          <tr >
                             <td>
-<!--                                <a title="Enroll For Someone" href="<?php echo site_url(); ?>course/referral_credentials1" style="color: black; text-decoration: none"><strong>Enroll For Someone</strong>-->
+                                <a title="Enroll For Someone" href="<?php echo site_url(); ?>course/referral_credentials1" style="color: black; text-decoration: none"><strong>Enroll For Someone</strong>
                               
                             </td>
                            
@@ -54,12 +79,12 @@
                
                 
                
-<!--                <table width="100%" align="left"> <tr>
+                <table width="100%" align="left"> <tr>
                         <td rowspan="4" align="right" width="12%"> <img src="<?php echo base_url(); ?>assets/images/ref_frnd.png" align="left" /></td>
                         <td align="left" width="88%">
                             <a href="<?php echo base_url(); ?>course/referral_credentials">Enroll for Someone </a></td>
                     </tr> 
-                </table>-->
+                </table>
                 
                 
             </div>
@@ -69,4 +94,4 @@
             </a>
         <?php } ?>
     </div>	
-</div>
+</div>-->

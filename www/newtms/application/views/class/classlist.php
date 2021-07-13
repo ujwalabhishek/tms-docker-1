@@ -45,6 +45,15 @@ $CI->load->model('class_model');
     if ($this->session->flashdata('error')) {
         echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
     }
+    /////display if any error from TPG site
+     if(!empty($this->session->flashdata('resp_error'))){
+        foreach($this->session->flashdata('resp_error') as $err){
+
+        echo '<div class="alert alert-danger dang">
+            <strong>'.$err->field.'</strong>'.$err->message.'
+        </div>';
+        }
+    }
     ?>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class.png"> Class List</h2>
     <div class="table-responsive">
@@ -97,6 +106,27 @@ $CI->load->model('class_model');
                         </button>
                     </td>
                 </tr>
+<!--                <tr>
+                    <td width="15%" colspan="-1" class="td_heading">Course Run ID:</td>
+                    <td colspan="4">
+                        <?php
+//                        $class_options = array();
+//                        $crsrunid_js = 'id="tpg_course_run_id"';
+//                        $tpg_course_run_id_options[''] = 'Select';
+//                        if (!empty($courseRunId)) {
+//                            $crsrunid_js = $crsrunid_js;
+//                            $tpg_course_run_id_options[''] = 'All';
+//                        } else {
+//                            //$crsrunid_js = $crsrunid_js . ' disabled="disabled"';
+//                        }
+//                        foreach ($courseRunId as $k => $v) {
+//                            $tpg_course_run_id_options[$k] = $v;
+//                        }
+//                        echo form_dropdown('tpg_course_run_id', $tpg_course_run_id_options, $this->input->get('tpg_course_run_id'), $crsrunid_js);
+                        ?>
+                    </td>
+                    
+                </tr>-->
                 <tr>
                     <td width="24%" class="td_heading">Filter by Class Status:</td>
                     <td colspan="6">

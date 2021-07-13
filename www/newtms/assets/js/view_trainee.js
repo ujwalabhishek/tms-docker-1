@@ -166,6 +166,19 @@ $(document).ready(function() {
                         $('#COMYTCOM_2NYC').prop('disabled', true);
                        
                     }
+                    if(item.training_score == 'ATR')
+                    {
+                      
+                        $('#COMYTCOM_C').prop('disabled', true);
+                        $('#COMYTCOM_ABS').prop('disabled', false);     
+                        $('#COMYTCOM_EX').prop('disabled', true);
+                        $('#COMYTCOM_NYC').prop('disabled', true);
+                        $('#COMYTCOM_2NYC').prop('disabled', true);
+                         $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                        $('#skm').hide();
+                        $('#tbl').show();
+                    }
+                    
                     if (item.training_score == null){
                         
                         $('#COMYTCOM_C').prop('disabled', false);
@@ -196,6 +209,37 @@ $(document).ready(function() {
                         }   
                         
                     }
+                    
+                    ///////below code was added by shubhranshu for xp for attrition option start-----
+                if(item.training_score == "NYC" || item.training_score == "C" || item.training_score == "2NYC"){
+                    $('#COMYTCOM_ATTRITION').prop('disabled', true);
+                }else{
+                    if((res.att_percentage <= 0.50) && (res.att_percentage !==null) && (res.att_percentage >= 0)){
+                        $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                        $('#COMYTCOM_C').prop('disabled', true);
+                        $('#COMYTCOM_NYC').prop('disabled', true);     
+                        $('#COMYTCOM_EX').prop('disabled', true);
+                        $('#COMYTCOM_2NYC').prop('disabled', true);
+                        $('#COMYTCOM_ABS').prop('disabled', false);
+                    }else if((res.att_percentage < 0.75) && (res.att_percentage !==null) && (res.att_percentage >= 0)){
+                        $('#COMYTCOM_ATTRITION').prop('disabled', true);
+                        $('#COMYTCOM_C').prop('disabled', true);
+                        $('#COMYTCOM_NYC').prop('disabled', true);     
+                        $('#COMYTCOM_EX').prop('disabled', true);
+                        $('#COMYTCOM_2NYC').prop('disabled', true);
+                        $('#COMYTCOM_ABS').prop('disabled', false);
+                    }else if(res.att_percentage == null){
+                        $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                        $('#COMYTCOM_C').prop('disabled', true);
+                        $('#COMYTCOM_NYC').prop('disabled', true);     
+                        $('#COMYTCOM_EX').prop('disabled', true);
+                        $('#COMYTCOM_2NYC').prop('disabled', true);
+                        $('#COMYTCOM_ABS').prop('disabled', false);
+                    }else{
+                        $('#COMYTCOM_ATTRITION').prop('disabled', true);
+                    }
+                }
+                    ////below code was added by shubhranshu for xp for attrition option end-----
                 });
                 $.each(lock_status, function(i,item){
                         if(item.lock_status==1){

@@ -515,6 +515,14 @@ $(document).ready(function() {
                 $('.companyamounts_display').show();
                 if (parseFloat($company_total) > 0) {
                     $('.common_pay').show();
+                    if(data.tenant_id=='T17'){///added by shubhranshu for everest
+                        $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="CHQ">Cheque</option>');
+                        
+                    }else{
+                        
+                        $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="GIRO">GIRO</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
+                    }
+                    
                 } else {
                     $('.common_pay').hide();
                 }
@@ -602,6 +610,18 @@ $(document).ready(function() {
             e.preventDefault();
         }
     });
+    ///////added by shubhranshu to prevent multiple clicks////////////////
+    $(document).ajaxStart(function () {
+         var self = $(".btn_srch"),
+            button = self.find('input[type="submit"],button');
+            button.attr('disabled','disabled').html('Please Wait..');
+            //$("#btnSubmit").attr("disabled", true);
+        });
+        $(document).ajaxComplete(function () {
+             $(".search_button").removeAttr("Disabled");
+                $(".search_button").html("<span class='glyphicon glyphicon-search'></span> Search");
+            //$("#btnSubmit").attr("disabled", false);
+        });
     function trigger_ajax($invoice_id, $taxcode_id, $trainee_id) {
          ///////added by shubhranshu to prevent multiple clicks////////////////  ////////////////////
         var self = $(".btn_srch"),
@@ -611,7 +631,7 @@ $(document).ready(function() {
         $.ajax({
             url: $siteurl + "class_trainee/search_trainee_updatepayment",
             type: "post",
-            //async: false,
+            async: false,
             dataType: "json",
             data: {
                 'invoice_id': $invoice_id,
@@ -708,6 +728,16 @@ $(document).ready(function() {
                         $html = '<tr><td class="error" colspan="3">There is no payment available.</td></tr>';
                         $payrcd_table.append($html);
                     }
+                    
+                   if(res.data.tenant_id=='T17'){
+                       $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="PSEA">PSEA</option><option value="CHQ">Cheque</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>');
+                        $('#payment_type1').html('<option value="" selected="selected">Select</option><option value="CASH1">Cash</option><option value="CHQ1">Cheque</option>');
+                    }else{
+                        $('#payment_type1').html('<option value="" selected="selected">Select</option><option value="CASH1">Cash</option><option value="CHQ1">Cheque</option><option value="GIRO1">GIRO</option><option value="NETS1">NETS</option>');
+                      $('#payment_type').html('<option value="" selected="selected">Select</option><option value="CASH">Cash</option><option value="NETS">NETS</option><option value="CHQ">Cheque</option><option value="GIRO">GIRO</option><option value="SFC_SELF">SFC_SELF</option><option value="SFC_ATO">SFC_ATO</option>'); 
+                   }
+                    
+                    
                 }
             });
         }
@@ -789,7 +819,7 @@ $(document).ready(function() {
         $('#sfcato_div').hide();
         $val = $(this).val();
         if ($val.length > 0) {
-            if ($val == 'CASH' || $val == 'NETS') {
+            if ($val == 'CASH' || $val == 'NETS' || $val == 'PSEA') {
                 $('#row_dim3').show();
                 $('#row_dim31').hide();
                 $('#row_dim1').hide();
@@ -845,14 +875,15 @@ $(document).ready(function() {
                
                 if($comp=="company")
                 {
+                   
                     $msg="SFC can not be claimed for company.";
                     disp_err('#sfc_claim', $msg);
-                $('#sfcato_div').hide();
-                $('#row_dim31').hide();
-                $('#row_dim1').hide();
-                $('#giro_div1').hide();
-                $('.other_payment').hide();
-                 $('.sfc_clm').show();
+                    $('#sfcato_div').hide();
+                    $('#row_dim31').hide();
+                    $('#row_dim1').hide();
+                    $('#giro_div1').hide();
+                    $('.other_payment').hide();
+                     $('.sfc_clm').show();
                 }
                 else
                 {
@@ -863,6 +894,11 @@ $(document).ready(function() {
                     $('#giro_div1').hide();
                     $('.other_payment').hide();
                     $('.sfc_clm').hide();
+                    if($tenant_id == 'T20'){
+                        $('#sfc_ato_divv').hide();
+                    }else{
+                        $('#sfc_ato_divv').show();
+                    }
                 }
             }
                 
@@ -950,6 +986,20 @@ function form_validate($retVal) {
         {
             remove_err('#sfcclaim_on');
         }
+        
+        ////added by shubhranshu for sfc claim id
+//        $sfc_self_claim_id = $('#sfc_self_claim_id').val();
+//        if ($sfc_self_claim_id.length == 0) 
+//        {
+//            $retVal = false;
+//            disp_err('#sfc_self_claim_id');
+//        } 
+//        else 
+//        {
+//            remove_err('#sfc_self_claim_id');
+//        }
+        //////end of the code
+        
         $sfc_amount = $.trim($('#sfc_amount').val());
         
         $p_paid = parseFloat($sfc_amount);
@@ -1022,6 +1072,20 @@ function form_validate($retVal) {
         {
             remove_err('#sfcatoclaim_on');
         }
+        
+        ////added by shubhranshu for sfc claim id
+//        $sfc_ato_claim_id = $('#sfc_ato_claim_id').val();
+//        if ($sfc_ato_claim_id.length == 0) 
+//        {
+//            $retVal = false;
+//            disp_err('#sfc_ato_claim_id');
+//        } 
+//        else 
+//        {
+//            remove_err('#sfc_ato_claim_id');
+//        }
+        /////end of the code
+
         $sfcato_amount = $.trim($('#sfcato_amount').val());
         
         $p_paid = parseFloat($sfcato_amount);
@@ -1077,7 +1141,7 @@ function form_validate($retVal) {
             }
         }
     }
-    else if ($payment_type == 'CASH'  || $payment_type == 'NETS') {
+    else if ($payment_type == 'CASH'  || $payment_type == 'NETS' || $payment_type == 'PSEA') {
         remove_err('#payment_type');
         $cashpaid_on = $('#cashpaid_on').val();
         if ($cashpaid_on.length == 0) {
@@ -1218,6 +1282,7 @@ function form_validate($retVal) {
         }
     }
     //payment options for SFC 
+    
     if ($payment_type1 == 'CASH1' || $payment_type1 == 'NETS1') 
     {
        
@@ -1282,6 +1347,7 @@ function form_validate($retVal) {
                 }
             }
         }
+       
          // check sfc claimed on start
         if($payment_type =='SFC_ATO')
         {
@@ -1292,6 +1358,7 @@ function form_validate($retVal) {
             } else {   
                 remove_err('#sfcatoclaim_on');
             }
+
         }
         // end
     }
@@ -1410,6 +1477,15 @@ function form_validate($retVal) {
         }
     }
     //end other paymnet option 
+    
+    if($tenant_id == 'T02' && $payment_type == 'SFC_ATO'){//////below code added by shubhranshu to check if it is xp and sfcid should mandatory  on 10/12/2020
+        if($('#sfc_ato_claim_id').val().length == 0 ){
+            $retVal = false;
+            disp_err('#sfc_ato_claim_id');
+        }else{
+            remove_err('#sfc_ato_claim_id');
+        }
+    }
     if ($retVal == true) 
     {
         if ($check_excess == 1 && $check_full == 1) {

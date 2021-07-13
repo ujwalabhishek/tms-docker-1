@@ -40,7 +40,7 @@ class User_Model extends CI_Model {
 
     }
 
-    function configurationfunction(){
+    function configurationfunction($uname){
         $tenentName = "";
         $domain = str_replace("www.", "", $_SERVER ["HTTP_HOST"]);
         $exploded = explode('.', $domain);
@@ -51,26 +51,37 @@ class User_Model extends CI_Model {
        
         // collect tenant name from url
         $tenentName =  $gd  > $segmentCount ? $exploded[0] : DEFAULT_TENANT;
-
+//        print_r($this->db->database);
         // fetch tenent id based on tenant name
+        ///////////below code added by shubhranshu to check if the trainee is created by testadmin
         $this->db->select('tenant_id');
-        $this->db->from('tenant_master');
-        $this->db->where('tenant_short_name', $tenentName);
+        $this->db->from('tms_users');
+        $this->db->where('user_name', $uname);
         $this->db->limit(1);
-        $res = $this->db->get()->row()->tenant_id;
-        //echo $this->db->last_query();exit;
+        $res = $this->db->get()->row()->tenant_id;////////////////////////////
+         //echo $this->db->last_query();exit;
+        if($res!= 'T01'){   /////////////////////added by shubhranshu for if the trainee is not created by testadmin
+            $this->db->select('tenant_id');
+            $this->db->from('tenant_master');
+            $this->db->where('tenant_short_name', $tenentName);
+            $this->db->limit(1);
+    //        print_r($this->db->get()->row());exit;
+            $res = $this->db->get()->row()->tenant_id;
+        }////////////////////////ssp///////////////////////////////////////
+        
+//        echo $this->db->last_query();exit;
         // if the tenent name doesnot exist in db redirect to default tenant        
         if(empty($res))
            //redirect(DEFAULT_TENANT);
 	  // redirect ("http://www.biipmi.com");
-           redirect ("http://xprienzhr.com/");
+           redirect ("/");
         
         //rename cookie according to tenant so that session data are domain specific
         $this->config->set_item('cookie_prefix', $res);
         
         // define tenant id 
         
-        define('TENANT_ID', $res);
+        define('TENANT_ID_PUB', $res);
  
     }
 
@@ -87,7 +98,7 @@ class User_Model extends CI_Model {
         $uname = trim($username);
         $pwd = trim($password);
    
-        $this->configurationfunction();// added by shubhranshu for dynamic teanant_id
+       // $this->configurationfunction($uname);// added by shubhranshu for dynamic teanant_id
         
 
         $this->db->select('usr.password, pers.first_name, pers.last_name, pers.tenant_id, usr.user_id, ten.logo, ten.copyrighttext, '
@@ -1100,8 +1111,8 @@ class User_Model extends CI_Model {
                 //end
             $this->send_trainee_email($r_someone, $user_details, $acc_activation_type);
             //$this->send_trainee_email1($r_someone, $user_details, $acc_activation_type);
-            $this->load->model('course_model');
-            $this->course_model->send_reg_someone_referal_email($r_someone, $user_details, $acc_activation_type);
+            $this->load->model('course_public_model');
+            $this->course_public_model->send_reg_someone_referal_email($r_someone, $user_details, $acc_activation_type);
 
 
         }

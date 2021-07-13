@@ -7,7 +7,7 @@ if (!defined('BASEPATH'))
 class Profile extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $this->load->helper('common');
         $this->load->helper('metavalues');
         $this->load->helper(array('form', 'url'));

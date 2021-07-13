@@ -1,3 +1,4 @@
+
 <div class="container_nav_style">
 
     <div class="container_row">
@@ -70,9 +71,6 @@
 
                                     foreach ($tabledata as $class):
 
-                                        ?>
-
-                                        <?php
 
                                         
 
@@ -88,8 +86,14 @@
 
                                         {  
 
-                                            $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'" data-user="'.$class['user_id'].'">'; 
-
+                                            //$enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'" data-user="'.$class['user_id'].'">'; 
+                                            if(TENANT_ID== 'T12' || TENANT_ID== 'T02'){// added by shubhranshu since this changes for xp and xp2 to remove the popup
+                                                $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link1" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id']  . '/'.$class['class_id'].'">';
+                                                $enroll_link_label = 'Enroll Now';
+                                            }else{
+                                                $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">'; 
+                                                $enroll_link_label = 'Enroll Now';
+                                            }
                                         
 
                                            
@@ -100,9 +104,13 @@
 
                                             
 
-                                            $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course/class_member_check/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">';;  
-
-                                           
+                                            if(TENANT_ID== 'T12' || TENANT_ID== 'T02'){// added by shubhranshu since this changes for xp and xp2 to remove the popup
+                                                    $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link1" href="' . base_url() . 'course_public/class_member_check/' . $class['course_id']  . '/'.$class['class_id'].'">';
+                                                    $enroll_link_label = 'Enroll Now';
+                                                }else{
+                                                    $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_member_check/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">'; 
+                                                    $enroll_link_label = 'Enroll Now';
+                                                }
 
                                             
 
@@ -112,14 +120,13 @@
 
                                         
 
-//                                        $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course/class_enroll/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_name'].'" data-course="'.$class['crse_name'].'">';
+//                                        $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_enroll/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_name'].'" data-course="'.$class['crse_name'].'">';
 
                                         $enroll_link_label = 'Enroll Now';
 
                                         $enroll_link_suffix = '</a>';
 
                                         $enroll_link = $enroll_link_prefix . $enroll_link_label . $enroll_link_suffix;
-
                                         ?>
 
                                         <tr>
@@ -502,15 +509,15 @@
 
                                $('.enrol_for_self').html("<button class='btn btn-primary btn1' type='button' style='background-color: gray;cursor:default;    border-color: gray;'>Already Enrolled</button>");
 
-                                $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course/register_enroll/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
+                                $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course_public/register_enroll/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
 
                             }else{
 
-//                                $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course/create_enroll_self_loggedin/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
+//                                $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course_public/create_enroll_self_loggedin/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
 
-                                  $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course/class_enroll1/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
+                                  $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course_public/class_enroll1/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
 
-                                  $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course/register_enroll/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
+                                  $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course_public/register_enroll/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
 
                             }
 
@@ -570,15 +577,15 @@
 
            
 
-           //$('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course/register_enroll/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
+           //$('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course_public/register_enroll/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
 
-         $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course/class_member_check/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
+         $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course_public/class_member_check/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
 
            
 
             
 
-            $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course/referral_credentials1/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
+            $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course_public/referral_credentials1/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
 
             $('.course_name').text(course);
 

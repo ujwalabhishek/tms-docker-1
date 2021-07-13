@@ -9,7 +9,7 @@ class Payments extends CI_Controller {
             $this->load->model('meta_values_model');
         $this->load->helper('metavalues_helper');
         $this->load->model('meta_values');
-        $this->load->helper('pdf_reports_helper');
+        $this->load->helper('public_pdf_reports_helper');
         //getting all metadata values
         $this->meta_data = $this->meta_values_model->get_param_map();
     }
@@ -444,7 +444,7 @@ class Payments extends CI_Controller {
                 <td colspan="2"><font style="font-size:18px; font-weight:bold;">' . $tanant['invoice_name'] . '</font></td>
               </tr>
               <tr>
-                <td colspan="2"><strong>' . $tanant['invoice_name'] . ' No. </strong> ' . date('Y') . '' . $invoice['invoice_id'] . '<br><strong>' . $tanant['invoice_name'] . ' Date</strong>: ' . $date . '<br><br></td>
+                <td colspan="2"><strong>' . $tanant['invoice_name'] . ' No. </strong> ' . $invoice['invoice_id'] . '<br><strong>' . $tanant['invoice_name'] . ' Date</strong>: ' . $date . '<br><br></td>
               </tr>
               <tr>
                 <td colspan="2"><strong><u>Individual Details:</u></strong></td>

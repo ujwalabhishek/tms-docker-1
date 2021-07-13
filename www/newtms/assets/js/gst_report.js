@@ -341,8 +341,19 @@ $(document).ready(function() {
             }else{
                 $('#search_error').removeClass('error').text('');
         }///////added by shubhranshu to vaildate search operation////////////////
+        check_remove_id();//////added by shubhranshu//
         return retval;
     }
+    /////////////added by shubhranshu///////////////////////
+    function check_remove_id(){
+        
+        $trainee = $('#trainee').val();
+        if($trainee == ''){
+           $('#trainee_id').val(''); 
+        }
+        
+    }/////////////////////////////////////////////////////////////////////////////////////
+    
     function disp_err($id, $text) {
         $text = typeof $text !== 'undefined' ? $text : '[required]';
         $($id).addClass('error');

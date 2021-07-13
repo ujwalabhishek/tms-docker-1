@@ -1,10 +1,4 @@
-<?php  
-if (!defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * fetch the logged in user side menu
- * @return array
- */
- 
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
  function fetch_non_main_page_content() {
         $CI =& get_instance();
         $user = $CI->session->userdata('userDetails');
@@ -29,7 +23,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
                 'copyrighttext' => 'Copyright 2015',
                 'currency' => '',
                 'country' => '',
-                'applicationname' => 'TMS1.png',
+                'applicationname' => 'tms1.png',
                 'tenant_name' => $CI->session->userdata('userDetails')->user_name,
                 'website_url' => '',
                 'tenant_email_id' => $CI->session->userdata('userDetails')->registered_email_id
@@ -138,7 +132,7 @@ function fetch_tenant_details($tenant_id = NULL) {
         return FALSE;
     }
     $CI->db->select('ten.tenant_id, ten.logo, ten.copyrighttext, ten.currency, '
-            . 'ten.country,ten.applicationname, ten.tenant_name, ten.website_url, ten.tenant_email_id'); // ten.website_url added by dummy for changing home link on Nov 27 2014.
+            . 'ten.country,ten.applicationname, ten.tenant_name, ten.website_url, ten.tenant_email_id, ten.tenant_contact_num, ten.comp_reg_no'); // ten.website_url added by dummy for changing home link on Nov 27 2014.
     $CI->db->from('tenant_master ten');
     $CI->db->where('ten.tenant_id', $tenant_id);
     $CI->db->limit(1);
@@ -160,6 +154,14 @@ function database_connection_check_url(){
         $db_name=connect_primary('biipmico_tms_masterdata');
     }
     return $db_name;
+}
+
+/////added by shubhranshu for Data variable to be access session object
+function store_session_data(){
+    $CI =& get_instance();
+    $data['user'] = $CI->session->userdata('userDetails');
+    $CI->data = $data;
+    return;
 }
 
 function connect_primary($url_str){

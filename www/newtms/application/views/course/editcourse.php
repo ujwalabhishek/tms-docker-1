@@ -11,7 +11,7 @@ $CI->load->model('settings_model');
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-2.3.2.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.modal.js" type="text/javascript" charset="utf-8"></script>      
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/course_common.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/edit_course.js"></script>        
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/edit_course.js?0.00004"></script>        
 <div class="col-md-10">        
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Edit/ Deactivate</h2>        
     <div class="table-responsive">    
@@ -25,6 +25,7 @@ $CI->load->model('settings_model');
                     <td width="22%" class="td_heading">Search by Course Name:</td>
                     <td colspan="3">
                         <input size="50" type="text" name="search_course_name" id="search_course_name" value="<?php echo $this->input->post('search_course_name'); ?>" class='upper_case' />
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="search_course_name_err"></span>
                     </td>
                     <td width="13%" align="center"><button type="submit" title="Search" value="Search" onclick='validate_search();' class="btn btn-xs btn-primary no-mar">
@@ -236,6 +237,41 @@ $CI->load->model('settings_model');
 <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="td_heading">External Reference Number:<span class="required">*</span></td>
+                        <td>
+                            <?php
+                            $external_reference_number = array(
+                                'name' => 'external_reference_number',
+                                'id' => 'external_reference_number',
+                                'value' => $course_data->external_reference_number,
+                                'maxlength' => 50,
+                                'class' => 'upper_case',
+                                'style' => 'width:200px',
+                            );
+                            echo form_input($external_reference_number);
+                            ?>
+                            <div style='color:grey'>Always Starts with "TGS-"</div>
+                            <span id="external_reference_number_err"></span>
+                            <?php //echo form_error('external_reference_number', '<div class="error">', '</div>'); ?>
+                        </td>
+                        <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
+                        <td>
+                            <?php
+                            $crse_admin_email = array(
+                                'name' => 'crse_admin_email',
+                                'id' => 'crse_admin_email',
+                                'value' => $course_data->crse_admin_email,
+                                'maxlength' => 50,
+                                'class' => 'upper_case',
+                                'style' => 'width:200px',
+                            );
+                            echo form_input($crse_admin_email);
+                            ?>
+                            <span id="crse_admin_email_err"></span>
+                            <?php echo form_error('crse_admin_email', '<div class="error">', '</div>'); ?>
+                        </td>
+                    </tr>      
                     <tr>
                         <td class="td_heading">Course Competency Code:<span class="required">*</span></td>
                         <td>

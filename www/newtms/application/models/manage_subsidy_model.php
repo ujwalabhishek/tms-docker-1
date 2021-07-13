@@ -38,7 +38,7 @@ class Manage_Subsidy_Model extends CI_Model {
      * @param type $tenant_id
      * @return type
      */
-    public function get_tenant_details($tenant_id) {
+    public function get_tenant_details($tenant_id='') {
         $this->db->select('*')->from('tenant_master')->where('tenant_id <>', 'ISV01');
         if(!empty($tenant_id)) {
             $this->db->where('tenant_id', $tenant_id);

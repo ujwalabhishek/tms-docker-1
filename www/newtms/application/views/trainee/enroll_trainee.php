@@ -3,6 +3,10 @@ $this->load->helper('form');
 $this->load->helper('metavalues_helper');
 $this->load->helper('common_helper');
 $this->load->model('meta_values');
+//Added by abdulla
+$this->load->library('session');
+$trainee_id = $this->session->userdata('new_trainee_user_id');
+
 ?>
 <div class="col-md-10">
     <?php
@@ -67,12 +71,14 @@ $this->load->model('meta_values');
                                 </td>
                                 <td>
                                     <?php  
-                                    $this->load->model('Class_Trainee_Model', 'classtraineemodel');
+                                    $this->load->model('class_trainee_model', 'classtraineemodel');
                                     $res = $this->classtraineemodel->schedule_chck($data->class_id);
                                     if($res == 1)
                                     {
                                     $atr = 'id="enroll_trainee_form" name="enroll_trainee_form"';
-                                    echo form_open("trainee/enroll_trainee", $atr);
+                                    //Commented by abdulla
+									//echo form_open("trainee/enroll_trainee", $atr);
+									echo form_open("class_trainee/individual_enrollment_view_page", $atr);
                                     $data_course = array(
                                         'id' => 'course_id',
                                         'name' => 'course_id',
@@ -94,6 +100,21 @@ $this->load->model('meta_values');
                                         'type' => 'hidden',                                        
                                     );
                                     echo form_input($data_class_pymnt_enrol);
+									$data_user_id = array(
+										'value' => $trainee_id,
+										'id' => 'trainee_id',
+										'name' => 'trainee_id',
+										'type' => 'hidden',  
+										);
+                                    echo form_input($data_user_id); //Added by abdulla
+                                    $data_account_type = array(
+										'value' => 'individual',
+										'id' => 'account_type',
+										'name' => 'account_type',
+										'type' => 'hidden',
+										);
+                                    echo form_input($data_account_type); //Added by abdulla
+
                                     if($data->lock_status==1)
                                     {?>
                                         <button type="submit" class="btn btn-xs  no-mar" disabled="">
@@ -103,9 +124,10 @@ $this->load->model('meta_values');
                                     <?php 
                                     }else{
                                     ?>
+									<input type="hidden" class="privilage" name="privilage"  value="0" />
                                     <button type="submit" class="btn btn-xs btn-primary no-mar">
                                         <span class="glyphicon glyphicon-retweet"></span>
-                                        Enroll Now
+                                        Individual Enrollment
                                     </button>
                                        <?php }
                                     echo form_close();  
@@ -155,7 +177,7 @@ $this->load->model('meta_values');
         var self = $(this),
         button = self.find('input[type="submit"],button'),
         submitValue = button.data('submit-value');
-        button.attr('disabled','disabled').val('Please Wait..');
+        button.attr('disabled','disabled').html('Please Wait..');
         return true;
     }); //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM///////////////////////
 </script>

@@ -212,7 +212,7 @@
          {
             ?>
             <div>
-            <span class="pull-right">
+            <span class="pull-right" style='margin: 10px;'>
                 <a href="<?php echo site_url('/reports/certificates_dist_export_xls') . '?' . $_SERVER['QUERY_STRING']; ?>" class="small_text1"  style="cursor: default;">
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
                 <a href="<?php echo site_url('/reports/report_certificates_distribution_pdf') . '?' . $_SERVER['QUERY_STRING']; ?>" class="small_text1" style="cursor: default;">
@@ -228,17 +228,17 @@
         {
             ?>
             <div>
-            <span class="pull-right">
+            <span class="pull-right" style='margin: 10px;'>
                 
-                  <a href="<?php echo site_url('/reports/certificates_dist_export_xls') . '?' . $_SERVER['QUERY_STRING']; ?>" class="small_text1"  style="cursor: default;">
+                  <a href="javascript:void(0)" class="small_text1"  id="displayText" style="cursor: default;">
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
                 <a href="javascript:void(0)" class="small_text1" id="displayText1">
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>
-                    <div id="alertmsg" style="display: none;color:#ff0000;">Please Select One of the above filter to export PDF.</div>
+                    
             </span>
                   
             </div>
-          
+           <div id="alertmsg" style="padding:5px;clear:both;display:none" class='alert alert-danger'>Please Select One of the above filter to export PDF/XLS.</div>
         <?php
         }
          

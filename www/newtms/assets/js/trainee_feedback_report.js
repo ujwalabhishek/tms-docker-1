@@ -93,8 +93,11 @@ $(document).ready(function() {
         /* loader img skm start*/
         var ajax_image = "<img src='"+baseurl+"assets/images/q.gif' alt='Loading...' />";
         $('#tbl').hide();
+        $('#trainee_fdbk').hide();
         $('#skm').show();
+        $('#ssp').show();
         $('#skm').html(ajax_image);
+        $('#ssp').html(ajax_image);
         /* end*/
         
         reset_form();
@@ -157,8 +160,10 @@ $(document).ready(function() {
                         $('#COMYTCOM_EX').prop('disabled', false);
                         $('#COMYTCOM_2NYC').prop('disabled', false);
                         $('#COMYTCOM_ABS').prop('disabled', true);
-                         $('#skm').hide();
+                        $('#skm').hide();
                          $('#tbl').show();
+                          $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                     }
                     if(item.training_score == 'ABS')
                     {
@@ -169,7 +174,24 @@ $(document).ready(function() {
                         $('#COMYTCOM_NYC').prop('disabled', true);
                         $('#COMYTCOM_2NYC').prop('disabled', true);
                         $('#skm').hide();
-                        $('#tbl').show();
+                         $('#tbl').show();
+                          $('#ssp').hide();
+                        $('#trainee_fdbk').show();
+                    }
+                    
+                    if(item.training_score == 'ATR')
+                    {
+                      
+                        $('#COMYTCOM_C').prop('disabled', true);
+                        $('#COMYTCOM_ABS').prop('disabled', false);     
+                        $('#COMYTCOM_EX').prop('disabled', true);
+                        $('#COMYTCOM_NYC').prop('disabled', true);
+                        $('#COMYTCOM_2NYC').prop('disabled', true);
+                         $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                        $('#skm').hide();
+                         $('#tbl').show();
+                          $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                     }
                     if (item.training_score == null){
                         
@@ -179,7 +201,9 @@ $(document).ready(function() {
                         $('#COMYTCOM_NYC').prop('disabled', false);
                         $('#COMYTCOM_2NYC').prop('disabled', false);
                         $('#skm').hide();
-                        $('#tbl').show();
+                         $('#tbl').show();
+                          $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                     }
                   
                     if (item.feedback_question_id == 'COMYTCOM') {
@@ -202,9 +226,45 @@ $(document).ready(function() {
                         }   
                          $('#skm').hide();
                          $('#tbl').show();
+                          $('#ssp').hide();
+                        $('#trainee_fdbk').show();
                     }
                    
+                    ///////below code was added by shubhranshu for xp for attrition option start-----
+                if(item.training_score == "NYC" || item.training_score == "C" || item.training_score == "2NYC"){
+                    $('#COMYTCOM_ATTRITION').prop('disabled', true);
+                }else{
+                    if((res.att_percentage <= 0.50) && (res.att_percentage !==null) && (res.att_percentage >= 0)){
+                        $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                        $('#COMYTCOM_C').prop('disabled', true);
+                        $('#COMYTCOM_NYC').prop('disabled', true);     
+                        $('#COMYTCOM_EX').prop('disabled', true);
+                        $('#COMYTCOM_2NYC').prop('disabled', true);
+                        $('#COMYTCOM_ABS').prop('disabled', false);
+                    }else if((res.att_percentage < 0.75) && (res.att_percentage !==null) && (res.att_percentage >= 0)){
+                        $('#COMYTCOM_ATTRITION').prop('disabled', true);
+                        $('#COMYTCOM_C').prop('disabled', true);
+                        $('#COMYTCOM_NYC').prop('disabled', true);     
+                        $('#COMYTCOM_EX').prop('disabled', true);
+                        $('#COMYTCOM_2NYC').prop('disabled', true);
+                        $('#COMYTCOM_ABS').prop('disabled', false);
+                    }else if(res.att_percentage == null){
+                        $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                        $('#COMYTCOM_C').prop('disabled', true);
+                        $('#COMYTCOM_NYC').prop('disabled', true);     
+                        $('#COMYTCOM_EX').prop('disabled', true);
+                        $('#COMYTCOM_2NYC').prop('disabled', true);
+                        $('#COMYTCOM_ABS').prop('disabled', false);
+                    }else{
+                        $('#COMYTCOM_ATTRITION').prop('disabled', true);
+                    }
+                }
+                    ////below code was added by shubhranshu for xp for attrition option end-----
+                   
+                   
+                   
                 });
+                $('#rating').val('');
                 $.each(trainee, function(i, item) {
                     //$('#rating option[value="' + item.trainee_feedback_rating + '"]').attr("selected", "selected"); 
                     $('#rating').val(item.trainee_feedback_rating);

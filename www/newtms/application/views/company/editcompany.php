@@ -11,7 +11,9 @@
     ////added by shubhranshu for multiclick & validate input field
     function validate_search(){
         $compname=$('#edit_search_company_name').val();
-        if($compname == ''){
+        $compid=$('#edit_search_company_id').val();
+        
+        if($compname == '' || $compid == ''){
             disp_err('#edit_search_company_name', '[Select Company name from auto-complete]');
             return false;
         }else{
@@ -96,7 +98,7 @@
             var self = $(this),
             button = self.find('input[type="submit"],button'),
             submitValue = button.data('submit-value');
-            button.attr('disabled','disabled').val('Please Wait..');
+            button.attr('disabled','disabled').html('Please Wait..');
             return true;
            }else{
                return false;
@@ -124,6 +126,7 @@ if (!empty($tax_error)) {
                     <td>
                         <input size="100" type="text" name="edit_search_company_name" id="edit_search_company_name" value="<?php echo $this->input->post('edit_search_company_name'); ?>">              
                         <input type="hidden" name="edit_search_company_id" id="edit_search_company_id" value="<?php echo $this->input->post('edit_search_company_id'); ?>" />
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <div id="edit_search_company_name_err"></div>
                     </td>      
                     <td align="center">

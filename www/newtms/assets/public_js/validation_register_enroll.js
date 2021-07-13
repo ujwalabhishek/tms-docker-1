@@ -176,7 +176,7 @@ function check_taxcode_nric(e,id) {
           $course_id = $("#course_id").val();
           $class_id =  $("#class_id").val();
           $.ajax({
-                url: baseurl + "course/check_nric_no_cc",
+                url: baseurl + "course_public/check_nric_no_cc",
                 type: "post",
                 data: {taxcode_nric: e, course_id: $course_id, class_id: $class_id},
                 async: false,
@@ -214,7 +214,7 @@ function check_taxcode_nric(e,id) {
                     {
                         if($flag == 1)
                         {   
-                           $("#user_exists_class_msg").html('This Person is already enrolled in this class. Click <a href='+$baseurl+'course/course_class_schedule/'+$course_id+'>here</a> to go back to the Class list.');
+                           $("#user_exists_class_msg").html('This Person is already enrolled in this class. Click <a href='+$baseurl+'course_public/course_class_schedule/'+$course_id+'>here</a> to go back to the Class list.');
                            $("#user_class_msg").show();
                            $('#nric_found_msg').hide();
                            $('#flag_row_hide').hide(); // it hide relationship row
@@ -411,7 +411,7 @@ $("#NRIC").change(function() {
                         window.username = 'exists';
 //                        $("#" + id + "_err").text("[code exists!]").addClass('error');
 //                        $("#" + id).addClass('error');
-                        $("#NRIC_err").text("[code exists!]").addClass('error');
+                        $("#NRIC_err").text("[Already exists!]").addClass('error');
                         $("#NRIC").addClass('error');
                         $("#NRIC_msg").hide();
                         return false;
@@ -664,7 +664,7 @@ function check_captcha(e,id) {
     }  else {
         $.ajax({
           
-            url: baseurl + "course/captcha_match1",
+            url: baseurl + "course_public/captcha_match1",
             type: "post",
             data: "captcha="+e,
             
@@ -1684,3 +1684,55 @@ function remove_image() {
     $('#deleteimageno').attr('checked', 'checked');
 
 }
+
+$('.nric_submit').click(function(){
+    e = $('#taxcode_nric').val();
+    if(e == ''){
+        $('#taxcode_nric_err').text('[Required!]').addClass('error');
+    }else{
+        $('#taxcode_nric_err').text('').removeClass('error');
+       
+    
+        $course_id = $("#course_id").val();
+        $class_id =  $("#class_id").val();
+        e=$.trim(e);   
+        $taxcode = e;
+        $.ajax({
+                    url: baseurl + "course_public/check_nric_no_public",
+                    type: "post",
+                    data: {taxcode_nric: e, course_id: $course_id, class_id: $class_id},
+                    async: false,
+                    success: function(res)
+                    {
+                         $('.yescls').show();
+                         $('.nocls').html('Cancel');
+                        if(res == 0) // if trainee exists but his status is not active
+                        {
+                           document.trainee_form2.action = baseurl+"course_public/register_trainee/";
+                           $('#trainee_form2').submit();
+                        }else if(res == 1){
+                            var res = JSON.parse(res);
+                            $('#modal_nric_found').click();
+                            $('.msg').html("Oops! You are Already Enrolled for this class!");
+                            $('.suremsg').html("Kindly Choose Another Class To Enrol!");
+                            $('.yescls').hide();
+                            $('.nocls').html('Proceed!');
+                            $('#user_id_popup').val(res.user_id);
+                            $(".nocls").attr("href", baseurl)
+
+                        }else{
+                            var res = JSON.parse(res);
+                            $('#modal_nric_found').click();
+                            $('.msg').html("Please Confirm The "+res.first_name+" & ("+res.tax_code+") Are Accurate & Belongs to you.");
+                            $('.suremsg').html("Are you Sure! You want to Continue?");
+                            $('#user_id_popup').val(res.user_id);
+                        }
+
+                    },
+                    error:function(){
+                        return false;
+                    }
+                });
+                
+    }
+});

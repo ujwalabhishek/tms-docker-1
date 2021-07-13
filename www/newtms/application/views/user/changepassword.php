@@ -81,4 +81,4 @@
 <?php echo form_close(); ?>
 </div>
 <br><br>
-<script src="<?php echo base_url(); ?>assets/js/change_password.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/public_js/change_password.js?v=1" type="text/javascript"></script>

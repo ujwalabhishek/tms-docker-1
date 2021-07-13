@@ -115,7 +115,7 @@
         <br/>
         <span style="float:right;">
             <?php $query_string = (SANDBOX ? '?sandbox=1' : ''); ?>
-            <?php echo form_open("course/create_classenroll$query_string", "id='enroll_now'"); ?>
+            <?php echo form_open("course_public/create_classenroll$query_string", "id='enroll_now'"); ?>
             <?php echo form_hidden('user_id', $user_id) ?>
             <?php echo form_hidden('additional_remarks', $additional_remarks) ?>
             <?php echo form_hidden('class_id', $class_details->class_id) ?>
@@ -136,20 +136,188 @@
 
             <?php if ($class_details->class_pymnt_enrol == PAY_A_ENROL) { ?>
                 <button type="submit" name="submit" value="book_now" class="btn btn-sm btn-info" style="float: right;margin-left: 10px;"><strong>Book Now</strong></button>
+            <?php }else{ ?>
+                <center style='color:red'> Kindly Contact admin, If you wants to Book this class</center>
             <?php } ?>
-
 
 <!--                <button type="submit" name="submit" value="pay_now" class="btn btn-sm btn-info" style="float: right;"><strong>Pay Now</strong></button>-->
 
 
             <?php echo form_close(); ?>
         </span>
-    </div>
+    </div><br><br><br>
 </div>
+
+<!----------------modal by ssp start----------------------->
+<?php if (TENANT_ID == 'T02'){$show='display:block';}else{$show='display:none';}?>
+<div class="modal" id="ex1011" style="<?php //echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;height: auto;left: 0px !important;">
+<p>
+  <h2 class="panel_heading_style">Declaration</h2>
+    <!--Section: Contact v.2-->
+<section class="mb-4">
+
+    <!--Section heading-->
+    <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
+    <!--Section description-->
+    <p class="text-center alert alert-danger">You must fill this form to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of the company policy.</p>
+  
+    <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-12 mb-md-0 mb-5">
+           
+        
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-12">
+                        <div class="md-form mb-0">
+                            <label for="name" class="">Your Name<span style='color:red'>*</span></label>
+                            <input type="text" id="dec_name" class="form-control" value="<?php echo $trainee_data->first_name;?>" required>
+                            
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                </div>
+                
+                <div class="row">
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                             <label for="email" class="">Your Email</label>
+                             <input type="email" id="dec_email" class="form-control" pattern=".+@gmail.com" size="30" required>
+                           
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                             <label for="email" class="">Your Mobile<span style='color:red'>*</span></label>
+                            <input type="tel" id="dec_mobile" class="form-control" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                           
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                    
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <label for="subject" class="">Lesson Date:<span style='color:red'>*</span></label>
+                            <input type="date" id="dec_les_time" class="form-control" required>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-12">
+
+                        <div class="md-form">
+                            <label for="message">Do you have any relatives who returned from China on 15th January or later and is staying together? <span style='color:red'>*</span></label>
+                            <div><input type="radio" value="1" class="" name='dec_res' id='dec_res' style='height: 1.7em;width: 20px;' checked><b style='padding:2px'>Yes</b></div>
+                            <div><input type="radio" value="0" class="" name='dec_res' id='dec_res1' style='height: 1.7em;width: 20px;'><b style='padding:2px'>No</b> </div> 
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+
+                        <div class="md-form">
+                            <label for="message">Have you travelled overseas in the past 14 days? <span style='color:red'>*</span></label>
+                            <input type="text" id="dec_overseas" placeholder='Please State' class="form-control" required>
+                        </div>
+
+                    </div>
+                </div>
+                
+                 <div class="statuserr"></div>
+                 <br>
+                 <br>
+                <!--Grid row-->
+                 <div class="text-center">
+                    <a href='#' class="btn btn-primary" id='declarations' type='button'>Submit & Continue</a></div>
+                  
+           
+        </div>
+        <!--Grid column-->
+    </div>
+         
+</section>
+<!--Section: Contact v.2-->
+
+</p>
+</div>
+<!----------------modal by ssp end----------------------->
+
 <script type="text/javascript">
     $("#enroll_now").submit(function (event) {
         var addlRemark = $('#pers_additional_remarks').val();
         $( "input[name='additional_remarks']" ).val(addlRemark);
         return;
     });
+    
+    $(document).ready(function(){
+     //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
+     <?php if (TENANT_ID == 'T02'){?>
+    $('#declarations').click(function(){
+        $status = 1;
+        if($('#dec_name').val()==''){
+            $status=0;
+        }
+//        if($('#dec_email').val()==''){
+//            $status=0;
+//        }
+        if($('#dec_mobile').val()==''){
+            $status=0;
+        }
+        if($('#dec_overseas').val()==''){
+            $status=0;
+        }
+        if($('#dec_les_time').val()==''){
+            $status=0;
+        }
+        
+        if($status == 1){
+            $('#ex1011').hide();
+            $('.statuserr').html('');
+            $siteurl = '<?php echo site_url(); ?>';
+            $url = $siteurl + "class_trainee/save_declaration_trainee_data";
+            $.ajax({
+                url: $url,
+                type: "post",
+                dataType: "json",
+                data: {
+                    tax_code: '<?php echo $trainee_data->tax_code;?>',
+                    type:'PUBLIC_PORTAL',
+                    name: $('#dec_name').val(),  
+                    email: $('#dec_email').val(),
+                    mobile: $('#dec_mobile').val(),
+                    user_id:'<?php echo $user_id;?>',
+                    res: $('input[name="dec_res"]:checked').val(),
+                     class_id:'<?php echo $class_details->class_id;?>',
+                    lesson_timing: $('#dec_les_time').val(),
+                    overseas: $('#dec_overseas').val()
+                },
+                success: function(data) {
+                   if(data !='1'){
+                      $('#ex1011').show();  
+                  }
+                }
+            });
+        }else{
+             $('.statuserr').html('<span style="color:red">Please fill all the (*) Mark fields to Continue!</span>');
+        }
+    }); 
+     <?php } ?>
+ });
 </script>

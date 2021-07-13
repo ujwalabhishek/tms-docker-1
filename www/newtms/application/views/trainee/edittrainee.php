@@ -1,3 +1,4 @@
+
 <?php
 $this->load->helper('form');
 $this->load->helper('metavalues_helper');
@@ -11,8 +12,14 @@ if ($user->role_id == 'ADMN' || $user->role_id == 'COMPACT') {
 if (!empty($tax_error)) { 
     echo '<div class="error1">' . $tax_error . '</div>';
 }
+//Added by abdulla
+$tenant_id = $this->session->userdata('userDetails')->tenant_id;
 ?>
-
+<style>
+    .edu_level{
+        width:210px;
+    }
+</style>
 <div class="col-md-10">
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/trainee.png"/> Trainee - Edit/ Deactivate</h2>
     <div class="table-responsive">
@@ -60,6 +67,7 @@ if (!empty($tax_error)) {
                         $user_id = ($this->input->post('user_id'))? $this->input->post('user_id') :$this->input->post('userid');
                         echo form_hidden('user_id',$user_id,'user_id');
                         ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="search_by_name_autocomplete_err"></span>
                     </td>                    
                 </tr>
@@ -92,6 +100,7 @@ if (!empty($tax_error)) {
                         );
                         echo form_input($un);
                         ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="search_by_taxcode_autocomplete_err"></span>
                     </td> 
                      <td width="18%" align="center"><button type="submit" title="Search" value="Search" class="btn btn-xs btn-primary no-mar"><span class="glyphicon glyphicon-search"></span> Search</button></td>
@@ -172,7 +181,9 @@ if (!empty($tax_error)) {
                                     <SPAN id="SGP_ID" style="display:none;">
                                         <br /><br />
                                         <label id="SGP_ID_label"> NRIC Code : </label><span class="required">* </span>
+                                        
                                         <?php
+                                        form_hidden('NRIC_ID_MATCH', $trainee[userdetails]['tax_code']);
                                         $attr = array('name' => 'NRIC_ID', 'class' => 'upper_case alphanumeric', 'id' => 'NRIC_ID', 'onblur' => 'javascript:isunique_taxcode(this.value,this.id);', 'maxlength' => '50');
                                         echo form_input($attr, $trainee[userdetails]['tax_code']);
                                         ?>
@@ -256,7 +267,9 @@ if (!empty($tax_error)) {
                                 ?>
                                 <span id="pers_gender_err"></span>
                             </td>
-                            <td class="td_heading">Date of Birth:</td>
+                            <td class="td_heading">Date of Birth:							
+								<span class="required">*
+							</td>						
                             <td> <?php
                                 $dob_input = (empty($trainee[userdetails]['dob'])) ? '' : date('d-m-Y', strtotime($trainee[userdetails]['dob']));
                                 $dob = array(
@@ -514,7 +527,8 @@ if (!empty($tax_error)) {
                         </tr>
                         <tr>
                             <td class="td_heading">Email Id:
-                                <span id="span_email_id" class="required" style="display:<?php echo $display_email; ?>">*</span>
+                                <!--<span id="span_email_id" class="required" style="display:<?php //echo $display_email; ?>">*</span>-->
+								<span id="span_email_id" class="required">*</span>
                             </td>
                             <?php
                             $email = array(
@@ -602,20 +616,30 @@ if (!empty($tax_error)) {
                 <table class="table table-striped">
                     <tbody>
                         <tr>
-                            <td class="td_heading">Building/Street:</td>
-    <?php
-    $p_addr = array(
-        'name' => 'pers_personal_address',
-        'id' => 'pers_personal_address_bldg',
-        'maxlength' => '255',
-        'rows' => '1',
-        'cols' => '70',
-        'value' => $trainee[userdetails]['personal_address_bldg'],
-        'class' => 'upper_case'
-    );
-    ?>
-                            <td colspan="3"><?php echo form_textarea($p_addr); ?></td>
-                            <td class="td_heading">City:</td>
+                            <td class="td_heading">Building/Street:
+							<?php if($tenant_id=='T24'){ ?>
+								<span class="required">*
+							<?php } ?>
+							</td>
+								<?php
+								$p_addr = array(
+									'name' => 'pers_personal_address',
+									'id' => 'pers_personal_address_bldg',
+									'maxlength' => '255',
+									'rows' => '1',
+									'cols' => '70',
+									'value' => $trainee[userdetails]['personal_address_bldg'],
+									'class' => 'upper_case'
+								);
+								?>
+                            <td colspan="3"><?php echo form_textarea($p_addr); ?>
+								<span id="pers_personal_address_bldg_err"></span>
+							</td>
+                            <td class="td_heading">City:
+							<?php if($tenant_id=='T24'){ ?>
+								<span class="required">*
+							<?php } ?>
+							</td>
     <?php
     $city = array(
         'name' => 'pers_city',
@@ -630,7 +654,11 @@ if (!empty($tax_error)) {
                             </td>
                         </tr>
                         <tr>
-                            <td class="td_heading">Country:</td>
+                            <td class="td_heading">Country:
+							<?php if($tenant_id=='T24'){ ?>
+								<span class="required">*
+							<?php } ?>
+							</td>
                             <td width="25%">
     <?php
     $attr = 'id="pers_country"';
@@ -639,7 +667,11 @@ if (!empty($tax_error)) {
     ?>
                                 <span id="pers_country_err"></span>
                             </td>
-                            <td class="td_heading">State:</td>
+                            <td class="td_heading">State:
+							<?php if($tenant_id=='T24'){ ?>
+								<span class="required">*
+							<?php } ?>
+							</td>
                             <td>                           
     <?php
     $states = ($trainee[userdetails]['personal_address_country']) ? $this->traineemodel->get_states($trainee[userdetails]['personal_address_country']) : 'Select';
@@ -651,9 +683,13 @@ if (!empty($tax_error)) {
     echo form_dropdown('pers_states', $state_options, $trainee[userdetails]['personal_address_state'], $attr_js);
     echo form_hidden('current_pers_states', $trainee[userdetails]['personal_address_state'], 'current_pers_states');
     ?>                        
-                            </td> 
-                    <span id="pers_states_err"></span>
-                    <td class="td_heading">Postal Code:</td>
+                            <span id="pers_states_err"></span></td> 
+                    
+                    <td class="td_heading">Postal Code:
+					<?php if($tenant_id=='T24'){ ?>
+						<span class="required">*
+					<?php } ?>
+					</td>
     <?php
     $zip = array(
         'name' => 'personal_address_zip',
@@ -1602,22 +1638,22 @@ endif;
             if ($("#bypassemail_1").is(":checked")) {
                 var email = $.trim($('#user_registered_email').val());
                 if (email == '') {
-                    $("#user_registered_email_err").text("").removeClass('error');
-                    $("#user_registered_email").removeClass('error');
-                    $("#pers_conf_email_err").text("").removeClass('error');
-                    $("#pers_conf_email").removeClass('error');
+                    //$("#user_registered_email_err").text("").removeClass('error');
+                    //$("#user_registered_email").removeClass('error');
+                    //$("#pers_conf_email_err").text("").removeClass('error');
+                    //$("#pers_conf_email").removeClass('error');
                 }
                 $('#span_activate_user').css("display", "");
                 $('#BPEMAC_content').css("display", "");
                 $('#EMACRQ_content').css("display", "none");
-                $("#span_email_id").css("display", "none");
-                $("#span_confirm_email_id").css("display", "none");
+                //$("#span_email_id").css("display", "none");
+                //$("#span_confirm_email_id").css("display", "none");
             } else {
                 $('#span_activate_user').css("display", "none");
                 $('#BPEMAC_content').css("display", "none");
                 $('#EMACRQ_content').css("display", "");
-                $("#span_email_id").css("display", "");
-                $("#span_confirm_email_id").css("display", "");
+                //$("#span_email_id").css("display", "");
+                //$("#span_confirm_email_id").css("display", "");
             }
             return false;
         });
@@ -1772,6 +1808,8 @@ endif;
                 $('#SGP_OTHERS_label').text('OTHERS :');
                 $('#SGP_ID_label').text('');
                 $('#SGP_ID_label').text('OTHERS :');
+                $('#NRIC_OTHER option[value=NOTAXCODE]').attr('selected','selected');////added by shubhranshu
+                $("#SGP_ID").hide();
             } else {
                 $('#NRIC_OTHER_err').text('').removeClass('error');
                 $('#NRIC_OTHER').removeClass('error');
@@ -1976,15 +2014,33 @@ endif;
                 $("#pers_gender").removeClass('error');
             }
 
-            pers_dob = $.trim($("#pers_dob").val());            
-            if (valid_date_field(pers_dob) == false && pers_dob.trim().length > 0) {
-                $("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
-                $("#pers_dob").removeClass('error');
-                retVal = false;
-            } else {
-                $("#pers_dob_err").text("").removeClass('error');
-                $("#pers_dob").removeClass('error');
-            }
+//Added by abdulla
+$tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>";
+
+			//if($tenant_id == 'T24') {
+				pers_dob = $.trim($("#pers_dob").val());            
+				if (valid_date_field(pers_dob) == false && pers_dob.trim().length > 0) {
+					$("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
+					$("#pers_dob").removeClass('error');
+					retVal = false;
+				} else if(pers_dob == "") {
+					$("#pers_dob_err").text("[required]").addClass('error');
+					$("#pers_dob").addClass('error');
+				} else {
+					$("#pers_dob_err").text("").removeClass('error');
+					$("#pers_dob").removeClass('error');
+				}
+			//} else {
+			//	pers_dob = $.trim($("#pers_dob").val());            
+			//	if (valid_date_field(pers_dob) == false && pers_dob.trim().length > 0) {
+			//		$("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
+			//		$("#pers_dob").removeClass('error');
+			//		retVal = false;
+			//	} else {
+			//		$("#pers_dob_err").text("").removeClass('error');
+			//		$("#pers_dob").removeClass('error');
+			//	}
+			//}
 
             pers_contact_number = $.trim($("#pers_contact_number").val());
             if (pers_contact_number == "") {
@@ -2044,7 +2100,7 @@ endif;
             }
 
             user_registered_email = $.trim($("#user_registered_email").val());
-            if ($("#bypassemail_2").is(":checked")) {
+            //if ($("#bypassemail_2").is(":checked")) {
                 if (user_registered_email == "") {
                     $("#user_registered_email_err").text("[required]").addClass('error');
                     $("#user_registered_email").addClass('error');
@@ -2057,12 +2113,12 @@ endif;
                     $("#pers_conf_email_err").text("").removeClass('error');
                     $("#pers_conf_email").removeClass('error');
                 }
-            } else {
-                $("#user_registered_email_err").text("").removeClass('error');
-                $("#user_registered_email").removeClass('error');
-                $("#pers_conf_email_err").text("").removeClass('error');
-                $("#pers_conf_email").removeClass('error');
-            }            
+            //} else {
+            //    $("#user_registered_email_err").text("").removeClass('error');
+            //    $("#user_registered_email").removeClass('error');
+            //    $("#pers_conf_email_err").text("").removeClass('error');
+            //    $("#pers_conf_email").removeClass('error');
+            //}            
 
             pers_conf_email = $.trim($("#pers_conf_email").val());
             if (pers_conf_email != user_registered_email) {
@@ -2121,33 +2177,95 @@ endif;
                 $("#highest_educ_level").removeClass('error');
             }
 
-            var pers_city = $.trim($("#pers_city").val());
-            if (pers_city != '') {
-                if (valid_name(pers_city) == false) {
-                    $("#pers_city_err").text("[invalid]").addClass('error');
-                    $("#pers_city").addClass('error');
-                } else {
-                    $("#pers_city_err").text("").removeClass('error');
-                    $("#pers_city").removeClass('error');
-                }
-            } else {
-                $("#pers_city_err").text("").removeClass('error');
-                $("#pers_city").removeClass('error');
-            }
+			if($tenant_id == 'T24') {
+				pers_states = $.trim($("#pers_states").val());
+				if (pers_states == "") {
+					$("#pers_states_err").text("[required]").addClass('error');
+					$("#pers_states").addClass('error');
+					retVal = false;
+				} else {
+					$("#pers_states_err").text("").removeClass('error');
+					$("#pers_states").removeClass('error');
+				}			
+			}
 
-            var pers_zipcode = $.trim($("#pers_zipcode").val());
-            if (pers_zipcode != '') {
-                if (valid_zip(pers_zipcode) == false) {
-                    $("#pers_zipcode_err").text("[invalid]").addClass('error');
-                    $("#pers_zipcode").addClass('error');
-                } else {
-                    $("#pers_zipcode_err").text("").removeClass('error');
-                    $("#pers_zipcode").removeClass('error');
-                }
-            } else {
-                $("#pers_zipcode_err").text("").removeClass('error');
-                $("#pers_zipcode").removeClass('error');
-            }
+			if($tenant_id == 'T24') {
+				var pers_city = $.trim($("#pers_city").val());
+				if (pers_city != '') {
+					if (valid_name(pers_city) == false) {
+						$("#pers_city_err").text("[invalid]").addClass('error');
+						$("#pers_city").addClass('error');
+					} else {
+						$("#pers_city_err").text("").removeClass('error');
+						$("#pers_city").removeClass('error');
+					}
+				} else if(pers_city == '') {
+					$("#pers_city_err").text("[required]").addClass('error');
+					$("#pers_city").addClass('error');			
+				} else {
+					$("#pers_city_err").text("").removeClass('error');
+					$("#pers_city").removeClass('error');
+				}				
+			} else {
+				var pers_city = $.trim($("#pers_city").val());
+				if (pers_city != '') {
+					if (valid_name(pers_city) == false) {
+						$("#pers_city_err").text("[invalid]").addClass('error');
+						$("#pers_city").addClass('error');
+					} else {
+						$("#pers_city_err").text("").removeClass('error');
+						$("#pers_city").removeClass('error');
+					}
+				} else {
+					$("#pers_city_err").text("").removeClass('error');
+					$("#pers_city").removeClass('error');
+				}			
+			}
+			
+			if($tenant_id == 'T24') {
+				pers_personal_address_bldg = $.trim($("#pers_personal_address_bldg").val());
+				if (pers_personal_address_bldg == "") {
+					$("#pers_personal_address_bldg_err").text("[required]").addClass('error');
+					$("#pers_personal_address_bldg").addClass('error');
+				} else {
+					$("#pers_personal_address_bldg_err").text("").removeClass('error');
+					$("#pers_personal_address_bldg").removeClass('error');
+				}
+			}
+
+			if($tenant_id == 'T24') {
+				var pers_zipcode = $.trim($("#pers_zipcode").val());
+				if (pers_zipcode != '') {
+					if (valid_zip(pers_zipcode) == false) {
+						$("#pers_zipcode_err").text("[invalid]").addClass('error');
+						$("#pers_zipcode").addClass('error');
+					} else {
+						$("#pers_zipcode_err").text("").removeClass('error');
+						$("#pers_zipcode").removeClass('error');
+					}
+				} else if(pers_zipcode == '') {
+					$("#pers_zipcode_err").text("[required]").addClass('error');
+					$("#pers_zipcode").addClass('error');
+				} else {
+					$("#pers_zipcode_err").text("").removeClass('error');
+					$("#pers_zipcode").removeClass('error');
+				}
+			} else {
+				var pers_zipcode = $.trim($("#pers_zipcode").val());
+				if (pers_zipcode != '') {
+					if (valid_zip(pers_zipcode) == false) {
+						$("#pers_zipcode_err").text("[invalid]").addClass('error');
+						$("#pers_zipcode").addClass('error');
+					} else {
+						$("#pers_zipcode_err").text("").removeClass('error');
+						$("#pers_zipcode").removeClass('error');
+					}
+				} else {
+					$("#pers_zipcode_err").text("").removeClass('error');
+					$("#pers_zipcode").removeClass('error');
+				}
+			}
+			            
             if ($('#trainee_validation_div span').hasClass('error')) {
                 retVal = false;
             }

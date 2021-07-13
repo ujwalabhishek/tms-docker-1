@@ -4,6 +4,7 @@
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
     $role_id = "<?php echo $this->session->userdata('userDetails')->role_id;?>";//added by shubhranshu
+    
 $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/addnewenroll.js"></script>
@@ -15,6 +16,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
         <?php
         $atr = 'id="search_form" name="search_form" method="post" onkeypress="return event.keyCode != 13;"';
         echo form_open("class_trainee/enrollment_view_page", $atr);
+         $tenant_id = $this->session->userdata('userDetails')->tenant_id;//added by shubhranshu
         ?>  
         <table class="table table-striped">
             <tbody>
@@ -89,6 +91,10 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                             <label style="color:blue;font-weight:bold">Remove individual enrollment</label>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <?php
+                        
+                        if((TENANT_ID == 'T20') || (TENANT_ID == 'T17')){
+                            
+                        }else{
                             $data=array(
                                     'id'=>'move_enrollment',
                                     'class'=>'enrollment_type',
@@ -97,10 +103,12 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                                     'checked'=>FALSE
                                     );
                             echo form_radio($data);
+                        
                         ?>
                          &nbsp;&nbsp;
                         <label style="color:blue;font-weight: bold">Move Trainee from one company Invoice to other company invoice</label>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <?php }?>
                     </td>
                 </tr>
                 <?php } ?>
@@ -142,7 +150,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                              $comp[$company['company_id']] = $company['company_name'];
                        
                         endforeach;
-                        $attr_js = 'id="companies" ';
+                        $attr_js = 'id="companies" style="width:50%"';
                         echo form_dropdown('comp', $comp, $this->input->get('companies'), $attr_js);
                         
                     
@@ -320,7 +328,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                     </td>
                 </tr>
                  <tr class="add_inv1" style="display: none;">
-                    <td colspan="3"><span><font color="red">[The Invoice for this company is already exist, Please enroll by using</font>  <a href="#" class="add_inv" style="display: none;" >Add enrollments to Company invoie</a><font color="red">.]</font></span></td>
+                    <td colspan="3"><span><font color="red">[The invoice for this company is already exist, Please enroll by using</font>  <a href="#" class="add_inv" style="display: none;" >Add enrollments to Company invoice</a><font color="red">.]</font></span></td>
                 </tr>
                 <tr class="new_span">
                     <td colspan="4" class="no-bg">

@@ -84,6 +84,15 @@ $role_array = array("COMPACT");
                                 }
                                 ?></label></td>
                     </tr>
+                   
+                    <tr>
+                        <td class="td_heading">TPGateway Course Run ID:</td>
+                        <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_course_run_id; ?></label></td>
+                    </tr>
+                    <tr>
+                        <td class="td_heading">TPGateway QR-Code Link:</td>
+                        <td colspan="5"><label class="label_font" id='crs_run_id'><a href='<?php echo $class->tpg_qr_code; ?>' target="_blank"><?php echo $class->tpg_qr_code; ?></a></label></td>
+                    </tr>
                     <tr>
                         <td class="td_heading">Class Language:</td>
                         <td ><?php echo rtrim($ClassLang, ', '); ?></td>
@@ -163,7 +172,7 @@ $role_array = array("COMPACT");
     <div style="clear:both;"></div><br>
     <div class="row marketing">
         <div class="col-lg-6">
-          <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule</h4> 
+           <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule <a class="small_text" rel="modal:open" href="#view_ssg_session_modal" id='view_ssg_session' style='float:right;cursor:pointer;color:blue;'>View TPG Sessions</a></h4> 
             <p>
             <div class="scroll_schedule">
                 <div class="table-responsive">
@@ -282,3 +291,51 @@ $role_array = array("COMPACT");
         </div>
     </div>
 </div>
+
+
+<div class="modal1_0001" id="view_ssg_session_modal" style="display:none;height:227px;min-height: 200px;">
+    <h2 class="panel_heading_style">View TPG Live Sessions</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="td_heading">SL.NO</th>
+                <th class="td_heading">Session ID</th>
+                <th class="td_heading">Start Date</th>
+                <th class="td_heading">End Date</th>
+                <th class="td_heading">Start Time</th>
+                <th class="td_heading">End Time</th>
+                <th class="td_heading">Attendance Taken</th>
+            </tr>
+        </thead>
+        <tbody id='ssg_sess'>
+            
+            
+        </tbody>
+    </table>
+</div>
+
+<script>
+ $(document).ready(function() {
+      $siteurl = '<?php echo site_url(); ?>';
+       $('#view_ssg_session').click(function(){
+           $('#ssg_sess').html('');
+          $crs_run_id= $('#crs_run_id').html();
+          $class_id= '<?php echo $classid;?>';
+           $.ajax({
+            type: 'post',
+            url: $siteurl + 'classes/get_ssg_session',
+            data: {crs_run_id: $crs_run_id,class_id:$class_id},
+            async: false,
+            success: function(res) {
+                json_data = $.parseJSON(res);
+                if (json_data != '') {
+                   $.each(json_data.data.sessions, function(i, item) {
+                       $('#ssg_sess').append('<tr><td>'+(i+1)+'</td><td>'+item.id+'</td><td>'+item.startDate+'</td><td>'+item.endDate+'</td><td>'+item.startTime+'</td><td>'+item.endTime+'</td><td>'+item.attendanceTaken+'</td></tr>');
+                    });
+                }
+            }
+        });
+       });
+    });    
+
+</script>

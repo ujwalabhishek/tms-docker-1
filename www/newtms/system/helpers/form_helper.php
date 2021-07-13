@@ -168,55 +168,80 @@ if ( ! function_exists('form_open_multipart'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('form_hidden'))
+//if ( ! function_exists('form_hidden'))
+//{
+//	/**
+//	 * Hidden Input Field
+//	 *
+//	 * Generates hidden fields. You can pass a simple key/value string or
+//	 * an associative array with multiple values.
+//	 *
+//	 * @param	mixed	$name		Field name
+//	 * @param	string	$value		Field value
+//	 * @param	bool	$recursing
+//	 * @return	string
+//	 */
+//	function form_hidden($name, $value = '', $recursing = FALSE)
+//	{
+//		static $form;
+//
+//		if ($recursing === FALSE)
+//		{
+//			$form = "\n";
+//		}
+//
+//		if (is_array($name))
+//		{
+//			foreach ($name as $key => $val)
+//			{
+//				form_hidden($key, $val, TRUE);
+//			}
+//
+//			return $form;
+//		}
+//
+//		if ( ! is_array($value))
+//		{
+//			$form .= '<input type="hidden" name="'.$name.'" value="'.html_escape($value)."\" />\n";
+//		}
+//		else
+//		{
+//			foreach ($value as $k => $v)
+//			{
+//				$k = is_int($k) ? '' : $k;
+//				form_hidden($name.'['.$k.']', $v, TRUE);
+//			}
+//		}
+//
+//		return $form;
+//	}
+//}
+/*
+* Author : shubhranshu
+* 20-09-2019
+* Rewritten the above function so that the hidden fields can accept the id parameter too.
+*/
+ if ( ! function_exists('form_hidden'))
 {
-	/**
-	 * Hidden Input Field
-	 *
-	 * Generates hidden fields. You can pass a simple key/value string or
-	 * an associative array with multiple values.
-	 *
-	 * @param	mixed	$name		Field name
-	 * @param	string	$value		Field value
-	 * @param	bool	$recursing
-	 * @return	string
-	 */
-	function form_hidden($name, $value = '', $recursing = FALSE)
-	{
-		static $form;
+    function form_hidden($name, $value = '', $id = false)
+    {
+        if ( ! is_array($name))
+        {
+            return '<input type="hidden" id="'.($id ? $id : $name).'" name="'.$name.'" value="'.form_prep($value).'" />';
+        }
 
-		if ($recursing === FALSE)
-		{
-			$form = "\n";
-		}
+        $form = '';
 
-		if (is_array($name))
-		{
-			foreach ($name as $key => $val)
-			{
-				form_hidden($key, $val, TRUE);
-			}
+        foreach ($name as $name => $value)
+        {
+            $form .= "\n";
+            $form .= '<input type="hidden"  id="'.($id ? $id : $name).'" name="'.$name.'" value="'.form_prep($value).'" />';
+        }
 
-			return $form;
-		}
-
-		if ( ! is_array($value))
-		{
-			$form .= '<input type="hidden" name="'.$name.'" value="'.html_escape($value)."\" />\n";
-		}
-		else
-		{
-			foreach ($value as $k => $v)
-			{
-				$k = is_int($k) ? '' : $k;
-				form_hidden($name.'['.$k.']', $v, TRUE);
-			}
-		}
-
-		return $form;
-	}
-}
-
+        return $form;
+    }
+}  
+// ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 
 if ( ! function_exists('form_input'))

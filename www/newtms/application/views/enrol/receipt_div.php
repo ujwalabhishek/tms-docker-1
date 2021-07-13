@@ -48,7 +48,7 @@
         </tbody>
     </table>
     <br>        <span style="float:right;margin-right:10px;">
-        <a href="<?php echo base_url() . 'course/payment_receipt_pdf/' . $trainee_id . '/' . $class_id ?>">
+        <a href="<?php echo base_url() . 'course_public/payment_receipt_pdf/' . $trainee_id . '/' . $class_id ?>">
             <button type="button"  class="btn btn-sm btn-info" style="float: right;"><strong>Print</strong></button>
         </a>
     </span>

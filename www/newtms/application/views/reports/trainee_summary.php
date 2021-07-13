@@ -1,5 +1,20 @@
-<?php $check_startdate = $this->input->get('start_date'); ?>
+<?php $check_startdate = $this->input->get('start_date'); 
+?>
 <script>
+    //////below code added by shubhranshu
+    $(document).ready(function() {
+        $train = '<?php echo $this->input->get('trainee');?>';
+        $invoice11 = '<?php echo $this->input->get('invoice');?>';
+        if($train !=''){
+            $('#invoice').attr('disabled', 'disabled');
+        }else if($invoice11 !=''){
+            $('#trainee').attr('disabled', 'disabled');
+        }else{
+            $('#invoice').attr('disabled', 'disabled');
+        }  
+    });
+    /////////////////////////////end////////////////
+    
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
     $get_startdate = '<?php echo $start_date; ?>';
@@ -64,6 +79,7 @@
                         echo form_input($data);
                         ?>
                         <span id="trainee_err"></span>
+                        <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                     </td>                
                        <td class="td_heading">&nbsp;&nbsp;
                       <?php
@@ -95,7 +111,7 @@
                         echo form_input($data1);
                         ?>
                         <span id="invoice_err"></span>
-                        <div style='color:blue; font-size:10px;'>Enter minimum of 5 characters to search</div>
+                        <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                     </td>   
                     <td class="td_heading">
                     <input type="hidden"  name="start_date" id="start_date" placeholder="dd/mm/yyyy" value="<?php echo $this->input->get('start_date'); ?>">
@@ -158,7 +174,7 @@
                 $pageurl = $controllerurl;
                 ?>
                 <tr>
-                    <th width="10%" class="th_header"><a style="color:#000000;" href="<?php  echo base_url().$pageurl. "?" . $sort_link."&f=crse.crse_name&o=" .$ancher; ?>" >NRCI</a></th>
+                    <th width="10%" class="th_header"><a style="color:#000000;" href="<?php  echo base_url().$pageurl. "?" . $sort_link."&f=crse.crse_name&o=" .$ancher; ?>" >NRIC</a></th>
                     <th width="15%" class="th_header"><a style="color:#000000;" href="<?php  echo base_url().$pageurl. "?" . $sort_link."&f=pers.first_name&o=" .$ancher; ?>" >Name</a></th>
                     <th width="15%" class="th_header"><a style="color:#000000;" href="<?php  echo base_url().$pageurl. "?" . $sort_link."&f=cls.class_name&o=" .$ancher; ?>" >Company</a></th>
                     <th width="10%" class="th_header"><a style="color:#000000;" href="<?php  echo base_url().$pageurl. "?" . $sort_link."&f=usrs.tax_code&o=" .$ancher; ?>" >Class</a></th>
@@ -243,6 +259,7 @@
                 $('#search_error').removeClass('error').text('');
         }
         if(retval){
+            check_remove_id();
            var self = $(this),
             button = self.find('input[type="submit"],button');
             button.attr('disabled','disabled').html('Please Wait..');
@@ -253,5 +270,18 @@
         ///////added by shubhranshu to prevent multiple clicks////////////////
 
     });
+    /////////////added by shubhranshu///////////////////////
+    function check_remove_id(){
+        
+        $invoice = $('#invoice').val();
+        $trainee_name = $('#trainee').val();
+        
+        if($invoice == ''){
+           $('#invoice_id').val(''); 
+        }
+        if($trainee_name == ''){
+           $('#trainee_id').val(''); 
+        }
+    }/////////////////////////////////////////////////////////////////////////////////////
 </script>
 

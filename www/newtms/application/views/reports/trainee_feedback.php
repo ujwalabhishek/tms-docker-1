@@ -8,13 +8,15 @@ $class_id = set_value('class_id');
 if (empty($class_id)) {
     $class_id = key($classes);
 }
+
+
 ?>
 <script type="text/javascript">
     var SITE_URL = '<?php echo site_url(); ?>';
     var class_id = <?php echo $class_id ?>;
     var course_id = <?php echo $course_id ?>;
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/trainee_feedback_report.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/trainee_feedback_report.js?0.00000001"></script>
 
 <div class="col-md-10">
     <?php
@@ -146,6 +148,8 @@ if (empty($class_id)) {
                                             echo "<label style='color:red'>Absent</label>";
                                         } else if ($data['training_score'] == '2NYC') {
                                             echo "<label style='color:red'>Twice Not Competent</label>";
+                                        }else if ($data['training_score'] == 'ATR') {////added by shubhranshu for attrition
+                                            echo "<label style='color:red'>Attrition</label>";
                                         } else {
                                             echo "<label>Rating not available</label>";
                                         }
@@ -417,11 +421,21 @@ echo form_open("reports/trainee_feedback", $atr);
                                     'id' => 'COMYTCOM_2NYC',
                                     'value' => '2NYC',
                                 );
+                                $COMYTCOM_ATTRITION = array(
+                                    'name' => 'COMYTCOM',
+                                    'id' => 'COMYTCOM_ATTRITION',
+                                    'value' => 'ATR',
+                                );
                                 ?>              
                                 <?php echo form_radio($COMYTCOM_C); ?> Competent <br/>
                                 <?php echo form_radio($COMYTCOM_NYC); ?> Not Yet Competent <br/>                    
                                 <?php echo form_radio($COMYTCOM_EX); ?> Exempted<br/>                    
                                 <?php echo form_radio($COMYTCOM_ABS); ?> Absent<br/>
+                                <?php 
+                                if(TENANT_ID == 'T02'){/////below code was added by shubhranshu for xp for attrition option start-----
+                                    echo form_radio($COMYTCOM_ATTRITION); echo "Attrition <br/>";
+                                }
+                                ?> 
                                 <?php echo form_radio($COMYTCOM_2NYC); ?> Twice Not Competent                    
                             </td>
                         </tr>
@@ -478,7 +492,149 @@ echo form_open("reports/trainee_feedback", $atr);
 <?php
 echo form_close();
 ?>
-
+<?php
+///added by shubhranshu to display the trainee form for wablab
+if($tenant_id == 'T20' || $tenant_id == 'T17'){
+?>
+<div class="modal1_trainee_feedback" id="ex6">
+    <?php
+    $atr = 'id="feedbackForm" name="validate_form"';
+    echo form_open('reports/trainee_feedback', $atr);
+    ?> 
+    <p>
+    <h2 class="panel_heading_style">Trainee Feedback Form <span class="required_i">(5. Strongly agree, 4. Agree, 3. Neutral, 2. Disagree,  1. Strongly disagree )</span></h2>
+   <center> <span id="ssp" style="display:none"></span></center>
+    <div id ="trainee_fdbk">
+    <table class="table table-striped">
+        <?php
+        $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
+        ?>
+        <tbody>
+            
+            <tr>
+                <td colspan="2" class="td_heading"><strong><u><?php echo  $feedback['FDBCK01']['category_name'] ?></u></strong> </td>
+            </tr>
+            <tr>     
+                <td colspan="2">1.<?php echo $feedback['Q01']['category_name']; ?>
+                    <?php
+                    $atr = 'id="Q01" class="feed"';
+                    echo form_dropdown('Q01', $options, '', $atr);
+                    ?>
+                </td>
+            </tr>
+            <tr>     
+                <td colspan="2">2.<?php echo $feedback['Q02']['category_name']; ?>
+                    <?php
+                    $atr = 'id="Q02" class="feed"';
+                    echo form_dropdown('Q02', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">3.<?php echo $feedback['Q03']['category_name']; ?>
+                    <?php
+                    $atr = 'id="Q03" class="feed"';
+                    echo form_dropdown('Q03', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">4.<?php echo $feedback['Q04']['category_name']; ?>
+                    <?php
+                    $atr = 'id="Q04" class="feed"';
+                    echo form_dropdown('Q04', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+          
+            <tr>
+                <td colspan="2" class="td_heading"><strong><u> <?php echo $feedback['FDBCK02']['category_name'] ?></u></strong> </td>
+            </tr>
+              <tr>
+                <td colspan="2">5.<?php echo $feedback['Q05']['category_name']; ?>
+                    <?php
+                    $atr = 'id="Q05" class="feed"';
+                    echo form_dropdown('Q05', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">6.<?php echo $feedback['Q06']['category_name']; ?>
+                    <?php
+                    $atr = 'id="Q06" class="feed"';
+                    echo form_dropdown('Q06', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">7.<?php echo $feedback['Q07']['category_name']; ?>:
+                    <?php
+                    $atr = 'id="Q07" class="feed"';
+                    echo form_dropdown('Q07', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">8.<?php echo $feedback['Q08']['category_name']; ?>:
+                    <?php
+                    $atr = 'id="Q08" class="feed"';
+                    echo form_dropdown('Q08', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+          
+            <tr>
+                <td colspan="2" class="td_heading"><strong> <u><?php echo $feedback['FDBCK03']['category_name'] ?></u></strong> </td>
+            </tr>
+            <tr>
+                <td colspan="2">9.<?php echo $feedback['Q09']['category_name']; ?>:
+                    <?php
+                    $atr = 'id="Q09" class="feed"';
+                    echo form_dropdown('Q09', $options, '', $atr);
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">10.<?php echo $feedback['Q10']['category_name']; ?>:
+                    <?php
+                    $atr = 'id="Q10" class="feed"';
+                    echo form_dropdown('Q10', $options, '', $atr);
+                    ?> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><strong>Your satisfaction rating of the training program:</strong>
+                    <?php 
+//                     $atr = 'id="rating"';
+//                    echo form_dropdown('rating', $options,'',$atr); ?>
+                    <input type='text' name="rating" id='rating'  readonly/>
+            </tr>
+            <tr>
+                <td class="td_heading">11. Other comments thal you feel will help improve the course:</td>
+                <td>                   
+                    <textarea rows="5" cols="100" name="remarks" id="remarks" class="upper_case" maxlength="500"></textarea>                                   
+                    <?php
+                    echo form_hidden('trainee_id', "", 'trainee_id');
+                    echo form_hidden('type', "trainee", 'type');
+                    echo form_hidden('course_id', $course_id, 'course_id');
+                    echo form_hidden('class_id', $class_id, 'class_id');
+                    ?>                    
+                    <span style="float:right;">
+                        <button class="btn btn-primary" type="submit" id="save">Save</button>
+                        <a href="#" rel="modal:close">
+                            <button class="btn btn-primary" type="button">Close</button>
+                        </a>
+                    </span>
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+<?php form_close(); ?>
+</p>
+</div>
+<?php }else{?>
 <div class="modal1_trainee_feedback" id="ex6">
     <?php
     $atr = 'id="feedbackForm" name="validate_form"';
@@ -486,6 +642,8 @@ echo form_close();
     ?> 
     <p>
     <h2 class="panel_heading_style">Trainee Feedback Form <span class="required_i">(1. Strongly disagree, 2. Disagree, 3. Neutral, 4. Agree, 5. Strongly agree)</span></h2>
+    <center> <span id="ssp" style="display:none"></span></center>
+    <div id ="trainee_fdbk">
     <table class="table table-striped">
         <?php
         $options = array('' => 'Select', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5');
@@ -649,11 +807,11 @@ echo form_close();
             </tr>
         </tbody>
     </table>
-
+    </div>
 <?php form_close(); ?>
 </p>
 </div>
-<?php form_close(); ?>
+<?php } form_close(); ?>
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>-->
  
 <script>

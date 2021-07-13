@@ -1,4 +1,9 @@
 <?php $check_startdate = $this->input->get('start_date'); ?>
+<style>
+    #courseId{
+        width:91%;
+    }
+</style>
 <script>
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
@@ -6,7 +11,7 @@
     $get_enddate = $max_date = '<?php echo $end_date; ?>';
     $check_startdate = '<?php echo $check_startdate; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/reportcertificates.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/reportcertificates.js?version=1"></script>
 <div class="col-md-10">
     <h2 class="panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> Reports - Certificates Report</h2>
     <h5 class="sub_panel_heading_style"><span class="glyphicon glyphicon-search"></span> Search By</h5>
@@ -106,15 +111,40 @@
         ?>
         <div class = "panel-heading panel_headingstyle" style = "width:100%;"><strong>Certificates Report <?php echo $period ?></strong></div>
         <br>
+        <?php 
+        // added by shubhranshu
+        $course = $this->input->get("courseId");
+              $class = $this->input->get("classId");
+              $trainee = $this->input->get("trainee");
+              $start = $this->input->get("start_date");
+              $end = $this->input->get("end_date");
+         if(($course!="") || ($class!="") || ($trainee!="") || ($start!="" && $end!=''))
+         {
+         ?>
         <div>
             <span style="float: left;color: blue;">**Coll. Dt.: Certificate Available From</span>
-            <span class="pull-right">
+            <span class="pull-right" style='margin: 10px;'>
                 <a href="<?php echo site_url('/reports/certificates_export_xls') . '?' . $_SERVER['QUERY_STRING']; ?>" class="small_text1">
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
                 <a href="<?php echo site_url('/reports/report_certificates_pdf') . '?' . $_SERVER['QUERY_STRING']; ?>" class="small_text1">
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>
+                     <div id="alertmsg" style="display: none;color:#ff0000;padding:5px">Please Select One of the above filter to export PDF/XLS.</div>
             </span>
         </div>
+         <?php }else{ ?>
+            <div>
+                <span style="float: left;color: blue;">**Coll. Dt.: Certificate Available From</span>
+                <span class="pull-right" style='margin: 10px;'>
+                    <a href="javascript:void(0)" class="small_text1" id='displayText'>
+                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
+                    <a href="javascript:void(0)" class="small_text1" id='displayText1'>
+                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>
+                        
+                </span>
+                
+            </div>
+        <div id="alertmsg" style="padding:5px;clear:both;display:none" class='alert alert-danger'>Please Select One of the above filter to export PDF/XLS.</div>
+        <?php } // added by shubhranshu?>
         <br><br>
         <table class="table table-striped">
             <thead>
@@ -163,8 +193,10 @@
                     if (in_array($data->course_id, $wsq_courses_array) && in_array($tenant_id, $tenant_array)) // xp and xp2
                     { 
                        $linkStr = '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$data->course_id.'/'. $data->class_id . '/' . $data->user_id . '">TCS</a><br/>'; 
+                    }else if($tenant_id == 'T20' || $tenant_id == 'T17'){
+                         $linkStr = '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$data->course_id.'/'. $data->class_id . '/' . $data->user_id . '">TCS</a><br/>'; 
                     }
-                    /*skm code end */
+                    /*added by shubhranshu */
                     
                     echo '<tr>
                             <td>' . $data->crse_name . '</td>

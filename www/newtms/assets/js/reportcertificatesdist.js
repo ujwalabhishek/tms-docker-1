@@ -16,7 +16,7 @@ $(document).ready(function() {
         },
     });
   
-// pritam
+// shubhranshu
 
         $( "#displayText" ).click(function() {
           $( "#alertmsg" ).show();
@@ -326,6 +326,7 @@ $(document).ready(function() {
         var taxcode = $('#taxcode').val().trim();
         var courseid = $('#courseId').val().trim();
         var trainee_id = $('#trainee_id').val();
+        var company = $('#company_name').val();
         if (trainee.length > 0 && trainee_id.length == 0) {
             disp_err('#trainee', 'Select from auto-help');
             retval = false;
@@ -333,14 +334,32 @@ $(document).ready(function() {
             remove_err('#trainee');
         }
         ///////added by shubhranshu to vaildate search operation////////////////
-        if(trainee == '' && courseid == '' && taxcode == ''){
+        if(trainee == '' && courseid == '' && taxcode == '' && company == ''){
                 $('#company_name_err').addClass('error').text('Oops!..Please select atleast one filter to perform search operation');
                 retval = false;
             }else{
                 $('#company_name_err').removeClass('error').text('');
         }///////added by shubhranshu to vaildate search operation////////////////
+        check_remove_id();/////////added by shubhranshu//
         return retval;
     }
+    /////////////added by shubhranshu///////////////////////
+    function check_remove_id(){
+        
+        $taxcode = $('#taxcode').val();
+        $trainee= $('#trainee').val();
+        $company= $('#company_name').val();
+        
+        if($taxcode == ''){
+           $('#taxcode_id').val(''); 
+        }
+        if($trainee == ''){
+           $('#trainee_id').val(''); 
+        }
+        if($company == ''){
+           $('#company_id').val(''); 
+        }
+    }/////////////////////////////////////////////////////////////////////////////////////
     function disp_err($id, $text) {
         $text = typeof $text !== 'undefined' ? $text : '[required]';
         $($id).addClass('error');

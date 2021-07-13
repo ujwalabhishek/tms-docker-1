@@ -127,9 +127,9 @@ if (in_array($role_check, $role_array))
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th class="th_header">Class Name</th>
-                            <th class="th_header">Class Start Date</th>
-                            <th class="th_header">Name</th>
+                            <th class="th_header" width='11%'>Class Name</th>
+                            <th class="th_header" width='12%'>Class Start Date</th>
+                            <th class="th_header" width='25%'>Name</th>
                             <th class="th_header">Enrolment Type</th>
                             <th class="th_header">Enrolled On</th>                                                       
                             <th class="th_header"></th>

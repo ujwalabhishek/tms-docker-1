@@ -66,7 +66,8 @@
                             <button class="search_button pull-right btn btn-xs btn-primary no-mar" name="submit" type="submit" value="Search" title="Search">
                                 <span class="glyphicon glyphicon-search"></span>
                                 Search
-                            </button></td>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -118,7 +119,7 @@
                         <td  width="20%" class="td_heading">Company:<span class="required">*</span></td>
                         <td class="">
                             <?php
-                            $company_js = 'id="company"';
+                            $company_js = 'id="company" style="width:50%"';
                             $company_options = array(
                                 '' => 'Select',
                             );
@@ -151,6 +152,7 @@
                             );
                             echo form_input($taxcode_id);
                             ?>
+                            <div style='color:blue; font-size:10px;'>Enter minimum of 4 characters to search</div>
                             <span id="trainee_name_err"></span>                        
                         </td>
                     </tr>
@@ -321,7 +323,8 @@
                             foreach ($course_active_enroll_class as $k => $v) {
                                 $active_options[$k] = $v;
                             }
-                            echo form_dropdown('course_active_class', $active_options, $this->input->post('course_active_class'), $aactive_js);
+                            $default = $this->input->post('course_active_class').',0';///added by shubhranshu since zero is coming for default
+                            echo form_dropdown('course_active_class', $active_options, $default, $aactive_js);
                             ?>
                             <span id="course_active_class_err"></span>
                         </td>
@@ -336,7 +339,8 @@
                             foreach ($course_reschedule_enroll_class as $k => $v) {
                                 $reschedule_options[$k] = $v;
                             }
-                            echo form_dropdown('course_reschedule_class', $reschedule_options, $this->input->post('course_reschedule_class'), $reschedule_js);
+                            $default = $this->input->post('course_reschedule_class').',0';////added by shubhranshu since zero is coming
+                            echo form_dropdown('course_reschedule_class', $reschedule_options, $default, $reschedule_js);
                             ?>
                             <span id="course_reschedule_class_err"></span>
                         </td>

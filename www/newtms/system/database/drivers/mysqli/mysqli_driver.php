@@ -93,7 +93,8 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 *
 	 * @var	string
 	 */
-	protected $_escape_char = '`';
+	protected $_escape_char = ''; 
+        //protected $_escape_char = '`'; // commented by shubhranshu due to query builder backtick issue 
 
 	// --------------------------------------------------------------------
 

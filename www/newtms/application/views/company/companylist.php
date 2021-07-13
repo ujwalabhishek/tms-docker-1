@@ -27,6 +27,7 @@ echo form_open("company", $atr);
               <input type="text" name="search_company_name" id="list_search_company_name" 
                      value="<?php echo $this->input->get('search_company_name'); ?>" style="width:550px"/>
               <input id="list_search_company_id" name="list_search_company_id" type="hidden" value="<?php echo $this->input->get('list_search_company_id') ?>"/>
+              <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
               <span id="list_search_company_name_err"></span>
           </td>
         </tr>
@@ -215,7 +216,7 @@ echo form_open("company", $atr);
             var self = $(this),
             button = self.find('input[type="submit"],button'),
             submitValue = button.data('submit-value');
-            button.attr('disabled','disabled').val('Please Wait..');
+            button.attr('disabled','disabled').html('Please Wait..');
             return true;
            }else{
                return false;
@@ -225,6 +226,12 @@ echo form_open("company", $atr);
           if(form_search){
               return validate(false);
           } 
+       });
+       $('#list_search_company_name').on("blur", function() {
+        $list_search_company_name = $('#list_search_company_name').val().trim();
+            if($list_search_company_name ==''){
+                $("#list_search_company_id").val("");
+            }  
        });
        function validate(retval){
            var company_name = $('#list_search_company_name').val().trim();

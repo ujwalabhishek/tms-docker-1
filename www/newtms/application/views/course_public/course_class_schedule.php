@@ -12,6 +12,7 @@
                     if ($this->session->flashdata('error')) {
                         echo '<div style="color:red;font-weight: bold;">' . $this->session->flashdata('error') . '</div>';
                 } ?>
+                
                 <div class="bs-example">
                     <div class="table-responsive">
                         <table class="table table-striped" id="class_schedule">
@@ -43,37 +44,31 @@
                                         
                                         $result = $this->course_model->is_user_enrolled1($user_id,$class['class_id'],$class['course_id']);// check user alreaady enrolled in particular class or not
                                         $class['user_id'] = $user_id;
-                                        if($user_id!='')                                
-                                        {   
-//                                            if($result == 0)
-//                                            {
-//                                               // . base_url() . 'course/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'
-//                                              $enroll_link_prefix = '<a class="enroll_now_link" href="#">';  
-//                                            }else{
-                                               $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'" data-user="'.$class['user_id'].'">'; 
-//                                            }
-                                            
-                                            
-                                            $enroll_link_label = 'Enroll Now';
-                                            
-                                        }
-//                                        elseif($result!=0 && $user_id!='') {
-//                                            
-//                                            $enroll_link_prefix = ''; 
-//                                            $enroll_link_label = '<b style="color:red;">Already Enrolled</b>';
-//                                            
-//                                        }
-                                        else{
-                                            //$enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course/class_member_check/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_name'].'" data-course="'.$class['crse_name'].'">' ;
-                                            $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course/class_member_check/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">';;  
-                                            $enroll_link_label = 'Enroll Now';
-                                            
-                                        }
                                         
-//                                      
+                                            if($user_id!='')                                
+                                            {   
+                                                $enroll_link_prefix = '<a class="enroll_now_link1" href="' . base_url() . 'course_public/class_enroll1/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'" data-user="'.$class['user_id'].'">';
+                                                $enroll_link_label = 'Enroll Now';
+
+                                            }else{
+                                                //$enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course/class_member_check/' . $class['course_id'] . '/' . $class['class_id'] . '" data-class="'.$class['class_name'].'" data-course="'.$class['crse_name'].'">' ;
+                                                //$enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link1" href="' . base_url() . 'course_public/class_member_check/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">'; 
+                                                if(TENANT_ID== 'T12' || TENANT_ID== 'T02'){// added by shubhranshu since this changes for xp and xp2 to remove the popup
+                                                    $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link1" href="' . base_url() . 'course_public/class_member_check/' . $class['course_id']  . '/'.$class['class_id'].'">';
+                                                    $enroll_link_label = 'Enroll Now';
+                                                }else{
+                                                    $enroll_link_prefix = $enroll_link_prefix = '<a class="enroll_now_link" href="' . base_url() . 'course_public/class_member_check/' . $class['course_id']  . '" data-class="'.$class['class_id'].'" data-course="'.$class['course_id'].'">'; 
+                                                    $enroll_link_label = 'Enroll Now';
+                                                }
+                                                
+
+                                            } 
+
+                                            
                                         
                                         $enroll_link_suffix = '</a>';
                                         $enroll_link = $enroll_link_prefix . $enroll_link_label . $enroll_link_suffix;
+                                        
                                         ?>
                                         <tr>
                                             <td><a class="small_text1" rel="modal:open" href="#course_clas<?php echo $class['class_id']; ?>"><?php echo $class['class_name']; ?></a></td>
@@ -81,7 +76,7 @@
                                             <td><?php echo $class['total_classroom_duration'] + $class['total_lab_duration'] + $class['assmnt_duration']; ?></td>
                                             <td ><div class="table-scrol" style="    height: 75px;"><?php echo $class['crse_manager']; ?></div></td>
                                             <td ><div class="table-scrol" style="    height: 75px;"><?php echo $class['classroom_trainer']; ?></div></td>
-                                            <td><?php echo $status_lookup_location[$class['classroom_location']]; ?></td>
+                                            <td><?php if($class['classroom_location'] == 'OTH'){echo $class['classroom_venue_oth']; }else{echo $status_lookup_location[$class['classroom_location']]; }?></td>
                                             <td><?php echo $status_lookup_language[$class['class_language']]; ?></td>
                                             <td><?php echo $class['available']; ?></td>
                                             <?php
@@ -167,12 +162,12 @@
                                             </tr>
                                             <tr>
                                                 <td><span class="crse_des">Class Room Location :</span></td>
-                                                <td><?php echo $status_lookup_location[$class['classroom_location']]; ?></td>
+                                                <td><?php if($class['classroom_location'] == 'OTH'){echo $class['classroom_venue_oth']; }else{echo $status_lookup_location[$class['classroom_location']]; }?></td>
                                             </tr>
                                             <?php if ($class['lab_location']): ?>
                                                 <tr>
                                                     <td><span class="crse_des">Lab Location :</span></td>
-                                                    <td><?php echo $status_lookup_location[$class['lab_location']]; ?></td>
+                                                    <td><?php if($class['lab_location'] == 'OTH'){echo $class['lab_venue_oth']; }else{echo $status_lookup_location[$class['lab_location']]; }?></td>
                                                 </tr>
                                             <?php endif; ?>
                                             <tr>
@@ -195,6 +190,7 @@
                         <ul class="pagination pagination_style"></ul>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -262,11 +258,11 @@
                         {
                             if(res == 1) {
                                $('.enrol_for_self').html("<button class='btn btn-primary btn1' type='button' style='background-color: gray;cursor:default;    border-color: gray;'>Already Enrolled</button>");
-                                $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course/register_enroll/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
+                                $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course_public/register_enroll/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
                             }else{
                                 //$('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course/create_enroll_self_loggedin/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
-                                $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course/class_enroll1/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
-                                $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course/register_enroll/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
+                                $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course_public/class_enroll1/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
+                                $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course_public/register_enroll/"+course+"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
                             }
 
 
@@ -297,10 +293,10 @@
             var href_link = $(this).attr('href');
            
            //$('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course/register_enroll/"+course +"/"+cls+"'> <button class='btn btn-primary' type='button'>Enroll For Self</button></a>");
-         $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course/class_member_check/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
+         $('.enrol_for_self').html("<a id='skm' href='<?php echo base_url();?>course_public/class_member_check/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Self</button></a>");
            
             
-            $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course/referral_credentials1/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
+            $('.enrol_for_someone').html("<a id='skm' href='<?php echo base_url();?>course_public/referral_credentials1/"+course +"/"+cls+"'> <button class='btn btn-primary btn1' type='button'>Enroll For Someone</button></a>");
             $('.course_name').text(course);
             $('.class_name').text(cls);
             $('.href_link').attr('href',href_link);

@@ -40,7 +40,7 @@
                         $attr_js = 'id="user_role" ' . $disable;
                         echo form_dropdown('user_role', $role_options, $this->input->get('user_role'), $attr_js);
                         ?>
-                        <span id="user_role_err"></span>
+                        <div id="user_role_err"></div>
                     </td>
                     <td class="td_heading">
                         <?php
@@ -60,10 +60,11 @@
                         echo form_hidden('user_id', $this->input->get('user_id'), 'user_id');
                         ?>
                         <input  id="first_last_name" name="first_last_name" type="text" value="<?php echo $this->input->get('first_last_name'); ?>">
-                        <span id="first_last_name_err"></span>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
+                        <div id="first_last_name_err"></div>
                     </td>
                     <td align="center">
-                        <button type="submit" value="Search" title="Search" class="btn btn-xs btn-primary no-mar"><span class="glyphicon glyphicon-search"></span> Search</button>
+                        <button type="submit" id='srch_btn' value="Search" title="Search" class="btn btn-xs btn-primary no-mar"><span class="glyphicon glyphicon-search"></span> Search</button>
                     </td>
                 </tr>
                 <tr>
@@ -77,7 +78,7 @@
                         $attr_js = 'id="filter_status"';
                         echo form_dropdown('filter_status', $status_options, $this->input->get('filter_status'), $attr_js);
                         ?> 
-                        <span id="filter_status_err"></span>
+                        <div id="filter_status_err"></div>
                     </td>
                 </tr>
             </tbody>
@@ -167,7 +168,9 @@
             var self = $(this),
             button = self.find('input[type="submit"],button'),
             submitValue = button.data('submit-value');
-            button.attr('disabled','disabled').val('Please Wait..');
+            button.attr('disabled','disabled').html('Please Wait..');
+            
+            //$("#srch_btn").val('Please wait..');
             return true;
            }else{
                return false;
@@ -193,21 +196,41 @@
             }
             return retval;
         }
-        function form_validates() {
-        $user_role = $('#user_role').val();
-        $filter_status = $('#filter_status').val();
+        // added by shubhranshu for dynamic prevention of search form
+    $('#first_last_name').on("blur", function() {
         $first_last_name = $('#first_last_name').val();
-        
-       if($user_role != '' || $filter_status != '' || $first_last_name !=''){
+            if($first_last_name ==''){
+                $("#user_id").val("");
+            }  
+       });
+    function form_validates() {
+        $user_role = $('#user_role').find(":selected").text();
+        $filter_status = $('#filter_status').find(":selected").text();
+        $first_last_name = $('#first_last_name').val();
+        var user_id = $('#user_id').val();
+       if(user_id !='' || $filter_status !='All' || $user_role !='All'){
             remove_err('#user_role');
             remove_err('#filter_status');
             remove_err('#first_last_name');
             return true;
-        } 
-        else {
-            disp_err('#user_role', '[Select User role from auto-complete]');
-            disp_err('#filter_status', '[select filter status from auto-complete]');
+        }else if($first_last_name != ''){
+            if(user_id !=''){
+                remove_err('#user_role');
+                remove_err('#filter_status');
+                remove_err('#first_last_name');
+                return true;
+            }else{
+                disp_err('#first_last_name', '[Select Trainee from auto-complete]');
+                remove_err('#user_role');
+                remove_err('#filter_status');
+                return false;
+            }
+            
+        }else{
             disp_err('#first_last_name', '[Select Trainee from auto-complete]');
+            disp_err('#user_role', '[Select User role from dropdown]');
+            disp_err('#filter_status', '[select filter status from auto-complete]');
+
             return false;
         }
     }

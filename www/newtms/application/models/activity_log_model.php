@@ -149,7 +149,7 @@ class Activity_Log_Model extends CI_Model {
     }
     
 //    public function get_activity($tenant_id, $limit = NULL, $offset = NULL, $sort_by = NULL, $sort_order = NULL)
-    public function get_activity_list_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'at.trigger_datetime', $sort_order = 'DESC', $module = '', $user_id = '', $com_id = '', $invid = '', $inv_taxcode = '', $crs = '', $cls_id = '', $cls_name = '', $account_type = '',$pass = '') 
+    public function get_activity_list_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'at.trigger_datetime', $sort_order = 'DESC', $module = '', $user_id = '', $com_id = '', $invid = '', $inv_taxcode = '', $crs = '', $cls_id = '', $cls_name = '', $account_type = '',$pass = '',$crse_id='') 
     {
         $this->db->select('*');
         $this->db->from('activity_tracking at');
@@ -189,7 +189,12 @@ class Activity_Log_Model extends CI_Model {
             }
             else if($pass!=''){ // when search for reset password
                 $this->db->where('at.act_on',$pass);
+            }else if($crse_id !=''){
+                $this->db->where('at.act_on',$crse_id);
             }
+            
+            
+            
 
             if ($sort_by) {
                 $this->db->order_by($sort_by, $sort_order);
@@ -204,7 +209,7 @@ class Activity_Log_Model extends CI_Model {
                 $this->db->limit($limit, $limitvalue);
             }
             $query = $this->db->get();
-//            echo $this->db->last_query();
+            //echo $this->db->last_query();exit;
             return $query->result_array();
 
     }

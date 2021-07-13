@@ -28,9 +28,9 @@ class Course extends CI_Controller {
 
         $this->load->model('meta_values');
 
-        $this->load->model('Course_Model', 'course');
+        $this->load->model('course_model', 'course');
 
-        $this->load->model('Class_Model', 'classmodel');
+        $this->load->model('class_model', 'classmodel');
 
         $this->load->library('form_validation');
 
@@ -185,7 +185,11 @@ class Course extends CI_Controller {
         $this->form_validation->set_rules('course_duration', 'Course Duration', 'required');
 
         $this->form_validation->set_rules('course_reference_num', 'Course Reference Number', 'required');
+        
+        $this->form_validation->set_rules('external_reference_number', 'External Course Reference Number', 'required');
 
+        $this->form_validation->set_rules('crse_admin_email', 'course admin email', 'required');
+        
         $this->form_validation->set_rules('course_competency_code', 'Course Competency Code', 'required');
 
         $this->form_validation->set_rules('certification_code', 'Certification Code', 'required');
@@ -831,6 +835,10 @@ class Course extends CI_Controller {
         $this->form_validation->set_rules('subsidy', 'Subsidy', 'required');
 
         $this->form_validation->set_rules('course_reference_num', 'Course Reference Number', 'required');
+        
+        $this->form_validation->set_rules('external_reference_number', 'External Reference Number', 'required');
+        
+         $this->form_validation->set_rules('crse_admin_email', 'Course Admin Email', 'required');
 
         $this->form_validation->set_rules('course_competency_code', 'Course Competency Code', 'required');
 
@@ -1045,7 +1053,7 @@ class Course extends CI_Controller {
         }
 
         $file_name = str_ireplace(' ', '_', $this->input->get('file_name'));
-
+        $file_name = $file_name.'.zip'; // added by shubhranshu to append zip file extension while download the file
         header("Content-Type: application/octet-stream");
 
         header("Content-Disposition: attachment;filename=" . $file_name);

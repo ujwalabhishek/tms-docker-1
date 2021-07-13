@@ -5,11 +5,14 @@
  */
 
 class Company_Model extends CI_Model {
+    
+     private $user;
 
     public function __construct() {
         parent::__construct();
         $this->load->library('bcrypt');
         $this->load->helper('common');
+        $this->user = $this->session->userdata('userDetails');
     }
 
     /*
@@ -93,6 +96,7 @@ class Company_Model extends CI_Model {
             $this->db->limit($limit, $limitvalue);
         }
        $query = $this->db->get();
+      
         return $query->result_array();
     }
 
@@ -426,8 +430,8 @@ class Company_Model extends CI_Model {
         $this->db->from('course c');
         $this->db->join('company_discount cd', 'cd.Course_ID = c.course_id and cd.Tenant_ID = c.tenant_id and cd.Company_ID="' . $company_id . '"', 'LEFT');
         $this->db->where('c.tenant_id', $tenant_id);
-        if ($this->data['user']->role_id == 'CRSEMGR' && empty($type)) {
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",c.crse_manager) !=", 0);
+        if ($this->user->role_id == 'CRSEMGR' && empty($type)) {
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
         }
         $this->db->where('c.crse_status', 'ACTIVE');
         //code modified on 07-04-2015
@@ -442,6 +446,31 @@ class Company_Model extends CI_Model {
      * @param type $company_id
      * @return type
      */
+    //////added by shubhranshu for bulk enrollment company discount issue on 11-02-2020
+     public function get_company_details_discount($tenant_id, $company_id,$course) {
+
+        $this->db->select('*');
+        $this->db->from('tenant_company company');
+        $this->db->join('company_master companymaster', 'company.company_id = companymaster.company_id');
+        if($course > 0 && $course !=''){
+             $this->db->join('company_discount cd', 'company.company_id = cd.company_id');
+            $this->db->where('cd.Course_ID', $course);
+        }
+        $this->db->where('company.tenant_id', $tenant_id);
+        $this->db->where('company.company_id', $company_id);
+        
+        $qry = $this->db->get();
+
+        if ($qry->num_rows() > 0) {
+            $comp_details = array();
+            foreach ($qry->result() as $row) {
+                $comp_details[] = $row;
+            }
+        }
+        return $comp_details;
+    }
+    
+    
     public function get_company_details($tenant_id, $company_id) {
 
         $this->db->select('*');
@@ -450,7 +479,6 @@ class Company_Model extends CI_Model {
         $this->db->where('company.tenant_id', $tenant_id);
         $this->db->where('company.company_id', $company_id);
         $qry = $this->db->get();
-
         if ($qry->num_rows() > 0) {
             $comp_details = array();
             foreach ($qry->result() as $row) {
@@ -1057,6 +1085,7 @@ class Company_Model extends CI_Model {
      * @return type
      */
     public function get_activeuser_companies_for_tenant($tenant_id, $active_enrollment = 0) {
+        $this->db->cache_on();
         $this->db->select('cm.company_id');
         $this->db->select('cm.company_name');
         $this->db->from('tenant_company_users tcu');
@@ -1069,8 +1098,8 @@ class Company_Model extends CI_Model {
         if ($active_enrollment == 1) {
             $this->db->join('class_enrol ce', 'ce.company_id=cm.company_id');
         }
-        if ($this->data['user']->company_id != '') {
-            $this->db->where('cm.company_id', $this->data['user']->company_id);
+        if ($this->user->company_id != '') {
+            $this->db->where('cm.company_id', $this->user->company_id);
         }
         $this->db->group_by('tcu.company_id');
         $this->db->order_by("cm.company_name"); 
@@ -1251,7 +1280,7 @@ class Company_Model extends CI_Model {
         $disc_amt = $this->input->post('disc_amt');
         $data=array();
         $this->db->trans_start();
-        if ($this->data['user']->role_id == 'CRSEMGR') {
+        if ($this->user->role_id == 'CRSEMGR') {
             $delete_courses = array();
             foreach($disc_perc as $k=>$row){
                 if(!empty($row) || !empty($disc_amt[$k])){

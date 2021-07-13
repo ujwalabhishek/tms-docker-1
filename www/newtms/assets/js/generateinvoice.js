@@ -552,7 +552,7 @@ $(document).ready(function() {
                  
                 if (cnt > 1) 
                 {
-
+                        
                     $company_total = $company_total + +data.excess_remain;
                     $company_total_refund = $company_total_refund + +data.excess_refunded;
                     $company_total = parseFloat($company_total).toFixed(2);
@@ -565,7 +565,7 @@ $(document).ready(function() {
 //		    $pend_rec = parseFloat(data.total_inv_amount) + parseFloat(data.amount_refund) + parseFloat(data.invoice_excess_amt) - $total_paid - parseFloat(data.excess_refunded);
 //                    alert("tot_inv_amt= "+(data.total_inv_amount) +"amount refund= "+(data.amount_refund) +"extra amount="+data.invoice_excess_amt +"tot_paid="+parseFloat(data.amount_recd)+ "extra refund="+(data.excess_refunded));
                     $pend_rec = $pend_rec < 0 ? 0 : $pend_rec;
-	            
+	           
 		    $inv_amt_zigg = parseFloat(data.total_inv_amount).toFixed(2);
                     $pend_rec1=  parseFloat($pend_rec).toFixed(2);
                     $('.trainee_total_invice_amyt').html(parseFloat(data.total_inv_amount));
@@ -604,6 +604,9 @@ $(document).ready(function() {
                 }
                 else
                 {  
+                       //below code added by shubhranshu
+                  $pend_rec = parseFloat(data.total_inv_amount) + parseFloat(data.amount_refund) + parseFloat(data.invoice_excess_amt) - parseFloat(data.amount_recd) - parseFloat(data.excess_refunded);
+                   ///////
                     if(parseFloat(data.total_inv_amount).toFixed(2)==0.00)
                     {  
                         $total_paid=0.00;
@@ -611,6 +614,7 @@ $(document).ready(function() {
                         $pend_rec=0.00;
                         
                     }
+                   
 //                    $('.c_total_amt_recd').html($total_paid);
                     $('.c_total_amt_recd').html(parseFloat(data.amount_recd).toFixed(2));
                     $('.c_tot_refundable_amt').html($company_total);

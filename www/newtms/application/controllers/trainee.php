@@ -8,11 +8,12 @@ class Trainee extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('trainee_model', 'traineemodel');
-        $this->load->model('Manage_Tenant_Model', 'manage_tenant');
+        $this->load->model('manage_tenant_model', 'manage_tenant');
         $this->load->model('course_model', 'course');
         $this->load->model('common_model', 'commonmodel');
-        $this->load->model('Class_Trainee_Model', 'classtraineemodel');
+        $this->load->model('class_trainee_model', 'classtraineemodel');
         $this->load->helper('common');
+        $this->load->model('user_model');
         $this->load->helper('metavalues_helper');
         $this->load->model('meta_values', 'meta');
         $this->load->model('acl_model', 'acl');
@@ -86,6 +87,7 @@ class Trainee extends CI_Controller {
      */
     public function add_new_trainee() 
     {
+		$tenant_id=$this->user->tenant_id;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $user = $this->session->userdata('userDetails');
         $tenant_id = $user->tenant_id;
@@ -106,7 +108,10 @@ class Trainee extends CI_Controller {
             }
             if ($country_of_residence == 'SGP') 
             {                
-                $nric = $this->input->post("NRIC");                
+                $nric = $this->input->post("NRIC"); 
+                if($nric == "SNG_4"){
+                   $nric = "SNG_3"; 
+                }
                 $nric_other = $this->input->post("NRIC_OTHER");
                 $nric_id = $this->input->post('NRIC_ID');
                 $tax_code = $nric_id;
@@ -127,17 +132,26 @@ class Trainee extends CI_Controller {
                 $this->form_validation->set_rules('SSN', 'SSNNumber', 'required|max_length[50]|callback_check_unique_usertaxcode');
             }
             if ($this->input->post('bypassemail') == 'EMACRQ') {
-                $this->form_validation->set_rules('user_registered_email', 'Email', 'required|max_length[50]|valid_email|callback_check_unique_useremail');
+                $this->form_validation->set_rules('user_registered_email', 'Email', 'required|max_length[50]|valid_email');
             }
             $this->form_validation->set_rules('user_name', 'Username', 'required|max_length[15]|callback_check_unique_username');
             $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
             $this->form_validation->set_rules('pers_second_name', 'Secondname', 'max_length[100]');
-            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|max_length[50]');
+            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|exact_length[8]');
             $this->form_validation->set_rules('pers_alternate_email', 'Email', 'valid_email');
             $this->form_validation->set_rules('pers_alternate_contact_number', 'Alternater Contact Number', 'max_length[50]');
-            $this->form_validation->set_rules('pers_personal_address_bldg', 'Address', 'max_length[255]');
-            $this->form_validation->set_rules('pers_city', 'City', 'max_length[50]');
             $this->form_validation->set_rules('pers_gender', 'Gender', 'required');
+			$this->form_validation->set_rules('pers_dob', 'Date of Birth', 'required|max_length[10]');
+			if($tenant_id =='T24'){								
+				$this->form_validation->set_rules('pers_country', 'Country', 'required');
+				$this->form_validation->set_rules('pers_states', 'State', 'required');
+				$this->form_validation->set_rules('pers_city', 'City', 'required|max_length[50]');
+				$this->form_validation->set_rules('pers_zip_code', 'Postal Code', 'required|max_length[10]');
+				$this->form_validation->set_rules('pers_personal_address_bldg', 'Address', 'required|max_length[255]');
+			} else {
+				$this->form_validation->set_rules('pers_personal_address_bldg', 'Address', 'max_length[255]');
+				$this->form_validation->set_rules('pers_city', 'City', 'max_length[50]');
+			}
             $this->form_validation->set_rules('highest_educ_level', 'Highest Educ Level', 'required');
             $this->form_validation->set_rules('nationality', 'Nationality', 'required');
             if ($valid && $this->form_validation->run() == TRUE) {
@@ -187,6 +201,28 @@ class Trainee extends CI_Controller {
             $this->load->view('layout', $data);
         }
     }
+    
+    function check_unique_usertaxcode() {
+        $country_of_residence = $this->input->post('country_of_residence');
+        if ($country_of_residence == "IND") {
+            $tax_code = $this->input->post('PAN');
+        }
+        if ($country_of_residence == "SGP") {
+            $tax_code = $this->input->post('NRIC');
+        }
+        if ($country_of_residence == "USA") {
+            $tax_code = $this->input->post('SSN');
+        }        
+        if ($tax_code) {
+            $exists = $this->user_model->check_duplicate_user_taxcode($tax_code);            
+            if (!$exists) {
+                $this->form_validation->set_message('check_unique_usertaxcode', "Duplicate Tax Code. Please change the tax code.");
+                return FALSE;
+            }
+            return TRUE;
+        }
+    }
+    
     /**
      * This method for redirect trainees to enroll new page if trainee status is active.
      */
@@ -272,6 +308,7 @@ class Trainee extends CI_Controller {
             $valid = TRUE;
             $country_of_residence = $this->input->post('country_of_residence');
             $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
+            $this->form_validation->set_rules('pers_contact_phone', 'Contact Number', 'required|exact_length[8]');
             if ($country_of_residence == 'IND') {
                 $tax_code = $this->input->post("PAN");
                 $this->form_validation->set_rules('PAN', 'PAN Number', 'required|max_length[15]');
@@ -281,15 +318,22 @@ class Trainee extends CI_Controller {
                 $NRIC = $this->input->post('NRIC');
                 $NRIC_OTHER = $this->input->post("NRIC_OTHER");
                 $NRIC_ID = $this->input->post('NRIC_ID');
+                $NRIC_ID_MATCH = $this->input->post('NRIC_ID_MATCH'); // addded by shubhranshu for NRIC ID
                 $tax_code = $NRIC_ID;
+                
                 if($NRIC != "SNG_3"){
-                    $this->form_validation->set_rules('NRIC_ID', 'NRIC Number', 'required|max_length[50]|callback_check_unique_usertaxcode');                                      
-                    if(!empty($NRIC)) {
+                    if($NRIC_ID != $NRIC_ID_MATCH){ //added by shubhranshu for check NRIC if it does not match
+                        $this->form_validation->set_rules('NRIC_ID', 'NRIC Number', 'required|max_length[50]|callback_check_unique_usertaxcode');   
+                        if(!empty($NRIC)) {
                         $valid = validate_nric_code($NRIC, $NRIC_ID);
-                        if ($valid == FALSE) {
-                            $data['tax_error'] = 'Invalid NRIC Code.'; //Added By dummy for Edit issue (Nov 10 2014)
+                            if ($valid == FALSE) {
+                                $data['tax_error'] = 'Invalid NRIC Code.'; //Added By dummy for Edit issue (Nov 10 2014)
+                            }
                         }
+                        
                     }
+                                                       
+                    
                 }
             }                       
             if ($country_of_residence == 'USA') {
@@ -339,7 +383,7 @@ class Trainee extends CI_Controller {
                 $this->load->view('layout', $data);
                 return;
             }
-        } else if ($this->input->post('task') == 'deactivate') {
+        } else if ($this->input->post('task') == 'deactivate') { 
             $user_id = $this->input->post('userid');
             $res = $this->traineemodel->get_complete_trainee_details($user_id);
             $previous_trainee_data = json_encode($res);
@@ -386,7 +430,7 @@ class Trainee extends CI_Controller {
         $data['page_title'] = 'View Trainee';
         $userid = $this->uri->segment(3);
         $data['trainee'] = $trainee = $this->traineemodel->get_trainee($userid);        
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         if ($trainee[userdetails]['account_status'] == 'INACTIV') 
         {
             $data['deactivated_by'] = $this->internaluser->get_user_details($this->session->userdata('userDetails')->tenant_id, $trainee[userdetails]['deacti_by']);
@@ -431,6 +475,7 @@ class Trainee extends CI_Controller {
      * export trainee data
      */
     public function export_trainee_page() {
+        
         set_time_limit(0);
         ini_set("memory_limit","-1");
         $result = $this->traineemodel->get_trainee_list_export();
@@ -456,7 +501,7 @@ class Trainee extends CI_Controller {
         if (empty($country_param)) {
             return;
         }
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $states = $this->internaluser->get_states($country_param);
         $states_arr = array();
         foreach ($states as $item) {
@@ -534,6 +579,7 @@ class Trainee extends CI_Controller {
      * This method for validating each excel field.
      */
       private function validate_excel($trainee, $i) {
+        $tenant_id=$this->user->tenant_id;
         $metavalues = array();
         $metavalues = $this->get_metavalues_array();
         $is_taxcode_unique = $this->is_taxcode_unique($trainee[$i][taxcode]);
@@ -552,12 +598,23 @@ class Trainee extends CI_Controller {
         if (($trainee[$i][countryofresidence] == '') || ($trainee[$i][nrictype] == '') || ($trainee[$i][nationality] == '') || ($trainee[$i][education] == '') || ($trainee[$i][firstname] == '') || ($trainee[$i][gender] == '') || ($trainee[$i][ContactNumber] == '')) {
             $trainee[$i][rowstatus] = 'fail';
             $trainee[$i]['failure_reason'] = 'Mandatory Check Fail.';
-        }//// added by shubhranshu for notax code problem on 03/12/2018/////////////////
+        }//// added by shubhranshu for notax code problem on 03/12/2018////////////////
+        
+        if($trainee[$i][taxcode] !=''){
+            if (preg_match('/\s/',$trainee[$i][taxcode])){
+                $trainee[$i][rowstatus] = 'fail';
+                $trainee[$i]['failure_reason'] = 'White Space does not allowed in NRIC.';
+            }
+        }
         if($trainee[$i][taxcode] == '' && $trainee[$i][nrictypeOthers] != 'NO TAX CODE'){
             $trainee[$i][rowstatus] = 'fail';
             $trainee[$i]['failure_reason'] = 'Mandatory Check Fail.';
+        }//// added by shubhranshu
+        if($trainee[$i][nrictype] == 'NRIC' && $trainee[$i][nrictypeOthers] != ''){
+            $trainee[$i][rowstatus] = 'fail';
+            $trainee[$i]['failure_reason'] = 'if others should be blank.';
         }
-        if($trainee[$i][nrictype] == 'FIN' || $trainee[$i][nrictype] == 'NRIC' && $trainee[$i][nrictypeOthers] != ''){
+        if($trainee[$i][nrictype] == 'FIN' && $trainee[$i][nrictypeOthers] != ''){
             $trainee[$i][rowstatus] = 'fail';
             $trainee[$i]['failure_reason'] = 'if others should be blank.';
         }
@@ -867,8 +924,8 @@ class Trainee extends CI_Controller {
 //        unset($excel_data[1]);
 //        foreach ($excel_data as $k => $exceldata) {
 //            $trainee[$i][CompanyCode] = trim($exceldata[10]);
-//            if ($this->data['user']->role_id == 'COMPACT') {
-//                $trainee[$i][CompanyCode] = $this->data['user']->company_id;
+//            if ($this->user->role_id == 'COMPACT') {
+//                $trainee[$i][CompanyCode] = $this->user->company_id;
 //            }
 //            $trainee[$i][countryofresidence] = ($exceldata[1])? trim($exceldata[1]): 'SGP';
 //            $trainee[$i][nrictype] = trim($exceldata[2]);
@@ -913,6 +970,7 @@ class Trainee extends CI_Controller {
 //    }
     
     public function validate_bulk_trainee($excel_data) {
+        $tenant_id=$this->user->tenant_id;
         $trainee = array();
         $i = 1;
         $trainee[1]['db_error'] = '';
@@ -920,17 +978,31 @@ class Trainee extends CI_Controller {
         $restrict_flag = 'false'; // added by shubhranshu for restriction array
         foreach ($excel_data as $k => $exceldata) {
             $trainee[$i][CompanyCode] = trim($exceldata[11]);
-            if ($this->data['user']->role_id == 'COMPACT') {
-                $trainee[$i][CompanyCode] = $this->data['user']->company_id;
+            if ($this->user->role_id == 'COMPACT') {
+                $trainee[$i][CompanyCode] = $this->user->company_id;
             }
             $trainee[$i][countryofresidence] = ($exceldata[1])? trim($exceldata[1]): 'SGP';
-            $trainee[$i][nrictype] = trim($exceldata[2]);
-            $trainee[$i][nrictypeOthers] = trim($exceldata[3]);
-            $trainee[$i][taxcode] = trim($exceldata[4]);
-            $trainee[$i][nationality] = trim($exceldata[5]);
-            $trainee[$i][education] = trim($exceldata[6]);
+            ////addded by shubhranshu for Xprienz requirement
+            if($tenant_id =='T02'){
+                $trainee[$i][nrictype] = trim($exceldata[2] ? $exceldata[2] : 'Others');
+                if($exceldata[2]){////added by shubhranshu
+                    $trainee[$i][nrictypeOthers] = $exceldata[3];
+                }else{
+                   $trainee[$i][nrictypeOthers] = 'NO TAX CODE';  
+                }
+               
+                $trainee[$i][nationality] = ($exceldata[5] ? $exceldata[5] : 'SINGAPORE PR');
+                $trainee[$i][education] = ($exceldata[6] ? $exceldata[6] : "At least 1 GCE 'N' Level Pass");
+                $trainee[$i][gender] = ($exceldata[8] ? $exceldata[8] : 'MALE');
+            }else{
+                $trainee[$i][nrictype] = trim($exceldata[2]);
+                $trainee[$i][nrictypeOthers] = trim($exceldata[3]);
+                $trainee[$i][nationality] = trim($exceldata[5]);
+                $trainee[$i][education] = trim($exceldata[6]);
+                $trainee[$i][gender] = trim($exceldata[8]);
+            }
+            $trainee[$i][taxcode] = trim($exceldata[4]);          
             $trainee[$i][firstname] = trim($exceldata[7]);
-            $trainee[$i][gender] = trim($exceldata[8]);
             $trainee[$i][dob] = trim($exceldata[9]);
             $trainee[$i][ContactNumber] = trim($exceldata[10]);
             $trainee[$i][EmailId] = trim($exceldata[12]);
@@ -955,9 +1027,9 @@ class Trainee extends CI_Controller {
                 $trainee['flag'] = $restrict_flag;
             }
             ///////////////////////////////////////////////////
-            if ($trainee[$i][rowstatus] == 'success') {                
-                $status = true;//$this->traineemodel->save_bulk_user_data($trainee[$i]);
-               
+            if ($trainee[$i][rowstatus] == 'success') {               
+                $status = $this->traineemodel->save_bulk_user_data($trainee[$i]);
+               //print_r($status);exit;
                 if ($status['status'] == FALSE) {
                     $trainee[$i][rowstatus] = 'fail';
                     $trainee[$i]['failure_reason'] = 'Insertion Failed';
@@ -965,11 +1037,14 @@ class Trainee extends CI_Controller {
                 } else {
                     $trainee[$i][password] = $status['password'];
                     $trainee[$i][username] = $status['username'];
+                    //////below code added by shubhranshu for displaying the userid if its notax code
+                    $trainee[$i]['userid'] = $status['userid_for_notax'];//below code added by shubhranshu for displaying the userid if its notax code
                     $trainee[1]['db_error'] = '';
                 }
             }
             $i++;
         }
+        //print_r($trainee);exit;
         return $trainee;
     }
     /*
@@ -998,9 +1073,16 @@ class Trainee extends CI_Controller {
                     $data['error'] = 'File is not readable.';
                 } else {
                     $excel_data = $this->excel_reader->sheets[0][cells];
-                    $trainee = $this->validate_bulk_trainee($excel_data);
+                    if(count($excel_data[1]) > 0){////added by shubhranshu to prevent if the sheet is blank
+                        
+                        $trainee = $this->validate_bulk_trainee($excel_data);
+                    }else{
+                        $this->session->set_flashdata('error_message', 'Oops! Excel Sheet is blank!');
+                        
+                    }
+                    
 
-		if ($trainee[1]['db_error'] == 'db_error') {
+                    if ($trainee[1]['db_error'] == 'db_error') {
                         $this->session->set_flashdata('error_message', 'Oops! Sorry, it looks like something went wrong with some record.Please check!');
                     }
                     unset($trainee[1]['db_error']);
@@ -1009,6 +1091,7 @@ class Trainee extends CI_Controller {
                     $this->load->helper('export');
                     $files = write_import_status($trainee, $this->user->user_id);
                     unlink('./uploads/' . $data['file_name']);
+                    
                 }
             }
         } 
@@ -1024,12 +1107,24 @@ class Trainee extends CI_Controller {
     * download smaple excel file.
     * @param type $file_name
     */
-    public function download_xls($file_name = "uploads/Trainee_Bulk_Registration.xls") {
-        ob_clean();
-        header("Content-Type: application/octet-stream");
-        header("Content-Disposition: attachment;filename=Trainee_Bulk_Registration.xls");
-        readfile(base_url() . $file_name);
-        exit();
+    public function download_xls() {
+        $tenant_id = $this->user->tenant_id;////added by shubhranshu due to client request
+        if($tenant_id =='T02'){
+            $file_name = "uploads/Xprienz_Trainee_Bulk_Registration.xls";
+            ob_clean();
+            header("Content-Type: application/octet-stream");
+            header("Content-Disposition: attachment;filename=Xprienz_Trainee_Bulk_Registration.xls");
+            readfile(base_url() . $file_name);
+            exit();
+        }else{
+            $file_name = "uploads/Trainee_Bulk_Registration.xls";
+            ob_clean();
+            header("Content-Type: application/octet-stream");
+            header("Content-Disposition: attachment;filename=Trainee_Bulk_Registration.xls");
+            readfile(base_url() . $file_name);
+            exit();
+        }
+        
     }
     /**
      * download import xls
@@ -1242,17 +1337,17 @@ class Trainee extends CI_Controller {
      * @param type $email
      * @return type
      */
-    public function check_email_id($email) {
+   /// added by shubhranshu
+    public function check_email_id($email='') {
         extract($_POST);
         $email_id = trim($email);
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $exists = $this->internaluser->check_email($email_id);
         if ($exists) {
-            echo 1;
+            echo TRUE;
         } else {
-            echo 0;
+            echo FALSE;
         }
-        return;
     }
     /**
      * check user name
@@ -1261,7 +1356,7 @@ class Trainee extends CI_Controller {
     public function check_username() {
         extract($_POST);
         $user_name = trim(($username));
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $exists = $this->internaluser->check_username($username);
         if ($exists) {
             echo 1;
@@ -1274,12 +1369,13 @@ class Trainee extends CI_Controller {
     public function check_nric_restriction(){
         extract($_POST);
         $tax_code = trim(($tax_code));
-        $operation = trim(($operation));
+	$operation = trim(($operation));
         $exists = $this->traineemodel->check_nric_restriction($tax_code,$operation);
         if ($exists) {
             echo 1;
         } else { echo 0;}
     }/*  added by shubhranshu for client requirement on 21/03/2019 */
+
     /**
      * This method validate the NRIC/FIN number     
      * @return type
@@ -1380,7 +1476,7 @@ class Trainee extends CI_Controller {
      */
     public function get_states_json() {
         $country_param = $this->input->post('country_param');
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $states = $this->internaluser->get_states($country_param);
         $states_arr = array();
         foreach ($states as $item) {
@@ -1455,7 +1551,7 @@ class Trainee extends CI_Controller {
         if($role->role_id!='ADMN')
         {
             //if ($check_salesexe_assigned || $role->role_id=='CRSEMGR' || $role->role_id=='TRAINER')
-            if ($this->data['user']->role_id == 'SLEXEC' || $this->data['user']->role_id=='CRSEMGR' || $this->data['user']->role_id=='TRAINER') 
+            if ($this->user->role_id == 'SLEXEC' || $this->user->role_id=='CRSEMGR' || $this->user->role_id=='TRAINER') 
             {
                    $data['salesexec_check'] = 1;
 
@@ -1472,7 +1568,7 @@ class Trainee extends CI_Controller {
         $this->load->view('layout', $data);
     }
     ///////added by shubhranshu to prevent enrollment for paid company invoice on 05/12/2018////////////////
-    function check_company_invoice_status($course_id, $class_id,$company_id){
+    function check_company_invoice_status($course_id='', $class_id='',$company_id=''){
         $course_id = $this->input->post('crs_id');
         $class_id = $this->input->post('cls_id'); 
         $comp_id = $this->input->post('comp_id');
@@ -1536,6 +1632,23 @@ class Trainee extends CI_Controller {
                 $this->session->set_flashdata("error", "Unable to reset password. Try again.");
             }
             redirect('trainee/view_trainee/'.$user_id);
+        }
+    }
+    
+    public function test_send_mail(){
+  
+        $this->load->library('email');
+        $this->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
+        $this->email->to('abdullah@mailinator.com');
+        $this->email->subject('Hello');
+        $this->email->message('Good to know you are happy');
+        if ($this->email->send()) {
+            echo "mail sent successfully";
+             echo $this->email->print_debugger();
+        
+        }else{
+            echo "something went wrong";
+             echo $this->email->print_debugger();
         }
     }
 }

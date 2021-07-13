@@ -173,9 +173,11 @@
                                 <?php
 //                                $type_options = array('' => 'Select', 'CASH' => 'Cash', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO');
                                  if($tenant_id == 'T02' || $tenant_id == 'T12' || $tenant_id == 'T01'){
-                                      $type_options = array('' => 'Select', 'CASH' => 'Cash', 'NETS'=>'NETS', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
+                                      //$type_options = array('' => 'Select', 'CASH' => 'Cash', 'NETS'=>'NETS', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
+                                     $type_options = array('' => 'Select', 'CASH' => 'Cash', 'NETS'=>'NETS', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO');
                                  }  else {
-                                       $type_options = array('' => 'Select', 'CASH' => 'Cash', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
+                                        $type_options = array('' => 'Select', 'CASH' => 'Cash', 'NETS'=>'NETS', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO');
+                                       //$type_options = array('' => 'Select', 'CASH' => 'Cash', 'CHQ' => 'Cheque', 'GIRO' => 'GIRO','SFC_SELF'=>'SFC_SELF','SFC_ATO'=>'SFC_ATO');
                                  }
                               
                                 $type_js = 'id="payment_type"';
@@ -641,7 +643,7 @@
                 );
                 echo form_input($data);
                 ?>
-                <span style="float:right;">                                        
+                <span style="float:right;" id='declra'>                                        
                     <button type="submit" name="submit" value="enroll_now" class="pay_now btn btn-sm btn-info enroll_now_btn" style="float: right;"><strong>Pay Now</strong></button>                                                                    
                 </span>
                 <?php
@@ -657,7 +659,7 @@
                 );
                 echo form_input($data);
                 ?>
-                <span style="float:right;"> 
+                <span style="float:right;" id='declra'> 
                         <button type="submit" name="submit" value="book_now" class="book_now btn btn-sm btn-info" style="float: right;margin-left: 10px;"><strong>Book Now</strong></button>
                          
                 </span>
@@ -666,7 +668,9 @@
             echo form_close();
             ?>
                 <!--added by shubhranshu to prevent trainee enrollment for paid company invoice-->
-            <div id="paiddiv" style="display:none;padding: 10px;font-weight: bold;" class="text-center bg-danger">Invoice is already paid for this company, If you wants to enroll kindly refund the invoice</div>
+            <div id="paiddiv" style="display:none;padding: 10px;font-weight: bold;" class="text-center bg-danger">Invoice is already paid for this company, If you wants to enroll kindly refund the invoice
+                <center><a href='<?php echo base_url(); ?>accounting/refund_payment' class='btn btn-sm btn-info'>Refund Now</a></center>
+            </div>
 
            
             
@@ -676,11 +680,177 @@
     </div> 
     
 </div>
+
+<!----------------modal by ssp start----------------------->
+<?php if ($this->session->userdata('userDetails')->tenant_id == 'T02' && $trainee_data->company_id =='0'){$show='display:block';}else{$show='display:none';}?>
+<div class="modal" id="ex1011" style="<?php //echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;">
+<p>
+  <h2 class="panel_heading_style">Declaration</h2>
+    <!--Section: Contact v.2-->
+<section class="mb-4">
+
+    <!--Section heading-->
+    <!--<h2 class="h1-responsive font-weight-bold text-center my-4">Declaration Form</h2>-->
+    <!--Section description-->
+    <p class="text-center alert alert-danger">You must fill this form to continue for the enrollment,I consent for Xprienz to collect and use my personal data for the purposes of the company policy.</p>
+  
+    <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-12 mb-md-0 mb-5">
+           
+        
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-12">
+                        <div class="md-form mb-0">
+                            <label for="name" class="">Your Name<span style='color:red'>*</span></label>
+                            <input type="text" id="dec_name" class="form-control" value="<?php echo $trainee_data->first_name;?>" required>
+                            
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                </div>
+                
+                <div class="row">
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                             <label for="email" class="">Your Email</label>
+                             <input type="email" id="dec_email" class="form-control" pattern=".+@gmail.com" size="30" required>
+                           
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                             <label for="email" class="">Your Mobile<span style='color:red'>*</span></label>
+                            <input type="tel" id="dec_mobile" class="form-control" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                           
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                    
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <label for="subject" class="">Lesson Date:<span style='color:red'>*</span></label>
+                            <input type="date" id="dec_les_time" class="form-control" required>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-12">
+
+                        <div class="md-form">
+                            <label for="message">Do you have any relatives who returned from China on 15th January or later and is staying together? <span style='color:red'>*</span></label>
+                            <div><input type="radio" value="1" class="" name='dec_res' id='dec_res' style='height: 1.7em;width: 20px;' checked><b style='padding:2px'>Yes</b></div>
+                            <div><input type="radio" value="0" class="" name='dec_res' id='dec_res1' style='height: 1.7em;width: 20px;'><b style='padding:2px'>No</b> </div> 
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+
+                        <div class="md-form">
+                            <label for="message">Have you travelled overseas in the past 14 days? <span style='color:red'>*</span></label>
+                            <input type="text" id="dec_overseas" placeholder='Please State' class="form-control" required>
+                        </div>
+
+                    </div>
+                </div>
+                
+                 <div class="statuserr"></div>
+                <!--Grid row-->
+                 <div class="text-center">
+                    <a href='#' class="btn btn-primary" id='declarations' type='button'>Submit & Continue</a></div>
+                  
+           
+        </div>
+        <!--Grid column-->
+    </div>
+         
+</section>
+<!--Section: Contact v.2-->
+
+</p>
+</div>
+<!----------------modal by ssp end----------------------->
 <script>
     $(document).ready(function(){
+         $('#declra').show();
         $('.book_now').click(function(){
             $(this).hide();
         });
+        
+    //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol 
+   
+    <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02' && $trainee_data->company_id =='0'){?>
+    //$('#declra').hide();
+    $('#declarations').click(function(){
+        $status = 1;
+        if($('#dec_name').val()==''){
+            $status=0;
+        }
+//        if($('#dec_email').val()==''){
+//            $status=0;
+//        }
+        if($('#dec_mobile').val()==''){
+            $status=0;
+        }
+        if($('#dec_overseas').val()==''){
+            $status=0;
+        }
+        if($('#dec_les_time').val()==''){
+            $status=0;
+        }
+        
+        if($status == 1){
+            $('#ex1011').hide();
+            $('#declra').show();
+            $('.statuserr').html('');
+            $siteurl = '<?php echo site_url(); ?>';
+            $url = $siteurl + "class_trainee/save_declaration_trainee_data";
+            $.ajax({
+                url: $url,
+                type: "post",
+                dataType: "json",
+                data: {
+                    tax_code: '<?php echo $trainee_name->tax_code;?>',
+                    type:'DIRECT_REG',
+                    name: $('#dec_name').val(),  
+                    email: $('#dec_email').val(),
+                    mobile: $('#dec_mobile').val(),
+                    user_id:'<?php echo $this->session->userdata('new_trainee_user_id');?>',
+                    class_id:'<?php echo $class_id;?>',
+                    res: $('input[name="dec_res"]:checked').val(),
+                    lesson_timing: $('#dec_les_time').val(),
+                    overseas: $('#dec_overseas').val()
+                },
+                success: function(data) {
+                   if(data !='1'){
+                      $('#ex1011').show();  
+                  }
+                }
+            });
+        }else{
+             $('.statuserr').html('<span style="color:red">Please fill all the (*) Mark fields to Continue!</span>');
+        }
+    }); 
+     <?php } ?>
     });
     
 </script>

@@ -6,11 +6,13 @@ class Settings extends CI_Controller {
     private $user;
     public function __construct() {
         parent::__construct();
+        $this->load->model('user_model');
         $this->load->helper('common');
         $this->load->model('settings_model');
         $this->load->model('notifications_model');
         $this->load->helper('metavalues_helper');
         $this->load->model('meta_values', 'meta');
+        $this->load->library('bcrypt');
         $this->user=$this->session->userdata('userDetails');
     }
     /*
@@ -197,4 +199,41 @@ class Settings extends CI_Controller {
             return FALSE;
         }
     }
+    
+    public function change_password() {
+        $data['page_title'] = 'Change Password - Settings';
+        $data['main_content'] = 'user/changepassword';
+        //server  side validation
+        $this->form_validation->set_rules('old_password', 'Old Password', 'trim|required');
+        $this->form_validation->set_rules('new_password', 'New Password', 'trim|required|matches[confirm_password]');
+        $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required');
+
+        if ($this->form_validation->run() == TRUE) {
+            extract($_POST);
+            $encrypted_password = $this->bcrypt->hash_password($new_password);
+            $result = $this->user_model->update_password($encrypted_password);
+            if ($result == TRUE) {
+                $this->session->set_flashdata('success', 'Your password has been updated successfully!');
+            } else {
+                $this->session->set_flashdata('error', 'Unable to update your password.Please try again later.');
+            }
+            redirect('settings/change_password');
+        } else {
+            $this->load->view('layout_public', $data);
+        }
+    }
+
+    /*
+      Function to verify current password.
+
+     */
+
+    public function password_exist() {
+        extract($_POST);
+        $oldpassword = trim(($oldpassword));
+        $exists = $this->user_model->match_old_pwd($oldpassword);
+        echo ($exists) ? '1' : '0';
+        return;
+    }
+
 }

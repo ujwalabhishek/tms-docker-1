@@ -977,6 +977,7 @@ class Courses_Model extends CI_Model {
         $this->db->join('trainee_feedback tf', 'tf.feedback_question_id = mv.parameter_id and tf.class_id = ' . $class_id . ' and tf.user_id =' . $user_id .
                 ' and tf.course_id =' . $course_id, 'left');
         $this->db->like('mv.category_id', 'CAT32_01', 'after');
+        //$this->db->where('tf.tenant_id', $tenant_id);
         $query = $this->db->get();
         $result = $query->result_array();
         $grouped_by_question = array();
@@ -1201,12 +1202,39 @@ class Courses_Model extends CI_Model {
         return $result;
     }
         //function to generate invoice id
-    private function generate_invoice_id() {
-        $pre_fix_array = array("T01"=>"T01", "T02"=>"XPR", "T03"=>"CAI", "T04"=>"FL","T12" => "XPR.A.","T16" => "XPR.B.");
-        $lookup_table = array("T01" =>"test_invoice_id", "T02"=>"xprienz_invoice_id", "T03"=>"carrie_invoice_id", "T04"=>"focus_invoice_id","T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id");
-        $tenant_id = TENANT_ID;
+    ////added by shubhranshu for everest invoice id changes
+   private function generate_invoice_id() {
+
+        //$date_array = explode("-",$class_start_date);
+
+      $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.","T17" => "EVI","T20" => "WABLAB","T23" => "DEMO", "T24" => "RLIS");
+
+        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id","T17" => "ei_new_invoice_id","T20" => "wablab_invoice_id","T23" => "demo_invoice_id", "T24" => "rlis_invoice_id");
+
+        $tenant_id = $this->tenant_id;
+
         $invoice_id_tmp = get_max_lookup($lookup_table[$tenant_id]);
-        $invoice_id = $pre_fix_array[$tenant_id].$invoice_id_tmp;
+
+        if($tenant_id == 'T17'){
+            if(strlen($invoice_id_tmp)== 1){
+                $invoice_id_tmp = '0000'.$invoice_id_tmp;
+            }elseif(strlen($invoice_id_tmp)== 2){
+                $invoice_id_tmp = '000'.$invoice_id_tmp;
+            }elseif(strlen($invoice_id_tmp)== 3){
+                $invoice_id_tmp = '00'.$invoice_id_tmp;
+            }elseif(strlen($invoice_id_tmp)== 4){
+                $invoice_id_tmp = '0'.$invoice_id_tmp;
+            }elseif(strlen($invoice_id_tmp)== 5){
+                $invoice_id_tmp = $invoice_id_tmp;
+            }else{
+                $invoice_id_tmp = $invoice_id_tmp;
+            }
+            
+            $invoice_id = $pre_fix_array[$tenant_id] .'-20'.date('y').'-'.$invoice_id_tmp;
+        }else{
+            $invoice_id = $pre_fix_array[$tenant_id] . $invoice_id_tmp;
+        }
+
         return $invoice_id;
     }
 //code modification ends here

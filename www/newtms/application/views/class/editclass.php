@@ -10,7 +10,7 @@ if (!empty($tax_error)) {
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
     $js_class_status = '<?php echo $js_class_status; ?>';
-    
+     $js_tenant = '<?php echo TENANT_ID; ?>';
 </script>
 <script>
     $trainee_enroll = <?php echo json_encode($trainee_enrolled); ?>;
@@ -26,7 +26,7 @@ if (!empty($tax_error)) {
     $siteurl = '<?php echo site_url(); ?>';
     $course_duration = '<?php echo $course_duration; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/editclass.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/editclass.js?0.01"></script>
 
 <div class="col-md-10">
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class.png" /> Class - Edit</h2>
@@ -58,6 +58,7 @@ if (!empty($tax_error)) {
                         );
                         echo form_input($course_id);
                         ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="course_name_err"></span>
                     </td>
                     <td class="td_heading" width="20%">Class Name:<span class="required">*</span></td>
@@ -326,6 +327,27 @@ if (!empty($tax_error)) {
                                 ?>
                                 &nbsp;</td>
                         </tr>
+                       
+                        <tr>
+                        <td class="td_heading">TPGateway Course Run ID:</td>
+                        <td colspan="5">
+                            <?php
+                            $tpg_course_run_id = array(
+                                'name' => 'tpg_course_run_id',
+                                'id' => 'tpg_course_run_id',
+                                'value' => $class->tpg_course_run_id,
+                                'maxlength' => 60,
+                                'width' => '300px',
+                                "class" => 'upper_case'
+                            );
+                            echo form_input($tpg_course_run_id);
+                            ?>
+                            </span>
+                            <br>
+                            <span id="tpg_crse_err" class="tpg_crse_err"></span>
+                        </td>
+                    </tr>
+                    
                         <tr>
                             <td colspan="2" class="td_heading">  
                                 <?php
@@ -713,7 +735,7 @@ if (!empty($tax_error)) {
         ?>
         <div class="button_class">
             <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button> &nbsp; &nbsp; 
-            <a href="#ex8" rel="modal:open" class="small_text <?php echo $deactivate_class; ?> check_deactivate" data-class="<?php echo $this->input->post('class_id'); ?>"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Deactivate</button></a> &nbsp; &nbsp; 
+            <a href="#ex8" rel="modal:open" class="small_text <?php echo $deactivate_class; ?> check_deactivate" data-class="<?php echo $this->input->post('class_id'); ?>"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Delete</button></a> &nbsp; &nbsp; 
             
         </div>
        
@@ -1117,8 +1139,8 @@ echo form_open("classes/deactivate_class", $form_attributes);
 ?>
 <div class="modal1_051" id="ex8" style="display:none;">
     <p>
-    <h2 class="panel_heading_style">Deactivate Class</h2>
-    <span class="error"><strong> This Class will be deactivated from </strong>
+    <h2 class="panel_heading_style">Delete Class</h2>
+    <span class="error"><strong> This Class will be deleted from </strong>
         <?php
         $deactiv_date = array(
             'name' => 'deactivation_date',
@@ -1133,7 +1155,7 @@ echo form_open("classes/deactivate_class", $form_attributes);
     </span>
     <span id="deactivation_date_err"></span>
     <br><br>
-    <strong>Reason for De-Activation:<span class="red">*</span></strong>  <?php
+    <strong>Reason for Deletion:<span class="red">*</span></strong>  <?php
     $d_reasons = fetch_metavalues_by_category_id(Meta_Values::CLASS_DEACTIVATE_REASONS);
     $reasons_options[''] = 'Select';
     foreach ($d_reasons as $item):
@@ -1154,11 +1176,12 @@ echo form_open("classes/deactivate_class", $form_attributes);
         );
         echo form_input($attr);
         echo form_hidden('class_id_deactive', $class->class_id);
+        echo form_hidden('class_id_deactive', $class->class_id);
         ?>
     </div>
     <span id="other_reason_for_deactivation_err" style="float:right;clear:both;"></span>
     <br><br>
-    Are you sure you want to deactivate this class? <br>
+    Are you sure you want to Delete this class? <br>
     <span class="required_i red">*Required Field</span>
 
     <div class="popup_cancel9">

@@ -46,9 +46,31 @@ $(document).ready(function() {
             $(this).trigger("change");
         }
     });
+    $("#start_date2").click(function(){
+        $('.print_soa_report').prop("disabled", false);/////added by shubhranshu
+         $('.print_soa_report').html("Print");///added by shubhranshu
+         $('.submit_but').prop("disabled", false);///added by shubhranshu
+         $('#okbtn').prop("disabled", false);///added by shubhranshu
+           $('#okbtn').html('Ok');///added by shubhranshu
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span> Export");///added by shubhranshu
+    });
+    $("#start_date1").click(function(){
+        $('.print_soa_report').prop("disabled", false);/////added by shubhranshu
+         $('.print_soa_report').html("Print");///added by shubhranshu
+         $('.submit_but').prop("disabled", false);///added by shubhranshu
+         $('#okbtn').prop("disabled", false);///added by shubhranshu
+           $('#okbtn').html('Ok');///added by shubhranshu
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span> Export");///added by shubhranshu
+    });
     $('#generateby').change(function() {
         $val = $(this).val();
         $('.error1').empty();
+        $('.print_soa_report').prop("disabled", false);/////added by shubhranshu
+         $('.print_soa_report').html("Print");///added by shubhranshu
+         $('.submit_but').prop("disabled", false);///added by shubhranshu
+          $('#okbtn').prop("disabled", false);///added by shubhranshu
+           $('#okbtn').html('Ok');///added by shubhranshu
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span> Export");///added by shubhranshu
         remove_all();
         $('.generate1').hide();
         $('.generate2').hide();
@@ -138,6 +160,13 @@ $(document).ready(function() {
             $('#soa_report_form')[0].submit();
         }
     });
+    // below code added by shubhranshu for dynamic button search request
+    $('.select_soa_print').click(function(){
+        $('.print_soa_report').prop("disabled", false);
+         $('.print_soa_report').html("Print");
+         $('.submit_but').prop("disabled", false);
+         $('.submit_but').html("<span class='glyphicon glyphicon-search'></span>Export");
+    });// below code added by shubhranshu for dynamic button search request
 });
 function form_validation($retval) {
     $course = $('#courseId').val();

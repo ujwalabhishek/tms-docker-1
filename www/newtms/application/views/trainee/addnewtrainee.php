@@ -11,6 +11,8 @@ if ($user->role_id == 'ADMN' || $user->role_id == 'COMPACT') {
 if (!empty($tax_error)) { 
     echo '<div class="error1">' . $tax_error . '</div>';
 }
+//Added by abdulla
+$tenant_id = $this->session->userdata('userDetails')->tenant_id;
 ?>
 <div class="col-md-10">
     <?php echo validation_errors('<div class="error1">', '</div>'); ?>   
@@ -40,7 +42,7 @@ if (!empty($tax_error)) {
                                 ?>
                                 <span id="country_of_residence_err"></span>
                             </td>
-                            <td class="td_heading" colspan="2" >
+                            <td class="td_heading" colspan="2">
                                 <SPAN id="SGP" style="">NRIC Type : <span class="required">* </span>   <!--Modified dummy on 10/03/15--->               
                                     <?php
                                     $nrics = fetch_metavalues_by_category_id(Meta_Values::NRIC);
@@ -48,7 +50,7 @@ if (!empty($tax_error)) {
                                     foreach ($nrics as $item):
                                         $nris_options[$item['parameter_id']] = $item['category_name'];
                                     endforeach;
-
+                                    //$nris_options['SNG_4'] = 'NO TAX CODE';
                                     $attr = 'id="NRIC"';
                                     echo form_dropdown('NRIC', $nris_options, $this->input->post('NRIC'), $attr);
                                     ?>
@@ -159,7 +161,9 @@ if (!empty($tax_error)) {
                             ?> 
                             <span id="pers_gender_err"></span>
                         </td>
-                        <td class="td_heading">Date of Birth:</td>
+                        <td class="td_heading">Date of Birth:						
+							<span class="required">*
+						</td>
                         <td>
                             <?php
                             $pers_dob = array(
@@ -302,7 +306,16 @@ if (!empty($tax_error)) {
                         <?php
                         $occupation = fetch_metavalues_by_category_id(Meta_Values::OCCUPATION);
                         $occupation_options[''] = 'Select';
-                        foreach ($occupation as $item):
+                        
+                        if(TENANT_ID=='T17' || TENANT_ID=='T20'){
+                            foreach ($occupation as $item):
+                             
+                                        $occupation_options[$item['parameter_id']] = $item['category_name'];
+                                    
+                            //$occupation_options[$item['parameter_id']] = $item['category_name'];
+                        endforeach;
+                        }else{
+                            foreach ($occupation as $item):
                              if($item['parameter_id']=='WNCLBO_10' || $item['parameter_id']=='CLWRK_04' || 
                                      $item['parameter_id']=='SWASAM_05'){
                            
@@ -311,6 +324,8 @@ if (!empty($tax_error)) {
                                     }
                             //$occupation_options[$item['parameter_id']] = $item['category_name'];
                         endforeach;
+                        }
+                        
                         ?>
                         <td colspan="3">
                             <?php echo form_dropdown('occupation', $occupation_options, set_value('occupation'), 'id="occupation" style="width:170px"'); ?>
@@ -347,13 +362,13 @@ if (!empty($tax_error)) {
                         </td>    
                     </tr>
                     <tr>
-                        <td class="td_heading">Email Id:<span id="span_email_id" class="required" style="display:none">*</span></td>
+                        <td class="td_heading">Email Id:<span id="span_email_id" class="required">*</span></td>
                         <?php
                         $email = array(
                             'name' => 'user_registered_email',
                             'id' => 'user_registered_email',
                             'maxlength' => '50',
-                            'value' => set_value('pers_email'),
+                            'value' => set_value('user_registered_email'),
                             'onblur' => 'javascript:isunique_email(this.value,this.id);',
                             'style' => 'width:250px',
                         );
@@ -368,7 +383,7 @@ if (!empty($tax_error)) {
                         
                         ?>
                         <td colspan="2"><?php echo form_input($email); ?> <span id="user_registered_email_err"> </span></td>
-                        <td class="td_heading">Confirm Email Id:<span id="span_confirm_email_id" class="required" style="display:none">*</span></td>
+                        <td class="td_heading">Confirm Email Id:<span id="span_confirm_email_id" class="required">*</span></td>
                         <td colspan="2"><?php echo form_input($conf_email); ?><span id="pers_conf_email_err"></span></td>
                     </tr>
                     <tr>
@@ -392,7 +407,12 @@ if (!empty($tax_error)) {
                         $highest_educ_level = fetch_metavalues_by_category_id(Meta_Values::HIGHEST_EDUC_LEVEL);
                         $highest_educ_level_options[''] = 'Select';
                         foreach ($highest_educ_level as $item):
-                             if($item['parameter_id']=='WSQDP_74' || $item['parameter_id']=='LSEC_20' || $item['parameter_id']=='UNIVFD_80'
+                            if($user->tenant_id == 'T20' || $user->tenant_id == 'T17'){
+                           
+                                 $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
+                                    
+                            }else{
+                                if($item['parameter_id']=='WSQDP_74' || $item['parameter_id']=='LSEC_20' || $item['parameter_id']=='UNIVFD_80'
                                     || $item['parameter_id']=='UNIVDD_90'|| $item['parameter_id']=='MNITEC_53' || $item['parameter_id']=='TWGC_36'||
                                     $item['parameter_id']=='WSQGD_93' || $item['parameter_id']=='TSD_32' ||  $item['parameter_id']=='WSQCERT_54' ||
                                       $item['parameter_id']=='WSQSD_75' ||  $item['parameter_id']=='WSQHC_55' ||  $item['parameter_id']=='WSQAC_73'
@@ -401,6 +421,7 @@ if (!empty($tax_error)) {
                                     }else{
                                          $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
                                     }
+                            }
                             
 //                            $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
                         endforeach;
@@ -441,7 +462,11 @@ if (!empty($tax_error)) {
             <table class="table table-striped">
                 <tbody>
                     <tr>
-                        <td class="td_heading" width="15%">Building/Street:</td>
+                        <td class="td_heading" width="15%">Building/Street:
+						<?php if($tenant_id=='T24'){ ?>
+							<span class="required">*
+						<?php } ?>
+						</td>
                         <?php
                         $p_addr = array(
                             'name' => 'pers_personal_address_bldg',
@@ -452,8 +477,14 @@ if (!empty($tax_error)) {
                             'class' => 'upper_case'
                         );
                         ?>
-                        <td colspan="3" width="50%"><?php echo form_textarea($p_addr); ?></td>
-                        <td class="td_heading" width="8%">City:</td>
+                        <td colspan="3" width="50%"><?php echo form_textarea($p_addr); ?>
+							<span id="pers_personal_address_bldg_err"></span>
+						</td>
+                        <td class="td_heading" width="8%">City:
+						<?php if($tenant_id=='T24'){ ?>
+							<span class="required">*
+						<?php } ?>
+						</td>
                         <?php
                         $city = array(
                             'name' => 'pers_city',
@@ -471,7 +502,11 @@ if (!empty($tax_error)) {
                         </td>                    
                     </tr>
                     <tr>
-                        <td class="td_heading">Country:</td>
+                        <td class="td_heading">Country:
+						<?php if($tenant_id=='T24'){ ?>
+							<span class="required">*
+						<?php } ?>
+						</td>
                         <td width="25%">
                             <?php
                             $attr = 'id="pers_country"';
@@ -480,16 +515,25 @@ if (!empty($tax_error)) {
                             <span id="pers_country_err"></span>
                         </td>
 
-                        <td class="td_heading">State:</td>
+                        <td class="td_heading">State:
+						<?php if($tenant_id=='T24'){ ?>
+							<span class="required">*
+						<?php } ?>
+						</td>
                         <td>                           
                             <?php
                             $attr = array('' => 'Select');
                             $attr_js = 'id="pers_states"';
                             echo form_dropdown('pers_states', $attr, set_value(pers_states), $attr_js);
-                            ?>                        
+                            ?>
+							<span id="pers_states_err"></span>
                         </td>
 
-                        <td class="td_heading">Postal Code:</td>
+                        <td class="td_heading">Postal Code:
+						<?php if($tenant_id=='T24'){ ?>
+							<span class="required">*
+						<?php } ?>
+						</td>
                         <?php
                         $zip = array(
                             'name' => 'pers_zip_code',
@@ -1141,22 +1185,22 @@ if (!empty($tax_error)) {
             if ($("#bypassemail_1").is(":checked")) {
                 var email = $.trim($('#user_registered_email').val());
                 if (email == '') {
-                    $("#user_registered_email_err").text("").removeClass('error');
-                    $("#user_registered_email").removeClass('error');
-                    $("#pers_conf_email_err").text("").removeClass('error');
-                    $("#pers_conf_email").removeClass('error');
+                    //$("#user_registered_email_err").text("").removeClass('error');
+                   // $("#user_registered_email").removeClass('error');
+                   // $("#pers_conf_email_err").text("").removeClass('error');
+                   // $("#pers_conf_email").removeClass('error');
                 }
                 $('#span_activate_user').css("display", "");
                 $('#BPEMAC_content').css("display", "");
                 $('#EMACRQ_content').css("display", "none");
-                $("#span_email_id").css("display", "none");
-                $("#span_confirm_email_id").css("display", "none");
+                //$("#span_email_id").css("display", "none");
+               // $("#span_confirm_email_id").css("display", "none");
             } else {
                 $('#span_activate_user').css("display", "none");
                 $('#BPEMAC_content').css("display", "none");
                 $('#EMACRQ_content').css("display", "");
-                $("#span_email_id").css("display", "");
-                $("#span_confirm_email_id").css("display", "");
+               // $("#span_email_id").css("display", "");
+               // $("#span_confirm_email_id").css("display", "");
             }
             return false;
         });
@@ -1264,12 +1308,23 @@ if (!empty($tax_error)) {
                 $("#SGP_OTHERS").hide();
             } else if (this.value == "SNG_3") {
                 $("#SGP_OTHERS").show();
+                $('#SGP_OTHERS').css('visibility','visible');
                 $('#SGP_OTHERS option:first-child').attr("selected", "selected");
                 $('#SGP_OTHERS_label').text('');
                 $('#SGP_OTHERS_label').text('OTHERS :');
                 $('#SGP_ID_label').text('');
                 $('#SGP_ID_label').text('OTHERS :');
-            } else {
+            }  else if (this.value == "SNG_4") { ////added by shubhranshu due to client requirement on 16/12/2019
+                $("#SGP_OTHERS").show();
+                $('#SGP_OTHERS option:first-child').attr("selected", "selected");
+                $('#SGP_OTHERS_label').text('');
+                $('#SGP_OTHERS_label').text('OTHERS :');
+                $('#SGP_ID_label').text('');
+                $('#SGP_ID_label').text('OTHERS :');
+                $('#NRIC_OTHER option[value=NOTAXCODE]').attr('selected','selected');////added by shubhranshu for client requirement
+                $('#SGP_OTHERS').css('visibility','hidden');
+            $("#SGP_ID").hide();
+            }else {
                 $('#SGP_OTHERS_label').text('');
                 $('#SGP_OTHERS_label').text('NRIC :');
                 $('#SGP_ID_label').text('');
@@ -1433,6 +1488,7 @@ if (!empty($tax_error)) {
         function check_nric_restriction(){
             var $nric = $("#NRIC_ID").val(); 
             //alert($nric);
+            if($nric !=''){
             $.ajax({
                     url: "check_nric_restriction",
                     type: "post",
@@ -1441,13 +1497,12 @@ if (!empty($tax_error)) {
                     data: {tax_code: $nric,operation:'ADDNEWTRAINEE'},
                     success: function(res) {
                         if (res == 1) {
-                            ///added by shubhranshu
-                            if($privilage == '0'){
-                                if($role_id == 'ADMN'){
+                            if($privilage == '0'){///added by shubhranshu
+                                if($role_id == 'ADMN'){///added by shubhranshu
                                     if(res > 0){
                                         $('#ex111').modal();
                                     }
-                                }
+                                }///added by shubhranshu
                             }else if($privilage == '1'){
                                 if(res > 0){
                                         $('#ex111').modal();
@@ -1456,13 +1511,14 @@ if (!empty($tax_error)) {
                         } 
                     }
                 });
+            }
         }
         /*--------------------------------------------------------------*/
         function isunique_taxcode(e, id) {
             e = $.trim(e);
-            var NRIC = $("#NRIC").val();
-            
-            check_nric_restriction();  ///added by shubhranshu
+            var NRIC = $("#NRIC").val(); 
+           check_nric_restriction();  ///added by shubhranshu
+
             
             var NRIC_OTHER = $("#NRIC_OTHER").val();
             var country_of_residence = $("#country_of_residence").val(); 
@@ -1689,11 +1745,11 @@ if (!empty($tax_error)) {
 
         function isunique_email(e, id) {
             e = $.trim(e);
-            if (e == '' && $("#bypassemail_1").is(":checked")) {
-                $("#" + id + "_err").text("").removeClass('error');
-                $("#" + id).removeClass('error');
-                return false;
-            }
+            //if (e == '' && $("#bypassemail_1").is(":checked")) {
+            //    $("#" + id + "_err").text("").removeClass('error');
+            //    $("#" + id).removeClass('error');
+            //    return false;
+            //}
             if (e == '') {
                 $("#" + id + "_err").text("[required]").addClass('error');
                 $("#" + id).addClass('error');
@@ -1708,7 +1764,7 @@ if (!empty($tax_error)) {
                     type: "post",
                     data: 'email=' + e,
                     success: function(res) {
-                        if (res == 1) {
+                        if (res) {
                             window.email_id = 'exists';
                             $("#" + id + "_err").text("[Email Id exists!]").addClass('error');
                             $("#" + id).addClass('error');
@@ -1790,7 +1846,7 @@ if (!empty($tax_error)) {
                     $("#NRIC_err").text("[required]").addClass('error');
                     $("#NRIC").addClass('error');
                     retVal = false;
-                } else if (NRIC == "SNG_3") {
+                } else if (NRIC == "SNG_3" || NRIC == "SNG_4") {
                     if (NRIC_OTHER == "") {
                         $("#NRIC_OTHER_err").text("[required]").addClass('error');
                         $("#NRIC_OTHER").addClass('error');
@@ -1846,7 +1902,7 @@ if (!empty($tax_error)) {
                     $("#user_name").addClass('error');
                 }
             }
-
+			
             pers_first_name = $.trim($("#pers_first_name").val());
             if (pers_first_name == "") {
                 $("#pers_first_name_err").text("[required]").addClass('error');
@@ -1877,21 +1933,37 @@ if (!empty($tax_error)) {
                 $("#pers_gender").removeClass('error');
             }
 
-            pers_dob = $.trim($("#pers_dob").val());
+//Added by abdulla
+$tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>";
+
+		//if($tenant_id == 'T24') {
+			pers_dob = $.trim($("#pers_dob").val());
             if (pers_dob == "") {
-                $("#pers_dob_err").text("").removeClass('error');
-                $("#pers_dob").removeClass('error');
-            }
-            else if (valid_date_field(pers_dob) == false) {
+                $("#pers_dob_err").text("[required]").addClass('error');
+                $("#pers_dob").addClass('error');
+            } else if (valid_date_field(pers_dob) == false) {
                 $("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
                 $("#pers_dob").removeClass('error');
                 retVal = false;
-            }
-
-            else {
+            } else {
                 $("#pers_dob_err").text("").removeClass('error');
                 $("#pers_dob").removeClass('error');
             }
+		//} else {
+		//	pers_dob = $.trim($("#pers_dob").val());
+        //   if (pers_dob == "") {
+        //        $("#pers_dob_err").text("").removeClass('error');
+         //       $("#pers_dob").removeClass('error');
+        //    } else if (valid_date_field(pers_dob) == false) {
+        //        $("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
+        //        $("#pers_dob").removeClass('error');
+        //        retVal = false;
+        //    } else {
+        //        $("#pers_dob_err").text("").removeClass('error');
+        //        $("#pers_dob").removeClass('error');
+        //    }
+		//}
+            
 
             pers_contact_number = $.trim($("#pers_contact_number").val());
             if (pers_contact_number == "") {
@@ -1960,7 +2032,7 @@ if (!empty($tax_error)) {
                 }
             }
             user_registered_email = $.trim($("#user_registered_email").val());
-            if ($("#bypassemail_2").is(":checked")) {
+            //if ($("#bypassemail_2").is(":checked")) {
                 if (user_registered_email == "") {
                     $("#user_registered_email_err").text("[required]").addClass('error');
                     $("#user_registered_email").addClass('error');
@@ -1973,12 +2045,12 @@ if (!empty($tax_error)) {
                     $("#pers_conf_email_err").text("").removeClass('error');
                     $("#pers_conf_email").removeClass('error');
                 }
-            } else {
-                $("#user_registered_email_err").text("").removeClass('error');
-                $("#user_registered_email").removeClass('error');
-                $("#pers_conf_email_err").text("").removeClass('error');
-                $("#pers_conf_email").removeClass('error');
-            }
+            //} else {
+            //    $("#user_registered_email_err").text("").removeClass('error');
+            //    $("#user_registered_email").removeClass('error');
+            //    $("#pers_conf_email_err").text("").removeClass('error');
+            //    $("#pers_conf_email").removeClass('error');
+            //}
 
             pers_conf_email = $.trim($("#pers_conf_email").val());
             if (pers_conf_email != user_registered_email) {
@@ -2037,36 +2109,99 @@ if (!empty($tax_error)) {
                 $("#highest_educ_level").removeClass('error');
             }
 
-            var pers_city = $.trim($("#pers_city").val());
-            if (pers_city != '') {
-                if (valid_name(pers_city) == false) {
-                    $("#pers_city_err").text("[invalid]").addClass('error');
-                    $("#pers_city").addClass('error');
-                } else {
-                    $("#pers_city_err").text("").removeClass('error');
-                    $("#pers_city").removeClass('error');
-                }
-            } else {
-                $("#pers_city_err").text("").removeClass('error');
-                $("#pers_city").removeClass('error');
-            }
-
-            var pers_zipcode = $.trim($("#pers_zipcode").val());
-            if (pers_zipcode != '') {
-                if (valid_zip(pers_zipcode) == false) {
-                    $("#pers_zipcode_err").text("[invalid]").addClass('error');
-                    $("#pers_zipcode").addClass('error');
-                } else {
-                    $("#pers_zipcode_err").text("").removeClass('error');
-                    $("#pers_zipcode").removeClass('error');
-                }
-            } else {
-                $("#pers_zipcode_err").text("").removeClass('error');
-                $("#pers_zipcode").removeClass('error');
-            }            
+			if($tenant_id == 'T24') {
+				pers_states = $.trim($("#pers_states").val());
+				if (pers_states == "") {
+					$("#pers_states_err").text("[required]").addClass('error');
+					$("#pers_states").addClass('error');
+					retVal = false;
+				} else {
+					$("#pers_states_err").text("").removeClass('error');
+					$("#pers_states").removeClass('error');
+				}			
+			}
+			
+			if($tenant_id == 'T24') {
+				var pers_city = $.trim($("#pers_city").val());
+				if (pers_city != '') {
+					if (valid_name(pers_city) == false) {
+						$("#pers_city_err").text("[invalid]").addClass('error');
+						$("#pers_city").addClass('error');
+					} else {
+						$("#pers_city_err").text("").removeClass('error');
+						$("#pers_city").removeClass('error');
+					}
+				} else if(pers_city == '') {
+					$("#pers_city_err").text("[required]").addClass('error');
+					$("#pers_city").addClass('error');				
+				} else {
+					$("#pers_city_err").text("").removeClass('error');
+					$("#pers_city").removeClass('error');
+				}
+			} else {
+				var pers_city = $.trim($("#pers_city").val());
+				if (pers_city != '') {
+					if (valid_name(pers_city) == false) {
+						$("#pers_city_err").text("[invalid]").addClass('error');
+						$("#pers_city").addClass('error');
+					} else {
+						$("#pers_city_err").text("").removeClass('error');
+						$("#pers_city").removeClass('error');
+					}
+				} else {
+					$("#pers_city_err").text("").removeClass('error');
+					$("#pers_city").removeClass('error');
+				}
+			}
+			
+			if($tenant_id == 'T24') {
+				pers_personal_address_bldg = $.trim($("#pers_personal_address_bldg").val());
+				if (pers_personal_address_bldg == "") {
+					$("#pers_personal_address_bldg_err").text("[required]").addClass('error');
+					$("#pers_personal_address_bldg").addClass('error');
+				} else {
+					$("#pers_personal_address_bldg_err").text("").removeClass('error');
+					$("#pers_personal_address_bldg").removeClass('error');
+				}
+			}
+			
+			if($tenant_id == 'T24') {
+				var pers_zipcode = $.trim($("#pers_zipcode").val());
+				if (pers_zipcode != '') {
+					if (valid_zip(pers_zipcode) == false) {
+						$("#pers_zipcode_err").text("[invalid]").addClass('error');
+						$("#pers_zipcode").addClass('error');
+					} else {
+						$("#pers_zipcode_err").text("").removeClass('error');
+						$("#pers_zipcode").removeClass('error');
+					}
+				} else if(pers_zipcode == '') {
+					$("#pers_zipcode_err").text("[required]").addClass('error');
+					$("#pers_zipcode").addClass('error');
+				} else {
+					$("#pers_zipcode_err").text("").removeClass('error');
+					$("#pers_zipcode").removeClass('error');
+				}
+			} else {
+				var pers_zipcode = $.trim($("#pers_zipcode").val());
+				if (pers_zipcode != '') {
+					if (valid_zip(pers_zipcode) == false) {
+						$("#pers_zipcode_err").text("[invalid]").addClass('error');
+						$("#pers_zipcode").addClass('error');
+					} else {
+						$("#pers_zipcode_err").text("").removeClass('error');
+						$("#pers_zipcode").removeClass('error');
+					}
+				} else {
+					$("#pers_zipcode_err").text("").removeClass('error');
+					$("#pers_zipcode").removeClass('error');
+				}  
+			}
+		    
             if ($('#trainee_validation_div span').hasClass('error')) {
                 retVal = false;
             }
+        
         if(retVal == true){
             $('.button_class99 button[type=submit]').css('display','none');
         }

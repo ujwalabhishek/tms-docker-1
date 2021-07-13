@@ -7,14 +7,15 @@ if (!defined('BASEPATH'))
 class Manage_Subsidy extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Manage_Subsidy_Model', 'manage_subsidy');        
+        $this->load->model('manage_subsidy_model', 'manage_subsidy');        
         $this->view_folder = 'tenant/';
         $this->controller_name = 'manage_subsidy/';
     }
     /**
      * This function to list tenant subsidy
      */
-    public function index() {        
+    public function index() {    
+        $data['sideMenuData'] = fetch_non_main_page_content(); // added by shubhranshu
         $records_per_page = RECORDS_PER_PAGE;        
         $pageno = ($this->uri->segment(2)) ? $this->uri->segment(2) : 1;        
         $offset = ($pageno * $records_per_page);
@@ -36,6 +37,7 @@ class Manage_Subsidy extends CI_Controller {
      * This Function add tenant subsidy.
      */
     public function new_subsidy() {
+        $data['sideMenuData'] = fetch_non_main_page_content();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {            
             $subsidy_type = $this->input->post('subsidy_type');
             $subsidy_amount = $this->input->post('subsidy_amount');           
@@ -60,7 +62,8 @@ class Manage_Subsidy extends CI_Controller {
      * This function edit the tenant subsidy
      * @param type $subsidy_id
      */
-    public function edit_subsidy($subsidy_id) {
+    public function edit_subsidy($subsidy_id=0) {
+        $data['sideMenuData'] = fetch_non_main_page_content();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {            
             $subsidy_type = $this->input->post('subsidy_type');
             $subsidy_id = $this->input->post('subsidy_id');

@@ -97,7 +97,8 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
         $from_date = clone $to_date;
 
    
-
+//echo $from_date.'--------'.$to_date;exit;
+   
     list($week_start_date, $week_end_date) = calculate_start_end_date_range($from_date, $to_date, $class_start, $class_end, $week_start_date, $week);
 
  //previus commneted by sushil
@@ -226,14 +227,14 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
             $data['tabledata'] = $CI->classtraineemodel->present_absent_attendance_list($tenant_id, $course_id, $class_id, $subsidy, $week_start_date, $week_end_date, $sort_by, $sort_order, $attendance_status, $user_present);
 
 
-
-                }
+        }
 
     }
 
     $data['week_start'] = $week_start_date->format(CLIENT_DATE_FORMAT);
 
     $data['week_end'] = $week_end_date->format(CLIENT_DATE_FORMAT);
+
 
     $data['class_id'] = $class_id;
 
@@ -247,7 +248,7 @@ function get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $
 
     $data['class_end_date'] = date('Y-m-d',strtotime($class_details->class_end_datetime));
 
-
+//print_r($data);exit;
 
     return $data;
 
@@ -288,7 +289,8 @@ function calculate_start_end_date_range_for_month(DateTime $from_date) {
 }
 
 function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_start, $class_end, $week_start_date = null, $week = null) {
-
+//echo date('D',$week_start_date->getTimestamp());print_r($week_start_date);exit;
+     // print_r($week_start_date);exit;
     if (empty($week_start_date) || (strtotime($class_start->format('Y-m-d')) == strtotime($class_end->format('Y-m-d'))) ) {        
 
         $week_start_time = strtotime('Monday this week 12:00:00', $from_date->getTimestamp());
@@ -298,10 +300,13 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
         if(date('D',$week_start_date->getTimestamp())=='Sun'){
 
             $week_start_time = strtotime('Monday previous week 12:00:00', $week_start_date->getTimestamp());
-
+            $week_start_time = $week_start_time + 604800;
+            
         }else if(strtotime('Monday this week 12:00:00', $week_start_date->getTimestamp()) == strtotime('Monday this week 12:00:00') && strtotime($class_end->format('Y-m-d')) < strtotime($week_start_date->format('Y-m-d'))) {
 
+
             $week_start_time = strtotime('Monday this week 12:00:00', $class_start->getTimestamp());
+            $week_start_time = $week_start_time + 604800;
 
         }else{
 
@@ -310,7 +315,10 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
         }
 
     }
-
+    //echo date_default_timezone_get();
+    //echo 1571025600-$week_start_time.'-------';
+    //$week_start_time = $week_start_time + 604800;
+//print_r($week_start_time);exit;
     if ($week == 1) {
 
         $week_start_time = strtotime("-7 days", $week_start_time);
@@ -344,7 +352,7 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
         $first_sunday_datetime = $class_end;
 
     }    
-
+//echo print_r($start_datetime);print_r($first_sunday_datetime);exit;////
     return array($start_datetime, $first_sunday_datetime);
 
 }

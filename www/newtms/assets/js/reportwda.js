@@ -1,7 +1,14 @@
 /**
  * This js file includes in WDA reports page
  */
+
 $(document).ready(function() {
+    $( "#displayText" ).click(function() {
+          $( "#alertmsg" ).show();
+        });
+         $( "#displayText1" ).click(function() {
+          $( "#alertmsg" ).show();
+        });
     $("#start_date").datepicker({
         dateFormat: 'dd-mm-yy',
         changeMonth: true,
@@ -166,7 +173,22 @@ $(document).ready(function() {
             }else{
                 $('#search_error').removeClass('error').text('');
         }
+        check_remove_id();///////added by shubhranshu
         return retval;
     }
+    /////////////added by shubhranshu///////////////////////
+    function check_remove_id(){
+        
+        $taxcode = $('#taxcode').val();
+        $trainee_name = $('#trainee').val();
+        
+        if($taxcode == ''){
+           $('#taxcode_id').val(''); 
+        }
+        if($trainee_name == ''){
+           $('#trainee_id').val(''); 
+        }
+    }/////////////////////////////////////////////////////////////////////////////////////
+    
     ///////added by shubhranshu to vaildate search operation///////////////////////////////////////////////////////////
 });

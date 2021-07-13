@@ -58,7 +58,7 @@ echo form_open_multipart("internal_user/add_user", $atr);
                             ?>
                             <span id="NRIC_err"></span>
                         </SPAN>              
-                        <SPAN id="SGP_OTHERS" style="display:none;">
+                        <SPAN id="SGP_OTHERS" style="<?php if(empty($this->input->post('NRIC_OTHER'))){echo "display:none";}?>">
                             <br /><br />
                             <label id="SGP_OTHERS_label">NRIC Code: </label><span class="required">* </span>                  
                             <?php
@@ -73,7 +73,7 @@ echo form_open_multipart("internal_user/add_user", $atr);
                             ?>
                             <span id="NRIC_OTHER_err"></span>
                         </SPAN>
-                        <SPAN id="SGP_ID" style="display:none;">
+                        <SPAN id="SGP_ID" style="<?php if(empty($this->input->post('NRIC_ID'))){echo "display:none";}?>">
                             <br /><br />
                             <label id="SGP_ID_label"> NRIC Code : </label><span class="required">* </span>                  
                             <?php
@@ -82,7 +82,7 @@ echo form_open_multipart("internal_user/add_user", $atr);
                             ?>
                             <span id="NRIC_ID_err"></span>                    
                         </SPAN>
-                        <SPAN id="USA" style="display:none;">SSN : <span class="required">* </span>
+                        <SPAN id="USA" style="<?php if(empty($this->input->post('SSN'))){echo "display:none";}?>">SSN : <span class="required">* </span>
                             <?php
                             $attr = array('name' => 'SSN', 'class' => 'upper_case alphanumeric', 'id' => 'SSN', 'onblur' => 'javascript:isunique_pan(this.value,this.id);');
                             echo form_input($attr, $this->input->post('SSN'));
@@ -203,23 +203,29 @@ echo form_open_multipart("internal_user/add_user", $atr);
                 </tr>
                 <tr>
                     <td class="td_heading">Highest Education:<span class="required">*</span></td>
-                    <?php
-                    $highest_educ_level = fetch_metavalues_by_category_id(Meta_Values::HIGHEST_EDUC_LEVEL);
-                    $highest_educ_level_options[''] = 'Select';
-                    foreach ($highest_educ_level as $item):
-                    if($item['parameter_id']=='WSQDP_74' || $item['parameter_id']=='LSEC_20' || $item['parameter_id']=='UNIVFD_80'
-                                || $item['parameter_id']=='UNIVDD_90'|| $item['parameter_id']=='MNITEC_53' || $item['parameter_id']=='TWGC_36'||
-                                $item['parameter_id']=='TWGD_37' || $item['parameter_id']=='TSD_32'
-                                 ){
-
-                                }else{
-                                     $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
-                                }
-                        
-                        
-                       // $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
-                    endforeach;
-                    ?>
+                   <?php
+                        $highest_educ_level = fetch_metavalues_by_category_id(Meta_Values::HIGHEST_EDUC_LEVEL);
+                        $highest_educ_level_options[''] = 'Select';
+                        foreach ($highest_educ_level as $item):
+                            if(TENANT_ID == 'T20' || TENANT_ID == 'T17'){
+                           
+                                 $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
+                                    
+                            }else{
+                                if($item['parameter_id']=='WSQDP_74' || $item['parameter_id']=='LSEC_20' || $item['parameter_id']=='UNIVFD_80'
+                                    || $item['parameter_id']=='UNIVDD_90'|| $item['parameter_id']=='MNITEC_53' || $item['parameter_id']=='TWGC_36'||
+                                    $item['parameter_id']=='WSQGD_93' || $item['parameter_id']=='TSD_32' ||  $item['parameter_id']=='WSQCERT_54' ||
+                                      $item['parameter_id']=='WSQSD_75' ||  $item['parameter_id']=='WSQHC_55' ||  $item['parameter_id']=='WSQAC_73'
+                                     ){
+                           
+                                    }else{
+                                         $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
+                                    }
+                            }
+                            
+//                            $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
+                        endforeach;
+                        ?>
                     <td colspan="4">
                         <?php echo form_dropdown('highest_educ_level', $highest_educ_level_options, set_value('highest_educ_level'), 'id="highest_educ_level" style="width:100%"'); ?>
                         <span id="highest_educ_level_err"></span>
@@ -935,7 +941,11 @@ echo form_close();
         $('#SSN_err').text('').removeClass('error');
         $('#SSN').removeClass('error');
     }
-
+    /// added by shubhranshu to remove special character & space from NRIC client side
+    $('#NRIC_ID').keyup(function(){
+        $filter_nric = $('#NRIC_ID').val();
+        $('#NRIC_ID').val($filter_nric.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, ''));
+    });
     $("#NRIC").change(function() {
         if (this.value == "") {
             $("#SGP_ID").hide();
@@ -1473,8 +1483,10 @@ echo form_close();
                                 $('#account_status').text("'Pending Activation'");
                                 $('#inactive_id').show();
                             }
-                            $('#trainee_tax_code').text(e);
-                            $('#trainee_first_name').text(res.first_name+' '+res.last_name);
+                            $('#trainee_tax_code').text(e.toUpperCase());
+                            //$('#trainee_first_name').text(res.first_name+' '+res.last_name);
+                            // commented by shubhranshu due to null issue
+                            $('#trainee_first_name').text(res.first_name);
                             $('#trainee_nationality').text(res.nationality);
                             $('#trainee_gender').text(res.gender);
                             $('#trainee_dob').text(res.dob);
@@ -1538,6 +1550,9 @@ echo form_close();
             });
         }
     }
+    
+
+     
     $(document).ready(function() {
         var check = 0;
         $('#signupForm').submit(function() {
@@ -1549,6 +1564,34 @@ echo form_close();
                 return validate(false);
             }
         });
+        
+        ///////below ajax code was added by shubhranshu to checkif the company mail id exis?
+        $('#emp_email').blur(function(){
+            $emp_email= $('#emp_email').val();
+            var id ='emp_email';
+            $.ajax({
+                    url: baseurl + "internal_user/check_unique_useremail_client",
+                    type: "post",
+                    data: {'emp_email': $emp_email},
+                    success: function(res) {
+                        if (res == 1) {
+                           
+                            $("#" + id + "_err").text("[Exists!]").addClass('error');
+                            $("#" + id).addClass('error');
+                            return false;
+                        } else {
+                            
+                            $("#" + id + "_err").text("").removeClass('error');
+                            $("#" + id).removeClass('error');
+                            return true;
+                        }
+                    },
+                    error: function() {
+                        return false;
+                    }
+                });
+
+        }) 
     });
     $(".alphabets").keydown(function(e) {
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 32]) !== -1 ||

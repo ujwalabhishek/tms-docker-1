@@ -19,7 +19,7 @@ $tms_route['CRSE']['ops'] = array('ADD' => 'add_new_course', 'EDIT' => 'edit_cou
     'BULKREG' => 'bulk_registration', 'REFFRND' => 'referrals', 'COPY' => 'copy_course', 'SALESCOMM' => 'sales_commission_rate', 'WEPT' => 'wedgit');
 //------------------------ Class mapping -------------------------------------
 $tms_route['CLSS']['controller_name'] = 'classes';
-$tms_route['CLSS']['ops'] = array('ADD' => 'add_new_class', 'EDIT' => 'edit_class', 'COPY' => 'copy_class');
+$tms_route['CLSS']['ops'] = array('ADD' => 'add_new_class', 'EDIT' => 'edit_class', 'COPY' => 'copy_class', 'ADASTOTPG' => 'tpg_assessments');
 //------------------------ Class-Trainee mapping -------------------------------------
 $tms_route['CLTRAINE']['controller_name'] = 'class_trainee';
 $tms_route['CLTRAINE']['ops'] = array(
@@ -30,7 +30,9 @@ $tms_route['CLTRAINE']['ops'] = array(
     'ONENROL' => 'online_trainee',
     'RESCHD' => 're_schedule',
     'UPDT_TRFDB'=>'update_trainer_feedback',
-    'CHG_PYMODE'=>'change_payment_mode');
+    'CHG_PYMODE'=>'change_payment_mode',
+    'STPGENR' => 'tpg_search_enrolment',
+    'MATTPG' => 'mark_attendance_tpg');
 //------------------------ Company mapping -------------------------------------
 $tms_route['COMP']['controller_name'] = 'company';
 $tms_route['COMP']['ops'] = array('ADD' => 'add_new_company', 'EDIT' => 'edit_company');
@@ -49,7 +51,9 @@ $tms_route['RPTS']['ops'] = array(
     'WDA' => 'wda',  
     'TRAQOM' => 'traqom_report',
     'MENRLCT'=>'monthly_enrollment_count',
-    'CRTD'=>'certificate_distribution'
+    'SCNRPT' => 'search_company_name',
+    'CRTD'=>'certificate_distribution',
+    'ERFS'=>'enrolment_report_for_tpg'
     );
 //------------------------ Settings mapping -------------------------------------
 $tms_route['SETTG']['controller_name'] = 'settings';
@@ -72,8 +76,16 @@ $tms_route['RPTFIN']['ops'] = array(
     'PYMNTRECD' => 'payments',
     'RPTREFND' => 'refunds',
     'SLASMNTCOM' => 'sales',
+    'SLSUMBYMN' => 'sales_summary_monthwise',
     'ACTLOG' => 'activity_log',
+    'TMSRPTS' => 'tms_report',
+    'SALREP' => 'sales_report',
     'INVADTRAIL' => 'invoice_audit_trail'); //Added for new Invoice Audit Trail Report
+    //
+    //////---ssg api course
+$tms_route['SSGCRSE']['controller_name'] = 'ssgapi_course';
+$tms_route['SSGCRSE']['ops'] = array(
+    'LSTSRCSSGCRSE' => 'list_search_course');
 //------------------------ Manage Tenant -------------------------------------
 $tms_route['MNGTENT']['controller_name'] = 'manage_tenant';
 $tms_route['MNGTENT']['ops'] = array(

@@ -5,8 +5,12 @@ if (!defined('BASEPATH'))
 /*
  * This is the helper class for all common functions used in the applications. 
  */
+//// below function added by shubhranshu for sleaning of special characracters from a string
+function clean($string) {
+   //$string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
 
-    
+   return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+}
 
 function generateEncryptedPwd() {
     $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
@@ -36,18 +40,23 @@ function getDecryptedPwd($password) {
  * @return boolean TRUE if success Else Returns FALSE on failure
  */
 function send_mail($to_email_id, $cc_email_id, $mail_subject, $mail_body) {
-    $CI = & get_instance();
-    $CI->load->library('email');
-    $CI->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
-    $CI->email->to($to_email_id);
-    $CI->email->cc($cc_email_id);
-    $CI->email->subject($mail_subject);
-    $CI->email->message($mail_body);
-    if ($CI->email->send()) {
-        return true;
-    } else {
+    if(TENANT_ID == 'T20' || TENANT_ID == 'T17'){////dont sent mail for wab and Everest
         return false;
+    }else{
+        $CI = & get_instance();
+        $CI->load->library('email');
+        $CI->email->from(FROM_EMAIL_ID, INBOX_MAIL_NAME);
+        $CI->email->to($to_email_id);
+        $CI->email->cc($cc_email_id);
+        $CI->email->subject($mail_subject);
+        $CI->email->message($mail_body);
+        if ($CI->email->send()) {
+            return true;
+        } else {
+            return false;
+        }
     }
+    
 }
 
 /**
@@ -213,7 +222,7 @@ function compare_dates_without_time(DateTime $date1, DateTime $date2) {
  */
 function parse_date($date_str, $format) {
     $date = date_create_from_format($format, $date_str);
-    return $date;
+    return $date; 
 }
 
 /**
@@ -422,7 +431,7 @@ function common_reset_password($user_id, $pass = '') {
         $pwd=  random_key_generation();
     }
     //$pwd ='Pangchoon@#1956';
-    //$encrypted_password = $CI->bcrypt->hash_password($pwd);echo $encrypted_password;exit;
+    $encrypted_password = $CI->bcrypt->hash_password($pwd);
     $password_data = array('password' => $encrypted_password);
     $CI->db->trans_start();
     $CI->db->where('user_id', $user_id);
@@ -495,7 +504,7 @@ function internal_staff_reset_password($user_id, $pass = '') {
         $mail_body = get_mail_body($data, $qry1->row('first_name'), $qry1->row('gender'));
         $mail_body_admin = get_mail_body_admin_pwreset($data, $qry1->row('first_name'), $qry1->row('gender'));
 
-        $to_email_id = $CI->db->select('registered_email_id')->from('tms_users')->where('user_id', $user_id)->get()->row('registered_email_id');
+        //$to_email_id = $CI->db->select('registered_email_id')->from('tms_users')->where('user_id', $user_id)->get()->row('registered_email_id');
         
         $offcial_internalstaff_email = $CI->db->select('off_email_id')->from('internal_user_emp_detail')->where('user_id', $user_id)->get()->row('off_email_id');
         
@@ -503,7 +512,7 @@ function internal_staff_reset_password($user_id, $pass = '') {
         if ($user_role == "ADMN") {
             $cc_email_to_admin = $CI->session->userdata('userDetails')->registered_email_id;
         }
-        if(!empty($to_email_id)){
+        if(!empty($offcial_internalstaff_email)){
 //        send_mail($to_email_id, $cc_email_to, $mail_subject, $mail_body);
         send_mail($offcial_internalstaff_email, $cc_email_to, $mail_subject, $mail_body);
         }
@@ -656,3 +665,29 @@ function user_activity($module_id,$act_on,$previous_details,$account_type = null
         return $res;
     }
     /* End */
+    /////added by shubhranshu for new requirement class schedule 
+    function get_course_class_schedule($course_id, $class_id) {
+        $ci= & get_instance();
+        
+        $ci->db->select('class_date,session_start_time,session_end_time');
+
+        $ci->db->from('class_schld');
+
+        $ci->db->where('course_id', $course_id);
+        
+        $ci->db->where('class_id', $class_id);
+
+        $ci->db->where('tenant_id', TENANT_ID);
+        
+        $ci->db->group_by('class_date');
+        
+        $query = $ci->db->get();
+        //echo $ci->db->last_query();exit;
+        $res = $query->result_array();
+        $arr = '';
+        foreach($res as $v){
+           //$arr .= '<div>'.$v[class_date].'(Start: '.date('d/m/Y , <br>l @ h:i A', strtotime($v[session_start_time])).')</div>';
+           $arr .= '<div>'.$v[class_date].',</div>';
+        }
+        return $arr;
+    }

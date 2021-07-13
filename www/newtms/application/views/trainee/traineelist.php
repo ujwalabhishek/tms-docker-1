@@ -63,7 +63,8 @@ $this->load->model('meta_values');
                     echo form_hidden('user_id', $this->input->get('user_id'), 'user_id');
                     echo form_input($fn);
                     ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <div id="trainee_name_list_err"></div>
+                      <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>  
+                    <div id="trainee_name_list_err"></div>
                     </td>
                     <td class="td_heading">
                         <?php
@@ -79,6 +80,7 @@ $this->load->model('meta_values');
                         NRIC/FIN No.:
                     </td>
                     <?php
+                    echo form_hidden('tax_id', $this->input->get('tax_code'), 'tax_id');
                     $tax_code = array(
                         'name' => 'tax_code',
                         'id' => 'tax_code',
@@ -86,6 +88,7 @@ $this->load->model('meta_values');
                     );
                     ?>
                     <td><?php echo form_input($tax_code); ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <div id="tax_code_err"></div>
                     </td>
 
@@ -139,9 +142,12 @@ $this->load->model('meta_values');
                     <?php
                     $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
                     $pageurl = $controllerurl;
+                    
                     ?>
+                    
                     <tr>
-                        <th width="15%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.tax_code&o=" . $ancher; ?>" >NRIC/FIN No.</a></th>
+                        <!--<th width="8%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.tax_code&o=" . $ancher; ?>" >Field 1.</a></th>-->
+                         <th width="8%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.tax_code&o=" . $ancher; ?>" >NRIC/FIN No.</a></th>
                         <th width="15%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.country_of_residence&o=" . $ancher; ?>" >Country</a></th>
                         <th width="20%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=usr.registration_date&o=" . $ancher; ?>" >Registration Date</a></th>
                         <th width="20%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=traineename&o=" . $ancher; ?>" >Trainee Name</a></th>
@@ -155,8 +161,13 @@ $this->load->model('meta_values');
                     <?php
                     if (count($tabledata) > 0) {
                         foreach ($tabledata as $data) {
+                            /////added by shubhrashu for nric split to field1 and field 2
+                            $nric_taxcode=$data['tax_code'];
+                            $field[] = substr($nric_taxcode, 0, 5);
+                            $field[] = substr($nric_taxcode, 5);
                             ?>
                             <tr <?php if ($data['account_status'] == 'INACTIV') echo "class='danger'"; ?> >
+                                <!--<td><a href="<?php echo base_url() . $controllerurl . 'view_trainee/' . $data['user_id']; ?>"><?php echo $field[0]; ?></a></td>-->
                                 <td><a href="<?php echo base_url() . $controllerurl . 'view_trainee/' . $data['user_id']; ?>"><?php echo $data['tax_code']; ?></a></td>
                                 <td><?php echo ($data['country_of_residence']) ? get_catname_by_parm($data['country_of_residence']) : ''; ?></td>
                                 <td>
@@ -207,6 +218,47 @@ echo $pagination;
     </div>
 </div>
 <script>
+    function form_validates() {
+        $trainee_name_list = $('#trainee_name_list').val();
+        $tax_codev = $('#tax_code').val();
+        $off_company_name = $('#off_company_name').find(":selected").text();
+        $status = $('#status').find(":selected").text();
+     
+        var user_id = $('#user_id').val();
+        var tax_id = $('#tax_id').val();
+       if(tax_id !='' || user_id !='' || $off_company_name !='All' || $status !='All'){
+            remove_err('#trainee_name_list');
+            remove_err('#tax_code');
+            
+            return true;
+        }else if($trainee_name_list != ''){
+            if(user_id !=''){
+                remove_err('#trainee_name_list');
+                remove_err('#tax_code');
+                return true;
+            }else{
+                disp_err('#trainee_name_list', '[Select Trainee from auto-complete]');
+                remove_err('#tax_code');
+                return false;
+            }
+            
+        }else if($tax_codev != ''){
+            if(tax_id !=''){
+                remove_err('#trainee_name_list');
+                remove_err('#tax_code');
+                return true;
+            }else{
+                disp_err('#tax_code', '[Select NRIC from auto-complete]');
+                remove_err('#trainee_name_list');
+                return false;
+            }
+            
+        }else {
+            disp_err('#trainee_name_list', '[Select Trainee from auto-complete]');
+            disp_err('#tax_code', '[Select NRIC from auto-complete]');
+            return false;
+        }
+    }
     $(document).ready(function() {
         var search_check = 0;
 //        $('#search_form').submit(function() {
@@ -223,7 +275,7 @@ echo $pagination;
             var self = $(this),
             button = self.find('input[type="submit"],button'),
             submitValue = button.data('submit-value');
-            button.attr('disabled','disabled').val('Please Wait..');
+            button.attr('disabled','disabled').html('Please Wait..');
             return true;
            }else{
                return false;
@@ -234,21 +286,19 @@ echo $pagination;
                 return validate(false);
             }
         });
-        function form_validates() {
-        $trainee_name_list = $('#trainee_name_list').val();
-        $tax_codev = $('#tax_code').val();
-        
-            if($trainee_name_list != '' || $tax_codev != ''){
-                 remove_err('#trainee_name_list');
-                 remove_err('#tax_code');
-                 return true;
-             } 
-             else {
-                 disp_err('#trainee_name_list', '[Select trainee name from auto-complete]');
-                 disp_err('#tax_code', '[select NRIC from auto-complete]');
-                 return false;
-             }
-        }
+         // added by shubhranshu for dynamic prevention of search form
+        $('#trainee_name_list').on("blur", function() {
+        $trainee_name_list = $('#trainee_name_list').val().trim();
+            if($trainee_name_list ==''){
+                $("#user_id").val("");
+            }  
+       });
+       $('#tax_code').on("blur", function() {
+        $tax_code = $('#tax_code').val().trim();
+            if($tax_code ==''){
+                $("#tax_id").val("");
+            }  
+       });
         function validate(retval) {
             var trainee_name_list = $('#trainee_name_list').val().trim();
             var tax_code = $('#tax_code').val().trim();

@@ -21,6 +21,7 @@ $CI->load->model('settings_model');
                     <td class="td_heading">Search by Course Name:</td>
                     <td>
                         <input size="50" type="text" name="copy_course_name" id="copy_course_name" value="<?php echo $this->input->post('copy_course_name'); ?>" class='upper_case'>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="copy_course_name_err"></span>
                     </td>      
                     <td align="center">

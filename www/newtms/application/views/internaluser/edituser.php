@@ -17,7 +17,7 @@ if (!empty($tax_error)) {
     </h2>
     <div class="table-responsive">
         <?php
-        $atr = 'id="search_form" name="search_form" onclick="return validate_search();"';
+        $atr = 'id="search_form" name="search_form"';
         echo form_open("internal_user/edit_user", $atr);
         ?>    
         <table class="table table-striped">      
@@ -29,10 +29,13 @@ if (!empty($tax_error)) {
                         echo form_hidden('search_user_id',$this->input->get('search_user_id'),'search_user_id');
                         ?>
                         <input size="50" type="text" name="search_user_firstname" id="search_user_firstname" value="<?php echo $this->input->post('search_user_firstname'); ?>">
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
                         <span id="search_user_firstname_err"></span>
                     </td>      
                     <td align="center"><button type="submit" title="Search" value="Search" name="search_form_btn" id="search_form_btn" class="btn btn-xs btn-primary no-mar">
-                            <span class="glyphicon glyphicon-search"></span>  Search</button></td>
+                            <span class="glyphicon glyphicon-search"></span>  Search</button>
+                    
+                    </td>
                 </tr>                
             </tbody>
         </table>
@@ -973,9 +976,15 @@ echo form_close();
         </div>
     </div>        
 </div>
+
+
+
 <script type="text/javascript">
+    
     function validate_search() {
         var fname = $.trim($("#search_user_firstname").val());
+        
+        var search_user_id = $('#search_user_id').val();
         if (fname == "") {
             $("#search_user_firstname_err").text("[required]").addClass('error');
             $("#search_user_firstname").addClass('error');
@@ -984,23 +993,23 @@ echo form_close();
             $("#search_user_firstname_err").text("[Select user from autofill-help]").addClass('error');
             $("#search_user_firstname").addClass('error');
             return false;
+        }else if(search_user_id == ''){
+            $("#search_user_firstname_err").text("[Select user from autofill-help]").addClass('error');
+            $("#search_user_firstname").addClass('error');
+            return false;
         }
         return true;
     }
-</script>
-
-
-<script type="text/javascript">
     //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////
         $('#search_form').on('submit',function() {
             search_check = 1;
             //alert("form click");
-            var status=form_validates();
+            var status=validate_search();
             if(status){
             var self = $(this),
             button = self.find('input[type="submit"],button'),
             submitValue = button.data('submit-value');
-            button.attr('disabled','disabled').val('Please Wait..');
+            button.attr('disabled','disabled').html('Please Wait..');
             return true;
            }else{
                return false;
@@ -1642,8 +1651,8 @@ echo form_close();
                                 $('#account_status').text("'Pending Activation'");
                                 $('#inactive_id').show();
                             }
-                            $('#trainee_tax_code').text(e);
-                            $('#trainee_first_name').text(res.first_name+' '+res.last_name);
+                            $('#trainee_tax_code').text(e.toUpperCase());
+                            $('#trainee_first_name').text(res.first_name);
                             $('#trainee_nationality').text(res.nationality);
                             $('#trainee_gender').text(res.gender);
                             $('#trainee_dob').text(res.dob);
@@ -1680,11 +1689,11 @@ echo form_close();
             check = 1;
             return validate(true);
         });
-        $('#edit_user_form select,#edit_user_form input').change(function() {
-            if (check == 1) {
-                return validate(false);
-            }
-        });
+//        $('#edit_user_form select,#edit_user_form input').change(function() {
+//            if (check == 1) {
+//                return validate(false);
+//            }
+//        });
     });
     
     $("#reason_for_deactivation").change(function() {

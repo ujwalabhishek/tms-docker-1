@@ -746,5 +746,5 @@
     </div>
 </p>    
 </div>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/view_trainee.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/public_js/classtraineelist.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/public_js/view_trainee.js"></script>

@@ -8,7 +8,7 @@ if (!defined('BASEPATH'))
 class Internal_user extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Internal_User_Model', 'internaluser');
+        $this->load->model('internal_user_model', 'internaluser');
         $this->load->model('meta_values');
         $this->load->model('common_model', 'commonmodel');
         $this->load->helper('common');
@@ -29,9 +29,11 @@ class Internal_user extends CI_Controller {
         foreach ($_GET as $k => $v) {
             $export_url .="$k=$v&";
         }
+       
         $export_url = rtrim($export_url, '&');
         $data['export_url'] = $export_url;
         $data['sort_link'] = $sort_link = "user_role=" . $this->input->get('user_role') . "&first_last_name=" . $this->input->get('first_last_name') . "&filter_status=" . $this->input->get('filter_status') . "&search_radio=" . $this->input->get('search_radio').'&user_id='.$this->input->get('user_id');
+        
         $totalrows = $this->internaluser->get_internal_user_count_by_tenant_id($tenant_id);
         $field = ($this->input->get('f')) ? $this->input->get('f') : 'usr.last_modified_on';
         $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
@@ -50,6 +52,7 @@ class Internal_user extends CI_Controller {
         $data['controllerurl'] = 'internal_user/';
         $this->load->helper('pagination');
         $data['pagination'] = get_pagination($records_per_page, $pageno, $baseurl, $totalrows, $field, $order_by . '&' . $sort_link);
+       
         $data['main_content'] = 'internaluser/userlist';
         $data['roles'] = $this->internaluser->get_user_role($tenant_id);
         $data['filter_status'] = fetch_metavalues_by_category_id(Meta_Values::STATUS);
@@ -102,7 +105,7 @@ class Internal_user extends CI_Controller {
             $this->load->library('form_validation');            
             $country_of_residence = $this->input->post('country_of_residence'); 
             $this->form_validation->set_rules('country_of_residence', 'Country of Residence', 'required');
-            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|min_length[8]|max_length[12]');
+            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|max_length[12]');
             if ($country_of_residence == 'IND') {
                 $this->form_validation->set_rules('PAN', 'PANNumber', 'required|max_length[15]|callback_check_unique_usertaxcode');
                 $tax_code = $this->input->post("PAN");
@@ -196,8 +199,8 @@ class Internal_user extends CI_Controller {
         $form_style_attr = ' style="display:none;"';
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $user_details = explode('(', $this->input->post('search_user_firstname'));
-            $edit_user_id = rtrim($user_details[1], ')');
-            $data['edit_user_id'] = $edit_user_id;
+            $edit_user_id = $this->input->post('search_user_id');
+            $data['edit_user_id'] = $edit_user_id;			
             $form_style_attr = ' style="display: ;"';
             if ($this->input->post('edit_user_form_btn') != '') {
                 $this->load->library('form_validation');
@@ -210,7 +213,7 @@ class Internal_user extends CI_Controller {
                 $this->session->set_userdata('user_name_edit', $user_list_values->user_name);
                 $this->session->set_userdata('tax_code_edit', $user_list_values->tax_code);
                 $this->form_validation->set_rules('country_of_residence', 'Country of Residence', 'required');
-                $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|min_length[8]|max_length[12]');
+                $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|max_length[12]');
                 $country_of_residence = $this->input->post('country_of_residence');
                 $valid = TRUE; //Added By dummy for Edit issue (Nov 10 2014)
                 if ($country_of_residence == 'IND') {
@@ -279,7 +282,7 @@ class Internal_user extends CI_Controller {
             }
         }
         $user_list_values = $this->internaluser->get_user_details($tenant_id, $edit_user_id);
-        $data['edit_user_id'] = $edit_user_id;
+				
         $data['user_list_values'] = $user_list_values;
         $country_of_residence = get_param_value($user_list_values->country_of_residence);
         $data['country_of_residence'] = $country_of_residence;
@@ -448,6 +451,18 @@ class Internal_user extends CI_Controller {
             return TRUE;
         }
     }
+    ///// below function was added by shubhranshu to check client side duplicates email
+    function check_unique_useremail_client() {
+        if ($emp_email = $this->input->post('emp_email')) {
+            $exists = $this->internaluser->check_duplicate_user_email_company($emp_email);
+            if ($exists) {
+                echo '1';
+            }else{
+                echo '0';
+            }
+            
+        }
+    }
     
     function check_unique_useremail_emp() {
         if ($emp_email = $this->input->post('emp_email')) {
@@ -521,7 +536,7 @@ class Internal_user extends CI_Controller {
     /*
      * Method for checking if email id is already exists in add Interanl user.
      */
-    public function check_email_id($email) {
+    public function check_email_id($email='') {
         extract($_POST);
         $email_id = trim($email);
         $exists = $this->internaluser->check_email($email_id);
@@ -533,7 +548,7 @@ class Internal_user extends CI_Controller {
         return;
     }
     ////// added by shubhranshu for valid email (internal user view page) on 4/12/2018///////////////////
-    public function check_email_status($email) {
+    public function check_email_status($email='') {
         extract($_POST);
         $email_id = trim($email);
         $exists = $this->internaluser->check_email_status($email_id,$usrid);
@@ -548,7 +563,7 @@ class Internal_user extends CI_Controller {
     /*
      * Method for checking if pan id is already exists in add Interanl user.
      */
-    public function check_pan($pan) { 
+    public function check_pan($pan='') { /// modified by shubhranshu
         extract($_POST);        
         if($country_of_residence == "SGP") {
             $valid = validate_nric_code($nric, $pan_id);            

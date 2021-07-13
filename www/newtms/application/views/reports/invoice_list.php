@@ -6,7 +6,7 @@
 
 </script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/invoice_list.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/invoice_list.js?v=1.0.0"></script>
 
 <div class="col-md-10">
 
@@ -179,8 +179,15 @@
         <div>
 
             <span style="float:left;color:blue;">**NRIC/FIN No.:  Individual NRIC/ Company Registration Number</span>
-
-            <span class="pull-right">
+            <?php 
+            // added by shubhranshu
+                $start = $this->input->get("start_date");
+                $company = $this->input->get("company_name");
+                $end = $this->input->get("end_date");
+             if(($start!="" && $end!='') || $company !='')
+             {
+             ?>
+            <span class="pull-right" style='margin: 10px;'>
 
                 <a href="<?php echo site_url('/reports_finance/invoice_list_export_xls') . '?' . $_SERVER['QUERY_STRING']; ?>"  class="small_text1">
 
@@ -189,12 +196,29 @@
                 <a href="<?php echo site_url('/reports_finance/invoice_export_PDF') . '?' . $_SERVER['QUERY_STRING']; ?>" class="small_text1">
 
                     <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>
-
             </span>
+             </div>
 
-        </div>
+             <br><br>
+             <?php }else{ ?>
+                <span class="pull-right" style='margin: 10px;'>
 
-        <br><br>
+                    <a href="javascript:void(0)" class="small_text1" id='displayText'>
+
+                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to XLS</span></a> &nbsp;&nbsp;
+
+                    <a href="javascript:void(0)" class="small_text1" id='displayText1'>
+
+                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Export to PDF</span></a>
+                        
+
+                </span>
+            <div id="alertmsg" style="padding:5px;clear:both;display:none" class='alert alert-danger'>Company name/Start & End Date Required to Download PDF/XLS.</div>
+             </div>
+            <?php } // added by shubhranshu end code?>
+        
+
+        
 
         <div class="table-responsive">
 
@@ -244,7 +268,7 @@
 
                         if ($data->invoiced_on == NULL || $data->invoiced_on == '0000-00-00 00:00:00') {
 
-                            $invoiced_label = '<br><span style="color:red">** Invoice Sent</span>';
+                            $invoiced_label = '<br><span style="color:red">** Invoice Not Sent</span>';
 
                         } else {
 

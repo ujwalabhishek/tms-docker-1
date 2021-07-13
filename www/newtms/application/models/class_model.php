@@ -6,9 +6,13 @@
 
 class Class_Model extends CI_Model {
 
+    private $user;
+    
     public function __construct() {
         parent::__construct();
         $this->load->helper('common');
+        $this->sess_user = $this->session->userdata('userDetails'); // added by shubhranshu to het the user data
+        $this->user = $this->session->userdata('userDetails');
     }
 
     /**
@@ -72,6 +76,7 @@ class Class_Model extends CI_Model {
                         ->order_by('scd.comm_period_mth', 'ASC')
                         ->group_by('scd.pymnt_due_id')
                         ->get()->result_object();
+        //echo $this->db->last_query();exit;
         return $result;
     }
 
@@ -217,6 +222,7 @@ class Class_Model extends CI_Model {
         $deactivate_date = date('Y-m-d');
         $data = array(
             'class_status' => 'INACTIV',
+            //'class_status' => 'DELETED',
             'deacti_date_time' => $deactivate_date,
             'deacti_reason' => $reason_for_deactivation,
             'deacti_reason_oth' => strtoupper($other_reason_for_deactivation),
@@ -345,8 +351,8 @@ class Class_Model extends CI_Model {
         $this->db->where('class_id', $class_id);
         $this->db->where('course_id', $course_id);
         $this->db->where_in('enrol_status', array('ENRLACT', 'ENRLBKD'));
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('sales_executive_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('sales_executive_id', $this->user->user_id);
         }
         return $this->db->get()->row()->count;
     }
@@ -404,8 +410,8 @@ class Class_Model extends CI_Model {
             $limitvalue = $offset - $limit;
             $this->db->limit($limit, $limitvalue);
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('enrol.sales_executive_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('enrol.sales_executive_id', $this->user->user_id);
         }
        $query = $this->db->get();
         return $query->result_object();
@@ -420,7 +426,7 @@ class Class_Model extends CI_Model {
         if ($offset <= 0 || empty($tenant_id)) {
             return;
         }
-        $this->db->select("class_pymnt_enrol, class_id, course_id, class_name, class_start_datetime, "
+        $this->db->select("tpg_course_run_id,class_pymnt_enrol, class_id, course_id, class_name, class_start_datetime, "
                 . "class_end_datetime, classroom_trainer,training_aide, "
                 . "class_language, total_seats, class_status");
         $this->db->from('course_class');
@@ -431,6 +437,9 @@ class Class_Model extends CI_Model {
         }
         if (!empty($class_id)) {
             $this->db->where('class_id', $class_id);
+        }
+        if (!empty($tpg_course_run_id)) {
+            $this->db->where('tpg_course_run_id', $tpg_course_run_id);
         }
         if (!empty($class_status)) {
             switch ($class_status) {
@@ -484,7 +493,7 @@ class Class_Model extends CI_Model {
     /**
      * this function to get the class status by its start and end date
      */
- public function get_class_status($cid, $status) {
+ public function get_class_status($cid, $status='') {
         if (!empty($status)) {
             switch ($status) {
                 case 'IN_PROG':
@@ -514,6 +523,8 @@ class Class_Model extends CI_Model {
             return 'In-Progress';
         } elseif ($end < $cur_date && $start < $cur_date) {
             return 'Completed';
+        } elseif ($data->class_status == 'DELETED') {
+            return 'DELETED';
         } else {
             return 'Status Unknown!!!!';  
         }
@@ -538,8 +549,8 @@ class Class_Model extends CI_Model {
             $this->db->from('course');
             $this->db->where('tenant_id', $tenant_id);
             $this->db->where_not_in('crse_status', 'INACTIV');
-            if ($this->data['user']->role_id == 'CRSEMGR') {
-                $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",crse_manager) !=", 0);
+            if ($this->user->role_id == 'CRSEMGR') {
+                $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",crse_manager) !=", 0);
             }
             $this->db->like('crse_name', $search_course_code, 'both');
             $results = $this->db->get()->result_object();
@@ -591,15 +602,15 @@ class Class_Model extends CI_Model {
                     break;
             }
         }
-        if ($this->data['user']->role_id == 'TRAINER') {
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",classroom_trainer) !=", 0);
+        if ($this->user->role_id == 'TRAINER') {
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",classroom_trainer) !=", 0);
         }
         if ($sort_by) {
             $this->db->order_by($sort_by, $sort_order);
         } else {
             $this->db->order_by('last_modified_on', 'DESC');
         }
-        if ($this->data['user']->role_id == 'SLEXEC') {
+        if ($this->user->role_id == 'SLEXEC') {
             $this->traineelist_querychange();
         }
         $result = $this->db->get()->result_object();
@@ -609,7 +620,7 @@ class Class_Model extends CI_Model {
     /**
      * this function gets the default assessment schedule for class id
      */
-    public function get_def_assessment($tenant_id, $class_id, $assmnt_type) {
+    public function get_def_assessment($tenant_id, $class_id, $assmnt_type='') {
         if ($assmnt_type == 'DEFAULT') {
             $result = $this->db->select('*')->from('class_assmnt_schld')->where('tenant_id', $tenant_id)
                             ->where('class_id', $class_id)->get()->row();
@@ -666,16 +677,34 @@ class Class_Model extends CI_Model {
         $this->db->where_in('pers.user_id', $ids);
         $this->db->where('pers.tenant_id', $tenant_id);
         $this->db->where('sales.course_id', $course_id);
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('pers.user_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('pers.user_id', $this->user->user_id);
         }
         $result = $this->db->get();
+        
         return $result->result_array();
+    }
+    ///////below function was added by shubhranshu for fetch of course sales executive assisgn
+    function get_all_salesexec_course($tenant_id, $course_id) {
+       if($this->user->role_id == 'ADMN') { 
+            $this->db->select('pers.user_id, pers.first_name, pers.last_name, sales.commission_rate');
+            $this->db->from('tms_users_pers pers');
+            $this->db->join('course_sales_exec sales', 'sales.user_id=pers.user_id');
+            $this->db->where('pers.tenant_id', $tenant_id);
+            $this->db->where('sales.course_id', $course_id);
+            if ($this->user->role_id == 'SLEXEC') {
+                $this->db->where('pers.user_id', $this->user->user_id);
+            }
+            $result = $this->db->get();
+            return $result->result_array();
+       }else{
+           return;
+       }
     }
      /**
      * class sales executive details
      */
-      function get_class_salesexec1($tenant_id,$course_id,$class_id,$ids) 
+      function get_class_salesexec1($tenant_id,$course_id,$class_id,$ids='') 
                 {
         if (empty($ids)) {
             return;
@@ -693,8 +722,8 @@ class Class_Model extends CI_Model {
         $this->db->where('pers.user_id', $ids);
         $this->db->where('pers.tenant_id', $tenant_id);
         $this->db->where('ce.course_id', $course_id);
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('pers.user_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('pers.user_id', $this->user->user_id);
         }*/
          if (empty($ids)) {
             return;
@@ -711,8 +740,8 @@ class Class_Model extends CI_Model {
         $this->db->from('tms_users_pers pers');
         $this->db->where('pers.user_id', $sales_executive_id);
         $this->db->where('pers.tenant_id', $tenant_id);
-        if ($this->data['user']->role_id == 'SLEXEC') {
-            $this->db->where('pers.user_id', $this->data['user']->user_id);
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->where('pers.user_id', $this->user->user_id);
         }
         $result = $this->db->get();
         return $result->result_array();
@@ -800,25 +829,54 @@ class Class_Model extends CI_Model {
      * this function get classes in a course
      */
     public function get_course_class($tenantId, $courseId, $mark_attendance = NULL, $is_allclass = 0,$classTrainee=0) {
-        $this->db->select('class_id,class_name');
-        $this->db->from('course_class');
-        $this->db->where('tenant_id', $tenantId);
-        $this->db->where('course_id', $courseId);
+        
+        $this->db->select('cc.class_id,cc.class_name,tpg_course_run_id');
+        $this->db->from('course_class cc');
+        $this->db->where('cc.tenant_id', $tenantId);
+        $this->db->where('cc.course_id', $courseId);
         if (empty($is_allclass)) {
-             $this->db->where('class_status !=', 'INACTIV');
+             $this->db->where('cc.class_status !=', 'INACTIV');
         }
-        if ($this->data['user']->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
-            $this->traineelist_querychange();
+        if ($this->sess_user->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
+            $this->traineelist_querychange_copy();
         }
-         if ($this->data['user']->role_id == 'TRAINER') {
-            $this->db->where("FIND_IN_SET(" . $this->data['user']->user_id . ",classroom_trainer) !=", 0);
+         if ($this->sess_user->role_id == 'TRAINER') {
+            $this->db->where("FIND_IN_SET(" . $this->sess_user->user_id . ",cc.classroom_trainer) !=", 0);
         }
-        $this->db->order_by("DATE(class_start_datetime)", "DESC"); // added for class start date based sorting on Nov 24 2014.
+        $this->db->order_by("DATE(cc.class_start_datetime)", "DESC"); // added for class start date based sorting on Nov 24 2014.
         $query = $this->db->get();   
+        
         $result = array();
         foreach ($query->result() as $row) {
-            $result[$row->class_id] = $row->class_name;
+            $result[$row->class_id] = $row->class_name.'('.$row->tpg_course_run_id.')';
         }
+        return $result;
+    }
+    
+    ////added by shubhranshu to fetch course run id
+    public function get_course_Run_id($tenantId, $courseId, $mark_attendance = NULL, $is_allclass = 0,$classTrainee=0) {
+        
+        $this->db->select('cc.tpg_course_run_id');
+        $this->db->from('course_class cc');
+        $this->db->where('cc.tenant_id', $tenantId);
+        $this->db->where('cc.course_id', $courseId);
+        if (empty($is_allclass)) {
+             $this->db->where('cc.class_status !=', 'INACTIV');
+        }
+        if ($this->sess_user->role_id == 'SLEXEC' && (string)$classTrainee=='classTrainee') {
+            $this->traineelist_querychange_copy();
+        }
+         if ($this->sess_user->role_id == 'TRAINER') {
+            $this->db->where("FIND_IN_SET(" . $this->sess_user->user_id . ",cc.classroom_trainer) !=", 0);
+        }
+        $this->db->order_by("DATE(cc.class_start_datetime)", "DESC"); // added for class start date based sorting on Nov 24 2014.
+        $query = $this->db->get();   
+        
+        $result = array();
+        foreach ($query->result() as $row) {
+            $result[$row->tpg_course_run_id] = $row->tpg_course_run_id;
+        }
+      
         return $result;
     }
 
@@ -979,10 +1037,11 @@ class Class_Model extends CI_Model {
         $control_4 = empty($control_4) ? NULL : $control_4;
         $classroom_venue_oth = empty($classroom_venue_oth) ? NULL : strtoupper($classroom_venue_oth);
         $lab_venue_oth = empty($lab_venue_oth) ? NULL : strtoupper($lab_venue_oth);
-
-        $data_class = array(
+       
+            $data_class = array(
             'tenant_id' => $tenantId,
             'class_name' => strtoupper($class_name),
+            'tpg_course_run_id' => $tpg_course_run_id,
             'class_start_datetime' => $start_date_timestamp,
             'class_end_datetime' => $end_date_timestamp,
             'total_seats' => $total_seats,
@@ -1014,6 +1073,9 @@ class Class_Model extends CI_Model {
             'classroom_venue_oth' => $classroom_venue_oth,
             'lab_venue_oth' => $lab_venue_oth
         );
+        
+        
+        
         $this->db->where('tenant_id', $tenantId);
         $this->db->where('class_id', $class_id);
         $this->db->trans_start();
@@ -1456,7 +1518,7 @@ class Class_Model extends CI_Model {
      * @param type $userId
      * @param type $courseId
      */
-    public function create_class($tenantId, $userId) {
+    public function create_class($tenantId, $userId,$tpg_course_run_id) {
         $display_class = 0;
         $control_4 = '';
         $control_5 = '';
@@ -1501,11 +1563,12 @@ class Class_Model extends CI_Model {
         }
         $control_4 = empty($control_4) ? NULL : $control_4;
         $classroom_venue_oth = empty($classroom_venue_oth) ? NULL : strtoupper($classroom_venue_oth);
-        $lab_venue_oth = empty($lab_venue_oth) ? NULL : strtoupper($lab_venue_oth);        
-        $data = array(
+        $lab_venue_oth = empty($lab_venue_oth) ? NULL : strtoupper($lab_venue_oth);     
+            $data = array(
             'tenant_id' => $tenantId,
             'course_id' => $class_course,
-            'class_name' => $class_name,
+            'class_name' => strtoupper($class_name),
+            //'tpg_course_run_id' => strtoupper($tpg_course_run_id),
             'class_start_datetime' => $start_date_timestamp,
             'class_end_datetime' => $end_date_timestamp,
             'total_seats' => $total_seats,
@@ -1537,8 +1600,18 @@ class Class_Model extends CI_Model {
             'last_modified_by' => $userId,
             'last_modified_on' => date('Y-m-d H:i:s'),
             'classroom_venue_oth' => $classroom_venue_oth,
-            'lab_venue_oth' => $lab_venue_oth
-        );
+            'lab_venue_oth' => $lab_venue_oth,
+            'venue_building' => $venue_building,
+            'venue_block' => $venue_block,
+            'venue_street' => $venue_street,
+            'venue_room' => $venue_room,
+            'venue_unit' => $venue_unit,
+            'venue_postalcode' => $venue_postalcode,
+            'venue_floor' => $venue_floor,
+            'modeoftraining' => $modeoftraining,
+            'survey_language' => $survey_language
+            );  
+        
         $this->db->trans_start();
         $this->db->insert('course_class', $data);
         $class_id = $this->db->insert_id();
@@ -1554,11 +1627,28 @@ class Class_Model extends CI_Model {
                 $this->db->update('course_class', array('class_name' => $course_name)); //coursename_classid
             }
             if (!empty($schlded_date)) {
+                $ct =1;
                 foreach ($schlded_date as $k => $v) {
-                    $class_date = date('Y-m-d', strtotime($schlded_date[$k]));
-                    $session_start_time = $schlded_start_time[$k] . ':00';
-                    $session_end_time = $schlded_end_time[$k] . ':00';
-                    $class_schld_data = array(
+                    if($schlded_session_type[$k] != 'BRK'){
+                        $class_date = date('Y-m-d', strtotime($schlded_date[$k]));
+                        $session_start_time = $schlded_start_time[$k] . ':00';
+                        $session_end_time = $schlded_end_time[$k] . ':00';
+                        $class_schld_data = array(
+                        'tenant_id' => $tenantId,
+                        'course_id' => $class_course,
+                        'class_id' => $class_id,
+                        'class_date' => $class_date,
+                        'session_type_id' => $schlded_session_type[$k],
+                        'tpg_session_id' => $crse_ref_no.'-'.$tpg_course_run_id.'-S'.$ct,
+                        'session_start_time' => $session_start_time,
+                        'session_end_time' => $session_end_time
+                        );
+                         $ct +=1;
+                    }else{
+                        $class_date = date('Y-m-d', strtotime($schlded_date[$k]));
+                        $session_start_time = $schlded_start_time[$k] . ':00';
+                        $session_end_time = $schlded_end_time[$k] . ':00';
+                        $class_schld_data = array(
                         'tenant_id' => $tenantId,
                         'course_id' => $class_course,
                         'class_id' => $class_id,
@@ -1566,8 +1656,11 @@ class Class_Model extends CI_Model {
                         'session_type_id' => $schlded_session_type[$k],
                         'session_start_time' => $session_start_time,
                         'session_end_time' => $session_end_time
-                    );
+                        );
+                    }
+                    
                     $this->db->insert('class_schld', $class_schld_data);
+                   
                 }
             }
             if (isset($def_schlded_date)) {
@@ -1594,8 +1687,11 @@ class Class_Model extends CI_Model {
             if ($this->db->trans_status() === FALSE) {
                 return FALSE;
             }
-
-            return TRUE;
+            $res = array(
+                'status' => TRUE,
+                'classid' => $class_id
+            );
+            return $res;
         } else {
             return FALSE;
         }
@@ -1667,6 +1763,7 @@ class Class_Model extends CI_Model {
      * @param $class_id
      */
     public function get_class_details_for_report($tenant_id, $course_id, $class_id) {
+    
         $this->db->select('cc.tenant_id,cc.class_id, cc.class_session_day, cc.course_id, cc.class_name, cc.classroom_trainer, cc.assessor, cc.lab_trainer, c.crse_name, tm.tenant_name as company_name, cc.class_start_datetime, cc.class_end_datetime, c.crse_manager, c.competency_code, cc.total_seats');
         $this->db->select('cc.total_classroom_duration, cc.total_lab_duration, cc.assmnt_duration');
         $this->db->from('course_class cc');
@@ -1679,6 +1776,7 @@ class Class_Model extends CI_Model {
 
         $query = $this->db->get();
 
+//echo $this->db->last_query();exit;
         $results = $query->result();
         $details = count($results) > 0 ? $results[0] : null;
         if ($details != null) {
@@ -1791,8 +1889,16 @@ class Class_Model extends CI_Model {
     /**
      * role based access for salesexec
      */
-    private function traineelist_querychange() {
-        $this->db->like('sales_executive', $this->data['user']->user_id, 'both');
+    private function traineelist_querychange_copy() {
+		$this->db->join("course_sales_exec sales", " cc.course_id=sales.course_id");		
+		$this->db->where("sales.user_id", $this->user->user_id);
+    }
+	
+	/**
+     * role based access for salesexec
+     */
+    private function traineelist_querychange() {		
+        $this->db->like('sales_executive', $this->user->user_id, 'both');
     }
     
     /**
@@ -1841,6 +1947,204 @@ class Class_Model extends CI_Model {
     
     public function get_class_name($tenant_id,$class_id){
     return $this->db->select('class_name')->from('course_class')->where('tenant_id',$tenant_id)->where('class_id',$class_id)->get()->row()->class_name;
+    }
+    
+    public function get_Trainee_For_Assessments($tenant_id,$courseID,$classID,$userid=''){
+        $today_date = date('Y-m-d');
+        $str='';
+        if($userid !=''){
+            $str = "AND ce.user_id = '$userid'";
+        }
+         $sql = "SELECT
+                cm.company_name,
+                c.reference_num,
+                c.course_id,
+                cc.tpg_course_run_id,
+                tu.tax_code,
+                tu.tax_code_type,
+                cc.class_id,
+                ce.eid_number,
+                ce.assessment_reference_No,
+                ce.user_id,
+                tup.first_name as fullname,
+                CURDATE() as assessmentDate,
+                c.competency_code as skillCode,
+                ce.feedback_score,
+                ce.feedback_grade,
+                (CASE WHEN ce.training_score ='C' THEN 'Pass' WHEN ce.training_score ='EX' THEN 'Exempt' ELSE 'Fail' END) as 'result',
+                cc.class_start_datetime,
+                cc.class_end_datetime,
+                cc.class_name,
+                ce.training_score
+                FROM ( course_class cc) 
+                JOIN course c ON c.course_id = cc.course_id 
+                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                left join tms_users_pers tup on tup.user_id =ce.user_id 
+                left join company_master cm on cm.company_id=ce.company_id
+                WHERE cc . tenant_id = '$tenant_id'
+                AND c.course_id = '$courseID'
+                AND cc.class_id = '$classID'
+                AND ce.feedback_grade !=''
+                AND ce.feedback_score !=0
+                AND c.competency_code !=''
+                AND c.reference_num !=''
+                AND ce.training_score !='' $str
+                AND date(cc.class_end_datetime) <= '$today_date'";                
+                $result = $this->db->query($sql)->result();
+                //echo $this->db->last_query();exit;
+                return $result;
+    }
+    
+    public function get_Trainee_For_Assessments_json($tenant_id,$courseID,$classID){
+        
+        $today_date = date('Y-m-d');
+    
+         $sql = "SELECT             
+                tu.user_id,
+                tu.tax_code
+                FROM ( course_class cc) 
+                JOIN course c ON c.course_id = cc.course_id 
+                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                left join tms_users_pers tup on tup.user_id =ce.user_id 
+                left join company_master cm on cm.company_id=ce.company_id
+                WHERE cc . tenant_id = '$tenant_id'
+                AND c.course_id = '$courseID'
+                AND cc.class_id = '$classID'
+                AND ce.feedback_grade !=''
+                AND ce.feedback_score !=0
+                AND c.competency_code !=''
+                AND c.reference_num !=''
+                AND ce.training_score !=''
+                AND date(cc.class_end_datetime) <= '$today_date'";                
+                $res = $this->db->query($sql)->result();
+                //echo $this->db->last_query();exit;
+                $result = array();
+                foreach ($res as $row) {
+                    $result[$row->user_id] = $row->tax_code;
+                }
+               
+                return $result;
+    }
+    
+    public function get_single_trainee_for_assessment($tenant_id,$courseID,$classID,$userid){
+        $today_date = date('Y-m-d');
+        $str='';
+        if($userid !=''){
+            $str = "AND ce.user_id = '$userid'";
+        }
+         $sql = "SELECT
+                cm.company_name,
+                c.reference_num,
+                c.course_id,
+                cc.tpg_course_run_id,
+                tu.tax_code,
+                tu.tax_code_type,
+                cc.class_id,
+                ce.user_id,
+                tup.first_name as fullname,
+                CURDATE() as assessmentDate,
+                c.competency_code as skillCode,
+                ce.feedback_score,
+                ce.feedback_grade,
+                (CASE WHEN ce.training_score ='C' THEN 'Pass' ELSE 'Fail' END) as 'result',
+                cc.class_start_datetime,
+                cc.class_end_datetime,
+                cc.class_name,
+                ce.training_score
+                FROM ( course_class cc) 
+                JOIN course c ON c.course_id = cc.course_id 
+                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                left join tms_users_pers tup on tup.user_id =ce.user_id 
+                left join company_master cm on cm.company_id=ce.company_id
+                WHERE cc . tenant_id = '$tenant_id'
+                AND c.course_id = '$courseID'
+                AND cc.class_id = '$classID'
+                AND ce.feedback_grade !=''
+                AND ce.feedback_score !=0
+                AND c.competency_code !=''
+                AND c.reference_num !=''
+                AND ce.training_score !='' $str
+                AND date(cc.class_end_datetime) <= '$today_date'";                
+                $result = $this->db->query($sql)->result();
+                //echo $this->db->last_query();exit;
+                return $result[0];
+    }
+    
+    public function updateAssessmentRefNo($assment_ref_no,$course_id,$class_id,$user_id,$tenant_id){
+        $this->db->trans_start();
+        $data = array(
+            'assessment_reference_No' => $assment_ref_no,
+            'assessment_date' => date('Y-m-d')
+            );
+        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        $this->db->where('user_id', $user_id);
+        $this->db->update('class_enrol', $data);
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
+    
+    public function updateAssessmentData($score,$assessment_date,$grade,$user_id,$class_id,$course_id,$tenant_id){
+        $this->db->trans_start();
+        $data = array(
+            'feedback_score' => $score,
+            'feedback_grade' => $grade,
+            'assessment_date' => date('Y-m-d', strtotime($assessment_date))
+            );
+        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        $this->db->where('user_id', $user_id);
+        $this->db->update('class_enrol', $data);
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
+    
+    public function get_tms_trainee_assessments($assessment_ref_no,$tenant_id){
+
+         $sql = "SELECT
+                cm.company_name,
+                c.reference_num,
+                c.course_id,
+                cc.tpg_course_run_id,
+                tu.tax_code,
+                tu.tax_code_type,
+                cc.class_id,
+                ce.eid_number,
+                ce.assessment_reference_No,
+                ce.user_id,
+                tup.first_name as fullname,
+                CURDATE() as assessmentDate,
+                c.competency_code as skillCode,
+                ce.feedback_score,
+                ce.feedback_grade,
+                (CASE WHEN ce.training_score ='C' THEN 'Pass' ELSE 'Fail' END) as 'result',
+                cc.class_start_datetime,
+                cc.class_end_datetime,
+                cc.class_name,
+                ce.training_score
+                FROM ( course_class cc) 
+                JOIN course c ON c.course_id = cc.course_id 
+                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                left join tms_users_pers tup on tup.user_id =ce.user_id 
+                left join company_master cm on cm.company_id=ce.company_id
+                WHERE cc . tenant_id = '$tenant_id' AND assessment_reference_No='$assessment_ref_no'";             
+                $result = $this->db->query($sql)->result();
+                
+                return $result;
     }
 
 

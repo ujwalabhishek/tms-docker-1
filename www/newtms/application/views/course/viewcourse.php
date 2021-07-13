@@ -156,6 +156,14 @@ $role_array = array("COMPACT","TRAINER");
                         <td class="td_heading">Course Reference Number:<span class="required">*</span></td>
                         <td><label class="label_font"><?php echo $course_data->reference_num; ?></label></td>                        
                     </tr>
+                     <tr>
+                        
+                        <td class="td_heading">External Reference Number:<span class="required">*</span></td>
+                        <td><label class="label_font"><?php echo $course_data->external_reference_number; ?></label></td> 
+                        <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
+                        <td><label class="label_font"><?php echo $course_data->crse_admin_email; ?></label></td> 
+                    </tr>
+                    
                     <tr>                        
                         <td class="td_heading">Course Competency Code:<span class="required">*</span></td>
                         <td><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
