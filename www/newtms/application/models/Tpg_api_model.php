@@ -247,8 +247,12 @@ class Tpg_api_Model extends CI_Model {
                
              }
         }
-        
-        $session_arr = array_merge($sessions,$assessments);
+        if(!empty($assessments)){
+             $session_arr = array_merge($sessions,$assessments);
+        }else{
+             $session_arr = $sessions;
+        }
+       
         //print_r($session_arr);exit;
         $ClassTrainers = $this->get_trainer_details($control_5);
         //print_r($ClassTrainers);exit;
