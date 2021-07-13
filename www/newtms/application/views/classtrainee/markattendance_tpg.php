@@ -231,7 +231,7 @@
 
 
 <div class="modal1_0001" id="view_session_attn" style="display:none;height:370px;min-height: 200px;width:60%">
-    <h2 class="panel_heading_style">TPG Retrive Course Session Attendance</h2>
+    <h2 class="panel_heading_style">TPG Retrieve Course Session Attendance</h2>
     <table class="table table-striped" id='viewsection'>
         <tbody>
             <tr>

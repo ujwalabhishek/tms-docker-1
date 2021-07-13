@@ -150,7 +150,7 @@
                             <tr>                        
                                 <td><?php echo $row->tax_code; ?></td>
                                 <td class="name"><?php echo $row->fullname; ?></td>
-                                <td><?php echo $row->assessmentDate; ?></td>
+                                <td><?php echo $row->assmnt_date ?? $row->assessmentDate; ?></td>
                                 <td><?php echo $row->skillCode; ?></td>
                                 <td><?php echo $row->feedback_score ?></td>
                                 <td><?php echo $row->feedback_grade; ?></td>
@@ -216,23 +216,23 @@
         <tbody>
             <tr>
                 <td class="td_heading">Trainee Full Name:<span class="required">*</span></td>
-                <td  colspan='3'> "<span id='fullname1'></span>"<span> Will Changed To : "</span> <b><span id="tms_fullname"></span>"</b></td>
+                <td  colspan='3'> "<span id='fullname1'></span>"<span> Will Change To : "</span> <b><span id="tms_fullname"></span>"</b></td>
             </tr>
             <tr>
                 <td class="td_heading">Result:<span class="required">*</span></td>
-                <td colspan='3'>"<span id='result1'></span>"<span> Will Changed To : "</span> <b><span id="tms_result"></span>"</b></td>
+                <td colspan='3'>"<span id='result1'></span>"<span> Will Change To : "</span> <b><span id="tms_result"></span>"</b></td>
             </tr>
             <tr>
                 <td class="td_heading">Skill Code:<span class="required">*</span></td>
-                <td colspan='3'>"<span id='skill_code1'></span>"<span> Will Changed To : "</span> <b><span id="tms_skill_code"></span>"</b></td>
+                <td colspan='3'>"<span id='skill_code1'></span>"<span> Will Change To : "</span> <b><span id="tms_skill_code"></span>"</b></td>
             </tr>
              <tr>
                 <td class="td_heading">Score:<span class="required">*</span></td>
-                <td colspan='3'>"<span id='score1'></span>"<span> Will Changed To : "</span> <b><span id="tms_score"></span>"</b></td>
+                <td colspan='3'>"<span id='score1'></span>"<span> Will Change To : "</span> <b><span id="tms_score"></span>"</b></td>
             </tr>
              <tr>
                 <td class="td_heading">Grade:<span class="required">*</span></td>
-                <td colspan='3'>"<span id='grade1'></span>"<span> Will Changed To : "</span> <b><span id="tms_grade"></span>"</b></td>
+                <td colspan='3'>"<span id='grade1'></span>"<span> Will Change To : "</span> <b><span id="tms_grade"></span>"</b></td>
             </tr>
             
             <tr>
@@ -255,7 +255,7 @@
             
         </tbody>
     </table>
-    <div class="required required_i">* To Update "Trainee Name" &  "Result" & "Skill Code" & "Score" & "Grade" fields, Update in edit trainee,trainer feedback,Edit Course,trainer feedback,trainer feedback for the same,Then Come to update this page.</div>
+    <div class="required required_i">* To update the above fields, please visit the Trainee Edit section and/or the Trainer Feedback section on TMS..</div>
     <div id="status_msg"></div>
     <div class="popup_cance89" id="btnarea">
         <button class='btn btn-primary' id="updateAseessment">Update/Void</button>

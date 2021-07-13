@@ -8,7 +8,7 @@
     $js_role = '<?php echo $role; ?>';   
     $js_tenant = '<?php echo TENANT_ID; ?>';  
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.00114598"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_class.js?0.007086148919707789889908114598"></script>
 <?php
 $this->load->helper('form');
 $this->load->helper('metavalues_helper');
@@ -304,27 +304,7 @@ echo form_open("classes/add_new_class", $atr);
                             ?>
                             <span id="languages_err"></span>
                         </td>
-                        <td width="20%" class="td_heading">Mode Of Training:<span class="required">*</span></td>
-                        <td width="20%">
-                        <?php
                         
-                        $modeoftraining = array();
-                        $modeoftraining[''] = 'Please Choose';
-                        $modeoftraining[1] = '1-Classroom';
-                        $modeoftraining[2] = '2-Asynchronous eLearning';
-                        $modeoftraining[3] = '3-In-house';
-                        $modeoftraining[4] = '4-On-the-Job';
-                        $modeoftraining[5] = '5-Practical / Practicum';
-                        $modeoftraining[6] = '6-Supervised Field';
-                        $modeoftraining[7] = '7-Traineeship';
-                        $modeoftraining[8] = '8-Assessment';
-                        $modeoftraining[9] = '9-Synchronous eLearning';
-                        echo form_dropdown('modeoftraining', $modeoftraining, $this->input->post('modeoftraining'), 'id="modeoftraining"');
-                        ?>
-                    
-                        <span id="modeoftraining_err"></span>
-                
-                        </td>
 <!--                        <td class="td_heading">Sales Executive:</td>
                         <td><?php
                             $sales_exec_options[''] = 'Select';                            
@@ -657,20 +637,18 @@ echo form_open("classes/add_new_class", $atr);
         <div class="col-lg-6">
             <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Assessment Schedule 
                 <span class="label label-default push_right black-btn"><a href="#ex2" rel="modal:open" class="small_text alert_message1"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Assessment Schedule</a></span>
-                &nbsp;&nbsp;<span class="label label-default push_right moving_right black-btn"><a href="#ex3" rel="modal:open" class="small_text add_def_schld_form alert_message">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                        Default Schedule</a></span></h4>
+                &nbsp;&nbsp;</h4>
             <div class="scroll_schedule1 def_schld_div">
                 <div class="table-responsive  table-scroll-x">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th width="8%">Action</th>
-                                <th width="18%">Assmnt. Date</th>
-                                <th width="30%">Trainee Name</th>
-                                <th width="30%">Assessor</th>
-                                <th width="20%">Assmnt. Time</th>
-                                <th width="20%">Assmnt. Venue</th>
+                                <th width="">Action</th>
+                                <th width="">Assmnt. Date</th>
+                              
+                                <th width="">Assessor</th>
+                                <th width="">Assmnt. Time</th>
+                                <th width="">Assmnt. Venue</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -687,12 +665,32 @@ echo form_open("classes/add_new_class", $atr);
         <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-saved"></span>&nbsp;Save</button> &nbsp; &nbsp; 
     </div>
 </div>
-<div class="modalassessment009911" id="ex1" style="display:none;">
+<div class="modalassessment009911" id="ex1" style="display:none;height: 300px;">
     <h2 class="panel_heading_style">Add Class / Lab Schedule</h2>
     <div class="table-responsive">
         <table class="table table-striped">
             <tbody>
                 <tr>
+                    <tr>
+                    <td class="td_heading">Mode Of Training:<span class="required">*</span></td>
+                        <td width="20%">
+                        <?php
+                        $modeoftraining = array();
+                        $modeoftraining[''] = 'Please Choose';
+                        $modeoftraining[1] = '1-Classroom';
+                        $modeoftraining[2] = '2-Asynchronous eLearning';
+                        $modeoftraining[3] = '3-In-house';
+                        $modeoftraining[4] = '4-On-the-Job';
+                        $modeoftraining[5] = '5-Practical / Practicum';
+                        $modeoftraining[6] = '6-Supervised Field';
+                        $modeoftraining[7] = '7-Traineeship';
+                        //$modeoftraining[8] = '8-Assessment';
+                        $modeoftraining[9] = '9-Synchronous eLearning';
+                        echo form_dropdown('modeoftraining', $modeoftraining, $this->input->post('modeoftraining'), 'id="modeoftraining"');
+                        ?>
+                        <span id="modeoftraining_err"></span>
+                    </td>
+                </tr>
                     <td class="td_heading">Date:<span class="required">*</span></td>
                     <td><?php
                         $schld_date = array(
@@ -756,6 +754,118 @@ echo form_open("classes/add_new_class", $atr);
     <span class="required required_i">* Required Fields</span>
     <div class="button_class"><a href="#" rel="modal:close"><button class="btn btn-primary schld_save" type="button"><span class="glyphicon glyphicon-saved"></span>&nbsp;Save</button></a> &nbsp; &nbsp; <a href="#" rel="modal:close"><button class="btn btn-primary schld_cancel" type="button"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel/ Delete</button></a></div>
 </p></div>
+
+<div class="modalassessment" id="ex2" style="display:none;">
+    <p>
+    <h2 class="panel_heading_style">Assessment Schedule</h2>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td class="td_heading">Date:<span class="red">*</span></td>
+                <td>
+                    <?php
+                    $ass_date = array(
+                        'name' => 'ass_date',
+                        'id' => 'ass_date',
+                        'readonly' => 'readonly',
+                        'placeholder' => 'dd/mm/yyyy',
+                        'value' => '',
+                    );
+                    echo form_input($ass_date);
+                    ?>
+                    <span id="ass_date_err"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td_heading">Start Time:<span class="red">*</span></td>
+                <td>
+                    <?php
+                    $ass_start_time = array(
+                        'name' => 'ass_start_time',
+                        'id' => 'ass_start_time',
+                        'readonly' => 'readonly',
+                        'value' => $this->input->post('ass_start_time'),
+                    );
+                    echo form_input($ass_start_time);
+                    ?>
+                    <span id="ass_start_time_err"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td_heading">End Time:<span class="red">*</span></td>
+                <td>
+                    <?php
+                    $ass_end_time = array(
+                        'name' => 'ass_end_time',
+                        'id' => 'ass_end_time',
+                        'readonly' => 'readonly',
+                        'value' => $this->input->post('ass_end_time'),
+                    );
+                    echo form_input($ass_end_time);
+                    ?>
+                    <span id="ass_end_time_err"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td_heading">Select Assessor:<span class="red">*</span></td>
+                <td><?php
+                    $cls_trainer_options = array();
+                    $cls_trainer_options[''] = 'Select';
+                    
+                    foreach ($trainer as $k => $v):
+                        $cls_trainer_options[$k] = $v;
+                    endforeach;
+                    echo form_dropdown('control_8[]', $cls_trainer_options, '', 'id="control_8" style="width:78%;" multiple="multiple"');
+                    ?>
+                    <span id="control_8_err"></span>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="td_heading">Venue:<span class="red">*</span></td>
+                <td style="width: 200px;">
+                    <?php
+                    $ass_venue_options[''] = 'Select';
+                    $cls_venue = fetch_metavalues_by_category_id(Meta_Values::LOCATION);
+                    foreach ($cls_venue as $val):
+                        $ass_venue_options[$val['parameter_id']] = $val['category_name'];
+                    endforeach;
+                    
+                    $ass_venue_options['OTH'] = 'Others';
+                    echo form_dropdown('ass_venue', $ass_venue_options, '', 'id="ass_venue" maxlength="250" style="width:152px;"');
+                    ?>
+                    <span id="ass_venue_err"></span>
+                    <br/>
+                    
+                    &nbsp; &nbsp; &nbsp; &nbsp; 
+                    <span class="assven_oth_span" style="display:none;">
+                        <?php
+                        $ass_venue_oth = array(
+                            'name' => 'ass_venue_oth',
+                            'id' => 'ass_venue_oth',
+                            'maxlength' => '250',
+                            'style' => 'width:220px;',
+                            
+                            'class' => 'upper_case',
+                            'maxlength'=>'250',
+                            'value' => $class->ass_venue_oth,
+                        );
+                        echo form_input($ass_venue_oth);
+                        ?>
+                    </span>
+                    <br>
+                    <span id="ass_venue_oth_err" class="ass_venue_oth_err"></span>
+                    <input type="hidden" id="ass_editid"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="clear:both;"></div>
+    <span class="required_i red">*Required Field</span>
+    <br><br>
+    <div class="button_class"><a href="javascript:;" rel="modal:close"><button class="btn btn-primary ass_save" type="button"><span class="glyphicon glyphicon-saved"></span>&nbsp;Save</button></a> &nbsp; &nbsp; <a href="#" rel="modal:close"><button class="btn btn-primary ass_schld_remove" type="button"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel/ Delete</button></a></div>
+</p>
+</div>
 <div class="modal1_5" id="ex9" style="display:none;">
     <p>
     <h2 class="panel_heading_style">Delete</h2>

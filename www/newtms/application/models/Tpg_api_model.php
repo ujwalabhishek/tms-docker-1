@@ -193,12 +193,12 @@ class Tpg_api_Model extends CI_Model {
                     $dates = date('Ymd', strtotime($schlded_date[$k]));
                     $starttime = date("H:i", strtotime($schlded_start_time[$k]));
                     $endtime = date("H:i", strtotime($schlded_end_time[$k]));
-                    $session_arr[] = array(
+                    $sessions[] = array(
                      "startDate" => "$dates",
                      "endDate" => "$dates",
                      "startTime" => "$starttime",
                      "endTime" => "$endtime",
-                     "modeOfTraining" => "$modeoftraining",
+                     "modeOfTraining" => "$mode_of_training[$k]",
                      "venue" => array
                          (
                              "block" => "$venue_block",
@@ -217,6 +217,43 @@ class Tpg_api_Model extends CI_Model {
              }
         }
         
+       
+        if (!empty($assmnt_date)) {    
+            foreach ($assmnt_date as $k => $v) {
+               
+                    $assdates = date('Ymd', strtotime($assmnt_date[$k]));
+                    $assstarttime = date("H:i", strtotime($assmnt_start_time[$k]));
+                    $assendtime = date("H:i", strtotime($assmnt_end_time[$k]));
+                    $assessments[] = array(
+                     "startDate" => "$assdates",
+                     "endDate" => "$assdates",
+                     "startTime" => "$assstarttime",
+                     "endTime" => "$assendtime",
+                     "modeOfTraining" => "8",
+                     "venue" => array
+                         (
+                             "block" => "$venue_block",
+                             "street" => "$venue_street",
+                             "floor" => "$venue_floor",
+                             "unit" => "$venue_unit",
+                             "building" => "$venue_building",
+                             "postalCode" => "$venue_postalcode",
+                             "room" => "$venue_room",
+                             "wheelChairAccess" => true,
+                             "primaryVenue" => true,
+                         ),
+
+                 );
+               
+             }
+        }
+        if(!empty($assessments)){
+             $session_arr = array_merge($sessions,$assessments);
+        }else{
+             $session_arr = $sessions;
+        }
+       
+        //print_r($session_arr);exit;
         $ClassTrainers = $this->get_trainer_details($control_5);
         //print_r($ClassTrainers);exit;
         if (!empty($ClassTrainers)) {    
@@ -562,7 +599,9 @@ class Tpg_api_Model extends CI_Model {
     function submit_attendance_to_tpg($tp_uen,$tpg_course_run_id,$tax_code,$crs_reference_num,$tenant_id,$user_id,$course_id,$class_id,$survey_language,$noOfHours,$tpgCourseId,$tpg_session_id,$attn_status_code,$fullname,$registered_email_id,$idtype,$mobileNo){
         
             $retun = $this->correct_live_dev_api_data($crs_reference_num,$tp_uen);
-           
+           if($attn_status_code == 0){//for absent
+               $attn_status_code= 2;///2-unconfirmed
+           }
 
             $tpg_attn_json_data = '{"uen": "'.$retun[tp_uen].'",
                                         "course": {
