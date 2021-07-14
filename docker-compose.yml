@@ -21,7 +21,7 @@ services:
     container_name: 'tms-mysql-5.7'
     restart: 'always'
     ports:
-      - "${HOST_MACHINE_MYSQL_PORT}:3306"
+      - "${HOST_MACHINE_MYSQL_PORT}:3308"
     volumes: 
       - ${MYSQL_LOG_DIR-./logs/mysql}:/var/log/mysql
     environment:
@@ -36,7 +36,7 @@ services:
       - mysql
     environment:
       PMA_HOST: mysql
-      PMA_PORT: 3306
+      PMA_PORT: 3308
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
