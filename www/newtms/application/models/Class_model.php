@@ -1013,6 +1013,7 @@ class Class_Model extends CI_Model {
         
         //print_r($data1['class_schedule']);exit;
         foreach($data1['class_schedule'] as $ses){
+            $ses['class_id'] = $latest_class_id;
             $this->db->insert('class_schld', $ses);
         }
         
