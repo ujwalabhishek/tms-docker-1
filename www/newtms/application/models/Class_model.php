@@ -939,7 +939,62 @@ class Class_Model extends CI_Model {
      * @param type $user_id
      * @return boolean
      */
-    public function copy_classes($tenantId, $course_name, $user_id) {
+    public function copy_classes($tenant_id, $course_name, $user_id, $data1){
+        
+       $class_name = $class_name;
+        $start_date_timestamp = date('Y-m-d H:i:s', strtotime($start_date . ' ' . $start_time . ':00'));
+        $end_date_timestamp = date('Y-m-d H:i:s', strtotime($end_date . ' ' . $end_time . ':00'));
+        $data = $this->db->select('*')->from('course_class')
+                        ->where('tenant_id', $tenantId)->where('class_id', $class_hid)->get()->row_array();
+        $cur_date = strtotime(date('Y-m-d'));
+        $class_start_date = strtotime($start_date);
+        $class_end_date = strtotime($end_date);
+        if ($class_start_date > $cur_date && $class_end_date > $cur_date) {
+            $class_status = 'YTOSTRT';
+        } else if ($class_start_date <= $cur_date && $class_end_date >= $cur_date) {
+            $class_status = 'IN_PROG';
+        } else {
+            $class_status = ' !!!!';  
+        }
+        $data['class_status'] = $class_status;
+        $data['deacti_date_time'] = NULL;
+        $data['deacti_reason'] = '';
+        $data['deacti_reason_oth'] = '';
+        $data['deacti_by'] = '';
+        $data['class_id'] = '';
+        $data['class_name'] = strtoupper($class_name);
+        $data['class_start_datetime'] = $start_date_timestamp;
+        $data['class_end_datetime'] = $end_date_timestamp;
+        $data['certi_coll_date'] = NULL;
+        $data['created_by'] = $user_id;
+        $data['class_copied_from'] = $class_hid;
+        $data['copied_by'] = $user_id;
+        $data['copied_reason'] = $copy_reason;
+        $data['copied_reason_oth'] = strtoupper($other_reason);
+        $data['created_on'] = date('Y-m-d H:i:s');
+        $data['last_modified_by'] = $user_id;
+        $data['last_modified_on'] = date('Y-m-d H:i:s');
+        print_r($data); print_r($data1);exit;
+        $this->db->trans_start();
+        $course_class = $this->db->insert('course_class', $data);
+        if ($course_class) {
+            $class_id = $this->db->insert_id();
+            if (empty($class_name)) {
+                $class_name = $course_name.'_'.$class_id;                
+                $this->db->where('class_id', $class_id);
+                $this->db->update('course_class', array('class_name' => $class_name));
+            }
+            $this->db->trans_complete();
+            if ($this->db->trans_status() === FALSE) {
+                return FALSE;
+            }
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    
+    public function copy_classes_backup($tenantId, $course_name, $user_id) {
         extract($_POST);
         $class_name = $class_name;
         $start_date_timestamp = date('Y-m-d H:i:s', strtotime($start_date . ' ' . $start_time . ':00'));

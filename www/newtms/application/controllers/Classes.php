@@ -694,9 +694,88 @@ class Classes extends CI_Controller {
                     $this->copy_class($tax_error); 
                     return;
                 }                                     
-            }                
+            } 
+            
+            ///////////////////////////////
+            
+         
+                if (empty($class_id)) {
+                    return show_404();
+                }
+          
+             
+                $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_hid);
+                $coursedetails = $this->coursemodel->get_course_detailse($class->course_id);
+                $status = $this->classmodel->get_class_status($class_id, '');
+                if ($status == 'Inactive') {
+                    $data['deactivate_reason'] = ($class->deacti_reason != 'OTHERS') ? $this->coursemodel->get_metadata_on_parameter_id($class->deacti_reason) : 'Others (' . $class->deacti_reason_oth . ')';
+                }
+                if (!empty($class->class_copied_from)) {
+                    $copied_user_details = $this->classmodel->get_user_details($tenant_id, $class->copied_by);
+                    $data['copied_user'] = $copied_user_details->first_name . ' ' . $copied_user_details->last_name;
+                    $data['copy_reason'] = ($class->copied_reason != 'OTHERS') ? $this->coursemodel->get_metadata_on_parameter_id($class->copied_reason) : 'Others (' . $class->copied_reason_oth . ')';
+                }
+                if ($status == 'Yet to Start')
+                    $status_label = '<font color="green">Yet to Start</font>';
+                elseif ($status == 'Inactive')
+                    $status_label = '<font color="red">Inactive</font>';
+                else if ($status == 'Completed')
+                    $status_label = '<font color="red">Completed</font>';
+                else if ($status == 'In-Progress')
+                    $status_label = '<font color="blue">In-Progress</font>';
+                else
+                    $status_label = 'Unknown';
+                $data['class_status'] = $status_label;
+                $data['ClassPay'] = $this->coursemodel->get_metadata_on_parameter_id($class->class_pymnt_enrol);
+                $data['ClassLang'] = $this->coursemodel->get_metadata_on_parameter_id($class->class_language);
+                $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
+                $data['LabLoc'] = $this->get_classroom_location($class->lab_location, $class->lab_venue_oth);
+                $data['ClassTrainer'] = $this->classmodel->get_trainer_names($class->classroom_trainer);
+                $data['LabTrainer'] = $this->classmodel->get_trainer_names($class->lab_trainer);
+                $data['Assessor'] = $this->classmodel->get_trainer_names($class->assessor);
+                $data['TrainingAide'] = $this->classmodel->get_course_manager_names($class->training_aide);
+                $data['SalesExec'] = $this->classmodel->get_class_salesexec($tenant_id, $class->course_id, $class->sales_executive);
+                $data['class_schedule'] = $this->classmodel->get_all_class_schedule($tenant_id, $class_id);
+                $def_assmnt = $this->classmodel->get_def_assessment_new($tenant_id, $class_id, $class->assmnt_type);
+                if ($class->assmnt_type == 'DEFAULT') {
+                    $data['DefAssLoc'] = ($def_assmnt->assmnt_venue == 'OTH') ? 'Others (' . $def_assmnt->assmnt_venue_oth . ')' : $this->coursemodel->get_metadata_on_parameter_id($def_assmnt->assmnt_venue);
+                    $data['DefAssId'] = $this->classmodel->get_trainer_names($def_assmnt->assessor_id);
+                    $cdef_assmnt = $def_assmnt;
+                } else {
+                    foreach ($def_assmnt as $k => $row) {
+                        $def_assmnt[$k]->DefAssLoc = ($row->assmnt_venue == 'OTH') ? 'Others (' . $row->assmnt_venue_oth . ')' : $this->coursemodel->get_metadata_on_parameter_id($row->assmnt_venue);
+                        $def_assmnt[$k]->DefAssId = $this->classmodel->get_trainer_names($row->assessor_id);
+                    }
+                    $assmnt = array();
+                    foreach ($def_assmnt as $row) {
+                        $assmnt[$row->assmnt_id]['DefAssLoc'] = ($row->assmnt_venue == 'OTH') ? 'Others (' . $row->assmnt_venue_oth . ')' : $this->coursemodel->get_metadata_on_parameter_id($row->assmnt_venue);
+                        $assmnt[$row->assmnt_id]['DefAssId'] = $this->classmodel->get_trainer_names($row->assessor_id);
+                        $assmnt[$row->assmnt_id]['assessor_id'] = $row->assessor_id;
+                        $assmnt[$row->assmnt_id]['assmnt_id'] = $row->assmnt_id;
+                        $assmnt[$row->assmnt_id]['assmnt_date'] = $row->assmnt_date;
+                        $assmnt[$row->assmnt_id]['assmnt_venue'] = $row->assmnt_venue;
+                        $assmnt[$row->assmnt_id]['assmnt_venue_oth'] = $row->assmnt_venue_oth;
+                        $assmnt[$row->assmnt_id]['assmnt_date'] = $row->assmnt_date;
+                        $assmnt[$row->assmnt_id]['trainee'][] = $row->first_name . ' ' . $row->last_name;
+                        $assmnt[$row->assmnt_id]['trainee_id'][] = $row->user_id;
+                        $assmnt[$row->assmnt_id]['assmnt_start_time'] = $row->assmnt_start_time;
+                        $assmnt[$row->assmnt_id]['assmnt_end_time'] = $row->assmnt_end_time;
+                    }
+                    $cdef_assmnt = $assmnt;
+                }
+                $data['def_assessment'] = $cdef_assmnt;
+                $data['page_title'] = 'Class';
+                $data['classid'] = $class_id;
+               
+            
+            
+            
+            
+            
+            
+            ///////////////////////////////////
             $course_name= $course_name_hidden;            
-            $result = $this->classmodel->copy_classes($tenant_id, $course_name, $user_id);
+            $result = $this->classmodel->copy_classes($tenant_id, $course_name, $user_id,$data);
             if ($result == TRUE) {
                 $this->session->set_flashdata("success", "Class copied successfully.");
             } else {
