@@ -931,7 +931,11 @@ class Class_Model extends CI_Model {
                         ->where('tenant_id', $tenant_id)->where('class_id', $class_id)->get()->row_array();
         return $data;
     }
-
+    public function get_all_class_schedule_new($tenant_id, $cid, $dt) {
+        $result = $this->db->query("select *
+                from class_schld where tenant_id='$tenant_id' and class_id='$cid' and class_date=$dt");
+        return $result->result_array();
+    }
     /**
      * This method copy's a class
      * @param type $tenantId
@@ -967,6 +971,8 @@ class Class_Model extends CI_Model {
         
         $data = $data1['class'];
         $data->tenant_id = $tenant_id;
+        $data->tpg_course_run_id = '';
+        $data->tpg_qr_code = '';
         $data->class_name = strtoupper($class_name);
         $data->class_start_datetime = $start_date_timestamp;
         $data->class_end_datetime = $end_date_timestamp;
@@ -981,7 +987,25 @@ class Class_Model extends CI_Model {
         $data->last_modified_on = date('Y-m-d H:i:s');
         
         
-        print_r($data); print_r($data1);exit;
+        
+        
+        $data['class_schedule'];
+        $begin = new DateTime($start_date);
+        $end = new DateTime($end_date);
+
+        $interval = DateInterval::createFromDateString('1 day');
+        $period = new DatePeriod($begin, $interval, $end);
+
+        foreach ($period as $dt) {
+            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $class_hid, $dt);
+            print_r($class_schedule);exit;
+            foreach($class_schedule as $da){
+                
+            }
+            $dt->format("Y-m-d");
+        }
+        
+        
         $this->db->trans_start();
         $course_class = $this->db->insert('course_class', $data);
         if ($course_class) {
