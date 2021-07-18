@@ -705,7 +705,7 @@ class Classes extends CI_Controller {
           
              
                 $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_hid);
-                print_r($data['class']);exit;
+                print_r($data['class']);exit;//
                 $coursedetails = $this->coursemodel->get_course_detailse($class->course_id);
                 $status = $this->classmodel->get_class_status($class_id, '');
                 if ($status == 'Inactive') {
