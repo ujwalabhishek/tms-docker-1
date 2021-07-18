@@ -1063,8 +1063,8 @@ class Class_Model extends CI_Model {
             $assm_schedule = $this->get_def_assessments_new($tenant_id, $class_id,$course_id, $data1['def_assessment'][0]->assmnt_type,$dt->format("Y-m-d"));
             //print_r($class_schedule);exit;
             if(empty($assm_schedule)){
-                $your_date = strtotime("1 day", strtotime($start_date));
-                $new_date1 = date("Y-m-d", $your_date);
+                $your_date1 = strtotime("1 day", strtotime($start_date));
+                $new_date1 = date("Y-m-d", $your_date1);
             }else{
                 $this->db->where('class_id', $latest_class_id);
                 $this->db->where('course_id', $course_id);
