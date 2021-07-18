@@ -1019,13 +1019,13 @@ class Class_Model extends CI_Model {
         
         $new_date = date("Y-m-d", strtotime($start_date));
         foreach ($period as $dt) {
-            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $class_id, $dt->format("Y-m-d"));
+            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $latest_class_id, $dt->format("Y-m-d"));
             //print_r($class_schedule);exit;
             if(empty($class_schedule)){
                 $your_date = strtotime("1 day", strtotime($start_date));
                 $new_date = date("Y-m-d", $your_date);
             }else{
-                $this->db->where('class_id', $class_id);
+                $this->db->where('class_id', $latest_class_id);
                 $this->db->where('course_id', $course_id);
                 $this->db->where('tenant_id', $tenant_id);
                 $this->db->where('class_date', $dt->format("Y-m-d"));
