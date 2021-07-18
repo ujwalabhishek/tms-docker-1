@@ -989,7 +989,7 @@ class Class_Model extends CI_Model {
         
         
         
-        $data['class_schedule'];
+       
         $begin = new DateTime($start_date);
         $end = new DateTime($end_date);
 
