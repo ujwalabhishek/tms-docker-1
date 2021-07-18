@@ -1031,7 +1031,7 @@ class Class_Model extends CI_Model {
 //            
 //        }
         
-        print_r($data['class_schedule']);exit;
+        print_r($data1['class_schedule']);exit;
         foreach($data['class_schedule'] as $ses){
             $this->db->insert('class_schld', $ses);
         }
