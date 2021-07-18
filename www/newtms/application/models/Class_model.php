@@ -998,12 +998,12 @@ class Class_Model extends CI_Model {
         $period = new DatePeriod($begin, $interval, $end);
 
         foreach ($period as $dt) {
-            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $class_id, $dt);
+            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $class_id, $dt->format("Y-m-d"));
             print_r($class_schedule);exit;
             foreach($class_schedule as $da){
                 
             }
-            $dt->format("Y-m-d");
+            
         }
         
         
