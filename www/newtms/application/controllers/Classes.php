@@ -680,7 +680,7 @@ class Classes extends CI_Controller {
     /**
      * this function to get post values and copy the class
      */
-    public function copy_classes() {
+    public function copy_classes() {echo "s";exit;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
