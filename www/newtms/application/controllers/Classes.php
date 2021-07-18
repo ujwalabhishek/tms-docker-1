@@ -732,33 +732,8 @@ class Classes extends CI_Controller {
                 $data['SalesExec'] = $this->classmodel->get_class_salesexec($tenant_id, $class->course_id, $class->sales_executive);
                 $data['class_schedule'] = $this->classmodel->get_all_class_schedules($tenant_id, $class_hid);
                 $def_assmnt = $this->classmodel->get_def_assessment_new($tenant_id, $class_hid, $class->assmnt_type);
-                if ($class->assmnt_type == 'DEFAULT') {
-                    $data['DefAssLoc'] = ($def_assmnt->assmnt_venue == 'OTH') ? 'Others (' . $def_assmnt->assmnt_venue_oth . ')' : $this->coursemodel->get_metadata_on_parameter_id($def_assmnt->assmnt_venue);
-                    $data['DefAssId'] = $this->classmodel->get_trainer_names($def_assmnt->assessor_id);
-                    $cdef_assmnt = $def_assmnt;
-                } else {
-                    foreach ($def_assmnt as $k => $row) {
-                        $def_assmnt[$k]->DefAssLoc = ($row->assmnt_venue == 'OTH') ? 'Others (' . $row->assmnt_venue_oth . ')' : $this->coursemodel->get_metadata_on_parameter_id($row->assmnt_venue);
-                        $def_assmnt[$k]->DefAssId = $this->classmodel->get_trainer_names($row->assessor_id);
-                    }
-                    $assmnt = array();
-                    foreach ($def_assmnt as $row) {
-                        $assmnt[$row->assmnt_id]['DefAssLoc'] = ($row->assmnt_venue == 'OTH') ? 'Others (' . $row->assmnt_venue_oth . ')' : $this->coursemodel->get_metadata_on_parameter_id($row->assmnt_venue);
-                        $assmnt[$row->assmnt_id]['DefAssId'] = $this->classmodel->get_trainer_names($row->assessor_id);
-                        $assmnt[$row->assmnt_id]['assessor_id'] = $row->assessor_id;
-                        $assmnt[$row->assmnt_id]['assmnt_id'] = $row->assmnt_id;
-                        $assmnt[$row->assmnt_id]['assmnt_date'] = $row->assmnt_date;
-                        $assmnt[$row->assmnt_id]['assmnt_venue'] = $row->assmnt_venue;
-                        $assmnt[$row->assmnt_id]['assmnt_venue_oth'] = $row->assmnt_venue_oth;
-                        $assmnt[$row->assmnt_id]['assmnt_date'] = $row->assmnt_date;
-                        $assmnt[$row->assmnt_id]['trainee'][] = $row->first_name . ' ' . $row->last_name;
-                        $assmnt[$row->assmnt_id]['trainee_id'][] = $row->user_id;
-                        $assmnt[$row->assmnt_id]['assmnt_start_time'] = $row->assmnt_start_time;
-                        $assmnt[$row->assmnt_id]['assmnt_end_time'] = $row->assmnt_end_time;
-                    }
-                    $cdef_assmnt = $assmnt;
-                }
-                $data['def_assessment'] = $cdef_assmnt;
+                
+                $data['def_assessment'] = $def_assmnt;
                 $data['page_title'] = 'Class';
                 $data['classid'] = $class_hid;
                

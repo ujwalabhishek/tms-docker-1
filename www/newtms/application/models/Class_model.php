@@ -651,6 +651,22 @@ class Class_Model extends CI_Model {
         }
         return $result;
     }
+    
+    public function get_def_assessments_new($tenant_id, $class_id,$course_id, $assmnt_type='',$assdate) {
+        if ($assmnt_type == 'DEFAULT') {
+            $result = $this->db->select('*')->from('class_assmnt_schld')->where('tenant_id', $tenant_id)
+                            ->where('class_id', $class_id)->get()->row();
+        } elseif ($assmnt_type == 'CUSTOM') {
+            $this->db->select('*');
+            $this->db->from('class_assmnt_schld');
+            $this->db->where('tenant_id', $tenant_id);
+            $this->db->where('course_id', $course_id);
+            $this->db->where('assmnt_date', $assdate);
+            $this->db->where('class_id', $class_id);
+            $result = $this->db->get()->result();
+        }
+        return $result;
+    }
 
     /**
      * this function to get all class schedules
@@ -998,9 +1014,9 @@ class Class_Model extends CI_Model {
         $data->last_modified_by = $user_id;
         $data->last_modified_on = date('Y-m-d H:i:s');
         unset($data->assmnt_type);
-        $this->db->trans_start();
-        $course_class = $this->db->insert('course_class', $data);
-        $latest_class_id = $this->db->insert_id();
+        //$this->db->trans_start();
+        //$course_class = $this->db->insert('course_class', $data);
+        //$latest_class_id = $this->db->insert_id();
         
         $start_date_ = date('Y-m-d', strtotime($old_start_datetime));
         $end_date_ = date('Y-m-d', strtotime($old_end_datetime));
@@ -1012,24 +1028,50 @@ class Class_Model extends CI_Model {
         
         
         //print_r($data1['class_schedule']);exit;
-        foreach($data1['class_schedule'] as $ses){
-            $ses['class_id'] = $latest_class_id;
-            $this->db->insert('class_schld', $ses);
+//        foreach($data1['class_schedule'] as $ses){
+//            $ses['class_id'] = $latest_class_id;
+//            $this->db->insert('class_schld', $ses);
+//        }
+//        
+//        $new_date = date("Y-m-d", strtotime($start_date));
+//        foreach ($period as $dt) {
+//            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $latest_class_id, $dt->format("Y-m-d"));
+//            //print_r($class_schedule);exit;
+//            if(empty($class_schedule)){
+//                $your_date = strtotime("1 day", strtotime($start_date));
+//                $new_date = date("Y-m-d", $your_date);
+//            }else{
+//                $this->db->where('class_id', $latest_class_id);
+//                $this->db->where('course_id', $course_id);
+//                $this->db->where('tenant_id', $tenant_id);
+//                $this->db->where('class_date', $dt->format("Y-m-d"));
+//                $this->db->update('class_schld', array('tpg_session_id' => '','class_date' =>$new_date));
+//                
+//            }
+//   
+//        }
+        print_r($data1['def_assessment']);exit;
+         foreach($data1['def_assessment'] as $ass){
+            $ass['tenant_id'] = $tenant_id;
+            $ass['course_id'] = $course_id;
+            $ass['class_id'] = $latest_class_id;
+             unset($ass['assmnt_id']);
+            $this->db->insert('class_assmnt_schld', $ass);
         }
         
-        $new_date = date("Y-m-d", strtotime($start_date));
+        $new_date1 = date("Y-m-d", strtotime($start_date));
         foreach ($period as $dt) {
-            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $latest_class_id, $dt->format("Y-m-d"));
+            $assm_schedule = $this->get_def_assessments_new($tenant_id, $class_id,$course_id, $assmnt_type='',$dt->format("Y-m-d"));
             //print_r($class_schedule);exit;
-            if(empty($class_schedule)){
+            if(empty($assm_schedule)){
                 $your_date = strtotime("1 day", strtotime($start_date));
-                $new_date = date("Y-m-d", $your_date);
+                $new_date1 = date("Y-m-d", $your_date);
             }else{
                 $this->db->where('class_id', $latest_class_id);
                 $this->db->where('course_id', $course_id);
                 $this->db->where('tenant_id', $tenant_id);
                 $this->db->where('class_date', $dt->format("Y-m-d"));
-                $this->db->update('class_schld', array('tpg_session_id' => '','class_date' =>$new_date,'class_id' => $latest_class_id));
+                $this->db->update('class_assmnt_schld', array('assmnt_date' =>$new_date1));
                 
             }
    
