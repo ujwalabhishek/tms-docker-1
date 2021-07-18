@@ -997,7 +997,7 @@ class Class_Model extends CI_Model {
         $data->created_on = date('Y-m-d H:i:s');
         $data->last_modified_by = $user_id;
         $data->last_modified_on = date('Y-m-d H:i:s');
-        
+        unset($data->assmnt_type);
         $this->db->trans_start();
         $course_class = $this->db->insert('course_class', $data);
         $latest_class_id = $this->db->insert_id();
