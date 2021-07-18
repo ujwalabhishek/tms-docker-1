@@ -636,6 +636,21 @@ class Class_Model extends CI_Model {
         }
         return $result;
     }
+    
+    public function get_def_assessment_new($tenant_id, $class_id, $assmnt_type='') {
+        if ($assmnt_type == 'DEFAULT') {
+            $result = $this->db->select('*')->from('class_assmnt_schld')->where('tenant_id', $tenant_id)
+                            ->where('class_id', $class_id)->get()->row();
+        } elseif ($assmnt_type == 'CUSTOM') {
+            $this->db->select('*');
+            $this->db->from('class_assmnt_schld');
+            $this->db->where('assmnt.tenant_id', $tenant_id);
+            $this->db->where('assmnt.class_id', $class_id);
+
+            $result = $this->db->get()->result();
+        }
+        return $result;
+    }
 
     /**
      * this function to get all class schedules
