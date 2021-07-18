@@ -978,7 +978,7 @@ class Class_Model extends CI_Model {
         $data->class_end_datetime = $end_date_timestamp;
         $data->certi_coll_date = NULL;
         $data->created_by = $user_id;
-        $data->class_copied_from = $class_hid;
+        $data->class_copied_from = $class_id;
         $data->copied_by = $user_id;
         $data->copied_reason = $copy_reason;
         $data->copied_reason_oth = strtoupper($other_reason);
@@ -997,7 +997,7 @@ class Class_Model extends CI_Model {
         $period = new DatePeriod($begin, $interval, $end);
 
         foreach ($period as $dt) {
-            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $class_hid, $dt);
+            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $class_id, $dt);
             print_r($class_schedule);exit;
             foreach($class_schedule as $da){
                 
