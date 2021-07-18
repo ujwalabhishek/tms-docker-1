@@ -980,7 +980,7 @@ class Class_Model extends CI_Model {
         
         $old_start_datetime  = $data->class_start_datetime;
         $old_end_datetime = $data->class_end_datetime;
-        
+        $course_id = $data->course_id;
         
         $data->tenant_id = $tenant_id;
         $data->tpg_course_run_id = '';
@@ -998,8 +998,9 @@ class Class_Model extends CI_Model {
         $data->last_modified_by = $user_id;
         $data->last_modified_on = date('Y-m-d H:i:s');
         
-        
-        
+        $this->db->trans_start();
+        $course_class = $this->db->insert('course_class', $data);
+        $latest_class_id = $this->db->insert_id();
         
         $start_date_ = date('Y-m-d', strtotime($old_start_datetime));
         $end_date_ = date('Y-m-d', strtotime($old_end_datetime));
@@ -1008,42 +1009,40 @@ class Class_Model extends CI_Model {
 
         $interval = DateInterval::createFromDateString('1 day');
         $period = new DatePeriod($begin, $interval, $end);
-        $class_schd_new = array();
         
         
-        
-//        foreach ($period as $dt) {
-//            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $class_id, $dt->format("Y-m-d"));
-//            //print_r($class_schedule);exit;
-//            if(empty($class_schedule)){
-//                $your_date = strtotime("1 day", strtotime($start_date));
-//                $new_date = date("Y-m-d", $your_date);
-//            }else{
-//                foreach($class_schedule as $da){
-//                
-//                }
-//               $class_schd_new = $class_schedule;
-//                
-//            }
-//            
-//            
-//            
-//            
-//        }
-        
-        print_r($data1['class_schedule']);exit;
+        //print_r($data1['class_schedule']);exit;
         foreach($data['class_schedule'] as $ses){
             $this->db->insert('class_schld', $ses);
         }
         
-        
-        $this->db->trans_start();
-        $course_class = $this->db->insert('course_class', $data);
-        if ($course_class) {
-            $class_id = $this->db->insert_id();
-            if (empty($class_name)) {
-                $class_name = $course_name.'_'.$class_id;                
+        $new_date = date("Y-m-d", strtotime($start_date));
+        foreach ($period as $dt) {
+            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $class_id, $dt->format("Y-m-d"));
+            //print_r($class_schedule);exit;
+            if(empty($class_schedule)){
+                $your_date = strtotime("1 day", strtotime($start_date));
+                $new_date = date("Y-m-d", $your_date);
+            }else{
                 $this->db->where('class_id', $class_id);
+                $this->db->where('course_id', $course_id);
+                $this->db->where('tenant_id', $tenant_id);
+                $this->db->where('class_date', $dt->format("Y-m-d"));
+                $this->db->update('class_schld', array('tpg_session_id' => '','class_date' =>$new_date,'class_id' => $latest_class_id));
+                
+            }
+   
+        }
+       
+        
+        
+       
+       
+        if ($course_class) {
+           
+            if (empty($class_name)) {
+                $class_name = $course_name.'_'.$latest_class_id;                
+                $this->db->where('class_id', $latest_class_id);
                 $this->db->update('course_class', array('class_name' => $class_name));
             }
             $this->db->trans_complete();
