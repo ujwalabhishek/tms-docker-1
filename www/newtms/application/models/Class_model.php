@@ -981,7 +981,7 @@ class Class_Model extends CI_Model {
         $old_start_datetime  = $data->class_start_datetime;
         $old_end_datetime = $data->class_end_datetime;
         $course_id = $data->course_id;
-        
+        $data->class_id = '';
         $data->tenant_id = $tenant_id;
         $data->tpg_course_run_id = '';
         $data->tpg_qr_code = '';
