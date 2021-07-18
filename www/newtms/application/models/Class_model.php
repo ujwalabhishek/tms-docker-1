@@ -965,28 +965,8 @@ class Class_Model extends CI_Model {
         }
         
         
-        
+        $data = $data1['class'];
         $data['tenant_id'] = $tenant_id;
-        $data['course_id'] = $data1['class']->course_id;
-        $data['class_status'] = $class_status;
-        $data['class_status'] = $class_status;
-        $data['class_status'] = $class_status;
-        $data['class_status'] = $class_status;
-        $data['class_status'] = $class_status;
-        $data['class_status'] = $class_status;
-        $data['class_status'] = $class_status;
-        $data['class_status'] = $class_status;
-        
-        
-        
-        
-        
-        $data['class_status'] = $class_status;
-        $data['deacti_date_time'] = NULL;
-        $data['deacti_reason'] = '';
-        $data['deacti_reason_oth'] = '';
-        $data['deacti_by'] = '';
-        $data['class_id'] = '';
         $data['class_name'] = strtoupper($class_name);
         $data['class_start_datetime'] = $start_date_timestamp;
         $data['class_end_datetime'] = $end_date_timestamp;
@@ -999,7 +979,8 @@ class Class_Model extends CI_Model {
         $data['created_on'] = date('Y-m-d H:i:s');
         $data['last_modified_by'] = $user_id;
         $data['last_modified_on'] = date('Y-m-d H:i:s');
-        $data = $data1['class'];
+        
+        
         print_r($data); print_r($data1);exit;
         $this->db->trans_start();
         $course_class = $this->db->insert('course_class', $data);
