@@ -1033,7 +1033,7 @@ class Class_Model extends CI_Model {
             $this->db->insert('class_schld', $ses);
         }
         
-        $new_date = date("Y-m-d", strtotime($start_date));
+        $new_date = date("Y-m-d", strtotime("1 day", strtotime($start_date)));
         foreach ($period as $dt) {
             $class_schedule = $this->get_all_class_schedule_new($tenant_id, $latest_class_id, $dt->format("Y-m-d"));
             //print_r($class_schedule);exit;
@@ -1058,7 +1058,7 @@ class Class_Model extends CI_Model {
             $this->db->insert('class_assmnt_schld', $ass);
         }
         
-        $new_date1 = date("Y-m-d", strtotime($start_date));
+        $new_date1 = date("Y-m-d", strtotime("1 day", strtotime($start_date)));
         foreach ($period as $dt) {
             $assm_schedule = $this->get_def_assessments_new($tenant_id, $class_id,$course_id, $data1['def_assessment'][0]->assmnt_type,$dt->format("Y-m-d"));
             //print_r($class_schedule);exit;
