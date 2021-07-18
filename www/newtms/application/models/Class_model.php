@@ -661,6 +661,11 @@ class Class_Model extends CI_Model {
                 order by class_date DESC, session_start_time ASC");
         return $result->result_array();
     }
+    public function get_all_class_schedules($tenant_id, $cid) {
+        $result = $this->db->query("select tenant_id,course_id,class_id,class_date,session_type_id,tpg_session_id,mode_of_training,session_start_time,session_end_time
+                from class_schld where tenant_id='$tenant_id' and class_id='$cid'");
+        return $result->result_array();
+    }
     
      /* this function get the start date and time of class skm start */
     public function get_class_startdate_time($class_id)
@@ -1003,16 +1008,32 @@ class Class_Model extends CI_Model {
 
         $interval = DateInterval::createFromDateString('1 day');
         $period = new DatePeriod($begin, $interval, $end);
-
-        foreach ($period as $dt) {
-            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $class_id, $dt->format("Y-m-d"));
-            print_r($class_schedule);exit;
-            $your_date = strtotime("1 day", strtotime("2016-08-24"));
-            $new_date = date("Y-m-d", $your_date);
-            foreach($class_schedule as $da){
-                
-            }
-            
+        $class_schd_new = array();
+        
+        
+        
+//        foreach ($period as $dt) {
+//            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $class_id, $dt->format("Y-m-d"));
+//            //print_r($class_schedule);exit;
+//            if(empty($class_schedule)){
+//                $your_date = strtotime("1 day", strtotime($start_date));
+//                $new_date = date("Y-m-d", $your_date);
+//            }else{
+//                foreach($class_schedule as $da){
+//                
+//                }
+//               $class_schd_new = $class_schedule;
+//                
+//            }
+//            
+//            
+//            
+//            
+//        }
+        
+        print_r($data['class_schedule']);exit;
+        foreach($data['class_schedule'] as $ses){
+            $this->db->insert('class_schld', $ses);
         }
         
         
