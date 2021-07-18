@@ -941,11 +941,18 @@ class Class_Model extends CI_Model {
      */
     public function copy_classes($tenant_id, $course_name, $user_id, $data1){
         
-       print_r($start_date);exit;
+       $class_name = $this->input->post('class_name');
+       $start_date = $this->input->post('start_date');
+       $start_time = $this->input->post('start_time');
+       $end_date = $this->input->post('end_date');
+       $end_time = $this->input->post('end_time');
+       $copy_reason = $this->input->post('copy_reason');
+       $class_id = $this->input->post('class_hid');
+       
         $start_date_timestamp = date('Y-m-d H:i:s', strtotime($start_date . ' ' . $start_time . ':00'));
         $end_date_timestamp = date('Y-m-d H:i:s', strtotime($end_date . ' ' . $end_time . ':00'));
-        $data = $this->db->select('*')->from('course_class')
-                        ->where('tenant_id', $tenantId)->where('class_id', $class_hid)->get()->row_array();
+       // $data = $this->db->select('*')->from('course_class')
+                        //->where('tenant_id', $tenantId)->where('class_id', $class_id)->get()->row_array();
         $cur_date = strtotime(date('Y-m-d'));
         $class_start_date = strtotime($start_date);
         $class_end_date = strtotime($end_date);
