@@ -933,9 +933,9 @@ class Class_Model extends CI_Model {
     }
     public function get_all_class_schedule_new($tenant_id, $cid, $dt) {
         $result = $this->db->query("select *
-                from class_schld where tenant_id='$tenant_id' and class_id='$cid' and class_date='$dt'");
-         $result->result_array();
-         echo $this->db->last_query();exit;
+                from class_schld where tenant_id='$tenant_id' and class_id='$cid' and class_date='$dt' and session_type_id !='BRK'");
+         return $result->result_array();
+         
     }
     /**
      * This method copy's a class
@@ -970,7 +970,13 @@ class Class_Model extends CI_Model {
         }
         
         
+        
         $data = $data1['class'];
+        
+        $old_start_datetime  = $data->class_start_datetime;
+        $old_end_datetime = $data->class_end_datetime;
+        
+        
         $data->tenant_id = $tenant_id;
         $data->tpg_course_run_id = '';
         $data->tpg_qr_code = '';
@@ -990,8 +996,8 @@ class Class_Model extends CI_Model {
         
         
         
-        $start_date_ = date('Y-m-d', strtotime($start_date));
-        $end_date_ = date('Y-m-d', strtotime($end_date));
+        $start_date_ = date('Y-m-d', strtotime($old_start_datetime));
+        $end_date_ = date('Y-m-d', strtotime($old_end_datetime));
         $begin = new DateTime($start_date_);
         $end = new DateTime($end_date_);
 
@@ -1001,6 +1007,8 @@ class Class_Model extends CI_Model {
         foreach ($period as $dt) {
             $class_schedule = $this->get_all_class_schedule_new($tenant_id, $class_id, $dt->format("Y-m-d"));
             print_r($class_schedule);exit;
+            $your_date = strtotime("1 day", strtotime("2016-08-24"));
+            $new_date = date("Y-m-d", $your_date);
             foreach($class_schedule as $da){
                 
             }
