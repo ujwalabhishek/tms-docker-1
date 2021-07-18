@@ -1069,7 +1069,7 @@ class Class_Model extends CI_Model {
                 $this->db->where('class_id', $latest_class_id);
                 $this->db->where('course_id', $course_id);
                 $this->db->where('tenant_id', $tenant_id);
-                $this->db->where('class_date', $dt->format("Y-m-d"));
+                $this->db->where('assmnt_date', $dt->format("Y-m-d"));
                 $this->db->update('class_assmnt_schld', array('assmnt_date' =>$new_date1));
                 
             }
