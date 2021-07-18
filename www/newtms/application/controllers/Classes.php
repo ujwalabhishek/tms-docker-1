@@ -680,7 +680,7 @@ class Classes extends CI_Controller {
     /**
      * this function to get post values and copy the class
      */
-    public function copy_classes() {echo "s";exit;
+    public function copy_classes() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
@@ -697,13 +697,7 @@ class Classes extends CI_Controller {
             } 
             
             ///////////////////////////////
-            
-         
-                if (empty($class_id)) {
-                    return show_404();
-                }
-          
-             
+
                 $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_hid);
                 print_r($data['class']);exit;//
                 $coursedetails = $this->coursemodel->get_course_detailse($class->course_id);
