@@ -933,7 +933,7 @@ class Class_Model extends CI_Model {
     }
     public function get_all_class_schedule_new($tenant_id, $cid, $dt) {
         $result = $this->db->query("select *
-                from class_schld where tenant_id='$tenant_id' and class_id='$cid' and class_date=$dt");
+                from class_schld where tenant_id='$tenant_id' and class_id='$cid' and class_date='$dt'");
         return $result->result_array();
     }
     /**
