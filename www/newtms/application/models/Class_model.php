@@ -989,9 +989,10 @@ class Class_Model extends CI_Model {
         
         
         
-       
-        $begin = new DateTime($start_date);
-        $end = new DateTime($end_date);
+        $start_date_ = date('Y-m-d', strtotime($start_date));
+        $end_date_ = date('Y-m-d', strtotime($end_date));
+        $begin = new DateTime($start_date_);
+        $end = new DateTime($end_date_);
 
         $interval = DateInterval::createFromDateString('1 day');
         $period = new DatePeriod($begin, $interval, $end);
