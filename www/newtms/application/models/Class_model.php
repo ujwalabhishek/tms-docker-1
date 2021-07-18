@@ -644,8 +644,8 @@ class Class_Model extends CI_Model {
         } elseif ($assmnt_type == 'CUSTOM') {
             $this->db->select('*');
             $this->db->from('class_assmnt_schld');
-            $this->db->where('assmnt.tenant_id', $tenant_id);
-            $this->db->where('assmnt.class_id', $class_id);
+            $this->db->where('tenant_id', $tenant_id);
+            $this->db->where('class_id', $class_id);
 
             $result = $this->db->get()->result();
         }
