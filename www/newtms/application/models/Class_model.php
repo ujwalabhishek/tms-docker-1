@@ -963,6 +963,24 @@ class Class_Model extends CI_Model {
         } else {
             $class_status = ' !!!!';  
         }
+        
+        
+        
+        $data['tenant_id'] = $tenant_id;
+        $data['course_id'] = $data1['class']->course_id;
+        $data['class_status'] = $class_status;
+        $data['class_status'] = $class_status;
+        $data['class_status'] = $class_status;
+        $data['class_status'] = $class_status;
+        $data['class_status'] = $class_status;
+        $data['class_status'] = $class_status;
+        $data['class_status'] = $class_status;
+        $data['class_status'] = $class_status;
+        
+        
+        
+        
+        
         $data['class_status'] = $class_status;
         $data['deacti_date_time'] = NULL;
         $data['deacti_reason'] = '';
@@ -981,6 +999,7 @@ class Class_Model extends CI_Model {
         $data['created_on'] = date('Y-m-d H:i:s');
         $data['last_modified_by'] = $user_id;
         $data['last_modified_on'] = date('Y-m-d H:i:s');
+        $data = $data1['class'];
         print_r($data); print_r($data1);exit;
         $this->db->trans_start();
         $course_class = $this->db->insert('course_class', $data);
