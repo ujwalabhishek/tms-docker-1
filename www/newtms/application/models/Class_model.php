@@ -966,19 +966,19 @@ class Class_Model extends CI_Model {
         
         
         $data = $data1['class'];
-        $data['tenant_id'] = $tenant_id;
-        $data['class_name'] = strtoupper($class_name);
-        $data['class_start_datetime'] = $start_date_timestamp;
-        $data['class_end_datetime'] = $end_date_timestamp;
-        $data['certi_coll_date'] = NULL;
-        $data['created_by'] = $user_id;
-        $data['class_copied_from'] = $class_hid;
-        $data['copied_by'] = $user_id;
-        $data['copied_reason'] = $copy_reason;
-        $data['copied_reason_oth'] = strtoupper($other_reason);
-        $data['created_on'] = date('Y-m-d H:i:s');
-        $data['last_modified_by'] = $user_id;
-        $data['last_modified_on'] = date('Y-m-d H:i:s');
+        $data->tenant_id = $tenant_id;
+        $data->class_name = strtoupper($class_name);
+        $data->class_start_datetime = $start_date_timestamp;
+        $data->class_end_datetime = $end_date_timestamp;
+        $data->certi_coll_date = NULL;
+        $data->created_by = $user_id;
+        $data->class_copied_from = $class_hid;
+        $data->copied_by = $user_id;
+        $data->copied_reason = $copy_reason;
+        $data->copied_reason_oth = strtoupper($other_reason);
+        $data->created_on = date('Y-m-d H:i:s');
+        $data->last_modified_by = $user_id;
+        $data->last_modified_on = date('Y-m-d H:i:s');
         
         
         print_r($data); print_r($data1);exit;
