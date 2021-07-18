@@ -701,7 +701,7 @@ class Classes extends CI_Controller {
                 $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_hid);
                 
                 $coursedetails = $this->coursemodel->get_course_detailse($class->course_id);
-                $status = $this->classmodel->get_class_status($class_id, '');
+                $status = $this->classmodel->get_class_status($class_hid, '');
                 if ($status == 'Inactive') {
                     $data['deactivate_reason'] = ($class->deacti_reason != 'OTHERS') ? $this->coursemodel->get_metadata_on_parameter_id($class->deacti_reason) : 'Others (' . $class->deacti_reason_oth . ')';
                 }
@@ -730,8 +730,8 @@ class Classes extends CI_Controller {
                 $data['Assessor'] = $this->classmodel->get_trainer_names($class->assessor);
                 $data['TrainingAide'] = $this->classmodel->get_course_manager_names($class->training_aide);
                 $data['SalesExec'] = $this->classmodel->get_class_salesexec($tenant_id, $class->course_id, $class->sales_executive);
-                $data['class_schedule'] = $this->classmodel->get_all_class_schedule($tenant_id, $class_id);
-                $def_assmnt = $this->classmodel->get_def_assessment_new($tenant_id, $class_id, $class->assmnt_type);
+                $data['class_schedule'] = $this->classmodel->get_all_class_schedule($tenant_id, $class_hid);
+                $def_assmnt = $this->classmodel->get_def_assessment_new($tenant_id, $class_hid, $class->assmnt_type);
                 if ($class->assmnt_type == 'DEFAULT') {
                     $data['DefAssLoc'] = ($def_assmnt->assmnt_venue == 'OTH') ? 'Others (' . $def_assmnt->assmnt_venue_oth . ')' : $this->coursemodel->get_metadata_on_parameter_id($def_assmnt->assmnt_venue);
                     $data['DefAssId'] = $this->classmodel->get_trainer_names($def_assmnt->assessor_id);
@@ -760,7 +760,7 @@ class Classes extends CI_Controller {
                 }
                 $data['def_assessment'] = $cdef_assmnt;
                 $data['page_title'] = 'Class';
-                $data['classid'] = $class_id;
+                $data['classid'] = $class_hid;
                
             
             
