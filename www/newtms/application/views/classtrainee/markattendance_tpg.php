@@ -150,9 +150,22 @@
                                 <td><?php echo $row->tpg_session_id; ?></td>
                                 <td class="name"><?php
                                     if ($row->session_type_id == 'S1') {
-                                        echo $row->session_01;
+                                        if($row->session_01 == 0){
+                                            $att_ses_status = '2';
+                                            echo '2';
+                                        }else{
+                                            $att_ses_status = '1';
+                                            echo $row->session_01;
+                                        }
+                                        
                                     } else {
-                                        echo $row->session_02;
+                                        if($row->session_02 == 0){
+                                            $att_ses_status = '2';
+                                            echo '2';
+                                        }else{
+                                            $att_ses_status = '1';
+                                            echo $row->session_02;
+                                        }
                                     }
                                     ?>
                                 </td>
@@ -188,9 +201,9 @@
                                         ?>
                                         <input type="hidden" name="tpg_session_id" value="<?php echo $row->tpg_session_id; ?>" id="tpg_session_id">                                    
                                         <?php if ($row->session_type_id == 'S1') { ?>
-                                            <input type="hidden" name="attn_status_code" value="<?php echo $row->session_01; ?>" id="attn_status_code">
+                                            <input type="hidden" name="attn_status_code" value="<?php echo $att_ses_status; ?>" id="attn_status_code">
                                         <?php } else { ?>
-                                            <input type="hidden" name="attn_status_code" value="<?php echo $row->session_02; ?>" id="attn_status_code">
+                                            <input type="hidden" name="attn_status_code" value="<?php echo $att_ses_status; ?>" id="attn_status_code">
                                         <?php } ?>                                                                                                            
                                         <input type="hidden" name="fullname" value="<?php echo $row->fullname; ?>" id="fullname">
                                         <input type="hidden" name="registered_email_id" value="<?php echo $row->registered_email_id; ?>" id="registered_email_id">

@@ -14402,10 +14402,10 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 
                 cs.class_date,
                 (CASE 
-                    WHEN cs.session_type_id like '%S1%' THEN ca.session_01 ELSE 2 END
+                    WHEN cs.session_type_id like '%S1%' THEN ca.session_01 ELSE 0 END
                 ) as session_01,
                 (CASE 
-                    WHEN cs.session_type_id like '%S2%' THEN ca.session_02 ELSE 2 END
+                    WHEN cs.session_type_id like '%S2%' THEN ca.session_02 ELSE 0 END
                 ) as session_02,
                 tup.nationality as idtype,
                 cc.tpg_course_run_id
