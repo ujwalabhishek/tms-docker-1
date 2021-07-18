@@ -1038,7 +1038,7 @@ class Class_Model extends CI_Model {
             $class_schedule = $this->get_all_class_schedule_new($tenant_id, $latest_class_id, $dt->format("Y-m-d"));
             //print_r($class_schedule);exit;
             if(empty($class_schedule)){
-                $your_date = strtotime("1 day", strtotime($start_date));
+                $your_date = strtotime("1 day", strtotime($new_date));
                 $new_date = date("Y-m-d", $your_date);
             }else{
                 $this->db->where('class_id', $latest_class_id);
@@ -1046,6 +1046,8 @@ class Class_Model extends CI_Model {
                 $this->db->where('tenant_id', $tenant_id);
                 $this->db->where('class_date', $dt->format("Y-m-d"));
                 $this->db->update('class_schld', array('tpg_session_id' => '','class_date' =>$new_date));
+                $your_date = strtotime("1 day", strtotime($new_date));
+                $new_date = date("Y-m-d", $your_date);
                 
             }
    
@@ -1063,7 +1065,7 @@ class Class_Model extends CI_Model {
             $assm_schedule = $this->get_def_assessments_new($tenant_id, $class_id,$course_id, $data1['def_assessment'][0]->assmnt_type,$dt->format("Y-m-d"));
             //print_r($class_schedule);exit;
             if(empty($assm_schedule)){
-                $your_date1 = strtotime("1 day", strtotime($start_date));
+                $your_date1 = strtotime("1 day", strtotime($new_date1));
                 $new_date1 = date("Y-m-d", $your_date1);
             }else{
                 $this->db->where('class_id', $latest_class_id);
@@ -1071,6 +1073,8 @@ class Class_Model extends CI_Model {
                 $this->db->where('tenant_id', $tenant_id);
                 $this->db->where('assmnt_date', $dt->format("Y-m-d"));
                 $this->db->update('class_assmnt_schld', array('assmnt_date' =>$new_date1));
+                $your_date1 = strtotime("1 day", strtotime($new_date1));
+                $new_date1 = date("Y-m-d", $your_date1);
                 
             }
    
