@@ -2351,8 +2351,9 @@ class Class_Model extends CI_Model {
         
         $result = array();
         foreach ($query->result() as $row) {
-            $result[$row->tpg_course_run_id] = $row->class_name.'('.$row->tpg_course_run_id.')';
+            $result[$row->class_id] = $row->class_name.'('.$row->tpg_course_run_id.')';
         }
+        echo print_r($result); exit;
         return $result;
     }
 
