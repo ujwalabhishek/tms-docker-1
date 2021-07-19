@@ -1601,7 +1601,7 @@ class tp_gateway extends CI_Controller {
             $data['tpgUserId'] = $this->input->post('tpgUserId');
             
             
-            $course_classes = $this->classModel->get_course_class($this->tenant_id, $data['tpgCourseId'], "", "", "classTrainee");
+            $course_classes = $this->classModel->get_course_class_tpg($this->tenant_id, $data['tpgCourseId'], $data['tpgClassId'], "");
             $data['classes'] = $course_classes;
 
             //echo "aaa" . print_r($tpg_response);
