@@ -324,15 +324,15 @@
             $("#traineeEmailAddress").removeClass('error');
         }
 
-        courseRunId = $.trim($("#courseRunId").val());
-        if (courseRunId == "") {
-            $("#crunid_err").text("[required]").addClass('error');
-            $("#courseRunId").addClass('error');
-            retVal = false;
-        } else {
-            $("#crunid_err").text("").removeClass('error');
-            $("#courseRunId").removeClass('error');
-        }
+//        courseRunId = $.trim($("#courseRunId").val());
+//        if (courseRunId == "") {
+//            $("#crunid_err").text("[required]").addClass('error');
+//            $("#courseRunId").addClass('error');
+//            retVal = false;
+//        } else {
+//            $("#crunid_err").text("").removeClass('error');
+//            $("#courseRunId").removeClass('error');
+//        }
 
         if (sponsorshipType != "Individual") {
             employerContactFullName = $.trim($("#employerContactFullName").val());
