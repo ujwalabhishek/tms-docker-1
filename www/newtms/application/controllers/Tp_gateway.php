@@ -1700,7 +1700,8 @@ class tp_gateway extends CI_Controller {
 
         if ($editEnrolmentAction == 'Update') {
             //Send params to API
-            $courseRunId = $this->input->post('courseRunId');
+            //$courseRunId = $this->input->post('courseRunId');
+            $courseRunId = $this->input->post('class');
             $traineeContactNumber = $this->input->post('traineeContactNumber');
             $traineeEmailAddress = $this->input->post('traineeEmailAddress');
             $feeDiscountAmount = $this->input->post('feeDiscountAmount');
