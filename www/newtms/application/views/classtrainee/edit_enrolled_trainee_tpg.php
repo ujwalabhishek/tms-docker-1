@@ -149,7 +149,21 @@
                             <input type="text" name="courseRunId" id="courseRunId" style="" value='<?php echo $courseRunId; ?>' <?php echo $disabled; ?>/>
                             <span id="crunid_err"></span>
                         </td>
-                    </tr>                
+                    </tr>
+                    <tr>
+                    <td class="td_heading">Class Name:</td>
+                    <td colspan='3'>
+                        <?php
+                        $options = array();
+                        $options[''] = 'Select';
+                        foreach ($classes as $k => $v) {
+                            $options[$k] = $v;
+                        }
+                        $js = 'id="class" ';
+                        echo form_dropdown('class', $options, $this->input->get('class'), $js);
+                        ?>
+                    </td>
+                </tr>
                     <tr class="new_span">
                         <td class="td_heading" width="15%">Course Title:<span class="required">*</span></td>
                         <td colspan="3">

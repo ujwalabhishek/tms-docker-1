@@ -1599,6 +1599,10 @@ class tp_gateway extends CI_Controller {
             $data['tpgCourseId'] = $this->input->post('tpgCourseId');
             $data['tpgClassId'] = $this->input->post('tpgClassId');
             $data['tpgUserId'] = $this->input->post('tpgUserId');
+            
+            
+            $course_classes = $this->classModel->get_course_class($this->tenant_id, $data['tpgCourseId'], "", "", "classTrainee");
+            $data['classes'] = $course_classes;
 
             //echo "aaa" . print_r($tpg_response);
             //exit;
@@ -1969,6 +1973,10 @@ class tp_gateway extends CI_Controller {
             'corpassid' => $corpassid
         );
         return $data;
+    }
+    
+    public function sfc_payment_response() {
+        
     }
 
 }
