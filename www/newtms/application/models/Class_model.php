@@ -2353,7 +2353,7 @@ class Class_Model extends CI_Model {
         foreach ($query->result() as $row) {
             $result[$row->tpg_course_run_id] = $row->class_name.'('.$row->tpg_course_run_id.')';
         }
-        echo print_r($result); exit;
+        //echo print_r($result); exit;
         return $result;
     }
 
