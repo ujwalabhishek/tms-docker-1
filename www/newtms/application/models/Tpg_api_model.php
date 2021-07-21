@@ -448,7 +448,32 @@ class Tpg_api_Model extends CI_Model {
              }
         }
         
-       print_r($sessions);exit;
+       //print_r($sessions);exit;
+        $new_date1 = date("Y-m-d", strtotime($start_date));
+        foreach ($period as $dt) {
+            $assm_schedule = $this->get_def_assessments_new($tenant_id, $datas['class']->class_id,$datas['class']->course_id, $datas['def_assessment'][0]->assmnt_type,$dt->format("Y-m-d"));
+            
+            if(empty($assm_schedule)){
+                $your_date1 = strtotime("1 day", strtotime($new_date1));
+                $new_date1 = date("Y-m-d", $your_date1);
+            }else{
+                foreach($assm_schedule as $clssch1){
+                    $assmt_schdl_arr[] =array(
+                        'startDate' => $new_date,
+                        'endDate'  => $new_date,
+                        "startTime" => str_replace(':00','',$clssch1['session_start_time']),
+                        "endTime" => str_replace(':00','',$clssch1['session_end_time']),
+                        'mode_of_training' => $clssch1['mode_of_training']
+                    ); 
+                }
+                $your_date1 = strtotime("1 day", strtotime($new_date1));
+                $new_date1 = date("Y-m-d", $your_date1);
+                
+            }
+   
+        }
+        print_r($assmt_schdl_arr);exit;
+        
         if (!empty($assmnt_date)) {    
             foreach ($assmnt_date as $k => $v) {
                
@@ -592,6 +617,21 @@ class Tpg_api_Model extends CI_Model {
             //redirect('tp_gateway/check_status');
         //}
         
+    }
+    public function get_def_assessments_new($tenant_id, $class_id,$course_id, $assmnt_type='',$assdate) {
+        if ($assmnt_type == 'DEFAULT') {
+            $result = $this->db->select('*')->from('class_assmnt_schld')->where('tenant_id', $tenant_id)
+                            ->where('class_id', $class_id)->get()->row();
+        } elseif ($assmnt_type == 'CUSTOM') {
+            $this->db->select('*');
+            $this->db->from('class_assmnt_schld');
+            $this->db->where('tenant_id', $tenant_id);
+            $this->db->where('course_id', $course_id);
+            $this->db->where('assmnt_date', $assdate);
+            $this->db->where('class_id', $class_id);
+            $result = $this->db->get()->result();
+        }
+        return $result;
     }
     public function get_all_class_schedule_new($tenant_id, $cid, $dt) {
         $result = $this->db->query("select *
