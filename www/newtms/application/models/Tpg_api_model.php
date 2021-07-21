@@ -380,7 +380,7 @@ class Tpg_api_Model extends CI_Model {
         $end_date_ = date('Y-m-d', strtotime("1 day", strtotime($old_end_datetime)));
         $begin = new DateTime($start_date_);
         $end = new DateTime($end_date_);
-echo $start_date_.'------------'.$start_date_;exit;
+
         $interval = DateInterval::createFromDateString('1 day');
         $period = new DatePeriod($begin, $interval, $end);
         //print_r($period);exit;
@@ -576,6 +576,12 @@ echo $start_date_.'------------'.$start_date_;exit;
             //redirect('tp_gateway/check_status');
         //}
         
+    }
+    public function get_all_class_schedule_new($tenant_id, $cid, $dt) {
+        $result = $this->db->query("select *
+                from class_schld where tenant_id='$tenant_id' and class_id='$cid' and class_date='$dt' and session_type_id !='BRK'");
+         return $result->result_array();
+         
     }
     //////beloe function added by shubhranshu to delete created courserun completely from the SSG system
     public function delete_courserun_tpg($crse_ref_no,$tp_uen,$courserunid){
