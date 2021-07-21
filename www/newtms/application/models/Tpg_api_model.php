@@ -371,7 +371,8 @@ class Tpg_api_Model extends CI_Model {
        $start_time = $this->input->post('start_time');
        $end_date = $this->input->post('end_date');
        $end_time = $this->input->post('end_time');
-
+       $schedule_info_des= 'Description';//Course run schedule info Description
+       $schedule_info= date('dM', strtotime($start_date)).' : '.date('D', strtotime($start_date)).' / '.date('h:i A', strtotime($this->input->post('start_time'))).' - '.date('h:i A', strtotime($this->input->post('end_date')));
        $class_id = $this->input->post('class_hid');
         
         $old_start_datetime  = $datas['class']->class_start_datetime;
@@ -546,8 +547,8 @@ class Tpg_api_Model extends CI_Model {
             }
         }
        ///salutationId    = Available value - 1(Mr) 2(Ms) 3(Mdm) 4(Mrs) 5(Dr) 6(Prof).
-       print_r($trainers);print_r($datas);exit;
-       $retun = $this->correct_live_dev_api_data($crse_ref_no,$tp_uen);
+       //print_r($trainers);print_r($datas);exit;
+       $retun = $this->correct_live_dev_api_data($datas['course']->reference_num,$tp_uen);
        
         $tpg_course_run_json='{
                     "course": {
@@ -560,12 +561,12 @@ class Tpg_api_Model extends CI_Model {
                           "sequenceNumber": 0,
                           "modeOfTraining": "'.$modeoftraining.'",
                           "registrationDates": {
-                            "opening": "'.date("Ymd", strtotime($reg_open_date)).'",
-                            "closing": "'.date("Ymd", strtotime($reg_close_date)).'"
+                            "opening": "'.date("Ymd", strtotime($start_date)).'",
+                            "closing": "'.date("Ymd", strtotime($end_date)).'"
                           },
                           "courseDates": {
-                            "start": "'.date("Ymd", strtotime($crse_start_date)).'",
-                            "end": "'.date("Ymd", strtotime($crse_end_date)).'"
+                            "start": "'.date("Ymd", strtotime($start_date)).'",
+                            "end": "'.date("Ymd", strtotime($end_date)).'"
                           },
                           "scheduleInfoType": {
                             "code": "01",
@@ -582,8 +583,8 @@ class Tpg_api_Model extends CI_Model {
                               "room": "'.$venue_room.'",
                               "wheelChairAccess": true
                           },
-                          "intakeSize": '.$crse_intake_size.',
-                          "courseAdminEmail": "'.$crs_admin_email.'",
+                          "intakeSize": '.$datas['course']->total_seats.',
+                          "courseAdminEmail": "'.$datas['course']->crse_admin_email.'",
                           "threshold": 0,
                           "registeredUserCount": "",
                           "courseVacancy": {
@@ -604,7 +605,7 @@ class Tpg_api_Model extends CI_Model {
                   }';
        
        
-        //print_r($tpg_course_run_json);exit;
+        print_r($tpg_course_run_json);exit;
         $api_version = 'v1.3';
         $url = "https://".$retun[domain]."/courses/runs";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
