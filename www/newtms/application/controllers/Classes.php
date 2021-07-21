@@ -680,6 +680,16 @@ class Classes extends CI_Controller {
     /**
      * this function to get post values and copy the class
      */
+    
+    public function find_date_diff($date1,$date2){
+        $diff = abs(strtotime($date2) - strtotime($date1));
+
+        $years = floor($diff / (365*60*60*24));
+        $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+        $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+
+        return $days;
+    }
     public function copy_classes() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
@@ -700,14 +710,14 @@ class Classes extends CI_Controller {
 
                 $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_hid);
                 $data['course']=$coursedetails = $this->coursemodel->get_course_detailse($class->course_id);
-                $diff = abs($data['class']->class_end_datetime - $data['class']->class_start_datetime);
-                $mytime=getdate($diff);
-                $start_date = $this->input->post('start_date');
-                $end_date = $this->input->post('end_date');
-                $diff1 = abs($end_date - $start_date);
-                $mytime1=getdate($diff1);
-                echo "$mytime-$mytime1";exit;
-                if($mytime[mday] != $mytime1[mday]){
+               
+                $start_date = date("Y-m-d", strtotime($this->input->post('start_date')));
+                $end_date = date("Y-m-d", strtotime($this->input->post('end_date')));
+
+                $old_class_date_diff = $this->find_date_diff($date1,$date2);
+                $new_class_date_diff = $this->find_date_diff(date("Y-m-d", strtotime($data['class']->class_start_datetime)),date("Y-m-d", strtotime($data['class']->class_end_datetime)));
+                echo "$old_class_date_diff-$new_class_date_diff";exit;
+                if($old_class_date_diff != $new_class_date_diff){
                     $this->session->set_flashdata("error", "Unable to Copy! Since Class Date Mismatched!. Please try again later.");
                     redirect('classes?course_id=' . $data['course']->course_id);
                 }
