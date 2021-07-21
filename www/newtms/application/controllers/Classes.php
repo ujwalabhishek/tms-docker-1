@@ -699,8 +699,18 @@ class Classes extends CI_Controller {
             ///////////////////////////////
 
                 $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_hid);
-                
                 $data['course']=$coursedetails = $this->coursemodel->get_course_detailse($class->course_id);
+                $diff = abs($data['class']->class_end_datetime - $data['class']->class_start_datetime);
+                $mytime=getdate($diff);
+                $start_date = $this->input->post('start_date');
+                $end_date = $this->input->post('end_date');
+                $diff1 = abs($end_date - $start_date);
+                $mytime1=getdate($diff1);
+                if($mytime[mday] != $mytime1[mday]){
+                    $this->session->set_flashdata("error", "Unable to Copy! Since Class Date Mismatched!. Please try again later.");
+                    redirect('classes?course_id=' . $data['course']->course_id);
+                }
+               
                 $status = $this->classmodel->get_class_status($class_hid, '');
                 if ($status == 'Inactive') {
                     $data['deactivate_reason'] = ($class->deacti_reason != 'OTHERS') ? $this->coursemodel->get_metadata_on_parameter_id($class->deacti_reason) : 'Others (' . $class->deacti_reason_oth . ')';
@@ -751,7 +761,7 @@ class Classes extends CI_Controller {
                     } else {
                         $this->session->set_flashdata("error", "Unable to copy class. Please try again later.");
                     }
-                    redirect('classes?course_id=' . $this->input->post('class_course'));
+                    redirect('classes?course_id=' . $data['course']->course_id);
                 }else{
                     if($tpg_response->status == 400){
                         $this->session->set_flashdata('error',"Oops! Bad request!");
