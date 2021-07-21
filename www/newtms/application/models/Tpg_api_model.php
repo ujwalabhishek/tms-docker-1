@@ -578,12 +578,12 @@ class Tpg_api_Model extends CI_Model {
                               "street": "'.$venue_street.'",
                               "floor": "'.$venue_floor.'",
                               "unit": "'.$venue_unit.'",
-                              "building": "",
+                              "building": "'.$venue_building.'",
                               "postalCode": "'.$venue_postalcode.'",
                               "room": "'.$venue_room.'",
                               "wheelChairAccess": true
                           },
-                          "intakeSize": '.$datas['course']->total_seats.',
+                          "intakeSize": '.$datas['class']->total_seats.',
                           "courseAdminEmail": "'.$datas['course']->crse_admin_email.'",
                           "threshold": 0,
                           "registeredUserCount": "",
@@ -605,7 +605,7 @@ class Tpg_api_Model extends CI_Model {
                   }';
        
        
-        print_r($tpg_course_run_json);exit;
+        //print_r($tpg_course_run_json);exit;
         $api_version = 'v1.3';
         $url = "https://".$retun[domain]."/courses/runs";
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);

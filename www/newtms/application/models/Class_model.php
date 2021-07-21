@@ -965,8 +965,8 @@ class Class_Model extends CI_Model {
      * @param type $user_id
      * @return boolean
      */
-    public function copy_classes($tenant_id, $course_name, $user_id, $data1){
-        
+    public function copy_classes($tenant_id, $course_name, $user_id, $data1,$tpg_course_run_id){
+        $crse_ref_no  =$data1['course']->reference_num;
        $class_name = $this->input->post('class_name');
        $start_date = $this->input->post('start_date');
        $start_time = $this->input->post('start_time');
@@ -1034,9 +1034,11 @@ class Class_Model extends CI_Model {
         }
         
         $new_date = date("Y-m-d", strtotime($start_date));
+        $j =1;
         foreach ($period as $dt) {
             $class_schedule = $this->get_all_class_schedule_new($tenant_id, $latest_class_id, $dt->format("Y-m-d"));
             //print_r($class_schedule);exit;
+            
             if(empty($class_schedule)){
                 $your_date = strtotime("1 day", strtotime($new_date));
                 $new_date = date("Y-m-d", $your_date);
@@ -1045,10 +1047,10 @@ class Class_Model extends CI_Model {
                 $this->db->where('course_id', $course_id);
                 $this->db->where('tenant_id', $tenant_id);
                 $this->db->where('class_date', $dt->format("Y-m-d"));
-                $this->db->update('class_schld', array('tpg_session_id' => '','class_date' =>$new_date));
+                $this->db->update('class_schld', array('tpg_session_id' => $crse_ref_no.'-'.$tpg_course_run_id.'-S'.$j,'class_date' =>$new_date));
                 $your_date = strtotime("1 day", strtotime($new_date));
                 $new_date = date("Y-m-d", $your_date);
-                
+                $j++;
             }
    
         }
