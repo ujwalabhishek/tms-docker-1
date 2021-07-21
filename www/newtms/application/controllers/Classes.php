@@ -745,6 +745,8 @@ class Classes extends CI_Controller {
                     $tpg_course_run_id = $tpg_response->data->runs[0]->id;
                     $result = $this->classmodel->copy_classes($tenant_id, $data['course']->crse_name, $user_id,$data,$tpg_course_run_id);
                     if($result == TRUE) {
+                        $ssg_data = $this->tpgModel->getCourseByRunId($tpg_course_run_id);//to get qr code details
+                        $st = $this->tpgModel->updateSsgData($result['classid'],$tpg_course_run_id,$ssg_data->data->course->run);
                         $this->session->set_flashdata("success", "Class Copied successfully With Course Run ID: ".$tpg_course_run_id); 
                     } else {
                         $this->session->set_flashdata("error", "Unable to copy class. Please try again later.");
@@ -769,8 +771,7 @@ class Classes extends CI_Controller {
             ///////////////////////////////////        
   
         }
-        $classes = $this->classmodel->get_class_details($tenant_id, $class_hid);
-        redirect("classes?course_id=" . $classes->course_id);
+        redirect("classes?course_id=" . $data['course']->course_id);
     }
 
     /*
