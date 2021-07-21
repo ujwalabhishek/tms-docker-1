@@ -375,18 +375,18 @@ class Tpg_api_Model extends CI_Model {
        $class_id = $this->input->post('class_hid');
         
         $old_start_datetime  = $datas['class']->class_start_datetime;
-        $old_end_datetime = $data['class']->class_end_datetime;
+        $old_end_datetime = $datas['class']->class_end_datetime;
         $start_date_ = date('Y-m-d', strtotime($old_start_datetime));
         $end_date_ = date('Y-m-d', strtotime("1 day", strtotime($old_end_datetime)));
         $begin = new DateTime($start_date_);
         $end = new DateTime($end_date_);
-echo $start_date_ .' ----' . $end_date_;exit;
+
         $interval = DateInterval::createFromDateString('1 day');
         $period = new DatePeriod($begin, $interval, $end);
         //print_r($period);exit;
         $new_date = date("Y-m-d", strtotime($start_date));
         $session_schdl_arr = array();
-        foreach ($period as $dt) {echo $dt->format("Y-m-d");
+        foreach ($period as $dt) {
             $class_schedule = $this->get_all_class_schedule_new($tenant_id, $datas['class']->class_id, $dt->format("Y-m-d"));
             print_r($class_schedule);exit;
             if(empty($class_schedule)){
