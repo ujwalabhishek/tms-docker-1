@@ -399,6 +399,7 @@ class Tpg_api_Model extends CI_Model {
                         'endDate'  => $new_date,
                         "startTime" => str_replace(':00','',$clssch['session_start_time']),
                         "endTime" => str_replace(':00','',$clssch['session_end_time']),
+                        'mode_of_training' => $clssch['mode_of_training']
                     ); 
                 }
                 $your_date = strtotime("1 day", strtotime($new_date));
@@ -407,20 +408,28 @@ class Tpg_api_Model extends CI_Model {
             }
    
         }
-        print_r($session_schdl_arr);exit;
-        echo "ss";exit;
-        if (!empty($schlded_date)) {    
-            foreach ($schlded_date as $k => $v) {
-                if($schlded_session_type[$k] != 'BRK'){
-                    $dates = date('Ymd', strtotime($schlded_date[$k]));
-                    $starttime = date("H:i", strtotime($schlded_start_time[$k]));
-                    $endtime = date("H:i", strtotime($schlded_end_time[$k]));
+        
+        //echo "ss";exit;
+        $venue_block =$datas['class']->venue_block;
+        $venue_street=$datas['class']->venue_street;
+        $venue_floor=$datas['class']->venue_floor;
+        $venue_unit=$datas['class']->venue_unit;
+        $venue_building=$datas['class']->venue_building;
+        $venue_postalcode=$datas['class']->venue_postalcode;
+        $venue_room=$datas['class']->venue_room;
+        
+        if (!empty($session_schdl_arr)) {    
+            foreach ($session_schdl_arr as $objj) {
+                
+                    $dates = date('Ymd', strtotime($objj['startDate']));
+                    $starttime = date("H:i", strtotime($objj['startTime']));
+                    $endtime = date("H:i", strtotime($objj['endTime']));
                     $sessions[] = array(
                      "startDate" => "$dates",
                      "endDate" => "$dates",
                      "startTime" => "$starttime",
                      "endTime" => "$endtime",
-                     "modeOfTraining" => "$mode_of_training[$k]",
+                     "modeOfTraining" => "$objj[mode_of_training]",
                      "venue" => array
                          (
                              "block" => "$venue_block",
@@ -435,11 +444,11 @@ class Tpg_api_Model extends CI_Model {
                          ),
 
                  );
-               }
+               
              }
         }
         
-       
+       print_r($sessions);exit;
         if (!empty($assmnt_date)) {    
             foreach ($assmnt_date as $k => $v) {
                
