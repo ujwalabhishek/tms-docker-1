@@ -363,29 +363,39 @@ class Tpg_api_Model extends CI_Model {
         
     }
     public function create_copy_courserun_tpg($tenant_id,$tp_uen,$datas){
-        print_r($datas);exit;
+        //print_r($datas);exit;
        $crse_vacancy_code="A"; //A - Available ,F - Full, L - Limited Vacancy
        $crse_vacancy_description= "Available";/////A - Available ,F - Full, L - Limited Vacancy
-       if (!empty($control_4)) {
-            $control_4 = implode(",", $control_4);
+
+        
+        $old_start_datetime  = $datas['class']->class_start_datetime;
+        $old_end_datetime = $data['class']->class_end_datetime;
+        $start_date_ = date('Y-m-d', strtotime($old_start_datetime));
+        $end_date_ = date('Y-m-d', strtotime("1 day", strtotime($old_end_datetime)));
+        $begin = new DateTime($start_date_);
+        $end = new DateTime($end_date_);
+
+        $interval = DateInterval::createFromDateString('1 day');
+        $period = new DatePeriod($begin, $interval, $end);
+        
+        $new_date = date("Y-m-d", strtotime($start_date));
+        $session_schdl_arr = array();
+        foreach ($period as $dt) {
+            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $datas['class']->class_id, $dt->format("Y-m-d"));
+            print_r($class_schedule);exit;
+            if(empty($class_schedule)){
+                $your_date = strtotime("1 day", strtotime($new_date));
+                $new_date = date("Y-m-d", $your_date);
+            }else{
+                //count($class_schedule);
+                $your_date = strtotime("1 day", strtotime($new_date));
+                $new_date = date("Y-m-d", $your_date);
+                
+            }
+   
         }
-        if (!empty($control_5)) {
-            $control_5 = implode(",", $control_5);
-        }
-        if (!empty($control_6)) {
-            $control_6 = implode(",", $control_6);
-        }
-        if (!empty($control_7)) {
-            $control_7 = implode(",", $control_7);
-        }
-        if (!empty($control_3)) {
-            $control_3 = implode(",", $control_3);
-        }
-       $trainer_name= $this->input->post('trainer_name');
-       $trainer_id= $this->input->post('trainer_id');
-       $trainer_email= $this->input->post('trainer_email');
-       $course_id= $this->input->post('class_course');
-            
+        
+        
         if (!empty($schlded_date)) {    
             foreach ($schlded_date as $k => $v) {
                 if($schlded_session_type[$k] != 'BRK'){
