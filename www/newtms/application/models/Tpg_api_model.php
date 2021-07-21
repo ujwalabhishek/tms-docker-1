@@ -380,7 +380,7 @@ class Tpg_api_Model extends CI_Model {
         $end_date_ = date('Y-m-d', strtotime("1 day", strtotime($old_end_datetime)));
         $begin = new DateTime($start_date_);
         $end = new DateTime($end_date_);
-
+echo $start_date_.'------------'.$start_date_;exit;
         $interval = DateInterval::createFromDateString('1 day');
         $period = new DatePeriod($begin, $interval, $end);
         //print_r($period);exit;
