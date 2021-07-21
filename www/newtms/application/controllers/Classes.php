@@ -716,7 +716,7 @@ class Classes extends CI_Controller {
 
                 $old_class_date_diff = $this->find_date_diff($date1,$date2);
                 $new_class_date_diff = $this->find_date_diff(date("Y-m-d", strtotime($data['class']->class_start_datetime)),date("Y-m-d", strtotime($data['class']->class_end_datetime)));
-                echo "$old_class_date_diff-$new_class_date_diff";exit;
+                
                 if($old_class_date_diff != $new_class_date_diff){
                     $this->session->set_flashdata("error", "Unable to Copy! Since Class Date Mismatched!. Please try again later.");
                     redirect('classes?course_id=' . $data['course']->course_id);
