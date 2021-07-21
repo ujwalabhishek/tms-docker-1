@@ -739,7 +739,8 @@ class Classes extends CI_Controller {
                
             
             
-            
+            $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
+            $tpg_response = $this->tpgModel->create_copy_courserun_tpg($tenant_id,$tenant->comp_reg_no,$data);
             
             
             

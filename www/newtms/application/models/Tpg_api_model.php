@@ -362,6 +362,205 @@ class Tpg_api_Model extends CI_Model {
         //}
         
     }
+    public function create_copy_courserun_tpg($tenant_id,$tp_uen,$datas){
+        print_r($datas);exit;
+       $crse_vacancy_code="A"; //A - Available ,F - Full, L - Limited Vacancy
+       $crse_vacancy_description= "Available";/////A - Available ,F - Full, L - Limited Vacancy
+       if (!empty($control_4)) {
+            $control_4 = implode(",", $control_4);
+        }
+        if (!empty($control_5)) {
+            $control_5 = implode(",", $control_5);
+        }
+        if (!empty($control_6)) {
+            $control_6 = implode(",", $control_6);
+        }
+        if (!empty($control_7)) {
+            $control_7 = implode(",", $control_7);
+        }
+        if (!empty($control_3)) {
+            $control_3 = implode(",", $control_3);
+        }
+       $trainer_name= $this->input->post('trainer_name');
+       $trainer_id= $this->input->post('trainer_id');
+       $trainer_email= $this->input->post('trainer_email');
+       $course_id= $this->input->post('class_course');
+            
+        if (!empty($schlded_date)) {    
+            foreach ($schlded_date as $k => $v) {
+                if($schlded_session_type[$k] != 'BRK'){
+                    $dates = date('Ymd', strtotime($schlded_date[$k]));
+                    $starttime = date("H:i", strtotime($schlded_start_time[$k]));
+                    $endtime = date("H:i", strtotime($schlded_end_time[$k]));
+                    $sessions[] = array(
+                     "startDate" => "$dates",
+                     "endDate" => "$dates",
+                     "startTime" => "$starttime",
+                     "endTime" => "$endtime",
+                     "modeOfTraining" => "$mode_of_training[$k]",
+                     "venue" => array
+                         (
+                             "block" => "$venue_block",
+                             "street" => "$venue_street",
+                             "floor" => "$venue_floor",
+                             "unit" => "$venue_unit",
+                             "building" => "$venue_building",
+                             "postalCode" => "$venue_postalcode",
+                             "room" => "$venue_room",
+                             "wheelChairAccess" => true,
+                             "primaryVenue" => true,
+                         ),
+
+                 );
+               }
+             }
+        }
+        
+       
+        if (!empty($assmnt_date)) {    
+            foreach ($assmnt_date as $k => $v) {
+               
+                    $assdates = date('Ymd', strtotime($assmnt_date[$k]));
+                    $assstarttime = date("H:i", strtotime($assmnt_start_time[$k]));
+                    $assendtime = date("H:i", strtotime($assmnt_end_time[$k]));
+                    $assessments[] = array(
+                     "startDate" => "$assdates",
+                     "endDate" => "$assdates",
+                     "startTime" => "$assstarttime",
+                     "endTime" => "$assendtime",
+                     "modeOfTraining" => "8",
+                     "venue" => array
+                         (
+                             "block" => "$venue_block",
+                             "street" => "$venue_street",
+                             "floor" => "$venue_floor",
+                             "unit" => "$venue_unit",
+                             "building" => "$venue_building",
+                             "postalCode" => "$venue_postalcode",
+                             "room" => "$venue_room",
+                             "wheelChairAccess" => true,
+                             "primaryVenue" => true,
+                         ),
+
+                 );
+               
+             }
+        }
+        if(!empty($assessments)){
+             $session_arr = array_merge($sessions,$assessments);
+        }else{
+             $session_arr = $sessions;
+        }
+       
+        //print_r($session_arr);exit;
+        $ClassTrainers = $this->get_trainer_details($control_5);
+        //print_r($ClassTrainers);exit;
+        if (!empty($ClassTrainers)) {    
+            foreach ($ClassTrainers as $trainer) {
+                $trainers[] = array("trainer"=> array(
+                  "trainerType"=> array(
+                        "code"=> "2",
+                        "description"=> "New"
+                  ),
+                  "indexNumber"=> 0,
+                  "id"=> "",
+                  "name"=> "$trainer->first_name.' '.$trainer->last_name",
+                  "email"=> "$trainer->off_email_id",
+                  "inTrainingProviderProfile"=> true,
+                  "domainAreaOfPractice"=> "Testing Management in Computer Application and Diploma in Computer Application",
+                  "experience"=> "Testing ABC",
+                  "linkedInURL"=> "https=>//sg.linkedin.com/company/linkedin/abc",
+                  "salutationId"=> 1,
+                  "photo"=> array(
+                        "name"=> "",
+                        "content"=> ""
+                  ),
+                  "linkedSsecEQAs"=> array(
+                          "description"=> "EQA test 4",
+                          "ssecEQA"=> array(
+                                "code"=> "12"
+                          ) 
+                        )
+                    )
+                );
+            }
+        }
+       ///salutationId    = Available value - 1(Mr) 2(Ms) 3(Mdm) 4(Mrs) 5(Dr) 6(Prof).
+       
+       $retun = $this->correct_live_dev_api_data($crse_ref_no,$tp_uen);
+       
+        $tpg_course_run_json='{
+                    "course": {
+                      "courseReferenceNumber": "'.$retun[ref_no].'",
+                      "trainingProvider": {
+                        "uen": "'.$retun[tp_uen].'"
+                      },
+                      "runs": [
+                        {
+                          "sequenceNumber": 0,
+                          "modeOfTraining": "'.$modeoftraining.'",
+                          "registrationDates": {
+                            "opening": "'.date("Ymd", strtotime($reg_open_date)).'",
+                            "closing": "'.date("Ymd", strtotime($reg_close_date)).'"
+                          },
+                          "courseDates": {
+                            "start": "'.date("Ymd", strtotime($crse_start_date)).'",
+                            "end": "'.date("Ymd", strtotime($crse_end_date)).'"
+                          },
+                          "scheduleInfoType": {
+                            "code": "01",
+                            "description": "'.$schedule_info_des.'"
+                          },
+                          "scheduleInfo": "'.$schedule_info.'",
+                          "venue": {
+                              "block": "'.$venue_block.'",
+                              "street": "'.$venue_street.'",
+                              "floor": "'.$venue_floor.'",
+                              "unit": "'.$venue_unit.'",
+                              "building": "",
+                              "postalCode": "'.$venue_postalcode.'",
+                              "room": "'.$venue_room.'",
+                              "wheelChairAccess": true
+                          },
+                          "intakeSize": '.$crse_intake_size.',
+                          "courseAdminEmail": "'.$crs_admin_email.'",
+                          "threshold": 0,
+                          "registeredUserCount": "",
+                          "courseVacancy": {
+                            "code": "'.$crse_vacancy_code.'",
+                            "description": "'.$crse_vacancy_description.'"
+                          },
+                          "file": {
+                            "Name": "",
+                            "content": ""
+                          },
+                          "sessions": 
+                            '.json_encode($session_arr).'
+                          ,
+                          "linkCourseRunTrainer": '.json_encode($trainers).'
+                        }
+                      ]
+                    }
+                  }';
+       
+       
+        //print_r($tpg_course_run_json);exit;
+        $api_version = 'v1.3';
+        $url = "https://".$retun[domain]."/courses/runs";
+        $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
+        //print_r($response);exit;
+        $obj=json_decode($response);
+        //$obj = json_decode('{ "data": { "runs": [ { "id": 223389 } ] }, "error": {}, "meta": {}, "status": 200 }');
+        $this->session->set_flashdata('resp',$obj);
+        $this->session->set_flashdata('cid',$class_id);
+        //if($obj->status == 200){
+            //redirect('tp_gateway/courserun_status');
+            return $obj;
+        ///}else{
+            //redirect('tp_gateway/check_status');
+        //}
+        
+    }
     //////beloe function added by shubhranshu to delete created courserun completely from the SSG system
     public function delete_courserun_tpg($crse_ref_no,$tp_uen,$courserunid){
         $retun = $this->correct_live_dev_api_data($crse_ref_no,$tp_uen);
