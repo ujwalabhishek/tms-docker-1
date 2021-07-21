@@ -459,11 +459,11 @@ class Tpg_api_Model extends CI_Model {
             }else{
                 foreach($assm_schedule as $clssch1){
                     $assmt_schdl_arr[] =array(
-                        'startDate' => $new_date,
-                        'endDate'  => $new_date,
-                        "startTime" => str_replace(':00','',$clssch1['assmnt_start_time']),
-                        "endTime" => str_replace(':00','',$clssch1['assmnt_end_time']),
-                        'mode_of_training' => $clssch1['mode_of_training']
+                        'startDate' => $new_date1,
+                        'endDate'  => $new_date1,
+                        "startTime" => str_replace(':00','',$clssch1->assmnt_start_time),
+                        "endTime" => str_replace(':00','',$clssch1->assmnt_end_time),
+                        'mode_of_training' => $clssch1->mode_of_training
                     ); 
                 }
                 $your_date1 = strtotime("1 day", strtotime($new_date1));
