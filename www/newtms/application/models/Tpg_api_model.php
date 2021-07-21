@@ -386,7 +386,7 @@ class Tpg_api_Model extends CI_Model {
         //print_r($period);exit;
         $new_date = date("Y-m-d", strtotime($start_date));
         $session_schdl_arr = array();
-        foreach ($period as $dt) {
+        foreach ($period as $dt) {echo $dt->format("Y-m-d");
             $class_schedule = $this->get_all_class_schedule_new($tenant_id, $datas['class']->class_id, $dt->format("Y-m-d"));
             print_r($class_schedule);exit;
             if(empty($class_schedule)){
