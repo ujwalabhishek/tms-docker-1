@@ -366,7 +366,13 @@ class Tpg_api_Model extends CI_Model {
         //print_r($datas);exit;
        $crse_vacancy_code="A"; //A - Available ,F - Full, L - Limited Vacancy
        $crse_vacancy_description= "Available";/////A - Available ,F - Full, L - Limited Vacancy
+       $class_name = $this->input->post('class_name');
+       $start_date = $this->input->post('start_date');
+       $start_time = $this->input->post('start_time');
+       $end_date = $this->input->post('end_date');
+       $end_time = $this->input->post('end_time');
 
+       $class_id = $this->input->post('class_hid');
         
         $old_start_datetime  = $datas['class']->class_start_datetime;
         $old_end_datetime = $data['class']->class_end_datetime;
@@ -377,7 +383,7 @@ class Tpg_api_Model extends CI_Model {
 
         $interval = DateInterval::createFromDateString('1 day');
         $period = new DatePeriod($begin, $interval, $end);
-        print_r($period);exit;
+        //print_r($period);exit;
         $new_date = date("Y-m-d", strtotime($start_date));
         $session_schdl_arr = array();
         foreach ($period as $dt) {
