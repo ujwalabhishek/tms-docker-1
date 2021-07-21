@@ -461,8 +461,8 @@ class Tpg_api_Model extends CI_Model {
                     $assmt_schdl_arr[] =array(
                         'startDate' => $new_date,
                         'endDate'  => $new_date,
-                        "startTime" => str_replace(':00','',$clssch1['session_start_time']),
-                        "endTime" => str_replace(':00','',$clssch1['session_end_time']),
+                        "startTime" => str_replace(':00','',$clssch1['assmnt_start_time']),
+                        "endTime" => str_replace(':00','',$clssch1['assmnt_end_time']),
                         'mode_of_training' => $clssch1['mode_of_training']
                     ); 
                 }
