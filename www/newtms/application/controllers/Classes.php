@@ -700,7 +700,7 @@ class Classes extends CI_Controller {
 
                 $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_hid);
                 
-                $coursedetails = $this->coursemodel->get_course_detailse($class->course_id);
+                $data['course']=$coursedetails = $this->coursemodel->get_course_detailse($class->course_id);
                 $status = $this->classmodel->get_class_status($class_hid, '');
                 if ($status == 'Inactive') {
                     $data['deactivate_reason'] = ($class->deacti_reason != 'OTHERS') ? $this->coursemodel->get_metadata_on_parameter_id($class->deacti_reason) : 'Others (' . $class->deacti_reason_oth . ')';

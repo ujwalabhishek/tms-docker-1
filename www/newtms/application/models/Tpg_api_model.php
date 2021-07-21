@@ -472,14 +472,14 @@ class Tpg_api_Model extends CI_Model {
             }
    
         }
-        print_r($assmt_schdl_arr);exit;
+        //print_r($assmt_schdl_arr);exit;
         
-        if (!empty($assmnt_date)) {    
-            foreach ($assmnt_date as $k => $v) {
+        if (!empty($assmt_schdl_arr)) {    
+            foreach ($assmt_schdl_arr as $kv) {
                
-                    $assdates = date('Ymd', strtotime($assmnt_date[$k]));
-                    $assstarttime = date("H:i", strtotime($assmnt_start_time[$k]));
-                    $assendtime = date("H:i", strtotime($assmnt_end_time[$k]));
+                    $assdates = date('Ymd', strtotime($kv['startDate']));
+                    $assstarttime = date("H:i", strtotime($kv['startTime']));
+                    $assendtime = date("H:i", strtotime($kv['endTime']));
                     $assessments[] = array(
                      "startDate" => "$assdates",
                      "endDate" => "$assdates",
@@ -510,7 +510,10 @@ class Tpg_api_Model extends CI_Model {
         }
        
         //print_r($session_arr);exit;
-        $ClassTrainers = $this->get_trainer_details($control_5);
+        if (!empty($datas['ClassTrainer'])) {
+            $control_6 = implode(",", $control_6);
+        }
+        $ClassTrainers = $this->get_trainer_details($control_6);
         //print_r($ClassTrainers);exit;
         if (!empty($ClassTrainers)) {    
             foreach ($ClassTrainers as $trainer) {
@@ -543,7 +546,7 @@ class Tpg_api_Model extends CI_Model {
             }
         }
        ///salutationId    = Available value - 1(Mr) 2(Ms) 3(Mdm) 4(Mrs) 5(Dr) 6(Prof).
-       
+       print_r($trainers);print_r($datas);exit;
        $retun = $this->correct_live_dev_api_data($crse_ref_no,$tp_uen);
        
         $tpg_course_run_json='{
