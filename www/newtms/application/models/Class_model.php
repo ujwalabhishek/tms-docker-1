@@ -1097,9 +1097,17 @@ class Class_Model extends CI_Model {
             if ($this->db->trans_status() === FALSE) {
                 return FALSE;
             }
-            return TRUE;
+            $res = array(
+                'status' => TRUE,
+                'classid' => $latest_class_id
+            );
+            return $res;
         } else {
-            return FALSE;
+            $res = array(
+                'status' => FALSE,
+                'classid' => $latest_class_id
+            );
+            return $res;
         }
     }
     
