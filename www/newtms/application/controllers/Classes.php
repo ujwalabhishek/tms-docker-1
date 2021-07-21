@@ -706,6 +706,7 @@ class Classes extends CI_Controller {
                 $end_date = $this->input->post('end_date');
                 $diff1 = abs($end_date - $start_date);
                 $mytime1=getdate($diff1);
+                echo "$mytime-$mytime1";exit;
                 if($mytime[mday] != $mytime1[mday]){
                     $this->session->set_flashdata("error", "Unable to Copy! Since Class Date Mismatched!. Please try again later.");
                     redirect('classes?course_id=' . $data['course']->course_id);
@@ -774,7 +775,7 @@ class Classes extends CI_Controller {
                     }else{
                         $this->session->set_flashdata('error',"TPG is not responding. Please, check back again."); 
                     }
-                    $data['resp_error'] = $tpg_response->error->details;
+                    $this->session->set_flashdata('resp_error',$tpg_response->error->details);
                     
                 }
                 
