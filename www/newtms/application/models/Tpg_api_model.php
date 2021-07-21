@@ -377,7 +377,7 @@ class Tpg_api_Model extends CI_Model {
 
         $interval = DateInterval::createFromDateString('1 day');
         $period = new DatePeriod($begin, $interval, $end);
-        
+        print_r($period);exit;
         $new_date = date("Y-m-d", strtotime($start_date));
         $session_schdl_arr = array();
         foreach ($period as $dt) {
@@ -395,7 +395,7 @@ class Tpg_api_Model extends CI_Model {
    
         }
         
-        
+        echo "ss";exit;
         if (!empty($schlded_date)) {    
             foreach ($schlded_date as $k => $v) {
                 if($schlded_session_type[$k] != 'BRK'){

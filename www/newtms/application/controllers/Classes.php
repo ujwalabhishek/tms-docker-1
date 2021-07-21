@@ -746,7 +746,7 @@ class Classes extends CI_Controller {
             
             ///////////////////////////////////
             $course_name= $course_name_hidden;            
-            $result = $this->classmodel->copy_classes($tenant_id, $course_name, $user_id,$data);
+            //$result = $this->classmodel->copy_classes($tenant_id, $course_name, $user_id,$data);
             if ($result == TRUE) {
                 $this->session->set_flashdata("success", "Class copied successfully.");
             } else {
