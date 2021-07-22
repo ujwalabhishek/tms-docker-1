@@ -958,6 +958,12 @@ class Class_Model extends CI_Model {
          return $result->result_array();
          
     }
+    public function get_all_brk_class_schedule_new($tenant_id, $cid, $dt) {
+        $result = $this->db->query("select *
+                from class_schld where tenant_id='$tenant_id' and class_id='$cid' and class_date='$dt'");
+         return $result->result_array();
+         
+    }
     /**
      * This method copy's a class
      * @param type $tenantId
@@ -1036,7 +1042,7 @@ class Class_Model extends CI_Model {
         $new_date = date("Y-m-d", strtotime($start_date));
         $jk =1;
         foreach ($period as $dt) {
-            $class_schedule = $this->get_all_class_schedule_new($tenant_id, $latest_class_id, $dt->format("Y-m-d"));
+            $class_schedule = $this->get_all_brk_class_schedule_new($tenant_id, $latest_class_id, $dt->format("Y-m-d"));
             //print_r($class_schedule);exit;
             
             if(empty($class_schedule)){
@@ -1044,15 +1050,24 @@ class Class_Model extends CI_Model {
                 $new_date = date("Y-m-d", $your_date);
             }else{
                 foreach($class_schedule as $vals){
-                    $tpg_sess_id = "$crse_ref_no-$tpg_course_run_id-S$jk";
-                    $this->db->where('class_id', $latest_class_id);
-                    $this->db->where('course_id', $course_id);
-                    $this->db->where('tenant_id', $tenant_id);
-                    $this->db->where('class_date', $dt->format("Y-m-d"));
-                    $this->db->where('tpg_session_id', $vals['tpg_session_id']);
-                    $this->db->update('class_schld', array('tpg_session_id' => $tpg_sess_id,'class_date' =>$new_date));
-                    
-                    $jk++;
+                    if($vals['session_type_id'] == 'BRK'){
+                        $this->db->where('class_id', $latest_class_id);
+                        $this->db->where('course_id', $course_id);
+                        $this->db->where('tenant_id', $tenant_id);
+                        $this->db->where('class_date', $dt->format("Y-m-d"));
+                        $this->db->where('tpg_session_id', $vals['tpg_session_id']);
+                        $this->db->update('class_schld', array('tpg_session_id' => '','class_date' =>$new_date));
+                    }else{
+                        $tpg_sess_id = "$crse_ref_no-$tpg_course_run_id-S$jk";
+                        $this->db->where('class_id', $latest_class_id);
+                        $this->db->where('course_id', $course_id);
+                        $this->db->where('tenant_id', $tenant_id);
+                        $this->db->where('class_date', $dt->format("Y-m-d"));
+                        $this->db->where('tpg_session_id', $vals['tpg_session_id']);
+                        $this->db->update('class_schld', array('tpg_session_id' => $tpg_sess_id,'class_date' =>$new_date));
+
+                        $jk++;
+                    }
                 }
                 $your_date = strtotime("1 day", strtotime($new_date));
                 $new_date = date("Y-m-d", $your_date);
