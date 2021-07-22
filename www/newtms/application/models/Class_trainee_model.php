@@ -2087,7 +2087,7 @@ class Class_Trainee_Model extends CI_Model {
         }
         $this->db->order_by("date(cc.class_start_datetime)");
         $result = $this->db->get()->result_object();
-        echo print_r($result); exit;
+        //echo print_r($result); exit;
         return $result;
     }
 
