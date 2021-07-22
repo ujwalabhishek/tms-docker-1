@@ -1014,7 +1014,7 @@ class Class_Model extends CI_Model {
         $data->last_modified_by = $user_id;
         $data->last_modified_on = date('Y-m-d H:i:s');
         unset($data->assmnt_type);
-        $this->db->trans_start();
+        //$this->db->trans_start();
         $course_class = $this->db->insert('course_class', $data);
         $latest_class_id = $this->db->insert_id();
         
@@ -1037,22 +1037,25 @@ class Class_Model extends CI_Model {
         $jk =1;
         foreach ($period as $dt) {
             $class_schedule = $this->get_all_class_schedule_new($tenant_id, $latest_class_id, $dt->format("Y-m-d"));
-            print_r($class_schedule);exit;
+            //print_r($class_schedule);exit;
             
             if(empty($class_schedule)){
                 $your_date = strtotime("1 day", strtotime($new_date));
                 $new_date = date("Y-m-d", $your_date);
             }else{
-                $tpg_sess_id = "$crse_ref_no-$tpg_course_run_id-S$jk";
-                echo $tpg_sess_id;
-//                $this->db->where('class_id', $latest_class_id);
-//                $this->db->where('course_id', $course_id);
-//                $this->db->where('tenant_id', $tenant_id);
-//                $this->db->where('class_date', $dt->format("Y-m-d"));
-//                $this->db->update('class_schld', array('tpg_session_id' => $tpg_sess_id,'class_date' =>$new_date));
-                $your_date = strtotime("1 day", strtotime($new_date));
-                $new_date = date("Y-m-d", $your_date);
-                $jk++;
+                foreach($class_schedule as $vals){
+                    $tpg_sess_id = "$crse_ref_no-$tpg_course_run_id-S$jk";
+                    $this->db->where('class_id', $latest_class_id);
+                    $this->db->where('course_id', $course_id);
+                    $this->db->where('tenant_id', $tenant_id);
+                    $this->db->where('class_date', $dt->format("Y-m-d"));
+                    $this->db->where('tpg_session_id', $vals['tpg_session_id']);
+                    $this->db->update('class_schld', array('tpg_session_id' => $tpg_sess_id,'class_date' =>$new_date));
+                    $your_date = strtotime("1 day", strtotime($new_date));
+                    $new_date = date("Y-m-d", $your_date);
+                    $jk++;
+                }
+                
             }
    
         }
