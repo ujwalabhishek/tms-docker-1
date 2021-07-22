@@ -189,7 +189,7 @@
                         {
                             foreach ($active_enroll_class as $k => $v) 
                             {
-                                if($active_enroll_lock_att_status[$k]==1)
+                                if(($active_enroll_lock_att_status[$k]==1) || ($active_enroll_eid_no[$k] != "" && $active_enroll_tpg_status[$k] != ""))
                                 {
                                 $data = array(
                                     'name' => 'active_class',
@@ -202,6 +202,9 @@
                                         'disabled'=>'disabled'
                                     );
                                     echo form_radio($data) . $v . '<br/>';
+                                    if($active_enroll_eid_no[$k] != "" && $active_enroll_tpg_status[$k] != "") {
+                                        echo "<i>The trainee details has been submitted to TPG. Please, use TPG edit enrolment option for same.</i>";
+                                    }
                                 }else{
                                     $data = array(
                                         'name' => 'active_class',

@@ -2073,7 +2073,7 @@ class Class_Trainee_Model extends CI_Model {
      */
     public function get_active_class_enrol($tenant_id, $course_id, $trainee_id) {
         $cur_date = date('Y-m-d');
-        $this->db->select('cc.class_name,cc.lock_status,cc.class_id,c.crse_name,c.course_id,cc.class_start_datetime,cc.class_end_datetime')
+        $this->db->select('cc.class_name,cc.lock_status,cc.class_id,c.crse_name,c.course_id,cc.class_start_datetime,cc.class_end_datetime, ce.eid_number, ce.tpg_enrolment_status')
                 ->from('class_enrol ce')->join('course_class cc', 'cc.class_id=ce.class_id')
                 ->join('course c', 'c.course_id=cc.course_id')->where('date(cc.class_end_datetime) >=', $cur_date)
                 ->where('ce.tenant_id', $tenant_id)
