@@ -1044,17 +1044,19 @@ class Class_Model extends CI_Model {
                 $new_date = date("Y-m-d", $your_date);
             }else{
                 $tpg_sess_id = "$crse_ref_no-$tpg_course_run_id-S$jk";
-                $this->db->where('class_id', $latest_class_id);
-                $this->db->where('course_id', $course_id);
-                $this->db->where('tenant_id', $tenant_id);
-                $this->db->where('class_date', $dt->format("Y-m-d"));
-                $this->db->update('class_schld', array('tpg_session_id' => $tpg_sess_id,'class_date' =>$new_date));
+                echo $tpg_sess_id;
+//                $this->db->where('class_id', $latest_class_id);
+//                $this->db->where('course_id', $course_id);
+//                $this->db->where('tenant_id', $tenant_id);
+//                $this->db->where('class_date', $dt->format("Y-m-d"));
+//                $this->db->update('class_schld', array('tpg_session_id' => $tpg_sess_id,'class_date' =>$new_date));
                 $your_date = strtotime("1 day", strtotime($new_date));
                 $new_date = date("Y-m-d", $your_date);
                 $jk++;
             }
    
         }
+        exit;
         //print_r($data1['def_assessment']);exit;
          foreach($data1['def_assessment'] as $ass){
             $ass->class_id = $latest_class_id;
