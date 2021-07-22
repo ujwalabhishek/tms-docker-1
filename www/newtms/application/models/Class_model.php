@@ -999,7 +999,7 @@ class Class_Model extends CI_Model {
         $course_id = $data->course_id;
         $data->class_id = '';
         $data->tenant_id = $tenant_id;
-        $data->tpg_course_run_id = '';//$tpg_course_run_id;
+        $data->tpg_course_run_id = $tpg_course_run_id;
         $data->tpg_qr_code = '';
         $data->class_name = strtoupper($class_name);
         $data->class_start_datetime = $start_date_timestamp;
@@ -1014,7 +1014,7 @@ class Class_Model extends CI_Model {
         $data->last_modified_by = $user_id;
         $data->last_modified_on = date('Y-m-d H:i:s');
         unset($data->assmnt_type);
-        //$this->db->trans_start();
+        $this->db->trans_start();
         $course_class = $this->db->insert('course_class', $data);
         $latest_class_id = $this->db->insert_id();
         
@@ -1059,7 +1059,7 @@ class Class_Model extends CI_Model {
             }
    
         }
-        exit;
+       
         //print_r($data1['def_assessment']);exit;
          foreach($data1['def_assessment'] as $ass){
             $ass->class_id = $latest_class_id;

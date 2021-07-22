@@ -760,34 +760,34 @@ class Classes extends CI_Controller {
                
             
             
-//                $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
-//                /$tpg_response = $this->tpgModel->create_copy_courserun_tpg($tenant_id,$tenant->comp_reg_no,$data);
-//                if($tpg_response->status == 200){
-//                    $tpg_course_run_id = $tpg_response->data->runs[0]->id;
+                $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
+                $tpg_response = $this->tpgModel->create_copy_courserun_tpg($tenant_id,$tenant->comp_reg_no,$data);
+                if($tpg_response->status == 200){
+                    $tpg_course_run_id = $tpg_response->data->runs[0]->id;
                     $result = $this->classmodel->copy_classes($tenant_id, $data['course']->crse_name, $user_id,$data,$tpg_course_run_id);
-//                    if($result['status'] == TRUE) {
-//                        $ssg_data = $this->tpgModel->getCourseByRunId($tpg_course_run_id);//to get qr code details
-//                        $st = $this->tpgModel->updateSsgData($result['classid'],$tpg_course_run_id,$ssg_data->data->course->run);
-//                        $this->session->set_flashdata("success", "Class Copied successfully With Course Run ID: ".$tpg_course_run_id); 
-//                    } else {
-//                        $this->session->set_flashdata("error", "Unable to copy class. Please try again later.");
-//                    }
-//                    redirect('classes?course_id=' . $data['course']->course_id);
-//                }else{
-//                    if($tpg_response->status == 400){
-//                        $this->session->set_flashdata('error',"Oops! Bad request!");
-//                    }elseif($tpg_response->status == 403){
-//                        $this->session->set_flashdata('error',"Oops! Forbidden. Authorization information is missing or invalid.");
-//                    }elseif($tpg_response->status == 404){
-//                        $this->session->set_flashdata('error',"Oops! Not Found!");
-//                    }elseif($tpg_response->status == 500){
-//                        $this->session->set_flashdata('error',"Oops! Internal Error!!");
-//                    }else{
-//                        $this->session->set_flashdata('error',"TPG is not responding. Please, check back again."); 
-//                    }
-//                    $this->session->set_flashdata('resp_error',$tpg_response->error->details);
-//                    
-//                }
+                    if($result['status'] == TRUE) {
+                        $ssg_data = $this->tpgModel->getCourseByRunId($tpg_course_run_id);//to get qr code details
+                        $st = $this->tpgModel->updateSsgData($result['classid'],$tpg_course_run_id,$ssg_data->data->course->run);
+                        $this->session->set_flashdata("success", "Class Copied successfully With Course Run ID: ".$tpg_course_run_id); 
+                    } else {
+                        $this->session->set_flashdata("error", "Unable to copy class. Please try again later.");
+                    }
+                    redirect('classes?course_id=' . $data['course']->course_id);
+                }else{
+                    if($tpg_response->status == 400){
+                        $this->session->set_flashdata('error',"Oops! Bad request!");
+                    }elseif($tpg_response->status == 403){
+                        $this->session->set_flashdata('error',"Oops! Forbidden. Authorization information is missing or invalid.");
+                    }elseif($tpg_response->status == 404){
+                        $this->session->set_flashdata('error',"Oops! Not Found!");
+                    }elseif($tpg_response->status == 500){
+                        $this->session->set_flashdata('error',"Oops! Internal Error!!");
+                    }else{
+                        $this->session->set_flashdata('error',"TPG is not responding. Please, check back again."); 
+                    }
+                    $this->session->set_flashdata('resp_error',$tpg_response->error->details);
+                    
+                }
                 
             ///////////////////////////////////        
   
