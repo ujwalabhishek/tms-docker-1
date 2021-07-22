@@ -1051,10 +1051,11 @@ class Class_Model extends CI_Model {
                     $this->db->where('class_date', $dt->format("Y-m-d"));
                     $this->db->where('tpg_session_id', $vals['tpg_session_id']);
                     $this->db->update('class_schld', array('tpg_session_id' => $tpg_sess_id,'class_date' =>$new_date));
-                    $your_date = strtotime("1 day", strtotime($new_date));
-                    $new_date = date("Y-m-d", $your_date);
+                    
                     $jk++;
                 }
+                $your_date = strtotime("1 day", strtotime($new_date));
+                $new_date = date("Y-m-d", $your_date);
                 
             }
    
