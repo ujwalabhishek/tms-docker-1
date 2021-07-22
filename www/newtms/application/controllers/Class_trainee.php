@@ -1645,7 +1645,7 @@ class Class_Trainee extends CI_Controller {
                         $data['active_enroll_lock_att_status'] = get_active_class_att_status($active_enroll_class);
                         //Added by abdulla
                         $data['active_enroll_eid_no'] = get_eid_id($active_enroll_class);
-                        echo $data['active_enroll_eid_no']; exit;
+                        echo print_r($data['active_enroll_eid_no']); exit;
                         $data['active_enroll_tpg_status'] = get_active_class_tpg_status($active_enroll_class);
                         $active_enroll_class_id = get_class_id($active_enroll_class);
                         //$reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, '', $active_enroll_class_id);////commented by shubhranshu
