@@ -212,7 +212,7 @@
                                     );
                                     echo form_radio($data) . $v . '<br/>';
                                     if ($active_enroll_eid_no[$k] != "" && $active_enroll_tpg_status[$k] != "") {
-                                        echo "<i>The trainee details has been submitted to TPG. Please, use TPG edit enrolment option for same.</i>";
+                                        echo "<i>The enrolment details of this class has been submitted to TPG. Please, use TPG edit enrolment option for same.</i>";
                                     }
                                 } else {
                                     $data = array(

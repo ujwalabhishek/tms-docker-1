@@ -116,8 +116,7 @@
                         <th width="9%" class="th_header">Class Date</th>
                         <th width="9%" class="th_header">Session</th>
                         <th width="9%" class="th_header">Session ID</th>
-                        <th width="10%" class="th_header">Attn Status Code                            
-                        </th>
+                        <th width="10%" class="th_header">Attn Status Code</th>
                         <th width="10%" class="th_header">Name</th>
                         <th width="6%" class="th_header">Email</th>
                         <th width="6%" class="th_header">ID Type</th>
@@ -152,19 +151,23 @@
                                     if ($row->session_type_id == 'S1') {
                                         if($row->session_01 == 0){
                                             $att_ses_status = '2';
-                                            echo '2';
+                                            //echo '2';
+                                            echo "Unconfirmed";
                                         }else{
                                             $att_ses_status = '1';
-                                            echo $row->session_01;
+                                            //echo $row->session_01;
+                                            echo "Confirmed";
                                         }
                                         
                                     } else {
                                         if($row->session_02 == 0){
                                             $att_ses_status = '2';
-                                            echo '2';
+                                            //echo '2';
+                                            echo "Unconfirmed";
                                         }else{
                                             $att_ses_status = '1';
-                                            echo $row->session_02;
+                                            //echo $row->session_02;
+                                            echo "Confirmed";
                                         }
                                     }
                                     ?>
