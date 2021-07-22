@@ -710,7 +710,7 @@ class Classes extends CI_Controller {
 
                 $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_hid);
                 $data['course']=$coursedetails = $this->coursemodel->get_course_detailse($class->course_id);
-               
+               print_r($data['class']);exit;
                 $start_date = date("Y-m-d", strtotime($this->input->post('start_date')));
                 $end_date = date("Y-m-d", strtotime($this->input->post('end_date')));
 
