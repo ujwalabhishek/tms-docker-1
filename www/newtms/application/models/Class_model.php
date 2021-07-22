@@ -1037,7 +1037,7 @@ class Class_Model extends CI_Model {
         $jk =1;
         foreach ($period as $dt) {
             $class_schedule = $this->get_all_class_schedule_new($tenant_id, $latest_class_id, $dt->format("Y-m-d"));
-            //print_r($class_schedule);exit;
+            print_r($class_schedule);exit;
             
             if(empty($class_schedule)){
                 $your_date = strtotime("1 day", strtotime($new_date));
