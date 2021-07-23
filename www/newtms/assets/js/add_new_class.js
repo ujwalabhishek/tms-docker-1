@@ -278,7 +278,7 @@ $(document).ready(function() {
                 $('#venue_building').val(res.building); 
                 $('#venue_block').val(res.block); 
                 $('#venue_floor').val(res.floor); 
-                $('#venue_building').val(res.room); 
+                $('#venue_room').val(res.room); 
                 $('#venue_postalcode').val(res.postalcode); 
                 $('#venue_unit').val(res.unit); 
                 $('#venue_street').val(res.street); 
