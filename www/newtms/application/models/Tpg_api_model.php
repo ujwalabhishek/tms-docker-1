@@ -398,8 +398,8 @@ class Tpg_api_Model extends CI_Model {
                     $session_schdl_arr[] =array(
                         'startDate' => $new_date,
                         'endDate'  => $new_date,
-                        "startTime" => str_replace(':00','',$clssch['session_start_time']),
-                        "endTime" => str_replace(':00','',$clssch['session_end_time']),
+                        "startTime" => substr($clssch['session_start_time'],0, 5),
+                        "endTime" => substr($clssch['session_end_time'],0, 5),
                         'mode_of_training' => $clssch['mode_of_training']
                     ); 
                 }
@@ -462,8 +462,8 @@ class Tpg_api_Model extends CI_Model {
                     $assmt_schdl_arr[] =array(
                         'startDate' => $new_date1,
                         'endDate'  => $new_date1,
-                        "startTime" => str_replace(':00','',$clssch1->assmnt_start_time),
-                        "endTime" => str_replace(':00','',$clssch1->assmnt_end_time),
+                        "startTime" => substr($clssch1->assmnt_start_time,0, 5),
+                        "endTime" => substr($clssch1->assmnt_end_time,0, 5),
                         'mode_of_training' => $clssch1->mode_of_training
                     ); 
                 }
@@ -473,7 +473,7 @@ class Tpg_api_Model extends CI_Model {
             }
    
         }
-        //print_r($assmt_schdl_arr);exit;
+       // print_r($assmt_schdl_arr);exit;
         
         if (!empty($assmt_schdl_arr)) {    
             foreach ($assmt_schdl_arr as $kv) {
