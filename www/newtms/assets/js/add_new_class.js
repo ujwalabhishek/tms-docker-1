@@ -259,6 +259,26 @@ $(document).ready(function() {
             }
         });
     });
+    $('#cls_venue').change(function() {
+        $.ajax({
+            type: 'post',
+            url: $siteurl + 'classes/autofill_venue_details',
+            data: {class_venue: $('#cls_venue').val()},
+            dataType: "json",
+            beforeSend: function() {
+
+            },
+            success: function(res) {
+                $course_duration = parseFloat(res.course_duration);
+                $.each(res.languages, function(i, item) {
+                    $lang.append('<option value="' + item.key + '">' + item.value + '</option>');
+                });
+                
+               
+                $('#crse_ref_no').val(res.crse_ref_no); 
+            }
+        });
+    });
     
     $("#ass_date").datepicker({
         dateFormat: 'dd-mm-yy',

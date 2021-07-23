@@ -1051,5 +1051,11 @@ class Classes extends CI_Controller {
         echo json_encode($classes_arr);
     }
     
+    public function autofill_venue_details(){
+        $class_venue = $this->input->post('class_venue');
+         $ClassLoc = $this->get_classroom_location($class_venue, '');
+         echo $ClassLoc;
+    }
+    
    
 }
