@@ -1064,7 +1064,7 @@ class Classes extends CI_Controller {
             'floor'=> str_replace('#', '', $arr[4]),
             'unit'=> $arr[5],
             'postalcode'=> $postalcode,
-            'room'=> $arr[0]
+            'room'=> preg_replace('/[^0-9\-]/', '', $arr[0])
         );
             
         
