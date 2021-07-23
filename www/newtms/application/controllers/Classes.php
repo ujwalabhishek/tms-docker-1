@@ -1053,8 +1053,23 @@ class Classes extends CI_Controller {
     
     public function autofill_venue_details(){
         $class_venue = $this->input->post('class_venue');
-         $ClassLoc = $this->get_classroom_location($class_venue, '');
-         echo $ClassLoc;
+        $ClassLoc = $this->get_classroom_location($class_venue, '');
+        $arr = explode(',',$ClassLoc);
+        $string = str_replace(' ', '-', $arr[count($arr)-1]); 
+        $postalcode =preg_replace('/[^0-9\-]/', '', $string); 
+        $output=array(
+            'block'=> $arr[1],
+            'street'=> $arr[2],
+            'building'=> $arr[3],
+            'floor'=> $arr[4],
+            'unit'=> $arr[5],
+            'postalcode'=> $postalcode,
+            'room'=> $arr[0]
+        );
+            
+        
+        
+        echo json_encode($output);
     }
     
    
