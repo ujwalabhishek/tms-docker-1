@@ -144,13 +144,12 @@
                             <input type="text" name="course" id="crefno" style="" value='<?php echo $courseReferenceNumber; ?>' disabled="disabled"/>
                             <span id="crefno_err"></span>
                         </td>
-                        <td class="td_heading" width="15%">Course RunID:<span class="required">*</span></td>
+<!--                        <td class="td_heading" width="15%">Course RunID:<span class="required">*</span></td>
                         <td>
-                            <input type="text" name="courseRunId" id="courseRunId" style="" value='<?php echo $courseRunId; ?>' <?php echo $disabled; ?>/>
+                            <input type="text" name="courseRunId" id="courseRunId" style="" value='<?php //echo $courseRunId; ?>' <?php //echo $disabled; ?>/>
                             <span id="crunid_err"></span>
-                        </td>
-                    </tr>
-                    <tr>
+                        </td>-->
+                    
                     <td class="td_heading">Class Name:</td>
                     <td colspan='3'>
                         <?php
