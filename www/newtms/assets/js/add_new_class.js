@@ -266,16 +266,22 @@ $(document).ready(function() {
             data: {class_venue: $('#cls_venue').val()},
             dataType: "json",
             beforeSend: function() {
-
+                $('#venue_building').val(''); 
+                $('#venue_block').val(''); 
+                $('#venue_floor').val(''); 
+                $('#venue_building').val(''); 
+                $('#venue_postalcode').val(''); 
+                $('#venue_unit').val(''); 
+                $('#venue_street').val('');
             },
             success: function(res) {
-                $course_duration = parseFloat(res.course_duration);
-                $.each(res.languages, function(i, item) {
-                    $lang.append('<option value="' + item.key + '">' + item.value + '</option>');
-                });
-                
-               
-                $('#crse_ref_no').val(res.crse_ref_no); 
+                $('#venue_building').val(res.building); 
+                $('#venue_block').val(res.block); 
+                $('#venue_floor').val(res.floor); 
+                $('#venue_building').val(res.room); 
+                $('#venue_postalcode').val(res.postalcode); 
+                $('#venue_unit').val(res.unit); 
+                $('#venue_street').val(res.street); 
             }
         });
     });

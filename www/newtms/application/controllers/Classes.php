@@ -1061,7 +1061,7 @@ class Classes extends CI_Controller {
             'block'=> $arr[1],
             'street'=> $arr[2],
             'building'=> $arr[3],
-            'floor'=> $arr[4],
+            'floor'=> str_replace('#', '', $arr[4]),
             'unit'=> $arr[5],
             'postalcode'=> $postalcode,
             'room'=> $arr[0]
