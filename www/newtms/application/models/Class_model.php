@@ -860,6 +860,23 @@ class Class_Model extends CI_Model {
         }
         return $result;
     }
+    
+    public function get_course_class_for_edit_new($tenantId, $courseId) {
+        $cur_date = date('Y-m-d');
+        $this->db->select('class_id,class_name');
+        $this->db->from('course_class');
+        $this->db->where('tenant_id', $tenantId);
+        $this->db->where('course_id', $courseId);
+        $this->db->where('tpg_course_run_id', '');
+        $this->db->where_not_in('class_status', 'INACTIV');
+        $this->db->order_by("DATE(class_start_datetime)", "DESC"); // added for class start date based sorting on Nov 24 2014.
+        $query = $this->db->get();
+        $result = array();
+        foreach ($query->result() as $row) {
+            $result[$row->class_id] = $row->class_name;
+        }
+        return $result;
+    }
 
     /**
      * this function get classes in a course
