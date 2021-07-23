@@ -473,7 +473,7 @@ class Tpg_api_Model extends CI_Model {
             }
    
         }
-        print_r($assmt_schdl_arr);exit;
+       // print_r($assmt_schdl_arr);exit;
         
         if (!empty($assmt_schdl_arr)) {    
             foreach ($assmt_schdl_arr as $kv) {
