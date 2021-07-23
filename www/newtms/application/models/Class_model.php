@@ -1856,8 +1856,8 @@ class Class_Model extends CI_Model {
                          $ct +=1;
                     }else{
                         $class_date = date('Y-m-d', strtotime($schlded_date[$k]));
-                        $session_start_time = $schlded_start_time[$k];
-                        $session_end_time = $schlded_end_time[$k];
+                        $session_start_time = $schlded_start_time[$k] . ':00';
+                        $session_end_time = $schlded_end_time[$k] . ':00';
                         $class_schld_data = array(
                         'tenant_id' => $tenantId,
                         'course_id' => $class_course,
@@ -1876,8 +1876,8 @@ class Class_Model extends CI_Model {
             if (isset($assmnt_date)) {
                 foreach ($assmnt_date as $k => $v) {
                     $assmnt_date = date('Y-m-d', strtotime($v));
-                    $assmt_start_time = $assmnt_start_time[$k];
-                    $assmt_end_time = $assmnt_end_time[$k];
+                    $assmt_start_time = $assmnt_start_time[$k] . ':00';
+                    $assmt_end_time = $assmnt_end_time[$k] . ':00';
                     $assm_venue_oth = (empty($ass_venue_oth[$k]))?NULL:$ass_venue_oth[$k];
                     $class_assmnt_data = array(
                         'tenant_id' => $tenantId,
