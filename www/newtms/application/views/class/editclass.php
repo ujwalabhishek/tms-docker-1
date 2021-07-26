@@ -30,7 +30,7 @@ if (!empty($tax_error)) {
 
 <div class="col-md-10">
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class.png" /> Class - Edit</h2>
-    <div style="color:red"> <b>Note: </b>Only Class/Course Run which are not submitted to tpg can be editable, It can only cancel</div>
+    <div style="color:red"> <b>Note: </b>Only Class/Course Run which are not submitted to tpg can be editable, TPG Submitted courserun can only be cancel</div>
     <div class="table-responsive">
         <?php
         $atr = 'id="search_form" name="search_form"';
