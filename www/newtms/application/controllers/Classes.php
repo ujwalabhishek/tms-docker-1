@@ -889,7 +889,7 @@ class Classes extends CI_Controller {
     public function get_course_classes_edit_json() {
         $tenantId = $this->tenant_id;
         $courseId = $this->input->post('course_id');
-        $course_classes = $this->classmodel->get_course_class_for_edit_new($tenantId, $courseId);
+        $course_classes = $this->classmodel->get_course_class_for_edit($tenantId, $courseId);
         $classes_arr = array();
         foreach ($course_classes as $k => $v) {
             $classes_arr[] = array('key' => $k, 'value' => $v);
