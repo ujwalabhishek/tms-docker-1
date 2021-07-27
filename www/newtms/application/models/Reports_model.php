@@ -3649,7 +3649,7 @@ SELECT  {$calc_rows} c.crse_name,
         ' ' as 'EmployerPhoneAreaCode',
         COALESCE(cm.comp_phone,'') as 'EmployerPhone',
         COALESCE(cm.comp_email,'') as 'EmployerContactEmail',
-        ceil((due.class_fees * due.discount_rate)) DIV 100 as 'CourseFeeDiscountAmount',
+        (due.class_fees * due.discount_rate) DIV 100 as 'CourseFeeDiscountAmount',
         (CASE 
          WHEN ce.payment_status like 'PARTPAID' THEN 'Partial Payment' 
          WHEN ce.payment_status like 'PAID' THEN 'Full Payment' 
