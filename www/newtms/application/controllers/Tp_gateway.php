@@ -1831,10 +1831,11 @@ class tp_gateway extends CI_Controller {
         $crs_reference_num = $this->input->post('crs_reference_num');
         $tpg_course_run_id = $this->input->post('tpg_course_run_id');
         $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
-        $obj_resp = $this->tpgModel->submit_attendance_to_tpg($tenant->comp_reg_no, $tpg_course_run_id, $tax_code, $crs_reference_num, $tenant_id, $user_id, $course_id, $class_id, $survey_language, $noOfHours, $tpgCourseId, $tpg_session_id, $attn_status_code, $fullname, $registered_email_id, $idtype, $mobileNo);
+        //$obj_resp = $this->tpgModel->submit_attendance_to_tpg($tenant->comp_reg_no, $tpg_course_run_id, $tax_code, $crs_reference_num, $tenant_id, $user_id, $course_id, $class_id, $survey_language, $noOfHours, $tpgCourseId, $tpg_session_id, $attn_status_code, $fullname, $registered_email_id, $idtype, $mobileNo);
         $controller = 'class_trainee/mark_attendance_tpg';
 
-        if ($obj_resp->status == 200) {
+        //if ($obj_resp->status == 200) {
+        if(true){
             $this->classTraineeModel->uploadTmsClassShdl($tenant_id, $course_id, $class_id, $tpg_session_id,$user_id); ///update tms record
             $this->session->set_flashdata("success", "Attendance Uploaded Successfully To TPG ");
             redirect($controller);

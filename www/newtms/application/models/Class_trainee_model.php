@@ -14438,13 +14438,13 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->where('class_id', $class_id);
         $schd_data = $this->db->get()->row();
 
-        if (strpos($tpg_session_id, 'S1') !== false) {
+        if ((strpos($tpg_session_id, 'S1') !== false) || (strpos($tpg_session_id, 'S3') !== false) || (strpos($tpg_session_id, 'S5') !== false) || (strpos($tpg_session_id, 'S7') !== false)) {
             $data = array(
-                'session_01_tpg_uploaded_status' => 1
+                'session_01_tpg_uploaded_status' => '1'
             );
-        }else if(strpos($tpg_session_id, 'S2') !== false){
+        }else if((strpos($tpg_session_id, 'S2') !== false) || (strpos($tpg_session_id, 'S4') !== false) || (strpos($tpg_session_id, 'S6') !== false) || (strpos($tpg_session_id, 'S8') !== false)){
             $data = array(
-                'session_02_tpg_uploaded_status' => 1
+                'session_02_tpg_uploaded_status' => '1'
             );
         }
         $this->db->where('tenant_id', $tenant_id);
