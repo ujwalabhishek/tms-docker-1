@@ -2369,21 +2369,25 @@ class Class_Model extends CI_Model {
     }
     
     public function get_course_class_tpg($tenantId, $courseId, $classId, $is_allclass = 0) {
+        $cur_date = date('Y-m-d');
         
         $this->db->select('cc.class_id,cc.class_name,tpg_course_run_id');
         $this->db->from('course_class cc');
+        $this->db->where('date(cc.class_end_datetime) >=', $cur_date);
         $this->db->where('cc.tenant_id', $tenantId);
         $this->db->where('cc.course_id', $courseId);
-        $this->db->where('cc.class_id !=', $classId);
+        $this->db->where('cc.class_id !=', $classId);        
+        
         if (empty($is_allclass)) {
              $this->db->where('cc.class_status !=', 'INACTIV');
         }        
+        
         $this->db->order_by("DATE(cc.class_start_datetime)", "DESC"); // added for class start date based sorting on Nov 24 2014.
         $query = $this->db->get();   
         
         $result = array();
         foreach ($query->result() as $row) {
-            $result[$row->tpg_course_run_id] = $row->class_name.'('.$row->tpg_course_run_id.')';
+            $result[$row->tpg_course_run_id] = $row->class_name.' - ('.$row->tpg_course_run_id.')';
         }
         //echo print_r($result); exit;
         return $result;
