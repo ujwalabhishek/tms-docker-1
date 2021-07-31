@@ -2701,6 +2701,20 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         $result = $this->db->get();
         return $result->result();
     }
+    
+    public function get_module_training_history($tax_code)
+    {
+        $this->db->select('*');
+        $this->db->from('tms_users_training_history_module');
+        $this->db->where("taxcode", $tax_code);
+        $this->db->where("tenant_id", $this->user->tenant_id);
+        $this->db->order_by("start_date");
+        $result = $this->db->get();
+//        echo $this->db->last_query();
+        return $result->result();
+        
+    }
+
     /**
      * Get company details
      * @param type $user_id

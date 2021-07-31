@@ -422,7 +422,7 @@ class Trainee extends CI_Controller {
      * This function loads the View trainee form.
      */
     public function view_trainee() 
-    {
+    {        
         $data['sideMenuData'] = fetch_non_main_page_content();
         //$this->output->enable_profiler(TRUE);
         $user = $this->session->userdata('userDetails');
@@ -460,6 +460,9 @@ class Trainee extends CI_Controller {
         }
          
          $data['training_history'] = $this->traineemodel->get_training_history($trainee[userdetails]['tax_code']);
+         if($tenant_id == 'T18') {
+             $data['training_module_history'] = $this->traineemodel->get_module_training_history($trainee[userdetails]['tax_code']);
+         }
          $data['sort_order'] = $order_by;
         $data['user_id'] = $userid;
         $this->load->helper('pagination');
