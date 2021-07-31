@@ -223,18 +223,14 @@ endif;
                 if (!empty($training_history)) { ?>
                 <tr>
                     <th width="25%">Course Name</th>
-                    <th width="25%">Course Date</th>
-
-
+                    <?php if (TENANT_ID == 'T18') { ?>
+                            <th width="25%">Enrollment Date</th>
+                    <?php } else { ?>
+                            <th width="25%">Course Date</th>
+                    <?php } ?>
                     <th width="25%">Training Score</th>
-
-
                     <th width="25%">Company Name</th>
-
-
                     <th width="25%">Assessment Date</th>
-
-
                 </tr>
                 <?php } else {
                     echo "<tr class='danger'><td colspan='8' style='text-align:center;color:red'><label>No historical training data available.</label></td></tr>";
@@ -247,24 +243,21 @@ endif;
                         <td>
                             <label class="label_font"><?php echo $item->course_name; ?></label>
                         </td>
-                        <td>   
-
-
+                        <td>
+						<?php if (TENANT_ID == 'T18') { ?>
+							<label class="label_font"><?php echo $item->enrollment_date; ?></label>
+                        <?php } else { ?>
                             <label class="label_font"><?php echo ($item->course_date && $item->course_date != '0000-00-00') ? date('d-m-Y',strtotime($item->course_date)) : ''; ?></label>    
+						<?php } ?>                        
                         </td>
-
-
                         <td><label class="label_font"><?php echo get_catname_by_parm($item->training_score); ?></label></td>
-
-
                         <td><label class="label_font"><?php echo $item->company_name; ?></label></td>
-
-
-                        <td><label class="label_font"><?php echo ($item->assessment_date && $item->assessment_date != '0000-00-00 00:00:00') ? date('d-m-Y',strtotime($item->assessment_date)) : ''; ?></label></td
-
-
+                        <td><label class="label_font"><?php echo ($item->assessment_date && $item->assessment_date != '0000-00-00 00:00:00') ? date('d-m-Y',strtotime($item->assessment_date)) : ''; ?></label></td>
                     </tr>
                 <?php endforeach; ?>
+				<?php if (TENANT_ID == 'T18') { ?>
+                    <tr> <td colspan="6"> <center><a href="#ex145" rel="modal:open" style="color: blue;"><b>Module History</b></a></center></td></tr>
+				<?php } ?> 
             </tbody>
         </table>  
     </div>
@@ -1291,6 +1284,39 @@ echo form_close();
         <a href="#" class="print_receipt"><button class="btn btn-primary" type="button">Print</button></a>
     </div>
 </p>    
+</div>
+
+<div class="modal_0221" id="ex145" style="display:none; height: 500px; overflow-y: auto;">
+    <p>
+        <h2 class="panel_heading_style">Trainee Module History</h2>
+       
+           <table class="table table-striped">
+            <thead>
+                
+              <?php // print_r($training_module_history);
+              if (!empty($training_module_history)) { ?>
+            <tr>
+                <th>Module Name</th>
+                <th>Start date</th>
+                <th>End date</th>
+            </tr>
+              <?php }else{
+                  echo "<tr class='danger'><td colspan='8' style='text-align:center;color:red'><label>No Module historical training data available.</label></td></tr>";
+              }?>
+            </thead>
+            <tbody>
+                <?php foreach ($training_module_history as $training_module){?>
+                <tr>
+                    <td><label class="label_font"><?php echo $training_module->module_name; ?></label></td>
+                    <td><label class="label_font"><?php echo $training_module->start_date; ?></label></td>
+                    <td><label class="label_font"><?php echo $training_module->end_date; ?></label></td>
+                    
+                </tr>
+                <?php } ?>
+            </tbody>
+            
+        </table>
+    </p> 
 </div>
 
 <!--  Dialog for selecting the assessment report -->
