@@ -15,6 +15,23 @@ class Class_Model extends CI_Model {
         $this->user = $this->session->userdata('userDetails');
     }
 
+	/*skm start : get class details which scheduled in particular date*/
+    public function get_schedule_class($date)
+    {
+        $tenantId = $this->tenant_id;
+        $this->db->select('c.crse_name,cc.class_name,cc.color,cs.class_date,cs.session_type_id,cs.session_start_time,cs.session_end_time');
+        $this->db->from('class_schld cs');
+        $this->db->join('course_class cc','cc.class_id = cs.class_id');
+        $this->db->join('course c','c.course_id = cs.course_id');
+        $this->db->where('cs.class_date',$date);
+        $this->db->where('cs.tenant_id',$this->tenant_id);
+        $this->db->where('cc.class_status !=','INACTIV');
+        $this->db->where('c.crse_status','ACTIVE');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    /*skm end */
+	
     /**
      * check classname unique
      */
