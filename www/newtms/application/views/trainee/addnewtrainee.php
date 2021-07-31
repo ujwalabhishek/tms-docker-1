@@ -307,7 +307,7 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         $occupation = fetch_metavalues_by_category_id(Meta_Values::OCCUPATION);
                         $occupation_options[''] = 'Select';
                         
-                        if(TENANT_ID=='T17' || TENANT_ID=='T20'){
+                        if(TENANT_ID=='T17' || TENANT_ID=='T20' || TENANT_ID=='T18'){
                             foreach ($occupation as $item):
                              
                                         $occupation_options[$item['parameter_id']] = $item['category_name'];
@@ -407,7 +407,7 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         $highest_educ_level = fetch_metavalues_by_category_id(Meta_Values::HIGHEST_EDUC_LEVEL);
                         $highest_educ_level_options[''] = 'Select';
                         foreach ($highest_educ_level as $item):
-                            if($user->tenant_id == 'T20' || $user->tenant_id == 'T17'){
+                            if($user->tenant_id == 'T20' || $user->tenant_id == 'T17' || TENANT_ID=='T18'){
                            
                                  $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
                                     
