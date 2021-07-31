@@ -220,6 +220,30 @@ class Classes extends CI_Controller {
         }
     }
 
+    /* skm start : show calander */
+    public function calendar()
+    {    
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['page_title'] = 'Calendar Schedule';
+        $data['month'] = $month = ($this->input->get('month')? $this->input->get('month') : date("m") );
+        
+        $data['year'] = $year = ($this->input->get('year')? $this->input->get('year') : date("Y") );
+
+        $data['days_in_month'] = $days_in_month = date("t",mktime(0,0,0,$month,1,$year));
+
+        $data['year_array'] = array(''=>'Select year',2017 => 2017, 2018 => 2018, 2019 => 2019, 2020 => 2020, 2021 => 2021);        
+        
+        $data['month_array'] = array(''=>'Select Month','01'=>January,'02'=>February,'03'=>March,'04'=>April,'05'=>May,'06'=>June,'07'=>July,
+            '08'=>August,'09'=>September,'10'=>October,'11'=>November,'12'=>December);
+       
+        $data['main_content'] = 'class/calendar';
+        //$data['sideMenuData'] = $this->sideMenu;
+       
+        $this->load->view('layout', $data);
+    }
+    
+    /* skm end */
+       
     /**
      * this function to deactivate class
      */
