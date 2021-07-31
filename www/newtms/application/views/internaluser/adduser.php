@@ -207,7 +207,7 @@ echo form_open_multipart("internal_user/add_user", $atr);
                         $highest_educ_level = fetch_metavalues_by_category_id(Meta_Values::HIGHEST_EDUC_LEVEL);
                         $highest_educ_level_options[''] = 'Select';
                         foreach ($highest_educ_level as $item):
-                            if(TENANT_ID == 'T20' || TENANT_ID == 'T17'){
+                            if(TENANT_ID == 'T20' || TENANT_ID == 'T17' || TENANT_ID == 'T18'){
                            
                                  $highest_educ_level_options[$item['parameter_id']] = $item['category_name'];
                                     
