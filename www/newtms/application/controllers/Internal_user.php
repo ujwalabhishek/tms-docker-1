@@ -204,7 +204,7 @@ class Internal_user extends CI_Controller {
             $form_style_attr = ' style="display: ;"';
             if ($this->input->post('edit_user_form_btn') != '') {
                 $this->load->library('form_validation');
-                //$edit_user_id = $this->input->post('edit_user_id');
+                $edit_user_id = $this->input->post('edit_user_id');
                 $user_list_values = $this->internaluser->get_user_details($tenant_id, $edit_user_id);                
                 if ($user_list_values == false) {
                     redirect('internal_user/edit_user');
