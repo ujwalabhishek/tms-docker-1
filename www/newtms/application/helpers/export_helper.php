@@ -3687,7 +3687,7 @@ function generate_traqom2_report_xls($tabledata, $metadata) {
 
             }else if($tax_code_type == 'FIN'){
                 //$tax_code_type='SO';
-               $tax_code_type= 'FIN/Work Permit/SAF 11B';
+               $tax_code_type= 'FIN/Work Permit';
             }
             else{
                 $tax_code_type='Others';
@@ -3875,7 +3875,7 @@ function generate_traqom2_report_xls_xp($tabledata, $metadata) {
 
             }else if($tax_code_type == 'FIN'){
                 //$tax_code_type='SO';
-               $tax_code_type= 'FIN/Work Permit/SAF 11B';
+               $tax_code_type= 'FIN/Work Permit';
             }
             else{
                 $tax_code_type='Others';
