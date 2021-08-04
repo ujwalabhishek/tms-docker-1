@@ -524,4 +524,11 @@ $config['proxy_ips'] = '';
 
 $config['wsq_courses'] = array('95','115','67','66','65','98','100','97','101','102','103');// wsq courses added by shubhranshu
 
+//Key for XPRIENZ Tenant
 $config['TPG_KEY_T02'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
+
+//Key for FLC Tenant
+$config['TPG_KEY_T04'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
+
+//Key for SSI Tenant
+$config['TPG_KEY_T18'] = "n8DfGN39ME6bn333gILFDUeyDeXU9vZMZXnCdCQ65EA=";

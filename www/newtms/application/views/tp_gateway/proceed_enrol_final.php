@@ -8,9 +8,8 @@
 <script>
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
-    $role_id = "<?php echo $this->session->userdata('userDetails')->role_id;?>";//added by shubhranshu
-    
-$privilage = "<?php echo $privilage;?>"; //added by shubhranshu
+    $role_id = "<?php echo $this->session->userdata('userDetails')->role_id;?>";//added by shubhranshu    
+    $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
 </script>
 
 <div class="col-md-10 right-minheight">
@@ -22,6 +21,7 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
         $atr = 'id="tpg_form" name="tpg_form" method="post" onkeypress="return event.keyCode != 13"';
         echo form_open("tp_gateway/proceed_enrol_toTpg", $atr);
          $tenant_id = $this->session->userdata('userDetails')->tenant_id;//added by shubhranshu
+         $tpg_key = $this->config->item(TPG_KEY_.$tenant_id);
         ?>  
         <table class="table table-striped">
             <tbody>
@@ -665,14 +665,11 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
     </div>
     <!---------- /*  added by shubhranshu for client requirement on 21/03/2019 */-->
 <script>
-    $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>";
-    $key = "<?php echo TPG_KEY."_".$tenant_id; ?>";
-
     $(document).ready(function(){
         
     function encrypt() {
         var tpgraw = '<?php echo $tpg_data; ?>';
-        var key = '<?php echo $key; ?>';
+        var key = '<?php echo $tpg_key; ?>';
         var cipher = CryptoJS.AES.encrypt(
                 tpgraw,
                 CryptoJS.enc.Base64.parse(key), {

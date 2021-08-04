@@ -143,7 +143,7 @@ class tp_gateway extends CI_Controller {
         
         $pemfile = "/var/www/newtms/assets/certificates/".$tenant_id."/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/".$tenant_id."/key.pem";
-        
+        echo $pemfile; exit;
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -1349,8 +1349,6 @@ class tp_gateway extends CI_Controller {
                 )
             )
         );
-        
-        //$data['tpg_key'] = TPG_KEY_.$tenant_id;
         
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
         //print_r($tpg_enrolment_json);exit;

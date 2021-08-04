@@ -211,8 +211,7 @@
     $(document).ready(function () {
         function encrypt() {
             var tpgraw = '<?php echo $tpg_json_data; ?>';
-            var key = '<?php echo $tpg_key; ?>';
-            alert(key);
+            var key = '<?php echo $tpg_key; ?>';            
             var cipher = CryptoJS.AES.encrypt(
                     tpgraw,
                     CryptoJS.enc.Base64.parse(key), {
