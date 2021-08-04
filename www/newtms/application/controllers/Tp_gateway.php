@@ -126,7 +126,7 @@ class tp_gateway extends CI_Controller {
         $output = false;
         $encrypt_method = "AES-256-CBC";
         $tenant_id = $this->tenant_id;        
-        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
         if ($action == 'encrypt') {
             $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
@@ -143,7 +143,7 @@ class tp_gateway extends CI_Controller {
         
         $pemfile = "/var/www/newtms/assets/certificates/".$tenant_id."/cert.pem";
         $keyfile = "/var/www/newtms/assets/certificates/".$tenant_id."/key.pem";
-        echo $pemfile; exit;
+        
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -675,7 +675,7 @@ class tp_gateway extends CI_Controller {
         $encrypted_data = $this->input->post('tpg_data');
 
         $tenant_id = $this->tenant_id;        
-        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
         
         $api_version = 'v1';
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
@@ -1402,7 +1402,7 @@ class tp_gateway extends CI_Controller {
         $encrypt_method = "AES-256-CBC";
         
         $tenant_id = $this->tenant_id;        
-        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
                 
         $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
 
@@ -1443,7 +1443,7 @@ class tp_gateway extends CI_Controller {
         $encrypt_method = "AES-256-CBC";
         
         $tenant_id = $this->tenant_id;        
-        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
         
         $iv = 'SSGAPIInitVector';                      // don't hash to derive the (16 bytes) IV
 
@@ -1525,7 +1525,7 @@ class tp_gateway extends CI_Controller {
 
         $encrypt_method = "AES-256-CBC";
         $tenant_id = $this->tenant_id;        
-        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                     // don't hash to derive the (16 bytes) IV        
 
         $api_version = 'v1';
@@ -1576,7 +1576,7 @@ class tp_gateway extends CI_Controller {
 
         $encrypt_method = "AES-256-CBC";
         $tenant_id = $this->tenant_id;        
-        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                      // don't hash to derive the (16 bytes) IV        
 
         $api_version = 'v1';
@@ -1727,7 +1727,7 @@ class tp_gateway extends CI_Controller {
 
         $encrypt_method = "AES-256-CBC";
         $tenant_id = $this->tenant_id;        
-        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
 
         $api_version = 'v1';

@@ -358,7 +358,7 @@ class Class_Trainee extends CI_Controller {
             $encrypt_method = "AES-256-CBC";
             
             $tenant_id = $this->tenant_id;        
-            $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+            $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
             
             $iv = 'SSGAPIInitVector';                      // don't hash to derive the (16 bytes) IV        
 
@@ -435,10 +435,12 @@ class Class_Trainee extends CI_Controller {
     }
 
     public function curl_request($mode, $url, $encrypted_data, $api_version) {
-        //$encrypted_data='ggrR1uwMpea4GWQbhu6+iZ/KZvwhlblrRspkqEg9dVszEjqIiDKnWe4u6PfsD/ntzFfbazfu1I6YmomjmsaCCXPEdJ6sPmrVDyxgVvnScrn6XhZXRQMRpXCSwC5PUh0SXEyr/jw0HtsOFT0JseoJ7nxj8qM/rKv4e9OhNmrIysykBlfEAZ3MsCfnZL9O7kpsVvi2yANJfNoVYBSAs6hUdHc5jlvn2tmLf7kKMNiaP/z+qusGppVZfbvXPq2LNaLl/osEJZDASgGbzJOwLxzDG90E9cyTqhoeREl5KxUud37U41Gx0ufui2bGzA9meFdK6sWefTdIFIfZlh7MK7xKfEyDaTZTyYTObC2p8/PoLq9RAfcRPFCCvOYAFIMB2din+XQ+u+ZqMHzF0cz6A/HPdkSpze2NB96EJwhUXHF5tMMgwq7kKc/ELg6etD8FDrai/klmj7svqsBYfm7fJTwMXDvTWnNWbRhT94JT9RpWGq2V6Gph/16CuAMYt0QZ1mEkzV27m149P5QrPGXvd4CDqSE7lR55Kfs6CujYx4s4PyP7naOEPBUn7DCb6Bv6bJSM6B+K+dAhMArlf1Ov6yKepX0qRzq/XU140sM3xpQs0+/dTLWiiYM5WmIAbj5Ohb0KX9tpccfQ/xo8Xn6sU0mJx5xslh48il1aQOhz/54iAI0+WR8Pf3+x7R/3U6V4tasaWlhPhqdPfzkPbwsSbKK4b/g7UZCU0XgNY0l4ELK+swnh/zv0nzJlHji7a8B0elxAZCRU2EOA+JZDjyEHC1xSNPnss8hNc3c9y3RcmTG6H3EjrPth19e8M3jvSsYGNi0JhoGaojPaXRsCjwI6qHhU2uvn5CmNPvVxxzI5v+0sI46oIoijBfrkZEIFElu6nVwcvFm5b+/nZhM2VuUhO85UIA==';
-        $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
-        $keyfile = "/var/www/newtms/assets/certificates/key.pem";
-        //print_r($data);exit;
+        
+        $tenant_id = $this->tenant_id;
+        
+        $pemfile = "/var/www/newtms/assets/certificates/".$tenant_id."/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/".$tenant_id."/key.pem";
+        
         $curl = curl_init();
 
         curl_setopt_array($curl, array(

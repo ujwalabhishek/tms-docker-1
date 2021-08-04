@@ -21,7 +21,7 @@ class Tpg_api_Model extends CI_Model {
         $encrypt_method = "AES-256-CBC";
         
         $tenant_id = $this->tenant_id;        
-        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
         
         $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
         if ( $action == 'encrypt' ) {
