@@ -162,7 +162,7 @@ define('TPG_ENVIRONMENT', "DEVELOPEMENT");
 define('TPG_URL', "uat-api.ssg-wsg.sg");
 
 //Key for XPRIENZ Tenant
-define('TPG_KEY_T02', "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=");
+//define('TPG_KEY_T02', "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=");
 
 //Key for FLC Tenant
 define('TPG_KEY_T04', "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=");

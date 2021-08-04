@@ -523,3 +523,5 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 $config['wsq_courses'] = array('95','115','67','66','65','98','100','97','101','102','103');// wsq courses added by shubhranshu
+
+$config['TPG_KEY_T02'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
