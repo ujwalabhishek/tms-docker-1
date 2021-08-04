@@ -25,7 +25,8 @@
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <td colspan="4">                        
+                    <td colspan="4"> 
+                        <?php echo TPG_KEY_.$tenant_id; ?>
                         <textarea type="hidden" style="display:none;" id='tpg_data' name="tpg_data" ></textarea>
                         <input type="hidden" name="courseId" value="<?php echo $courseId; ?>" id="courseId">
                         <input type="hidden" name="classId" value="<?php echo $classId; ?>" id="classId">

@@ -1350,7 +1350,7 @@ class tp_gateway extends CI_Controller {
             )
         );
         
-        $data['tpg_key'] = TPG_KEY_T02;
+        $data['tpg_key'] = TPG_KEY_.$tenant_id;
         
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
         //print_r($tpg_enrolment_json);exit;
