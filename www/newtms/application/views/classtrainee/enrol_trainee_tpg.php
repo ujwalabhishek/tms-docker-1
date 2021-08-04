@@ -20,8 +20,7 @@
         $atr = 'id="tpg_form" name="tpg_form" method="post" onkeypress="return event.keyCode != 13"';
         echo form_open("tp_gateway/response_trainee_enrolment_data_tpg", $atr);
         $tenant_id = $this->session->userdata('userDetails')->tenant_id; //added by shubhranshu
-        $key = TPG_KEY."_".$tenant_id;
-        $tpg_key = print $key;
+        $key = TPG_KEY."_".$tenant_id;        
         ?>  
         <table class="table table-striped">
             <tbody>
@@ -211,7 +210,7 @@
     $(document).ready(function () {
         function encrypt() {
             var tpgraw = '<?php echo $tpg_json_data; ?>';
-            var key = '<?php echo $tpg_key; ?>';
+            var key = '<?php $key; ?>';
             alert(key);
             var cipher = CryptoJS.AES.encrypt(
                     tpgraw,
