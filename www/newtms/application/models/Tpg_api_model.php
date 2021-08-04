@@ -2,21 +2,27 @@
 
 class Tpg_api_Model extends CI_Model {
 
-/**
-     * this function to get trainer names
-     */    
+     
     private $user;
+    
+    /**
+     * constructor - loads Model and other objects required in this controller
+     */
     public function __construct() {
         parent::__construct();
         $this->load->helper('common');
         $this->sess_user = $this->session->userdata('userDetails'); // added by shubhranshu to het the user data
         $this->user = $this->session->userdata('userDetails');
+        $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;
     }
     function encrypt_decrypt($action, $string) 
     {
         $output = false;
         $encrypt_method = "AES-256-CBC";
-        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+        
+        $tenant_id = $this->tenant_id;        
+        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        
         $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
         if ( $action == 'encrypt' ) {
             $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
@@ -25,11 +31,15 @@ class Tpg_api_Model extends CI_Model {
         }
         return $output;
     }
+    
+    // Modified by abdulla for dynamic pem files.
     public function curl_request($mode,$url,$encrypted_data,$api_version){
-       // echo $encrypted_data;exit;
-        $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
-        $keyfile = "/var/www/newtms/assets/certificates/key.pem";
-        //print_r($data);exit;
+       
+        $tenant_id = $this->tenant_id;
+        
+        $pemfile = "/var/www/newtms/assets/certificates/".$tenant_id."/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/".$tenant_id."/key.pem";
+        
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -57,7 +67,7 @@ class Tpg_api_Model extends CI_Model {
          if($response === false){
              print_r(curl_error($curl));exit;
          }else{
-             //print_r(json_decode($response));exit;
+             
              return $response;
          }
         curl_close($curl);
@@ -67,13 +77,13 @@ class Tpg_api_Model extends CI_Model {
         if(TPG_ENVIRONMENT == 'PRODUCTION'){
            $crse_ref_no = $crse_ref_no;
            $tp_uen  = $tp_uen;
-           $domain=TPG_LIVE_URL;
+           $domain=TPG_URL;
            $skillCode = $skillCode;
            $nric = $nric;
         }else{
           $crse_ref_no =  'TGS-2020002096';
           $tp_uen = '201000372W';
-          $domain=TPG_DEV_URL;
+          $domain=TPG_URL;
           $skillCode='AER-MAT-2019-2.1';
           $nric='S8195288D';
           $dob='1981-01-10';

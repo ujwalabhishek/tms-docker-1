@@ -356,11 +356,14 @@ class Class_Trainee extends CI_Controller {
         if (!empty($_GET)) {
 
             $encrypt_method = "AES-256-CBC";
-            $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
-            $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
+            
+            $tenant_id = $this->tenant_id;        
+            $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+            
+            $iv = 'SSGAPIInitVector';                      // don't hash to derive the (16 bytes) IV        
 
             $api_version = 'v1';
-            $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/search";
+            $url = "https://" . TPG_URL . "/tpg/enrolments/search";
 
             //Training Partner
             $tenant_details = fetch_tenant_details($tenant_id);

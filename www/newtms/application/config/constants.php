@@ -154,8 +154,19 @@ define('GOOGLE_CAPTCHA_SITEKEY', "6Le7puAUAAAAAPUPDMn2d98Zf6ABHAB1fen1Te-R");
 define('GOOGLE_CAPTCHA_SECRETKEY', "6Le7puAUAAAAAISg1yqxoXAur7FxGj5u9a-OSd66"); 
 /////added by shubhranshu for NSA courses mail send to anther mail id for FRCS
 define('FRCSMAILID', "nsadivya@mailinator.com"); 
-////added by shubhranshu for TPG Gateway Environment variable
+//Added by abdulla for TPG Gateway Environment variable
+
 //define('TPG_ENVIRONMENT', "PRODUCTION"); 
 define('TPG_ENVIRONMENT', "DEVELOPEMENT");
-define('TPG_LIVE_URL', "api.ssg-wsg.sg");
-define('TPG_DEV_URL', "uat-api.ssg-wsg.sg");
+
+define('TPG_URL', "uat-api.ssg-wsg.sg");
+
+//Key for XPRIENZ Tenant
+define('TPG_KEY_T02', "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=");
+
+//Key for FLC Tenant
+define('TPG_KEY_T04', "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=");
+
+//Key for SSI Tenant
+define('TPG_KEY_T18', "n8DfGN39ME6bn333gILFDUeyDeXU9vZMZXnCdCQ65EA=");
+

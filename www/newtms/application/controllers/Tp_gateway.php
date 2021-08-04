@@ -4,7 +4,7 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 /*
- * his is the controller class for Accounting Use Cases
+ * his is the controller class for TPG Use Cases
  */
 
 class tp_gateway extends CI_Controller {
@@ -125,7 +125,8 @@ class tp_gateway extends CI_Controller {
     function encrypt_decrypt($action, $string) {
         $output = false;
         $encrypt_method = "AES-256-CBC";
-        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+        $tenant_id = $this->tenant_id;        
+        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
         if ($action == 'encrypt') {
             $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
@@ -135,12 +136,14 @@ class tp_gateway extends CI_Controller {
         return $output;
     }
 
-    //// added by shubhranshu to make a curl request
+    // Modified by abdulla for dynamic pem files.
     public function curl_request($mode, $url, $encrypted_data, $api_version) {
-        //$encrypted_data='ggrR1uwMpea4GWQbhu6+iZ/KZvwhlblrRspkqEg9dVszEjqIiDKnWe4u6PfsD/ntzFfbazfu1I6YmomjmsaCCXPEdJ6sPmrVDyxgVvnScrn6XhZXRQMRpXCSwC5PUh0SXEyr/jw0HtsOFT0JseoJ7nxj8qM/rKv4e9OhNmrIysykBlfEAZ3MsCfnZL9O7kpsVvi2yANJfNoVYBSAs6hUdHc5jlvn2tmLf7kKMNiaP/z+qusGppVZfbvXPq2LNaLl/osEJZDASgGbzJOwLxzDG90E9cyTqhoeREl5KxUud37U41Gx0ufui2bGzA9meFdK6sWefTdIFIfZlh7MK7xKfEyDaTZTyYTObC2p8/PoLq9RAfcRPFCCvOYAFIMB2din+XQ+u+ZqMHzF0cz6A/HPdkSpze2NB96EJwhUXHF5tMMgwq7kKc/ELg6etD8FDrai/klmj7svqsBYfm7fJTwMXDvTWnNWbRhT94JT9RpWGq2V6Gph/16CuAMYt0QZ1mEkzV27m149P5QrPGXvd4CDqSE7lR55Kfs6CujYx4s4PyP7naOEPBUn7DCb6Bv6bJSM6B+K+dAhMArlf1Ov6yKepX0qRzq/XU140sM3xpQs0+/dTLWiiYM5WmIAbj5Ohb0KX9tpccfQ/xo8Xn6sU0mJx5xslh48il1aQOhz/54iAI0+WR8Pf3+x7R/3U6V4tasaWlhPhqdPfzkPbwsSbKK4b/g7UZCU0XgNY0l4ELK+swnh/zv0nzJlHji7a8B0elxAZCRU2EOA+JZDjyEHC1xSNPnss8hNc3c9y3RcmTG6H3EjrPth19e8M3jvSsYGNi0JhoGaojPaXRsCjwI6qHhU2uvn5CmNPvVxxzI5v+0sI46oIoijBfrkZEIFElu6nVwcvFm5b+/nZhM2VuUhO85UIA==';
-        $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
-        $keyfile = "/var/www/newtms/assets/certificates/key.pem";
-        //print_r($data);exit;
+        
+        $tenant_id = $this->tenant_id;
+        
+        $pemfile = "/var/www/newtms/assets/certificates/".$tenant_id."/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/".$tenant_id."/key.pem";
+        
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -169,7 +172,7 @@ class tp_gateway extends CI_Controller {
             print_r(curl_error($curl));
             exit;
         } else {
-            //print_r($response);exit;
+            
             return $response;
         }
         curl_close($curl);
@@ -339,8 +342,11 @@ class tp_gateway extends CI_Controller {
     public function course_details_by_run_id() {
         $query_string = $this->input->get('course_run_id');
 
-        $pemfile = "/var/www/newtms/assets/certificates/cert.pem";
-        $keyfile = "/var/www/newtms/assets/certificates/key.pem";
+        $tenant_id = $this->tenant_id;
+        
+        $pemfile = "/var/www/newtms/assets/certificates/".$tenant_id."/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/".$tenant_id."/key.pem";
+        
         $url = "https://uat-api.ssg-wsg.sg/courses/runs/$query_string";
         //$requestXml =  file_get_contents("net.xml");
         $headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';
@@ -533,12 +539,6 @@ class tp_gateway extends CI_Controller {
             ),
         ));
 
-
-
-
-
-
-
         $response = curl_exec($curl);
         if ($response === false) {
             print_r(curl_error($curl));
@@ -583,12 +583,6 @@ class tp_gateway extends CI_Controller {
             ),
         ));
 
-
-
-
-
-
-
         $response = curl_exec($curl);
         if ($response === false) {
             print_r(curl_error($curl));
@@ -619,11 +613,6 @@ class tp_gateway extends CI_Controller {
         $enrolment_date = $this->input->post('enrolment_date');
 
         $traine = $this->classTraineeModel->get_full_trainee_details($trainee_id);
-
-
-
-
-
 
         $object = array(
             "enrolment" => array(
@@ -672,8 +661,6 @@ class tp_gateway extends CI_Controller {
             )
         );
 
-
-
         $object = json_encode($object);
         //print_r($object);exit;
         $data['trainee'] = $traine;
@@ -687,6 +674,9 @@ class tp_gateway extends CI_Controller {
     public function proceed_enrol_toTpg() {
         $encrypted_data = $this->input->post('tpg_data');
 
+        $tenant_id = $this->tenant_id;        
+        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        
         $api_version = 'v1';
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $response = $this->curl_request('POST', $url, $encrypted_data, $api_version);
@@ -699,7 +689,7 @@ class tp_gateway extends CI_Controller {
             decrypt();
             function decrypt() {
             var strings = '$response';
-				var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+				var key = '$key';
 				var cipher = CryptoJS.AES.decrypt(
 					strings,
 					CryptoJS.enc.Base64.parse(key), {
@@ -1098,8 +1088,6 @@ class tp_gateway extends CI_Controller {
             }$count++;
         }
 
-
-
         $tpg_course_run_json = '{
                             "course": {
                               "courseReferenceNumber": "' . $crse_ref_no . '",
@@ -1407,13 +1395,15 @@ class tp_gateway extends CI_Controller {
         $user_id = $this->input->post('userId');
         $api_version = 'v1';
 
-        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments";
-        //$url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
+        $url = "https://" . TPG_URL . "/tpg/enrolments";
         $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
 
         //$output = false;
         $encrypt_method = "AES-256-CBC";
-        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+        
+        $tenant_id = $this->tenant_id;        
+        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+                
         $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
 
         $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
@@ -1451,11 +1441,14 @@ class tp_gateway extends CI_Controller {
     public function view_enrolment_tpg($enrolmentReferenceNumber) {
 
         $encrypt_method = "AES-256-CBC";
-        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
-        $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
+        
+        $tenant_id = $this->tenant_id;        
+        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        
+        $iv = 'SSGAPIInitVector';                      // don't hash to derive the (16 bytes) IV
 
         $api_version = 'v1';
-        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/details/" . $enrolmentReferenceNumber;
+        $url = "https://" . TPG_URL . "/tpg/enrolments/details/" . $enrolmentReferenceNumber;
 
         $request = $this->curl_request('GET', $url, "", $api_version);
 
@@ -1531,11 +1524,12 @@ class tp_gateway extends CI_Controller {
         $feeCollectionStatus = $this->input->post('fee_collectionStatus');
 
         $encrypt_method = "AES-256-CBC";
-        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
-        $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
+        $tenant_id = $this->tenant_id;        
+        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        $iv = 'SSGAPIInitVector';                     // don't hash to derive the (16 bytes) IV        
 
         $api_version = 'v1';
-        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/feeCollections/" . $enrolmentReferenceNumber;
+        $url = "https://" . TPG_URL . "/tpg/enrolments/feeCollections/" . $enrolmentReferenceNumber;
 
         $tpg_enrolment_json_data = '{
                                     "enrolment": {
@@ -1581,11 +1575,12 @@ class tp_gateway extends CI_Controller {
         $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumber');
 
         $encrypt_method = "AES-256-CBC";
-        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
-        $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
+        $tenant_id = $this->tenant_id;        
+        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
+        $iv = 'SSGAPIInitVector';                      // don't hash to derive the (16 bytes) IV        
 
         $api_version = 'v1';
-        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/details/" . $enrolmentReferenceNumber;
+        $url = "https://" . TPG_URL . "/tpg/enrolments/details/" . $enrolmentReferenceNumber;
 
         $request = $this->curl_request('GET', $url, "", $api_version);
 
@@ -1731,11 +1726,12 @@ class tp_gateway extends CI_Controller {
         //$class_id = $this->input->post('tpgClassId');
 
         $encrypt_method = "AES-256-CBC";
-        $key = base64_decode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');  // don't hash to derive the (32 bytes) key
+        $tenant_id = $this->tenant_id;        
+        $key = base64_decode(TPG_KEY."_".$tenant_id);  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
 
         $api_version = 'v1';
-        $url = "https://" . TPG_DEV_URL . "/tpg/enrolments/details/" . $enrolmentReferenceNumber;
+        $url = "https://" . TPG_URL . "/tpg/enrolments/details/" . $enrolmentReferenceNumber;
 
         $tpg_enrolment_json_data = '{
                                         "enrolment": {
@@ -1852,7 +1848,7 @@ class tp_gateway extends CI_Controller {
         $retun = $this->correct_live_dev_api_data($courseReferenceNumber, $tenant->comp_reg_no);
 
         $api_version = 'v1.3';
-        $url = "https://" . TPG_DEV_URL . "/courses/runs/" . $tpg_course_run_id . "/sessions/attendance?uen=" . $retun['tp_uen'] . "&courseReferenceNumber=" . $courseReferenceNumber . "&sessionId=" . $sessionId;
+        $url = "https://" . TPG_URL . "/courses/runs/" . $tpg_course_run_id . "/sessions/attendance?uen=" . $retun['tp_uen'] . "&courseReferenceNumber=" . $courseReferenceNumber . "&sessionId=" . $sessionId;
 
         $response = $this->curl_request('GET', $url, "", $api_version);
 
@@ -1953,13 +1949,13 @@ class tp_gateway extends CI_Controller {
         if (TPG_ENVIRONMENT == 'PRODUCTION') {
             $crse_ref_no = $crse_ref_no;
             $tp_uen = $tp_uen;
-            $domain = TPG_LIVE_URL;
+            $domain = TPG_URL;
             $skillCode = $skillCode;
             $nric = $nric;
         } else {
             $crse_ref_no = 'TGS-2020002096';
             $tp_uen = '201000372W';
-            $domain = TPG_DEV_URL;
+            $domain = TPG_URL;
             $skillCode = 'AER-MAT-2019-2.1';
             $nric = 'S8195288D';
             $dob = '1981-01-10';

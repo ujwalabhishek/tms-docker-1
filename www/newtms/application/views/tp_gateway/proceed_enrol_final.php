@@ -665,16 +665,14 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
     </div>
     <!---------- /*  added by shubhranshu for client requirement on 21/03/2019 */-->
 <script>
-    
+    $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>";
+    $key = "<?php echo TPG_KEY."_".$tenant_id; ?>";
 
     $(document).ready(function(){
-     
-       
-       
-       
+        
     function encrypt() {
         var tpgraw = '<?php echo $tpg_data; ?>';
-        var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+        var key = '<?php echo $key; ?>';
         var cipher = CryptoJS.AES.encrypt(
                 tpgraw,
                 CryptoJS.enc.Base64.parse(key), {
