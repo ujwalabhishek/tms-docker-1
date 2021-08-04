@@ -209,12 +209,12 @@
 <script>
     $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>";
     $key = "<?php TPG_KEY."_".$tenant_id; ?>";
-    
+    alert($key);
     $(document).ready(function () {
         function encrypt() {
             var tpgraw = '<?php echo $tpg_json_data; ?>';
             var key = '<?php echo $key; ?>';
-            alert(key);
+            
             var cipher = CryptoJS.AES.encrypt(
                     tpgraw,
                     CryptoJS.enc.Base64.parse(key), {
