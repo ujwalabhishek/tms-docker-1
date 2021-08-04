@@ -21,12 +21,12 @@
         $atr = 'id="tpg_form" name="tpg_form" method="post" onkeypress="return event.keyCode != 13"';
         echo form_open("tp_gateway/response_trainee_enrolment_data_tpg", $atr);
         $tenant_id = $this->session->userdata('userDetails')->tenant_id; //added by shubhranshu
+        $tpg_key = $this->config->item(TPG_KEY_.$tenant_id);
         ?>  
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <td colspan="4"> 
-                        <?php echo $this->config->item(TPG_KEY_.$tenant_id); ?>
+                    <td colspan="4">                        
                         <textarea type="hidden" style="display:none;" id='tpg_data' name="tpg_data" ></textarea>
                         <input type="hidden" name="courseId" value="<?php echo $courseId; ?>" id="courseId">
                         <input type="hidden" name="classId" value="<?php echo $classId; ?>" id="classId">
