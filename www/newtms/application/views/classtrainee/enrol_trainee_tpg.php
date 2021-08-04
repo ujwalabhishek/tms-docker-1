@@ -11,10 +11,6 @@
     $role_id = "<?php echo $this->session->userdata('userDetails')->role_id; ?>";//added by shubhranshu
     $privilage = "<?php echo $privilage; ?>"; //added by shubhranshu
 </script>
-<?php 
-    $tenant_id = $this->session->userdata('userDetails')->tenant_id;
-    $key = TPG_KEY."_".$tenant_id;
-?>
 <div class="col-md-10 right-minheight">
     <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
     <h2 class="panel_heading_style"><span class="glyphicon glyphicon-list-alt"></span> TPG Trainee Enrollment</h2>
@@ -24,6 +20,8 @@
         $atr = 'id="tpg_form" name="tpg_form" method="post" onkeypress="return event.keyCode != 13"';
         echo form_open("tp_gateway/response_trainee_enrolment_data_tpg", $atr);
         $tenant_id = $this->session->userdata('userDetails')->tenant_id; //added by shubhranshu
+        $key = TPG_KEY."_".$tenant_id;
+        $tpg_key = print $key;
         ?>  
         <table class="table table-striped">
             <tbody>
@@ -213,7 +211,7 @@
     $(document).ready(function () {
         function encrypt() {
             var tpgraw = '<?php echo $tpg_json_data; ?>';
-            var key = '<?php echo $key; ?>';
+            var key = '<?php echo $tpg_key; ?>';
             alert(key);
             var cipher = CryptoJS.AES.encrypt(
                     tpgraw,
