@@ -358,6 +358,8 @@ class Tpg_api_Model extends CI_Model {
         //print_r($tpg_course_run_json);exit;
         $api_version = 'v1.3';
         $url = "https://".$retun[domain]."/courses/runs";
+        echo "URL : ".$url;
+        echo "JSON : ".print_r($tpg_course_run_json, true);
         $response = $this->curl_request('POST',$url,$tpg_course_run_json,$api_version);
         //print_r($response);exit;
         $obj=json_decode($response);
