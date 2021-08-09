@@ -24,10 +24,10 @@ $atr = 'id="AddclassForm" name="AddclassForm"';
 echo form_open("classes/add_new_class", $atr);
 ?>  
 <div class="col-md-10">
-    <?php echo validation_errors('<div class="error1">', '</div>'); 
+    <?php echo validation_errors('<div class="error1">', '</div>');
     if(!empty($error)){
         foreach($error as $err){
-        echo '<div class="alert alert-danger dang" style="text-align:left;">'.$err->message.'</div>';
+        echo '<div class="alert alert-danger dang" style="text-align:left;">Field Name : '.$err->field.'</br>Message : '.$err->message.'</br></br></div>';
         }
     }
     ?> 
