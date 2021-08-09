@@ -486,7 +486,7 @@ function validate() {
         $diffDays = Math.ceil($timeDiff / (1000 * 3600 * 24));
         if(($diffDays > 0) && ($('.schlded_date').val() === undefined))
         {
-                $(".marketing #dis-error").html('<span id="dis-error" class="error">You must create atleast one class Schedule.</span>');
+                $(".marketing #dis-error").html('<span id="dis-error" class="error">You must create atleast one Class / Lab Schedule.</span>');
                 $(".marketing #dis-error").focus();
                 $retval = false;
           
@@ -678,7 +678,7 @@ function validate() {
     $schlded_date = $('.schlded_date').val();
 
     if($schlded_date === undefined && $js_tenant == 'T02'){
-        $(".marketing #dis-error").html('<span id="dis-error" class="error">You must create atleast one class Schedule.</span>');
+        $(".marketing #dis-error").html('<span id="dis-error" class="error">You must create atleast one Class / Lab Schedule.</span>');
         $retval = false;
     } else {
          $(".marketing #dis-error").html('');

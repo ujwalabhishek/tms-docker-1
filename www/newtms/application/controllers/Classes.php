@@ -183,12 +183,10 @@ class Classes extends CI_Controller {
                         $st = $this->tpgModel->updateSsgData($result['classid'],$tpg_course_run_id,$ssg_data->data->course->run);
                         //print_r($tpg_response);exit;
                         if($st == TRUE){
-                           $this->session->set_flashdata("success", "Class created successfully With Course Run ID: ".$tpg_course_run_id); 
+                           $this->session->set_flashdata("success", "Class created successfully with Course Run ID: ".$tpg_course_run_id); 
                         }else{
-                            $this->session->set_flashdata("success", "Class created successfully Without Course Run ID");
-                        }
-                        
-                        
+                            $this->session->set_flashdata("success", "Class created successfully without Course Run ID");
+                        }                                                
                     } else {
                         $this->session->set_flashdata("error", "Unable to create class. Please try again later.");
                     }

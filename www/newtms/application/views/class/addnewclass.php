@@ -27,10 +27,7 @@ echo form_open("classes/add_new_class", $atr);
     <?php echo validation_errors('<div class="error1">', '</div>'); 
     if(!empty($error)){
         foreach($error as $err){
-
-        echo '<div class="alert alert-danger dang">
-            <strong>'.$err->field.'</strong>'.$err->message.'
-        </div>';
+        echo '<div class="alert alert-danger dang">'.$err->message.'</div>';
         }
     }
     ?> 
