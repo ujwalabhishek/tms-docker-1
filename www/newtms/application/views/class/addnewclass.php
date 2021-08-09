@@ -26,13 +26,13 @@ echo form_open("classes/add_new_class", $atr);
 <div class="col-md-10">
     <?php echo validation_errors('<div class="error1">', '</div>');
     if(!empty($error)){ ?>
-    <div class="alert alert-danger dang" style="text-align:left;">
-    <?php    foreach($error as $err){
-        echo 'Field Name : '.$err->field.'</br>Message : '.$err->message.'</br></br>';
-        } ?>
-    </div>
-    <?php }
-    ?> 
+        <div class="alert alert-danger dang" style="text-align:left;">
+            <?php foreach($error as $err){
+                echo 'Field Name : '.$err->field.'</br>Message : '.$err->message.'</br></br>';
+                } 
+            ?>
+        </div>
+    <?php } ?>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class.png"> Class - Add New(Create Course Run)</h2>
     <div class="table-responsive">
         <table class="table table-striped">
