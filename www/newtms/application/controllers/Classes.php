@@ -203,6 +203,8 @@ class Classes extends CI_Controller {
                     }else{
                         $this->session->set_flashdata('error',"TPG is not responding. Please, check back again."); 
                     }
+                    echo "ERRRR".$tpg_response->error->details;
+                    exit;
                     $data['error'] = $tpg_response->error->details;
                     $data['display'] = 'display:block;';
                     $data['main_content'] = 'class/addnewclass';
