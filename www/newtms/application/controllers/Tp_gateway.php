@@ -125,8 +125,8 @@ class tp_gateway extends CI_Controller {
     function encrypt_decrypt($action, $string) {
         $output = false;
         $encrypt_method = "AES-256-CBC";
-        $tenant_id = $this->tenant_id;        
-        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
+        $tenant_id = $this->tenant_id;
+        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
         if ($action == 'encrypt') {
             $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv); // remove explicit Base64 encoding (alternatively set OPENSSL_RAW_DATA)
@@ -138,12 +138,12 @@ class tp_gateway extends CI_Controller {
 
     // Modified by abdulla for dynamic pem files.
     public function curl_request($mode, $url, $encrypted_data, $api_version) {
-        
+
         $tenant_id = $this->tenant_id;
-        
-        $pemfile = "/var/www/newtms/assets/certificates/".$tenant_id."/cert.pem";
-        $keyfile = "/var/www/newtms/assets/certificates/".$tenant_id."/key.pem";
-        
+
+        $pemfile = "/var/www/newtms/assets/certificates/" . $tenant_id . "/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/" . $tenant_id . "/key.pem";
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -172,7 +172,7 @@ class tp_gateway extends CI_Controller {
             print_r(curl_error($curl));
             exit;
         } else {
-            
+
             return $response;
         }
         curl_close($curl);
@@ -343,10 +343,10 @@ class tp_gateway extends CI_Controller {
         $query_string = $this->input->get('course_run_id');
 
         $tenant_id = $this->tenant_id;
-        
-        $pemfile = "/var/www/newtms/assets/certificates/".$tenant_id."/cert.pem";
-        $keyfile = "/var/www/newtms/assets/certificates/".$tenant_id."/key.pem";
-        
+
+        $pemfile = "/var/www/newtms/assets/certificates/" . $tenant_id . "/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/" . $tenant_id . "/key.pem";
+
         $url = "https://uat-api.ssg-wsg.sg/courses/runs/$query_string";
         //$requestXml =  file_get_contents("net.xml");
         $headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';
@@ -674,9 +674,9 @@ class tp_gateway extends CI_Controller {
     public function proceed_enrol_toTpg() {
         $encrypted_data = $this->input->post('tpg_data');
 
-        $tenant_id = $this->tenant_id;        
-        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
-        
+        $tenant_id = $this->tenant_id;
+        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
+
         $api_version = 'v1';
         $url = "https://uat-api.ssg-wsg.sg/tpg/enrolments";
         $response = $this->curl_request('POST', $url, $encrypted_data, $api_version);
@@ -1349,7 +1349,7 @@ class tp_gateway extends CI_Controller {
                 )
             )
         );
-        
+
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
         //print_r($tpg_enrolment_json);exit;
         $data['trainingPartnerCode'] = $trainingPartnerCode;
@@ -1400,10 +1400,10 @@ class tp_gateway extends CI_Controller {
 
         //$output = false;
         $encrypt_method = "AES-256-CBC";
-        
-        $tenant_id = $this->tenant_id;        
-        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
-                
+
+        $tenant_id = $this->tenant_id;
+        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
+
         $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
 
         $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
@@ -1441,10 +1441,10 @@ class tp_gateway extends CI_Controller {
     public function view_enrolment_tpg($enrolmentReferenceNumber) {
 
         $encrypt_method = "AES-256-CBC";
-        
-        $tenant_id = $this->tenant_id;        
-        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
-        
+
+        $tenant_id = $this->tenant_id;
+        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
+
         $iv = 'SSGAPIInitVector';                      // don't hash to derive the (16 bytes) IV
 
         $api_version = 'v1';
@@ -1524,8 +1524,8 @@ class tp_gateway extends CI_Controller {
         $feeCollectionStatus = $this->input->post('fee_collectionStatus');
 
         $encrypt_method = "AES-256-CBC";
-        $tenant_id = $this->tenant_id;        
-        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
+        $tenant_id = $this->tenant_id;
+        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                     // don't hash to derive the (16 bytes) IV        
 
         $api_version = 'v1';
@@ -1575,8 +1575,8 @@ class tp_gateway extends CI_Controller {
         $enrolmentReferenceNumber = $this->input->post('tpgEnrolmentReferenceNumber');
 
         $encrypt_method = "AES-256-CBC";
-        $tenant_id = $this->tenant_id;        
-        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
+        $tenant_id = $this->tenant_id;
+        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                      // don't hash to derive the (16 bytes) IV        
 
         $api_version = 'v1';
@@ -1594,8 +1594,8 @@ class tp_gateway extends CI_Controller {
             $data['tpgCourseId'] = $this->input->post('tpgCourseId');
             $data['tpgClassId'] = $this->input->post('tpgClassId');
             $data['tpgUserId'] = $this->input->post('tpgUserId');
-            
-            
+
+
             $course_classes = $this->classModel->get_course_class_tpg($this->tenant_id, $data['tpgCourseId'], $data['tpgClassId'], "");
             $data['classes'] = $course_classes;
 
@@ -1726,8 +1726,8 @@ class tp_gateway extends CI_Controller {
         //$class_id = $this->input->post('tpgClassId');
 
         $encrypt_method = "AES-256-CBC";
-        $tenant_id = $this->tenant_id;        
-        $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
+        $tenant_id = $this->tenant_id;
+        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
         $iv = 'SSGAPIInitVector';                                          // don't hash to derive the (16 bytes) IV        
 
         $api_version = 'v1';
@@ -1831,8 +1831,8 @@ class tp_gateway extends CI_Controller {
         $controller = 'class_trainee/mark_attendance_tpg';
 
         if ($obj_resp->status == 200) {
-        //if(true){
-            $this->classTraineeModel->uploadTmsClassShdl($tenant_id, $course_id, $class_id, $tpg_session_id,$user_id); ///update tms record
+            //if(true){
+            $this->classTraineeModel->uploadTmsClassShdl($tenant_id, $course_id, $class_id, $tpg_session_id, $user_id); ///update tms record
             $this->session->set_flashdata("success", "Attendance Uploaded Successfully To TPG ");
             redirect($controller);
         } else {
@@ -1923,7 +1923,7 @@ class tp_gateway extends CI_Controller {
             $data['TraineeindividualId'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->individualId;
             $data['Traineename'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->name;
             $data['TraineesurveyLanguageCode'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->surveyLanguage->description;
-            
+
             $data['sideMenuData'] = fetch_non_main_page_content();
             $data['page_title'] = 'TPG View Course Session Attendance';
             $data['main_content'] = 'classtrainee/view_markattendance_tpg';
@@ -1954,7 +1954,11 @@ class tp_gateway extends CI_Controller {
             $nric = $nric;
         } else {
             $crse_ref_no = 'TGS-2020002096';
-            $tp_uen = '201000372W';
+            if ($this->tenant_id == 'T24') {
+                $tp_uen = '201223502K';
+            } else {
+                $tp_uen = '201000372W';
+            }
             $domain = TPG_URL;
             $skillCode = 'AER-MAT-2019-2.1';
             $nric = 'S8195288D';
@@ -1972,7 +1976,7 @@ class tp_gateway extends CI_Controller {
         );
         return $data;
     }
-    
+
     public function sfc_payment_response() {
         
     }
