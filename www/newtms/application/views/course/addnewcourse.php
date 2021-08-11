@@ -8,25 +8,37 @@ $form_attributes = 'id="addNewCourseForm" name="addNewCourseForm" onsubmit="retu
 echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes);
 ?>
 <div class="col-md-10">
-    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Add New</h2>
-    <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course Type</h2>
-    <?php
-    $tpg_course_yes = array(
-        'name' => 'tpg_course',
-        'value' => '1',
-        'id' => 'tpg_course_yes'        
-    );
-    $tpg_course_no = array(
-        'name' => 'tpg_course',
-        'id' => 'tpg_course_no',
-        'value' => '0',
-        'checked' => TRUE
-    );
-    ?>
-    <?php echo form_radio($tpg_course_no); ?> Non - TPG Course &nbsp;&nbsp; 
-    <?php echo form_radio($tpg_course_yes); ?>TPG Course                                                                
-    <span id="class_type_err"></span>
-    <?php echo form_error('gst_rules', '<div class="error">', '</div>'); ?>
+    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Add New</h2>    
+    <div class="table-responsive">
+        <table class="table table-striped">
+
+            <tbody>    
+                <tr>
+                    <td class="td_heading">Course Type:</td>
+                    <td class="td_heading">
+                        <?php
+                        $tpg_course_yes = array(
+                            'name' => 'tpg_course',
+                            'value' => '1',
+                            'id' => 'tpg_course_yes'
+                        );
+                        $tpg_course_no = array(
+                            'name' => 'tpg_course',
+                            'id' => 'tpg_course_no',
+                            'value' => '0',
+                            'checked' => TRUE
+                        );
+                        ?>
+                        <?php echo form_radio($tpg_course_no); ?>Non - TPG Course
+                    </td>
+                    <td class="td_heading">
+                        <?php echo form_radio($tpg_course_yes); ?> TPG Course  
+                    </td>
+
+                </tr>                                                               
+            <span id="class_type_err"></span>
+            <?php echo form_error('tpg_course', '<div class="error">', '</div>'); ?>
+    </div>
     <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png"> Course Details</h2>
     <div class="bs-example">
         <div class="table-responsive">
