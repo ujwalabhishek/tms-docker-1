@@ -3,10 +3,6 @@ $this->load->helper('form');
 $CI = & get_instance();
 $CI->load->model('settings_model');
 ?>
-<?php
-$form_attributes = 'id="addNewCourseForm" name="addNewCourseForm" onsubmit="return(validate());"';
-echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes);
-?>
 <div class="col-md-10">
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Add New</h2>
     <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png">Select Course Type</h2>
@@ -39,7 +35,6 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
         </table>
     </div>
     <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png"> Course Details</h2>
-
     <div class="table-responsive">
         <?php
         $attr = 'id="search_form" name="search_form" method="POST"';
@@ -73,7 +68,10 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
         </table>
         <?php echo form_close(); ?>
     </div>
-
+    <?php
+    $form_attributes = 'id="addNewCourseForm" name="addNewCourseForm" onsubmit="return(validate());"';
+    echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes);
+    ?>
     <div class="bs-example" id="tpg_show_only1">
         <div class="table-responsive">
             <table class="table table-striped">      
