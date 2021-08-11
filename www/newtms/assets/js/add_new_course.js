@@ -382,7 +382,9 @@ function remove_zip_file() {
 
 $("#tpg_course_yes").click(function () {
     $('#tpg_show').show();
+    $('#tpg_show_only').show();
 });
 $("#tpg_course_no").click(function () {
     $('#tpg_show').hide();
+    $('#tpg_show_only').hide();
 });
