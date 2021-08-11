@@ -41,6 +41,10 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
     <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png"> Course Details</h2>
 
     <div class="table-responsive">
+        <?php
+        $attr = 'id="search_form" name="search_form" method="POST"';
+        echo form_open("tp_gateway/retrieve_course_details", $attr);
+        ?>
         <table class="table table-striped">      
             <tbody>
                 <tr>
@@ -67,6 +71,7 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                 </tr>
             </tbody>
         </table>
+        <?php echo form_close(); ?>
     </div>
 
     <div class="bs-example" id="tpg_show_only1">
