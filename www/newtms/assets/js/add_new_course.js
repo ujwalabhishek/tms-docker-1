@@ -381,10 +381,10 @@ function remove_zip_file() {
 }
 
 $("#tpg_course_yes").click(function () {
-    $('#tpg_form').show();
-    $('#non_tpg_form').hide();
+    $('#tpg_show').show();
+    $('#tpg_show_only').show();
 });
 $("#tpg_course_no").click(function () {
-    $('#tpg_form').hide();
-    $('#non_tpg_form').show();
+    $('#tpg_show').hide();
+    $('#tpg_show_only').hide();
 });
