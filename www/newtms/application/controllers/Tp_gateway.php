@@ -328,7 +328,7 @@ class tp_gateway extends CI_Controller {
 
         curl_close($curl);
 
-        //print_r(json_decode($response));exit;
+        print_r(json_decode($response));exit;
 
 
         $data['resp'] = json_decode($response)->data->courses[0];
