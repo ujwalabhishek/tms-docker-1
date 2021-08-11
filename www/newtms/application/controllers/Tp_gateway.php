@@ -273,11 +273,11 @@ class tp_gateway extends CI_Controller {
     public function course_details() {
         $query_string = $this->input->get('course_code_id');
 
-        $encr = base64_encode('c785f2331e314192a886bafcc8cd99b4:OTc1NTNlYjUtNmM5ZC00ZjNlLTg2ODMtNGExNWFiZGM2ODA3');
+        $encr = base64_encode('DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=');
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://public-api.ssg-wsg.sg/dp-oauth/oauth/token",
+            CURLOPT_URL => "https://uat-api.ssg-wsg.sg/dp-oauth/oauth/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_POST => 1,
@@ -295,19 +295,15 @@ class tp_gateway extends CI_Controller {
         ));
 
         $response_token = curl_exec($curl);
-
         curl_close($curl);
 
         $response_token = json_decode($response_token);
-
-
-
         //$result = file_get_contents($google_api_url);
 
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://public-api.ssg-wsg.sg/courses/directory/$query_string",
+            CURLOPT_URL => "https://uat-api.ssg-wsg.sg/courses/directory/$query_string",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -323,13 +319,10 @@ class tp_gateway extends CI_Controller {
             ),
         ));
 
-
         $response = curl_exec($curl);
-
         curl_close($curl);
 
         print_r(json_decode($response));exit;
-
 
         $data['resp'] = json_decode($response)->data->courses[0];
 
