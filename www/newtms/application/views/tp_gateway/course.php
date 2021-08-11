@@ -13,7 +13,7 @@
     <div class="table-responsive">  
         <?php
         $atr = 'id="search_form" name="search_form" method="GET" autocomplete="off"';
-        echo form_open("ssgapi_course/course_details_by_run_id", $atr);
+        echo form_open("tp_gateway/course_details_by_run_id", $atr);
         ?>
         <table class="table table-striped">
             <tbody>
