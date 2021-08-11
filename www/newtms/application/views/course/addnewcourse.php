@@ -47,6 +47,24 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
             <table class="table table-striped">      
                 <tbody>
                     <tr>
+                        <td class="td_heading">Course Reference Number:<span class="required">*</span></td>
+                        <td>
+                            <?php
+                            $course_reference_num = array(
+                                'name' => 'course_reference_num',
+                                'id' => 'course_reference_num',
+                                'value' => set_value('course_reference_num'),
+                                'maxlength' => 50,
+                                'class' => 'upper_case',
+                                'style' => 'width:200px',
+                            );
+                            echo form_input($course_reference_num);
+                            ?>
+                            <span id="course_reference_num_err"></span>
+                            <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="td_heading" width="30%">Course Name:<span class="required">*</span></td>
                         <?php
                         $course_details = array(
@@ -195,22 +213,6 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                             ?>
                             <span id="course_duration_err"></span>
                             <?php echo form_error('course_duration', '<div class="error">', '</div>'); ?>
-                        </td>
-                        <td class="td_heading">Course Reference Number:<span class="required">*</span></td>
-                        <td>
-                            <?php
-                            $course_reference_num = array(
-                                'name' => 'course_reference_num',
-                                'id' => 'course_reference_num',
-                                'value' => set_value('course_reference_num'),
-                                'maxlength' => 50,
-                                'class' => 'upper_case',
-                                'style' => 'width:200px',
-                            );
-                            echo form_input($course_reference_num);
-                            ?>
-                            <span id="course_reference_num_err"></span>
-                            <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>
                         </td>
                     </tr>
                     <tr id="tpg_show" style='display:none'>
