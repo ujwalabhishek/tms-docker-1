@@ -15,7 +15,7 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
             <tbody>    
                 <tr>
                     <td class="td_heading">Course Type:</td>
-                    <td class="td_heading">
+                    <td class="td_heading" colspan="3">
                         <?php
                         $tpg_course_yes = array(
                             'name' => 'tpg_course',
@@ -29,12 +29,9 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                             'checked' => TRUE
                         );
                         ?>
-                        <?php echo form_radio($tpg_course_no); ?>Non - TPG Course
-                    </td>
-                    <td class="td_heading">
+                        <?php echo form_radio($tpg_course_no); ?>Non - TPG Course   &nbsp;&nbsp;                 
                         <?php echo form_radio($tpg_course_yes); ?> TPG Course  
                     </td>
-
                 </tr>                                                               
             <span id="class_type_err"></span>
             <?php echo form_error('tpg_course', '<div class="error">', '</div>'); ?>
@@ -205,7 +202,7 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                     </tr>                                                
                     <tr>
                         <td class="td_heading">Course Duration (in hrs):<span class="required">*</span></td>
-                        <td>
+                        <td colspan="3">
                             <?php
                             $course_duration = array(
                                 'name' => 'course_duration',
