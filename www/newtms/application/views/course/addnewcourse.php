@@ -59,12 +59,20 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                             ?>
                             <span id="course_reference_num_err"></span>
                             <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>
-                            
+
                             <button title="Search" value="Search" type="submit" class="btn btn-xs btn-primary no-mar" id="tpg_show_only" style='display:none'>
                                 <span class="glyphicon glyphicon-search"></span> Search
                             </button>
                         </td>
                     </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="bs-example" id="tpg_show_only1">
+        <div class="table-responsive">
+            <table class="table table-striped">      
+                <tbody>                    
                     <tr>
                         <td class="td_heading" width="30%">Course Name:<span class="required">*</span></td>
                         <?php
