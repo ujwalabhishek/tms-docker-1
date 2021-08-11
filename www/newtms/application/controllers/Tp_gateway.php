@@ -2001,7 +2001,7 @@ class tp_gateway extends CI_Controller {
 
         $tpg_response = json_decode($output);
         
-        echo print_r($tpg_response); exit;
+        echo print_r($tpg_response, true); exit;
         
     }
 
