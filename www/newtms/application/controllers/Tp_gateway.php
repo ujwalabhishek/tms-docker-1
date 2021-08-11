@@ -192,7 +192,7 @@ class tp_gateway extends CI_Controller {
     public function list_search_course() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Accounting';
-        $data['main_content'] = 'ssgapi_course/course';
+        $data['main_content'] = 'tp_gateway/course';
         $this->load->view('layout', $data);
     }
 
@@ -1984,20 +1984,12 @@ class tp_gateway extends CI_Controller {
     public function retrieve_course_details() {
     
         $tenant_id = $this->tenant_id;
-        $crse_ref_no = $this->input->post('course_reference_num');
-        
-        $encrypt_method = "AES-256-CBC";
-        
-        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
-
-        $iv = 'SSGAPIInitVector';                      // don't hash to derive the (16 bytes) IV
+        $crse_ref_no = $this->input->post('course_reference_num');               
 
         $api_version = 'v1';
         $url = "https://" . TPG_URL . "/courses/directory/" . $crse_ref_no;
 
         $request = $this->curl_request('GET', $url, "", $api_version);
-
-        //$output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
         $tpg_response = json_decode($request);
         
