@@ -45,7 +45,7 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                 <tbody>
                     <tr>
                         <td class="td_heading">Course Reference Number:<span class="required">*</span></td>
-                        <td>
+                        <td colspan="3">
                             <?php
                             $course_reference_num = array(
                                 'name' => 'course_reference_num',
@@ -59,9 +59,8 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                             ?>
                             <span id="course_reference_num_err"></span>
                             <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>
-                        </td>
-                        <td align="center" id="tpg_show_only" style='display:none'>           
-                            <button title="Search" value="Search" type="submit" class="btn btn-xs btn-primary no-mar">
+                            
+                            <button title="Search" value="Search" type="submit" class="btn btn-xs btn-primary no-mar" id="tpg_show_only" style='display:none'>
                                 <span class="glyphicon glyphicon-search"></span> Search
                             </button>
                         </td>
