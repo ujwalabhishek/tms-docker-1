@@ -528,7 +528,7 @@ $config['wsq_courses'] = array('95','115','67','66','65','98','100','97','101','
 $config['TPG_KEY_T02'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
 
 //Key for FLC Tenant
-$config['TPG_KEY_T04'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
+$config['TPG_KEY_T04'] = "xbeD57Hop10nFfRo2uvCH+nSiuRBlzjREOIk/LYwsrI=";
 
 //Key for SSI Tenant
 $config['TPG_KEY_T18'] = "QFyCysgjUNQ08wBWi07/1WkEj0+u1oyq5o7wfdcfrgI=";
