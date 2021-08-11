@@ -388,4 +388,5 @@ $("#tpg_course_yes").click(function () {
 $("#tpg_course_no").click(function () {
     $('#tpg_show').hide();
     $('#tpg_show_only').hide();
+    $('#tpg_show_only1').show();
 });

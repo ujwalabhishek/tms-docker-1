@@ -39,36 +39,36 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
         </table>
     </div>
     <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png"> Course Details</h2>
-    <div class="bs-example">
-        <div class="table-responsive">
-            <table class="table table-striped">      
-                <tbody>
-                    <tr>
-                        <td class="td_heading">Course Reference Number:<span class="required">*</span></td>
-                        <td colspan="3">
-                            <?php
-                            $course_reference_num = array(
-                                'name' => 'course_reference_num',
-                                'id' => 'course_reference_num',
-                                'value' => set_value('course_reference_num'),
-                                'maxlength' => 50,
-                                'class' => 'upper_case',
-                                'style' => 'width:200px',
-                            );
-                            echo form_input($course_reference_num);
-                            ?>
-                            <span id="course_reference_num_err"></span>
-                            <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>
 
-                            <button title="Search" value="Search" type="submit" class="btn btn-xs btn-primary no-mar" id="tpg_show_only" style='display:none'>
-                                <span class="glyphicon glyphicon-search"></span> Search
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="table-responsive">
+        <table class="table table-striped">      
+            <tbody>
+                <tr>
+                    <td class="td_heading">Course Reference Number:<span class="required">*</span></td>
+                    <td colspan="3">
+                        <?php
+                        $course_reference_num = array(
+                            'name' => 'course_reference_num',
+                            'id' => 'course_reference_num',
+                            'value' => set_value('course_reference_num'),
+                            'maxlength' => 50,
+                            'class' => 'upper_case',
+                            'style' => 'width:200px',
+                        );
+                        echo form_input($course_reference_num);
+                        ?>
+                        <span id="course_reference_num_err"></span>
+                        <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>
+
+                        <button title="Search" value="Search" type="submit" class="btn btn-xs btn-primary no-mar" id="tpg_show_only" style='display:none'>
+                            <span class="glyphicon glyphicon-search"></span> Search
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+
     <div class="bs-example" id="tpg_show_only1">
         <div class="table-responsive">
             <table class="table table-striped">      
