@@ -11,7 +11,6 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Add New</h2>    
     <div class="table-responsive">
         <table class="table table-striped">
-
             <tbody>    
                 <tr>
                     <td class="td_heading">Course Type:</td>
@@ -38,6 +37,8 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                 </tr>                                                               
             <span id="class_type_err"></span>
             <?php echo form_error('tpg_course', '<div class="error">', '</div>'); ?>
+            </tbody>
+        </table>
     </div>
     <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png"> Course Details</h2>
     <div class="bs-example">
