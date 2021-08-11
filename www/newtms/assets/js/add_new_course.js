@@ -280,6 +280,15 @@ function validate() {
         $("#external_reference_number_err").text("").removeClass('error');
         $("#external_reference_number").removeClass('error');
     }
+    crse_admin_email = $.trim($('#crse_admin_email').val());
+    if (crse_admin_email == "") {
+        $("#crse_admin_email_err").text("[required]").addClass('error');
+        $("#crse_admin_email").addClass('error');
+        retVal = false;
+    } else {
+        $("#crse_admin_email_err").text("").removeClass('error');
+        $("#crse_admin_email").removeClass('error');
+    }
     course_competency_code = $.trim($('#course_competency_code').val());
     if (course_competency_code == "") {
         $("#course_competency_code_err").text("[required]").addClass('error');
