@@ -8,7 +8,8 @@ $form_attributes = 'id="addNewCourseForm" name="addNewCourseForm" onsubmit="retu
 echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes);
 ?>
 <div class="col-md-10">
-    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Add New</h2>    
+    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Add New</h2>
+    <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png">Select Course Type</h2>
     <div class="table-responsive">
         <table class="table table-striped">
             <tbody>    
