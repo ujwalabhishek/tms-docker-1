@@ -1,11 +1,11 @@
 /* 
  * This js file included in add_new_course form
  */
-$(document).ready(function() {
+$(document).ready(function () {
     var cnt = $('#sales_exec_tbl tr').size();
     cnt_array = [0];
     selected_exec_array = new Array();
-    $("#sales_exec_addmore").click(function() {
+    $("#sales_exec_addmore").click(function () {
         retVal = true;
         $("#sales_exec_tbl_err").text("").removeClass('error');
         retVal = validate_sales_executive();
@@ -54,32 +54,32 @@ $(document).ready(function() {
         }
     });
 
-    $("#validity_yes").click(function() {
+    $("#validity_yes").click(function () {
         $('#show_me').show();
     });
-    $("#validity_no").click(function() {
+    $("#validity_no").click(function () {
         $('#show_me').hide();
     });
-    $(".alphanumeric").keydown(function(e) {
+    $(".alphanumeric").keydown(function (e) {
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 32]) !== -1 ||
-                        (e.keyCode == 65 && e.ctrlKey === true) ||
-                                (e.keyCode >= 35 && e.keyCode <= 39)) {
-                    return;
-                }
-                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 90) && (e.keyCode < 96 || e.keyCode > 105))) {
-                    e.preventDefault();
-                }
-            });
-    $(".alphabets").keydown(function(e) {
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+            return;
+        }
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 90) && (e.keyCode < 96 || e.keyCode > 105))) {
+            e.preventDefault();
+        }
+    });
+    $(".alphabets").keydown(function (e) {
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 32]) !== -1 ||
-                        (e.keyCode == 65 && e.ctrlKey === true) ||
-                                (e.keyCode >= 35 && e.keyCode <= 39)) {
-                    return;
-                }
-                if (((e.keyCode < 65 || e.keyCode > 90))) {
-                    e.preventDefault();
-                }
-            });
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+            return;
+        }
+        if (((e.keyCode < 65 || e.keyCode > 90))) {
+            e.preventDefault();
+        }
+    });
 
 });
 function removeBasedOnValue(id) {
@@ -179,7 +179,7 @@ function isunique_course(e, id) {
             url: "check_course_name",
             type: "post",
             data: 'course_name=' + e,
-            success: function(res) {
+            success: function (res) {
                 if (res == 1) {
                     window.email_id = 'exists';
                     $("#" + id + "_err").text("[Couse Name exists!]").addClass('error');
@@ -192,7 +192,7 @@ function isunique_course(e, id) {
                     return true;
                 }
             },
-            error: function() {
+            error: function () {
                 return false;
             }
         });
@@ -298,7 +298,7 @@ function validate() {
         $("#course_competency_code_err").text("").removeClass('error');
         $("#course_competency_code").removeClass('error');
     }
-      //default commission rate
+    //default commission rate
     default_commission_rate = $.trim($('#default_commission_rate').val());
     if (default_commission_rate == "") {
         $("#default_commission_rate_err").text("[required]").addClass('error');
@@ -308,8 +308,8 @@ function validate() {
         $("#default_commission_rate_err").text("").removeClass('error');
         $("#default_commission_rate").removeClass('error');
     }
-    
-    
+
+
     certification_code = $.trim($('#certification_code').val());
     if (certification_code == "") {
         $("#certification_code_err").text("[required]").addClass('error');
@@ -354,21 +354,21 @@ function reset_all() {
     $('.remove2').hide();
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     var check = 0;
-    $('#addNewCourseForm').submit(function() {
+    $('#addNewCourseForm').submit(function () {
         check = 1;
-        if(validate()){
+        if (validate()) {
             var self = $(this),
-            button = self.find('input[type="submit"],button');
-            button.attr('disabled','disabled').html('Please Wait..');
+                    button = self.find('input[type="submit"],button');
+            button.attr('disabled', 'disabled').html('Please Wait..');
             return true;
-        }else{
+        } else {
             return false;
         }
-        
+
     });
-    $('#addNewCourseForm select,#addNewCourseForm input,#addNewCourseForm textarea').change(function() {
+    $('#addNewCourseForm select,#addNewCourseForm input,#addNewCourseForm textarea').change(function () {
         if (check == 1) {
             return validate();
         }
@@ -379,3 +379,10 @@ function remove_zip_file() {
     $('#zip_file').val('');
     $('#remove_upload_span').css('display', 'none');
 }
+
+$("#tpg_course_yes").click(function () {
+    $('#tpg_show').show();
+});
+$("#tpg_course_no").click(function () {
+    $('#tpg_show').hide();
+});

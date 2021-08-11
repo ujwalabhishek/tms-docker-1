@@ -196,7 +196,6 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                             <span id="course_duration_err"></span>
                             <?php echo form_error('course_duration', '<div class="error">', '</div>'); ?>
                         </td>
-
                         <td class="td_heading">Course Reference Number:<span class="required">*</span></td>
                         <td>
                             <?php
@@ -213,8 +212,8 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                             <span id="course_reference_num_err"></span>
                             <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>
                         </td>
-                    </tr>  
-                    <tr>
+                    </tr>
+                    <tr id="tpg_show" style='display:none'>
                         <td class="td_heading">External Reference Number:<span class="required">*</span></td>
                         <td>
                             <?php
