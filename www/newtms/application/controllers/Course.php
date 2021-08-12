@@ -1123,13 +1123,22 @@ class Course extends CI_Controller {
 
     public function add_new_tpg_course() {
 
+        $tenant_id = $this->tenant_id;
+        
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Add New Course(TPG)';
         $data['main_content'] = 'course/addnewcourse_tpg';
-
+        
+        $course_reference_no = $this->input->post('course_reference_num');
+        
+        if($course_reference_no) {
+            $result = $this->course->get_course_by_reference_no($tenant_id, $course_reference_no);
+            echo print_r($result, true); exit;
+        }
+        
+        
         if($this->input->post('course_reference_num')) {
             
-            $tenant_id = $this->tenant_id;
             $crse_ref_no = $this->input->post('course_reference_num');
 
             $api_version = 'v1';

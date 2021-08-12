@@ -2960,5 +2960,9 @@ public function get_course_name($tenant_id,$course_id){
     return $this->db->select('crse_name')->from('course')->where('tenant_id',$tenant_id)->where('course_id',$course_id)->get()->row()->crse_name;
 }
 
+public function get_course_by_reference_no($tenant_id, $reference_no){
+    return $this->db->select('crse_name')->from('course')->where('tenant_id',$tenant_id)->where('reference_num',$reference_no)->get()->row()->crse_name;
+}
+
 }
 
