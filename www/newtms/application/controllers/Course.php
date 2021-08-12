@@ -1139,18 +1139,14 @@ class Course extends CI_Controller {
             $tpg_response = json_decode($request);
 
             if ($tpg_response->status == 200) {
-
-                echo "<pre>".print_r($tpg_response, true)."</pre>"; exit;
-                
+                //echo "<pre>".print_r($tpg_response, true)."</pre>";                
                 $data['tpg_response'] = $tpg_response;
                 $data['course_name'] = $tpg_response->data->courses[0]->title;
                 $data['external_reference_number'] = $tpg_response->data->courses[0]->externalReferenceNumber;
                 $data['course_duration'] = $tpg_response->data->courses[0]->totalTrainingDurationHour;
                 $data['course_description'] = $tpg_response->data->courses[0]->description;
-                
-                
-                
-                
+                $data['crse_admin_email'] = $tpg_response->data->courses[0]->contactPerson[0]->email;
+                                                
             } else {
                 if ($tpg_response->status == 400) {
                     $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);

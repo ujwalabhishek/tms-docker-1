@@ -225,7 +225,7 @@ $CI->load->model('settings_model');
                                 $crse_admin_email = array(
                                     'name' => 'crse_admin_email',
                                     'id' => 'crse_admin_email',
-                                    'value' => set_value('crse_admin_email'),
+                                    'value' => $crse_admin_email,
                                     'maxlength' => 50,
                                     'class' => 'upper_case',
                                     'style' => 'width:200px',
