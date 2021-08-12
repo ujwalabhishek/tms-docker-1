@@ -752,7 +752,7 @@ class Course extends CI_Controller {
         $course_id = $this->input->post('course_id');
         $res = $this->course->get_course_details($course_id, $tenant_id);
         
-        echo print_r($res, true); exit;
+        //echo print_r($res, true); exit;
 
         $this->form_validation->set_rules('course_name', 'Course Name', 'required');
 
