@@ -748,6 +748,11 @@ class Course extends CI_Controller {
         $tenant_id = $this->user->tenant_id;
 
         $user_id = $this->user->user_id;
+        
+        $course_id = $this->input->post('course_id');
+        $res = $this->course->get_course_details($course_id, $tenant_id);
+        
+        echo print_r($res, true); exit;
 
         $this->form_validation->set_rules('course_name', 'Course Name', 'required');
 
@@ -782,8 +787,6 @@ class Course extends CI_Controller {
 
         if ($this->form_validation->run() == TRUE) {
 
-            $course_id = $this->input->post('course_id');
-            $res = $this->course->get_course_details($course_id, $tenant_id);
             $previous_course_data = json_encode($res);
 
             $delete_image = $this->input->post('deleteimage') ? $this->input->post('deleteimage') : 'no';
