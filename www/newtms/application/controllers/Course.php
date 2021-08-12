@@ -1161,6 +1161,7 @@ class Course extends CI_Controller {
                 $data['course_competency_code_val'] = $tpg_response->data->courses[0]->code;
 
                 if ($this->input->post('task') == 'save') {
+                    echo "abd"; exit;
                     $user_id = $this->user->user_id;
 
                     $this->form_validation->set_rules('course_name', 'Course Name', 'required');
