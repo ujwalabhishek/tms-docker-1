@@ -1141,7 +1141,7 @@ class Course extends CI_Controller {
             if ($tpg_response->status == 200) {
 
                 $data['tpg_response'] = $tpg_response;
-                $data['course_name'] = $tpg_response->data->courses->title;
+                $data['course_name'] = $tpg_response->data->courses[0]->title;
                 
                 echo $data['course_name']; exit;
                 
