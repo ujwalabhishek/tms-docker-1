@@ -18,18 +18,18 @@ function validate_search() {
 }
 
 
-$(document).ready(function() {
+$(document).ready(function () {
     //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 03/01/2019 AT 3:45PM////////////////////////////////////
-    $('#search_form').on('submit',function() {
-        if(validate_search()){
+    $('#search_form').on('submit', function () {
+        if (validate_search()) {
             var self = $(this),
-            button = self.find('input[type="submit"],button');
-            button.attr('disabled','disabled').html('Please Wait..');
+                    button = self.find('input[type="submit"],button');
+            button.attr('disabled', 'disabled').html('Please Wait..');
             return true;
-        }else{
+        } else {
             return false;
         }
-       
+
     }); //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 03/01/2019 AT 3:45PM///////////////////////////////
     var cnt = $('#sales_exec_tbl tr').size();
     cnt_array = [];
@@ -39,8 +39,8 @@ $(document).ready(function() {
         var selected_sales_executives = $("#sales_executives_" + i).val();
         if (selected_sales_executives != "")
             selected_exec_array.push(selected_sales_executives);
-    }   
-    $("#sales_exec_addmore").click(function() {
+    }
+    $("#sales_exec_addmore").click(function () {
         retVal = true;
         $("#sales_exec_tbl_err").text("").removeClass('error');
         retVal = validate_sales_executive();
@@ -90,32 +90,32 @@ $(document).ready(function() {
         }
     });
 
-    $("#validity_yes").click(function() {
+    $("#validity_yes").click(function () {
         $('#show_me').show();
     });
-    $("#validity_no").click(function() {
+    $("#validity_no").click(function () {
         $('#show_me').hide();
     });
-    $(".alphanumeric").keydown(function(e) {
+    $(".alphanumeric").keydown(function (e) {
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 32]) !== -1 ||
-                        (e.keyCode == 65 && e.ctrlKey === true) ||
-                                (e.keyCode >= 35 && e.keyCode <= 39)) {
-                    return;
-                }
-                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 90) && (e.keyCode < 96 || e.keyCode > 105))) {
-                    e.preventDefault();
-                }
-            });
-    $(".alphabets").keydown(function(e) {
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+            return;
+        }
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 90) && (e.keyCode < 96 || e.keyCode > 105))) {
+            e.preventDefault();
+        }
+    });
+    $(".alphabets").keydown(function (e) {
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 32]) !== -1 ||
-                        (e.keyCode == 65 && e.ctrlKey === true) ||
-                                (e.keyCode >= 35 && e.keyCode <= 39)) {
-                    return;
-                }
-                if (((e.keyCode < 65 || e.keyCode > 90))) {
-                    e.preventDefault();
-                }
-            });
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+            return;
+        }
+        if (((e.keyCode < 65 || e.keyCode > 90))) {
+            e.preventDefault();
+        }
+    });
 });
 function removeBasedOnValue(id) {
     var current_val = $("#" + id).val();
@@ -164,7 +164,7 @@ function check_enrolled(sales_id) {
             type: "post",
             async: false,
             data: {'sales_id': sales_id, 'course_id': course_id},
-            success: function(res) {
+            success: function (res) {
                 if (res == 1) {
                     $('#sales_exec_tbl_err').text("[Sales Executive has done Enrolments.]").addClass('error');
                     result = false;
@@ -173,7 +173,7 @@ function check_enrolled(sales_id) {
                     result = true;
                 }
             },
-            error: function() {
+            error: function () {
                 result = false;
             }
         });
@@ -188,12 +188,12 @@ function remove_zip_file(course_id) {
             type: "post",
             async: false,
             data: {'course_id': course_id},
-            success: function(res) {
+            success: function (res) {
                 $('#span_course_content').css('display', 'none');
                 $('#zip_file_err').text('File has been removed.').addClass('error');
                 remove_zip_file_result = true;
             },
-            error: function() {
+            error: function () {
                 remove_zip_file_result = false;
             }
         });
@@ -257,7 +257,7 @@ function array_pop(removeItem) {
 
 function validate() {
     var retVal = true;
-    var language = $.trim($('#language option:selected').val());    
+    var language = $.trim($('#language option:selected').val());
     if (language == null || language == '') {
         $("#language_err").text("[required]").addClass('error');
         $("#language").addClass('error');
@@ -326,14 +326,17 @@ function validate() {
         $("#course_reference_num_err").text("").removeClass('error');
         $("#course_reference_num").removeClass('error');
     }
-    var external_reference_num = $.trim($('#external_reference_number').val());
-    if (external_reference_num == "") {
-        $("#external_reference_number_err").text("[required]").addClass('error');
-        $("#external_reference_number").addClass('error');
-        retVal = false;
-    } else {
-        $("#external_reference_number_err").text("").removeClass('error');
-        $("#external_reference_number").removeClass('error');
+    var tpg_course = $('#tpg_course').val();
+    if (tpg_course) {
+        var external_reference_num = $.trim($('#external_reference_number').val());
+        if (external_reference_num == "") {
+            $("#external_reference_number_err").text("[required]").addClass('error');
+            $("#external_reference_number").addClass('error');
+            retVal = false;
+        } else {
+            $("#external_reference_number_err").text("").removeClass('error');
+            $("#external_reference_number").removeClass('error');
+        }
     }
     var course_competency_code = $.trim($('#course_competency_code').val());
     if (course_competency_code == "") {
@@ -344,7 +347,7 @@ function validate() {
         $("#course_competency_code_err").text("").removeClass('error');
         $("#course_competency_code").removeClass('error');
     }
-    
+
     var default_commission_rate = $.trim($('#default_commission_rate').val());
     if (default_commission_rate == "") {
         $("#default_commission_rate_err").text("[required]").addClass('error');
@@ -354,7 +357,7 @@ function validate() {
         $("#default_commission_rate_err").text("").removeClass('error');
         $("#default_commission_rate").removeClass('error');
     }
-    
+
     var certification_codes = $.trim($('#certification_code').val());
     if (certification_codes == "") {
         $("#certification_code_err").text("[required]").addClass('error');
@@ -402,7 +405,7 @@ function isunique_course(e, id) {
             url: "check_course_name",
             type: "post",
             data: {'course_name': e, 'course_id': course_id},
-            success: function(res) {
+            success: function (res) {
                 if (res == 1) {
                     window.email_id = 'exists';
                     $("#" + id + "_err").text("[Couse Name exists!]").addClass('error');
@@ -415,7 +418,7 @@ function isunique_course(e, id) {
                     return true;
                 }
             },
-            error: function() {
+            error: function () {
                 return false;
             }
         });
@@ -436,40 +439,40 @@ function reset_all() {
     $(".error").text("").removeClass('error');
     $("#sales_exec_tbl").find("tr:gt(0)").remove();
     $('.remove2').hide();
-    $('#editCourseForm').each(function() {
+    $('#editCourseForm').each(function () {
         this.reset();
     });
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     var check = 0;
-    $('#addNewCourseForm').submit(function() {
+    $('#addNewCourseForm').submit(function () {
         check = 1;
         return validate();
     });
     //////////////////////////////////added by shubhranshu to prevent multi click////////////////////////////////////////////////
-    $('#editCourseForm').submit(function() {
+    $('#editCourseForm').submit(function () {
         check = 1;
-        if(validate()){
+        if (validate()) {
             $('#updatebtn').hide()
             $('#deactivatebtn').hide()
             $('.button_class99').html('<button class="btn btn-primary" type="submit">Update</button>');
             var self = $(this),
-            button = self.find('input[type="submit"],button');
-            button.attr('disabled','disabled').html('Please Wait..');
+                    button = self.find('input[type="submit"],button');
+            button.attr('disabled', 'disabled').html('Please Wait..');
             return true;
-        }else{
+        } else {
             return false;
         }
-        
+
     });///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    $('#addNewCourseForm select,#addNewCourseForm input,#addNewCourseForm textarea').change(function() {
+    $('#addNewCourseForm select,#addNewCourseForm input,#addNewCourseForm textarea').change(function () {
         if (check == 1) {
             return validate();
         }
     });
 });
-$(function() {
+$(function () {
     $("#deactivation_date").text($.datepicker.formatDate("dd/mm/yy", new Date()));
 });
 
@@ -511,8 +514,8 @@ function validate_deactivate_user() {
     }
     return retVal;
 }
-$(document).ready(function() {
-    $('.deactive').click(function() {
+$(document).ready(function () {
+    $('.deactive').click(function () {
         var course_id = $('#course_id').val();
         $.ajax({
             url: baseurl + "course/get_active_class",
@@ -522,9 +525,9 @@ $(document).ready(function() {
             data: {
                 'course_id': course_id,
             },
-            beforeSend: function() {
+            beforeSend: function () {
             },
-            success: function(res) {
+            success: function (res) {
                 var running_class = res.running;
                 var yet_to_start_class = res.yet_to_start;
                 if (running_class != 0 && yet_to_start_class != 0) {

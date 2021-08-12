@@ -237,6 +237,7 @@ $CI->load->model('settings_model');
 <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>
                         </td>
                     </tr>
+                    <input type="hidden" name="tpg_course" id="tpg_course" value="<?php echo $course_data->tpg_crse; ?>">
                     <?php if($course_data->tpg_crse) {?>
                     <tr>
                         <td class="td_heading">External Reference Number:<span class="required">*</span></td>
