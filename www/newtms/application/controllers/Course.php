@@ -1122,49 +1122,50 @@ class Course extends CI_Controller {
     }
 
     public function add_new_tpg_course() {
-        
-        $tenant_id = $this->tenant_id;
-        $crse_ref_no = $this->input->post('course_reference_num');               
 
-        $api_version = 'v1';
-        $url = "https://" . TPG_URL . "/courses/directory/" . $crse_ref_no;
-        //$url = "https://" . TPG_URL . "/courses/directory/TGS-2020002096";
-
-        $request = $this->curl_request('GET', $url, "", $api_version);
-
-        $tpg_response = json_decode($request);
-        
-        //echo print_r($tpg_response, true); exit;
-        
-        
-        
-        
-        if ($tpg_response->status == 200) {
-            
-            $data['tpg_response'] = $tpg_response;
-            
-        } else {
-            if ($tpg_response->status == 400) {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
-            } elseif ($tpg_response->status == 403) {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
-            } elseif ($tpg_response->status == 404) {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
-            } elseif ($tpg_response->status == 500) {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
-            } else {
-                $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
-            }
-            redirect('course/add_new_tpg_course');
-        }
-                        
-        $data['sideMenuData'] = fetch_non_main_page_content();        
+        $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Add New Course(TPG)';
         $data['main_content'] = 'course/addnewcourse_tpg';
 
+        if($this->input->post('course_reference_num')) {
+            $tenant_id = $this->tenant_id;
+            $crse_ref_no = $this->input->post('course_reference_num');
+
+            $api_version = 'v1';
+            $url = "https://" . TPG_URL . "/courses/directory/" . $crse_ref_no;
+            //$url = "https://" . TPG_URL . "/courses/directory/TGS-2020002096";
+
+            $request = $this->curl_request('GET', $url, "", $api_version);
+
+            $tpg_response = json_decode($request);
+
+            //echo print_r($tpg_response, true); exit;
+
+
+
+
+            if ($tpg_response->status == 200) {
+
+                $data['tpg_response'] = $tpg_response;
+            } else {
+                if ($tpg_response->status == 400) {
+                    $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                } elseif ($tpg_response->status == 403) {
+                    $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                } elseif ($tpg_response->status == 404) {
+                    $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                } elseif ($tpg_response->status == 500) {
+                    $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                } else {
+                    $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
+                }
+                redirect('course/add_new_tpg_course');
+            }
+        }
+        
         $this->load->view('layout', $data);
-    }    
-    
+    }
+
     // Modified by abdulla for dynamic pem files.
     public function curl_request($mode, $url, $encrypted_data, $api_version) {
 
