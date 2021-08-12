@@ -18,18 +18,14 @@ class Course extends CI_Controller {
         parent::__construct();
 
         $this->user = $this->session->userdata('userDetails');
-
         $this->load->helper('metavalues_helper');
-
         $this->load->helper('common');
-
         $this->load->model('meta_values');
-
         $this->load->model('course_model', 'course');
-
         $this->load->model('class_model', 'classmodel');
-
         $this->load->library('form_validation');
+        $this->user = $this->session->userdata('userDetails');
+        $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;
     }
 
     /*
@@ -1127,19 +1123,6 @@ class Course extends CI_Controller {
 
     public function add_new_tpg_course() {
         
-        $data['sideMenuData'] = fetch_non_main_page_content();
-
-        $tenant_id = $this->user->tenant_id;
-
-        $data['page_title'] = 'Add New Course(TPG)';
-
-        $data['main_content'] = 'course/addnewcourse_tpg';
-
-        $this->load->view('layout', $data);
-    }
-    
-    public function retrieve_course_details() {
-    
         $tenant_id = $this->tenant_id;
         $crse_ref_no = $this->input->post('course_reference_num');               
 
@@ -1156,14 +1139,29 @@ class Course extends CI_Controller {
         
         $data['tpg_response'] = $tpg_response;
         
-        
-        
+        if ($tpg_response->status == 200) {
+            
+        } else {
+            if ($tpg_response->status == 400) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 403) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 404) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 500) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } else {
+                $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
+            }
+            redirect('course/add_new_tpg_course');
+        }
+                        
         $data['sideMenuData'] = fetch_non_main_page_content();        
         $data['page_title'] = 'Add New Course(TPG)';
         $data['main_content'] = 'course/addnewcourse_tpg';
 
-        $this->load->view('layout', $data);                        
-    }
+        $this->load->view('layout', $data);
+    }    
     
     // Modified by abdulla for dynamic pem files.
     public function curl_request($mode, $url, $encrypted_data, $api_version) {

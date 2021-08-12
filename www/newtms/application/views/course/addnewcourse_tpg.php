@@ -9,7 +9,7 @@ $CI->load->model('settings_model');
         <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
         <?php
         $form_attributes = array('name' => 'course_create_search', 'id' => 'course_create_search', "onsubmit" => "return(validate_search());");
-        echo form_open("course/retrieve_course_details", $form_attributes);
+        echo form_open("course/add_new_tpg_course", $form_attributes);
         ?>
         <table class="table table-striped">
             <tbody>
