@@ -1134,7 +1134,7 @@ class Course extends CI_Controller {
         if($course_reference_no) {
             $result = $this->course->get_course_by_reference_no($tenant_id, $course_reference_no);
             if(isset($result)) {                
-                $this->session->set_flashdata('error', "For the Course Reference Number,".$course_reference_no." course is already registered on TMS with name ".$result);
+                $this->session->set_flashdata('error', "For the Course Reference Number - ".$course_reference_no.", course is already registered on TMS with name ".$result);
                 
                 redirect('course/add_new_tpg_course');
             }
@@ -1151,7 +1151,7 @@ class Course extends CI_Controller {
             $tpg_response = json_decode($request);
 
             if ($tpg_response->status == 200) {
-                //echo "<pre>".print_r($tpg_response, true)."</pre>";
+                echo "<pre>".print_r($tpg_response, true)."</pre>";
                 $data['tpg_response'] = $tpg_response;
                 $data['course_name_val'] = $tpg_response->data->courses[0]->title;
                 $data['external_reference_number_val'] = $tpg_response->data->courses[0]->externalReferenceNumber;
