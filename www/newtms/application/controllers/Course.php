@@ -1133,9 +1133,10 @@ class Course extends CI_Controller {
         
         if($course_reference_no) {
             $result = $this->course->get_course_by_reference_no($tenant_id, $course_reference_no);
-            echo print_r($result, true); exit;
+            if(isset($result)) {
+                $this->session->set_flashdata('error', "For the Course Reference Number,".$course_reference_no." course is already registered on TMS with name ".$result);
+            }
         }
-        
         
         if($this->input->post('course_reference_num')) {
             
