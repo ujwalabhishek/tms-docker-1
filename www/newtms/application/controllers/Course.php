@@ -1,9 +1,6 @@
 <?php
 
-
-
 if (!defined('BASEPATH'))
-
     exit('No direct script access allowed');
 
 /*
@@ -33,10 +30,7 @@ class Course extends CI_Controller {
         $this->load->model('class_model', 'classmodel');
 
         $this->load->library('form_validation');
-
     }
-
-
 
     /*
 
@@ -58,7 +52,6 @@ class Course extends CI_Controller {
         foreach ($_GET as $k => $v) {
 
             $export_url .="$k=$v&";
-
         }
 
         $export_url = rtrim($export_url, '&');
@@ -78,15 +71,12 @@ class Course extends CI_Controller {
         $filter_status = '';
 
         if ($this->input->get('course_name'))
-
             $course_name = $this->input->get('course_name');
 
         if ($this->input->get('course_code'))
-
             $course_code = $this->input->get('course_code');
 
         if ($this->input->get('filter_status'))
-
             $filter_status = $this->input->get('filter_status');
 
         $totalrows = $this->course->get_all_course_count_by_tenant_id($tenant_id, $course_name, $course_code, $filter_status);
@@ -100,7 +90,6 @@ class Course extends CI_Controller {
         if (empty($pageno)) {
 
             $pageno = 1;
-
         }
 
         $offset = ($pageno * $records_per_page);
@@ -126,17 +115,14 @@ class Course extends CI_Controller {
         foreach ($values as $value) {
 
             $status_lookup[$value['parameter_id']] = $value['category_name'];
-
         }
 
         if (!empty($status_lookup)) {
 
             $data['status_lookup'] = $status_lookup;
-
         }
 
         $this->load->view('layout', $data);
-
     }
 
     /*
@@ -155,7 +141,6 @@ class Course extends CI_Controller {
         $data['main_content'] = 'course/addnewcourse';
 
         $this->load->view('layout', $data);
-
     }
 
     /**
@@ -163,7 +148,6 @@ class Course extends CI_Controller {
      * This method creates a new course for the tenant
 
      */
-
     public function create_new_course_by_tenant() {
 
         $tenant_id = $this->user->tenant_id;
@@ -185,11 +169,11 @@ class Course extends CI_Controller {
         $this->form_validation->set_rules('course_duration', 'Course Duration', 'required');
 
         $this->form_validation->set_rules('course_reference_num', 'Course Reference Number', 'required');
-        
+
         $this->form_validation->set_rules('external_reference_number', 'External Course Reference Number', 'required');
 
         $this->form_validation->set_rules('crse_admin_email', 'course admin email', 'required');
-        
+
         $this->form_validation->set_rules('course_competency_code', 'Course Competency Code', 'required');
 
         $this->form_validation->set_rules('certification_code', 'Certification Code', 'required');
@@ -220,19 +204,15 @@ class Course extends CI_Controller {
                     if ($icon_data['status']) {
 
                         $icon_path = $icon_data['image']['system_path'] . '/' .
-
                                 $icon_path .= $icon_path . $icon_data['image']['raw_name'] . '_thumb' . $icon_data['image']['file_ext'];
 
                         $this->course->save_course_file_path($course_id, $icon_path, 'crse_icon');
-
                     } else {
 
                         $this->session->set_flashdata("error", $icon_data['error']);
 
                         $this->add_new_course();
-
                     }
-
                 }
 
                 if (!empty($_FILES['userfile']['name'])) {
@@ -250,43 +230,32 @@ class Course extends CI_Controller {
                         $file_path = 'uploads/files/course/' . $file_data['file']['file_name'];
 
                         $this->course->save_course_file_path($course_id, $file_path, 'crse_content_path');
-
                     } else {
 
                         $this->session->set_flashdata("error", $file_data['error']);
 
                         $this->add_new_course();
-
                     }
-
                 }
 
                 $this->session->set_flashdata("success", "Course has been created successfully.");
-
             } else {
 
                 $this->session->set_flashdata("error", "Unable to create course. Please try again later.");
-
             }
 
             redirect("course");
-
         } else {
 
             $this->add_new_course();
-
         }
-
     }
-
-
 
     /**
 
      * This method exporting excel file for course with page fields
 
      */
-
     public function export_course_page() {
 
         $tenant_id = $this->user->tenant_id;
@@ -296,7 +265,6 @@ class Course extends CI_Controller {
         $this->load->helper('export_helper');
 
         export_course_page($query);
-
     }
 
     /**
@@ -304,7 +272,6 @@ class Course extends CI_Controller {
      * This method exporting excel file for course sales executive page.
 
      */
-
     public function export_sales_rate_page_filed() {
 
         $tenant_id = $this->user->tenant_id;
@@ -326,7 +293,6 @@ class Course extends CI_Controller {
                 $excel_data[$i][] = $data[$i]->first_name . " " . $data[$i]->last_name;
 
                 $excel_data[$i][] = $data[$i]->commission_rate . "%";
-
             }
 
             $excel_filename = 'sales_commission_rate.xls';
@@ -338,23 +304,17 @@ class Course extends CI_Controller {
             $this->load->helper('export_helper');
 
             export_page_fields($excel_titles, $excel_data, $excel_filename, $excel_sheetname, $heading);
-
         } else {
 
             $this->sales_commission_rate();
-
         }
-
     }
-
-
 
     /**
 
      * This method exporting excel file for course with All fields
 
      */
-
     public function export_course_full() {
 
         $tenant_id = $this->user->tenant_id;
@@ -364,10 +324,7 @@ class Course extends CI_Controller {
         $this->load->helper('export_helper');
 
         export_course_full($query);
-
     }
-
-
 
     /*
 
@@ -383,7 +340,6 @@ class Course extends CI_Controller {
         if ($course_data->copied_from_id) {
 
             $data['course_data']->copy_reason = (substr(trim($course_data->copy_reason), 0, 6) != 'OTHERS') ? $this->course->get_metadata_on_parameter_id($course_data->copy_reason) : substr($course_data->copy_reason, 7);
-
         }
 
         $data['sales_exec'] = $this->course->get_sales_exec_detailse($course_id);
@@ -395,7 +351,6 @@ class Course extends CI_Controller {
         foreach ($_GET as $k => $v) {
 
             $export_url .="$k=$v&";
-
         }
 
         $export_url = rtrim($export_url, '&');
@@ -439,7 +394,6 @@ class Course extends CI_Controller {
         $data['main_content'] = 'course/viewcourse';
 
         $this->load->view('layout', $data);
-
     }
 
     /*
@@ -457,7 +411,6 @@ class Course extends CI_Controller {
         print json_encode($result);
 
         exit;
-
     }
 
     /*
@@ -475,7 +428,6 @@ class Course extends CI_Controller {
         print json_encode($result);
 
         exit;
-
     }
 
     /*
@@ -493,7 +445,6 @@ class Course extends CI_Controller {
         print json_encode($result);
 
         exit;
-
     }
 
     /*
@@ -511,7 +462,6 @@ class Course extends CI_Controller {
         print json_encode($result);
 
         exit;
-
     }
 
     /**
@@ -519,7 +469,6 @@ class Course extends CI_Controller {
      * get course name for auto-complete help
 
      */
-
     public function get_course_name_copy_autocomplete() {
 
         $query_string = htmlspecialchars($_GET['query'], ENT_QUOTES, 'UTF-8');
@@ -529,10 +478,7 @@ class Course extends CI_Controller {
         print json_encode($result);
 
         exit;
-
     }
-
-
 
     /*
 
@@ -550,15 +496,16 @@ class Course extends CI_Controller {
         $data['main_content'] = 'course/copycourse';
 
         $this->load->view('layout', $data);
-
     }
-	/*
+
+    /*
 
      * This function is use for iframe genration.
 
      */
-	public function wedgit() {
-            $data['sideMenuData'] = fetch_non_main_page_content();
+
+    public function wedgit() {
+        $data['sideMenuData'] = fetch_non_main_page_content();
 
         $tenant_id = $this->user->tenant_id;
 
@@ -566,9 +513,8 @@ class Course extends CI_Controller {
 
         $data['main_content'] = 'course/wedgit';
 
-        
-        $this->load->view('layout', $data);
 
+        $this->load->view('layout', $data);
     }
 
     /*
@@ -591,7 +537,6 @@ class Course extends CI_Controller {
         foreach ($_GET as $k => $v) {
 
             $export_url .="$k=$v&";
-
         }
 
         $export_url = rtrim($export_url, '&');
@@ -613,7 +558,6 @@ class Course extends CI_Controller {
         if (empty($pageno)) {
 
             $pageno = 1;
-
         }
 
         $offset = ($pageno * $records_per_page);
@@ -624,14 +568,13 @@ class Course extends CI_Controller {
 
         $this->load->helper('pagination');
 
-        $totalrows = $this->course->get_sales_commission_list_count($tenant_id);        
+        $totalrows = $this->course->get_sales_commission_list_count($tenant_id);
 
         $data['pagination'] = get_pagination($records_per_page, $pageno, $baseurl, $totalrows, $field, $order_by . '&' . $sort_link);
 
-        $data['table_data'] = $this->course->get_sales_commission_list($tenant_id, $records_per_page, $offset, $field, $order_by);        
+        $data['table_data'] = $this->course->get_sales_commission_list($tenant_id, $records_per_page, $offset, $field, $order_by);
 
         $this->load->view('layout', $data);
-
     }
 
     /*
@@ -664,13 +607,11 @@ class Course extends CI_Controller {
             $data['course_data'] = $this->course->get_course_detailse($course_id);
 
             $data['sales_exec_array'] = $this->course->get_sales_exec_detailse_obj($course_id);
-
         }
 
         $data['form_style_attr'] = $form_style_attr;
 
         $this->load->view('layout', $data);
-
     }
 
     /*
@@ -690,17 +631,13 @@ class Course extends CI_Controller {
             if ($result == TRUE) {
 
                 $this->session->set_flashdata("success", "Course has been copied successfully.");
-
             } else {
 
                 $this->session->set_flashdata("error", "Unable to copy course. Please try again later.");
-
             }
-
         }
 
         redirect("course");
-
     }
 
     /*
@@ -718,15 +655,12 @@ class Course extends CI_Controller {
         if ($exists) {
 
             echo 1;
-
         } else {
 
             echo 0;
-
         }
 
         return;
-
     }
 
     /*
@@ -757,7 +691,6 @@ class Course extends CI_Controller {
                 $course_details = explode('(', $search_course_name);
 
                 $course_id = rtrim(end($course_details), ')');
-
             }
 
             $data['course_data'] = $course_data = $this->course->get_course_detailse($course_id);
@@ -765,7 +698,6 @@ class Course extends CI_Controller {
             if ($course_data->copied_from_id) {
 
                 $data['course_data']->copy_reason = (substr(trim($course_data->copy_reason), 0, 6) != 'OTHERS') ? $this->course->get_metadata_on_parameter_id($course_data->copy_reason) : substr($course_data->copy_reason, 7);
-
             }
 
             $data['enrol_count'] = $this->course->get_enrol_count($course_id);
@@ -785,13 +717,11 @@ class Course extends CI_Controller {
             $data['course_manager'] = explode(",", $data['course_data']->crse_manager);
 
             $data['sales_exec_array'] = $this->course->get_sales_exec_detailse_obj($course_id);
-
         }
 
         $data['form_style_attr'] = $form_style_attr;
 
         $this->load->view('layout', $data);
-
     }
 
     /*
@@ -809,7 +739,6 @@ class Course extends CI_Controller {
         $res['yet_to_start'] = $this->course->get_yet_to_class($course_id);
 
         echo json_encode($res);
-
     }
 
     /**
@@ -817,7 +746,6 @@ class Course extends CI_Controller {
      * This method editing the course for the tenant
 
      */
-
     public function edit_course_by_tenant() {
 
         $data['page_title'] = 'Edit Course';
@@ -835,10 +763,10 @@ class Course extends CI_Controller {
         $this->form_validation->set_rules('subsidy', 'Subsidy', 'required');
 
         $this->form_validation->set_rules('course_reference_num', 'Course Reference Number', 'required');
-        
+
         $this->form_validation->set_rules('external_reference_number', 'External Reference Number', 'required');
-        
-         $this->form_validation->set_rules('crse_admin_email', 'Course Admin Email', 'required');
+
+        $this->form_validation->set_rules('crse_admin_email', 'Course Admin Email', 'required');
 
         $this->form_validation->set_rules('course_competency_code', 'Course Competency Code', 'required');
 
@@ -855,13 +783,12 @@ class Course extends CI_Controller {
             $this->form_validation->set_rules('class_types', 'Class Type', 'required');
 
             $this->form_validation->set_rules('certification_code', 'Certification Code', 'required');
-
         }
 
         if ($this->form_validation->run() == TRUE) {
-            
+
             $course_id = $this->input->post('course_id');
-            $res = $this->course->get_course_details($course_id,$tenant_id);
+            $res = $this->course->get_course_details($course_id, $tenant_id);
             $previous_course_data = json_encode($res);
 
             $delete_image = $this->input->post('deleteimage') ? $this->input->post('deleteimage') : 'no';
@@ -881,7 +808,6 @@ class Course extends CI_Controller {
                 if ($icon_data['status']) {
 
                     $icon_path = $icon_data['image']['system_path'] . '/' .
-
                             $icon_path .= $icon_path . $icon_data['image']['raw_name'] . '_thumb' . $icon_data['image']['file_ext'];
 
                     $previous_thumb_path = $this->course->fetch_image_path_by_course_id($course_id, 'crse_icon');
@@ -889,9 +815,7 @@ class Course extends CI_Controller {
                     $this->course->remove_previous_icon($previous_thumb_path);
 
                     $this->course->save_course_file_path($course_id, $icon_path, 'crse_icon');
-
-                } 
-
+                }
             } else if ($course_id && $delete_image == 'no') {
 
                 $previous_thumb_path = $this->course->fetch_image_path_by_course_id($course_id, 'crse_icon');
@@ -899,7 +823,6 @@ class Course extends CI_Controller {
                 $this->course->remove_previous_icon($previous_thumb_path);
 
                 $this->course->save_course_file_path($course_id, $icon_path, 'crse_icon');
-
             }
 
             if (!empty($_FILES['userfile']['name'])) {
@@ -917,33 +840,25 @@ class Course extends CI_Controller {
                     $file_path = 'uploads/files/course/' . $file_data['file']['file_name'];
 
                     $this->course->save_course_file_path($course_id, $file_path, 'crse_content_path');
-
                 } else {
 
                     $this->session->set_flashdata("error", $file_data['error']);
-
                 }
-
             }
 
             if ($course_id) {
-                user_activity( 4, $course_id, $previous_course_data);
+                user_activity(4, $course_id, $previous_course_data);
                 $this->session->set_flashdata("success", "Course has been updated successfully.");
-
             } else if (!$course_id) {
 
                 $this->session->set_flashdata("error", "Unable to edit course. Please try again later.");
-
             }
 
             redirect("course");
-
         } else {
 
             $this->edit_course($this->input->post('course_id'));
-
         }
-
     }
 
     /*
@@ -959,7 +874,6 @@ class Course extends CI_Controller {
             foreach ($this->input->post() as $key => $value) {
 
                 $$key = $value;
-
             }
 
             $this->load->library('form_validation');
@@ -969,7 +883,6 @@ class Course extends CI_Controller {
             if ($reason_for_deactivation == 'OTHERS') {
 
                 $this->form_validation->set_rules('other_reason_for_deactivation', 'other reason for deactivation', 'required');
-
             }
 
             if ($this->form_validation->run() == TRUE) {
@@ -977,25 +890,20 @@ class Course extends CI_Controller {
                 $result = $this->course->deactivate_course($course_id_deactive);
 
                 if ($result == TRUE) {
-                    
-                    $tenant_id = $this->user->tenant_id;
-                    $res = $this->course->get_course_details($course_id_deactive,$tenant_id);
-                    $current_course_data = json_encode($res);
-                    user_activity( 4, $course_id_deactive, $current_course_data);
-                    $this->session->set_flashdata('success', 'Course has been deactivated successfully!');
 
+                    $tenant_id = $this->user->tenant_id;
+                    $res = $this->course->get_course_details($course_id_deactive, $tenant_id);
+                    $current_course_data = json_encode($res);
+                    user_activity(4, $course_id_deactive, $current_course_data);
+                    $this->session->set_flashdata('success', 'Course has been deactivated successfully!');
                 } else {
 
                     $this->session->set_flashdata('error', 'Oops! Sorry, it looks like something went wrong.Please try again!.');
-
                 }
 
                 redirect('course');
-
             }
-
         }
-
     }
 
     /* This Function for updating sales executive commition rate.
@@ -1011,18 +919,13 @@ class Course extends CI_Controller {
         if ($result == TRUE) {
 
             $this->session->set_flashdata('success', 'Commission rate has been updated successfully!');
-
         } else {
 
             $this->session->set_flashdata("error", "Unable to update Commission rate. Please try again later.");
-
         }
 
         redirect('course/sales_commission_rate');
-
     }
-
-
 
     /* This Function for getting the sales exec based on course_id
 
@@ -1035,7 +938,6 @@ class Course extends CI_Controller {
         $result_array = $this->course->get_sales_exec_detailse_array($tenant_id);
 
         echo json_encode($result_array);
-
     }
 
     /**
@@ -1043,17 +945,15 @@ class Course extends CI_Controller {
      * download course content
 
      */
-
     public function download_course_content() {
 
         if (!$this->input->get('file_path')) {
 
             $this->course();
-
         }
 
         $file_name = str_ireplace(' ', '_', $this->input->get('file_name'));
-        $file_name = $file_name.'.zip'; // added by shubhranshu to append zip file extension while download the file
+        $file_name = $file_name . '.zip'; // added by shubhranshu to append zip file extension while download the file
         header("Content-Type: application/octet-stream");
 
         header("Content-Disposition: attachment;filename=" . $file_name);
@@ -1061,7 +961,6 @@ class Course extends CI_Controller {
         readfile(base_url() . $this->input->get('file_path'));
 
         exit();
-
     }
 
     /**
@@ -1071,7 +970,6 @@ class Course extends CI_Controller {
      * @return type
 
      */
-
     public function check_enrolled() {
 
         $exists = $this->course->check_enrolled();
@@ -1079,15 +977,12 @@ class Course extends CI_Controller {
         if ($exists) {
 
             echo 1;
-
         } else {
 
             echo 0;
-
         }
 
         return;
-
     }
 
     /**
@@ -1097,7 +992,6 @@ class Course extends CI_Controller {
      * @return boolean
 
      */
-
     public function remove_zip_file() {
 
         $course_id = $this->input->post('course_id');
@@ -1109,7 +1003,6 @@ class Course extends CI_Controller {
         $this->course->save_course_file_path($course_id, '', 'crse_content_path');
 
         return TRUE;
-
     }
 
     /**
@@ -1117,7 +1010,6 @@ class Course extends CI_Controller {
      * this function to generate xls for course view page fields
 
      */
-
     public function export_course_class_full() {
 
         $tenant_id = $this->user->tenant_id;
@@ -1127,19 +1019,18 @@ class Course extends CI_Controller {
         $this->load->helper('export_helper');
 
         export_course_class_full($result);
-
     }
-    
+
     //Added for DM - June 02 2015
     /**
      * This function loads the assessmenmt templates page
      */
-    public function assessment_templates(){
+    public function assessment_templates() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         //echo 'in here...';  
         $tenant_id = $this->user->tenant_id;
         $data['courses'] = $this->course->get_course_listbytenant($tenant_id);
-       
+
         //check if search option  selected or default 
         $course_id = '';
         $filter_option = '';
@@ -1147,91 +1038,104 @@ class Course extends CI_Controller {
             $course_id = $this->input->get('course_name');
         if ($this->input->get('filter_options'))
             $filter_option = $this->input->get('filter_options');
-        
-        if(strlen(trim($filter_option)) == 0) $filter_option='active';
-        if(strlen(trim($course_id)) == 0) $course_id=$data['courses'][0]->course_id;
-        
+
+        if (strlen(trim($filter_option)) == 0)
+            $filter_option = 'active';
+        if (strlen(trim($course_id)) == 0)
+            $course_id = $data['courses'][0]->course_id;
+
         //Pagination and Filter
         $records_per_page = RECORDS_PER_PAGE;
         $sort_by = ($this->input->get('f')) ? $this->input->get('f') : 'temp.template_title';
         $sort_order = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
-       
+
         $baseurl = base_url() . 'course/assessment_templates/';
         $pageno = $this->uri->segment(3);
-      
-       
+
+
         if (empty($pageno)) {
             $pageno = 1;
         }
         //echo 'Course Id...'.$course_id; 
         $offset = ($pageno * $records_per_page);
-        $tabledata = $this->course->get_template_list($tenant_id, $course_id, $filter_option,$records_per_page, $offset,$sort_by, $sort_order,'loadall');
-        $totalrows = $this->course->get_template_list($tenant_id, $course_id, $filter_option,$records_per_page, $offset,$sort_by, $sort_order,'rowcount'); 
-        
+        $tabledata = $this->course->get_template_list($tenant_id, $course_id, $filter_option, $records_per_page, $offset, $sort_by, $sort_order, 'loadall');
+        $totalrows = $this->course->get_template_list($tenant_id, $course_id, $filter_option, $records_per_page, $offset, $sort_by, $sort_order, 'rowcount');
+
         //echo 'pageno: '.$pageno.' offset: '.$offset. ' $totalrows: '.$totalrows;
-        
+
         $sort_link = $_SERVER['QUERY_STRING'];
         $data[sort_link] = $sort_link;
         $data['tabledata'] = $tabledata;
         $data['sort_order'] = $sort_order;
         $data['sort_by'] = $sort_by;
-        $data['controllerurl'] = 'course/assessment_templates/'. $pageno;
+        $data['controllerurl'] = 'course/assessment_templates/' . $pageno;
         $data['controllerurl_link'] = 'course/assessment_templates/' . $pageno;
         $this->load->helper('pagination');
         $data['pagination'] = get_pagination($records_per_page, $pageno, $baseurl, $totalrows, $sort_by, $sort_order . '&' . $sort_link);
- 
+
         $data['page_title'] = 'Course Assessment Templates';
         $data['main_content'] = 'course/assessment_templates';
-        
+
         $data['sel_course'] = $course_id;
         $data['sel_status'] = $filter_option;
-        
+
         $this->load->view('layout', $data);
-   }
-    
-/**
-*  This method inserts the assessment template into the database
-* Comes here on click of upload
-*/
-public function insert_assmnt_template()
-{        
+    }
+
+    /**
+     *  This method inserts the assessment template into the database
+     * Comes here on click of upload
+     */
+    public function insert_assmnt_template() {
+
+        $result = $this->course->insert_assmnt_template($this->user->tenant_id, $this->user->user_id);
+        if ($result == true) {
+            $this->session->set_flashdata("success", "Assessment template uploaded successfully.");
+        } else {
+            $this->session->set_flashdata("error", "Unable to upload assessment template. Please try again later.");
+        }
+
+        redirect("course/assessment_templates?course_name=" . $_POST['course_id'] . "&filter_options=" . $_POST['filter_options']);
+    }
+
+    /**
+     * This method is used to change the current PDF file to inactive and insert the new PDF version
+     *  It will also set the PDF as active 
+     */
+    public function change_assmnt_template() {
+
+        $result = $this->course->change_assmnt_template($this->user->tenant_id, $this->user->user_id);
+
+        if ($result == true) {
+            $this->session->set_flashdata("success", "Assessment template updated successfully.");
+        } else {
+            $this->session->set_flashdata("error", "Unable to update assessment template. Please try again later.");
+        }
+
+        redirect("course/assessment_templates?course_name=" . $_POST['course_id'] . "&filter_options=" . $_POST['filter_options']);
+    }
+
+    /**
+     * This method is used change the PDF staus to inactive
+     */
+    public function remove_assmnt_template() {
+
+        $result = $this->course->remove_assmnt_template($this->user->user_id);
+        $this->session->set_flashdata("success", "Assessment template deactivated successfully.");
+        redirect("course/assessment_templates?course_name=" . $_POST['course_id'] . "&filter_options=" . $_POST['filter_options']);
+    }
+
+    public function add_new_tpg_course() {
         
-    $result = $this->course->insert_assmnt_template($this->user->tenant_id, $this->user->user_id);
-    if ($result == true) {
-        $this->session->set_flashdata("success", "Assessment template uploaded successfully.");
-    } else {
-        $this->session->set_flashdata("error", "Unable to upload assessment template. Please try again later.");
+        $data['sideMenuData'] = fetch_non_main_page_content();
+
+        $tenant_id = $this->user->tenant_id;
+
+        $data['page_title'] = 'Add New Course(TPG)';
+
+        $data['main_content'] = 'course/addnewcourse_tpg';
+
+        $this->load->view('layout', $data);
     }
 
-    redirect("course/assessment_templates?course_name=" . $_POST['course_id'] . "&filter_options=" . $_POST['filter_options']);
 }
-
-/**
- * This method is used to change the current PDF file to inactive and insert the new PDF version
- *  It will also set the PDF as active 
- */
-public function change_assmnt_template(){
-    
-    $result = $this->course->change_assmnt_template($this->user->tenant_id, $this->user->user_id);
-    
-    if ($result == true) {
-        $this->session->set_flashdata("success", "Assessment template updated successfully.");
-    } else {
-        $this->session->set_flashdata("error", "Unable to update assessment template. Please try again later.");
-    }
-
-    redirect("course/assessment_templates?course_name=" . $_POST['course_id'] . "&filter_options=" . $_POST['filter_options']);
-}
-
-/**
- * This method is used change the PDF staus to inactive
- */
-public function remove_assmnt_template(){
-       
-    $result = $this->course->remove_assmnt_template($this->user->user_id);
-    $this->session->set_flashdata("success", "Assessment template deactivated successfully.");
-    redirect("course/assessment_templates?course_name=" . $_POST['course_id'] . "&filter_options=" . $_POST['filter_options']);
-}
-
-}
-
