@@ -58,7 +58,7 @@ $CI->load->model('settings_model');
                                 'maxlength' => 100,
                                 'class' => 'upper_case alphanumeric',
                                 'onblur' => 'javascript:isunique_course(this.value,this.id);',
-                                'style' => 'width:250px;',
+                                 'style' => 'width:250px;',
                             );
                             ?>
                             <?php echo form_input($course_details); ?>
@@ -77,7 +77,7 @@ $CI->load->model('settings_model');
                                 echo form_multiselect('pre_requisites[]', $tenant_courses, $pre_requisite, $tenant_courses_js);
                                 ?>        
                             </td>
-                            <?php
+                        <?php
                         } else {
                             echo "<td>&nbsp;</td><td>&nbsp;</td>";
                         }
@@ -104,7 +104,7 @@ $CI->load->model('settings_model');
                                 ?> 
                             </select>
                             <span id="language_err"></span>
-                            <?php echo form_error('languages[]', '<div class="error">', '</div>'); ?>
+<?php echo form_error('languages[]', '<div class="error">', '</div>'); ?>
                         </td>
                         <td class="td_heading">Course Type:<span class="required">*</span></td>
                         <td>
@@ -118,7 +118,7 @@ $CI->load->model('settings_model');
                             echo form_dropdown('course_types', $course_types_options, $course_data->crse_type, $course_types_js);
                             ?>
                             <span id="course_type_err"></span>
-                            <?php echo form_error('course_types', '<div class="error">', '</div>'); ?>
+<?php echo form_error('course_types', '<div class="error">', '</div>'); ?>
                         </td>
                     </tr>
                     <tr>
@@ -134,7 +134,7 @@ $CI->load->model('settings_model');
                             echo form_dropdown('class_types', $class_types_options, $course_data->class_type, $class_types_js);
                             ?>
                             <span id="class_type_err"></span>
-                            <?php echo form_error('class_types', '<div class="error">', '</div>'); ?>
+<?php echo form_error('class_types', '<div class="error">', '</div>'); ?>
                         </td>
                         <td class="td_heading">GST Rate:</td>
                         <td>
@@ -144,7 +144,7 @@ $CI->load->model('settings_model');
                             if ($gst_rates->gst_rate != false) {
                                 $gst = number_format($gst_rates->gst_rate, 2);
                                 echo form_label("$gst %", '', $gst_rates_attributes);
-                            } else
+                            }else
                                 echo form_label("GST-Not Defined", '', $gst_rates_attributes);
                             ?>
                         </td>
@@ -173,8 +173,8 @@ $CI->load->model('settings_model');
                                 'checked' => $no,
                             );
                             ?>              
-                            <?php echo form_radio($gst_rules_yes); ?>Yes &nbsp;&nbsp; 
-                            <?php echo form_radio($gst_rules_yes_no); ?> No                                                            
+<?php echo form_radio($gst_rules_yes); ?>Yes &nbsp;&nbsp; 
+<?php echo form_radio($gst_rules_yes_no); ?> No                                                            
                             <span id="class_type_err"></span>
                         </td>
                         <td colspan='2'>
@@ -200,8 +200,8 @@ $CI->load->model('settings_model');
                                 'checked' => $no,
                             );
                             ?>              
-                            <?php echo form_radio($before_subsidy); ?>Apply GST before SUBSIDY. &nbsp;&nbsp; 
-                            <?php echo form_radio($after_subsidy); ?> Apply GST after SUBSIDY.                               
+<?php echo form_radio($before_subsidy); ?>Apply GST before SUBSIDY. &nbsp;&nbsp; 
+<?php echo form_radio($after_subsidy); ?> Apply GST after SUBSIDY.                               
                         </td>                          
                     </tr>
                     <tr>
@@ -218,7 +218,7 @@ $CI->load->model('settings_model');
                             echo form_input($course_duration);
                             ?>
                             <span id="course_duration_err"></span>
-                            <?php echo form_error('course_duration', '<div class="error">', '</div>'); ?>
+<?php echo form_error('course_duration', '<div class="error">', '</div>'); ?>
                         </td>
                         <td class="td_heading">Course Reference Number:<span class="required">*</span></td>
                         <td>
@@ -229,15 +229,14 @@ $CI->load->model('settings_model');
                                 'value' => $course_data->reference_num,
                                 'maxlength' => 50,
                                 'class' => 'upper_case',
-                                'style' => 'width:200px',
+                                 'style' => 'width:200px',
                             );
                             echo form_input($course_reference_num);
                             ?>
                             <span id="course_reference_num_err"></span>
-                            <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>
+<?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>
                         </td>
                     </tr>
-                    <?php if($course_data->tpg_crse) {?>
                     <tr>
                         <td class="td_heading">External Reference Number:<span class="required">*</span></td>
                         <td>
@@ -272,8 +271,7 @@ $CI->load->model('settings_model');
                             <span id="crse_admin_email_err"></span>
                             <?php echo form_error('crse_admin_email', '<div class="error">', '</div>'); ?>
                         </td>
-                    </tr>
-                    <?php } ?>
+                    </tr>      
                     <tr>
                         <td class="td_heading">Course Competency Code:<span class="required">*</span></td>
                         <td>
@@ -284,12 +282,12 @@ $CI->load->model('settings_model');
                                 'value' => $course_data->competency_code,
                                 'maxlength' => 50,
                                 'class' => 'upper_case',
-                                'style' => 'width:200px',
+                                 'style' => 'width:200px',
                             );
                             echo form_input($course_competency_code);
                             ?>
                             <span id="course_competency_code_err" ></span>
-                            <?php echo form_error('course_competency_code', '<div class="error">', '</div>'); ?>
+<?php echo form_error('course_competency_code', '<div class="error">', '</div>'); ?>
                         </td>
                         <td class="td_heading">Certification Code/ Level:<span class="required">*</span></td>
                         <td>                        
@@ -303,7 +301,7 @@ $CI->load->model('settings_model');
                             echo form_dropdown('certification_code', $certification_codes_options, $course_data->certi_level, $certification_codes_attr);
                             ?>                            
                             <span id="certification_code_err"></span>
-                            <?php echo form_error('certification_code', '<div class="error">', '</div>'); ?>
+<?php echo form_error('certification_code', '<div class="error">', '</div>'); ?>
                         </td>
                     </tr>
                     <tr>
@@ -315,7 +313,7 @@ $CI->load->model('settings_model');
                             echo form_multiselect('course_manager[]', $course_managers, $course_manager, $course_managers_js);
                             ?>
                             <span id="course_manager_err"></span>
-                            <?php echo form_error('course_manager[]', '<div class="error">', '</div>'); ?>
+<?php echo form_error('course_manager[]', '<div class="error">', '</div>'); ?>
                         </td>
                     </tr>
                     <tr>
@@ -341,40 +339,40 @@ $CI->load->model('settings_model');
                             <input type="file" name="course_icon" id="userfile" onchange="showimagepreview(this)" />
                             <label id="image_err"></label>
                         </td>
-                        <?php if ($course_data->crse_icon): ?> 
+<?php if ($course_data->crse_icon): ?> 
                             <td id="user_image_preview" class="td_heading">&nbsp;&nbsp;&nbsp;
                                 <img width="150px"  src="<?php echo base_url() . $course_data->crse_icon; ?>" id="imgprvw" border="0" />                
                                 <span id="removeimagebutton" onclick="remove_image();" class="glyphicon glyphicon-remove-circle"></span></td> 
                             <td colspan="2"><b>Use Previous Image:</b>&nbsp;&nbsp;&nbsp;<input type="radio" name="deleteimage" checked="checked" id="deleteimageyes" value="yes"/>Yes
                                 <input type="radio" name="deleteimage" id="deleteimageno" value="no"/>No</td>
-                        <?php else: ?>
+<?php else: ?>
                             <td id="user_image_preview" colspan="3" class="td_heading">&nbsp;&nbsp;&nbsp;&nbsp;
                                 <img height="120px" width="120px" id="imgprvw" border="0" />
                                 &nbsp;&nbsp;&nbsp;
                                 <span style="display: none;" id="removeimagebutton" onclick="remove_image();" class="glyphicon glyphicon-remove-circle"></span></td>     
-                        <?php endif; ?>    
+<?php endif; ?>    
 
 
                     </tr>
-                    <?php if ($course_data->copied_from_id) { ?>
-                        <tr>
-                            <td class="td_heading">                            
-                                <label>
-                                    Remarks: 
-                                </label>                            
-                            </td>
-                            <td>
-                                Course Copied from <?php echo $this->course->course_name($course_data->copied_from_id); ?>
-                            </td>
-                            <td>
-                                <label>
-                                    Copy Reason:
-                                </label>
-                            </td>
-                            <td>
-                                <?php echo $course_data->copy_reason; ?>
-                            </td>
-                        </tr>
+                    <?php if($course_data->copied_from_id) { ?>
+                    <tr>
+                        <td class="td_heading">                            
+                            <label>
+                                Remarks: 
+                            </label>                            
+                        </td>
+                        <td>
+                            Course Copied from <?php echo $this->course->course_name($course_data->copied_from_id); ?>
+                        </td>
+                        <td>
+                            <label>
+                                Copy Reason:
+                            </label>
+                        </td>
+                        <td>
+                            <?php echo $course_data->copy_reason; ?>
+                        </td>
+                    </tr>
                     <?php } ?>
                     <tr>
                         <td colspan="4">Does this course have a validity period? &nbsp;&nbsp;
@@ -401,8 +399,8 @@ $CI->load->model('settings_model');
                                 'checked' => $no,
                             );
                             ?>              
-                            <?php echo form_radio($course_validity_period_yes); ?>Yes &nbsp;&nbsp; 
-                            <?php echo form_radio($course_validity_period_no); ?> No                        
+                    <?php echo form_radio($course_validity_period_yes); ?>Yes &nbsp;&nbsp; 
+                    <?php echo form_radio($course_validity_period_no); ?> No                        
                         </td>
                     </tr>                    
                     <tr>
@@ -416,7 +414,7 @@ $CI->load->model('settings_model');
                                     'maxlength' => '10',
                                     'value' => $course_data->crse_cert_validity,
                                     'style' => "width:40px;",
-                                );
+                                        );
                                 echo form_input($validity_array);
                                 ?> days.
                                 <span id='validity_err'></span>
@@ -445,7 +443,7 @@ $CI->load->model('settings_model');
                                 <?php if ($course_data->crse_content_path) { ?>
                                     <a href="#" onclick="remove_zip_file(<?php echo $course_data->course_id; ?>);">Remove Upload</a> &nbsp;&nbsp;                             
                                     <a href="<?php echo base_url() . 'course/download_course_content/?file_path=' . $course_data->crse_content_path . "&file_name=" . $course_data->crse_name; ?>">Download</a>
-                                <?php } ?>
+<?php } ?>
                             </span>
                             <span style="width:33%;">
                                 <input type="file" name="userfile" id="zip_file" onchange="validate_course_file(this)">
@@ -453,7 +451,7 @@ $CI->load->model('settings_model');
                             <label id="zip_file_err"></label>
                         </td>
                     </tr>
-                    <tr>
+                     <tr>
                         <td class="td_heading" width="30%"> 
                             Default Sales Commission Rate :<span class="required">*</span>                            
                         </td> 
@@ -462,7 +460,7 @@ $CI->load->model('settings_model');
                             $default_commission_rate = array(
                                 'name' => 'default_commission_rate',
                                 'id' => 'default_commission_rate',
-                                'value' => $course_data->default_commission_rate,
+                                'value'  => $course_data->default_commission_rate,
                                 'class' => 'float_number'
                             );
                             echo form_input($default_commission_rate);
@@ -483,7 +481,7 @@ $CI->load->model('settings_model');
             <table class="table table-striped" id='sales_exec_tbl'>
                 <tbody>
                 <label id="sales_exec_tbl_err"></label>
-                <?php for ($i = 0; $i < count($sales_exec_array); $i++) { ?>
+<?php for ($i = 0; $i < count($sales_exec_array); $i++) { ?>
                     <tr id="sales_exec_tblrow_<?php echo $i; ?>">
                         <td class="td_heading">Sales Executive:</td>
                         <td>
@@ -494,7 +492,7 @@ $CI->load->model('settings_model');
                             echo form_dropdown('sales_executives[]', $sales_executives, $sales_exec_array[$i][2], $sales_executives_js);
                             ?>
                             <span id="sales_executives_err_<?php echo $i; ?>" ></span>
-                            <?php echo form_error('sales_executives[]', '<div class="error">', '</div>'); ?>
+    <?php echo form_error('sales_executives[]', '<div class="error">', '</div>'); ?>
                         </td>
                         <td class="td_heading">Commission Rate:</td>
                         <td>
@@ -508,7 +506,7 @@ $CI->load->model('settings_model');
                             echo form_input($sales_exec_commission_rate);
                             ?> %
                             <span id="sales_exec_commission_rates_err_0"></span>                            
-                            <?php echo form_error('sales_exec_commission_rates[]', '<div class="error">', '</div>'); ?>
+    <?php echo form_error('sales_exec_commission_rates[]', '<div class="error">', '</div>'); ?>
                         </td>
                         <td>&nbsp;                              
                             <a class="btn btn-xs btn-default remove2" type="button" style="display:<?php echo (count($sales_exec_array) > 1) ? '' : 'none' ?>" onClick="remove_sales_exec_row(<?php echo $i; ?>)" name="sales_exec_remove[]" id="sales_exec_remove_btn_<?php echo $i; ?>" > 
@@ -516,7 +514,7 @@ $CI->load->model('settings_model');
                             </a> 
                         </td>
                     </tr>                    
-                <?php } ?>
+<?php } ?>
                 </tbody>
             </table>
         </div>
@@ -528,13 +526,13 @@ $CI->load->model('settings_model');
                 <span class="glyphicon glyphicon-retweet" id="updatebtn"></span>&nbsp;Update
             </button>
             &nbsp; &nbsp;
-            <?php if ($course_data->crse_status == 'ACTIVE'): ?>
+<?php if ($course_data->crse_status == 'ACTIVE'): ?>
                 <a href="#ex9" class="small_text deactive">
                     <button class="btn btn-primary" type="button">
                         <span class="glyphicon glyphicon-remove-sign" id="deactivatebtn"></span>&nbsp;Deactivate
                     </button>
                 </a> &nbsp;&nbsp; 
-            <?php endif; ?>
+<?php endif; ?>
         </div>
     </div>
 </div>
@@ -605,7 +603,7 @@ echo form_open("course/deactivate_course", $form_attributes);
 echo form_close();
 ?>
 <script>
-    $("#reason_for_deactivation").change(function () {
+    $("#reason_for_deactivation").change(function() {
         var reason_for_deactivation = $("#reason_for_deactivation").val();
         if (reason_for_deactivation == 'OTHERS') {
             $("#other_reason").show();
