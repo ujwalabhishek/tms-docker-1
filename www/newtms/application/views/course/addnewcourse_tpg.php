@@ -208,7 +208,7 @@ $CI->load->model('settings_model');
                                 $external_reference_number = array(
                                     'name' => 'external_reference_number',
                                     'id' => 'external_reference_number',
-                                    'value' => set_value('external_reference_number'),
+                                    'value' => $external_reference_number,
                                     'maxlength' => 50,
                                     'class' => 'upper_case',
                                     'style' => 'width:200px',
@@ -291,7 +291,7 @@ $CI->load->model('settings_model');
                                     'id' => 'course_description',
                                     'rows' => '5',
                                     'cols' => '100',
-                                    'value' => $course_description_val,
+                                    'value' => $course_description,
                                 );
                                 echo form_textarea($course_description);
                                 ?>
