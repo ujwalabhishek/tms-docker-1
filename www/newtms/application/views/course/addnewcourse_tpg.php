@@ -443,6 +443,7 @@ $CI->load->model('settings_model');
             </div>    
         </div>
         <?php
+        echo form_hidden('task', 'save');
         echo form_close();
     endif;
     ?>
