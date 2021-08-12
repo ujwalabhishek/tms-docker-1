@@ -1137,5 +1137,74 @@ class Course extends CI_Controller {
 
         $this->load->view('layout', $data);
     }
+    
+    public function retrieve_course_details() {
+    
+        $tenant_id = $this->tenant_id;
+        $crse_ref_no = $this->input->post('course_reference_num');               
+
+        $api_version = 'v1';
+        $url = "https://" . TPG_URL . "/courses/directory/" . $crse_ref_no;
+        //$url = "https://" . TPG_URL . "/courses/directory/TGS-2020002096";
+
+        $request = $this->curl_request('GET', $url, "", $api_version);
+
+        $tpg_response = json_decode($request);
+        
+        echo print_r($tpg_response, true); exit;
+        
+        
+        $data['tpg_response'] = $tpg_response;
+        
+        
+        
+        $data['sideMenuData'] = fetch_non_main_page_content();        
+        $data['page_title'] = 'Add New Course(TPG)';
+        $data['main_content'] = 'course/addnewcourse_tpg';
+
+        $this->load->view('layout', $data);                        
+    }
+    
+    // Modified by abdulla for dynamic pem files.
+    public function curl_request($mode, $url, $encrypted_data, $api_version) {
+
+        $tenant_id = $this->tenant_id;
+
+        $pemfile = "/var/www/newtms/assets/certificates/" . $tenant_id . "/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/" . $tenant_id . "/key.pem";
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => $mode,
+            CURLOPT_SSLCERT => $pemfile,
+            CURLOPT_SSLCERTTYPE => 'PEM',
+            CURLOPT_SSLKEY => $keyfile,
+            CURLOPT_POSTFIELDS => $encrypted_data,
+            CURLOPT_HTTPHEADER => array(
+                "Authorization:  ",
+                "Cache-Control: no-cache",
+                "Content-Type: application/json",
+                "x-api-version: $api_version"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        if ($response === false) {
+            print_r(curl_error($curl));
+            exit;
+        } else {
+
+            return $response;
+        }
+        curl_close($curl);
+    }
 
 }

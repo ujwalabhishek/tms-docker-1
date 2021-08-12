@@ -8,8 +8,8 @@ $CI->load->model('settings_model');
     <div class="table-responsive">
         <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
         <?php
-        $form_attributes = array('name' => 'trainee_edit_search', 'id' => 'trainee_edit_search', "onsubmit" => "return(validate_search());");
-        echo form_open("trainee/edit_trainee", $form_attributes);
+        $form_attributes = array('name' => 'course_create_search', 'id' => 'course_create_search', "onsubmit" => "return(validate_search());");
+        echo form_open("course/retrieve_course_details", $form_attributes);
         ?>
         <table class="table table-striped">
             <tbody>
@@ -41,7 +41,7 @@ $CI->load->model('settings_model');
     </div>
     <br>
     <?php
-    if ($trainee):
+    if ($tpg_response):
 
 
 

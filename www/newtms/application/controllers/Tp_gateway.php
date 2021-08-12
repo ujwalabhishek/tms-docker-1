@@ -1969,22 +1969,4 @@ class tp_gateway extends CI_Controller {
     public function sfc_payment_response() {
         
     }
-    
-    public function retrieve_course_details() {
-    
-        $tenant_id = $this->tenant_id;
-        $crse_ref_no = $this->input->post('course_reference_num');               
-
-        $api_version = 'v1';
-        $url = "https://" . TPG_URL . "/courses/directory/" . $crse_ref_no;
-        //$url = "https://" . TPG_URL . "/courses/directory/TGS-2020002096";
-
-        $request = $this->curl_request('GET', $url, "", $api_version);
-
-        $tpg_response = json_decode($request);
-        
-        echo print_r($tpg_response, true); exit;
-        
-    }
-
 }
