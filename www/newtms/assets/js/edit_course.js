@@ -327,7 +327,7 @@ function validate() {
         $("#course_reference_num").removeClass('error');
     }
     var tpg_course = $('#tpg_course').val();
-    if (tpg_course) {
+    if (tpg_course == '1') {
         var external_reference_num = $.trim($('#external_reference_number').val());
         if (external_reference_num == "") {
             $("#external_reference_number_err").text("[required]").addClass('error');
@@ -336,6 +336,16 @@ function validate() {
         } else {
             $("#external_reference_number_err").text("").removeClass('error');
             $("#external_reference_number").removeClass('error');
+        }
+        
+        var crse_admin_email = $.trim($('#crse_admin_email').val());
+        if (crse_admin_email == "") {
+            $("#crse_admin_email_err").text("[required]").addClass('error');
+            $("#crse_admin_email").addClass('error');
+            retVal = false;
+        } else {
+            $("#crse_admin_email_err").text("").removeClass('error');
+            $("#crse_admin_email").removeClass('error');
         }
     }
     var course_competency_code = $.trim($('#course_competency_code').val());
