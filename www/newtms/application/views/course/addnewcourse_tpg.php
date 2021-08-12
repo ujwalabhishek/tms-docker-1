@@ -51,7 +51,7 @@ $CI->load->model('settings_model');
     <?php
     if ($tpg_response):
         $form_attributes = 'id="addNewCourseForm" name="addNewCourseForm" onsubmit="return(validate());"';
-        echo form_open_multipart("course/add_new_tpg_course", $form_attributes);
+        echo form_open_multipart("course/save_tpg_course", $form_attributes);
         ?>
         <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png"> Course Details</h2>
         <div class="bs-example">
