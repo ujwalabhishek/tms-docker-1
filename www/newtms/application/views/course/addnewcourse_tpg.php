@@ -450,5 +450,37 @@ $CI->load->model('settings_model');
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-multiselect.css" type="text/css" />
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-2.3.2.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-multiselect.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_course.js?0.00001"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_course_tpg.js?0.00001"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/course_common.js"></script>
+
+<script type="text/javascript">
+                        function validate_search() {
+                            var $retVal = true;
+
+                            var search_val = $.trim($("#course_reference_num").val());
+                            var $error_id = '#course_reference_num_err';
+                            var $input_id = '#course_reference_num';
+                            if (search_val == "") {
+                                $($error_id).text("[required]").addClass('error');
+                                $($input_id).addClass('error');
+                                return false;
+                            }
+
+                            $('#course_reference_num').removeClass('error');
+                            $('#course_reference_num_err').removeClass('error').text('');
+                            ///added by shubhranshu to prevent multiclick
+                            var self = $('#course_create_search'),
+                                    button = self.find('input[type="submit"],button');
+                            button.attr('disabled', 'disabled').html('Please Wait..');
+                            return $retVal;
+                        }
+                        function disp_err($id, $text) {
+                            $text = typeof $text !== 'undefined' ? $text : '[required]';
+                            $($id).addClass('error');
+                            $($id + '_err').addClass('error').addClass('error_text').html($text);
+                        }
+                        function remove_err($id) {
+                            $($id).removeClass('error');
+                            $($id + '_err').removeClass('error').text('');
+                        }
+</script>
