@@ -1143,7 +1143,7 @@ class Course extends CI_Controller {
                 $data['tpg_response'] = $tpg_response;
                 $data['course_name'] = $tpg_response->data->courses[0]->title;
                 
-                echo $data['course_name']; exit;
+                //echo $data['course_name']; exit;
                 
                 
             } else {
