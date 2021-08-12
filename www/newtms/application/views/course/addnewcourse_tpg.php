@@ -27,7 +27,7 @@ $CI->load->model('settings_model');
                     </td>                    
                     <td colspan="2" width="60%">
                         <?php
-                        $course_reference_num = array(
+                        $course_reference_number = array(
                             'name' => 'course_reference_num',
                             'id' => 'course_reference_num',
                             'value' => $course_reference_num,
@@ -35,7 +35,7 @@ $CI->load->model('settings_model');
                             'class' => 'upper_case',
                             'style' => 'width:200px',
                         );
-                        echo form_input($course_reference_num);
+                        echo form_input($course_reference_number);
                         ?>
                         <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter the course reference number from TPG to search</div>
                         <span id="course_reference_num_err"></span>
