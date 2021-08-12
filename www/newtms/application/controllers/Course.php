@@ -1140,7 +1140,7 @@ class Course extends CI_Controller {
 
             if ($tpg_response->status == 200) {
 
-                //echo "<pre>".print_r($tpg_response, true)."</pre>"; exit;
+                echo "<pre>".print_r($tpg_response, true)."</pre>"; exit;
                 
                 $data['tpg_response'] = $tpg_response;
                 $data['course_name'] = $tpg_response->data->courses[0]->title;
