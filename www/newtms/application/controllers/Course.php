@@ -1153,7 +1153,7 @@ class Course extends CI_Controller {
                 //echo "<pre>".print_r($tpg_response, true)."</pre>";
 
                 $data['tpg_response'] = $tpg_response;
-                $data['course_reference_num'] = $crse_ref_no;
+                $data['course_reference_num'] = $tpg_response->data->courses[0]->referenceNumber;
                 $data['course_name_val'] = $tpg_response->data->courses[0]->title;
                 $data['external_reference_number_val'] = $tpg_response->data->courses[0]->externalReferenceNumber;
                 $data['course_duration_val'] = $tpg_response->data->courses[0]->totalTrainingDurationHour;
@@ -1183,98 +1183,101 @@ class Course extends CI_Controller {
 
         $tenant_id = $this->tenant_id;
 
+        $course_reference_no = $this->input->post('course_reference_num');
+
+        if ($this->input->post('task') == 'save') {
+
+            $user_id = $this->user->user_id;
+
+            $this->form_validation->set_rules('course_name', 'Course Name', 'required');
+            $this->form_validation->set_rules('languages[]', 'Language', 'required');
+            $this->form_validation->set_rules('course_types', 'Course Type', 'required');
+            $this->form_validation->set_rules('class_types', 'Class Type', 'required');
+            $this->form_validation->set_rules('gst_rules', 'Gst Rules', 'required');
+            $this->form_validation->set_rules('subsidy', 'Subsidy', 'required');
+            $this->form_validation->set_rules('course_duration', 'Course Duration', 'required');
+            //$this->form_validation->set_rules('course_reference_num', 'Course Reference Number', 'required');
+            $this->form_validation->set_rules('external_reference_number', 'External Course Reference Number', 'required');
+            $this->form_validation->set_rules('crse_admin_email', 'course admin email', 'required');
+            $this->form_validation->set_rules('course_competency_code', 'Course Competency Code', 'required');
+            $this->form_validation->set_rules('certification_code', 'Certification Code', 'required');
+            $this->form_validation->set_rules('course_manager[]', 'Course Manager', 'required');
+            $this->form_validation->set_rules('default_commission_rate', 'Default Commission Rate', 'required');
+            $this->form_validation->set_rules('sales_executives[]', 'Sales Executives', 'required');
+            $this->form_validation->set_rules('sales_exec_commission_rates[]', 'Commission Rates', 'required');
+
+            if ($this->form_validation->run() == TRUE) {
+
+                $course_id = $this->course->create_new_course_by_tenant($tenant_id, $user_id);
+
+                if ($course_id) {
+
+                    if (!empty($_FILES['course_icon']['name'])) {
+
+                        $this->load->helper('upload_helper');
+
+                        $icon_name = str_ireplace(' ', '_', $this->input->post('course_name'));
+
+                        $icon_name = $icon_name . '_' . $course_id;
+
+                        $icon_data = upload_image('uploads/images/course', $icon_name, 'course_icon');
+
+                        if ($icon_data['status']) {
+
+                            $icon_path = $icon_data['image']['system_path'] . '/' .
+                                    $icon_path .= $icon_path . $icon_data['image']['raw_name'] . '_thumb' . $icon_data['image']['file_ext'];
+
+                            $this->course->save_course_file_path($course_id, $icon_path, 'crse_icon');
+                        } else {
+
+                            $this->session->set_flashdata("error", $icon_data['error']);
+
+                            $this->create_tpg_temp();
+                        }
+                    }
+
+                    if (!empty($_FILES['userfile']['name'])) {
+
+                        $this->load->helper('upload_helper');
+
+                        $file_name = str_ireplace(' ', '_', $this->input->post('course_name'));
+
+                        $file_name = $file_name . '_' . $course_id;
+
+                        $file_data = upload_file('uploads/files/course', $file_name);
+
+                        if ($file_data['status']) {
+
+                            $file_path = 'uploads/files/course/' . $file_data['file']['file_name'];
+
+                            $this->course->save_course_file_path($course_id, $file_path, 'crse_content_path');
+                        } else {
+
+                            $this->session->set_flashdata("error", $file_data['error']);
+
+                            $this->create_tpg_temp();
+                        }
+                    }
+                    $this->session->set_flashdata("success", "Course has been created successfully.");
+                } else {
+
+                    $this->session->set_flashdata("error", "Unable to create course. Please try again later.");
+                }
+
+                redirect("course");
+            } else {
+                $this->create_tpg_temp();
+            }
+        } else {
+            $this->create_tpg_temp();
+        }
+    }
+
+    public function create_tpg_temp() {
+
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Add New Course(TPG)';
         $data['main_content'] = 'course/addnewcourse_tpg';
-
-        $course_reference_no = $this->input->post('course_reference_num');
-        if ($course_reference_no) {
-            if ($this->input->post('task') == 'save') {
-
-                $user_id = $this->user->user_id;
-
-                $this->form_validation->set_rules('course_name', 'Course Name', 'required');
-                $this->form_validation->set_rules('languages[]', 'Language', 'required');
-                $this->form_validation->set_rules('course_types', 'Course Type', 'required');
-                $this->form_validation->set_rules('class_types', 'Class Type', 'required');
-                $this->form_validation->set_rules('gst_rules', 'Gst Rules', 'required');
-                $this->form_validation->set_rules('subsidy', 'Subsidy', 'required');
-                $this->form_validation->set_rules('course_duration', 'Course Duration', 'required');
-                //$this->form_validation->set_rules('course_reference_num', 'Course Reference Number', 'required');
-                $this->form_validation->set_rules('external_reference_number', 'External Course Reference Number', 'required');
-                $this->form_validation->set_rules('crse_admin_email', 'course admin email', 'required');
-                $this->form_validation->set_rules('course_competency_code', 'Course Competency Code', 'required');
-                $this->form_validation->set_rules('certification_code', 'Certification Code', 'required');
-                $this->form_validation->set_rules('course_manager[]', 'Course Manager', 'required');
-                $this->form_validation->set_rules('default_commission_rate', 'Default Commission Rate', 'required');
-                $this->form_validation->set_rules('sales_executives[]', 'Sales Executives', 'required');
-                $this->form_validation->set_rules('sales_exec_commission_rates[]', 'Commission Rates', 'required');
-
-                if ($this->form_validation->run() == TRUE) {
-
-                    $course_id = $this->course->create_new_course_by_tenant($tenant_id, $user_id);
-
-                    if ($course_id) {
-
-                        if (!empty($_FILES['course_icon']['name'])) {
-
-                            $this->load->helper('upload_helper');
-
-                            $icon_name = str_ireplace(' ', '_', $this->input->post('course_name'));
-
-                            $icon_name = $icon_name . '_' . $course_id;
-
-                            $icon_data = upload_image('uploads/images/course', $icon_name, 'course_icon');
-
-                            if ($icon_data['status']) {
-
-                                $icon_path = $icon_data['image']['system_path'] . '/' .
-                                        $icon_path .= $icon_path . $icon_data['image']['raw_name'] . '_thumb' . $icon_data['image']['file_ext'];
-
-                                $this->course->save_course_file_path($course_id, $icon_path, 'crse_icon');
-                            } else {
-
-                                $this->session->set_flashdata("error", $icon_data['error']);
-
-                                $this->add_new_course();
-                            }
-                        }
-
-                        if (!empty($_FILES['userfile']['name'])) {
-
-                            $this->load->helper('upload_helper');
-
-                            $file_name = str_ireplace(' ', '_', $this->input->post('course_name'));
-
-                            $file_name = $file_name . '_' . $course_id;
-
-                            $file_data = upload_file('uploads/files/course', $file_name);
-
-                            if ($file_data['status']) {
-
-                                $file_path = 'uploads/files/course/' . $file_data['file']['file_name'];
-
-                                $this->course->save_course_file_path($course_id, $file_path, 'crse_content_path');
-                            } else {
-
-                                $this->session->set_flashdata("error", $file_data['error']);
-
-                                $this->add_new_course();
-                            }
-                        }
-
-                        $this->session->set_flashdata("success", "Course has been created successfully.");
-                    } else {
-
-                        $this->session->set_flashdata("error", "Unable to create course. Please try again later.");
-                    }
-
-                    redirect("course");
-                }
-            }
-        }
-
-
 
         $this->load->view('layout', $data);
     }
