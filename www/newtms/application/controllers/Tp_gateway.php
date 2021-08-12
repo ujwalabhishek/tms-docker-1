@@ -1946,12 +1946,8 @@ class tp_gateway extends CI_Controller {
             $skillCode = $skillCode;
             $nric = $nric;
         } else {
-            $crse_ref_no = 'TGS-2020002096';
-            if ($this->tenant_id == 'T04') {
-                $tp_uen = '201223502K';
-            } else {
-                $tp_uen = '201000372W';
-            }
+            $crse_ref_no = 'TGS-2020002096';            
+            $tp_uen = '201000372W';            
             $domain = TPG_URL;
             $skillCode = 'AER-MAT-2019-2.1';
             $nric = 'S8195288D';
