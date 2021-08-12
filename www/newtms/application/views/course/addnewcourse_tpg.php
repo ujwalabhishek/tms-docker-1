@@ -56,7 +56,7 @@ $CI->load->model('settings_model');
                             $course_details = array(
                                 'name' => 'course_name',
                                 'id' => 'course_name',
-                                'value' => $course_name,
+                                'value' => $course_name_val,
                                 'maxlength' => 100,
                                 'class' => 'upper_case alphanumeric',
                                 'onblur' => 'javascript:isunique_course(this.value,this.id);',
@@ -191,7 +191,7 @@ $CI->load->model('settings_model');
                                 $course_duration = array(
                                     'name' => 'course_duration',
                                     'id' => 'course_duration',
-                                    'value' => $course_duration,
+                                    'value' => $course_duration_val,
                                     'maxlength' => 10,
                                     'class' => "float_number"
                                 );
@@ -208,7 +208,7 @@ $CI->load->model('settings_model');
                                 $external_reference_number = array(
                                     'name' => 'external_reference_number',
                                     'id' => 'external_reference_number',
-                                    'value' => $external_reference_number,
+                                    'value' => $external_reference_number_val,
                                     'maxlength' => 50,
                                     'class' => 'upper_case',
                                     'style' => 'width:200px',
@@ -225,7 +225,7 @@ $CI->load->model('settings_model');
                                 $crse_admin_email = array(
                                     'name' => 'crse_admin_email',
                                     'id' => 'crse_admin_email',
-                                    'value' => $crse_admin_email,
+                                    'value' => $crse_admin_email_val,
                                     'maxlength' => 50,
                                     'class' => 'upper_case',
                                     'style' => 'width:200px',
@@ -243,7 +243,7 @@ $CI->load->model('settings_model');
                                 $course_competency_code = array(
                                     'name' => 'course_competency_code',
                                     'id' => 'course_competency_code',
-                                    'value' => set_value('course_competency_code'),
+                                    'value' => $course_competency_code_val,
                                     'maxlength' => 50,
                                     'class' => 'upper_case',
                                     'style' => 'width:200px',
@@ -291,7 +291,7 @@ $CI->load->model('settings_model');
                                     'id' => 'course_description',
                                     'rows' => '5',
                                     'cols' => '100',
-                                    'value' => $course_description,
+                                    'value' => $course_description_val,
                                 );
                                 echo form_textarea($course_description);
                                 ?>
