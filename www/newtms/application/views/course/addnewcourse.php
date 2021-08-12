@@ -380,7 +380,10 @@ $CI->load->model('settings_model');
         </div>    
     </div>    
 </div>
-<?php echo form_close(); ?>
+<?php
+echo form_hidden('tpg_crse', '0');
+echo form_close();
+?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-multiselect.css" type="text/css" />
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-2.3.2.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-multiselect.js"></script>

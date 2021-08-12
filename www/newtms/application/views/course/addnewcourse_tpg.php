@@ -444,6 +444,7 @@ $CI->load->model('settings_model');
         </div>
         <?php
         echo form_hidden('course_reference_num', $course_reference_num);
+        echo form_hidden('tpg_crse', '1');
         echo form_hidden('task', 'save');
         echo form_close();
     endif;

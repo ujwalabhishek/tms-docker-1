@@ -423,7 +423,7 @@ public function get_tenant_non_sales_exe($tenant_id,$role_id)
 
             'pre_requisite' => $pre_requisites_value, 'language' => $language_value,
 
-            'crse_type' => $course_types, 'class_type' => $class_types,
+            'crse_type' => $course_types, 'class_type' => $class_types, 'tpg_crse' => $tpg_crse,
 
             'crse_duration' => $course_duration, 'reference_num' => strtoupper($course_reference_num),'external_reference_number' => strtoupper($external_reference_number),
             'default_commission_rate' => $default_commission_rate, 'default_commission_rate' => ($default_commission_rate),
