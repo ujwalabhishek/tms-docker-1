@@ -4,8 +4,111 @@ $CI = & get_instance();
 $CI->load->model('settings_model');
 ?>
 <div class="col-md-10">
-    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Add New</h2>    
-    <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png"> Course Details</h2>    
+    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Add New(TPG)</h2>    
+    <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png"> Course Details</h2>
+    
+    <div class="table-responsive">
+        <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
+        <?php
+        $form_attributes = array('name' => 'trainee_edit_search', 'id' => 'trainee_edit_search', "onsubmit" => "return(validate_search());");
+        echo form_open("trainee/edit_trainee", $form_attributes);
+        ?>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    
+                    <td width="30%" class="td_heading">
+                        Search by Trainee Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        <?php     
+                            $status = TRUE;
+                            $disabled = '';
+                            if($this->input->post('search_radio') == 'tax_radio'){
+                                $status = FALSE;
+                                $disabled ='disabled';
+                            }
+                            $name_radio = array(
+                                'name' => 'search_radio',
+                                'id' => 'name_radio',                            
+                                'value' => 'name_radio',
+                                'checked' => $status,
+                                'class' => 'search',                                
+                            );                       
+                            echo form_radio($name_radio); 
+                        ?>                    
+                    </td>                    
+                    <td colspan="4">
+                        <?php
+                        $un = array(
+                            'name' => 'trainee_name',
+                            'maxlength' => '250',
+                            'value' => $this->input->post('trainee_name'),
+                            'id' => 'search_by_name_autocomplete',
+                            'style' => 'width:400px;',
+                            $disabled => $disabled
+                        );                    
+                        echo form_input($un); 
+                        
+                        $user_id = ($this->input->post('user_id'))? $this->input->post('user_id') :$this->input->post('userid');
+                        echo form_hidden('user_id',$user_id,'user_id');
+                        ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
+                        <span id="search_by_name_autocomplete_err"></span>
+                    </td>                    
+                </tr>
+                <tr>
+                    <td width="22%" class="td_heading">
+                        Search by Trainee NRIC/FIN No.:&nbsp;&nbsp;
+                        <?php $tax_radio = array(
+                                   'name' => 'search_radio',
+                                   'id' => 'tax_radio',                            
+                                   'value' => 'tax_radio',
+                                   'checked' => ($this->input->post('search_radio')=='tax_radio')?TRUE:FALSE,
+                                   'class' => 'search'
+                               );                 
+                        echo form_radio($tax_radio); 
+                        ?>
+                    </td>                     
+                    <td colspan="3" width="65%">
+                        <?php
+                        $tax_disabled = 'disabled';
+                        if($this->input->post('search_radio') =='tax_radio') {
+                            $tax_disabled = '';
+                        }
+                        $un = array(
+                            'name' => 'taxcode',
+                            'maxlength' => '250',
+                            'value' => $this->input->post('taxcode'),
+                            'id' => 'tax_code',
+                            'style' => 'width:400px;',
+                            $tax_disabled => $tax_disabled
+                        );
+                        echo form_input($un);
+                        ?>
+                        <div style="color: #0c0c6e;font-size: 10px;text-shadow: 1px 1px 1px #fdfdfd;">Enter minimum of 4 characters to search</div>
+                        <span id="search_by_taxcode_autocomplete_err"></span>
+                    </td> 
+                     <td width="18%" align="center"><button type="submit" title="Search" value="Search" class="btn btn-xs btn-primary no-mar"><span class="glyphicon glyphicon-search"></span> Search</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <?php echo form_close(); ?>  
+    </div>
+    <br>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <?php
     $form_attributes = 'id="addNewCourseForm" name="addNewCourseForm" onsubmit="return(validate());"';
     echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes);
