@@ -1163,13 +1163,13 @@ class Course extends CI_Controller {
                                                 
             } else {
                 if ($tpg_response->status == 400) {
-                    $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                    $this->session->set_flashdata('error', $tpg_response->error->code.' - '.$tpg_response->error->message);
                 } elseif ($tpg_response->status == 403) {
-                    $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                    $this->session->set_flashdata('error', $tpg_response->error->code.' - '.$tpg_response->error->message);
                 } elseif ($tpg_response->status == 404) {
-                    $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                    $this->session->set_flashdata('error', $tpg_response->error->code.' - '.$tpg_response->error->message);
                 } elseif ($tpg_response->status == 500) {
-                    $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                    $this->session->set_flashdata('error', $tpg_response->error->code.' - '.$tpg_response->error->message);
                 } else {
                     $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
                 }
