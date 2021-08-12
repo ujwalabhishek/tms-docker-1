@@ -83,7 +83,7 @@ class Tpg_api_Model extends CI_Model {
         } else {
             $crse_ref_no = 'TGS-2020002096';
             //$tp_uen = '201000372W';
-            if ($this->tenant_id == 'T24') {
+            if ($this->tenant_id == 'T04') {
                 $tp_uen = '201223502K';
             } else {
                 $tp_uen = '201000372W';

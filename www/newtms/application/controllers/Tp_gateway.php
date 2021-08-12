@@ -1947,7 +1947,7 @@ class tp_gateway extends CI_Controller {
             $nric = $nric;
         } else {
             $crse_ref_no = 'TGS-2020002096';
-            if ($this->tenant_id == 'T24') {
+            if ($this->tenant_id == 'T04') {
                 $tp_uen = '201223502K';
             } else {
                 $tp_uen = '201000372W';
