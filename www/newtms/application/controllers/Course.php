@@ -1134,12 +1134,14 @@ class Course extends CI_Controller {
 
         $tpg_response = json_decode($request);
         
-        echo print_r($tpg_response, true); exit;
+        //echo print_r($tpg_response, true); exit;
         
         
-        $data['tpg_response'] = $tpg_response;
+        
         
         if ($tpg_response->status == 200) {
+            
+            $data['tpg_response'] = $tpg_response;
             
         } else {
             if ($tpg_response->status == 400) {
