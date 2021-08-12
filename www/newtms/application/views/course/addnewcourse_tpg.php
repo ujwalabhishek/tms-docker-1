@@ -56,7 +56,7 @@ $CI->load->model('settings_model');
                             $course_details = array(
                                 'name' => 'course_name',
                                 'id' => 'course_name',
-                                'value' => set_value($course_name),
+                                'value' => $course_name,
                                 'maxlength' => 100,
                                 'class' => 'upper_case alphanumeric',
                                 'onblur' => 'javascript:isunique_course(this.value,this.id);',
