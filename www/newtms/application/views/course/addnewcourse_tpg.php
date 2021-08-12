@@ -191,7 +191,7 @@ $CI->load->model('settings_model');
                                 $course_duration = array(
                                     'name' => 'course_duration',
                                     'id' => 'course_duration',
-                                    'value' => set_value('course_duration'),
+                                    'value' => $course_duration,
                                     'maxlength' => 10,
                                     'class' => "float_number"
                                 );
@@ -291,7 +291,7 @@ $CI->load->model('settings_model');
                                     'id' => 'course_description',
                                     'rows' => '5',
                                     'cols' => '100',
-                                    'value' => '',
+                                    'value' => $course_description_val,
                                 );
                                 echo form_textarea($course_description);
                                 ?>
