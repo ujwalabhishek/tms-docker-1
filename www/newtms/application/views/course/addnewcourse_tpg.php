@@ -42,20 +42,6 @@ $CI->load->model('settings_model');
     <br>
     <?php
     if ($tpg_response):
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         $form_attributes = 'id="addNewCourseForm" name="addNewCourseForm" onsubmit="return(validate());"';
         echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes);
         ?>

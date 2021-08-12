@@ -1128,25 +1128,23 @@ class Course extends CI_Controller {
         $data['main_content'] = 'course/addnewcourse_tpg';
 
         if($this->input->post('course_reference_num')) {
+            
             $tenant_id = $this->tenant_id;
             $crse_ref_no = $this->input->post('course_reference_num');
 
             $api_version = 'v1';
-            $url = "https://" . TPG_URL . "/courses/directory/" . $crse_ref_no;
-            //$url = "https://" . TPG_URL . "/courses/directory/TGS-2020002096";
+            $url = "https://" . TPG_URL . "/courses/directory/" . $crse_ref_no;            
 
             $request = $this->curl_request('GET', $url, "", $api_version);
-
             $tpg_response = json_decode($request);
-
-            //echo print_r($tpg_response, true); exit;
-
-
-
-
+echo print_r($tpg_response, true);
             if ($tpg_response->status == 200) {
 
                 $data['tpg_response'] = $tpg_response;
+                
+                
+                
+                
             } else {
                 if ($tpg_response->status == 400) {
                     $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
