@@ -379,14 +379,3 @@ function remove_zip_file() {
     $('#zip_file').val('');
     $('#remove_upload_span').css('display', 'none');
 }
-
-$("#tpg_course_yes").click(function () {
-    $('#tpg_show').show();
-    $('#tpg_show_only').show();
-    $('#tpg_show_only1').hide();
-});
-$("#tpg_course_no").click(function () {
-    $('#tpg_show').hide();
-    $('#tpg_show_only').hide();
-    $('#tpg_show_only1').show();
-});

@@ -1980,8 +1980,8 @@ class tp_gateway extends CI_Controller {
         $crse_ref_no = $this->input->post('course_reference_num');               
 
         $api_version = 'v1';
-        //$url = "https://" . TPG_URL . "/courses/directory/" . $crse_ref_no;
-        $url = "https://" . TPG_URL . "/courses/directory/TGS-2020002096";
+        $url = "https://" . TPG_URL . "/courses/directory/" . $crse_ref_no;
+        //$url = "https://" . TPG_URL . "/courses/directory/TGS-2020002096";
 
         $request = $this->curl_request('GET', $url, "", $api_version);
 

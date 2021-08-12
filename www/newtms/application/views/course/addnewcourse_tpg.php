@@ -180,7 +180,42 @@ $CI->load->model('settings_model');
                             <span id="course_reference_num_err"></span>
                             <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>                        
                         </td>
-                    </tr>                                
+                    </tr>
+                    <tr>
+                        <td class="td_heading">External Reference Number:<span class="required">*</span></td>
+                        <td>
+                            <?php
+                            $external_reference_number = array(
+                                'name' => 'external_reference_number',
+                                'id' => 'external_reference_number',
+                                'value' => set_value('external_reference_number'),
+                                'maxlength' => 50,
+                                'class' => 'upper_case',
+                                'style' => 'width:200px',
+                            );
+                            echo form_input($external_reference_number);
+                            ?>
+                            <div style='color:grey'>Always Starts with "TGS-"</div>
+                            <span id="external_reference_number_err"></span>
+                            <?php echo form_error('external_reference_number', '<div class="error">', '</div>'); ?>
+                        </td>
+                        <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
+                        <td>
+                            <?php
+                            $crse_admin_email = array(
+                                'name' => 'crse_admin_email',
+                                'id' => 'crse_admin_email',
+                                'value' => set_value('crse_admin_email'),
+                                'maxlength' => 50,
+                                'class' => 'upper_case',
+                                'style' => 'width:200px',
+                            );
+                            echo form_input($crse_admin_email);
+                            ?>
+                            <span id="crse_admin_email_err"></span>
+                            <?php echo form_error('crse_admin_email', '<div class="error">', '</div>'); ?>
+                        </td>
+                    </tr>             
                     <tr>
                         <td class="td_heading">Course Competency Code:<span class="required">*</span></td>
                         <td>
