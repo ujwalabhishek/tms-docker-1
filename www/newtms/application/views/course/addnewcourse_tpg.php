@@ -30,7 +30,7 @@ $CI->load->model('settings_model');
                         $course_reference_num = array(
                             'name' => 'course_reference_num',
                             'id' => 'course_reference_num',
-                            'value' => set_value('course_reference_num'),
+                            'value' => $course_reference_num,
                             'maxlength' => 50,
                             'class' => 'upper_case',
                             'style' => 'width:200px',
@@ -443,6 +443,7 @@ $CI->load->model('settings_model');
             </div>    
         </div>
         <?php
+        echo form_hidden('course_reference_num', $course_reference_num);
         echo form_hidden('task', 'save');
         echo form_close();
     endif;

@@ -1153,6 +1153,7 @@ class Course extends CI_Controller {
                 //echo "<pre>".print_r($tpg_response, true)."</pre>";
 
                 $data['tpg_response'] = $tpg_response;
+                $data['course_reference_num'] = $crse_ref_no;
                 $data['course_name_val'] = $tpg_response->data->courses[0]->title;
                 $data['external_reference_number_val'] = $tpg_response->data->courses[0]->externalReferenceNumber;
                 $data['course_duration_val'] = $tpg_response->data->courses[0]->totalTrainingDurationHour;
