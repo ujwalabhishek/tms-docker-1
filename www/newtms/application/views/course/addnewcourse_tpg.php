@@ -4,6 +4,14 @@ $CI = & get_instance();
 $CI->load->model('settings_model');
 ?>
 <div class="col-md-10">
+    <?php
+    if ($this->session->flashdata('success')) {
+        echo '<div class="success">' . $this->session->flashdata('success') . '</div>';
+    }
+    if ($this->session->flashdata('error')) {
+        echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
+    }
+    ?>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Add New(TPG)</h2>
     <div class="table-responsive">
         <?php echo validation_errors('<div class="error1">', '</div>'); ?> 
