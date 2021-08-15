@@ -97,15 +97,17 @@
                                 <div class="col-sm-4 col-desg">
                                     <a href="<?php echo 'http://'.$client['tenant_url'];?>">
                                         <p class="col-desg-tlt"><?php echo $client['tenant_name'];?></p>
-                                        <img src="<?php echo base_url()?>logos/<?php echo $client['tenant_logo'];?>"  width='132px' alt="Image">
+                                        <?php if($client['tenant_id'] == "T25") {?>
+                                            <img src="<?php echo base_url()?>logos/<?php echo $client['tenant_logo'];?>"  width='100px' height="100px" alt="Image">
+                                        <?php } else {?>
+                                            <img src="<?php echo base_url()?>logos/<?php echo $client['tenant_logo'];?>"  width='132px' alt="Image">
+                                        <?php }?>
                                     </a>
                                 </div>
                         <?php } ?>
                     </div>
-                </div>
-                
+                </div>                
                 <br>
-
             </div>
             <p></p>
             <div id="footer" style="padding: 10px;margin: auto;box-shadow: 0px -2px 4px  rgba(0, 0, 255, .2);">
