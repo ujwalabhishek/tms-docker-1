@@ -98,7 +98,7 @@
                                     <a href="<?php echo 'http://'.$client['tenant_url'];?>">
                                         <p class="col-desg-tlt"><?php echo $client['tenant_name'];?></p>
                                         <?php if($client['tenant_id'] == "T25") {?>
-                                            <img src="<?php echo base_url()?>logos/<?php echo $client['tenant_logo'];?>"  width='100px' height="100px" alt="Image">
+                                            <img src="<?php echo base_url()?>logos/<?php echo $client['tenant_logo'];?>"  width='74px' height="74px" alt="Image">
                                         <?php } else {?>
                                             <img src="<?php echo base_url()?>logos/<?php echo $client['tenant_logo'];?>"  width='132px' alt="Image">
                                         <?php }?>
