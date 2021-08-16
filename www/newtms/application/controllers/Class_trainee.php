@@ -2687,8 +2687,7 @@ class Class_Trainee extends CI_Controller {
      */
     public function get_payid_details($payid, $json_check) {
         $tenant_id = $this->tenant_id;
-        $tenant_details = $this->classtraineemodel->get_tenant_masters($tenant_id);
-        echo print_r($tenant_details, true); exit;
+        $tenant_details = $this->classtraineemodel->get_tenant_masters($tenant_id);        
         //$result = $this->classtraineemodel->get_enroll_invoice($payid);
         $result = $this->classtraineemodel->get_enroll_individual_invoice($payid); //sk1
         //added by pritam to generate previous invoice number
