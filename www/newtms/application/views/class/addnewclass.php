@@ -230,7 +230,7 @@ echo form_open("classes/add_new_class", $atr);
                             &nbsp;</td>
                     </tr>
                    
-                    <tr>
+                    <tr id="tpg_crse_val">
 <!--                        <td class="td_heading">TPGateway Course Run ID:</td>
                         <td colspan="2">
                             <?php

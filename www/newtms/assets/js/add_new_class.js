@@ -255,15 +255,13 @@ $(document).ready(function() {
                 $('#control_3').children('span').text(text);
                 $('#control_3').attr('title',text);
                 if(res.tpg_crse == '1') {
-                    $('#crs_admin_email').show();
-                    $('#crse_ref_no').show();
+                    $('#tpg_crse_val').show();                    
                     $('#crs_admin_email').val(res.crse_admin_email);  
                     $('#crse_ref_no').val(res.crse_ref_no);  
                 } else {
                     $('#crs_admin_email').val('');  
                     $('#crse_ref_no').val(''); 
-                    $('#crs_admin_email').hide();
-                    $('#crse_ref_no').hide();
+                    $('#tpg_crse_val').hide();
                 }                 
             }
         });
