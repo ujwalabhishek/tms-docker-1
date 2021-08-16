@@ -977,7 +977,8 @@ class Classes extends CI_Controller {
         $course_duration = $course_details->crse_duration;        
         $course_manager = $course_details->crse_manager;    
         $all_data_arr['crse_admin_email'] = $course_details->crse_admin_email;  
-        $all_data_arr['crse_ref_no'] = $course_details->reference_num; 
+        $all_data_arr['crse_ref_no'] = $course_details->reference_num;
+        $all_data_arr['tpg_crse'] = $course_details->tpg_crse;
         $all_data_arr['languages'] = $languages_arr;
         $all_data_arr['salesexec'] = $salesexec_arr;
         $all_data_arr['course_duration'] = $course_duration; 
