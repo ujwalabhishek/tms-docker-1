@@ -21,7 +21,7 @@ if (!empty($tax_error)) {
     }
 
 $atr = 'id="AddclassForm" name="AddclassForm"';
-echo form_open("classes/add_new_class_tpg", $atr);
+echo form_open("classes/add_new_tpg_class", $atr);
 ?>  
 <div class="col-md-10">
     <?php echo validation_errors('<div class="error1">', '</div>');
