@@ -419,6 +419,11 @@ class Class_Trainee extends CI_Controller {
 
             $tpg_response = json_decode($decrypted_output);
 
+            echo "Payload : ".print_r($tpg_search_json_data, true);
+            echo "URL : ".print_r($url, true);
+            echo "TPG Response : ".print_r($tpg_response, true);
+            
+            
             if ($tpg_response->status == 200) {
                 $data['tabledata_tpg'] = $tpg_response;
             } else {
