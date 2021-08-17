@@ -159,4 +159,4 @@ define('FRCSMAILID', "nsadivya@mailinator.com");
 //define('TPG_ENVIRONMENT', "PRODUCTION"); 
 define('TPG_ENVIRONMENT', "PRODUCTION");
 
-define('TPG_URL', "uat-api.ssg-wsg.sg");
+define('TPG_URL', "api.ssg-wsg.sg");
