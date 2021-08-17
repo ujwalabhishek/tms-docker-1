@@ -352,14 +352,13 @@ class Class_Trainee extends CI_Controller {
         $export_url = '';
         $sort_url = '';
 
-
         if (!empty($_GET)) {
 
             $encrypt_method = "AES-256-CBC";
-            
-            $tenant_id = $this->tenant_id;        
-            $key = base64_decode($this->config->item(TPG_KEY_.$tenant_id));  // don't hash to derive the (32 bytes) key
-            
+
+            $tenant_id = $this->tenant_id;
+            $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
+
             $iv = 'SSGAPIInitVector';                      // don't hash to derive the (16 bytes) IV        
 
             $api_version = 'v1';
@@ -420,17 +419,30 @@ class Class_Trainee extends CI_Controller {
 
             $tpg_response = json_decode($decrypted_output);
 
-            echo print_r($tpg_response, true); exit;
-            $data['tabledata_tpg'] = $tpg_response;
+            if ($tpg_response->status == 200) {
+                $data['tabledata_tpg'] = $tpg_response;
+            } else {
+                if ($tpg_response->status == 400) {
+                    $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                } elseif ($tpg_response->status == 403) {
+                    $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                } elseif ($tpg_response->status == 404) {
+                    $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                } elseif ($tpg_response->status == 500) {
+                    $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+                } else {
+                    $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
+                }
+            }
         }
 
         if (empty($data['tabledata_tpg'])) {
             $data['error_msg'] = 'Kindly apply filter to fetch the trainees';
             //$this->session->set_flashdata('error', "Kindly, apply filter to fetch the trainees.");
         } else {
-            $data['error_msg'] = 'Please Select a Filter to Display The Data.';
+            $data['error_msg'] = 'Please, select a filter to display the data.';
             //$this->session->set_flashdata('error', "Please, select a filter to display the data.");
-        }
+        }        
 
         $data['page_title'] = 'Class Trainee';
         $data['main_content'] = 'classtrainee/search_enrol_tpg';
@@ -438,12 +450,12 @@ class Class_Trainee extends CI_Controller {
     }
 
     public function curl_request($mode, $url, $encrypted_data, $api_version) {
-        
+
         $tenant_id = $this->tenant_id;
-        
-        $pemfile = "/var/www/newtms/assets/certificates/".$tenant_id."/cert.pem";
-        $keyfile = "/var/www/newtms/assets/certificates/".$tenant_id."/key.pem";
-        
+
+        $pemfile = "/var/www/newtms/assets/certificates/" . $tenant_id . "/cert.pem";
+        $keyfile = "/var/www/newtms/assets/certificates/" . $tenant_id . "/key.pem";
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -1652,7 +1664,7 @@ class Class_Trainee extends CI_Controller {
                         $data['active_enroll_course_id'] = get_course_id($active_enroll_class);
                         $data['active_enroll_lock_att_status'] = get_active_class_att_status($active_enroll_class);
                         //Added by abdulla
-                        $data['active_enroll_eid_no'] = get_eid_id($active_enroll_class);                        
+                        $data['active_enroll_eid_no'] = get_eid_id($active_enroll_class);
                         $data['active_enroll_tpg_status'] = get_active_class_tpg_status($active_enroll_class);
                         $active_enroll_class_id = get_class_id($active_enroll_class);
                         //$reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, '', $active_enroll_class_id);////commented by shubhranshu
@@ -1945,30 +1957,30 @@ class Class_Trainee extends CI_Controller {
         $course = $this->input->get('course');
         $class = $this->input->get('class');
         $userid = $this->input->get('nric');
-        
-        if(!empty($course) && !empty($class) && !empty($userid)){
-            $data['classes'] = $this->class->get_course_class($tenant_id, $course, $mark_attendance,"ACTIVE","classTrainee");
-            $data['tabledata'] = $this->classtraineemodel->get_trainee_sessions_data($tenant_id,$course,$class,$userid);
-            $data['nric'] = $this->classtraineemodel->get_enrolled_trainee($tenant_id,$course,$class);
+
+        if (!empty($course) && !empty($class) && !empty($userid)) {
+            $data['classes'] = $this->class->get_course_class($tenant_id, $course, $mark_attendance, "ACTIVE", "classTrainee");
+            $data['tabledata'] = $this->classtraineemodel->get_trainee_sessions_data($tenant_id, $course, $class, $userid);
+            $data['nric'] = $this->classtraineemodel->get_enrolled_trainee($tenant_id, $course, $class);
         }
 
         $data['main_content'] = 'classtrainee/markattendance_tpg';
 
         $this->load->view('layout', $data);
     }
-   
-    
-     public function get_enrolled_trainee(){
+
+    public function get_enrolled_trainee() {
         $courseID = $this->input->post('course_id');
         $classID = $this->input->post('class_id');
         $tenant_id = $this->tenant_id;
-        $res = $this->classtraineemodel->get_enrolled_trainee($tenant_id,$courseID,$classID);
+        $res = $this->classtraineemodel->get_enrolled_trainee($tenant_id, $courseID, $classID);
         $classes_arr = array();
         foreach ($res as $k => $v) {
             $classes_arr[] = array('key' => $k, 'value' => $v);
         }
         echo json_encode($classes_arr);
     }
+
     /* locking class attendance 
       Author : Prit
       Date   : 03/08/2016 */
@@ -2690,7 +2702,7 @@ class Class_Trainee extends CI_Controller {
      */
     public function get_payid_details($payid, $json_check) {
         $tenant_id = $this->tenant_id;
-        $tenant_details = $this->classtraineemodel->get_tenant_masters($tenant_id);        
+        $tenant_details = $this->classtraineemodel->get_tenant_masters($tenant_id);
         //$result = $this->classtraineemodel->get_enroll_invoice($payid);
         $result = $this->classtraineemodel->get_enroll_individual_invoice($payid); //sk1
         //added by pritam to generate previous invoice number
@@ -5454,7 +5466,6 @@ function get_eid_id($data_arr) {
         return $arr;
     }
 }
-
 
 /**
  * function to get course id
