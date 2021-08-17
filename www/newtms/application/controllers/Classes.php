@@ -185,7 +185,7 @@ class Classes extends CI_Controller {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
-        $data['courses'] = $this->coursemodel->get_active_course_list_by_tenant($tenant_id);
+        $data['courses'] = $this->coursemodel->get_active_course_list_by_tenant_tpg($tenant_id);
         $data['trainer'] = $this->classmodel->get_tenant_users_by_role($tenant_id, 'TRAINER');
         $data['course_manager'] = $this->classmodel->get_tenant_users_by_role($tenant_id, 'CRSEMGR');
         $data['role'] = $this->user->role_id;
