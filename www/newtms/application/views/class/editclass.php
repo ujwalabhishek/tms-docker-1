@@ -328,7 +328,7 @@ if (!empty($tax_error)) {
                                 ?>
                                 &nbsp;</td>
                         </tr>
-                        <?php if($tpg_crse == '1') {?>
+                        <?php if($tpg_crse) {?>
                         <tr>
                             <td class="td_heading">TPGateway Course Run ID:</td>
                             <td colspan="5">
