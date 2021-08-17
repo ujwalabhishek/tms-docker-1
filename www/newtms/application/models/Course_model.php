@@ -21,6 +21,43 @@ class Course_Model extends CI_Model {
 
      */
 
+    public function get_active_course_list_all($tenantId, $classTrainee = 0) {
+
+        $this->db->select('c.course_id, c.crse_name, c.crse_manager');
+        $this->db->from('course c');
+        $this->db->where('c.tenant_id', $tenantId);
+///added by shubhranshu due to deactivate class are coming on 0/12/2018//
+        //if ($this->user->role_id != 'ADMN') { 
+        $this->db->where('c.crse_status', 'ACTIVE');        
+        //}/////////////////////////////////////////////////////////////////////
+
+        if ($this->user->role_id == 'SLEXEC' && (string) $classTrainee == 'classTrainee') {
+            $this->traineelist_querychange();
+        }
+
+        if ($this->user->role_id == 'CRSEMGR' && (string) $classTrainee == 'discount') {
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
+        }
+
+        $this->db->order_by("c.crse_name");
+        $query = $this->db->get();
+        //echo $this->db->last_query();exit;
+
+        $tenant_active_courses = array();
+        $logged_in_user_id = $this->user->user_id;
+
+        foreach ($query->result() as $item) {
+            $tenant_active_courses[$item->course_id] = $item->crse_name;
+        }
+        return $tenant_active_courses;
+    }
+            
+    /*
+
+     * This method gets the Active  Course list for a tenant
+
+     */
+
     public function get_active_course_list_by_tenant($tenantId, $classTrainee = 0) {
 
         $this->db->select('c.course_id, c.crse_name, c.crse_manager');

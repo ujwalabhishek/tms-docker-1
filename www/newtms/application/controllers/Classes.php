@@ -70,7 +70,7 @@ class Classes extends CI_Controller {
         $tenantId = $this->tenant_id;
         $userId = $this->user->user_id;
         $courseId = $this->input->get('course_id');
-        $data['courses'] = $this->coursemodel->get_active_course_list_by_tenant($tenantId);
+        $data['courses'] = $this->coursemodel->get_active_course_list_all($tenantId);
         $data['classes'] = array();
         $data['courseDetails'] = array();
         if ($courseId) {
