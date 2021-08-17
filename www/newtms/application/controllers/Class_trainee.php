@@ -420,6 +420,7 @@ class Class_Trainee extends CI_Controller {
 
             $tpg_response = json_decode($decrypted_output);
 
+            echo print_r($tpg_response, true); exit;
             $data['tabledata_tpg'] = $tpg_response;
         }
 
