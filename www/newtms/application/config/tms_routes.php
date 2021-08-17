@@ -19,7 +19,7 @@ $tms_route['CRSE']['ops'] = array('ADD' => 'add_new_course', 'ADDTPGCRSE' => 'ad
     'BULKREG' => 'bulk_registration', 'REFFRND' => 'referrals', 'COPY' => 'copy_course', 'SALESCOMM' => 'sales_commission_rate', 'WEPT' => 'wedgit');
 //------------------------ Class mapping -------------------------------------
 $tms_route['CLSS']['controller_name'] = 'classes';
-$tms_route['CLSS']['ops'] = array('ADD' => 'add_new_class', 'EDIT' => 'edit_class', 'COPY' => 'copy_class', 'SCHD' => 'calendar', 'ADASTOTPG' => 'tpg_assessments');
+$tms_route['CLSS']['ops'] = array('ADD' => 'add_new_class', 'ADDTPGCLS' => 'add_new_tpg_class', 'EDIT' => 'edit_class', 'COPY' => 'copy_class', 'SCHD' => 'calendar', 'ADASTOTPG' => 'tpg_assessments');
 //------------------------ Class-Trainee mapping -------------------------------------
 $tms_route['CLTRAINE']['controller_name'] = 'class_trainee';
 $tms_route['CLTRAINE']['ops'] = array(

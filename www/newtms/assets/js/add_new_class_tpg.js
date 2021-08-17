@@ -2,6 +2,7 @@
  * This js file included in  add_new_class form
  */
 $(document).ready(function() {
+     $start_date_check = check_start_or_today();
     $('.form_reset').click(function() {
         $('#AddclassForm')[0].reset();
         $('.error_text').text('');
@@ -127,22 +128,8 @@ $(document).ready(function() {
     $('.schld_alert_yes').click(function() {
         if ($(this).is("[data-count]")) {
             $count = $(this).attr('data-count');
-            if ($count == 'default-assessment') {
-                default_data_clear();
-
-                $('.def_schld_div .table-responsive table tbody tr').remove();
-            } else {
-                $date = $('.schld_tr' + $count).attr('data-date');
-                $('.schld_tr' + $count).remove();
-                if ($('tr').hasClass('schlddate_' + $date)) {
-                    $rowspan_td = $('.schlddate_' + $date + ':first td:first');
-                    $rowspan = $rowspan_td.attr('rowspan');
-                    $rowspan_td.attr('rowspan', --($rowspan));
-                    $delete = '<a href="#ex9" rel="modal:open" class="small_text delete_color schld_delete"><input type="button" value="Delete" style="color:#000000; text-decoration:none;" /></a>';
-                    $('.schlddate_' + $date + ':last td:last').html($delete);
-                }
-                $('.schld_alert_yes').removeAttr('data-count');
-            }
+           $('.ass_tr'+$count).remove();
+           default_data_clear();
         }
     });
     $('.sessions_perday').click(function() {
@@ -185,10 +172,10 @@ $(document).ready(function() {
         $('#ex11').modal();
         return false;
     });
-    $('.alert_message1').click(function() {
-        $('#ex12').modal();
-        return false;
-    });
+//    $('.alert_message1').click(function() {
+//        $('#ex12').modal();
+//        return false;
+//    });
    
     $('.close_reminder_popup').click(function() {
         return reminder_popup_validate();
@@ -266,10 +253,57 @@ $(document).ready(function() {
                 });
                 text = text.slice(0,-2);                
                 $('#control_3').children('span').text(text);
-                $('#control_3').attr('title',text);                             
+                $('#control_3').attr('title',text);   
+                $('#crs_admin_email').val(res.crse_admin_email);  
+                $('#crse_ref_no').val(res.crse_ref_no); 
             }
         });
     });
+    $('#cls_venue').change(function() {
+        $.ajax({
+            type: 'post',
+            url: $siteurl + 'classes/autofill_venue_details',
+            data: {class_venue: $('#cls_venue').val()},
+            dataType: "json",
+            beforeSend: function() {
+                $('#venue_building').val(''); 
+                $('#venue_block').val(''); 
+                $('#venue_floor').val(''); 
+                $('#venue_building').val(''); 
+                $('#venue_postalcode').val(''); 
+                $('#venue_unit').val(''); 
+                $('#venue_street').val('');
+            },
+            success: function(res) {
+                $('#venue_building').val(res.building); 
+                $('#venue_block').val(res.block); 
+                $('#venue_floor').val(res.floor); 
+                $('#venue_room').val(res.room); 
+                $('#venue_postalcode').val(res.postalcode); 
+                $('#venue_unit').val(res.unit); 
+                $('#venue_street').val(res.street); 
+            }
+        });
+    });
+    
+    $("#ass_date").datepicker({
+        dateFormat: 'dd-mm-yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '-50:+50',
+        minDate: $start_date_check,
+        maxDate: $('#end_date').val(),
+                onClose: function() {
+                    $(this).trigger("change");
+                }
+    });
+    $('#ass_start_time').timepicker({
+        showLeadingZero: false,
+        onSelect: asstpStartSelect,
+    });
+    $('#ass_end_time').timepicker({
+        showLeadingZero: false,
+    }); 
     $("#start_date").datepicker({
         dateFormat: 'dd-mm-yy',
         changeMonth: true,
@@ -452,7 +486,7 @@ function validate() {
         $diffDays = Math.ceil($timeDiff / (1000 * 3600 * 24));
         if(($diffDays > 0) && ($('.schlded_date').val() === undefined))
         {
-                $(".marketing #dis-error").html('<span id="dis-error" class="error">You must create atleast one class Schedule.</span>');
+                $(".marketing #dis-error").html('<span id="dis-error" class="error">You must create atleast one Class / Lab Schedule.</span>');
                 $(".marketing #dis-error").focus();
                 $retval = false;
           
@@ -514,6 +548,65 @@ function validate() {
     } else {
         remove_err('#minimum_students');
     }
+    $crs_admin_email = $.trim($('#crs_admin_email').val());
+    if(!valid_email_address($crs_admin_email)){
+        disp_err('#crs_admin_email', '[Invalid Email Address]');
+        $retval = false;
+    }else {
+        remove_err('#crs_admin_email');
+    }
+    $venue_floor=$('#venue_floor').val();
+        if ($venue_floor == null || $venue_floor == '') {
+            $("#venue_floor_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_floor_err").text("").removeClass('error');
+        }
+        $venue_building=$('#venue_building').val();
+        if ($venue_building == null || $venue_building == '') {
+            $("#venue_building_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_building_err").text("").removeClass('error');
+        }
+        $venue_unit=$('#venue_unit').val();
+        if ($venue_unit == null || $venue_unit == '') {
+            $("#venue_unit_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_unit_err").text("").removeClass('error');
+        }
+        $venue_postalcode=$('#venue_postalcode').val();
+        if ($venue_postalcode == null || $venue_postalcode == '') {
+            $("#venue_postalcode_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_postalcode_err").text("").removeClass('error');
+        }
+        
+        $venue_room = $('#venue_room').val();
+        if ($venue_room == null || $venue_room == '') {
+            $("#venue_room_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_room_err").text("").removeClass('error');
+        }
+        
+        $venue_block = $('#venue_block').val();
+        if ($venue_block == null || $venue_block == '') {
+            $("#venue_block_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_block_err").text("").removeClass('error');
+        }
+        
+        $venue_street = $('#venue_street').val();
+        if ($venue_street == null || $venue_street == '') {
+            $("#venue_street_err").text("[required]").addClass('error');
+            retVal = false;
+        } else {
+            $("#venue_street_err").text("").removeClass('error');
+        }
     $fees = $.trim($('#fees').val());
     if ($fees.length == 0) {
         disp_err('#fees');
@@ -546,6 +639,14 @@ function validate() {
     } else {
         remove_err('#languages');
     }
+    
+    $survey_language= $('#survey_language').val();
+    if ($survey_language.length == 0) {
+        disp_err('#survey_language');
+        $retval = false;
+    } else {
+        remove_err('#survey_language');
+    }
     $cls_venue = $('#cls_venue').val();
     if ($cls_venue.length == 0) {
         disp_err('#cls_venue');
@@ -577,7 +678,7 @@ function validate() {
     $schlded_date = $('.schlded_date').val();
 
     if($schlded_date === undefined && $js_tenant == 'T02'){
-        $(".marketing #dis-error").html('<span id="dis-error" class="error">You must create atleast one class Schedule.</span>');
+        $(".marketing #dis-error").html('<span id="dis-error" class="error">You must create atleast one Class / Lab Schedule.</span>');
         $retval = false;
     } else {
          $(".marketing #dis-error").html('');
@@ -676,12 +777,8 @@ function def_schld_attach() {
                 <input type="hidden" value="' + $assessor + '" name="def_schlded_assessor" class="def_schlded_assessor">\
                 <input type="hidden" value="' + $def_schld_venue + '" name="def_schlded_venue" class="def_schlded_venue">\
                <input type="hidden" value="' + $def_schld_venue_oth + '" name="def_schlded_venue_oth" class="def_schlded_venue_oth">\
- 			   <td class="a_button">\
-                    <a class="small_text" rel="modal:open" href="#ex3">\
-                    <input type="button" value="E" style="color:#000000; text-decoration:none;" />\
-                    </a><br>\
                     <a href="#ex9" rel="modal:open" class="small_text delete_color def_schld_delete">\
-                    <input type="button" value="D" style="color:#000000; text-decoration:none;" />\
+                    <input type="button" value="Delete" style="color:#000000; text-decoration:none;" />\
                     </a>\
                 </td>\
                 <td>' + $def_date + '</td>\
@@ -696,6 +793,7 @@ function def_schld_attach() {
 $schld_count = 1;
 function schld_attach() {
     $schld_date = $('#schld_date').val();
+    $modeoftraining = $('#modeoftraining').val();
     $schld_session_type = $('#schld_session_type').val();
     $schld_session_type_text = $('#schld_session_type option[value="' + $schld_session_type + '"]').text();
     $schld_start_time = $('#schld_start_time').val();
@@ -711,6 +809,7 @@ function schld_attach() {
     }
     $html = '<tr class="schld_tr' + $schld_count + ' schlddate_' + $schld_date + '" data-session="' + $schld_session_type + '" data-date="' + $schld_date + '" data-count="' + $schld_count + '">\
                 <input type="hidden" value="' + $schld_date + '" name="schlded_date[]" class="schlded_date">\
+                <input type="hidden" value="' + $modeoftraining + '" name="mode_of_training[]" class="schlded_session_type">\\n\
                 <input type="hidden" value="' + $schld_session_type + '" name="schlded_session_type[]" class="schlded_session_type">\
                 <input type="hidden" value="' + $schld_start_time + '" name="schlded_start_time[]" class="schlded_start_time">\
                 <input type="hidden" value="' + $schld_end_time + '" name="schlded_end_time[]" class="schlded_end_time">\
@@ -911,7 +1010,219 @@ $(document).ready(function() {
     $(document).on('click', '*[href="#ex1"]', function() {
         scroll_to_top();
     });
+    $('.ass_save').click(function() {
+        return ass_form_validate(true);
+    });
+    $(document).on('click', '.ass_delete', function() {
+        $val = $(this).children('input').data('del');
+        $('.schld_alert_yes').attr('data-count', $val);
+        $('.schld_alert_yes').attr('data-check', 'ass');
+    });
+    
+    $('.schld_alert_yes').click(function() {
+        if ($(this).is("[data-count]")) {
+            $count = $(this).attr('data-count');
+            $check = $(this).attr('data-check');
+            if ($check == 'ass') {
+                $('.ass_tr' + $count).remove();
+            }
+            if ($count == 'default-assessment') {
+                default_data_clear();
+
+                $('.def_schld_div .table-responsive table tbody tr').remove();
+            } else {
+                $date = $('.schld_tr' + $count).attr('data-date');
+                $('.schld_tr' + $count).remove();
+                if ($('tr').hasClass('schlddate_' + $date)) {
+                    $rowspan_td = $('.schlddate_' + $date + ':first td:first');
+                    $rowspan = $rowspan_td.attr('rowspan');
+                    $rowspan_td.attr('rowspan', --($rowspan));
+                    $delete = '<a href="#ex9" rel="modal:open" class="small_text delete_color schld_delete"><input type="button" value="Delete" style="color:#000000; text-decoration:none;" /></a>';
+                    $('.schlddate_' + $date + ':last td:last').html($delete);
+                }
+                $('.schld_alert_yes').removeAttr('data-count');
+            }
+        }
+    });
+    
+    $(document).on('click', '.ass_edit', function() {
+        $edit_id = $(this).children('input').data('edit');
+        $div = $('.ass_tr' + $edit_id);
+        $('#ass_date').val($div.children('.assmnt_date').val());
+        $('#ass_start_time').val($div.children('.assmnt_start_time').val());
+        $('#ass_end_time').val($div.children('.assmnt_end_time').val());
+        $('input[name="control_2[]"]').removeAttr('disabled');
+        $('#control_2').next('.multiSelectOptions label').removeAttr('style');
+        $('#control_2').next('.multiSelectOptions').children('label').children('input').removeAttr('checked');
+        $('.err_span').remove();
+        $('input[name="checking_trainee[]"]').each(function(i) {
+            $val = $(this).val();
+            $('input[name="control_2[]"][value="' + $val + '"]').attr('disabled', 'disabled').removeAttr('checked');
+            $('input[name="control_2[]"][value="' + $val + '"]').parent().css('display', 'none');
+        });
+        $('.ass_tr' + $edit_id + ' input[name="checking_trainee[]"]').each(function(i) {
+            $val = $(this).val();
+            $('input[name="control_2[]"][value="' + $val + '"]').removeAttr('disabled').attr('checked', 'checked');
+            $('input[name="control_2[]"][value="' + $val + '"]').parent().removeAttr('style')
+        })
+        $('#ass_editid').val($edit_id);
+        $('#control_8').next('.multiSelectOptions').children('label').children('input').removeAttr('checked');
+        $assessor = $('.ass_tr' + $edit_id + ' .assmnt_assessor').val();
+        $('.ass_tr' + $edit_id + ' input[name="checking_assessor[]"]').each(function(i) {
+            $val = $(this).val();
+            $('input[name="control_8[]"][value="' + $val + '"]').attr('checked', 'checked');
+        })
+        $('input[name="control_8[]"]').attr('disabled', 'disabled');
+        $('#control_8').next('.multiSelectOptions').children('label').css('display', 'none');
+        $('#control_8').next('.multiSelectOptions').children('.selectAll').removeAttr('style');
+        $('input[name="control_7[]"]:checked').each(function(i) {
+            $val = $(this).val();
+            $('input[name="control_8[]"][value="' + $val + '"]').removeAttr('disabled');
+            $('input[name="control_8[]"][value="' + $val + '"]').parent().removeAttr('style');
+        });
+        $('input[name="control_8[]"]:disabled').each(function(i) {
+            $(this).removeAttr('checked');
+        });
+        $length = $('input[name="control_8[]"]').not(':disabled').length;
+        if (parseInt($length) == 0) {
+            $('#ex231').modal();
+            return false;
+        }
+        $('#ass_venue').val($div.children('.ass_venue').val());
+        if ($div.children('.ass_venue').val() == 'OTH') {
+            $('.assven_oth_span').show();
+            $('#ass_venue_oth').val($div.children('.ass_venue_oth').val());
+        }
+    });
 })
 function scroll_to_top() {
     $('html,body').animate({scrollTop: $('body').offset().top}, "fast");
 }
+function asstpStartSelect(time, endTimePickerInst) {
+    $('#ass_end_time').timepicker('option', {
+        minTime: {
+            hour: endTimePickerInst.hours,
+            minute: endTimePickerInst.minutes
+        }
+    });
+}
+function ass_form_validate($retVal) {
+
+    $ass_date = $('#ass_date').val();
+    if ($ass_date.length == 0) {
+        disp_err('#ass_date');
+        $retVal = false;
+    } else {
+        remove_err('#ass_date');
+    }
+    $ass_start_time = $.trim($('#ass_start_time').val());
+    if ($ass_start_time.length == 0) {
+        disp_err('#ass_start_time');
+        $retVal = false;
+    } else {
+        remove_err('#ass_start_time');
+    }
+    $ass_end_time = $.trim($('#ass_end_time').val());
+    if ($ass_end_time.length == 0) {
+        disp_err('#ass_end_time');
+        $retVal = false;
+    } else if (parseInt($ass_start_time.replace(':', '')) >= parseInt($ass_end_time.replace(':', ''))) {
+        disp_err('#ass_end_time', '[cannot be same or less than start time]');
+        $retVal = false;
+    } else {
+        remove_err('#ass_end_time');
+    }
+    $assessor = '';
+    $('input[name="control_8[]"]:checked').each(function() {
+        $assessor += $(this).val();
+    })
+    if ($assessor.length == 0) {
+        disp_err('#control_8');
+        $retVal = false;
+    } else {
+        remove_err('#control_8');
+    }
+    
+    $ass_venue = $('#ass_venue').val();
+	$ass_venue_oth = $('#ass_venue_oth').val();
+    if ($ass_venue.length == 0) {
+        disp_err('#ass_venue');
+        $retVal = false;
+    } else if ($ass_venue == 'OTH' && $ass_venue_oth.trim().length == 0) {
+        disp_err('#ass_venue_oth');
+        $retVal = false;
+    } else {
+        remove_err('#ass_venue_oth');
+        remove_err('#ass_venue');
+    }
+    if ($retVal == true) {
+        ass_attach();
+    }
+    return $retVal;
+}
+$cnt = 100;
+function ass_attach() {
+    if ($('#ass_editid').val().length > 0) {
+        $count = $('#ass_editid').val();
+    } else {
+        $count = $cnt;
+    }
+    $ass_date = $('#ass_date').val();
+    $ass_start_time = $('#ass_start_time').val();
+    $ass_end_time = $('#ass_end_time').val();
+    $assessor = '';
+    $assessortext = '';
+    $assessor_hidden = '';
+    $('input[name="control_8[]"]:checked').each(function() {
+        $assessor += $(this).val() + ',';
+        $assessor_hidden += '<input type="hidden" value="' + $(this).val() + '" name="checking_assessor[]">';
+        $assessortext += $(this).parent().text() + ',';
+    })
+    
+    $assessortext = $assessortext.replace(/,+$/, '');
+   
+    $ass_venue = $('#ass_venue').val();
+    $ass_venue_text = $('#ass_venue option[value="' + $ass_venue + '"]').text();
+    $ass_venue_oth = $('#ass_venue_oth').val();
+    if ($ass_venue == 'OTH') {
+        $ass_venue_text += "(" + $ass_venue_oth + ")";
+    }
+    $html1 = '<tr class="ass_tr' + $count + '">';
+    $html2 = $assessor_hidden + '\
+                <input type="hidden" value="' + $ass_date + '" name="assmnt_date[]" class="assmnt_date">\
+                <input type="hidden" value="' + $ass_start_time + '" name="assmnt_start_time[]" class="assmnt_start_time">\
+                <input type="hidden" value="' + $ass_end_time + '" name="assmnt_end_time[]" class="assmnt_end_time">\
+                <input type="hidden" value="' + $assessor + '" name="assmnt_assessor[]" class="assmnt_assessor">\
+                <input type="hidden" value="' + $ass_venue + '" name="ass_venues[]" class="ass_venue">\
+                <input type="hidden" value="' + $ass_venue_oth + '" name="ass_venue_oth[]" class="ass_venue_oth">\
+                 <td class="a_button">\
+                    <a href="#ex9" rel="modal:open" class="small_text delete_color ass_delete">\
+                        <input type="button" data-del="' + $count + '" value="Delete" style="color:#000000; text-decoration:none;" />\
+                    </a>\
+                </td>\
+                <td>' + $ass_date + '</td>\
+                <td>' + $assessortext + '</td>\
+                <td>' + $ass_start_time + ' - ' + $ass_end_time + '</td>\
+                <td>' + $ass_venue_text + '</td>';
+    $html3 = '</tr>';
+   
+    $cnt++;
+    $('.def_schld_div .table-responsive table tbody').append($html1 + $html2 + $html3);
+    
+    assmnt_data_clear();
+}
+function assmnt_data_clear() {
+    $('#ass_date').val('');
+    $('#ass_start_time').val('');
+    $('#ass_end_time').val('');
+    $('#control_8').children('span').text('Select Option');
+    $('#control_8').next('.multiSelectOptions').children('label.selectAll').children('input').removeAttr('checked');
+    $('input[name="control_8[]"]').removeAttr('checked');
+    $('input[name="control_2[]"]').removeAttr('checked');
+    $('#control_2').children('span').text('Select Option');
+    $('#control_2').next('.multiSelectOptions').children('label.selectAll').children('input').removeAttr('checked');
+    $('#ass_venue').val('');
+    $('.assven_oth_span').hide();
+    $('#ass_venue_oth').val('');
+}
+

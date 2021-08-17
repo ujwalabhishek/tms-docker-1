@@ -7,7 +7,7 @@ if (!defined('BASEPATH'))
  */
 
 class Classes extends CI_Controller {
-    
+
     private $user;
 
     public function __construct() {
@@ -19,7 +19,6 @@ class Classes extends CI_Controller {
         $this->load->model('tpg_api_model', 'tpgModel');
         $this->load->model('meta_values');
         $this->user = $this->session->userdata('userDetails');
-       
     }
 
     /**
@@ -64,6 +63,7 @@ class Classes extends CI_Controller {
     /*
      * This function loads the initial list view page for class.
      */
+
     public function index() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Class';
@@ -116,19 +116,83 @@ class Classes extends CI_Controller {
     }
 
     /*
-     * This function modified by shubhranshu to chech with SSG system and sync the data with TMS 09.05.21
+     * This function loads the empty Add class form.
      */
+
     public function add_new_class() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
         $data['courses'] = $this->coursemodel->get_active_course_list_by_tenant($tenant_id);
         $data['trainer'] = $this->classmodel->get_tenant_users_by_role($tenant_id, 'TRAINER');
-        $data['course_manager'] = $this->classmodel->get_tenant_users_by_role($tenant_id, 'CRSEMGR'); 
+        $data['course_manager'] = $this->classmodel->get_tenant_users_by_role($tenant_id, 'CRSEMGR');
         $data['role'] = $this->user->role_id;
         $data['page_title'] = 'Class';
         $this->load->library('form_validation');
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $this->form_validation->set_rules('class_course', 'Class Course', 'required');
+            $this->form_validation->set_rules('class_name', 'Class Name', 'max_length[50]');
+            $this->form_validation->set_rules('start_date', 'Start Date', 'required');
+            $this->form_validation->set_rules('end_date', 'End Date', 'required');
+            $this->form_validation->set_rules('total_seats', 'Total Seats', 'required|max_length[10]|integer');
+            $this->form_validation->set_rules('minimum_students', 'Minimum Students', 'max_length[10]|integer');
+            $this->form_validation->set_rules('fees', 'Fees', 'required|numeric');
+            $this->form_validation->set_rules('class_discount', 'Class Discount', 'numeric');
+            $this->form_validation->set_rules('display_class', 'Check box', 'trim');
+            $this->form_validation->set_rules('languages', 'Languages', 'required');
+            $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
+            $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
+            $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
+            $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'trim|numeric|required'); ///modified by shubhranshu for trainer validation
+
+            if ($this->form_validation->run() == FALSE) {
+                $data['main_content'] = 'class/addnewclass';
+                //$data['sideMenuData'] = $this->sideMenu;
+                $this->load->view('layout', $data);
+            } else {
+                if ($this->user->role_id != 'ADMN') {
+                    $start_date_timestamp = strtotime($this->input->post('start_date'));
+                    $today_date = strtotime(date('Y-m-d'));
+                    if ($start_date_timestamp < $today_date) {
+                        $data['main_content'] = 'class/addnewclass';
+                        //$data['sideMenuData'] = $this->sideMenu;
+                        $data['tax_error'] = "You donot have permission to create class with start date lesser than today's date. Please get in touch with your Administratot to make this change.";
+                        $data['tax_error_status'] = 1;
+                        $this->load->view('layout', $data);
+                        return;
+                    }
+                }
+                $result = $this->classmodel->create_class($tenant_id, $user_id);
+                if ($result == TRUE) {
+                    $this->session->set_flashdata("success", "Class created successfully.");
+                } else {
+                    $this->session->set_flashdata("error", "Unable to create class. Please try again later.");
+                }
+                redirect('classes?course_id=' . $this->input->post('class_course'));
+            }
+        } else {
+            $data['main_content'] = 'class/addnewclass';
+            //$data['sideMenuData'] = $this->sideMenu;
+            $this->load->view('layout', $data);
+        }
+    }
+
+    /*
+     * This function modified by shubhranshu to chech with SSG system and sync the data with TMS 09.05.21
+     */
+
+    public function add_new_tpg_class() {
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $tenant_id = $this->tenant_id;
+        $user_id = $this->session->userdata('userDetails')->user_id;
+        $data['courses'] = $this->coursemodel->get_active_course_list_by_tenant($tenant_id);
+        $data['trainer'] = $this->classmodel->get_tenant_users_by_role($tenant_id, 'TRAINER');
+        $data['course_manager'] = $this->classmodel->get_tenant_users_by_role($tenant_id, 'CRSEMGR');
+        $data['role'] = $this->user->role_id;
+        $data['page_title'] = 'Class';
+        $this->load->library('form_validation');
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {         
+
             $this->form_validation->set_rules('class_course', 'Class Course', 'required');
             $this->form_validation->set_rules('class_name', 'Class Name', 'max_length[50]');
             $this->form_validation->set_rules('start_date', 'Start Date', 'required');
@@ -144,111 +208,107 @@ class Classes extends CI_Controller {
             $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
             $this->form_validation->set_rules('survey_language', 'survey_language', 'required|alpha');
             $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
-            $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'trim|numeric|required');///modified by shubhranshu for trainer validation
-            $this->form_validation->set_rules('crs_admin_email', 'Course Admin Email', 'trim|required|valid_email|max_length[30]');
+            $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'trim|numeric|required'); ///modified by shubhranshu for trainer validation            
             $this->form_validation->set_rules('venue_block', 'Venue Block', 'required|max_length[30]|alpha_numeric_spaces');
             $this->form_validation->set_rules('venue_street', 'Venue Street', 'required|max_length[30]|alpha_numeric_spaces');
             $this->form_validation->set_rules('venue_building', 'Venue Building', 'required|max_length[30]|alpha_numeric_spaces');
             $this->form_validation->set_rules('venue_floor', 'Venue Floor', 'required|max_length[30]|numeric');
             $this->form_validation->set_rules('venue_unit', 'Venue Unit', 'required|max_length[30]|alpha_numeric_spaces');
             $this->form_validation->set_rules('venue_postalcode', 'Venue Postal Code', 'required|max_length[30]|numeric');
+            $this->form_validation->set_rules('crs_admin_email', 'Course Admin Email', 'trim|required|valid_email|max_length[30]');
             $this->form_validation->set_rules('crse_ref_no', 'Course Reference No', 'required');
-             
-             
-             
+
             if ($this->form_validation->run() == FALSE) {
                 $data['display'] = 'display:block;';
-                $data['main_content'] = 'class/addnewclass';
+                $data['main_content'] = 'class/addnewclass_tpg';
                 $this->load->view('layout', $data);
             } else {
-                if($this->user->role_id != 'ADMN'){
-                    $start_date_timestamp = strtotime($this->input->post('start_date'));        
-                    $today_date = strtotime(date('Y-m-d'));                                            
-                    if($start_date_timestamp < $today_date){                       
-                        $data['main_content'] = 'class/addnewclass';
+                if ($this->user->role_id != 'ADMN') {
+                    $start_date_timestamp = strtotime($this->input->post('start_date'));
+                    $today_date = strtotime(date('Y-m-d'));
+                    if ($start_date_timestamp < $today_date) {
+                        $data['main_content'] = 'class/addnewclass_tpg';
                         $data['tax_error'] = "You donot have permission to create class with start date lesser than today's date. Please get in touch with your Administratot to make this change.";
                         $data['tax_error_status'] = 1;
-                        $this->load->view('layout', $data); 
+                        $this->load->view('layout', $data);
                         return;
-                    }                                     
+                    }
                 }
-                $tenant = $this->classTraineeModel->get_tenant_masters($tenantId);
-                $tpg_response = $this->tpgModel->create_courserun_tpg($tenantId,$tenant->comp_reg_no);
-                
-                if($tpg_response->status == 200){
+
+                $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
+                $tpg_response = $this->tpgModel->create_courserun_tpg($tenant_id, $tenant->comp_reg_no);
+
+                if ($tpg_response->status == 200) {
                     $tpg_course_run_id = $tpg_response->data->runs[0]->id;
-                    $result = $this->classmodel->create_class($tenant_id, $user_id,$tpg_course_run_id);
-                    if($result['status'] == TRUE) {
-                        $ssg_data = $this->tpgModel->getCourseByRunId($tpg_course_run_id);//to get qr code details
-                        $st = $this->tpgModel->updateSsgData($result['classid'],$tpg_course_run_id,$ssg_data->data->course->run);
+                    $result = $this->classmodel->create_class_tpg($tenant_id, $user_id, $tpg_course_run_id);
+                    if ($result['status'] == TRUE) {
+                        $ssg_data = $this->tpgModel->getCourseByRunId($tpg_course_run_id); //to get qr code details
+                        $st = $this->tpgModel->updateSsgData($result['classid'], $tpg_course_run_id, $ssg_data->data->course->run);
                         //print_r($tpg_response);exit;
-                        if($st == TRUE){
-                           $this->session->set_flashdata("success", "Class created successfully with Course Run ID: ".$tpg_course_run_id); 
-                        }else{
+                        if ($st == TRUE) {
+                            $this->session->set_flashdata("success", "Class created successfully with Course Run ID: " . $tpg_course_run_id);
+                        } else {
                             $this->session->set_flashdata("success", "Class created successfully without Course Run ID");
-                        }                                                
+                        }
                     } else {
                         $this->session->set_flashdata("error", "Unable to create class. Please try again later.");
                     }
                     redirect('classes?course_id=' . $this->input->post('class_course'));
-                }else{
-                    if($tpg_response->status == 400){
-                        $this->session->set_flashdata('error',"Oops! Bad request!");
-                    }elseif($tpg_response->status == 403){
-                        $this->session->set_flashdata('error',"Oops! Forbidden. Authorization information is missing or invalid.");
-                    }elseif($tpg_response->status == 404){
-                        $this->session->set_flashdata('error',"Oops! Not Found!");
-                    }elseif($tpg_response->status == 500){
-                        $this->session->set_flashdata('error',"Oops! Internal Error!!");
-                    }else{
-                        $this->session->set_flashdata('error',"TPG is not responding. Please, check back again."); 
+                } else {
+                    if ($tpg_response->status == 400) {
+                        $this->session->set_flashdata('error', "Oops! Bad request!");
+                    } elseif ($tpg_response->status == 403) {
+                        $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
+                    } elseif ($tpg_response->status == 404) {
+                        $this->session->set_flashdata('error', "Oops! Not Found!");
+                    } elseif ($tpg_response->status == 500) {
+                        $this->session->set_flashdata('error', "Oops! Internal Error!!");
+                    } else {
+                        $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
                     }
-                    //echo "BRRRR".print_r($tpg_response, true); exit;                                                           
                     
                     $data['error'] = $tpg_response->error->details;
                     $data['display'] = 'display:block;';
-                    $data['main_content'] = 'class/addnewclass';
+                    $data['main_content'] = 'class/addnewclass_tpg';
                     $this->load->view('layout', $data);
                 }
-                
-                
             }
         } else {
             $data['display'] = 'display:none;';
-            $data['main_content'] = 'class/addnewclass';
+            $data['main_content'] = 'class/addnewclass_tpg';
             $this->load->view('layout', $data);
         }
     }
 
     /* skm start : show calander */
-    public function calendar()
-    {    
+
+    public function calendar() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $data['page_title'] = 'Calendar Schedule';
-        $data['month'] = $month = ($this->input->get('month')? $this->input->get('month') : date("m") );
-        
-        $data['year'] = $year = ($this->input->get('year')? $this->input->get('year') : date("Y") );
+        $data['month'] = $month = ($this->input->get('month') ? $this->input->get('month') : date("m") );
 
-        $data['days_in_month'] = $days_in_month = date("t",mktime(0,0,0,$month,1,$year));
+        $data['year'] = $year = ($this->input->get('year') ? $this->input->get('year') : date("Y") );
 
-        $data['year_array'] = array(''=>'Select year',2017 => 2017, 2018 => 2018, 2019 => 2019, 2020 => 2020, 2021 => 2021);        
-        
-        $data['month_array'] = array(''=>'Select Month','01'=>January,'02'=>February,'03'=>March,'04'=>April,'05'=>May,'06'=>June,'07'=>July,
-            '08'=>August,'09'=>September,'10'=>October,'11'=>November,'12'=>December);
-       
+        $data['days_in_month'] = $days_in_month = date("t", mktime(0, 0, 0, $month, 1, $year));
+
+        $data['year_array'] = array('' => 'Select year', 2017 => 2017, 2018 => 2018, 2019 => 2019, 2020 => 2020, 2021 => 2021);
+
+        $data['month_array'] = array('' => 'Select Month', '01' => January, '02' => February, '03' => March, '04' => April, '05' => May, '06' => June, '07' => July,
+            '08' => August, '09' => September, '10' => October, '11' => November, '12' => December);
+
         $data['main_content'] = 'class/calendar';
         //$data['sideMenuData'] = $this->sideMenu;
-       
+
         $this->load->view('layout', $data);
     }
-    
+
     /* skm end */
-       
+
     /**
      * this function to deactivate class
      */
     function deactivate_class() {
-         $tenant_id = $this->tenant_id;
+        $tenant_id = $this->tenant_id;
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             foreach ($this->input->post() as $key => $value) {
                 $$key = $value;
@@ -265,49 +325,52 @@ class Classes extends CI_Controller {
                 $crs = $this->coursemodel->get_course_detailse($res[course_id]);
                 //print_r($crs);exit;
                 $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
-                $tpg_response = $this->tpgModel->delete_courserun_tpg($crs->reference_num,$tenant->comp_reg_no,$res[tpg_course_run_id]);///callling to delete the courserun FROM SSG system
-                if($tpg_response->status == 200){
-                     $result = $this->classmodel->deactivate_class($class_id_deactive);
+                $tpg_response = $this->tpgModel->delete_courserun_tpg($crs->reference_num, $tenant->comp_reg_no, $res[tpg_course_run_id]); ///callling to delete the courserun FROM SSG system
+                if ($tpg_response->status == 200) {
+                    $result = $this->classmodel->deactivate_class($class_id_deactive);
                     if ($result == TRUE) {
                         $current_class_data = json_encode($res);
-                        user_activity( 5, $class_id_deactive, $current_class_data);
+                        user_activity(5, $class_id_deactive, $current_class_data);
                         $this->session->set_flashdata('success', 'Class has been deleted successfully With SSG');
                     } else {
                         $this->session->set_flashdata("error", "Unable to delete class. Please try again later.");
                     }
-                }else{
-                    if($tpg_response->status == 400){
-                        $this->session->set_flashdata('error',"Oops! Bad request!");
-                    }elseif($tpg_response->status == 403){
-                        $this->session->set_flashdata('error',"Oops! Forbidden. Authorization information is missing or invalid.");
-                    }elseif($tpg_response->status == 404){
-                        $this->session->set_flashdata('error',"Oops! Not Found!");
-                    }elseif($tpg_response->status == 500){
-                        $this->session->set_flashdata('error',"Oops! Internal Error!!");
-                    }else{
-                        $this->session->set_flashdata('error',"TPG is not responding. Please, check back again."); 
+                } else {
+                    if ($tpg_response->status == 400) {
+                        $this->session->set_flashdata('error', "Oops! Bad request!");
+                    } elseif ($tpg_response->status == 403) {
+                        $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
+                    } elseif ($tpg_response->status == 404) {
+                        $this->session->set_flashdata('error', "Oops! Not Found!");
+                    } elseif ($tpg_response->status == 500) {
+                        $this->session->set_flashdata('error', "Oops! Internal Error!!");
+                    } else {
+                        $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
                     }
-                     $this->session->set_flashdata('resp_error',$tpg_response->error->details);
+                    $this->session->set_flashdata('resp_error', $tpg_response->error->details);
                 }
                 redirect('classes');
             }
         }
     }
-/* end class*/
-    public function end_class(){
-        $tenant_id=$this->tenant_id;
-        $class_id=$this->input->get('end_class');
-        if($class_id){
-        $result= $this->classmodel->end_class($tenant_id,$class_id);
-        $this->session->set_flashdata("success", "Class Status is Changed.");
-           
-       }
+
+    /* end class */
+
+    public function end_class() {
+        $tenant_id = $this->tenant_id;
+        $class_id = $this->input->get('end_class');
+        if ($class_id) {
+            $result = $this->classmodel->end_class($tenant_id, $class_id);
+            $this->session->set_flashdata("success", "Class Status is Changed.");
+        }
         redirect("class_trainee");
     }
+
     /*
      * This function loads the Edit class form.
      */
-   public function edit_class($tax_error ="") {
+
+    public function edit_class($tax_error = "") {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
@@ -316,7 +379,7 @@ class Classes extends CI_Controller {
             if ($this->classmodel->get_class_status($class_id) == 'Inactive') {
                 $this->session->set_flashdata("error", "You cannot Edit/Deactivate an 'INACTIVE' class.");
                 return redirect("classes");
-            }else if ($this->classmodel->get_class_status($class_id) == 'DELETED') {
+            } else if ($this->classmodel->get_class_status($class_id) == 'DELETED') {
                 $this->session->set_flashdata("error", "You cannot Edit a 'Deleted' class.");
                 return redirect("classes");
             } else {
@@ -335,7 +398,7 @@ class Classes extends CI_Controller {
                 $trainee_enrolled = $this->classmodel->traineeenrolled_class($tenant_id, $class_id);
                 $data['trainee_enrolled'] = $trainee_enrolled;
                 $data['trainer'] = $this->classmodel->get_tenant_users_by_role($tenant_id, 'TRAINER');
-                $data['course_manager'] = $this->classmodel->get_tenant_users_by_role($tenant_id, 'CRSEMGR'); 
+                $data['course_manager'] = $this->classmodel->get_tenant_users_by_role($tenant_id, 'CRSEMGR');
                 $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_id);
                 $totalbooked = $this->classmodel->get_class_booked($course_id, $class_id, $tenant_id);
                 $cur_date = strtotime(date('Y-m-d'));
@@ -346,11 +409,11 @@ class Classes extends CI_Controller {
                         $label = array('start' => '', 'fees' => 'label', 'language' => 'label', 'discount' => 'label', 'deactivate' => 'label');
                     } else if (strtotime(date('Y-m-d', strtotime($class->class_start_datetime))) <= $cur_date && strtotime(date('Y-m-d', strtotime($class->class_end_datetime))) >= $cur_date) {
                         $label = array('start' => 'label', 'fees' => 'label', 'language' => 'label', 'discount' => 'label', 'deactivate' => 'label');
-                    } else if(strtotime(date('Y-m-d', strtotime($class->class_start_datetime))) < $cur_date && strtotime(date('Y-m-d', strtotime($class->class_end_datetime))) <$cur_date){
+                    } else if (strtotime(date('Y-m-d', strtotime($class->class_start_datetime))) < $cur_date && strtotime(date('Y-m-d', strtotime($class->class_end_datetime))) < $cur_date) {
                         $label = array('fees' => 'label', 'discount' => 'label');
-                        $data['js_class_status']='completed';
+                        $data['js_class_status'] = 'completed';
                     }
-                    if($this->user->role_id == 'ADMN'){
+                    if ($this->user->role_id == 'ADMN') {
                         $label['fees'] = '';
                     }
                 }
@@ -386,9 +449,8 @@ class Classes extends CI_Controller {
                 }
                 $data['def_assessment'] = $cdef_assmnt;
             }
-            
         }
-       
+
         $data['tax_error'] = $tax_error;
         $data['page_title'] = 'Class';
         $data['main_content'] = 'class/editclass';
@@ -399,6 +461,7 @@ class Classes extends CI_Controller {
     /*
      * This function loads the View class form.
      */
+
     public function view_class($class_id) {
         $data['sideMenuData'] = fetch_non_main_page_content();
         if (empty($class_id)) {
@@ -476,11 +539,11 @@ class Classes extends CI_Controller {
     /**
      * this function to update the edited class
      */
-    public function update_class() { 
-        $data['sideMenuData'] = fetch_non_main_page_content();// added by shubhranshu
+    public function update_class() {
+        $data['sideMenuData'] = fetch_non_main_page_content(); // added by shubhranshu
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
-        $role_id = $this->session->userdata('userDetails')->role_id;// added by shubhranshu for fetching role id
+        $role_id = $this->session->userdata('userDetails')->role_id; // added by shubhranshu for fetching role id
         $this->load->library('form_validation');
         $this->form_validation->set_rules('class_name', 'Class Name', 'max_length[50]');
         $this->form_validation->set_rules('start_date', 'Start Date', 'required');
@@ -502,32 +565,31 @@ class Classes extends CI_Controller {
             //$data['sideMenuData'] = $this->sideMenu;
             $data['sideMenuData'] = fetch_non_main_page_content();
             $this->load->view('layout', $data);
-            
         } else {
-            if($role_id != 'ADMN'){ // changed by shubhranshu for userdata issue
-                $start_date_timestamp = strtotime($this->input->post('start_date'));        
-                $start_date_timestamp_hidden = strtotime($this->input->post('start_date_hidden'));        
-                $today_date = strtotime(date('Y-m-d'));                                            
-                if($start_date_timestamp < $today_date && $start_date_timestamp != $start_date_timestamp_hidden){
-                    $tax_error = "You donot have permission to update class with start date lesser than today's date. Please get in touch with your Administrator to make this change.";                    
+            if ($role_id != 'ADMN') { // changed by shubhranshu for userdata issue
+                $start_date_timestamp = strtotime($this->input->post('start_date'));
+                $start_date_timestamp_hidden = strtotime($this->input->post('start_date_hidden'));
+                $today_date = strtotime(date('Y-m-d'));
+                if ($start_date_timestamp < $today_date && $start_date_timestamp != $start_date_timestamp_hidden) {
+                    $tax_error = "You donot have permission to update class with start date lesser than today's date. Please get in touch with your Administrator to make this change.";
                     $this->edit_class($tax_error);
                     return;
-                }                                     
-            }   
-            
+                }
+            }
+
             $class_id = $this->input->post('class_hid');
-            $result = $this->classmodel->get_class_info($class_id);          
+            $result = $this->classmodel->get_class_info($class_id);
             $previous_data = json_encode($result);
-            
+
             $result = $this->classmodel->update_class($tenant_id, $user_id);
             if ($result == TRUE) {
-                 user_activity(5,$class_id,$previous_data);
+                user_activity(5, $class_id, $previous_data);
                 $this->session->set_flashdata("success", "Class updated successfully.");
             } else {
                 $this->session->set_flashdata("error", "Unable to update class. Please try again later.");
             }
         }
-        
+
         redirect("classes?course_id=" . $this->input->post('course_id'));
     }
 
@@ -704,117 +766,115 @@ class Classes extends CI_Controller {
     /**
      * this function to get post values and copy the class
      */
-    
-    public function find_date_diff($date1,$date2){
+    public function find_date_diff($date1, $date2) {
         $diff = abs(strtotime($date2) - strtotime($date1));
 
-        $years = floor($diff / (365*60*60*24));
-        $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-        $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+        $years = floor($diff / (365 * 60 * 60 * 24));
+        $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
+        $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
 
         return $days;
     }
+
     public function copy_classes() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
         extract($_POST);
-        if (!empty($class_hid)) {    
-            if($this->user->role_id != 'ADMN'){
-                $start_date_timestamp = date('Y-m-d', strtotime($this->input->post('start_date')));        
-                $today_date = strtotime(date('Y-m-d'));                                            
-                if($start_date_timestamp < $today_date){                       
+        if (!empty($class_hid)) {
+            if ($this->user->role_id != 'ADMN') {
+                $start_date_timestamp = date('Y-m-d', strtotime($this->input->post('start_date')));
+                $today_date = strtotime(date('Y-m-d'));
+                if ($start_date_timestamp < $today_date) {
                     $tax_error = "You donot have permission to create class with start date lesser than today's date. Please get in touch with your Administratot to make this change.";
-                    $this->copy_class($tax_error); 
+                    $this->copy_class($tax_error);
                     return;
-                }                                     
-            } 
-            
+                }
+            }
+
             ///////////////////////////////
 
-                $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_hid);
-                $data['course']=$coursedetails = $this->coursemodel->get_course_detailse($class->course_id);
-          
-                $start_date = date("Y-m-d", strtotime($this->input->post('start_date')));
-                $end_date = date("Y-m-d", strtotime($this->input->post('end_date')));
+            $data['class'] = $class = $this->classmodel->get_class_details_assmnts($tenant_id, $class_hid);
+            $data['course'] = $coursedetails = $this->coursemodel->get_course_detailse($class->course_id);
 
-                $old_class_date_diff = $this->find_date_diff($start_date,$end_date);
-                $new_class_date_diff = $this->find_date_diff(date("Y-m-d", strtotime($data['class']->class_start_datetime)),date("Y-m-d", strtotime($data['class']->class_end_datetime)));
-               
-                if($old_class_date_diff != $new_class_date_diff){
-                    $this->session->set_flashdata("error", "Unable to Copy! Since Class Date Mismatched!. Enter the correct Date Difference.");
-                    redirect('classes?course_id=' . $data['course']->course_id);
+            $start_date = date("Y-m-d", strtotime($this->input->post('start_date')));
+            $end_date = date("Y-m-d", strtotime($this->input->post('end_date')));
+
+            $old_class_date_diff = $this->find_date_diff($start_date, $end_date);
+            $new_class_date_diff = $this->find_date_diff(date("Y-m-d", strtotime($data['class']->class_start_datetime)), date("Y-m-d", strtotime($data['class']->class_end_datetime)));
+
+            if ($old_class_date_diff != $new_class_date_diff) {
+                $this->session->set_flashdata("error", "Unable to Copy! Since Class Date Mismatched!. Enter the correct Date Difference.");
+                redirect('classes?course_id=' . $data['course']->course_id);
+            }
+
+            $status = $this->classmodel->get_class_status($class_hid, '');
+            if ($status == 'Inactive') {
+                $data['deactivate_reason'] = ($class->deacti_reason != 'OTHERS') ? $this->coursemodel->get_metadata_on_parameter_id($class->deacti_reason) : 'Others (' . $class->deacti_reason_oth . ')';
+            }
+            if (!empty($class->class_copied_from)) {
+                $copied_user_details = $this->classmodel->get_user_details($tenant_id, $class->copied_by);
+                $data['copied_user'] = $copied_user_details->first_name . ' ' . $copied_user_details->last_name;
+                $data['copy_reason'] = ($class->copied_reason != 'OTHERS') ? $this->coursemodel->get_metadata_on_parameter_id($class->copied_reason) : 'Others (' . $class->copied_reason_oth . ')';
+            }
+            if ($status == 'Yet to Start')
+                $status_label = '<font color="green">Yet to Start</font>';
+            elseif ($status == 'Inactive')
+                $status_label = '<font color="red">Inactive</font>';
+            else if ($status == 'Completed')
+                $status_label = '<font color="red">Completed</font>';
+            else if ($status == 'In-Progress')
+                $status_label = '<font color="blue">In-Progress</font>';
+            else
+                $status_label = 'Unknown';
+            $data['class_status'] = $status_label;
+            $data['ClassPay'] = $this->coursemodel->get_metadata_on_parameter_id($class->class_pymnt_enrol);
+            $data['ClassLang'] = $this->coursemodel->get_metadata_on_parameter_id($class->class_language);
+            $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
+            $data['LabLoc'] = $this->get_classroom_location($class->lab_location, $class->lab_venue_oth);
+            $data['ClassTrainer'] = $this->classmodel->get_trainer_names($class->classroom_trainer);
+            $data['LabTrainer'] = $this->classmodel->get_trainer_names($class->lab_trainer);
+            $data['Assessor'] = $this->classmodel->get_trainer_names($class->assessor);
+            $data['TrainingAide'] = $this->classmodel->get_course_manager_names($class->training_aide);
+            $data['SalesExec'] = $this->classmodel->get_class_salesexec($tenant_id, $class->course_id, $class->sales_executive);
+            $data['class_schedule'] = $this->classmodel->get_all_class_schedules($tenant_id, $class_hid);
+            $def_assmnt = $this->classmodel->get_def_assessment_new($tenant_id, $class_hid, $class->assmnt_type);
+
+            $data['def_assessment'] = $def_assmnt;
+            $data['page_title'] = 'Class';
+            $data['classid'] = $class_hid;
+
+
+
+            $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
+            $tpg_response = $this->tpgModel->create_copy_courserun_tpg($tenant_id, $tenant->comp_reg_no, $data);
+            if ($tpg_response->status == 200) {
+                $tpg_course_run_id = $tpg_response->data->runs[0]->id;
+                $result = $this->classmodel->copy_classes($tenant_id, $data['course']->crse_name, $user_id, $data, $tpg_course_run_id);
+                if ($result['status'] == TRUE) {
+                    $ssg_data = $this->tpgModel->getCourseByRunId($tpg_course_run_id); //to get qr code details
+                    $st = $this->tpgModel->updateSsgData($result['classid'], $tpg_course_run_id, $ssg_data->data->course->run);
+                    $this->session->set_flashdata("success", "Class Copied successfully With Course Run ID: " . $tpg_course_run_id);
+                } else {
+                    $this->session->set_flashdata("error", "Unable to copy class. Please try again later.");
                 }
-               
-                $status = $this->classmodel->get_class_status($class_hid, '');
-                if ($status == 'Inactive') {
-                    $data['deactivate_reason'] = ($class->deacti_reason != 'OTHERS') ? $this->coursemodel->get_metadata_on_parameter_id($class->deacti_reason) : 'Others (' . $class->deacti_reason_oth . ')';
+                redirect('classes?course_id=' . $data['course']->course_id);
+            } else {
+                if ($tpg_response->status == 400) {
+                    $this->session->set_flashdata('error', "Oops! Bad request!");
+                } elseif ($tpg_response->status == 403) {
+                    $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
+                } elseif ($tpg_response->status == 404) {
+                    $this->session->set_flashdata('error', "Oops! Not Found!");
+                } elseif ($tpg_response->status == 500) {
+                    $this->session->set_flashdata('error', "Oops! Internal Error!!");
+                } else {
+                    $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
                 }
-                if (!empty($class->class_copied_from)) {
-                    $copied_user_details = $this->classmodel->get_user_details($tenant_id, $class->copied_by);
-                    $data['copied_user'] = $copied_user_details->first_name . ' ' . $copied_user_details->last_name;
-                    $data['copy_reason'] = ($class->copied_reason != 'OTHERS') ? $this->coursemodel->get_metadata_on_parameter_id($class->copied_reason) : 'Others (' . $class->copied_reason_oth . ')';
-                }
-                if ($status == 'Yet to Start')
-                    $status_label = '<font color="green">Yet to Start</font>';
-                elseif ($status == 'Inactive')
-                    $status_label = '<font color="red">Inactive</font>';
-                else if ($status == 'Completed')
-                    $status_label = '<font color="red">Completed</font>';
-                else if ($status == 'In-Progress')
-                    $status_label = '<font color="blue">In-Progress</font>';
-                else
-                    $status_label = 'Unknown';
-                $data['class_status'] = $status_label;
-                $data['ClassPay'] = $this->coursemodel->get_metadata_on_parameter_id($class->class_pymnt_enrol);
-                $data['ClassLang'] = $this->coursemodel->get_metadata_on_parameter_id($class->class_language);
-                $data['ClassLoc'] = $this->get_classroom_location($class->classroom_location, $class->classroom_venue_oth);
-                $data['LabLoc'] = $this->get_classroom_location($class->lab_location, $class->lab_venue_oth);
-                $data['ClassTrainer'] = $this->classmodel->get_trainer_names($class->classroom_trainer);
-                $data['LabTrainer'] = $this->classmodel->get_trainer_names($class->lab_trainer);
-                $data['Assessor'] = $this->classmodel->get_trainer_names($class->assessor);
-                $data['TrainingAide'] = $this->classmodel->get_course_manager_names($class->training_aide);
-                $data['SalesExec'] = $this->classmodel->get_class_salesexec($tenant_id, $class->course_id, $class->sales_executive);
-                $data['class_schedule'] = $this->classmodel->get_all_class_schedules($tenant_id, $class_hid);
-                $def_assmnt = $this->classmodel->get_def_assessment_new($tenant_id, $class_hid, $class->assmnt_type);
-                
-                $data['def_assessment'] = $def_assmnt;
-                $data['page_title'] = 'Class';
-                $data['classid'] = $class_hid;
-               
-            
-            
-                $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
-                $tpg_response = $this->tpgModel->create_copy_courserun_tpg($tenant_id,$tenant->comp_reg_no,$data);
-                if($tpg_response->status == 200){
-                    $tpg_course_run_id = $tpg_response->data->runs[0]->id;
-                    $result = $this->classmodel->copy_classes($tenant_id, $data['course']->crse_name, $user_id,$data,$tpg_course_run_id);
-                    if($result['status'] == TRUE) {
-                        $ssg_data = $this->tpgModel->getCourseByRunId($tpg_course_run_id);//to get qr code details
-                        $st = $this->tpgModel->updateSsgData($result['classid'],$tpg_course_run_id,$ssg_data->data->course->run);
-                        $this->session->set_flashdata("success", "Class Copied successfully With Course Run ID: ".$tpg_course_run_id); 
-                    } else {
-                        $this->session->set_flashdata("error", "Unable to copy class. Please try again later.");
-                    }
-                    redirect('classes?course_id=' . $data['course']->course_id);
-                }else{
-                    if($tpg_response->status == 400){
-                        $this->session->set_flashdata('error',"Oops! Bad request!");
-                    }elseif($tpg_response->status == 403){
-                        $this->session->set_flashdata('error',"Oops! Forbidden. Authorization information is missing or invalid.");
-                    }elseif($tpg_response->status == 404){
-                        $this->session->set_flashdata('error',"Oops! Not Found!");
-                    }elseif($tpg_response->status == 500){
-                        $this->session->set_flashdata('error',"Oops! Internal Error!!");
-                    }else{
-                        $this->session->set_flashdata('error',"TPG is not responding. Please, check back again."); 
-                    }
-                    $this->session->set_flashdata('resp_error',$tpg_response->error->details);
-                    
-                }
-                
+                $this->session->set_flashdata('resp_error', $tpg_response->error->details);
+            }
+
             ///////////////////////////////////        
-  
         }
         redirect("classes?course_id=" . $data['course']->course_id);
     }
@@ -822,6 +882,7 @@ class Classes extends CI_Controller {
     /*
      * This function copy's one class to another course.
      */
+
     public function copy_class($tax_error = "") {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
@@ -926,11 +987,11 @@ class Classes extends CI_Controller {
      * this function to get course classes on change json
      */
     public function get_course_classes_json() {
-        
+
         $tenantId = $this->tenant_id;
         $courseId = $this->input->post('course_id');
         $mark_attendance = $this->input->post('mark_attendance');
-        $course_classes = $this->classmodel->get_course_class($tenantId, $courseId, $mark_attendance,"ACTIVE","classTrainee");
+        $course_classes = $this->classmodel->get_course_class($tenantId, $courseId, $mark_attendance, "ACTIVE", "classTrainee");
         $classes_arr = array();
         foreach ($course_classes as $k => $v) {
             $classes_arr[] = array('key' => $k, 'value' => $v);
@@ -973,16 +1034,16 @@ class Classes extends CI_Controller {
             $name = $val->first_name . ' ' . $val->last_name;
             $salesexec_arr[] = array('key' => $val->user_id, 'value' => $name);
         }
-        $course_details = $this->coursemodel->get_course_detailse($courseId);        
-        $course_duration = $course_details->crse_duration;        
-        $course_manager = $course_details->crse_manager;    
-        $all_data_arr['crse_admin_email'] = $course_details->crse_admin_email;  
+        $course_details = $this->coursemodel->get_course_detailse($courseId);
+        $course_duration = $course_details->crse_duration;
+        $course_manager = $course_details->crse_manager;
+        $all_data_arr['crse_admin_email'] = $course_details->crse_admin_email;
         $all_data_arr['crse_ref_no'] = $course_details->reference_num;
         $all_data_arr['tpg_crse'] = $course_details->tpg_crse;
         $all_data_arr['languages'] = $languages_arr;
         $all_data_arr['salesexec'] = $salesexec_arr;
-        $all_data_arr['course_duration'] = $course_duration; 
-        $all_data_arr['course_manager'] = explode(",",$course_manager);
+        $all_data_arr['course_duration'] = $course_duration;
+        $all_data_arr['course_manager'] = explode(",", $course_manager);
         echo json_encode($all_data_arr);
         exit;
     }
@@ -1019,18 +1080,19 @@ class Classes extends CI_Controller {
     }
 
     ///added by shubhranshu to fetch the latest ssg sessions
-    public function get_ssg_session(){
+    public function get_ssg_session() {
         $tenant_id = $this->tenant_id;
         $CourseRunId = $this->input->post('crs_run_id');
         $classId = $this->input->post('class_id');
         $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
-        $class_details = $this->classmodel->get_class_details($tenant_id,$classId);
-        $crse_details=$this->coursemodel->get_course_detailse($class_details->course_id);
-        $tpg_response = $this->tpgModel->fetch_ssg_session($tenant_id,$CourseRunId,$classId,$tenant->comp_reg_no,$crse_details->crse_ref_no);
+        $class_details = $this->classmodel->get_class_details($tenant_id, $classId);
+        $crse_details = $this->coursemodel->get_course_detailse($class_details->course_id);
+        $tpg_response = $this->tpgModel->fetch_ssg_session($tenant_id, $CourseRunId, $classId, $tenant->comp_reg_no, $crse_details->crse_ref_no);
         echo $tpg_response;
     }
+
     ///added by shubhranshu to fetch all trainee asseessments
-    public function tpg_assessments(){
+    public function tpg_assessments() {
         $tenant_id = $this->tenant_id;
         $data['page_title'] = 'TPG Assessments';
         $data['sideMenuData'] = fetch_non_main_page_content();
@@ -1039,63 +1101,63 @@ class Classes extends CI_Controller {
         $class = $this->input->get('class');
         $userid = $this->input->get('nric');
         $searchAssessment = $this->input->get('searchAssessment');
-        if($searchAssessment == 'tpg'){
+        if ($searchAssessment == 'tpg') {
             $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
-            $class_details = $this->classmodel->get_class_details($tenant_id,$class);
-            $crse_details=$this->coursemodel->get_course_detailse($class_details->course_id);
-            $data['classes'] = $this->classmodel->get_course_class($tenant_id, $course, $mark_attendance,"ACTIVE","classTrainee");
-            $data['tabledata_tpg'] = $this->tpgModel->search_assessments($tenant_id,$tenant->comp_reg_no,$crse_details->crse_ref_no,$class_details->tpg_course_run_id);
+            $class_details = $this->classmodel->get_class_details($tenant_id, $class);
+            $crse_details = $this->coursemodel->get_course_detailse($class_details->course_id);
+            $data['classes'] = $this->classmodel->get_course_class($tenant_id, $course, $mark_attendance, "ACTIVE", "classTrainee");
+            $data['tabledata_tpg'] = $this->tpgModel->search_assessments($tenant_id, $tenant->comp_reg_no, $crse_details->crse_ref_no, $class_details->tpg_course_run_id);
             //print_r($data['tabledata_tpg']);exit;
-        }else{
+        } else {
             if (!empty($course) && !empty($class)) {
-                $data['tabledata']= $this->getTraineeForAssessments($course,$class,$userid);
-                $data['classes'] = $this->classmodel->get_course_class($tenant_id, $course, $mark_attendance,"ACTIVE","classTrainee");
-                $data['nric'] = $this->classmodel->get_Trainee_For_Assessments_json($tenant_id,$course,$class);
-
+                $data['tabledata'] = $this->getTraineeForAssessments($course, $class, $userid);
+                $data['classes'] = $this->classmodel->get_course_class($tenant_id, $course, $mark_attendance, "ACTIVE", "classTrainee");
+                $data['nric'] = $this->classmodel->get_Trainee_For_Assessments_json($tenant_id, $course, $class);
             }
         }
         $data['main_content'] = 'class/tpg_assessments';
         $this->load->view('layout', $data);
     }
+
     ///added by shubhranshu to get traine assessments
-    private function getTraineeForAssessments($courseID,$classID,$userid){
-        $tenant_id = $this->tenant_id;//
-        $trainees = $this->classmodel->get_Trainee_For_Assessments($tenant_id,$courseID,$classID,$userid);
+    private function getTraineeForAssessments($courseID, $classID, $userid) {
+        $tenant_id = $this->tenant_id; //
+        $trainees = $this->classmodel->get_Trainee_For_Assessments($tenant_id, $courseID, $classID, $userid);
         return $trainees;
     }
+
     ///added by shubhranshu to fetch trainee for assesssment json data
-    public function get_Trainee_For_Assessments_json(){
+    public function get_Trainee_For_Assessments_json() {
         $courseID = $this->input->post('course_id');
         $classID = $this->input->post('class_id');
         $tenant_id = $this->tenant_id;
-        $res = $this->classmodel->get_Trainee_For_Assessments_json($tenant_id,$courseID,$classID);
+        $res = $this->classmodel->get_Trainee_For_Assessments_json($tenant_id, $courseID, $classID);
         $classes_arr = array();
         foreach ($res as $k => $v) {
             $classes_arr[] = array('key' => $k, 'value' => $v);
         }
         echo json_encode($classes_arr);
     }
-    
-    public function autofill_venue_details(){
+
+    public function autofill_venue_details() {
         $class_venue = $this->input->post('class_venue');
         $ClassLoc = $this->get_classroom_location($class_venue, '');
-        $arr = explode(',',$ClassLoc);
-        $string = str_replace(' ', '-', $arr[count($arr)-1]); 
-        $postalcode =preg_replace('/[^0-9\-]/', '', $string); 
-        $output=array(
-            'block'=> $arr[1],
-            'street'=> $arr[2],
-            'building'=> $arr[3],
-            'floor'=> str_replace('#', '', $arr[4]),
-            'unit'=> $arr[5],
-            'postalcode'=> $postalcode,
-            'room'=> $arr[0]
+        $arr = explode(',', $ClassLoc);
+        $string = str_replace(' ', '-', $arr[count($arr) - 1]);
+        $postalcode = preg_replace('/[^0-9\-]/', '', $string);
+        $output = array(
+            'block' => $arr[1],
+            'street' => $arr[2],
+            'building' => $arr[3],
+            'floor' => str_replace('#', '', $arr[4]),
+            'unit' => $arr[5],
+            'postalcode' => $postalcode,
+            'room' => $arr[0]
         );
-            
-        
-        
+
+
+
         echo json_encode($output);
     }
-    
-   
+
 }
