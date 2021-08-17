@@ -735,7 +735,7 @@ if (!empty($tax_error)) {
         $deactivate_class = (!empty($label['deactivate'])) ? 'cancel_deactivate' : '';
         ?>
         <div class="button_class">
-            <?php if($class->tpg_course_run_id == ''){?><button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button><?php }?> &nbsp; &nbsp; 
+            <?php if($tpg_crse){?><button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button><?php }?> &nbsp; &nbsp; 
             <a href="#ex8" rel="modal:open" class="small_text <?php echo $deactivate_class; ?> check_deactivate" data-class="<?php echo $this->input->post('class_id'); ?>"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Delete</button></a> &nbsp; &nbsp; 
             
         </div>
