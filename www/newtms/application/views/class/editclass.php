@@ -328,27 +328,27 @@ if (!empty($tax_error)) {
                                 ?>
                                 &nbsp;</td>
                         </tr>
-                       
+                        <?php if($tpg_crse == '1') {?>
                         <tr>
-                        <td class="td_heading">TPGateway Course Run ID:</td>
-                        <td colspan="5">
-                            <?php
-                            $tpg_course_run_id = array(
-                                'name' => 'tpg_course_run_id',
-                                'id' => 'tpg_course_run_id',
-                                'value' => $class->tpg_course_run_id,
-                                'maxlength' => 60,
-                                'width' => '300px',
-                                "class" => 'upper_case'
-                            );
-                            echo form_input($tpg_course_run_id);
-                            ?>
-                            </span>
-                            <br>
-                            <span id="tpg_crse_err" class="tpg_crse_err"></span>
-                        </td>
-                    </tr>
-                    
+                            <td class="td_heading">TPGateway Course Run ID:</td>
+                            <td colspan="5">
+                                <?php
+                                $tpg_course_run_id = array(
+                                    'name' => 'tpg_course_run_id',
+                                    'id' => 'tpg_course_run_id',
+                                    'value' => $class->tpg_course_run_id,
+                                    'maxlength' => 60,
+                                    'width' => '300px',
+                                    "class" => 'upper_case'
+                                );
+                                echo form_input($tpg_course_run_id);
+                                ?>
+                                </span>
+                                <br>
+                                <span id="tpg_crse_err" class="tpg_crse_err"></span>
+                            </td>
+                        </tr>
+                        <?php } ?>
                         <tr>
                             <td colspan="2" class="td_heading">  
                                 <?php

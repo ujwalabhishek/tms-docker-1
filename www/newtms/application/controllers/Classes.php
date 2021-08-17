@@ -374,6 +374,10 @@ class Classes extends CI_Controller {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
+        
+        $course_details = $this->coursemodel->get_course_detailse($course_id);
+        $data['tpg_crse'] = $course_details->tpg_crse;
+        
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             extract($_POST);
             if ($this->classmodel->get_class_status($class_id) == 'Inactive') {
