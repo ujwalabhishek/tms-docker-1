@@ -387,7 +387,7 @@ class Classes extends CI_Controller {
                 
                 $course_details = $this->coursemodel->get_course_detailse($course_id);                
                 $data['tpg_crse'] = $course_details->tpg_crse;
-                echo print_r($data['tpg_crse']); exit;
+                echo print_r($data['tpg_crse'], true); exit;
                 $data['classid'] = $class_id;
                 $data['coursename'] = $this->coursemodel->course_name($course_id);
                 $data['classes'] = $this->classmodel->get_course_class_for_edit($tenant_id, $course_id);
