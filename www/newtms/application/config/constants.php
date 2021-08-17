@@ -157,6 +157,6 @@ define('FRCSMAILID', "nsadivya@mailinator.com");
 //Added by abdulla for TPG Gateway Environment variable
 
 //define('TPG_ENVIRONMENT', "PRODUCTION"); 
-define('TPG_ENVIRONMENT', "PRODUCTION");
+define('TPG_ENVIRONMENT', "DEVELOPEMENT");
 
-define('TPG_URL', "api.ssg-wsg.sg");
+define('TPG_URL', "uat-api.ssg-wsg.sg");

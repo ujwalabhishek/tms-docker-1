@@ -1133,14 +1133,14 @@ class Course extends CI_Controller {
 
         $course_reference_no = $this->input->post('course_reference_num');
 
-//        if ($course_reference_no) {
-//            $result = $this->course->get_course_by_reference_no($tenant_id, $course_reference_no);
-//            if (isset($result)) {
-//                $this->session->set_flashdata('error', "For the Course Reference Number - " . $course_reference_no . ", course is already registered on TMS with name " . $result);
-//
-//                redirect('course/add_new_tpg_course');
-//            }
-//        }
+        if ($course_reference_no) {
+            $result = $this->course->get_course_by_reference_no($tenant_id, $course_reference_no);
+            if (isset($result)) {
+                $this->session->set_flashdata('error', "For the Course Reference Number - " . $course_reference_no . ", course is already registered on TMS with name " . $result);
+
+                redirect('course/add_new_tpg_course');
+            }
+        }
 
         if ($this->input->post('course_reference_num')) {
 
