@@ -425,8 +425,10 @@ class Class_Trainee extends CI_Controller {
 
         if (empty($data['tabledata_tpg'])) {
             $data['error_msg'] = 'Kindly apply filter to fetch the trainees';
+            $this->session->set_flashdata('error', "Kindly, apply filter to fetch the trainees.");
         } else {
             $data['error_msg'] = 'Please Select a Filter to Display The Data.';
+            $this->session->set_flashdata('error', "Please, select a filter to display the data.");
         }
 
         $data['page_title'] = 'Class Trainee';
