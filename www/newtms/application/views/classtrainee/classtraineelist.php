@@ -402,7 +402,7 @@
                         }
                     } else {
                         $err_msg = $error_msg ? $error_msg : $err_msg; /// added by shubhranshu to remove the classtrainee list on 26/11/2018
-                        echo '<tr><td colspan="10" class="error" style="text-align: center">' . $err_msg . '</td></tr>';
+                        echo '<tr><td colspan="12" class="error" style="text-align: center">' . $err_msg . '</td></tr>';
                     }
                     ?>
                 </tbody>
