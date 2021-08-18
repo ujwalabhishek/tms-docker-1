@@ -4,7 +4,7 @@ $CI->load->model('course_model');
 $CI->load->model('class_model');
 $CI->load->model('settings_model');
 $class_status = $this->input->get('class_status');
-$role_array = array("COMPACT","TRAINER");                        
+$role_array = array("COMPACT", "TRAINER");
 ?>    
 <div class="col-md-10">
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course Detail</h2>   
@@ -12,12 +12,12 @@ $role_array = array("COMPACT","TRAINER");
         <div class="table-responsive">
             <table class="table table-striped">
                 <tbody>
-                        <tr>
-                         <td class="td_heading">Display on Landing Page:&nbsp;&nbsp;
-                             <label class="label_font" style="color:blue"><b>
-                                <?php echo ($course_data->display_on_portal == 1)?'Yes':'No';?></b>
+                    <tr>
+                        <td class="td_heading">Display on Landing Page:&nbsp;&nbsp;
+                            <label class="label_font" style="color:blue"><b>
+                                    <?php echo ($course_data->display_on_portal == 1) ? 'Yes' : 'No'; ?></b>
                             </label>
-                       </td>
+                        </td>
                         <?php
                         $div_class = 'green';
                         $div_colspan = '3';
@@ -32,11 +32,11 @@ $role_array = array("COMPACT","TRAINER");
                                     <b><?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($course_data->crse_status), ', '); ?></b>                                
                                 </span>
                             </label>
-                           <?php if ($course_data->crse_status == 'INACTIV') { ?>
+                            <?php if ($course_data->crse_status == 'INACTIV') { ?>
                                 De-activation Reason:
-                                 <label class="label_font">
+                                <label class="label_font">
                                     <span class="<?php echo $div_class; ?>">
-                                        <?php                                        
+                                        <?php
                                         if ($course_data->deacti_reason == 'OTHERS') {
                                             echo $course_data->deacti_reason_oth;
                                         } else {
@@ -46,7 +46,7 @@ $role_array = array("COMPACT","TRAINER");
                                     </span>
                                 </label>
                             <?php } ?>
-                          </td> 
+                        </td> 
                     </tr>
                     <tr>
                         <td class="td_heading" width="28%">Course Name:<span class="required">*</span></td>
@@ -87,7 +87,7 @@ $role_array = array("COMPACT","TRAINER");
                             if ($gst_rates->gst_rate != false) {
                                 $gst = number_format($gst_rates->gst_rate, 2);
                                 echo form_label("$gst %", '', $gst_rates_attributes);
-                            }else
+                            } else
                                 echo form_label("GST-Not Defined", '', $gst_rates_attributes);
                             ?>
                         </td>
@@ -148,7 +148,7 @@ $role_array = array("COMPACT","TRAINER");
                             ?>              
                             <?php echo form_radio($before_subsidy); ?>Apply GST before SUBSIDY. &nbsp;&nbsp; 
                             <?php echo form_radio($after_subsidy); ?> Apply GST after SUBSIDY.                               
-                        </td>                          
+                        </td>
                     </tr>
                     <tr>
                         <td class="td_heading">Course Duration (in hrs):<span class="required">*</span></td>
@@ -156,14 +156,14 @@ $role_array = array("COMPACT","TRAINER");
                         <td class="td_heading">Course Reference Number:<span class="required">*</span></td>
                         <td><label class="label_font"><?php echo $course_data->reference_num; ?></label></td>                        
                     </tr>
-                     <tr>
-                        
-                        <td class="td_heading">External Reference Number:<span class="required">*</span></td>
-                        <td><label class="label_font"><?php echo $course_data->external_reference_number; ?></label></td> 
-                        <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
-                        <td><label class="label_font"><?php echo $course_data->crse_admin_email; ?></label></td> 
-                    </tr>
-                    
+                    <?php if ($course_data->tpg_crse) { ?>
+                        <tr>
+                            <td class="td_heading">External Reference Number:<span class="required">*</span></td>
+                            <td><label class="label_font"><?php echo $course_data->external_reference_number; ?></label></td> 
+                            <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
+                            <td><label class="label_font"><?php echo $course_data->crse_admin_email; ?></label></td> 
+                        </tr>
+                    <?php } ?>
                     <tr>                        
                         <td class="td_heading">Course Competency Code:<span class="required">*</span></td>
                         <td><label class="label_font"><?php echo $course_data->competency_code; ?></label></td>
@@ -182,7 +182,7 @@ $role_array = array("COMPACT","TRAINER");
                             </label>
                         </td>
                     </tr>
-                  <tr>                        
+                    <tr>                        
                         <td class="td_heading">Course Description:<span class="required">*</span></td>
                         <td colspan="3">
                             <div class="table-responsive payment_scroll" style="height: 87px;min-height: 87px;">
@@ -192,39 +192,39 @@ $role_array = array("COMPACT","TRAINER");
                             </div>
                         </td>
                     </tr>
-                    <?php if(!in_array($this->session->userdata('userDetails')->role_id,$role_array)) { ?>
-                    <tr>
-                        <td class="td_heading">Default Sales Commission Rate:<span class="required">*</span></td>
-                        <td colspan="3"><label class="label_font"><?php echo number_format($course_data->default_commission_rate,2,'.',''); ?>&nbsp;%</label></td>
-                    </tr>
-                    <tr>
-                        <td class="td_heading">Sales Executive:<span class="required">*</span></td>
-                        <td colspan="3"><label class="label_font"><?php echo $sales_exec; ?></label></td>
-                    </tr>
+                    <?php if (!in_array($this->session->userdata('userDetails')->role_id, $role_array)) { ?>
+                        <tr>
+                            <td class="td_heading">Default Sales Commission Rate:<span class="required">*</span></td>
+                            <td colspan="3"><label class="label_font"><?php echo number_format($course_data->default_commission_rate, 2, '.', ''); ?>&nbsp;%</label></td>
+                        </tr>
+                        <tr>
+                            <td class="td_heading">Sales Executive:<span class="required">*</span></td>
+                            <td colspan="3"><label class="label_font"><?php echo $sales_exec; ?></label></td>
+                        </tr>
                     <?php } ?>
-                    <?php if($course_data->copied_from_id) { ?>
-                    <tr>
-                        <td class="td_heading">                            
-                            <label>
-                                Remarks: 
-                            </label>                            
-                        </td>
-                        <td>
-                            Course Copied from <?php echo $this->course->course_name($course_data->copied_from_id); ?>
-                        </td>
-                        <td>
-                            <label>
-                                Copy Reason:
-                            </label>
-                        </td>
-                        <td>
-                            <?php echo $course_data->copy_reason; ?>
-                        </td>
-                    </tr>
+                    <?php if ($course_data->copied_from_id) { ?>
+                        <tr>
+                            <td class="td_heading">                            
+                                <label>
+                                    Remarks: 
+                                </label>                            
+                            </td>
+                            <td>
+                                Course Copied from <?php echo $this->course->course_name($course_data->copied_from_id); ?>
+                            </td>
+                            <td>
+                                <label>
+                                    Copy Reason:
+                                </label>
+                            </td>
+                            <td>
+                                <?php echo $course_data->copy_reason; ?>
+                            </td>
+                        </tr>
                     <?php } ?>
                     <tr>
                         <td colspan="2" width="55%">Does this course have a validity period? 
-                             &nbsp; &nbsp;
+                            &nbsp; &nbsp;
                             <input name="1" type='radio' <?php if ($course_data->crse_cert_validity != 0) { ?> checked <?php } ?> disabled='disabled' />Yes &nbsp;&nbsp;
                             <input name="1" type='radio' <?php if ($course_data->crse_cert_validity == 0) { ?> checked <?php } ?> disabled='disabled'/>No &nbsp;&nbsp; 
                             <?php
@@ -259,7 +259,7 @@ $role_array = array("COMPACT","TRAINER");
         </div>
         <h2 class="sub_panel_heading_style">
             <img src="<?php echo base_url(); ?>/assets/images/company-detail.png" /> Class List
-            <?php if (!empty($tabledata) && !in_array($this->session->userdata('userDetails')->role_id,$role_array)){ ?>                
+            <?php if (!empty($tabledata) && !in_array($this->session->userdata('userDetails')->role_id, $role_array)) { ?>                
                 <a href="<?php echo base_url() . 'course/export_course_class_full' . $export_url; ?>" id="sales_exec_addmore" class="label label-default push_right black-btn mar-right">
                     <span class="glyphicon glyphicon-export"></span> Export to XLS 
                 </a> 
@@ -332,17 +332,17 @@ $role_array = array("COMPACT","TRAINER");
                             $status_label = '<font color="red">Completed</font>';
                         else
                             $status_label = '<font color="blue">In-Progress</font>';
-                        
+
                         $booked = $CI->class_model->get_class_booked($data['course_id'], $data['class_id'], $this->session->userdata('userDetails')->tenant_id);
-                        if($this->session->userdata('userDetails')->role_id == 'COMPACT') {                            
-                            $booked_count_in_my_company = $CI->class_model->get_class_booked_count($data['course_id'], $data['class_id'], $this->session->userdata('userDetails')->tenant_id);                            
+                        if ($this->session->userdata('userDetails')->role_id == 'COMPACT') {
+                            $booked_count_in_my_company = $CI->class_model->get_class_booked_count($data['course_id'], $data['class_id'], $this->session->userdata('userDetails')->tenant_id);
                         }
                         $available = $data['total_seats'] - $booked;
                         echo ($data['class_status'] == 'INACTIV') ? '<tr class="danger">' : '<tr>';
                         ?>
                     <td>
                         <a href="<?php echo base_url() . 'classes/view_class/' . $data['class_id']; ?>">
-                        <?php echo $data['class_id']; ?></a>
+                            <?php echo $data['class_id']; ?></a>
                         <?php echo ($data['class_pymnt_enrol'] == 'PAENROL') ? '<span style="color:red;"> **</span>' : ''; ?>
                     </td>
                     <td><?php echo $data['class_name']; ?></td>
@@ -355,34 +355,33 @@ $role_array = array("COMPACT","TRAINER");
                                     <?php
                                     if ($booked == 0) {
                                         echo $booked;
-                                    }else {
-                                        if ($this->session->userdata('userDetails')->role_id == 'ADMN'){
-                                             echo '<a href="'.base_url() . 'classes/seats_booked/' . $data['class_id'].'">'.$booked.'</a>';                                                                                     
-                                        }else if($this->session->userdata('userDetails')->role_id == 'CRSEMGR'){
+                                    } else {
+                                        if ($this->session->userdata('userDetails')->role_id == 'ADMN') {
+                                            echo '<a href="' . base_url() . 'classes/seats_booked/' . $data['class_id'] . '">' . $booked . '</a>';
+                                        } else if ($this->session->userdata('userDetails')->role_id == 'CRSEMGR') {
                                             $manager_array = explode(",", $course_data->crse_manager);
-                                            if(in_array($this->session->userdata('userDetails')->user_id, $manager_array)){
-                                                echo '<a href="'.base_url() . 'classes/seats_booked/' . $data['class_id'].'">'.$booked.'</a>';
-                                            }else{
-                                                 echo $booked;
+                                            if (in_array($this->session->userdata('userDetails')->user_id, $manager_array)) {
+                                                echo '<a href="' . base_url() . 'classes/seats_booked/' . $data['class_id'] . '">' . $booked . '</a>';
+                                            } else {
+                                                echo $booked;
                                             }
-                                        }else if($this->session->userdata('userDetails')->role_id == 'TRAINER'){
+                                        } else if ($this->session->userdata('userDetails')->role_id == 'TRAINER') {
                                             $trainer_array = explode(",", $data['classroom_trainer']);
-                                            if(in_array($this->session->userdata('userDetails')->user_id, $trainer_array)){
-                                                echo '<a href="'.base_url() . 'classes/seats_booked/' . $data['class_id'].'">'.$booked.'</a>';
-                                            }else{
-                                                 echo $booked;
+                                            if (in_array($this->session->userdata('userDetails')->user_id, $trainer_array)) {
+                                                echo '<a href="' . base_url() . 'classes/seats_booked/' . $data['class_id'] . '">' . $booked . '</a>';
+                                            } else {
+                                                echo $booked;
                                             }
-                                         }else if ($this->session->userdata('userDetails')->role_id == 'COMPACT'){
-                                            if(empty ($booked_count_in_my_company)){ 
-                                              echo '<a class="small_text1 no_class" rel="modal:open" href="#alert">'.$booked.'</a>';
+                                        } else if ($this->session->userdata('userDetails')->role_id == 'COMPACT') {
+                                            if (empty($booked_count_in_my_company)) {
+                                                echo '<a class="small_text1 no_class" rel="modal:open" href="#alert">' . $booked . '</a>';
+                                            } else {
+                                                echo '<a href="' . base_url() . 'classes/seats_booked/' . $data['class_id'] . '">' . $booked . '</a>';
                                             }
-                                            else{
-                                               echo '<a href="'.base_url() . 'classes/seats_booked/' . $data['class_id'].'">'.$booked.'</a>';
-                                            }
-                                         }else {
+                                        } else {
                                             echo $booked;
-                                         }
-                                     }
+                                        }
+                                    }
                                     ?>
                                 </td>
                                 <td width="35%" align="center"><?php echo ($available > 0 ) ? $available : 0; ?></td>
@@ -399,9 +398,9 @@ $role_array = array("COMPACT","TRAINER");
                 $note = '<span style="color:red">** Over Booking Allowed</span>';
             } else {
                 $note = '';
-                if($this->data['user']->role_id == 'TRAINER'){
+                if ($this->data['user']->role_id == 'TRAINER') {
                     echo "<td colspan='10' class='error' style='text-align:center;'>You are not assigned as Trainer to any of the classes of this course.</td>";
-                }else{
+                } else {
                     echo "<td colspan='10' class='error' style='text-align:center;'>There are no classes available.</td>";
                 }
             }
@@ -428,14 +427,14 @@ $role_array = array("COMPACT","TRAINER");
 <div class="alert" id="alert" style="display:none;max-height: 200px">
     <h2 class="panel_heading_style">Warning</h2>
     <div style="text-align:center" class="error1">
-    <img src="<?php echo base_url(); ?>assets/images/alert.png"  alt="Warning" />
-    There are no employees enrolled in this class from your organisation.</div>
+        <img src="<?php echo base_url(); ?>assets/images/alert.png"  alt="Warning" />
+        There are no employees enrolled in this class from your organisation.</div>
     <div class="popup_cancel11">
         <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Close</button></a>
     </div>
 </div>
 <script type="text/javascript">
-    $("#class_status").change(function() {
+    $("#class_status").change(function () {
         $('#search_form').submit();
     });
 </script>    
