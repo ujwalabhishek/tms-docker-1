@@ -84,7 +84,7 @@ $role_array = array("COMPACT");
                                 }
                                 ?></label></td>
                     </tr>
-                   
+                   <?php if($tpg_crse) { ?>
                     <tr>
                         <td class="td_heading">TPGateway Course Run ID:</td>
                         <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_course_run_id; ?></label></td>
@@ -93,6 +93,7 @@ $role_array = array("COMPACT");
                         <td class="td_heading">TPGateway QR-Code Link:</td>
                         <td colspan="5"><label class="label_font" id='crs_run_id'><a href='<?php echo $class->tpg_qr_code; ?>' target="_blank"><?php echo $class->tpg_qr_code; ?></a></label></td>
                     </tr>
+                    <?php } ?>
                     <tr>
                         <td class="td_heading">Class Language:</td>
                         <td ><?php echo rtrim($ClassLang, ', '); ?></td>
@@ -172,7 +173,12 @@ $role_array = array("COMPACT");
     <div style="clear:both;"></div><br>
     <div class="row marketing">
         <div class="col-lg-6">
-           <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule <a class="small_text" rel="modal:open" href="#view_ssg_session_modal" id='view_ssg_session' style='float:right;cursor:pointer;color:blue;'>View TPG Sessions</a></h4> 
+           <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule 
+               <?php if($tpg_crse) { ?>
+                    <a class="small_text" rel="modal:open" href="#view_ssg_session_modal" id='view_ssg_session' style='float:right;cursor:pointer;color:blue;'>View TPG Sessions
+                    </a>
+               <?php } ?>
+           </h4> 
             <p>
             <div class="scroll_schedule">
                 <div class="table-responsive">

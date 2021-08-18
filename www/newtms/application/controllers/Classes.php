@@ -531,6 +531,7 @@ class Classes extends CI_Controller {
             }
             $cdef_assmnt = $assmnt;
         }
+        $data['tpg_crse'] = $coursedetails->tpg_crse;
         $data['def_assessment'] = $cdef_assmnt;
         $data['page_title'] = 'Class';
         $data['classid'] = $class_id;
