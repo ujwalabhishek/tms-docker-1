@@ -7681,7 +7681,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         }
 
         //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
-        $this->db->select('c.course_id , c.crse_name, 
+        $this->db->select('c.course_id , c.crse_name,
  cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
  ce . pymnt_due_id ,ce.enrolment_mode, ce.enrolment_type, ce.company_id,ce.friend_id,ce.referral_details, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
@@ -12906,7 +12906,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         }
 
         //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
-        $this->db->select('c.course_id , c.crse_name, 
+        $this->db->select('c.course_id , c.crse_name, c.tpg_crse,
  cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
  ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode, ce.company_id,ce.referral_details,ce.eid_number, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
