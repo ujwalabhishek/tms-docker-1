@@ -247,7 +247,7 @@
                         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         if ($tenant_id == 'T01') {
                             ?>
-                                                                                       <th width="10%" class="th_header">Sales Executive</th>
+                                                                                           <th width="10%" class="th_header">Sales Executive</th>
                         <?php } ?>-->
                         <th width="8%" class="th_header">Sales Executive</th>
                         <th width="6%" class="th_header">Certi. Coll.</th>
@@ -334,10 +334,10 @@
                                 <td><?php echo $row['enroll_mode'] ?></td>
 
                                 <!--<?php if ($tenant_id == 'T01') { ?>
-                                                                                               <td><?php echo $salesList; //implode("<br>",$salesList).                ?></td>
+                                                                                                   <td><?php echo $salesList; //implode("<br>",$salesList).                 ?></td>
                                 <?php } ?>-->
 
-                                <td><?php echo $salesList; //implode("<br>",$salesList).                ?></td>
+                                <td><?php echo $salesList; //implode("<br>",$salesList).                 ?></td>
                                 <td><?php echo $row['certi_coll']; ?></td>
                                 <td><?php
                                     echo $row['status_text'] . '<br />' . $row['end_class'] . '<br />'
@@ -346,59 +346,61 @@
                                 </td>
                                 <td><?php echo $row['paid']; ?></td>
                                 <td><?php echo $row['action_link']; ?></td>
-                                <?php if($row['tpg_crse']) {?>
                                 <td>
-                                    <?php
-                                    $atr = 'id="tpg_form" name="tpg_form" method="post"';
-                                    echo form_open("tp_gateway/send_trainee_enrolment_data_tpg", $atr);
-                                    ?>
-                                    <input type="hidden" name="courseRunId" value="<?php echo $row['tpg_course_run_id']; ?>" id="courseRunId">
-                                    <input type="hidden" name="courseReferenceNumber" value="<?php echo $row['reference_num']; ?>" id="courseReferenceNumber">
-                                    <input type="hidden" name="userId" value="<?php echo $row['user_id']; ?>" id="userId">
-                                    <input type="hidden" name="enrolmentMode" value="<?php echo $row['enrolment_mode']; ?>" id="enrolmentMode">
-                                    <input type="hidden" name="paymentStatus" value="<?php echo $row['payment_status']; ?>" id="paymentStatus">
-                                    <input type="hidden" name="companyId" value="<?php echo $row['company_id']; ?>" id="companyId">
-                                    <input type="hidden" name="feeDiscountAmount" value="<?php echo $row['feeDiscountAmount']; ?>" id="feeDiscountAmount">
-
-                                    <input type="hidden" name="courseId" value="<?php echo $row['course_id']; ?>" id="courseId">
-                                    <input type="hidden" name="classId" value="<?php echo $row['class_id']; ?>" id="classId">
-
-                                    <?php
-                                    $enrolmentReferenceNumber = $row['enrolmentReferenceNumber'];
-                                    $feecollectionStatus = $row['feecollectionStatus_options'];
-                                    $feecollectionStatus_val = $row['feecollectionStatus_val'];
-                                    $enrolmentStatus = $row['enrolmentStatus'];
-
-                                    $tmsUserId = $row['user_id'];
-                                    $tmsPaymentStatus = $row['payment_status'];
-                                    $tpgCourseId = $row['course_id'];
-                                    $tpgClassId = $row['class_id'];
-
-                                    $editEnrolmentAction = $row['editEnrolmentAction'];
-                                    if (empty($enrolmentReferenceNumber)) {
-                                        ?>
-                                        <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
-                                        <br>
+                                    <?php if ($row['tpg_crse']) { ?>
                                         <?php
-                                    }
-                                    echo form_close();
-                                    ?>                                    
-                                    <?php
-                                    if ($enrolmentReferenceNumber != '') {
-                                        ?>                        
-                                        <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>"><button class="btnblue">View Enrolment</button></a>
-                                        <br>
-                                        <?php if ($enrolmentStatus == "Cancelled") { ?>
-                                            <span style="color:red"><i>This enrolment is Cancelled.</i></span>
-                                        <?php } ?>
-                                        <?php if ($enrolmentStatus == "Confirmed") { ?>
-                                            <a href="javascript:;" class="edit_enrolment" data-class="<?php echo $tpgClassId; ?>" data-course="<?php echo $tpgCourseId; ?>" data-user="<?php echo $tmsUserId; ?>" data-paymentstatus="<?php echo $tmsPaymentStatus; ?>" data-enrolrefnum="<?php echo $enrolmentReferenceNumber; ?>"><button type="button" class="btnblue">Edit Enrolment</button></a>
+                                        $atr = 'id="tpg_form" name="tpg_form" method="post"';
+                                        echo form_open("tp_gateway/send_trainee_enrolment_data_tpg", $atr);
+                                        ?>
+                                        <input type="hidden" name="courseRunId" value="<?php echo $row['tpg_course_run_id']; ?>" id="courseRunId">
+                                        <input type="hidden" name="courseReferenceNumber" value="<?php echo $row['reference_num']; ?>" id="courseReferenceNumber">
+                                        <input type="hidden" name="userId" value="<?php echo $row['user_id']; ?>" id="userId">
+                                        <input type="hidden" name="enrolmentMode" value="<?php echo $row['enrolment_mode']; ?>" id="enrolmentMode">
+                                        <input type="hidden" name="paymentStatus" value="<?php echo $row['payment_status']; ?>" id="paymentStatus">
+                                        <input type="hidden" name="companyId" value="<?php echo $row['company_id']; ?>" id="companyId">
+                                        <input type="hidden" name="feeDiscountAmount" value="<?php echo $row['feeDiscountAmount']; ?>" id="feeDiscountAmount">
+
+                                        <input type="hidden" name="courseId" value="<?php echo $row['course_id']; ?>" id="courseId">
+                                        <input type="hidden" name="classId" value="<?php echo $row['class_id']; ?>" id="classId">
+
+                                        <?php
+                                        $enrolmentReferenceNumber = $row['enrolmentReferenceNumber'];
+                                        $feecollectionStatus = $row['feecollectionStatus_options'];
+                                        $feecollectionStatus_val = $row['feecollectionStatus_val'];
+                                        $enrolmentStatus = $row['enrolmentStatus'];
+
+                                        $tmsUserId = $row['user_id'];
+                                        $tmsPaymentStatus = $row['payment_status'];
+                                        $tpgCourseId = $row['course_id'];
+                                        $tpgClassId = $row['class_id'];
+
+                                        $editEnrolmentAction = $row['editEnrolmentAction'];
+                                        if (empty($enrolmentReferenceNumber)) {
+                                            ?>
+                                            <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
                                             <br>
-                                            <a href="javascript:;" class="abd" data-classfee="<?php echo $tpgClassId; ?>" data-coursefee="<?php echo $tpgCourseId; ?>" data-enrolrefnumfee="<?php echo $enrolmentReferenceNumber; ?>" data-paymentstatusfee="<?php echo $tmsPaymentStatus; ?>" data-feecollectval="<?php echo $feecollectionStatus_val; ?>"><button type="button" class="btnblue">Update Fee</button></a>
+                                            <?php
+                                        }
+                                        echo form_close();
+                                        ?>                                    
+                                        <?php
+                                        if ($enrolmentReferenceNumber != '') {
+                                            ?>                        
+                                            <a href="<?php echo base_url() . 'tp_gateway/view_enrolment_tpg/' . $enrolmentReferenceNumber; ?>"><button class="btnblue">View Enrolment</button></a>
+                                            <br>
+                                            <?php if ($enrolmentStatus == "Cancelled") { ?>
+                                                <span style="color:red"><i>This enrolment is Cancelled.</i></span>
+                                            <?php } ?>
+                                            <?php if ($enrolmentStatus == "Confirmed") { ?>
+                                                <a href="javascript:;" class="edit_enrolment" data-class="<?php echo $tpgClassId; ?>" data-course="<?php echo $tpgCourseId; ?>" data-user="<?php echo $tmsUserId; ?>" data-paymentstatus="<?php echo $tmsPaymentStatus; ?>" data-enrolrefnum="<?php echo $enrolmentReferenceNumber; ?>"><button type="button" class="btnblue">Edit Enrolment</button></a>
+                                                <br>
+                                                <a href="javascript:;" class="abd" data-classfee="<?php echo $tpgClassId; ?>" data-coursefee="<?php echo $tpgCourseId; ?>" data-enrolrefnumfee="<?php echo $enrolmentReferenceNumber; ?>" data-paymentstatusfee="<?php echo $tmsPaymentStatus; ?>" data-feecollectval="<?php echo $feecollectionStatus_val; ?>"><button type="button" class="btnblue">Update Fee</button></a>
+                                            <?php } ?>
                                         <?php } ?>
+                                    <?php } else { ?>
+                                        <span style="color:red"><i>This is a non - tpg course.</i></span>
                                     <?php } ?>
                                 </td>
-                        <?php } ?>
                             </tr>
                             <?php
                         }
@@ -547,34 +549,34 @@ echo form_open("tp_gateway/update_fee_collection_tpg", $atr);
         //$('#fee_collectionStatus').val($feecollectst);
         //$('#fee_collectionStatus').val($feecollectval);
         //$('#fee_collectionStatus').prop('selected').val($feecollectval);
-        
+
         $("#fee_collectionStatus").empty();
         if (paymentstatusfee == 'PAID') {
-           var myOptions = {
-                '' : 'Select',
+            var myOptions = {
+                '': 'Select',
                 'Pending Payment': 'Pending Payment',
                 'Partial Payment': 'Partial Payment',
                 'Full Payment': 'Full Payment',
                 'Cancelled': 'Cancelled'
             };
         } else {
-          var myOptions = {
-                '' : 'Select',
+            var myOptions = {
+                '': 'Select',
                 'Pending Payment': 'Pending Payment',
-                'Partial Payment': 'Partial Payment',                
+                'Partial Payment': 'Partial Payment',
                 'Cancelled': 'Cancelled'
             };
         }
-        
+
         var mySelect = $('#fee_collectionStatus');
         //if ($('#fee_collectionStatus option[value=""]').length == 0) {
-            $.each(myOptions, function (val, text) {
-                mySelect.append(
-                        $('<option></option>').val(val).html(text)
-                        );
-            });
+        $.each(myOptions, function (val, text) {
+            mySelect.append(
+                    $('<option></option>').val(val).html(text)
+                    );
+        });
         //}
-        $("#fee_collectionStatus").val($feecollectval);        
+        $("#fee_collectionStatus").val($feecollectval);
 
         $('#abd').modal();
     });
@@ -745,11 +747,11 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                         ?>                    
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td class="td_heading">Feedback Score:</td>
                     <td>                    
                         <?php
-                        $feedback_score = array('' => 'Select', '10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50,'60' => 60, '70' => 70, '80' => 80, '90' => 90, '100' => 100);
+                        $feedback_score = array('' => 'Select', '10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50, '60' => 60, '70' => 70, '80' => 80, '90' => 90, '100' => 100);
                         $feedback_score_attr = 'id="feedback_score" "required"';
                         echo form_dropdown('FSCORE', $feedback_score, '', $feedback_score_attr);
                         ?>   
@@ -759,7 +761,7 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                     <td class="td_heading">Feedback Grade:</td>
                     <td>                    
                         <?php
-                        $feedback_grade = array('' => 'Select', 'A' => 'A', 'B' => 'B', 'C' =>'C', 'D' => 'D', 'E' => 'E','F' => 'F');
+                        $feedback_grade = array('' => 'Select', 'A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F');
                         $feedback_grade_attr = 'id="feedback_grade" "required"';
                         echo form_dropdown('FGRADE', $feedback_grade, '', $feedback_grade_attr);
                         ?>   
