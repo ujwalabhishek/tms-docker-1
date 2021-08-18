@@ -421,11 +421,7 @@ class Class_Trainee extends CI_Controller {
             $decrypted_output = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
             $tpg_response = json_decode($decrypted_output);
-            
-            echo "URL : ".print_r($url, true); 
-            echo "Payload : ".print_r($tpg_search_json_data, true);
-            echo "Response : ".print_r($tpg_response, true); exit;
-            
+                        
             if ($tpg_response->status == 200) {
                 $data['tabledata_tpg'] = $tpg_response;
             } else {
