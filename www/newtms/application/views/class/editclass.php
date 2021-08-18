@@ -2,7 +2,7 @@
 $CI = & get_instance();
 $CI->load->model('course_model');
 $CI->load->model('class_model');
-if (!empty($tax_error)) { 
+if (!empty($tax_error)) {
     echo '<div class="error1">' . $tax_error . '</div>';
 }
 ?>
@@ -10,7 +10,7 @@ if (!empty($tax_error)) {
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
     $js_class_status = '<?php echo $js_class_status; ?>';
-     $js_tenant = '<?php echo TENANT_ID; ?>';
+    $js_tenant = '<?php echo TENANT_ID; ?>';
 </script>
 <script>
     $trainee_enroll = <?php echo json_encode($trainee_enrolled); ?>;
@@ -72,8 +72,8 @@ if (!empty($tax_error)) {
                         foreach ($classes as $k => $v) {
                             $class_options[$k] = $v;
                         }
-                        if(!$classid)
-                            $classid='';
+                        if (!$classid)
+                            $classid = '';
                         echo form_dropdown('class_id', $class_options, $this->input->post('class_id'), $class_js, set_value('class_id', $classid));
                         ?>
                         <span id="class_id_err"></span>
@@ -145,16 +145,16 @@ if (!empty($tax_error)) {
                                     'style' => $style,
                                     'value' => date('d-m-Y', strtotime($class->class_start_datetime)),
                                 );
-                                
+
                                 $start_date_hidden = array(
                                     'name' => 'start_date_hidden',
                                     'id' => 'start_date_hidden',
                                     'readonly' => 'readonly',
                                     'style' => "display:none",
-                                    'value' => date('d-m-Y',strtotime($class->class_start_datetime)),
+                                    'value' => date('d-m-Y', strtotime($class->class_start_datetime)),
                                 );
                                 echo form_input($start_date_hidden);
-                                
+
                                 echo form_input($start_date);
                                 echo $style_attr;
                                 if (!empty($label['start'])) {
@@ -328,26 +328,26 @@ if (!empty($tax_error)) {
                                 ?>
                                 &nbsp;</td>
                         </tr>
-                        <?php if($tpg_crse) {?>
-                        <tr>
-                            <td class="td_heading">TPGateway Course Run ID:</td>
-                            <td colspan="5">
-                                <?php
-                                $tpg_course_run_id = array(
-                                    'name' => 'tpg_course_run_id',
-                                    'id' => 'tpg_course_run_id',
-                                    'value' => $class->tpg_course_run_id,
-                                    'maxlength' => 60,
-                                    'width' => '300px',
-                                    "class" => 'upper_case'
-                                );
-                                echo form_input($tpg_course_run_id);
-                                ?>
-                                </span>
-                                <br>
-                                <span id="tpg_crse_err" class="tpg_crse_err"></span>
-                            </td>
-                        </tr>
+                        <?php if ($tpg_crse) { ?>
+                            <tr>
+                                <td class="td_heading">TPGateway Course Run ID:</td>
+                                <td colspan="5">
+                                    <?php
+                                    $tpg_course_run_id = array(
+                                        'name' => 'tpg_course_run_id',
+                                        'id' => 'tpg_course_run_id',
+                                        'value' => $class->tpg_course_run_id,
+                                        'maxlength' => 60,
+                                        'width' => '300px',
+                                        "class" => 'upper_case'
+                                    );
+                                    echo form_input($tpg_course_run_id);
+                                    ?>
+                                    </span>
+                                    <br>
+                                    <span id="tpg_crse_err" class="tpg_crse_err"></span>
+                                </td>
+                            </tr>
                         <?php } ?>
                         <tr>
                             <td colspan="2" class="td_heading">  
@@ -364,7 +364,6 @@ if (!empty($tax_error)) {
                             <td class="td_heading">Class Language:<span class="required">*</span></td>
                             <td colspan="3">
                                 <?php
-                                
                                 if (!empty($label['language'])) {
                                     $style = '';
 
@@ -383,14 +382,14 @@ if (!empty($tax_error)) {
                                 ?>
                                 <span id="languages_err"></span>
                             </td>
-<!--                            <td class="td_heading">Sales Executive:</td>
+    <!--                            <td class="td_heading">Sales Executive:</td>
                             <td><?php
-                                $sales_exec_options[''] = 'Select';
-                                foreach ($salesexec as $k => $v) {
-                                    $sales_exec_options[$k] = $v;
-                                }
-                                $sales_exec_attr = 'id="control_4" class="control_4" style="width:78%;" multiple="multiple"';
-                                echo form_dropdown('control_4[]', $sales_exec_options, explode(',', $class->sales_executive), $sales_exec_attr);
+                            $sales_exec_options[''] = 'Select';
+                            foreach ($salesexec as $k => $v) {
+                                $sales_exec_options[$k] = $v;
+                            }
+                            $sales_exec_attr = 'id="control_4" class="control_4" style="width:78%;" multiple="multiple"';
+                            echo form_dropdown('control_4[]', $sales_exec_options, explode(',', $class->sales_executive), $sales_exec_attr);
                                 ?>
                                 <span id="control_4_err"></span>
                             </td>-->
@@ -493,7 +492,7 @@ if (!empty($tax_error)) {
                                 $lab_venue_options['OTH'] = 'Others';
                                 echo form_dropdown('lab_venue', $lab_venue_options, $class->lab_location, 'id="lab_venue" maxlength="250"');
                                 ?>
-                               
+
                                 &nbsp; &nbsp; &nbsp; &nbsp; 
                                 <span class="labven_oth_span" style="display:none;">
                                     <?php
@@ -517,12 +516,12 @@ if (!empty($tax_error)) {
                             <td><?php
                                 $cls_trainer_options = array();
                                 $cls_trainer_options[''] = 'Select';
-                                
+
                                 foreach ($trainer as $k => $v):
                                     $cls_trainer_options[$k] = $v;
                                 endforeach;
                                 echo form_dropdown('control_5[]', $cls_trainer_options, explode(',', $class->classroom_trainer), 'id="control_5" style="width:78%;" multiple="multiple"');
-                                ?>
+                                    ?>
                                 <span id="control_5_err"></span></td>
                             <td class="td_heading">Lab Trainer/ Assistant Trainer:</td>
                             <td>
@@ -543,7 +542,7 @@ if (!empty($tax_error)) {
                             <td class="td_heading">Training Aide:</td>
                             <td colspan="5">
                                 <?php
-                                $tra_aide_options = array();                            
+                                $tra_aide_options = array();
                                 $tra_aide_options = $course_manager;
                                 echo form_dropdown('control_3[]', $tra_aide_options, explode(',', $class->training_aide), 'id="control_3" style="width:20%;" multiple="multiple"');
                                 ?>
@@ -572,7 +571,7 @@ if (!empty($tax_error)) {
         <br>
         <div class="row marketing">
             <div class="col-lg-6">
-                    <span id="dis-error"></span>
+                <span id="dis-error"></span>
                 <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png" /> Class / Lab Schedule <span class="label label-default push_right black-btn"><a class="small_text" rel="modal:open" href="#ex1"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Class / Lab Schedule</a></span></h4> 
                 <p>
                 <div class="scroll_schedule schld_div">
@@ -700,7 +699,7 @@ if (!empty($tax_error)) {
                                         <input type="hidden" value="<?php echo implode(',', $row['trainee_id']); ?>" name="assmnt_trainee[]" class="assmnt_trainee">
                                         <input type="hidden" value="<?php echo $row['assessor_id']; ?>" name="assmnt_assessor[]" class="assmnt_assessor">
                                         <input type="hidden" value="<?php echo $row['assmnt_venue']; ?>" name="ass_venue[]" class="ass_venue">
-                                        
+
                                         <input type="hidden" value="<?php echo $row['assmnt_venue_oth']; ?>" name="ass_venue_oth[]" class="ass_venue_oth">
                                         <td class="a_button">
                                             <a class="small_text ass_edit" rel="modal:open" href="#ex2">
@@ -731,19 +730,18 @@ if (!empty($tax_error)) {
         </div>
         <span class="required required_i">* Required Fields</span>
         <?php
-        
         $deactivate_class = (!empty($label['deactivate'])) ? 'cancel_deactivate' : '';
-        if($tpg_crse == '0'){
+        if ($tpg_crse == '0') {
             $label_but = 'Deactivate';
         } else {
             $label_but = 'Delete';
-        }        
+        }
         ?>
         <div class="button_class">
-            <?php if($tpg_crse == '0'){?><button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button><?php }?> &nbsp; &nbsp; 
+        <?php if ($tpg_crse == '0') { ?><button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button><?php } ?> &nbsp; &nbsp; 
             <a href="#ex8" rel="modal:open" class="small_text <?php echo $deactivate_class; ?> check_deactivate" data-class="<?php echo $this->input->post('class_id'); ?>"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;<?php echo $label_but; ?></button></a> &nbsp; &nbsp;            
         </div>
-       
+
         <div class="modalassessment009911 modal-al" id="ex1" style="display:none;">
             <h2 class="panel_heading_style">Class / Lab Schedule</h2>
             <div class="table-responsive">
@@ -752,57 +750,57 @@ if (!empty($tax_error)) {
                         <tr>
                             <td class="td_heading">Date:<span class="required">*</span></td>
                             <td><?php
-                                $schld_date = array(
-                                    'name' => 'schld_date',
-                                    'id' => 'schld_date',
-                                    'readonly' => 'readonly',
-                                    'value' => $this->input->post('schld_date'),
-                                );
-                                echo form_input($schld_date);
-                                ?>
+    $schld_date = array(
+        'name' => 'schld_date',
+        'id' => 'schld_date',
+        'readonly' => 'readonly',
+        'value' => $this->input->post('schld_date'),
+    );
+    echo form_input($schld_date);
+        ?>
                                 &nbsp; 
                                 <span id="schld_date_err"></span> </td>
                         </tr>
                         <tr>
                             <td class="td_heading">Session Type:<span class="required">*</span></td>
                             <td>
-                                <?php
-                                $schld_session_type_options = array(
-                                    '' => 'Select',
-                                    'S1' => 'Session 1',
-                                    'BRK' => 'Break',
-                                    'S2' => 'Session 2'
-                                );
-                                echo form_dropdown('schld_session_type', $schld_session_type_options, $this->input->post('schld_session_type'), 'id = "schld_session_type" style = "width:50%"');
-                                ?>
+    <?php
+    $schld_session_type_options = array(
+        '' => 'Select',
+        'S1' => 'Session 1',
+        'BRK' => 'Break',
+        'S2' => 'Session 2'
+    );
+    echo form_dropdown('schld_session_type', $schld_session_type_options, $this->input->post('schld_session_type'), 'id = "schld_session_type" style = "width:50%"');
+    ?>
                                 <span id="schld_session_type_err"></span> 
                             </td>
                         </tr>
                         <tr>
                             <td class="td_heading">Start Time:<span class="required">*</span></td>
                             <td><?php
-                                $schld_start_time = array(
-                                    'name' => 'schld_start_time',
-                                    'id' => 'schld_start_time',
-                                    'readonly' => 'readonly',
-                                    'value' => $this->input->post('schld_start_time'),
-                                );
-                                echo form_input($schld_start_time);
-                                ?>
+                            $schld_start_time = array(
+                                'name' => 'schld_start_time',
+                                'id' => 'schld_start_time',
+                                'readonly' => 'readonly',
+                                'value' => $this->input->post('schld_start_time'),
+                            );
+                            echo form_input($schld_start_time);
+    ?>
                                 &nbsp; 
                                 <span id="schld_start_time_err"></span></td>
                         </tr>
                         <tr>
                             <td class="td_heading">End Time:<span class="required">*</span></td>
                             <td><?php
-                                $schld_end_time = array(
-                                    'name' => 'schld_end_time',
-                                    'id' => 'schld_end_time',
-                                    'readonly' => 'readonly',
-                                    'value' => $this->input->post('schld_end_time'),
-                                );
-                                echo form_input($schld_end_time);
-                                ?>
+                            $schld_end_time = array(
+                                'name' => 'schld_end_time',
+                                'id' => 'schld_end_time',
+                                'readonly' => 'readonly',
+                                'value' => $this->input->post('schld_end_time'),
+                            );
+                            echo form_input($schld_end_time);
+    ?>
                                 &nbsp; 
                                 <span id="schld_end_time_err"></span></td>
                         </tr>
@@ -823,39 +821,39 @@ if (!empty($tax_error)) {
                         <tr>
                             <td class="td_heading">1st Reminder:</td>
                             <td>
-                                <?php
-                                $reminder1 = array(
-                                    'id' => 'reminder1',
-                                    'name' => 'reminder1',
-                                    'style' => 'width:20%',
-                                    'value' => $class->min_reqd_noti_freq1,
-                                );
-                                echo form_input($reminder1)
-                                ?> days <span id="reminder1_err"></span></td>
+    <?php
+    $reminder1 = array(
+        'id' => 'reminder1',
+        'name' => 'reminder1',
+        'style' => 'width:20%',
+        'value' => $class->min_reqd_noti_freq1,
+    );
+    echo form_input($reminder1)
+    ?> days <span id="reminder1_err"></span></td>
                         </tr>
                         <tr>
                             <td class="td_heading">2nd Reminder:</td>
                             <td><?php
-                                $reminder2 = array(
-                                    'id' => 'reminder2',
-                                    'name' => 'reminder2',
-                                    'style' => 'width:20%',
-                                    'value' => $class->min_reqd_noti_freq2,
-                                );
-                                echo form_input($reminder2);
-                                ?>  days <span id="reminder2_err"></span></td>
+                            $reminder2 = array(
+                                'id' => 'reminder2',
+                                'name' => 'reminder2',
+                                'style' => 'width:20%',
+                                'value' => $class->min_reqd_noti_freq2,
+                            );
+                            echo form_input($reminder2);
+    ?>  days <span id="reminder2_err"></span></td>
                         </tr>
                         <tr>
                             <td class="td_heading">3rd Reminder:</td>
                             <td><?php
-                                $reminder3 = array(
-                                    'id' => 'reminder3',
-                                    'name' => 'reminder3',
-                                    'style' => 'width:20%',
-                                    'value' => $class->min_reqd_noti_freq3,
-                                );
-                                echo form_input($reminder3);
-                                ?>  days <span id="reminder3_err"></span></td>
+                            $reminder3 = array(
+                                'id' => 'reminder3',
+                                'name' => 'reminder3',
+                                'style' => 'width:20%',
+                                'value' => $class->min_reqd_noti_freq3,
+                            );
+                            echo form_input($reminder3);
+    ?>  days <span id="reminder3_err"></span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -874,72 +872,71 @@ if (!empty($tax_error)) {
                         <tr>
                             <td class="td_heading">Date:<span class="required">*</span></td>
                             <td><?php
-                                $def_date = !empty($def_assessment->assmnt_date) ? date('d-m-Y', strtotime($def_assessment->assmnt_date)) : '';
-                                $def_date = array(
-                                    'name' => 'def_date',
-                                    'id' => 'def_date',
-                                    'readonly' => 'readonly',
-                                    'placeholder' => 'dd/mm/yyyy',
-                                    'value' => $def_date,
-                                );
-                                echo form_input($def_date);
-                                ?>
+                            $def_date = !empty($def_assessment->assmnt_date) ? date('d-m-Y', strtotime($def_assessment->assmnt_date)) : '';
+                            $def_date = array(
+                                'name' => 'def_date',
+                                'id' => 'def_date',
+                                'readonly' => 'readonly',
+                                'placeholder' => 'dd/mm/yyyy',
+                                'value' => $def_date,
+                            );
+                            echo form_input($def_date);
+    ?>
                                 &nbsp; 
                                 <span id="def_date_err"></span></td>
                         </tr>
                         <tr>
                             <td class="td_heading">Start Time:<span class="required">*</span></td>
                             <td><?php
-                                $def_schld_start_time = array(
-                                    'name' => 'def_schld_start_time',
-                                    'id' => 'def_schld_start_time',
-                                    'readonly' => 'readonly',
-                                    'value' => date('H:i', strtotime($def_assessment->assmnt_start_time)),
-                                );
-                                echo form_input($def_schld_start_time);
-                                ?><span id="def_schld_start_time_err"></span></td>
+                            $def_schld_start_time = array(
+                                'name' => 'def_schld_start_time',
+                                'id' => 'def_schld_start_time',
+                                'readonly' => 'readonly',
+                                'value' => date('H:i', strtotime($def_assessment->assmnt_start_time)),
+                            );
+                            echo form_input($def_schld_start_time);
+    ?><span id="def_schld_start_time_err"></span></td>
                         </tr>
                         <tr>
                             <td class="td_heading">End Time:<span class="required">*</span></td>
                             <td><?php
-                                $def_schld_end_time = array(
-                                    'name' => 'def_schld_end_time',
-                                    'id' => 'def_schld_end_time',
-                                    'readonly' => 'readonly',
-                                    'value' => date('H:i', strtotime($def_assessment->assmnt_end_time)),
-                                );
-                                echo form_input($def_schld_end_time);
-                                ?><span id="def_schld_end_time_err"></span></td>
+                            $def_schld_end_time = array(
+                                'name' => 'def_schld_end_time',
+                                'id' => 'def_schld_end_time',
+                                'readonly' => 'readonly',
+                                'value' => date('H:i', strtotime($def_assessment->assmnt_end_time)),
+                            );
+                            echo form_input($def_schld_end_time);
+    ?><span id="def_schld_end_time_err"></span></td>
                         </tr>
                         <tr>
                             <td class="td_heading">Select Assessor:<span class="required">*</span></td>
                             <td><?php
-                                echo form_dropdown('control_9[]', $assessor_options, explode(',', $def_assessment->assessor_id), 'id = "control_9" style = "width:78%;" multiple = "multiple"');
-                                ?><span id="control_9_err"></span></td>
+                            echo form_dropdown('control_9[]', $assessor_options, explode(',', $def_assessment->assessor_id), 'id = "control_9" style = "width:78%;" multiple = "multiple"');
+                            ?><span id="control_9_err"></span></td>
                         </tr>
                         <tr>
                             <td class="td_heading">Venue:<span class="required">*</span></td>
                             <td><?php
-                                $def_schld_venue = $lab_venue_options;
-                                echo form_dropdown('def_schld_venue', $def_schld_venue, $def_assessment->assmnt_venue, 'id = "def_schld_venue"');
-                                ?><span id="def_schld_venue_err"></span>
+                            $def_schld_venue = $lab_venue_options;
+                            echo form_dropdown('def_schld_venue', $def_schld_venue, $def_assessment->assmnt_venue, 'id = "def_schld_venue"');
+    ?><span id="def_schld_venue_err"></span>
                                 <br/>
-                                
+
                                 &nbsp; &nbsp; &nbsp; &nbsp; 
-                                
+
                                 <span class="defven_oth_span" style="<?php echo ($def_assessment->assmnt_venue == 'OTH') ? '' : 'display:none;'; ?>">
-                                    <?php
-                                    $def_venue_oth = array(
-                                        'name' => 'def_venue_oth',
-                                        'id' => 'def_venue_oth',
-                                        'maxlength' => '250',
-                                        'style' => 'width:220px;',
-                                        
-                                        'class' => 'upper_case',
-                                        'value' => $def_assessment->assmnt_venue_oth,
-                                    );
-                                    echo form_input($def_venue_oth);
-                                    ?>
+    <?php
+    $def_venue_oth = array(
+        'name' => 'def_venue_oth',
+        'id' => 'def_venue_oth',
+        'maxlength' => '250',
+        'style' => 'width:220px;',
+        'class' => 'upper_case',
+        'value' => $def_assessment->assmnt_venue_oth,
+    );
+    echo form_input($def_venue_oth);
+    ?>
                                 </span>
                                 <br>
                                 <span id="def_venue_oth_err" class="def_venue_oth_err"></span>
@@ -1017,11 +1014,11 @@ if (!empty($tax_error)) {
                 <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Ok</button></a></div>
             </p>
         </div>
-       
-        <?php
-        echo form_close();
-    }
-    ?>
+
+    <?php
+    echo form_close();
+}
+?>
 </div>
 <div class="modalassessment" id="ex2" style="display:none;height:420px;">
     <p>
@@ -1031,46 +1028,46 @@ if (!empty($tax_error)) {
             <tr>
                 <td class="td_heading">Date:<span class="red">*</span></td>
                 <td>
-                    <?php
-                    $ass_date = array(
-                        'name' => 'ass_date',
-                        'id' => 'ass_date',
-                        'readonly' => 'readonly',
-                        'placeholder' => 'dd/mm/yyyy',
-                        'value' => '',
-                    );
-                    echo form_input($ass_date);
-                    ?>
+<?php
+$ass_date = array(
+    'name' => 'ass_date',
+    'id' => 'ass_date',
+    'readonly' => 'readonly',
+    'placeholder' => 'dd/mm/yyyy',
+    'value' => '',
+);
+echo form_input($ass_date);
+?>
                     <span id="ass_date_err"></span>
                 </td>
             </tr>
             <tr>
                 <td class="td_heading">Start Time:<span class="red">*</span></td>
                 <td>
-                    <?php
-                    $ass_start_time = array(
-                        'name' => 'ass_start_time',
-                        'id' => 'ass_start_time',
-                        'readonly' => 'readonly',
-                        'value' => $this->input->post('ass_start_time'),
-                    );
-                    echo form_input($ass_start_time);
-                    ?>
+<?php
+$ass_start_time = array(
+    'name' => 'ass_start_time',
+    'id' => 'ass_start_time',
+    'readonly' => 'readonly',
+    'value' => $this->input->post('ass_start_time'),
+);
+echo form_input($ass_start_time);
+?>
                     <span id="ass_start_time_err"></span>
                 </td>
             </tr>
             <tr>
                 <td class="td_heading">End Time:<span class="red">*</span></td>
                 <td>
-                    <?php
-                    $ass_end_time = array(
-                        'name' => 'ass_end_time',
-                        'id' => 'ass_end_time',
-                        'readonly' => 'readonly',
-                        'value' => $this->input->post('ass_end_time'),
-                    );
-                    echo form_input($ass_end_time);
-                    ?>
+<?php
+$ass_end_time = array(
+    'name' => 'ass_end_time',
+    'id' => 'ass_end_time',
+    'readonly' => 'readonly',
+    'value' => $this->input->post('ass_end_time'),
+);
+echo form_input($ass_end_time);
+?>
                     <span id="ass_end_time_err"></span>
                 </td>
             </tr>
@@ -1079,12 +1076,12 @@ if (!empty($tax_error)) {
                 <td><?php
                     $cls_trainer_options = array();
                     $cls_trainer_options[''] = 'Select';
-                    
+
                     foreach ($trainer as $k => $v):
                         $cls_trainer_options[$k] = $v;
                     endforeach;
                     echo form_dropdown('control_8[]', $cls_trainer_options, '', 'id="control_8" style="width:78%;" multiple="multiple"');
-                    ?>
+?>
                     <span id="control_8_err"></span>
                 </td>
             </tr>
@@ -1096,34 +1093,33 @@ if (!empty($tax_error)) {
             <tr>
                 <td class="td_heading">Venue:<span class="red">*</span></td>
                 <td>
-                    <?php
-                    $ass_venue_options[''] = 'Select';
-                    $cls_venue = fetch_metavalues_by_category_id(Meta_Values::LOCATION);
-                    foreach ($cls_venue as $val):
-                        $ass_venue_options[$val['parameter_id']] = $val['category_name'];
-                    endforeach;
-                    
-                    $ass_venue_options['OTH'] = 'Others';
-                    echo form_dropdown('ass_venue', $ass_venue_options, '', 'id="ass_venue" maxlength="250"');
-                    ?>
+<?php
+$ass_venue_options[''] = 'Select';
+$cls_venue = fetch_metavalues_by_category_id(Meta_Values::LOCATION);
+foreach ($cls_venue as $val):
+    $ass_venue_options[$val['parameter_id']] = $val['category_name'];
+endforeach;
+
+$ass_venue_options['OTH'] = 'Others';
+echo form_dropdown('ass_venue', $ass_venue_options, '', 'id="ass_venue" maxlength="250"');
+?>
                     <span id="ass_venue_err"></span>
                     <br/>
-                    
+
                     &nbsp; &nbsp; &nbsp; &nbsp; 
                     <span class="assven_oth_span" style="display:none;">
-                        <?php
-                        $ass_venue_oth = array(
-                            'name' => 'ass_venue_oth',
-                            'id' => 'ass_venue_oth',
-                            'maxlength' => '250',
-                            'style' => 'width:220px;',
-                            
-                            'class' => 'upper_case',
-                            'maxlength'=>'250',
-                            'value' => $class->ass_venue_oth,
-                        );
-                        echo form_input($ass_venue_oth);
-                        ?>
+<?php
+$ass_venue_oth = array(
+    'name' => 'ass_venue_oth',
+    'id' => 'ass_venue_oth',
+    'maxlength' => '250',
+    'style' => 'width:220px;',
+    'class' => 'upper_case',
+    'maxlength' => '250',
+    'value' => $class->ass_venue_oth,
+);
+echo form_input($ass_venue_oth);
+?>
                     </span>
                     <br>
                     <span id="ass_venue_oth_err" class="ass_venue_oth_err"></span>
@@ -1140,49 +1136,53 @@ if (!empty($tax_error)) {
 </div>
 <?php
 $form_attributes = array('name' => 'deactivate_class_form', 'id' => 'deactivate_class_form');
-echo form_open("classes/deactivate_class", $form_attributes);
+if ($tpg_crse == '0') {
+    echo form_open("classes/deactivate_class", $form_attributes);
+} else {
+    echo form_open("classes/deactivate_class_tpg", $form_attributes);
+}
 ?>
 <div class="modal1_051" id="ex8" style="display:none;">
     <p>
     <h2 class="panel_heading_style">Delete Class</h2>
     <span class="error"><strong> This Class will be deleted from </strong>
-        <?php
-        $deactiv_date = array(
-            'name' => 'deactivation_date',
-            'id' => 'deactivation_date',
-            'value' => date('d-m-Y'),
-            'readonly' => TRUE,
-            'style' => 'display:none;',
-        );
-        echo form_input($deactiv_date);
-        echo form_label(date('d-m-Y'));
-        ?>
+<?php
+$deactiv_date = array(
+    'name' => 'deactivation_date',
+    'id' => 'deactivation_date',
+    'value' => date('d-m-Y'),
+    'readonly' => TRUE,
+    'style' => 'display:none;',
+);
+echo form_input($deactiv_date);
+echo form_label(date('d-m-Y'));
+?>
     </span>
     <span id="deactivation_date_err"></span>
     <br><br>
     <strong>Reason for Deletion:<span class="red">*</span></strong>  <?php
-    $d_reasons = fetch_metavalues_by_category_id(Meta_Values::CLASS_DEACTIVATE_REASONS);
-    $reasons_options[''] = 'Select';
-    foreach ($d_reasons as $item):
-        $reasons_options[$item['parameter_id']] = $item['category_name'];
-    endforeach;
-    $reasons_options['OTHERS'] = 'Others';
-    $attr = 'id="reason_for_deactivation"';
-    echo form_dropdown('reason_for_deactivation', $reasons_options, $this->input->post('reason_for_deactivation'), $attr);
-    ?> <span id="reason_for_deactivation_err"></span>
+        $d_reasons = fetch_metavalues_by_category_id(Meta_Values::CLASS_DEACTIVATE_REASONS);
+        $reasons_options[''] = 'Select';
+        foreach ($d_reasons as $item):
+            $reasons_options[$item['parameter_id']] = $item['category_name'];
+        endforeach;
+        $reasons_options['OTHERS'] = 'Others';
+        $attr = 'id="reason_for_deactivation"';
+        echo form_dropdown('reason_for_deactivation', $reasons_options, $this->input->post('reason_for_deactivation'), $attr);
+?> <span id="reason_for_deactivation_err"></span>
     <div id="row_dim_new1" style="float:right; margin-right:20%;display:none;">
-        <?php
-        $attr = array(
-            'name' => 'other_reason_for_deactivation',
-            'id' => 'other_reason_for_deactivation',
-            'style' => 'width:200%',
-            'class' => 'upper_case',
-            'maxlength' => '250',
-        );
-        echo form_input($attr);
-        echo form_hidden('class_id_deactive', $class->class_id);
-        echo form_hidden('class_id_deactive', $class->class_id);
-        ?>
+    <?php
+    $attr = array(
+        'name' => 'other_reason_for_deactivation',
+        'id' => 'other_reason_for_deactivation',
+        'style' => 'width:200%',
+        'class' => 'upper_case',
+        'maxlength' => '250',
+    );
+    echo form_input($attr);
+    echo form_hidden('class_id_deactive', $class->class_id);
+    echo form_hidden('class_id_deactive', $class->class_id);
+    ?>
     </div>
     <span id="other_reason_for_deactivation_err" style="float:right;clear:both;"></span>
     <br><br>

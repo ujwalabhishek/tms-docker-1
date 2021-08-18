@@ -308,6 +308,35 @@ class Classes extends CI_Controller {
      * this function to deactivate class
      */
     function deactivate_class() {
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            foreach ($this->input->post() as $key => $value) {
+                $$key = $value;
+            }
+
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('deactivation_date', 'deactivation date', 'required');
+            $this->form_validation->set_rules('reason_for_deactivation', 'reason for deactivation', 'required');
+            if ($reason_for_deactivation == 'OTHERS') {
+                $this->form_validation->set_rules('other_reason_for_deactivation', 'other reason for deactivation', 'required');
+            }
+            if ($this->form_validation->run() == TRUE) {
+                $result = $this->classmodel->deactivate_class($class_id_deactive);
+                if ($result == TRUE) {
+                    $res = $this->classmodel->get_class_info($class_id_deactive);
+                    $current_class_data = json_encode($res);
+                    user_activity( 5, $class_id_deactive, $current_class_data);
+                    $this->session->set_flashdata('success', 'Class has been deactivated successfully');
+                } else {
+                    $this->session->set_flashdata("error", "Unable to deactivate class. Please try again later.");
+                }
+                redirect('classes');
+            }
+        }
+    }            
+    /**
+     * this function to deactivate class
+     */
+    function deactivate_class_tpg() {
         $tenant_id = $this->tenant_id;
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             foreach ($this->input->post() as $key => $value) {
