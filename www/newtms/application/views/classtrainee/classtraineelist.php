@@ -346,6 +346,7 @@
                                 </td>
                                 <td><?php echo $row['paid']; ?></td>
                                 <td><?php echo $row['action_link']; ?></td>
+                                <?php if($row['tpg_crse']) {?>
                                 <td>
                                     <?php
                                     $atr = 'id="tpg_form" name="tpg_form" method="post"';
@@ -397,6 +398,7 @@
                                         <?php } ?>
                                     <?php } ?>
                                 </td>
+                        <?php } ?>
                             </tr>
                             <?php
                         }
