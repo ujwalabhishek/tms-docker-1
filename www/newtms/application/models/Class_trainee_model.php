@@ -7095,7 +7095,7 @@ class Class_Trainee_Model extends CI_Model {
         $query2 = $this->list_all_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit, $offset, $sort_by, $sort_order, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
 
         //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
-        $this->db->select('c.course_id , c.crse_name, 
+        $this->db->select('c.course_id , c.crse_name, c.tpg_crse,
  cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
  ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode,ce.referral_details,ce.eid_number, ce.company_id, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
