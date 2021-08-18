@@ -21,14 +21,15 @@ class Course_Model extends CI_Model {
 
      */
 
-    public function get_active_course_list_all($tenantId, $classTrainee = 0) {
+    public function get_active_course_list_all_non_tpg($tenantId, $classTrainee = 0) {
 
         $this->db->select('c.course_id, c.crse_name, c.crse_manager');
         $this->db->from('course c');
         $this->db->where('c.tenant_id', $tenantId);
 ///added by shubhranshu due to deactivate class are coming on 0/12/2018//
         //if ($this->user->role_id != 'ADMN') { 
-        $this->db->where('c.crse_status', 'ACTIVE');        
+        $this->db->where('c.crse_status', 'ACTIVE');
+        $this->db->where('c.tpg_crse', '0');
         //}/////////////////////////////////////////////////////////////////////
 
         if ($this->user->role_id == 'SLEXEC' && (string) $classTrainee == 'classTrainee') {
@@ -66,7 +67,7 @@ class Course_Model extends CI_Model {
 ///added by shubhranshu due to deactivate class are coming on 0/12/2018//
         //if ($this->user->role_id != 'ADMN') { 
         $this->db->where('c.crse_status', 'ACTIVE');
-        $this->db->where('c.tpg_crse', '0');
+        //$this->db->where('c.tpg_crse', '0');
         //}/////////////////////////////////////////////////////////////////////
 
         if ($this->user->role_id == 'SLEXEC' && (string) $classTrainee == 'classTrainee') {
@@ -90,7 +91,7 @@ class Course_Model extends CI_Model {
         return $tenant_active_courses;
     }
     
-    public function get_active_course_list_by_tenant_tpg($tenantId, $classTrainee = 0) {
+    public function get_active_course_list_all_tpg($tenantId, $classTrainee = 0) {
 
         $this->db->select('c.course_id, c.crse_name, c.crse_manager');
         $this->db->from('course c');
