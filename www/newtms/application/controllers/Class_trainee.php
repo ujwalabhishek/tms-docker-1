@@ -265,7 +265,9 @@ class Class_Trainee extends CI_Controller {
                 //////add by shubhranshu to save enrollment id on 18/03/2021
                 //Commented by abdulla nofal - Since, it's being updated from TPG.
                 //$linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">' . $EIDNO . ' </span> </a><br/>';
-                $linkStr .= 'EID No: <span style="font-weight:normal;color:#000">' . $EIDNO . ' </span><br/>';
+                if($row['tpg_crse']) {
+                    $linkStr .= 'EID No: <span style="font-weight:normal;color:#000">' . $EIDNO . ' </span><br/>';    
+                }                                
                 $new_tabledata[$k]['action_link'] = $linkStr;
                 $new_tabledata[$k]['referrer'] = $row['referral_details'];
             }
