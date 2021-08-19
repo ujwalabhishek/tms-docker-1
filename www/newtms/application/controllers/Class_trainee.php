@@ -422,17 +422,17 @@ class Class_Trainee extends CI_Controller {
 
             $tpg_response = json_decode($decrypted_output);
                         
-            echo "URL : ".print_r($url, true);
-            
-            echo "JSON DATA : ".print_r($tpg_search_json_data, true);
-            
-            echo "Encrypted Input : ".print_r($encrypted_output, true);
-            
-            echo "Decrypted Output : ".print_r($decrypted_output, true);
-            
-            echo "TPG Response : ".print_r($tpg_response, true);     
-            
-            echo $today = date("Y-m-d H:i:s"); exit;
+//            echo "URL : ".print_r($url, true);
+//            
+//            echo "JSON DATA : ".print_r($tpg_search_json_data, true);
+//            
+//            echo "Encrypted Input : ".print_r($encrypted_output, true);
+//            
+//            echo "Decrypted Output : ".print_r($decrypted_output, true);
+//            
+//            echo "TPG Response : ".print_r($tpg_response, true);     
+//            
+//            echo $today = date("Y-m-d H:i:s"); exit;
             
             if ($tpg_response->status == 200) {
                 $data['tabledata_tpg'] = $tpg_response;
