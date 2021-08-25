@@ -535,3 +535,9 @@ $config['TPG_KEY_T18'] = "QFyCysgjUNQ08wBWi07/1WkEj0+u1oyq5o7wfdcfrgI=";
 
 //Key for FONDA GLOBAL Tenant
 $config['TPG_KEY_T25'] = "1FB65Prs/602t9KV3vFs1Ogl7DiQoY63WP/QtjbDF3I=";
+
+//Key for CAI Tenant
+$config['TPG_KEY_T03'] = "I3xGwAl81Ru8pHxTNQ/HXGbERt9U2mgqyMOhlZMh3dE=";
+
+//Key for EVEREST Tenant
+$config['TPG_KEY_T17'] = "YVtPkPm7iSJ9znMeQSjA1LfdmP0raIPHCreooBD5SHE=";
