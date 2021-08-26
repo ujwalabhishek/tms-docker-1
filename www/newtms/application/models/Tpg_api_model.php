@@ -705,7 +705,7 @@ class Tpg_api_Model extends CI_Model {
         }
         $assessment_json = '{"assessment": {
                       "trainingPartner": {
-                        "code": "' . $retun[tp_uen] . '-01",
+                        "code": "' . $retun[tp_uen] . '-03",
                         "uen": "' . $retun[tp_uen] . '"
                       },
                       "course": {
@@ -725,7 +725,7 @@ class Tpg_api_Model extends CI_Model {
                       "assessmentDate": "' . $trainee->assessmentDate . '",
                       "skillCode": "' . $retun[skillcode] . '",
                       "conferringInstitute": {
-                        "code": "' . $retun[tp_uen] . '-01"
+                        "code": "' . $retun[tp_uen] . '-03"
                       }
                     }
 
@@ -784,7 +784,7 @@ class Tpg_api_Model extends CI_Model {
         $search_assessment_json = '{"assessments": {
                                   "trainingPartner": {
                                     "uen": "' . $retun[tp_uen] . '",
-                                    "code": "' . $retun[tp_uen] . '-01"
+                                    "code": "' . $retun[tp_uen] . '-03"
                                   },
                                   "course": {
                                     "referenceNumber": "' . $retun[ref_no] . '",
