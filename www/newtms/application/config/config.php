@@ -540,4 +540,4 @@ $config['TPG_KEY_T25'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
 $config['TPG_KEY_T03'] = "I3xGwAl81Ru8pHxTNQ/HXGbERt9U2mgqyMOhlZMh3dE=";
 
 //Key for EVEREST Tenant
-$config['TPG_KEY_T17'] = "YVtPkPm7iSJ9znMeQSjA1LfdmP0raIPHCreooBD5SHE=";
+$config['TPG_KEY_T17'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
