@@ -527,17 +527,23 @@ $config['wsq_courses'] = array('95','115','67','66','65','98','100','97','101','
 //Key for XPRIENZ Tenant
 $config['TPG_KEY_T02'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
 
+//Key for CAI Tenant
+$config['TPG_KEY_T03'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
+
 //Key for FLC Tenant
 $config['TPG_KEY_T04'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
+
+//Key for EVEREST Tenant
+$config['TPG_KEY_T17'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
 
 //Key for SSI Tenant
 $config['TPG_KEY_T18'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
 
+//Key for WABLAB Tenant
+$config['TPG_KEY_T20'] = "";
+
+//Key for FRCS Tenant
+$config['TPG_KEY_T24'] = "1DK5t7WvWjr4GiEBQC3KquA3dt8yHJoOEUwl9zpysNg=";
+
 //Key for FONDA GLOBAL Tenant
 $config['TPG_KEY_T25'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
-
-//Key for CAI Tenant
-$config['TPG_KEY_T03'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
-
-//Key for EVEREST Tenant
-$config['TPG_KEY_T17'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
