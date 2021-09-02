@@ -902,7 +902,13 @@ class Class_Model extends CI_Model {
 
         $result = array();
         foreach ($query->result() as $row) {
-            $result[$row->class_id] = $row->class_name . '(' . $row->tpg_course_run_id . ')';
+            if($row->tpg_course_run_id == "") {
+                $val_brac = $row->class_id;
+            } else {
+                $val_brac = $row->tpg_course_run_id;
+            }
+            
+            $result[$row->class_id] = $row->class_name . '(' . $val_brac . ')';
         }
         return $result;
     }
