@@ -251,7 +251,7 @@ $CI->load->model('settings_model');
                                 $course_competency_code = array(
                                     'name' => 'course_competency_code',
                                     'id' => 'course_competency_code',
-                                    'value' => $course_competency_code_val,
+                                    'value' => '',
                                     'maxlength' => 50,
                                     'class' => 'upper_case',
                                     'style' => 'width:200px',
