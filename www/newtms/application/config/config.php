@@ -543,7 +543,7 @@ $config['TPG_KEY_T18'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
 $config['TPG_KEY_T20'] = "";
 
 //Key for FRCS Tenant
-$config['TPG_KEY_T24'] = "1DK5t7WvWjr4GiEBQC3KquA3dt8yHJoOEUwl9zpysNg=";
+$config['TPG_KEY_T24'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
 
 //Key for FONDA GLOBAL Tenant
 $config['TPG_KEY_T25'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
