@@ -1343,7 +1343,7 @@ class Course_Model extends CI_Model {
             $tenant_id = $user->tenant_id;
 
             $course_data = array('tenant_id' => $course_details->tenant_id, 'crse_name' => $couse_name
-                , 'crse_type' => $course_details->crse_type, 'class_type' => $course_details->class_type
+                , 'crse_type' => $course_details->crse_type, 'class_type' => $course_details->class_type, 'tpg_crse' => $course_details->tpg_crse
                 , 'crse_duration' => $course_details->crse_duration, 'competency_code' => $course_details->competency_code
                 , 'reference_num' => $course_details->reference_num, 'certi_level' => $course_details->certi_level
                 , 'description' => $course_details->description, 'crse_cert_validity' => $course_details->crse_cert_validity
