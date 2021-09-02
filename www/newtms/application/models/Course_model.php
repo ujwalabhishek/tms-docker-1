@@ -1346,6 +1346,7 @@ class Course_Model extends CI_Model {
                 , 'crse_type' => $course_details->crse_type, 'class_type' => $course_details->class_type, 'tpg_crse' => $course_details->tpg_crse
                 , 'crse_duration' => $course_details->crse_duration, 'competency_code' => $course_details->competency_code
                 , 'reference_num' => $course_details->reference_num, 'certi_level' => $course_details->certi_level
+                , 'external_reference_number' => $course_details->external_reference_number, 'crse_admin_email' => $course_details->crse_admin_email    
                 , 'description' => $course_details->description, 'crse_cert_validity' => $course_details->crse_cert_validity
                 , 'display_on_portal' => $course_details->display_on_portal, 'crse_content_path' => $course_details->crse_content_path
                 , 'crse_icon' => $course_details->crse_icon, 'pre_requisite' => $course_details->pre_requisite
