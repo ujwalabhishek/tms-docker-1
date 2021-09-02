@@ -1153,7 +1153,7 @@ class Course extends CI_Controller {
             $tpg_response = json_decode($request);
 
             if ($tpg_response->status == 200) {
-                echo "<pre>".print_r($tpg_response, true)."</pre>";
+                //echo "<pre>".print_r($tpg_response, true)."</pre>";
 
                 $data['tpg_response'] = $tpg_response;
                 $data['course_reference_num'] = $tpg_response->data->courses[0]->referenceNumber;
