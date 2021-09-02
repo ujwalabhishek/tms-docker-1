@@ -1678,9 +1678,9 @@ class Class_Trainee extends CI_Controller {
                         $data['active_enroll_class'] = get_course_class_starttime($active_enroll_class);
                         $data['active_enroll_course_id'] = get_course_id($active_enroll_class);
                         $data['active_enroll_lock_att_status'] = get_active_class_att_status($active_enroll_class);
-                        //Added by abdulla
-                        $data['active_enroll_eid_no'] = get_eid_id($active_enroll_class);
-                        $data['active_enroll_tpg_status'] = get_active_class_tpg_status($active_enroll_class);
+                        //Added by abdulla for TPG re_schedule
+                        //$data['active_enroll_eid_no'] = get_eid_id($active_enroll_class);
+                        //$data['active_enroll_tpg_status'] = get_active_class_tpg_status($active_enroll_class);
                         $active_enroll_class_id = get_class_id($active_enroll_class);
                         //$reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, '', $active_enroll_class_id);////commented by shubhranshu
                         $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $data['active_enroll_course_id'], $active_enroll_class_id); ////added by shubhranshu to show only the enrolled course id list
@@ -1717,9 +1717,9 @@ class Class_Trainee extends CI_Controller {
                         $data['active_enroll_class'] = get_course_class_starttime($active_enroll_class);
                         $data['active_enroll_course_id'] = get_course_id($active_enroll_class);
                         $data['active_enroll_lock_att_status'] = get_active_class_att_status($active_enroll_class);
-                        //Added by abdulla
-                        $data['active_enroll_eid_no'] = get_eid_id($active_enroll_class);
-                        $data['active_enroll_tpg_status'] = get_active_class_tpg_status($active_enroll_class);
+                        //Added by abdulla for TPG re_schedule
+                        //$data['active_enroll_eid_no'] = get_eid_id($active_enroll_class);
+                        //$data['active_enroll_tpg_status'] = get_active_class_tpg_status($active_enroll_class);
                         $active_enroll_class_id = get_class_id($active_enroll_class);
                         //$reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, '', $active_enroll_class_id);
                         $reschedule_enroll_class = $this->classtraineemodel->get_reschedule_class_enrol($tenant_id, $data['active_enroll_course_id'], $active_enroll_class_id); ////added by shubhranshu to show only the enrolled course id list
