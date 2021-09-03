@@ -696,8 +696,8 @@ class Tpg_api_Model extends CI_Model {
     public function create_asssessment_to_tpg($trainee, $tp_uen) {
         $retun = $this->correct_live_dev_api_data($trainee->reference_num, $tp_uen, $trainee->skillCode, $trainee->tax_code);
 
-        $score = isset($trainee->feedback_score) ? $trainee->feedback_score : '';
-        $grade = isset($trainee->feedback_grade) ? $trainee->feedback_grade : '';      
+        $score = empty($trainee->feedback_score) ? ' ' : $trainee->feedback_score;
+        $grade = empty($trainee->feedback_grade) ? ' ' : $trainee->feedback_grade;      
         
         if ($trainee->tax_code_type == 'SNG_1') {
             $taxcode_type = 'NRIC';
