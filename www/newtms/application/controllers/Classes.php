@@ -1164,7 +1164,7 @@ class Classes extends CI_Controller {
         $tenant_id = $this->tenant_id;
         $data['page_title'] = 'TPG Assessments';
         $data['sideMenuData'] = fetch_non_main_page_content();
-        $data['courses'] = $this->coursemodel->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
+        $data['courses'] = $this->coursemodel->get_active_course_list_all_tpg($tenant_id, 'classTrainee');
         $course = $this->input->get('course');
         $class = $this->input->get('class');
         $userid = $this->input->get('nric');
