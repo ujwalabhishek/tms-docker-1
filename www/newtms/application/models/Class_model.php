@@ -2448,6 +2448,7 @@ class Class_Model extends CI_Model {
                 AND cc.class_id = '$classID'                
                 AND c.competency_code !=''
                 AND c.reference_num !=''
+                AND ce.tpg_enrolment_status = 'Confirmed'
                 AND ce.training_score !='' $str
                 AND date(cc.class_end_datetime) <= '$today_date'";
         $result = $this->db->query($sql)->result();
@@ -2478,6 +2479,7 @@ class Class_Model extends CI_Model {
                 AND c.competency_code !=''
                 AND c.reference_num !=''
                 AND ce.training_score !=''
+                AND ce.tpg_enrolment_status = 'Confirmed'
                 AND date(cc.class_end_datetime) <= '$today_date'";
         $res = $this->db->query($sql)->result();
         //echo $this->db->last_query();exit;
@@ -2530,6 +2532,7 @@ class Class_Model extends CI_Model {
                 AND cc.class_id = '$classID'
                 AND c.competency_code !=''
                 AND c.reference_num !=''
+                AND ce.tpg_enrolment_status = 'Confirmed'
                 AND ce.training_score !='' $str
                 AND date(cc.class_end_datetime) <= '$today_date'";
         $result = $this->db->query($sql)->result();
