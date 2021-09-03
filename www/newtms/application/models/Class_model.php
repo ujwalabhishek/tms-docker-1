@@ -2490,6 +2490,11 @@ class Class_Model extends CI_Model {
     }
 
     public function get_single_trainee_for_assessment($tenant_id, $courseID, $classID, $userid) {
+        
+        //Commented by abdulla
+        //AND ce.feedback_grade !=''
+        //AND ce.feedback_score !=0
+        
         $today_date = date('Y-m-d');
         $str = '';
         if ($userid != '') {
@@ -2523,8 +2528,6 @@ class Class_Model extends CI_Model {
                 WHERE cc . tenant_id = '$tenant_id'
                 AND c.course_id = '$courseID'
                 AND cc.class_id = '$classID'
-                AND ce.feedback_grade !=''
-                AND ce.feedback_score !=0
                 AND c.competency_code !=''
                 AND c.reference_num !=''
                 AND ce.training_score !='' $str
