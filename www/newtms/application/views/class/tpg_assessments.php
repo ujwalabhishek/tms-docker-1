@@ -152,8 +152,8 @@
                                 <td class="name"><?php echo $row->fullname; ?></td>
                                 <td><?php echo $row->assmnt_date ?? $row->assessmentDate; ?></td>
                                 <td><?php echo $row->skillCode; ?></td>
-                                <td><?php echo $row->feedback_score ?></td>
-                                <td><?php echo $row->feedback_grade; ?></td>
+                                <td><?php echo ($row->feedback_score) ? $row->feedback_score : '-'  ?></td>
+                                <td><?php echo ($row->feedback_grade) ? $row->feedback_grade : '-'; ?></td>
                                 <td><?php echo $row->result; ?></td>
                                 <td><?php echo $row->reference_num; ?></td>
                                 <td><?php echo $row->assessment_reference_No; ?></td>
