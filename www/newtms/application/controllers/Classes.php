@@ -482,7 +482,8 @@ class Classes extends CI_Controller {
                 $data['def_assessment'] = $cdef_assmnt;
             }
         }
-
+        
+        $data['tenant_id'] = $tenant_id;
         $data['tax_error'] = $tax_error;
         $data['page_title'] = 'Class';
         $data['main_content'] = 'class/editclass';
