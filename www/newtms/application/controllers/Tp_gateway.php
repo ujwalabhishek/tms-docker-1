@@ -87,6 +87,7 @@ class tp_gateway extends CI_Controller {
         $result = $this->input->post('result');
         $assessment_date = $this->input->post('assessment_date');
         $score = $this->input->post('score');
+        $score_tpg = empty($score) ? 0 : $score;
         $grade = $this->input->post('grade');
         $skillcode = $this->input->post('skillcode');
         $action = $this->input->post('action');
@@ -94,7 +95,7 @@ class tp_gateway extends CI_Controller {
         $user_id = $this->input->post('user_id');
         $class_id = $this->input->post('class_id');
         $course_id = $this->input->post('course_id');
-        $resp = $this->tpgModel->update_void_assessment_to_tpg($fullname, $result, $assessment_date, $score, $grade, $skillcode, $action, $assessment_ref_no);
+        $resp = $this->tpgModel->update_void_assessment_to_tpg($fullname, $result, $assessment_date, $score_tpg, $grade, $skillcode, $action, $assessment_ref_no);
         $obj_resp = json_decode($resp);
         if ($obj_resp->status == 200) {
             $this->classModel->updateAssessmentData($score, $assessment_date, $grade, $user_id, $class_id, $course_id, $tenant_id);
