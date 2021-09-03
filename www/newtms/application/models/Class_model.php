@@ -2454,6 +2454,10 @@ class Class_Model extends CI_Model {
 
     public function get_Trainee_For_Assessments_json($tenant_id, $courseID, $classID) {
 
+        //Commented by abdulla
+        //AND ce.feedback_grade !=''
+        //AND ce.feedback_score !=0
+        
         $today_date = date('Y-m-d');
 
         $sql = "SELECT             
@@ -2467,9 +2471,7 @@ class Class_Model extends CI_Model {
                 left join company_master cm on cm.company_id=ce.company_id
                 WHERE cc . tenant_id = '$tenant_id'
                 AND c.course_id = '$courseID'
-                AND cc.class_id = '$classID'
-                AND ce.feedback_grade !=''
-                AND ce.feedback_score !=0
+                AND cc.class_id = '$classID'                
                 AND c.competency_code !=''
                 AND c.reference_num !=''
                 AND ce.training_score !=''

@@ -247,7 +247,7 @@
                         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         if ($tenant_id == 'T01') {
                             ?>
-                                                                                           <th width="10%" class="th_header">Sales Executive</th>
+                                                                                               <th width="10%" class="th_header">Sales Executive</th>
                         <?php } ?>-->
                         <th width="8%" class="th_header">Sales Executive</th>
                         <th width="6%" class="th_header">Certi. Coll.</th>
@@ -334,10 +334,10 @@
                                 <td><?php echo $row['enroll_mode'] ?></td>
 
                                 <!--<?php if ($tenant_id == 'T01') { ?>
-                                                                                                   <td><?php echo $salesList; //implode("<br>",$salesList).                 ?></td>
+                                                                                                       <td><?php echo $salesList; //implode("<br>",$salesList).                  ?></td>
                                 <?php } ?>-->
 
-                                <td><?php echo $salesList; //implode("<br>",$salesList).                 ?></td>
+                                <td><?php echo $salesList; //implode("<br>",$salesList).                  ?></td>
                                 <td><?php echo $row['certi_coll']; ?></td>
                                 <td><?php
                                     echo $row['status_text'] . '<br />' . $row['end_class'] . '<br />'
@@ -747,26 +747,28 @@ echo form_open("class_trainee/trainer_feedback", $atr);
                         ?>                    
                     </td>
                 </tr>
-                <tr>
-                    <td class="td_heading">Feedback Score:</td>
-                    <td>                    
-                        <?php
-                        $feedback_score = array('' => 'Select', '10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50, '60' => 60, '70' => 70, '80' => 80, '90' => 90, '100' => 100);
-                        $feedback_score_attr = 'id="feedback_score" "required"';
-                        echo form_dropdown('FSCORE', $feedback_score, '', $feedback_score_attr);
-                        ?>   
-                    </td>
-                </tr>
-                <tr>
-                    <td class="td_heading">Feedback Grade:</td>
-                    <td>                    
-                        <?php
-                        $feedback_grade = array('' => 'Select', 'A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F');
-                        $feedback_grade_attr = 'id="feedback_grade" "required"';
-                        echo form_dropdown('FGRADE', $feedback_grade, '', $feedback_grade_attr);
-                        ?>   
-                    </td>
-                </tr>
+                <?php if ($row['tpg_crse']) { ?>
+                    <tr>
+                        <td class="td_heading">Feedback Score:</td>
+                        <td>                    
+                            <?php
+                            $feedback_score = array('' => 'Select', '10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50, '60' => 60, '70' => 70, '80' => 80, '90' => 90, '100' => 100);
+                            $feedback_score_attr = 'id="feedback_score" "required"';
+                            echo form_dropdown('FSCORE', $feedback_score, '', $feedback_score_attr);
+                            ?>   
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_heading">Feedback Grade:</td>
+                        <td>                    
+                            <?php
+                            $feedback_grade = array('' => 'Select', 'A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F');
+                            $feedback_grade_attr = 'id="feedback_grade" "required"';
+                            echo form_dropdown('FGRADE', $feedback_grade, '', $feedback_grade_attr);
+                            ?>   
+                        </td>
+                    </tr>
+                <?php } ?>
                 <tr>
                     <td class="td_heading"><?php echo get_catname_by_parm('SATSRATE'); ?>:</td>
                     <td>                    
