@@ -2536,7 +2536,7 @@ class Class_Model extends CI_Model {
                 AND ce.training_score !='' $str
                 AND date(cc.class_end_datetime) <= '$today_date'";
         $result = $this->db->query($sql)->result();
-        echo $this->db->last_query();exit;
+        //echo $this->db->last_query();exit;
         return $result[0];
     }
 
