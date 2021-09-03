@@ -191,7 +191,7 @@ class Classes extends CI_Controller {
         $data['role'] = $this->user->role_id;
         $data['page_title'] = 'Class';
         $this->load->library('form_validation');
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {         
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
 
             $this->form_validation->set_rules('class_course', 'Class Course', 'required');
             $this->form_validation->set_rules('class_name', 'Class Name', 'max_length[50]');
@@ -266,7 +266,7 @@ class Classes extends CI_Controller {
                     } else {
                         $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
                     }
-                    
+
                     $data['error'] = $tpg_response->error->details;
                     $data['display'] = 'display:block;';
                     $data['main_content'] = 'class/addnewclass_tpg';
@@ -324,7 +324,7 @@ class Classes extends CI_Controller {
                 if ($result == TRUE) {
                     $res = $this->classmodel->get_class_info($class_id_deactive);
                     $current_class_data = json_encode($res);
-                    user_activity( 5, $class_id_deactive, $current_class_data);
+                    user_activity(5, $class_id_deactive, $current_class_data);
                     $this->session->set_flashdata('success', 'Class has been deactivated successfully');
                 } else {
                     $this->session->set_flashdata("error", "Unable to deactivate class. Please try again later.");
@@ -332,7 +332,8 @@ class Classes extends CI_Controller {
                 redirect('classes');
             }
         }
-    }            
+    }
+
     /**
      * this function to deactivate class
      */
@@ -403,7 +404,7 @@ class Classes extends CI_Controller {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
-                        
+
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             extract($_POST);
             if ($this->classmodel->get_class_status($class_id) == 'Inactive') {
@@ -412,9 +413,9 @@ class Classes extends CI_Controller {
             } else if ($this->classmodel->get_class_status($class_id) == 'DELETED') {
                 $this->session->set_flashdata("error", "You cannot Edit a 'Deleted' class.");
                 return redirect("classes");
-            } else {                
-                $course_details = $this->coursemodel->get_course_detailse($course_id);                
-                $data['tpg_crse'] = $course_details->tpg_crse;                
+            } else {
+                $course_details = $this->coursemodel->get_course_detailse($course_id);
+                $data['tpg_crse'] = $course_details->tpg_crse;
                 $data['classid'] = $class_id;
                 $data['coursename'] = $this->coursemodel->course_name($course_id);
                 $data['classes'] = $this->classmodel->get_course_class_for_edit($tenant_id, $course_id);
@@ -482,7 +483,7 @@ class Classes extends CI_Controller {
                 $data['def_assessment'] = $cdef_assmnt;
             }
         }
-        
+
         $data['tenant_id'] = $tenant_id;
         $data['tax_error'] = $tax_error;
         $data['page_title'] = 'Class';
@@ -810,7 +811,40 @@ class Classes extends CI_Controller {
         return $days;
     }
 
+    /**
+     * this function to get post values and copy the class
+     */    
     public function copy_classes() {
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $tenant_id = $this->tenant_id;
+        $user_id = $this->session->userdata('userDetails')->user_id;
+        extract($_POST);
+        if (!empty($class_hid)) {    
+            if($this->user->role_id != 'ADMN'){
+                $start_date_timestamp = date('Y-m-d', strtotime($this->input->post('start_date')));        
+                $today_date = strtotime(date('Y-m-d'));                                            
+                if($start_date_timestamp < $today_date){                       
+                    $tax_error = "You donot have permission to create class with start date lesser than today's date. Please get in touch with your Administratot to make this change.";
+                    $this->copy_class($tax_error); 
+                    return;
+                }                                     
+            }                
+            $course_name= $course_name_hidden;            
+            $result = $this->classmodel->copy_classes($tenant_id, $course_name, $user_id);
+            if ($result == TRUE) {
+                $this->session->set_flashdata("success", "Class copied successfully.");
+            } else {
+                $this->session->set_flashdata("error", "Unable to copy class. Please try again later.");
+            }
+        }
+        $classes = $this->classmodel->get_class_details($tenant_id, $class_hid);
+        redirect("classes?course_id=" . $classes->course_id);
+    }
+
+    /**
+     * this function to get post values and copy the class of TPG
+     */
+    public function copy_classes_tpg() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
@@ -878,13 +912,11 @@ class Classes extends CI_Controller {
             $data['page_title'] = 'Class';
             $data['classid'] = $class_hid;
 
-
-
             $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
             $tpg_response = $this->tpgModel->create_copy_courserun_tpg($tenant_id, $tenant->comp_reg_no, $data);
             if ($tpg_response->status == 200) {
                 $tpg_course_run_id = $tpg_response->data->runs[0]->id;
-                $result = $this->classmodel->copy_classes($tenant_id, $data['course']->crse_name, $user_id, $data, $tpg_course_run_id);
+                $result = $this->classmodel->copy_classes_tpg($tenant_id, $data['course']->crse_name, $user_id, $data, $tpg_course_run_id);
                 if ($result['status'] == TRUE) {
                     $ssg_data = $this->tpgModel->getCourseByRunId($tpg_course_run_id); //to get qr code details
                     $st = $this->tpgModel->updateSsgData($result['classid'], $tpg_course_run_id, $ssg_data->data->course->run);
@@ -923,6 +955,8 @@ class Classes extends CI_Controller {
         $user_id = $this->session->userdata('userDetails')->user_id;
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             extract($_POST);
+            $res = $this->coursemodel->get_course_details($course_id, $tenant_id);
+            $data['tpg_crse'] = $res['tpg_crse'];
             $data['classes'] = $this->classmodel->get_course_class($tenant_id, $course_id, '', 1);
             $data['class'] = $class = $this->classmodel->get_class_details($tenant_id, $class_id);
             $data['ClassPay'] = $this->coursemodel->get_metadata_on_parameter_id($class->class_pymnt_enrol);

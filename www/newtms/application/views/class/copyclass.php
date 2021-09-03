@@ -6,7 +6,7 @@ $this->load->helper('metavalues_helper');
 $CI = & get_instance();
 $CI->load->model('course_model');
 $CI->load->model('meta_values');
-if (!empty($tax_error)) { 
+if (!empty($tax_error)) {
     echo '<div class="error1">' . $tax_error . '</div>';
 }
 ?>
@@ -220,9 +220,14 @@ if (!empty($tax_error)) {
             <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Cancel</button></a></div></p>
     </div>
     <?php
-    $atr = 'id="copy_form" name="copy_form" method="post"';
-    echo form_open("classes/copy_classes", $atr);
-    ?>  
+    if ($tpg_crse) {
+        $atr = 'id="copy_form" name="copy_form" method="post"';
+        echo form_open("classes/copy_classes_tpg", $atr);
+    } else {
+        $atr = 'id="copy_form" name="copy_form" method="post"';
+        echo form_open("classes/copy_classes", $atr);
+    }
+    ?>
     <div class="modal1_55555_99" id="ex9" style="display:none;">
         <p>
         <h2 class="panel_heading_style">Copy Class</h2>
@@ -240,13 +245,13 @@ if (!empty($tax_error)) {
                         echo form_input($class_name);
                         ?>
                         <span id="class_name_err"></span>
-                        <?php 
-                         $course_name = array(
+                        <?php
+                        $course_name = array(
                             'name' => 'course_name_hidden',
                             'id' => 'course_name_hidden',
                             'value' => $this->input->post('course_name'),
                             'maxlength' => 50,
-                            'type' => 'hidden'                             
+                            'type' => 'hidden'
                         );
                         echo form_input($course_name);
                         ?>
