@@ -79,13 +79,7 @@ $tms_route['RPTFIN']['ops'] = array(
     'SLSUMBYMN' => 'sales_summary_monthwise',
     'ACTLOG' => 'activity_log',
     'TMSRPTS' => 'tms_report',
-    'SALREP' => 'sales_report',
     'INVADTRAIL' => 'invoice_audit_trail'); //Added for new Invoice Audit Trail Report
-    //
-    //////---ssg api course
-$tms_route['SSGCRSE']['controller_name'] = 'ssgapi_course';
-$tms_route['SSGCRSE']['ops'] = array(
-    'LSTSRCSSGCRSE' => 'list_search_course');
 //------------------------ Manage Tenant -------------------------------------
 $tms_route['MNGTENT']['controller_name'] = 'manage_tenant';
 $tms_route['MNGTENT']['ops'] = array(
