@@ -7,7 +7,7 @@ if (!defined('BASEPATH'))
  * This is the controller class for course listing based  on different  parameters. 
  */
 
-class course_public extends CI_Controller {
+class Course_public extends CI_Controller {
 
     public function __construct() {
 
@@ -20,7 +20,7 @@ class course_public extends CI_Controller {
         $this->load->model('meta_values');
         $this->load->model('manage_tenant_model', 'manage_tenant');
         $host=$_SERVER['HTTP_HOST'];
-        if($host != 'xprienz.net'){
+        if($host != 'biipmi.co'){
             $tenent_details = $this->course_model->get_tenant_details();
         }
         $this->session->set_userdata('public_tenant_details', $tenent_details);
@@ -36,7 +36,7 @@ class course_public extends CI_Controller {
         ////////////added by shubhranshu to show the landing page for all tenants////////////
 
         $host=$_SERVER['HTTP_HOST'];
-        if($host == 'xprienz.net'){
+        if($host == 'biipmi.co'){
             $data['page_title'] = 'BIIPMI Training Management Portal';
             $data['tenants'] = $this->manage_tenant->list_all_tenants_for_landing_page();
             $this->load->view('landing_page', $data);
