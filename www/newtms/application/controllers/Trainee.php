@@ -137,12 +137,12 @@ class Trainee extends CI_Controller {
             $this->form_validation->set_rules('user_name', 'Username', 'required|max_length[15]|callback_check_unique_username');
             $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
             $this->form_validation->set_rules('pers_second_name', 'Secondname', 'max_length[100]');
-            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|max_length[50]');
+            $this->form_validation->set_rules('pers_contact_number', 'Contact Number', 'required|exact_length[8]');
             $this->form_validation->set_rules('pers_alternate_email', 'Email', 'valid_email');
             $this->form_validation->set_rules('pers_alternate_contact_number', 'Alternater Contact Number', 'max_length[50]');
             $this->form_validation->set_rules('pers_gender', 'Gender', 'required');
-			if($tenant_id =='T24'){
-				$this->form_validation->set_rules('pers_dob', 'Date of Birth', 'required|max_length[10]');				
+			$this->form_validation->set_rules('pers_dob', 'Date of Birth', 'required|max_length[10]');
+			if($tenant_id =='T24'){								
 				$this->form_validation->set_rules('pers_country', 'Country', 'required');
 				$this->form_validation->set_rules('pers_states', 'State', 'required');
 				$this->form_validation->set_rules('pers_city', 'City', 'required|max_length[50]');
@@ -308,6 +308,7 @@ class Trainee extends CI_Controller {
             $valid = TRUE;
             $country_of_residence = $this->input->post('country_of_residence');
             $this->form_validation->set_rules('pers_first_name', 'Firstname', 'required|max_length[100]');
+            $this->form_validation->set_rules('pers_contact_phone', 'Contact Number', 'required|exact_length[8]');
             if ($country_of_residence == 'IND') {
                 $tax_code = $this->input->post("PAN");
                 $this->form_validation->set_rules('PAN', 'PAN Number', 'required|max_length[15]');
@@ -421,7 +422,7 @@ class Trainee extends CI_Controller {
      * This function loads the View trainee form.
      */
     public function view_trainee() 
-    {
+    {        
         $data['sideMenuData'] = fetch_non_main_page_content();
         //$this->output->enable_profiler(TRUE);
         $user = $this->session->userdata('userDetails');
@@ -459,7 +460,7 @@ class Trainee extends CI_Controller {
         }
          
          $data['training_history'] = $this->traineemodel->get_training_history($trainee[userdetails]['tax_code']);
-		 if($tenant_id == 'T18') {
+         if($tenant_id == 'T18') {
              $data['training_module_history'] = $this->traineemodel->get_module_training_history($trainee[userdetails]['tax_code']);
          }
          $data['sort_order'] = $order_by;

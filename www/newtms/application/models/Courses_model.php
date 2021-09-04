@@ -977,6 +977,7 @@ class Courses_Model extends CI_Model {
         $this->db->join('trainee_feedback tf', 'tf.feedback_question_id = mv.parameter_id and tf.class_id = ' . $class_id . ' and tf.user_id =' . $user_id .
                 ' and tf.course_id =' . $course_id, 'left');
         $this->db->like('mv.category_id', 'CAT32_01', 'after');
+        //$this->db->where('tf.tenant_id', $tenant_id);
         $query = $this->db->get();
         $result = $query->result_array();
         $grouped_by_question = array();
@@ -1201,13 +1202,14 @@ class Courses_Model extends CI_Model {
         return $result;
     }
         //function to generate invoice id
-    private function generate_invoice_id() {
+    ////added by shubhranshu for everest invoice id changes
+   private function generate_invoice_id() {
 
         //$date_array = explode("-",$class_start_date);
 
-       $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.","T17" => "EVI","T20" => "WABLAB","T23" => "DEMO", "T24" => "RLIS", "T18" => "SSI");
+      $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.","T17" => "EVI","T20" => "WABLAB","T23" => "DEMO", "T24" => "RLIS", "T18" => "SSI", "T25" => "FGE");
 
-        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id","T17" => "ei_new_invoice_id","T20" => "wablab_invoice_id","T23" => "demo_invoice_id", "T24" => "rlis_invoice_id", "T18" => "ssi_invoice_id");
+        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id","T17" => "ei_new_invoice_id","T20" => "wablab_invoice_id","T23" => "demo_invoice_id", "T24" => "rlis_invoice_id", "T18" => "ssi_invoice_id", "T25" => "fge_invoice_id");
 
         $tenant_id = $this->tenant_id;
 

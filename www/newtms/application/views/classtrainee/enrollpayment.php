@@ -10,6 +10,11 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
     $gst_feesdue = '<?php echo $feesdue; ?>';
     $amount_check = '<?php echo $feesdue; ?>';
     $gst_gstrate = '<?php echo $gstrate; ?>';
+	
+	$course_id = '<?php echo $courses->course_id;?>';//s_skm1 
+    $trainee_age = '<?php echo $trainee_age->age?>';//s_skm2
+    $trainee_id = '<?php echo $trainee_id; ?>';//s_skm3
+    $course_duration = '<?php echo $course_duration; ?>';//s_skm4
 
     $company_unit_fees = '<?php echo $company_unit_fees; ?>';
 
@@ -89,16 +94,46 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                         );
                         echo form_input($data, $this->input->post('discount'), 'id="discount"');
                         echo array_to_input($this->input->post('control_6'), 'control_6');
-                        $data = array(
+
+// skm code start
+                        if($direct == 1){ // direct check whether trainee direct comes from register and enroll process OR from enrollemnt process
+                            // $direct == 1 means trainee direct comes from register and enroll process
+                            $data = array(
+                                'name' => 'course',
+                                'type' => 'hidden',
+                                'value' => $course
+                            );
+                            echo form_input($data, $this->input->post('course'), 'id="course"');
+                            $data = array(
+                                'name' => 'class',
+                                'type' => 'hidden',
+                                value => $class
+                            );
+                            echo form_input($data, $this->input->post('class'), 'id="class"');
+                        }
+                        else
+                        {
+                            $data = array(
                             'name' => 'course',
                             'type' => 'hidden'
-                        );
-                        echo form_input($data, $this->input->post('course'), 'id="course"');
-                        $data = array(
-                            'name' => 'class',
-                            'type' => 'hidden'
-                        );
-                        echo form_input($data, $this->input->post('class'), 'id="class"');
+                            );
+                            echo form_input($data, $this->input->post('course'), 'id="course"');
+                            $data = array(
+                                'name' => 'class',
+                                'type' => 'hidden'
+                            );
+                            echo form_input($data, $this->input->post('class'), 'id="class"');
+                        }
+//                        $data = array(
+//                            'name' => 'course',
+//                            'type' => 'hidden'
+//                        );
+//                        echo form_input($data, $this->input->post('course'), 'id="course"');
+//                        $data = array(
+//                            'name' => 'class',
+//                            'type' => 'hidden'
+//                        );
+//                        echo form_input($data, $this->input->post('class'), 'id="class"');
                         $data = array(
                             'name' => 'search_select',
                             'type' => 'hidden'
@@ -687,7 +722,6 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
             <a href="#" class="book_ackn_print btn btn-primary">Print</a>
      </div>
 </div>
-
 <!----------------modal by ssp start----------------------->
 <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02' && $this->input->post('account_type') == 'individual'){$show='display:block';}else{$show='display:none';}?>
 <div class="modal" id="ex1011" style="<?php //echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;">
@@ -760,7 +794,7 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
                 <!--Grid row-->
                 <div class="row">
 
-                    <!--Grid column--->
+                    <!--Grid column-->
                     <div class="col-md-12">
 
                         <div class="md-form">
@@ -798,9 +832,6 @@ $discount_amount = ($classes->class_fees  * ($discount['discount_rate']/100) );
 </p>
 </div>
 <!----------------modal by ssp end----------------------->
-
-
-
 <?php
 function array_to_input($array, $prefix = '') {
     if ((bool) count(array_filter(array_keys($array), 'is_string'))) {
@@ -941,9 +972,13 @@ code {
 code span {
 	color:green;
 }
+label {
+  
+    margin-top: 5px;
+}
 </style>
 <script>
-    $(document).ready(function(){
+$(document).ready(function(){
        
        var ALERT_TITLE = "Warning!";
 var ALERT_BUTTON_TEXT = "Ok";
@@ -1007,9 +1042,7 @@ alert('Alert this pages');
             }///added by shubhranshu
         }
         
-        
-        
-         //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
+     //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol  
      <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02' && $this->input->post('account_type') == 'individual'){?>
     $('#declarations').click(function(){
         $status = 1;
@@ -1062,7 +1095,7 @@ alert('Alert this pages');
      <?php } ?>
        
     });
-    
+  
 </script>
 
 <!---------- /*  added by shubhranshu for client requirement on 21/03/2019 */-->

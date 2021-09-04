@@ -524,4 +524,27 @@ $config['proxy_ips'] = '';
 
 //$config['wsq_courses'] = array('95', '115', '67', '66', '65', '98', '100', '97', '101', '102', '103', '127','129', '128', '132','133','134', '135', '136', '137', '130', '131','158','159','162',164);// wsq courses added by shubhranshu
 $config['wsq_courses'] = array('128', '132');// wsq courses added by shubhranshu request from client on 29.12.20
-//$config['wsq_courses'] = array();
+
+//Key for XPRIENZ Tenant
+$config['TPG_KEY_T02'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
+
+//Key for CAI Tenant
+$config['TPG_KEY_T03'] = "I3xGwAl81Ru8pHxTNQ/HXGbERt9U2mgqyMOhlZMh3dE=";
+
+//Key for FLC Tenant
+$config['TPG_KEY_T04'] = "n8DfGN39ME6bn333gILFDUeyDeXU9vZMZXnCdCQ65EA=";
+
+//Key for EVEREST Tenant
+$config['TPG_KEY_T17'] = "YVtPkPm7iSJ9znMeQSjA1LfdmP0raIPHCreooBD5SHE=";
+
+//Key for SSI Tenant
+$config['TPG_KEY_T18'] = "QFyCysgjUNQ08wBWi07/1WkEj0+u1oyq5o7wfdcfrgI=";
+
+//Key for WABLAB Tenant
+$config['TPG_KEY_T20'] = "";
+
+//Key for FRCS Tenant
+$config['TPG_KEY_T24'] = "1DK5t7WvWjr4GiEBQC3KquA3dt8yHJoOEUwl9zpysNg=";
+
+//Key for FONDA GLOBAL Tenant
+$config['TPG_KEY_T25'] = "1FB65Prs/602t9KV3vFs1Ogl7DiQoY63WP/QtjbDF3I=";

@@ -3,9 +3,9 @@
 function switch_db_dynamic($name_db)
 {
     $config_app['dsn'] = '';
-    $config_app['hostname'] = '172.19.0.3';
-    $config_app['username'] = 'biipmico_tms';
-    $config_app['password'] = base64_decode('a3NqNzg0MzgyKjg3OSNwcm9kIUAyMDIw');
+    $config_app['hostname'] = '172.18.0.3';
+    $config_app['username'] = 'biipmico_tms_dev';
+    $config_app['password'] = 'biipmi@#*123@biipbyte';
     $config_app['database'] = $name_db;
     $config_app['dbdriver'] = 'mysqli';
     $config_app['dbprefix'] = '';
@@ -27,11 +27,11 @@ function switch_db_dynamic($name_db)
 
 function fetch_dynamic_db_details(){
     $host=$_SERVER['HTTP_HOST'];
-    if($host == 'biipmi.co'){
+    if($host == 'xprienz.net'){
         $object = new stdClass();
         $object->tenant_db_name = 'biipmico_tms_masterdata';
-        $object->tenant_db_user = 'biipmico_tms';
-        $object->tenant_db_password = 'a3NqNzg0MzgyKjg3OSNwcm9kIUAyMDIw';
+        $object->tenant_db_user = 'biipmico_tms_dev';
+        $object->tenant_db_password = 'biipmi@#*123@biipbyte';
         
         return $object;
     }
@@ -45,11 +45,10 @@ function fetch_dynamic_db_details(){
         $CI->dbs->where('tenant_url',$host);
         $res = $CI->dbs->get()->row();
         //$CI->session->set_userdata('master_tenant_id', $res->tenant_id);
-        //print_r($res);exit;
         define('TENANT_ID',  $res->tenant_id); //////very very imporatant line by shubhranshu
         define('TENANT_LOGO',  $res->tenant_logo);//////very very imporatant line by shubhranshu
         if(empty($res)){
-            redirect('https://biipmi.co/'); // this if condition was added by shubhranshu check if the url is invalid redirect to home page
+            redirect('http://xprienz.net/'); // this if condition was added by shubhranshu check if the url is invalid redirect to home page
         }
         return $res;
         //print_r( $CI->dbs->get()->row());exit;

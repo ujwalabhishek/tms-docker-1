@@ -4,6 +4,7 @@
     $siteurl = '<?php echo site_url(); ?>';
     $baseurl = '<?php echo base_url(); ?>';
     $role_id = "<?php echo $this->session->userdata('userDetails')->role_id;?>";//added by shubhranshu
+    
 $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/addnewenroll.js"></script>
@@ -90,8 +91,8 @@ $privilage = "<?php echo $privilage;?>"; //added by shubhranshu
                             <label style="color:blue;font-weight:bold">Remove individual enrollment</label>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <?php
-                        //////added by shubhranshu to disable option for wablab
-                         if((TENANT_ID == 'T20') || (TENANT_ID == 'T17')){
+                        
+                        if((TENANT_ID == 'T20') || (TENANT_ID == 'T17')){
                             
                         }else{
                             $data=array(

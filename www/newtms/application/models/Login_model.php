@@ -1,9 +1,9 @@
 <?php
 /*
-  * This is the Model class for Logingg  
+  * This is the Model class for Login  
   */
 
-class login_model extends CI_Model {
+class Login_Model extends CI_Model {
     
     public function __construct() {
         parent::__construct();       

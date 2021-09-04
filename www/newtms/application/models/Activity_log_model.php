@@ -189,12 +189,13 @@ class Activity_Log_Model extends CI_Model {
             }
             else if($pass!=''){ // when search for reset password
                 $this->db->where('at.act_on',$pass);
-            }else if($crse_id !=''){///added by shubhranshu for course id search
+            }else if($crse_id !=''){
                 $this->db->where('at.act_on',$crse_id);
             }
+            
+            
+            
 
-            
-            
             if ($sort_by) {
                 $this->db->order_by($sort_by, $sort_order);
             } else {
@@ -208,7 +209,7 @@ class Activity_Log_Model extends CI_Model {
                 $this->db->limit($limit, $limitvalue);
             }
             $query = $this->db->get();
-//            echo $this->db->last_query();
+            //echo $this->db->last_query();exit;
             return $query->result_array();
 
     }

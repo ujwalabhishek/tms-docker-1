@@ -2338,6 +2338,28 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                         $this->db->where('user_id', $user_id);
                         $update_result = $this->db->update("class_enrol", $feedback_data);
                     }
+                    if ($key == 'FSCORE') {
+                        $feedback_data = array(
+                            'feedback_score' => $value,
+                            
+                        );
+                        $this->db->where('tenant_id', $this->user->tenant_id);
+                        $this->db->where('course_id', $course_id);
+                        $this->db->where('class_id', $class_id);
+                        $this->db->where('user_id', $user_id);
+                        $update_result = $this->db->update("class_enrol", $feedback_data);
+                    }
+                    if ($key == 'FGRADE') {
+                        $feedback_data = array(
+                            'feedback_grade' => $value,
+                            
+                        );
+                        $this->db->where('tenant_id', $this->user->tenant_id);
+                        $this->db->where('course_id', $course_id);
+                        $this->db->where('class_id', $class_id);
+                        $this->db->where('user_id', $user_id);
+                        $update_result = $this->db->update("class_enrol", $feedback_data);
+                    }
                     if ($key == 'CERTCOLDT') {
                         $certi_coll_date = (empty($value)) ? NULL : date('Y-m-d H:i:s', strtotime($value));
                         $enrol_data = array(
@@ -2679,8 +2701,8 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         $result = $this->db->get();
         return $result->result();
     }
-	
-	public function get_module_training_history($tax_code)
+    
+    public function get_module_training_history($tax_code)
     {
         $this->db->select('*');
         $this->db->from('tms_users_training_history_module');
@@ -2692,7 +2714,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         return $result->result();
         
     }
-	
+
     /**
      * Get company details
      * @param type $user_id

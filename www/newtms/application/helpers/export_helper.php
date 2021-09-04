@@ -127,7 +127,6 @@ function export_tms_report_page($result) {
         }
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, mask_format($row->tax_code));
-        //$sheet->setCellValue('B' . $rn, $row->tax_code);
         $sheet->setCellValue('C' . $rn, $row->user_id);
         $sheet->setCellValue('D' . $rn, $row->invoice_id);
         $sheet->setCellValue('E' . $rn, $row->name);

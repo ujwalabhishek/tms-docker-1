@@ -67,14 +67,14 @@ class accounting extends CI_Controller {
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $this->load->library('form_validation');
             $this->form_validation->set_rules('payment_type', 'Payment Type', 'required');
-            $payment_type = $this->input->get('payment_type');
+            $payment_type = $this->input->post('payment_type');
             if ($payment_type == 'CHQ') {
                 $this->form_validation->set_rules('paid_on', 'Paid on', 'required');
                 $this->form_validation->set_rules('cheque_number', 'Cheque number', 'required');
                 $this->form_validation->set_rules('cheque_amount', 'Cheque amount', 'required');
                 $this->form_validation->set_rules('cheque_date', 'Cheque date', 'required');
                 $this->form_validation->set_rules('bank_name', 'Bank name', 'required');
-            } else if ($payment_type == 'CASH' || $payment_type == 'NETS') {
+            } else if ($payment_type == 'CASH' || $payment_type == 'NETS' ||  $payment_type == 'PSEA') {
                 $this->form_validation->set_rules('cashpaid_on', ' Paid on', 'required');
                 $this->form_validation->set_rules('cash_amount', 'Cash Amount', 'required');
             } else if ($payment_type == 'GIRO') {
@@ -82,7 +82,7 @@ class accounting extends CI_Controller {
                 $this->form_validation->set_rules('gbank_name', 'Bank Name', 'required');
                 $this->form_validation->set_rules('giro_amount', 'Giro Amount', 'required');
             }
-             else if ($payment_type == 'SFC_ATO') {
+            else if ($payment_type == 'SFC_ATO') {
                 $this->form_validation->set_rules('sfcatoclaim_on', 'SFC Claimed', 'required');
                 $this->form_validation->set_rules('sfcato_amount', 'SFC Amount', 'required');
                 if($tenant_id == 'T02'){////added by shubhranshu to check if xp mandatory sfc id

@@ -268,7 +268,7 @@
 
                         if ($data->invoiced_on == NULL || $data->invoiced_on == '0000-00-00 00:00:00') {
 
-                            $invoiced_label = '<br><span style="color:red">** Invoice Sent</span>';
+                            $invoiced_label = '<br><span style="color:red">** Invoice Not Sent</span>';
 
                         } else {
 

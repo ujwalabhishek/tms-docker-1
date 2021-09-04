@@ -153,7 +153,24 @@ $(document).ready(function() {
             $('#course_code').val(ui.item.value);
             return false;
         },
-        minLength: 1
+        minLength: 3
+    });
+    jQuery("#course_code_ssg_api").autocomplete({
+        source: function(request, response) {
+            jQuery.get(baseurl + "ssgapi_course/get_course_list_autocomplete", {
+                query: request.term,
+                dataType: "json"
+            }, function(data) {
+                var d = jQuery.parseJSON(data);
+                response(d);
+                
+            });
+        },select: function(event, ui) {
+            $('#course_code_id').val(ui.item.key);
+            $('#course_code_ssg_api').val(ui.item.value);
+            return false;
+        },
+        minLength: 3
     });
     jQuery("#first_last_name").autocomplete({
         source: function(request, response) {

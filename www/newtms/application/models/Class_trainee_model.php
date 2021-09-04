@@ -57,195 +57,179 @@ class Class_Trainee_Model extends CI_Model {
             $this->db->where('tup.first_name', $trainee_name);
         }
     }
+
     ///by shubhranshu for client requirement for declaration data to save
-    public function save_declaration_data($tenant_id,$trainee_id,$class_id,$tax_code,$name,$type,$email,$mobile,$condition,$lesson_timing,$overseas){
+    public function save_declaration_data($tenant_id, $trainee_id, $class_id, $tax_code, $name, $type, $email, $mobile, $condition, $lesson_timing, $overseas) {
         $data_array = array('dec_tenant_id' => $tenant_id,
-                                        'dec_tax_code' => $tax_code,
-                                        'dec_trainee_name' => $name,
-                                        'dec_trainee_email' => $email,
-                                        'dec_trainee_id' => $trainee_id,
-                                        'dec_class_id' => $class_id ?? '0',
-                                        'dec_trainee_mobile' => $mobile,
-                                        'dec_condition' => $condition,
-                                        'dec_lesson_timing' => $lesson_timing,
-                                        'dec_overseas' => $overseas,
-                                        'dec_type' => $type,
-                                        'dec_enrol_by' => $this->session->userdata('userDetails')->user_id ?? '0',
-                                        'dec_trigger_datetime' => date('Y-m-d H:i:s')
-                                      );
-        
-    
-           
-                $status=$this->db->insert('tms_declaration_data', $data_array);
-                return $status;
+        'dec_tax_code' => $tax_code,
+        'dec_trainee_name' => $name,
+        'dec_trainee_email' => $email,
+        'dec_trainee_id' => $trainee_id,
+        'dec_class_id' => $class_id ?? '0',
+        'dec_trainee_mobile' => $mobile,
+        'dec_condition' => $condition,
+        'dec_lesson_timing' => $lesson_timing,
+        'dec_overseas' => $overseas,
+        'dec_type' => $type,
+        'dec_enrol_by' => $this->session->userdata('userDetails')->user_id ?? '0',
+        'dec_trigger_datetime' => date('Y-m-d H:i:s')
+        );
+
+
+
+        $status = $this->db->insert('tms_declaration_data', $data_array);
+        return $status;
     }
-    
-    
+
     /**
-     This method gets the start date of class by class id 
-    **/
-    public function schedule_chck($class_id)
-    {
+      This method gets the start date of class by class id
+     * */
+    public function schedule_chck($class_id) {
         $this->db->select('class_id');
         $this->db->from('class_schld');
-        $this->db->where('class_id',$class_id);
+        $this->db->where('class_id', $class_id);
         $qry = $this->db->get();
-        if($qry->num_rows()>0)
-        {
+        if ($qry->num_rows() > 0) {
             $res = TRUE;
             return $res;
-        }
-        else
-        {   
+        } else {
             $res = $this->get_class_stdate($class_id);
             return $res;
         }
     }
+
     /**
      * 
      * @param type $class_id $course_id
      * @return boolean
      */
-    public function lock_class_attendance($tenant_id,$course_id,$class_id) {
+    public function lock_class_attendance($tenant_id, $course_id, $class_id) {
         $cur_date = date('Y-m-d H:i:s');
-        $data =array(
-                lock_status => 1,
-                lock_datetime =>$cur_date
+        $data = array(
+            lock_status => 1,
+            lock_datetime => $cur_date
         );
-        $this->db->where('tenant_id',$tenant_id);
-        $this->db->where('course_id',$course_id);
-        $this->db->where('class_id',$class_id);
-        $this->db->where('lock_status',0);
-        $this->db->update('course_class',$data);
-        if($this->db->affected_rows()>0)
-        {
-            /*skm start : trainee data will capture into the archive table*/ 
-           $staff_id = $this->session->userdata('userDetails')->user_id;           
-           $result = $this->get_all_enrolled_trainee($tenant_id,$course_id,$class_id);           
-           foreach($result as $row)
-           {
+        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        $this->db->where('lock_status', 0);
+        $this->db->update('course_class', $data);
+        if ($this->db->affected_rows() > 0) {
+            /* skm start : trainee data will capture into the archive table */
+            $staff_id = $this->session->userdata('userDetails')->user_id;
+            $result = $this->get_all_enrolled_trainee($tenant_id, $course_id, $class_id);
+            foreach ($result as $row) {
                 $data_array[] = array('tenant_id' => $tenant_id,
-                                        'trainee_id' => $row->user_id,
-                                        'taxcode_type' => $row->tax_code_type,
-                                        'taxcode' => $row->tax_code,
-                                        'first_name' => $row->first_name,
-                                        'course_id' => $course_id,
-                                        'class_id' => $class_id,
-                                        'enrolment_mode' => $row->enrolment_mode,
-                                        'company_id' => $row->company_id,
-                                        'class_fee' => $row->class_fees,
-                                        'pymnt_due_id' => $row->pymnt_due_id,
-                                        'subsidy_type_id' =>$row->subsidy_type_id,
-                                        'subsidy_amount' => $row->subsidy_amount,
-                                        'total_amount_due' => $row->total_amount_due,
-                                        'invoice_id' => $row->invoice_id,
-                                        'attendance_locked_by' => $staff_id
-                                      );
-           }
-                $this->db->insert_batch('class_attendance_archive', $data_array);
-            /*skm end */
-            
-           return TRUE;
-        }
-        else
-        {   
+                    'trainee_id' => $row->user_id,
+                    'taxcode_type' => $row->tax_code_type,
+                    'taxcode' => $row->tax_code,
+                    'first_name' => $row->first_name,
+                    'course_id' => $course_id,
+                    'class_id' => $class_id,
+                    'enrolment_mode' => $row->enrolment_mode,
+                    'company_id' => $row->company_id,
+                    'class_fee' => $row->class_fees,
+                    'pymnt_due_id' => $row->pymnt_due_id,
+                    'subsidy_type_id' => $row->subsidy_type_id,
+                    'subsidy_amount' => $row->subsidy_amount,
+                    'total_amount_due' => $row->total_amount_due,
+                    'invoice_id' => $row->invoice_id,
+                    'attendance_locked_by' => $staff_id
+                );
+            }
+            $this->db->insert_batch('class_attendance_archive', $data_array);
+            /* skm end */
+
+            return TRUE;
+        } else {
             return FALSE;
         }
     }
-    
-    /*skm start: get all the details of trainee */
-    public function get_all_enrolled_trainee($tenant_id,$course_id,$class_id)
-    {
+
+    /* skm start: get all the details of trainee */
+
+    public function get_all_enrolled_trainee($tenant_id, $course_id, $class_id) {
         $this->db->select('ce.user_id,ce.enrolment_mode,ce.company_id,epd.pymnt_due_id,epd.class_fees,'
                 . 'epd.total_amount_due,epd.subsidy_type_id,subsidy_amount,epd.subsidy_recd_date,ei.invoice_id,tu.tax_code_type,'
                 . 'tu.tax_code,tup.first_name');
         $this->db->from('class_enrol ce');
-        $this->db->join('enrol_pymnt_due epd','epd.user_id = ce.user_id and epd.pymnt_due_id = ce.pymnt_due_id');
-        $this->db->join('enrol_invoice ei','ei.pymnt_due_id = epd.pymnt_due_id');
-        $this->db->join('tms_users tu','tu.user_id = ce.user_id and tu.tenant_id = ce.tenant_id');
-        $this->db->join('tms_users_pers tup','tup.user_id = tu.user_id and tup.tenant_id = tu.tenant_id');
-        $this->db->where('ce.tenant_id',$tenant_id);
-        $this->db->where('ce.course_id',$course_id);
-        $this->db->where('ce.class_id',$class_id);
+        $this->db->join('enrol_pymnt_due epd', 'epd.user_id = ce.user_id and epd.pymnt_due_id = ce.pymnt_due_id');
+        $this->db->join('enrol_invoice ei', 'ei.pymnt_due_id = epd.pymnt_due_id');
+        $this->db->join('tms_users tu', 'tu.user_id = ce.user_id and tu.tenant_id = ce.tenant_id');
+        $this->db->join('tms_users_pers tup', 'tup.user_id = tu.user_id and tup.tenant_id = tu.tenant_id');
+        $this->db->where('ce.tenant_id', $tenant_id);
+        $this->db->where('ce.course_id', $course_id);
+        $this->db->where('ce.class_id', $class_id);
         $query = $this->db->get();
-        return  $query->result();
+        return $query->result();
     }
-    /*skm end*/
-    
+
+    /* skm end */
+
     /**
      * 
      * @param type $class_id $course_id
      * @return boolean
      */
-    public function unlock_class_attendance($tenant_id,$course_id,$class_id) {
+    public function unlock_class_attendance($tenant_id, $course_id, $class_id) {
         $cur_date = date('Y-m-d H:i:s');
-        $data =array(
-                lock_status => 0,
-                unlock_datetime =>$cur_date
+        $data = array(
+            lock_status => 0,
+            unlock_datetime => $cur_date
         );
-        $this->db->where('tenant_id',$tenant_id);
-        $this->db->where('course_id',$course_id);
-        $this->db->where('class_id',$class_id);
-        $this->db->where('lock_status',1);
-        $this->db->update('course_class',$data);
-        if($this->db->affected_rows()>0)
-        {
-           return TRUE;
-        }
-        else
-        {   
+        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        $this->db->where('lock_status', 1);
+        $this->db->update('course_class', $data);
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        } else {
             return FALSE;
         }
     }
-    public function get_attendance_lock_status($tenant,$course_id,$class_id){
-                $this->db->select('*');
-                $this->db->from('course_class');
-                $this->db->where('tenant_id',$tenant);
-                $this->db->where('course_id',$course_id);
-                $this->db->where('class_id',$class_id);
-                $qry = $this->db->get();
-               // echo $this->db->last_query();
-                return $qry->row();
-                
+
+    public function get_attendance_lock_status($tenant, $course_id, $class_id) {
+        $this->db->select('*');
+        $this->db->from('course_class');
+        $this->db->where('tenant_id', $tenant);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        $qry = $this->db->get();
+        // echo $this->db->last_query();
+        return $qry->row();
     }
-    
-    public function get_class_stdate($class_id)
-    {
+
+    public function get_class_stdate($class_id) {
         $this->db->select('class_id,class_start_datetime,class_end_datetime');
         $this->db->from('course_class');
-        $this->db->where('class_id',$class_id);
+        $this->db->where('class_id', $class_id);
         $sql = $this->db->get();
-         $res = $sql->result_array();
+        $res = $sql->result_array();
         //print_r($res);
-       $x = explode(" ",$res[0]['class_start_datetime']);
-       $x1 = explode(" ",$res[0]['class_end_datetime']);
-      
-        
-          $class_st_date =  strtotime($x[0]); 
-         $class_ed_date =  strtotime($x1[0]); 
-        
-       
-        if($class_st_date == $class_ed_date)
-        {
-            
-               return TRUE;
-        }else
-        {
-            $today_date = strtotime(CONST_DATE);  
-               if($today_date >= $class_st_date )
-               {
-                   //echo $xxx1 = 1;
-                   return TRUE;
-               }else
-               {
-                   //echo $xxx1 = 0;
-                   return FALSE;
-               }
+        $x = explode(" ", $res[0]['class_start_datetime']);
+        $x1 = explode(" ", $res[0]['class_end_datetime']);
+
+
+        $class_st_date = strtotime($x[0]);
+        $class_ed_date = strtotime($x1[0]);
+
+
+        if ($class_st_date == $class_ed_date) {
+
+            return TRUE;
+        } else {
+            $today_date = strtotime(CONST_DATE);
+            if ($today_date >= $class_st_date) {
+                //echo $xxx1 = 1;
+                return TRUE;
+            } else {
+                //echo $xxx1 = 0;
+                return FALSE;
+            }
         }
     }
-    
 
-   
     /**
 
      * Returns Trainee count 
@@ -321,7 +305,7 @@ class Class_Trainee_Model extends CI_Model {
      * @return type
 
      */
-   public function present_absent_attendance_list($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $sort_by, $sort_order, $attendance_status, $user_present) {
+    public function present_absent_attendance_list($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $sort_by, $sort_order, $attendance_status, $user_present) {
 
         $date_from = $from_date->format('Y-m-d');
 
@@ -377,24 +361,21 @@ class Class_Trainee_Model extends CI_Model {
 
         if ($attendance_status == 'ab') {
             //if (!empty($user_present)) {//commented by shubhranshu since its not needed
-
-               // $this->db->where_not_in('ce.user_id', $user_present);
-                $this->db->where('epd.att_status',0);
-           // }//commented by shubhranshu since its not needed
+            // $this->db->where_not_in('ce.user_id', $user_present);
+            $this->db->where('epd.att_status', 0);
+            // }//commented by shubhranshu since its not needed
         } else if ($attendance_status == 'pr') {
-           // if (!empty($user_present)) {//commented by shubhranshu since its not needed
-
-              //  $this->db->where_in('ce.user_id', $user_present);
-                $this->db->where('epd.att_status',1);
-           // } else {//commented by shubhranshu since its not needed
-
-                // $this->db->get();//commented by shubhranshu since its not needed
-                //return;//commented by shubhranshu since its not needed
+            // if (!empty($user_present)) {//commented by shubhranshu since its not needed
+            //  $this->db->where_in('ce.user_id', $user_present);
+            $this->db->where('epd.att_status', 1);
+            // } else {//commented by shubhranshu since its not needed
+            // $this->db->get();//commented by shubhranshu since its not needed
+            //return;//commented by shubhranshu since its not needed
             //} ///commented by shubhranshu since its not needed
         }
 
         $query = $this->db->get();
-      
+
         $result = $query->result_array();
 
         $grouped_by_trainee = array();
@@ -419,7 +400,7 @@ class Class_Trainee_Model extends CI_Model {
                 $grouped_by_trainee[$trainee][$date]['session_02'] = $res['session_02'];
             }
         }
-       
+
         return $grouped_by_trainee;
     }
 
@@ -442,7 +423,7 @@ class Class_Trainee_Model extends CI_Model {
      * @param $sort_order
 
      */
-   public function get_class_trainee_list_for_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $sort_by, $sort_order, $attendance_status='') {
+    public function get_class_trainee_list_for_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $sort_by, $sort_order, $attendance_status = '') {
 
 //       $this->output->enable_profiler(TRUE);
         $date_from = $from_date->format('Y-m-d');
@@ -462,7 +443,7 @@ class Class_Trainee_Model extends CI_Model {
         $this->db->join('tms_users_pers tup', 'ce.tenant_id = tup.tenant_id and ce.user_id = tup.user_id');
 
         $this->db->join('course_class cc', 'cc.tenant_id = ce.tenant_id and cc.course_id = ce.course_id and cc.class_id = ce.class_id');
-         
+
         $this->db->join('enrol_pymnt_due epd', 'epd.pymnt_due_id = ce.pymnt_due_id and epd.user_id = ce.user_id');
 //        if (!empty($subsidy)) {
 //
@@ -498,23 +479,18 @@ class Class_Trainee_Model extends CI_Model {
 //            else
 //                $this->db->where("epd.subsidy_amount", 0);
 //        }
-        
-        if (!empty($subsidy))
-        {
-            if ($subsidy == 'ws')
-            {
+
+        if (!empty($subsidy)) {
+            if ($subsidy == 'ws') {
                 $this->db->where("epd.subsidy_amount >", 0);
             }
-             /* skm start for foreginer trainee*/
-            else if($subsidy == 'fr'){
+            /* skm start for foreginer trainee */ else if ($subsidy == 'fr') {
 //                $taxcode = 'SNG_2 || SNG_3';
 //                $this->db->where('tu.tax_code',$taxcode);
                 $this->db->where_in("tu.tax_code_type", array('SNG_2', 'SNG_3'));
-            }/* skm end */
-            else if($subsidy == 'wts')
-            {
-                 $this->db->where_in("tu.tax_code_type", 'SNG_1');
-                 $this->db->where("epd.subsidy_amount", 0);
+            }/* skm end */ else if ($subsidy == 'wts') {
+                $this->db->where_in("tu.tax_code_type", 'SNG_1');
+                $this->db->where("epd.subsidy_amount", 0);
             }
 //            else
 //            {
@@ -540,12 +516,12 @@ class Class_Trainee_Model extends CI_Model {
 
             $this->db->where('ce.company_id', $this->user->company_id);
         }
-        if($sort_by==''){
-        $this->db->order_by('name',asc); // show all trainee in asc order
+        if ($sort_by == '') {
+            $this->db->order_by('name', asc); // show all trainee in asc order
         }
-        $query = $this->db->get(); 
+        $query = $this->db->get();
 
-        
+
         $result = $query->result_array();
 
         //echo $this->db->last_query();exit;
@@ -594,46 +570,36 @@ class Class_Trainee_Model extends CI_Model {
      * @param $data_table
 
      */
-    public function update_for_mark_attendance($tenant_id, $course_id, $class_id, $data_table,$trainees) 
-    {
+    public function update_for_mark_attendance($tenant_id, $course_id, $class_id, $data_table, $trainees) {
         $is_updated = false;
         $is_inserted = false;
-         $logged_in_user_id = $this->user->user_id;
+        $logged_in_user_id = $this->user->user_id;
         //$this->db->trans_start();/// added by shubhranshu to check all the query and return true
-        $query=$this->db->query("select * from class_attendance where course_id='$course_id' and class_id='$class_id'");
+        $query = $this->db->query("select * from class_attendance where course_id='$course_id' and class_id='$class_id'");
 
-        if($query->num_rows()> 0)
-        {
-            $marked_trainee =array();
-            foreach ($data_table as $trainee_id => $data_row) 
-            {
-                $marked_trainee[]=$trainee_id;
+        if ($query->num_rows() > 0) {
+            $marked_trainee = array();
+            foreach ($data_table as $trainee_id => $data_row) {
+                $marked_trainee[] = $trainee_id;
             }
-          
         }
-        
-        if (count($data_table) > 0) 
-        {
-            
+
+        if (count($data_table) > 0) {
+
             $insert_array = array();
-            foreach ($data_table as $trainee_id => $data_row) 
-            {
-               
-                foreach ($data_row as $date => $data) 
-                {
-                  
-                    if (isset($data['session_01']) || isset($data['session_02'])) 
-                    {
-                       
-                        $exists = $this->is_attandance_exists($class_id,$trainee_id,$date);
+            foreach ($data_table as $trainee_id => $data_row) {
+
+                foreach ($data_row as $date => $data) {
+
+                    if (isset($data['session_01']) || isset($data['session_02'])) {
+
+                        $exists = $this->is_attandance_exists($class_id, $trainee_id, $date);
                         $update_data = array();
-                        if (isset($data['session_01'])) 
-                        {
+                        if (isset($data['session_01'])) {
 
                             $update_data['session_01'] = $data['session_01'];
                         }
-                        if (isset($data['session_02'])) 
-                        {
+                        if (isset($data['session_02'])) {
                             $update_data['session_02'] = $data['session_02'];
                         }
                         $this->db->where('class_id', $class_id);
@@ -641,13 +607,10 @@ class Class_Trainee_Model extends CI_Model {
                         $this->db->where('tenant_id', $tenant_id);
                         $this->db->where('user_id', $trainee_id);
                         $this->db->where('class_attdn_date', $date);
-                        if ($exists) 
-                        {
+                        if ($exists) {
                             $this->db->update('class_attendance', $update_data);
                             $is_updated = true;
-                        } 
-                        else 
-                        {
+                        } else {
                             $insert_array[] = array(
                                 'tenant_id' => $tenant_id,
                                 'course_id' => $course_id,
@@ -660,22 +623,18 @@ class Class_Trainee_Model extends CI_Model {
                         }
                     }
                 }
-               
             }
-            if (count($insert_array) > 0) 
-            {
-               
-                 $is_inserted = $this->db->insert_batch('class_attendance', $insert_array);
+            if (count($insert_array) > 0) {
+
+                $is_inserted = $this->db->insert_batch('class_attendance', $insert_array);
             }
-            $query=$this->db->query("select * from class_attendance where course_id='$course_id' and class_id='$class_id'");
-            if($query->num_rows()> 0)
-            {
+            $query = $this->db->query("select * from class_attendance where course_id='$course_id' and class_id='$class_id'");
+            if ($query->num_rows() > 0) {
                 $query = $this->db->query("select * from class_schld where course_id='$course_id' and class_id='$class_id' and tenant_id='$tenant_id'");
                 $query->num_rows();
-                if($query->num_rows() > 0)
-                {
-                       
-                    $query  = $this->db->query("select att.user_id as user_id,
+                if ($query->num_rows() > 0) {
+
+                    $query = $this->db->query("select att.user_id as user_id,
                             SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) 
                            / (select count(cs.class_id) from class_schld cs where cs.course_id='$course_id' and cs.class_id='$class_id' and cs.tenant_id='$tenant_id' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
                     from class_attendance att
@@ -683,15 +642,14 @@ class Class_Trainee_Model extends CI_Model {
                     where att.class_id='$class_id' and att.course_id='$course_id'
                     group by att.user_id,att.class_id
                     having attendence >= 0.75");
-                      $this->db->last_query(); 
-                }
-                else {
-                    $sql=$this->db->query("select class_start_datetime,class_end_datetime from course_class where course_id='$course_id' and class_id='$class_id'");
-                    foreach($sql->result_array() as $row){
+                    $this->db->last_query();
+                } else {
+                    $sql = $this->db->query("select class_start_datetime,class_end_datetime from course_class where course_id='$course_id' and class_id='$class_id'");
+                    foreach ($sql->result_array() as $row) {
                         $row['class_start_datetime'];
                         $row['class_start_datetime'];
                     }
-                    $query  = $this->db->query("select att.user_id as user_id,
+                    $query = $this->db->query("select att.user_id as user_id,
                                     SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) 
                                     / (count(att.user_id)* cc.class_session_day) as attendence
                     from class_attendance att
@@ -699,149 +657,212 @@ class Class_Trainee_Model extends CI_Model {
                     where att.class_id='$class_id' and att.course_id='$course_id'
                     group by att.user_id,att.class_id
                     having attendence >= 0.75");
-                     $this->db->last_query(); 
+                    $this->db->last_query();
                 }
-                $attended_trainee =array();
-                foreach($query->result_array() as $row)
-                {
-                     $attended_trainee[]= $row['user_id'];
+
+
+
+
+                $attended_trainee = array();
+                foreach ($query->result_array() as $row) {
+                    $attended_trainee[] = $row['user_id'];
                 }
-                $absentee= array_diff($trainees,$attended_trainee);
-                foreach($absentee as $key=>$trainee_id)
-                {
+                $absentee = array_diff($trainees, $attended_trainee);
+                foreach ($absentee as $key => $trainee_id) {
+
+                    //////below code was added by shubhranshu for xp for attrition option START-----
+                    if (TENANT_ID == 'T02') {
+                        $qr = $this->db->query("select att.user_id as user_id,SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) / (select count(cs.class_id) 
+                            from class_schld cs where cs.course_id='$course_id' and cs.class_id='$class_id' and cs.tenant_id='T02' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
+                            from class_attendance att
+                            join course_class cc on cc.class_id='$class_id' and cc.course_id='$course_id' and cc.tenant_id='T02'
+                            where att.class_id='$class_id' and att.course_id='$course_id' and att.user_id='$trainee_id'
+                            group by att.user_id,att.class_id");
+                        //having attendence <= 0.50");
+                        $att_percentage = $qr->result_array()[0][attendence];
+                    }
+                    //////below code was added by shubhranshu for xp for attrition option end-----
+
+
                     $this->db->select('ce.pymnt_due_id,ce.company_id,ei.invoice_id');
                     $this->db->from('class_enrol ce');
-                    $this->db->join('enrol_invoice ei','ei.pymnt_due_id=ce.pymnt_due_id');
-                    $this->db->where('ce.tenant_id',$tenant_id);
-                    $this->db->where('ce.course_id',$course_id);
-                    $this->db->where('ce.class_id',$class_id);
-                    $this->db->where('ce.user_id',$trainee_id);
-                    $this->db->where('ce.enrolment_mode','COMPSPON');
+                    $this->db->join('enrol_invoice ei', 'ei.pymnt_due_id=ce.pymnt_due_id');
+                    $this->db->where('ce.tenant_id', $tenant_id);
+                    $this->db->where('ce.course_id', $course_id);
+                    $this->db->where('ce.class_id', $class_id);
+                    $this->db->where('ce.user_id', $trainee_id);
+                    $this->db->where('ce.enrolment_mode', 'COMPSPON');
                     $query = $this->db->get();
                     $query->num_rows();
-                
-                    if($query->num_rows()>0)
-                    {
-                        foreach($query->result() as $rows)
-                        { 
-                           
+
+                    if ($query->num_rows() > 0) {
+                        foreach ($query->result() as $rows) {
+
                             $payment_due_id = $rows->pymnt_due_id;
                             $invoice_id = $rows->invoice_id;
                             $company_id = $rows->company_id;
                         }
                         $query = $this->db->query("select * from enrol_pymnt_due where pymnt_due_id='$payment_due_id' and user_id='$trainee_id' and att_status='1'");
                         //echo "sss".$query->num_rows();exit;
-                        if ($query->num_rows() > 0)
-                        {
+                        if ($query->num_rows() > 0) {
                             //sk1
-                          $status= $this->remove_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
-                                  ,$invoice_id, $payment_due_id, $trainee_id);
+                            $status = $this->remove_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
+                                    , $invoice_id, $payment_due_id, $trainee_id, $att_percentage);
+                        }
+                    } else {
+                        $query = $this->db->select('ce.pymnt_due_id,ei.invoice_id')
+                                        ->from('class_enrol ce')
+                                        ->join('enrol_invoice ei', 'ei.pymnt_due_id=ce.pymnt_due_id')->where('ce.tenant_id', $tenant_id)->where('ce.course_id', $course_id)
+                                        ->where('ce.class_id', $class_id)->where('ce.user_id', $trainee_id)
+                                        ->get()->row(0);
+                        $this->db->last_query();
+                        $payment_due_id = $query->pymnt_due_id;
+                        $invoice_id = $query->invoice_id;
+                        $query = $this->db->query("select * from enrol_pymnt_due where pymnt_due_id='$payment_due_id' and user_id='$trainee_id' and att_status='1'");
+                        if ($query->num_rows() > 0) {
+
+                            $status = $this->remove_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $invoice_id, $payment_due_id, $trainee_id, $att_percentage);
                         }
                     }
-                    else
-                    {   
-                        $query=$this->db->select('ce.pymnt_due_id,ei.invoice_id')
-                                   ->from('class_enrol ce')
-                                ->join('enrol_invoice ei','ei.pymnt_due_id=ce.pymnt_due_id')->where('ce.tenant_id',$tenant_id)->where('ce.course_id',$course_id)
-                                ->where('ce.class_id',$class_id) ->where('ce.user_id',$trainee_id)
-                                ->get()->row(0);
-                             $this->db->last_query();
-                            $payment_due_id = $query->pymnt_due_id;
-                            $invoice_id = $query->invoice_id;
-                            $query = $this->db->query("select * from enrol_pymnt_due where pymnt_due_id='$payment_due_id' and user_id='$trainee_id' and att_status='1'");
-                            if ($query->num_rows() > 0)
-                            {
-                             
-                              $status= $this->remove_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id,$invoice_id, $payment_due_id, $trainee_id);
-                            }
-                    }
                 }
-               
-               $marked_attn=array_intersect($attended_trainee,$marked_trainee);
-               
-                foreach($marked_attn as $key=>$trainee_id)
-                {
+
+                $marked_attn = array_intersect($attended_trainee, $marked_trainee);
+
+                foreach ($marked_attn as $key => $trainee_id) {
                     $this->db->select('ce.pymnt_due_id,ce.company_id,ei.invoice_id');
                     $this->db->from('class_enrol ce');
-                    $this->db->join('enrol_invoice ei','ei.pymnt_due_id=ce.pymnt_due_id');
-                    $this->db->where('ce.tenant_id',$tenant_id);
-                    $this->db->where('ce.course_id',$course_id);
-                    $this->db->where('ce.class_id',$class_id);
-                    $this->db->where('ce.user_id',$trainee_id);
-                    $this->db->where('ce.enrolment_mode','COMPSPON');
+                    $this->db->join('enrol_invoice ei', 'ei.pymnt_due_id=ce.pymnt_due_id');
+                    $this->db->where('ce.tenant_id', $tenant_id);
+                    $this->db->where('ce.course_id', $course_id);
+                    $this->db->where('ce.class_id', $class_id);
+                    $this->db->where('ce.user_id', $trainee_id);
+                    $this->db->where('ce.enrolment_mode', 'COMPSPON');
                     $query = $this->db->get();
                     $query->num_rows();
-                    
-                    if($query->num_rows()>0)
-                    { 
-                        foreach($query->result() as $rows)
-                        { 
+
+                    if ($query->num_rows() > 0) {
+                        foreach ($query->result() as $rows) {
                             $payment_due_id = $rows->pymnt_due_id;
                             $invoice_id = $rows->invoice_id;
                             $company_id = $rows->company_id;
                         }
                         $query = $this->db->query("select * from enrol_pymnt_due where pymnt_due_id='$payment_due_id' and user_id='$trainee_id' and att_status='0'");
-                         
-                        if ($query->num_rows() > 0)
-                        {
-                           //sk2 
-                           $status= $this->add_presentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
-                         ,$invoice_id, $payment_due_id, $trainee_id);
+
+                        if ($query->num_rows() > 0) {
+                            //sk2 
+                            $status = $this->add_presentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
+                                    , $invoice_id, $payment_due_id, $trainee_id);
                         }
-                    }
-                    else
-                    {
-                        $query=$this->db->select('ce.pymnt_due_id,ei.invoice_id')
-                                ->from('class_enrol ce')
-                                ->join('enrol_invoice ei','ei.pymnt_due_id=ce.pymnt_due_id')->where('ce.tenant_id',$tenant_id)->where('ce.course_id',$course_id)
-                                ->where('ce.class_id',$class_id) ->where('ce.user_id',$trainee_id)
-                                ->get()->row(0);
-                          
-                            $payment_due_id = $query->pymnt_due_id;
-                            $invoice_id = $query->invoice_id;
-                            $query = $this->db->query("select * from enrol_pymnt_due where pymnt_due_id='$payment_due_id' and user_id='$trainee_id' and att_status='0'");
-                            if ($query->num_rows() > 0)
-                            {
-                             
-                              $status= $this->add_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id,$invoice_id, $payment_due_id, $trainee_id);
-                            }
+                    } else {
+                        $query = $this->db->select('ce.pymnt_due_id,ei.invoice_id')
+                                        ->from('class_enrol ce')
+                                        ->join('enrol_invoice ei', 'ei.pymnt_due_id=ce.pymnt_due_id')->where('ce.tenant_id', $tenant_id)->where('ce.course_id', $course_id)
+                                        ->where('ce.class_id', $class_id)->where('ce.user_id', $trainee_id)
+                                        ->get()->row(0);
+
+                        $payment_due_id = $query->pymnt_due_id;
+                        $invoice_id = $query->invoice_id;
+                        $query = $this->db->query("select * from enrol_pymnt_due where pymnt_due_id='$payment_due_id' and user_id='$trainee_id' and att_status='0'");
+                        if ($query->num_rows() > 0) {
+
+                            $status = $this->add_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $invoice_id, $payment_due_id, $trainee_id);
+                        }
                     }
                 }
             }
-              
-            foreach ($data_table as $trainee_id => $data_row) 
-            {
-               
-                $query11=$this->db->select('ce.pymnt_due_id,ei.invoice_id')
+
+            foreach ($data_table as $trainee_id => $data_row) {
+
+                $query11 = $this->db->select('ce.pymnt_due_id,ei.invoice_id')
                                 ->from('class_enrol ce')
-                               
-                                ->join('enrol_invoice ei','ei.pymnt_due_id=ce.pymnt_due_id')->where('ce.tenant_id',$tenant_id)->where('ce.course_id',$course_id)
-                                ->where('ce.class_id',$class_id) ->where('ce.user_id',$trainee_id)
+                                ->join('enrol_invoice ei', 'ei.pymnt_due_id=ce.pymnt_due_id')->where('ce.tenant_id', $tenant_id)->where('ce.course_id', $course_id)
+                                ->where('ce.class_id', $class_id)->where('ce.user_id', $trainee_id)
                                 ->get()->row(0);
                 $payment_due_id = $query11->pymnt_due_id;
                 //$att_status = $query11->att_status;
-                $this->db->set('ce.training_score','C');
-                $this->db->where('ce.pymnt_due_id',$payment_due_id);
-                 $this->db->where('epd.pymnt_due_id',$payment_due_id);
-                $this->db->where('epd.att_status',1);
-                $this->db->where('ce.user_id',$trainee_id);
-                 $this->db->where('epd.user_id',$trainee_id);
+                $this->db->set('ce.training_score', 'C');
+                $this->db->where('ce.pymnt_due_id', $payment_due_id);
+                $this->db->where('epd.pymnt_due_id', $payment_due_id);
+                $this->db->where('epd.att_status', 1);
+                $this->db->where('ce.user_id', $trainee_id);
+                $this->db->where('epd.user_id', $trainee_id);
                 $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
-                 //$this->db->last_query();
-               
-                $this->db->set('ce.training_score','ABS');
-                $this->db->where('ce.pymnt_due_id',$payment_due_id);
-                 $this->db->where('epd.pymnt_due_id',$payment_due_id);
-                $this->db->where('epd.att_status',0);
-                $this->db->where('ce.user_id',$trainee_id);
-                  $this->db->where('epd.user_id',$trainee_id);
-                $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
-              
-                 //$this->db->last_query();
+                //$this->db->last_query();
+                //////below code was added by shubhranshu for xp for attrition option START-----
+                if (TENANT_ID == 'T02') {
+                    $qr = $this->db->query("select att.user_id as user_id,SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) / (select count(cs.class_id) 
+                        from class_schld cs where cs.course_id='$course_id' and cs.class_id='$class_id' and cs.tenant_id='T02' and (cs.session_type_id='S1' or cs.session_type_id='S2')) as attendence
+                        from class_attendance att
+                        join course_class cc on cc.class_id='$class_id' and cc.course_id='$course_id' and cc.tenant_id='T02'
+                        where att.class_id='$class_id' and att.course_id='$course_id' and att.user_id='$trainee_id'
+                        group by att.user_id,att.class_id");
+                    //having attendence <= 0.50");
+                    $att_percentage = $qr->result_array()[0][attendence];
+                }
+
+
+                if ($att_percentage != null && $att_percentage >= 0 && $att_percentage <= 0.50 && TENANT_ID == 'T02') {
+                    $this->db->set('ce.training_score', 'ATR');
+                    $this->db->where('ce.pymnt_due_id', $payment_due_id);
+                    $this->db->where('epd.pymnt_due_id', $payment_due_id);
+                    $this->db->where('epd.att_status', 0);
+                    $this->db->where('ce.user_id', $trainee_id);
+                    $this->db->where('epd.user_id', $trainee_id);
+                    $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
+
+
+                    $data = array('feedback_answer' => 'ATR');
+                    $this->db->where('tenant_id', $tenant_id);
+                    $this->db->where('course_id', $course_id);
+                    $this->db->where('class_id', $class_id);
+                    $this->db->where('feedback_question_id', 'COMYTCOM');
+                    $this->db->where('user_id', $trainee_id);
+                    $this->db->update('trainer_feedback', $data);
+                } else if ($att_percentage != null && $att_percentage > 0.50 && $att_percentage < 0.75 && TENANT_ID == 'T02') {
+                    $this->db->set('ce.training_score', 'ABS');
+                    $this->db->where('ce.pymnt_due_id', $payment_due_id);
+                    $this->db->where('epd.pymnt_due_id', $payment_due_id);
+                    $this->db->where('epd.att_status', 0);
+                    $this->db->where('ce.user_id', $trainee_id);
+                    $this->db->where('epd.user_id', $trainee_id);
+                    $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
+
+
+                    $data = array('feedback_answer' => 'ABS');
+                    $this->db->where('tenant_id', $tenant_id);
+                    $this->db->where('course_id', $course_id);
+                    $this->db->where('class_id', $class_id);
+                    $this->db->where('feedback_question_id', 'COMYTCOM');
+                    $this->db->where('user_id', $trainee_id);
+                    $this->db->update('trainer_feedback', $data);
+                } else {//////below code was added by shubhranshu for xp for attrition option end-----
+                    $this->db->set('ce.training_score', 'ABS');
+                    $this->db->where('ce.pymnt_due_id', $payment_due_id);
+                    $this->db->where('epd.pymnt_due_id', $payment_due_id);
+                    $this->db->where('epd.att_status', 0);
+                    $this->db->where('ce.user_id', $trainee_id);
+                    $this->db->where('epd.user_id', $trainee_id);
+                    $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
+
+                    //////below code was added by shubhranshu for xp for attrition option START-----
+                    if (($att_percentage >= 0 && $att_percentage <= 0.50 && TENANT_ID == 'T02') || ($att_percentage == null && TENANT_ID == 'T02')) {
+
+                        $data = array('feedback_answer' => '');
+                        $this->db->where('tenant_id', $tenant_id);
+                        $this->db->where('course_id', $course_id);
+                        $this->db->where('class_id', $class_id);
+                        $this->db->where('feedback_question_id', 'COMYTCOM');
+                        $this->db->where('user_id', $trainee_id);
+                        $this->db->update('trainer_feedback', $data);
+                        //////below code was added by shubhranshu for xp for attrition option end-----
+                    }
+                }
+
+                //$this->db->last_query();
             }
             return $query->result(); // commented by shubhranshu since waste due to some condition does not show msg
         }
-        return $is_inserted || $is_updated;// commented by shubhranshu since waste
+        return $is_inserted || $is_updated; // commented by shubhranshu since waste
 //        $this->db->trans_complete();/// added by shubhranshu to check all the query and return true strat code/////
 //        if($this->db->trans_status() === TRUE){
 //            return TRUE;
@@ -849,133 +870,134 @@ class Class_Trainee_Model extends CI_Model {
 //            return FALSE;
 //        }///////added by shubhranshu end of code////////////////////////////
     }
+
     /*
      * add presentee to invoice ..
      * changed by pritam
      */
     /* Original commnented on 15/11/2016
-       public function add_presentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id,$invoice_id,$payment_due_id,$trainee_id) 
-    {
-          
-        $status = TRUE;
-        
-        $curr_invoice_details = $this->get_invoice_details($payment_due_id);
+      public function add_presentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id,$invoice_id,$payment_due_id,$trainee_id)
+      {
 
-        $total_gst_due = 0;
+      $status = TRUE;
 
-        $total_unit_fees_due = 0;
+      $curr_invoice_details = $this->get_invoice_details($payment_due_id);
 
-        $total_net_fees_due = 0;
+      $total_gst_due = 0;
 
-        $total_discount_due = 0;
+      $total_unit_fees_due = 0;
 
-        $total_subsidy_amount_due = 0;
+      $total_net_fees_due = 0;
 
-        $cur_date = date('Y-m-d');
+      $total_discount_due = 0;
 
-        $crse_cls_detail = $this->get_class_detail($class_id, $course_id, $tenant_id);
+      $total_subsidy_amount_due = 0;
 
-        $str_class_status = $this->get_class_status($crse_cls_detail->class_status, $crse_cls_detail->class_start_datetime, $crse_cls_detail->class_end_datetime);
-        
-        $data = $this->get_current_invoice_data($payment_due_id);
-        $due_to='Mark as Present';
-        
-        $this->db->trans_start();
-        
-        $status = $this->enrol_invoice_view($payment_due_id,$data,$logged_in_user_id,$due_to);
-        
-        $data = array('att_status'  =>1);
-        $this->db->where('pymnt_due_id',$payment_due_id);
-        $this->db->where('user_id',$trainee_id);
-        $this->db->update('enrol_pymnt_due', $data);
-        
-        $data = array('training_score'  =>'C' );
-        $this->db->where('pymnt_due_id',$payment_due_id);
-        $this->db->where('user_id',$trainee_id);
-        $this->db->update('class_enrol', $data);
-        
-        $query=$this->db->select('*')->from('trainer_feedback')->where('tenant_id',$tenant_id)->where('course_id',$course_id)
-                        ->where('class_id',$class_id)->where('user_id',$trainee_id)->get();
-        if($query->num_rows()>0)
-        {
-            $data = array('feedback_answer'  =>'C' );
-            $this->db->where('tenant_id',$tenant_id);
-            $this->db->where('course_id',$course_id);
-            $this->db->where('class_id',$class_id);
-            $this->db->where('feedback_question_id','COMYTCOM');
-            $this->db->where('user_id',$trainee_id);
-            $this->db->update('trainer_feedback', $data);
-        }
-        
-        $query=$this->db->query("select sum(subsidy_amount) as subsidy_amt from enrol_pymnt_due where att_status=1 and user_id= '$trainee_id' and"
-                                . " pymnt_due_id=$payment_due_id");
-        $row=$query->row_array();
-        $this->db->last_query();
-        if($row['subsidy_amt']>0){$total_subsidy_amount_due+=$row['subsidy_amt'];}
-        
-        $fees_array = $this->fees_payable($trainee_id,$tenant_id,$course_id,$class_id,$total_subsidy_amount_due,$company_id,$logged_in_user_id);
-        $discount_rate = $fees_array["discount_rate"];
-        $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
-        $total_gst_due += $fees_array["gst_amount"];
-        $total_unit_fees_due += $fees_array["unit_fees"];
-        $total_net_fees_due += $fees_array["net_fees_due"];
-       
-        $status = $this->update_invoice_audit_trail($payment_due_id);
-        if ($status) {
+      $cur_date = date('Y-m-d');
 
-            $status = $this->remove_invoice($payment_due_id);
+      $crse_cls_detail = $this->get_class_detail($class_id, $course_id, $tenant_id);
 
-            if ($status) {
-               
-                list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, 
-                        ($curr_invoice_details->total_inv_amount + $total_net_fees_due), 
-                        ($curr_invoice_details->total_unit_fees + $total_unit_fees_due), 
-                        ($curr_invoice_details->total_inv_discnt + $total_discount_due), 
-                        ($curr_invoice_details->total_inv_subsdy + $total_subsidy_amount_due), 
-                        ($curr_invoice_details->total_gst + $total_gst_due), 
-                        $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
+      $str_class_status = $this->get_class_status($crse_cls_detail->class_status, $crse_cls_detail->class_start_datetime, $crse_cls_detail->class_end_datetime);
 
-                if ($status) {
-                            //paid status
-                    $query=mysqli_query("select * from enrol_paymnt_recd where invoice_id='$invoice_id1'");
-                    if($query)
-                    {
-                        $invoice_id1=$invoice_id;
-                        $invoice_id = $new_invoice_id;
-                        $sql=mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
-                        $sql1=mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
-                    }
-                    //end paid status
-                    $invoice_id = $new_invoice_id;
-                    $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
-                    $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);
-                }
-            }
-        }
+      $data = $this->get_current_invoice_data($payment_due_id);
+      $due_to='Mark as Present';
 
-        $this->db->trans_complete();
+      $this->db->trans_start();
 
-        if ($this->db->trans_status() === FALSE) {
+      $status = $this->enrol_invoice_view($payment_due_id,$data,$logged_in_user_id,$due_to);
 
-            $status = FALSE;
-        }
+      $data = array('att_status'  =>1);
+      $this->db->where('pymnt_due_id',$payment_due_id);
+      $this->db->where('user_id',$trainee_id);
+      $this->db->update('enrol_pymnt_due', $data);
+
+      $data = array('training_score'  =>'C' );
+      $this->db->where('pymnt_due_id',$payment_due_id);
+      $this->db->where('user_id',$trainee_id);
+      $this->db->update('class_enrol', $data);
+
+      $query=$this->db->select('*')->from('trainer_feedback')->where('tenant_id',$tenant_id)->where('course_id',$course_id)
+      ->where('class_id',$class_id)->where('user_id',$trainee_id)->get();
+      if($query->num_rows()>0)
+      {
+      $data = array('feedback_answer'  =>'C' );
+      $this->db->where('tenant_id',$tenant_id);
+      $this->db->where('course_id',$course_id);
+      $this->db->where('class_id',$class_id);
+      $this->db->where('feedback_question_id','COMYTCOM');
+      $this->db->where('user_id',$trainee_id);
+      $this->db->update('trainer_feedback', $data);
+      }
+
+      $query=$this->db->query("select sum(subsidy_amount) as subsidy_amt from enrol_pymnt_due where att_status=1 and user_id= '$trainee_id' and"
+      . " pymnt_due_id=$payment_due_id");
+      $row=$query->row_array();
+      $this->db->last_query();
+      if($row['subsidy_amt']>0){$total_subsidy_amount_due+=$row['subsidy_amt'];}
+
+      $fees_array = $this->fees_payable($trainee_id,$tenant_id,$course_id,$class_id,$total_subsidy_amount_due,$company_id,$logged_in_user_id);
+      $discount_rate = $fees_array["discount_rate"];
+      $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
+      $total_gst_due += $fees_array["gst_amount"];
+      $total_unit_fees_due += $fees_array["unit_fees"];
+      $total_net_fees_due += $fees_array["net_fees_due"];
+
+      $status = $this->update_invoice_audit_trail($payment_due_id);
+      if ($status) {
+
+      $status = $this->remove_invoice($payment_due_id);
+
+      if ($status) {
+
+      list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id,
+      ($curr_invoice_details->total_inv_amount + $total_net_fees_due),
+      ($curr_invoice_details->total_unit_fees + $total_unit_fees_due),
+      ($curr_invoice_details->total_inv_discnt + $total_discount_due),
+      ($curr_invoice_details->total_inv_subsdy + $total_subsidy_amount_due),
+      ($curr_invoice_details->total_gst + $total_gst_due),
+      $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
+
+      if ($status) {
+      //paid status
+      $query=mysqli_query("select * from enrol_paymnt_recd where invoice_id='$invoice_id1'");
+      if($query)
+      {
+      $invoice_id1=$invoice_id;
+      $invoice_id = $new_invoice_id;
+      $sql=mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
+      $sql1=mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
+      }
+      //end paid status
+      $invoice_id = $new_invoice_id;
+      $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
+      $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);
+      }
+      }
+      }
+
+      $this->db->trans_complete();
+
+      if ($this->db->trans_status() === FALSE) {
+
+      $status = FALSE;
+      }
 
 
 
-        return $status;
-    }     /*
+      return $status;
+      }     /*
      * add presentee to invoice ..
      * changed by pritam
      */
-    
-     /*
+
+    /*
      * add presentee to invoice ..
      * changed by pritam
      */
+
     public function add_presentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
-    , $invoice_id, $payment_due_id, $trainee_id) 
-    {
-          
+    , $invoice_id, $payment_due_id, $trainee_id) {
+
         $status = TRUE;
         $curr_invoice_details = $this->get_invoice_details($payment_due_id);
         $total_gst_due = 0;
@@ -987,103 +1009,95 @@ class Class_Trainee_Model extends CI_Model {
         $crse_cls_detail = $this->get_class_detail($class_id, $course_id, $tenant_id);
         $str_class_status = $this->get_class_status($crse_cls_detail->class_status, $crse_cls_detail->class_start_datetime, $crse_cls_detail->class_end_datetime);
         $data = $this->get_current_invoice_data($payment_due_id);
-        $due_to='Mark as Present';
+        $due_to = 'Mark as Present';
         $this->db->trans_start();
-        $status = $this->enrol_invoice_view($payment_due_id,$data,$logged_in_user_id,$due_to);
+        $status = $this->enrol_invoice_view($payment_due_id, $data, $logged_in_user_id, $due_to);
 
-        $query1=$this->db->query("select sum(subsidy_amount) as subsidy_amt,discount_rate from enrol_pymnt_due where user_id= '$trainee_id' and"
-                                . " pymnt_due_id=$payment_due_id");
-        
-        $row1=$query1->row_array();
-        
-        if(empty($row1['discount_rate']))
-        {
-            $query_update=$this->db->query("select discount_rate,class_fees,gst_amount from enrol_pymnt_due where att_status=1 and discount_rate!= 0 and"
-                                . " pymnt_due_id=$payment_due_id");
-           
-            $row_update=$query_update->row_array();
+        $query1 = $this->db->query("select sum(subsidy_amount) as subsidy_amt,discount_rate from enrol_pymnt_due where user_id= '$trainee_id' and"
+                . " pymnt_due_id=$payment_due_id");
 
-            if($query_update->num_rows()>0){
-               
-            $class_fees=$row_update["class_fees"];
-            $discount_rate_update=$row_update["discount_rate"];
-            $gst_amount_update=$row_update["gst_amount"];
-            $discount_amount=round(((round($row_update["discount_rate"])*$class_fees)/100),4);
-            $total_amount_due = $class_fees - $discount_amount + $gst_amount_update;
-            $data = array('att_status'  =>1,
-                          'discount_rate'=>$discount_rate_update,
-                          'gst_amount' => round($gst_amount_update,2),//sk1
-                          'total_amount_due' =>  round($total_amount_due,2));//sk2
-            }else{
-                 $data = array('att_status'  =>1);
-            }
-           
-        }
-        else if (!empty($row1['discount_rate']))
-        {
-            $query_update=$this->db->query("select discount_rate,class_fees,gst_amount from enrol_pymnt_due where att_status=1 and discount_rate!= 0 and"
-                            . " pymnt_due_id=$payment_due_id");
-            
-            $query_absent=$this->db->query("select discount_rate,class_fees,gst_amount from enrol_pymnt_due where user_id= '$trainee_id' and"
-                            . " pymnt_due_id=$payment_due_id");
-            
-            $row_update_pr=  $query_update->row_array();
-            
-            $row_update_abs= $query_absent->row_array();
-            if(!empty($row_update_pr['discount_rate']) && !empty($row_update_abs['discount_rate']))
-            {
-                if($row_update_pr['discount_rate']!=$row_update_abs['discount_rate'])
-                { 
-                $discount_rate_update=$row_update_pr["discount_rate"];
-                $gst_amount_update=$row_update_pr["gst_amount"];
-                $class_fees=$row_update_pr["class_fees"];
-                $discount_amount=round(((round($row_update_pr["discount_rate"])*$class_fees)/100),4);
+        $row1 = $query1->row_array();
+
+        if (empty($row1['discount_rate'])) {
+            $query_update = $this->db->query("select discount_rate,class_fees,gst_amount from enrol_pymnt_due where att_status=1 and discount_rate!= 0 and"
+                    . " pymnt_due_id=$payment_due_id");
+
+            $row_update = $query_update->row_array();
+
+            if ($query_update->num_rows() > 0) {
+
+                $class_fees = $row_update["class_fees"];
+                $discount_rate_update = $row_update["discount_rate"];
+                $gst_amount_update = $row_update["gst_amount"];
+                $discount_amount = round(((round($row_update["discount_rate"]) * $class_fees) / 100), 4);
                 $total_amount_due = $class_fees - $discount_amount + $gst_amount_update;
-                $data = array('att_status'  =>1,
-                              'discount_rate'=>$discount_rate_update,
-                              'gst_amount' => round($gst_amount_update,2),//sk3
-                              'total_amount_due' =>  round($total_amount_due,2));//sk4
-                }
-                else{
-                     $data = array('att_status'  =>1);
-                }
-            }            
-            else{
-                 $data = array('att_status'  =>1);
+                $data = array('att_status' => 1,
+                    'discount_rate' => $discount_rate_update,
+                    'gst_amount' => round($gst_amount_update, 2), //sk1
+                    'total_amount_due' => round($total_amount_due, 2)); //sk2
+            } else {
+                $data = array('att_status' => 1);
             }
+        } else if (!empty($row1['discount_rate'])) {
+            $query_update = $this->db->query("select discount_rate,class_fees,gst_amount from enrol_pymnt_due where att_status=1 and discount_rate!= 0 and"
+                    . " pymnt_due_id=$payment_due_id");
+
+            $query_absent = $this->db->query("select discount_rate,class_fees,gst_amount from enrol_pymnt_due where user_id= '$trainee_id' and"
+                    . " pymnt_due_id=$payment_due_id");
+
+            $row_update_pr = $query_update->row_array();
+
+            $row_update_abs = $query_absent->row_array();
+            if (!empty($row_update_pr['discount_rate']) && !empty($row_update_abs['discount_rate'])) {
+                if ($row_update_pr['discount_rate'] != $row_update_abs['discount_rate']) {
+                    $discount_rate_update = $row_update_pr["discount_rate"];
+                    $gst_amount_update = $row_update_pr["gst_amount"];
+                    $class_fees = $row_update_pr["class_fees"];
+                    $discount_amount = round(((round($row_update_pr["discount_rate"]) * $class_fees) / 100), 4);
+                    $total_amount_due = $class_fees - $discount_amount + $gst_amount_update;
+                    $data = array('att_status' => 1,
+                        'discount_rate' => $discount_rate_update,
+                        'gst_amount' => round($gst_amount_update, 2), //sk3
+                        'total_amount_due' => round($total_amount_due, 2)); //sk4
+                } else {
+                    $data = array('att_status' => 1);
+                }
+            } else {
+                $data = array('att_status' => 1);
+            }
+        } else {
+            $data = array('att_status' => 1);
         }
-        else{
-             $data = array('att_status'  =>1);
-        }
-      
-        $this->db->where('pymnt_due_id',$payment_due_id);
-        $this->db->where('user_id',$trainee_id);
+
+        $this->db->where('pymnt_due_id', $payment_due_id);
+        $this->db->where('user_id', $trainee_id);
         $this->db->update('enrol_pymnt_due', $data);
-    
-        $data = array('training_score'  =>'C' );
-        $this->db->where('pymnt_due_id',$payment_due_id);
-        $this->db->where('user_id',$trainee_id);
+
+        $data = array('training_score' => 'C');
+        $this->db->where('pymnt_due_id', $payment_due_id);
+        $this->db->where('user_id', $trainee_id);
         $this->db->update('class_enrol', $data);
-        
-        $query=$this->db->select('*')->from('trainer_feedback')->where('tenant_id',$tenant_id)->where('course_id',$course_id)
-                        ->where('class_id',$class_id)->where('user_id',$trainee_id)->get();
-        if($query->num_rows()>0)
-        {
-            $data = array('feedback_answer'  =>'C' );
-            $this->db->where('tenant_id',$tenant_id);
-            $this->db->where('course_id',$course_id);
-            $this->db->where('class_id',$class_id);
-            $this->db->where('feedback_question_id','COMYTCOM');
-            $this->db->where('user_id',$trainee_id);
+
+        $query = $this->db->select('*')->from('trainer_feedback')->where('tenant_id', $tenant_id)->where('course_id', $course_id)
+                        ->where('class_id', $class_id)->where('user_id', $trainee_id)->get();
+        if ($query->num_rows() > 0) {
+            $data = array('feedback_answer' => 'C');
+            $this->db->where('tenant_id', $tenant_id);
+            $this->db->where('course_id', $course_id);
+            $this->db->where('class_id', $class_id);
+            $this->db->where('feedback_question_id', 'COMYTCOM');
+            $this->db->where('user_id', $trainee_id);
             $this->db->update('trainer_feedback', $data);
         }
-        $query=$this->db->query("select sum(subsidy_amount) as subsidy_amt from enrol_pymnt_due where att_status=1 and user_id= '$trainee_id' and"
-                                . " pymnt_due_id=$payment_due_id");
-     
-        $row=$query->row_array();
-        
-        if($row['subsidy_amt']>0){$total_subsidy_amount_due+=$row['subsidy_amt'];}
-        $fees_array = $this->fees_payable_add_abs($trainee_id,$payment_due_id,$tenant_id,$course_id,$class_id,$total_subsidy_amount_due,$company_id,$logged_in_user_id);
+        $query = $this->db->query("select sum(subsidy_amount) as subsidy_amt from enrol_pymnt_due where att_status=1 and user_id= '$trainee_id' and"
+                . " pymnt_due_id=$payment_due_id");
+
+        $row = $query->row_array();
+
+        if ($row['subsidy_amt'] > 0) {
+            $total_subsidy_amount_due+=$row['subsidy_amt'];
+        }
+        $fees_array = $this->fees_payable_add_abs($trainee_id, $payment_due_id, $tenant_id, $course_id, $class_id, $total_subsidy_amount_due, $company_id, $logged_in_user_id);
         $discount_rate = $fees_array["discount_rate"];
         $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
         $total_gst_due += $fees_array["gst_amount"];
@@ -1094,58 +1108,50 @@ class Class_Trainee_Model extends CI_Model {
         $status = $this->update_invoice_audit_trail($payment_due_id);
         $previous_inv_id = $invoice_id;
         if ($status) {
-             $status = $this->remove_invoice($payment_due_id);
+            $status = $this->remove_invoice($payment_due_id);
             if ($status) {
                 //sk5
-                list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, 
-                        (round($curr_invoice_details->total_inv_amount,2) + round($total_net_fees_due,2)), 
-                        ($curr_invoice_details->total_unit_fees + $total_unit_fees_due), 
-                        ($curr_invoice_details->total_inv_discnt + $total_discount_due), 
-                        ($curr_invoice_details->total_inv_subsdy + $total_subsidy_amount_due), 
-                        (round($curr_invoice_details->total_gst,2) + round($total_gst_due,2)), 
-                        $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
+                list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, (round($curr_invoice_details->total_inv_amount, 2) + round($total_net_fees_due, 2)), ($curr_invoice_details->total_unit_fees + $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt + $total_discount_due), ($curr_invoice_details->total_inv_subsdy + $total_subsidy_amount_due), (round($curr_invoice_details->total_gst, 2) + round($total_gst_due, 2)), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
                 if ($status) {
-                            //paid status
+                    //paid status
                     //$query=mysqli_query("select * from enrol_paymnt_recd where invoice_id='$invoice_id'");
                     $this->db->select('*');
                     $this->db->from('enrol_paymnt_recd');
-                    $this->db->where('invoice_id',$invoice_id);
+                    $this->db->where('invoice_id', $invoice_id);
                     $query = $this->db->get()->num_rows();
-                    
-                    if($query)
-                    {
-                        $invoice_id1=$invoice_id;
+
+                    if ($query) {
+                        $invoice_id1 = $invoice_id;
                         $invoice_id = $new_invoice_id;
-                        
-                         $updata = array('invoice_id' => $new_invoice_id);
-                        $this->db->where('invoice_id',$invoice_id1);
+
+                        $updata = array('invoice_id' => $new_invoice_id);
+                        $this->db->where('invoice_id', $invoice_id1);
                         $this->db->update('enrol_paymnt_recd', $updata);
-                    
-                        $this->db->where('invoice_id',$invoice_id1);
+
+                        $this->db->where('invoice_id', $invoice_id1);
                         $this->db->update('enrol_pymnt_brkup_dt', $updata);
-                        
+
                         //$sql=mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
                         //$sql1=mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
                     }
-                    
-                    $query=mysqli_query("select * from enrol_refund where invoice_id='$previous_inv_id'");
-                    if($query)
-                    {
-                        $previous_inv_id=$previous_inv_id;
+
+                    $query = mysqli_query("select * from enrol_refund where invoice_id='$previous_inv_id'");
+                    if ($query) {
+                        $previous_inv_id = $previous_inv_id;
                         $invoice_id = $new_invoice_id;
-                        
-                         $updata = array('invoice_id' => $new_invoice_id);
-                        $this->db->where('invoice_id',$previous_inv_id);
+
+                        $updata = array('invoice_id' => $new_invoice_id);
+                        $this->db->where('invoice_id', $previous_inv_id);
                         $this->db->update('enrol_refund', $updata);
-                    
-                        $this->db->where('invoice_id',$previous_inv_id);
+
+                        $this->db->where('invoice_id', $previous_inv_id);
                         $this->db->update('enrol_refund_brkup_dt', $updata);
-                        
+
                         //$sql=mysqli_query("update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
                         //$sql1=mysqli_query("update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
                     }
-                    
-                    
+
+
                     //end paid status
                     $invoice_id = $new_invoice_id;
                     $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
@@ -1158,94 +1164,88 @@ class Class_Trainee_Model extends CI_Model {
             $status = FALSE;
         }
         return $status;
-    }  
-    
-    public function check_previous_discount()
-    {
-          $this->db->select('*');
-          $this->db->from('enrol_pymnt_due epd');
-          $this->db->join('class_enrol ce','ce.pymnt_due_id = epd.pymnt_due_id');
-          $this->db->where('epd.pymnt_due_id',$payment_due_id);
-          $this->db->where('ce.course_id',$course_id);
-          $this->db->where('ce.class_id',$class_id);
-          $this->db->where('ce.tenant_id',$tenant_id);
-          $this->db->where('epd.att_status',1);
-          $this->db->limit(1);
-          $sql = $this->db->get();
-        
     }
-     public function fees_payable_add_abs($trainee_id,$payment_due_id,$tenant_id, $course_id, $class_id,$subsidy, $company_id, $loggedin_user_id) {
-            $courseDetails = $this->course->get_course_detailse($course_id);
-            $classDetails = $this->class->get_class_details($tenant_id, $class_id);
-            $unit_fees = $classDetails->class_fees;
-            $gst_rule = $courseDetails->subsidy_after_before;
-            $gst_rate = $this->get_gst_current();
-            $gst_label = ($courseDetails->gst_on_off == 1) ? 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($courseDetails->subsidy_after_before), ', ') : 'GST OFF';
-            if ($company_id == 0) {
-                $result_array = $this->get_discnt($tenant_id, 0, $course_id, $class_id, $unit_fees, $trainee_id);
+
+    public function check_previous_discount() {
+        $this->db->select('*');
+        $this->db->from('enrol_pymnt_due epd');
+        $this->db->join('class_enrol ce', 'ce.pymnt_due_id = epd.pymnt_due_id');
+        $this->db->where('epd.pymnt_due_id', $payment_due_id);
+        $this->db->where('ce.course_id', $course_id);
+        $this->db->where('ce.class_id', $class_id);
+        $this->db->where('ce.tenant_id', $tenant_id);
+        $this->db->where('epd.att_status', 1);
+        $this->db->limit(1);
+        $sql = $this->db->get();
+    }
+
+    public function fees_payable_add_abs($trainee_id, $payment_due_id, $tenant_id, $course_id, $class_id, $subsidy, $company_id, $loggedin_user_id) {
+        $courseDetails = $this->course->get_course_detailse($course_id);
+        $classDetails = $this->class->get_class_details($tenant_id, $class_id);
+        $unit_fees = $classDetails->class_fees;
+        $gst_rule = $courseDetails->subsidy_after_before;
+        $gst_rate = $this->get_gst_current();
+        $gst_label = ($courseDetails->gst_on_off == 1) ? 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($courseDetails->subsidy_after_before), ', ') : 'GST OFF';
+        if ($company_id == 0) {
+            $result_array = $this->get_discnt($tenant_id, 0, $course_id, $class_id, $unit_fees, $trainee_id);
+        } else {
+            //$result_array = $this->get_discnt($tenant_id, $company_id, $course_id, $class_id, $unit_fees, 0);
+            $this->db->select('*');
+            $this->db->from('enrol_pymnt_due epd');
+            $this->db->join('class_enrol ce', 'ce.pymnt_due_id = epd.pymnt_due_id');
+            $this->db->where('epd.pymnt_due_id', $payment_due_id);
+            $this->db->where('ce.course_id', $course_id);
+            $this->db->where('ce.class_id', $class_id);
+            $this->db->where('ce.tenant_id', $tenant_id);
+            $this->db->where('epd.att_status', 1);
+            $this->db->limit(1);
+            $sql = $this->db->get();
+            if ($sql->num_rows() > 0) {
+                $result_array = $sql->row_array();
+
+                $discount_type = $result_array['discount_type'];
+                $discount_rate = $result_array['discount_rate'];
+                $discount_amount = $unit_fees * ($discount_rate / 100);
             } else {
-                //$result_array = $this->get_discnt($tenant_id, $company_id, $course_id, $class_id, $unit_fees, 0);
-                $this->db->select('*');
-                $this->db->from('enrol_pymnt_due epd');
-                $this->db->join('class_enrol ce','ce.pymnt_due_id = epd.pymnt_due_id');
-                $this->db->where('epd.pymnt_due_id',$payment_due_id);
-                $this->db->where('ce.course_id',$course_id);
-                $this->db->where('ce.class_id',$class_id);
-                $this->db->where('ce.tenant_id',$tenant_id);
-                $this->db->where('epd.att_status',1);
-                $this->db->limit(1);
-                $sql = $this->db->get();
-                if($sql->num_rows()>0)
-                {
-                    $result_array = $sql->row_array();
-                  
-                        $discount_type =   $result_array['discount_type'];
-                        $discount_rate =   $result_array['discount_rate'];
-                        $discount_amount = $unit_fees * ($discount_rate / 100);
-                    
-                }else
-                {
-                     $result_array = $this->get_discnt($tenant_id, $company_id, $course_id, $class_id, $unit_fees, 0); 
-                
-                     $discount_type =   $result_array['discount_label'];
-                     $discount_rate =   $result_array['discount_rate'];
-                     $discount_amount = $result_array['discount_amount'];
-                }
+                $result_array = $this->get_discnt($tenant_id, $company_id, $course_id, $class_id, $unit_fees, 0);
+
+                $discount_type = $result_array['discount_label'];
+                $discount_rate = $result_array['discount_rate'];
+                $discount_amount = $result_array['discount_amount'];
             }
+        }
 //            $discount_type =   $result_array['discount_label'];
 //            $discount_rate =   $result_array['discount_rate'];
 //            $discount_amount = $result_array['discount_amount'];
-            if(empty($discount_rate)){
-                $query=$this->db->query("select discount_rate from enrol_pymnt_due where att_status=1 and user_id= $trainee_id and"
-                                    . " pymnt_due_id=$payment_due_id");
-                $row=$query->row_array();
-                $discount_rate=$row["discount_rate"];
-                $discount_amount = $unit_fees * ($discount_rate / 100);
-            }
-            $fees_due = $unit_fees - $discount_amount;
-            $gst_amount = $this->calculate_gst($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due, 0, $gst_rate);
-            $net_fees_due = $this->calculate_net_due($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due,$subsidy, $gst_rate);
-            $result_array = array(
-                'unit_fees' => $unit_fees,
-                'discount_type' => $discount_type,
-                'discount_rate' => $discount_rate,
-                'discount_amount' => $discount_amount,
-                'gst_amount' => is_null($gst_amount) ? 0 : $gst_amount,
-                'gst_rate' => $gst_rate,
-                'gst_label' => $gst_label,
-                'net_fees_due' => $net_fees_due,
-                'gst_rule' => $gst_rule
-            );
-
-            return $result_array;
+        if (empty($discount_rate)) {
+            $query = $this->db->query("select discount_rate from enrol_pymnt_due where att_status=1 and user_id= $trainee_id and"
+                    . " pymnt_due_id=$payment_due_id");
+            $row = $query->row_array();
+            $discount_rate = $row["discount_rate"];
+            $discount_amount = $unit_fees * ($discount_rate / 100);
         }
+        $fees_due = $unit_fees - $discount_amount;
+        $gst_amount = $this->calculate_gst($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due, 0, $gst_rate);
+        $net_fees_due = $this->calculate_net_due($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due, $subsidy, $gst_rate);
+        $result_array = array(
+            'unit_fees' => $unit_fees,
+            'discount_type' => $discount_type,
+            'discount_rate' => $discount_rate,
+            'discount_amount' => $discount_amount,
+            'gst_amount' => is_null($gst_amount) ? 0 : $gst_amount,
+            'gst_rate' => $gst_rate,
+            'gst_label' => $gst_label,
+            'net_fees_due' => $net_fees_due,
+            'gst_rule' => $gst_rule
+        );
 
-    
-    public function add_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $invoice_id, $payment_due_id, $trainee_id) 
-    {
-      
+        return $result_array;
+    }
+
+    public function add_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $invoice_id, $payment_due_id, $trainee_id) {
+
         $status = TRUE;
-       
+
         $curr_invoice_details = $this->get_invoice_details($payment_due_id);
 
         $total_gst_due = 0;
@@ -1265,64 +1265,63 @@ class Class_Trainee_Model extends CI_Model {
         $str_class_status = $this->get_class_status($crse_cls_detail->class_status, $crse_cls_detail->class_start_datetime, $crse_cls_detail->class_end_datetime);
 
         $this->db->trans_start();
-        $fees_array = $this->fees_payable($trainee_id, $tenant_id, $course_id, $class_id, 0,$company_id, $logged_in_user_id);
-       
-           $data = array('training_score'  =>'C');
-            $this->db->where('pymnt_due_id',$payment_due_id);
-            $this->db->where('user_id',$trainee_id);
-            $this->db->update('class_enrol', $data);
-            $query=$this->db->select('*')->from('trainer_feedback')->where('tenant_id',$tenant_id)->where('course_id',$course_id)
-                        ->where('class_id',$class_id)->where('user_id',$trainee_id)->get();
-            
-            if($query->num_rows()>0)
-            {
-                $data = array('feedback_answer'  =>'C' );
-                $this->db->where('tenant_id',$tenant_id);
-                $this->db->where('course_id',$course_id);
-                $this->db->where('class_id',$class_id);
-                $this->db->where('feedback_question_id','COMYTCOM');
-                $this->db->where('user_id',$trainee_id);
-                $this->db->update('trainer_feedback', $data);
-            }
-            
-            $data = array( 'att_status'  =>1);
-            $this->db->where('pymnt_due_id',$payment_due_id);
-            $this->db->where('user_id',$trainee_id);
-            $this->db->update('enrol_pymnt_due', $data);
-            
-            $discount_rate = $fees_array["discount_rate"];
-            $total_discount_due = ($fees_array["unit_fees"] * $discount_rate) / 100;
-            $total_gst_due = $fees_array["gst_amount"];
-            $total_unit_fees_due = $fees_array["unit_fees"];
-            $total_net_fees_due = $fees_array["net_fees_due"];
-            
-           /* $status = $this->update_invoice_audit_trail($payment_due_id);
+        $fees_array = $this->fees_payable($trainee_id, $tenant_id, $course_id, $class_id, 0, $company_id, $logged_in_user_id);
 
-            if ($status) {
+        $data = array('training_score' => 'C');
+        $this->db->where('pymnt_due_id', $payment_due_id);
+        $this->db->where('user_id', $trainee_id);
+        $this->db->update('class_enrol', $data);
+        $query = $this->db->select('*')->from('trainer_feedback')->where('tenant_id', $tenant_id)->where('course_id', $course_id)
+                        ->where('class_id', $class_id)->where('user_id', $trainee_id)->get();
 
-            $status = $this->remove_invoice($payment_due_id);
-
-            if ($status) {
-                
-               
-                list($status, $new_invoice_id) = $this->add_new_invoice($payment_due_id,
-                        ($curr_invoice_details->total_inv_amount + $total_net_fees_due), 
-                        ($curr_invoice_details->total_unit_fees + $total_unit_fees_due), 
-                        ($curr_invoice_details->total_inv_discnt + $total_discount_due), 
-                        ($curr_invoice_details->total_inv_subsdy + $total_subsidy_amount_due), 
-                        ($curr_invoice_details->total_gst + $total_gst_due), 
-                        $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
-
-                if ($status) 
-                {
-
-                    $invoice_id = $new_invoice_id;
-
-                    $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
-                }
-            }
+        if ($query->num_rows() > 0) {
+            $data = array('feedback_answer' => 'C');
+            $this->db->where('tenant_id', $tenant_id);
+            $this->db->where('course_id', $course_id);
+            $this->db->where('class_id', $class_id);
+            $this->db->where('feedback_question_id', 'COMYTCOM');
+            $this->db->where('user_id', $trainee_id);
+            $this->db->update('trainer_feedback', $data);
         }
-        */
+
+        $data = array('att_status' => 1);
+        $this->db->where('pymnt_due_id', $payment_due_id);
+        $this->db->where('user_id', $trainee_id);
+        $this->db->update('enrol_pymnt_due', $data);
+
+        $discount_rate = $fees_array["discount_rate"];
+        $total_discount_due = ($fees_array["unit_fees"] * $discount_rate) / 100;
+        $total_gst_due = $fees_array["gst_amount"];
+        $total_unit_fees_due = $fees_array["unit_fees"];
+        $total_net_fees_due = $fees_array["net_fees_due"];
+
+        /* $status = $this->update_invoice_audit_trail($payment_due_id);
+
+          if ($status) {
+
+          $status = $this->remove_invoice($payment_due_id);
+
+          if ($status) {
+
+
+          list($status, $new_invoice_id) = $this->add_new_invoice($payment_due_id,
+          ($curr_invoice_details->total_inv_amount + $total_net_fees_due),
+          ($curr_invoice_details->total_unit_fees + $total_unit_fees_due),
+          ($curr_invoice_details->total_inv_discnt + $total_discount_due),
+          ($curr_invoice_details->total_inv_subsdy + $total_subsidy_amount_due),
+          ($curr_invoice_details->total_gst + $total_gst_due),
+          $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
+
+          if ($status)
+          {
+
+          $invoice_id = $new_invoice_id;
+
+          $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
+          }
+          }
+          }
+         */
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {
@@ -1334,18 +1333,18 @@ class Class_Trainee_Model extends CI_Model {
 
         return $status;
     }
-    
+
     /*
      * remove absentee from invoi   ce ..
      * changed by pritam
      */
-    
-   public function remove_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
-    ,$invoice_id, $payment_due_id, $trainee_id) {
-       
+
+    public function remove_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
+    , $invoice_id, $payment_due_id, $trainee_id, $att_percentage) {
+
         $status = TRUE;
 
-        
+
         $curr_invoice_details = $this->get_invoice_details($payment_due_id);
 
         $total_gst_due = 0;
@@ -1359,50 +1358,68 @@ class Class_Trainee_Model extends CI_Model {
         $total_subsidy_amount_due = 0;
 
         $this->db->trans_start();
-        
-        $user_id=$trainee_id;
+
+        $user_id = $trainee_id;
         $data = $this->get_current_invoice_data($payment_due_id);
-        
-        $due_to='Mark as an absent';
 
-        $status = $this->enrol_invoice_view($payment_due_id,$data,$logged_in_user_id,$due_to);
+        $due_to = 'Mark as an absent';
 
-        
-            $payments_result = $this->get_payment_due($payment_due_id, $user_id);
+        $status = $this->enrol_invoice_view($payment_due_id, $data, $logged_in_user_id, $due_to);
 
-            $discount_rate = $payments_result->discount_rate;
 
-            $total_discount_due += ($payments_result->class_fees * $discount_rate) / 100;
+        $payments_result = $this->get_payment_due($payment_due_id, $user_id);
 
-            $total_gst_due += $payments_result->gst_amount;
+        $discount_rate = $payments_result->discount_rate;
 
-            $total_unit_fees_due += $payments_result->class_fees;
+        $total_discount_due += ($payments_result->class_fees * $discount_rate) / 100;
 
-            $total_net_fees_due += $payments_result->total_amount_due;
+        $total_gst_due += $payments_result->gst_amount;
 
-            $total_subsidy_amount_due += $payments_result->subsidy_amount;
-            $data = array('training_score'  =>'ABS');
-            $this->db->where('pymnt_due_id',$payment_due_id);
-            $this->db->where('user_id',$trainee_id);
+        $total_unit_fees_due += $payments_result->class_fees;
+
+        $total_net_fees_due += $payments_result->total_amount_due;
+
+        $total_subsidy_amount_due += $payments_result->subsidy_amount;
+        //modified by shubhranshu due to attrition starts
+        if ($att_percentage <= 0.50 && TENANT_ID == 'T02') {
+            $data = array('training_score' => 'ATR');
+            $this->db->where('pymnt_due_id', $payment_due_id);
+            $this->db->where('user_id', $trainee_id);
             $this->db->update('class_enrol', $data);
-            
-            $query=$this->db->select('*')->from('trainer_feedback')->where('tenant_id',$tenant_id)->where('course_id',$course_id)
-                        ->where('class_id',$class_id)->where('user_id',$trainee_id)->get();
-            if($query->num_rows()>0)
-            {
-                $data = array('feedback_answer'  =>'ABS' );
-                $this->db->where('tenant_id',$tenant_id);
-                $this->db->where('course_id',$course_id);
-                $this->db->where('class_id',$class_id);
-                $this->db->where('feedback_question_id','COMYTCOM');
-                $this->db->where('user_id',$trainee_id);
+        } else {//modified by shubhranshu due to attrition end
+            $data = array('training_score' => 'ABS');
+            $this->db->where('pymnt_due_id', $payment_due_id);
+            $this->db->where('user_id', $trainee_id);
+            $this->db->update('class_enrol', $data);
+        }
+
+
+        $query = $this->db->select('*')->from('trainer_feedback')->where('tenant_id', $tenant_id)->where('course_id', $course_id)
+                        ->where('class_id', $class_id)->where('user_id', $trainee_id)->get();
+        if ($query->num_rows() > 0) {//modified by shubhranshu due to attrition starts
+            if ($att_percentage <= 0.50 && TENANT_ID == 'T02') {
+                $data = array('feedback_answer' => 'ATR');
+                $this->db->where('tenant_id', $tenant_id);
+                $this->db->where('course_id', $course_id);
+                $this->db->where('class_id', $class_id);
+                $this->db->where('feedback_question_id', 'COMYTCOM');
+                $this->db->where('user_id', $trainee_id);
+                $this->db->update('trainer_feedback', $data);
+            } else {//modified by shubhranshu due to attrition end
+                $data = array('feedback_answer' => 'ABS');
+                $this->db->where('tenant_id', $tenant_id);
+                $this->db->where('course_id', $course_id);
+                $this->db->where('class_id', $class_id);
+                $this->db->where('feedback_question_id', 'COMYTCOM');
+                $this->db->where('user_id', $trainee_id);
                 $this->db->update('trainer_feedback', $data);
             }
-            
-            $this->update_payment_due($payment_due_id, $user_id);
-           
-           // $this->remove_payment_due($payment_due_id, $user_id);
-        
+        }
+
+        $this->update_payment_due($payment_due_id, $user_id);
+
+        // $this->remove_payment_due($payment_due_id, $user_id);
+
 
         $status = $this->update_invoice_audit_trail($curr_invoice_details->pymnt_due_id);
         $previous_inv_id = $invoice_id;
@@ -1412,66 +1429,53 @@ class Class_Trainee_Model extends CI_Model {
 
             if ($status) {
                 //sk1
-                list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, 
-                                                (round($curr_invoice_details->total_inv_amount,2) - round($total_net_fees_due,2)), 
-                                                ($curr_invoice_details->total_unit_fees - $total_unit_fees_due), 
-                                                ($curr_invoice_details->total_inv_discnt - $total_discount_due), 
-                                                ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), 
-                                                (round($curr_invoice_details->total_gst,2) - round($total_gst_due,2)), 
-                                                 $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
+                list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, (round($curr_invoice_details->total_inv_amount, 2) - round($total_net_fees_due, 2)), ($curr_invoice_details->total_unit_fees - $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt - $total_discount_due), ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), (round($curr_invoice_details->total_gst, 2) - round($total_gst_due, 2)), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
 
-                if ($status) 
-                {
+                if ($status) {
                     //paid status
                     //$qry="select * from enrol_paymnt_recd where invoice_id='$invoice_id'"; 
                     //$query = mysqli_query($qry);//modified by shubhranshu
-                    
+
                     $this->db->select('*');
                     $this->db->from('enrol_paymnt_recd');
-                    $this->db->where('invoice_id',$invoice_id);
+                    $this->db->where('invoice_id', $invoice_id);
                     $query = $this->db->get()->num_rows();
-                    
-        
-                   if($query)
-                    {
-                        $invoice_id1=$invoice_id;
+
+
+                    if ($query) {
+                        $invoice_id1 = $invoice_id;
                         $invoice_id = $new_invoice_id;
-                        
+
                         $updata = array('invoice_id' => $new_invoice_id);
-                        $this->db->where('invoice_id',$invoice_id1);
+                        $this->db->where('invoice_id', $invoice_id1);
                         $this->db->update('enrol_paymnt_recd', $updata);
-                    
-                        $this->db->where('invoice_id',$invoice_id1);
+
+                        $this->db->where('invoice_id', $invoice_id1);
                         $this->db->update('enrol_pymnt_brkup_dt', $updata);
-                        
+
                         //$sql=mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
-                        
-                         //$sql1=mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
-             
-                        
+                        //$sql1=mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$invoice_id1'");
                     }
 //                  
                     $this->db->select('*');
                     $this->db->from('enrol_refund');
-                    $this->db->where('invoice_id',$previous_inv_id);
+                    $this->db->where('invoice_id', $previous_inv_id);
                     $query1 = $this->db->get();
-                    
-                    if($query1->num_rows()>0){
-                        
-                        $previous_inv_id=$previous_inv_id;
-                        $invoice_id = $new_invoice_id;   
-                        
-                        $updata = array('invoice_id'  => $new_invoice_id);
-                        $this->db->where('invoice_id',$previous_inv_id);
-                        $this->db->update('enrol_refund', $updata);
-                    
-                        $this->db->where('invoice_id',$previous_inv_id);
-                        $this->db->update('enrol_refund_brkup_dt', $updata);
-                        
-                         //$sql=mysqli_query("update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
 
-                         //$sql1=mysqli_query("update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
-                                              
+                    if ($query1->num_rows() > 0) {
+
+                        $previous_inv_id = $previous_inv_id;
+                        $invoice_id = $new_invoice_id;
+
+                        $updata = array('invoice_id' => $new_invoice_id);
+                        $this->db->where('invoice_id', $previous_inv_id);
+                        $this->db->update('enrol_refund', $updata);
+
+                        $this->db->where('invoice_id', $previous_inv_id);
+                        $this->db->update('enrol_refund_brkup_dt', $updata);
+
+                        //$sql=mysqli_query("update enrol_refund set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
+                        //$sql1=mysqli_query("update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
                     }
 //                     $previous_inv_id = $invoice_id;
 //                    $query=mysqli_query("select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'");
@@ -1482,7 +1486,6 @@ class Class_Trainee_Model extends CI_Model {
 //                        $sql=mysqli_query("update enrol_paymnt_recd set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
 //                        $sql1=mysqli_query("update enrol_pymnt_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
 //                    }
-                    
                     //end paid status 
                     $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
                     $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);
@@ -1498,13 +1501,15 @@ class Class_Trainee_Model extends CI_Model {
         }
 
         return $status;
-    }    /*
+    }
+
+/*
      * remove absentee from invoi   ce ..
      * changed by pritam
      */
-    
-    public function remove_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id,$invoice_id, $payment_due_id, $trainee_id) {
-       
+
+    public function remove_ind_absentee($tenant_id, $logged_in_user_id, $course_id, $class_id, $invoice_id, $payment_due_id, $trainee_id, $att_percentage) {
+
         $status = TRUE;
         $curr_invoice_details = $this->get_invoice_details($payment_due_id);
 
@@ -1520,64 +1525,83 @@ class Class_Trainee_Model extends CI_Model {
 
         $this->db->trans_start();
 
-            $user_id=$trainee_id;
+        $user_id = $trainee_id;
 
-            //$status = $this->update_classenrol_audittrail($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
+        //$status = $this->update_classenrol_audittrail($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
+        //$this->remove_enrollment($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
 
-            //$this->remove_enrollment($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
+        $payments_result = $this->get_payment_due($payment_due_id, $user_id);
 
-            $payments_result = $this->get_payment_due($payment_due_id, $user_id);
+        $discount_rate = $payments_result->discount_rate;
 
-            $discount_rate = $payments_result->discount_rate;
+        $total_discount_due += ($payments_result->class_fees * $discount_rate) / 100;
 
-            $total_discount_due += ($payments_result->class_fees * $discount_rate) / 100;
+        $total_gst_due += $payments_result->gst_amount;
 
-            $total_gst_due += $payments_result->gst_amount;
+        $total_unit_fees_due += $payments_result->class_fees;
 
-            $total_unit_fees_due += $payments_result->class_fees;
+        $total_net_fees_due += $payments_result->total_amount_due;
 
-            $total_net_fees_due += $payments_result->total_amount_due;
+        $total_subsidy_amount_due += $payments_result->subsidy_amount;
+        //modified by shubhranshu due to attrition starts
+        if ($att_percentage <= 0.50 && TENANT_ID == 'T02') {
 
-            $total_subsidy_amount_due += $payments_result->subsidy_amount;
-            $data = array('training_score'  =>'ABS');
-            $this->db->where('pymnt_due_id',$payment_due_id);
-            $this->db->where('user_id',$trainee_id);
+            $data = array('training_score' => 'ATR');
+            $this->db->where('pymnt_due_id', $payment_due_id);
+            $this->db->where('user_id', $trainee_id);
             $this->db->update('class_enrol', $data);
-            $query=$this->db->select('*')->from('trainer_feedback')->where('tenant_id',$tenant_id)->where('course_id',$course_id)
-                        ->where('class_id',$class_id)->where('user_id',$trainee_id)->get();
-            if($query->num_rows()>0)
-            {
-                $data = array('feedback_answer'  =>'ABS' );
-                $this->db->where('tenant_id',$tenant_id);
-                $this->db->where('course_id',$course_id);
-                $this->db->where('class_id',$class_id);
-                $this->db->where('feedback_question_id','COMYTCOM');
-                $this->db->where('user_id',$trainee_id);
+        } else {//modified by shubhranshu due to attrition end
+            //echo $att_percentage."tt";exit;
+            $data = array('training_score' => 'ABS');
+            $this->db->where('pymnt_due_id', $payment_due_id);
+            $this->db->where('user_id', $trainee_id);
+            $this->db->update('class_enrol', $data);
+        }
+
+        $query = $this->db->select('*')->from('trainer_feedback')->where('tenant_id', $tenant_id)->where('course_id', $course_id)
+                        ->where('class_id', $class_id)->where('user_id', $trainee_id)->get();
+        if ($query->num_rows() > 0) {/////modified by shubhranshu due to attrition starts
+            if ($att_percentage <= 0.50 && TENANT_ID == 'T02') {
+                $data = array('feedback_answer' => 'ATR');
+                $this->db->where('tenant_id', $tenant_id);
+                $this->db->where('course_id', $course_id);
+                $this->db->where('class_id', $class_id);
+                $this->db->where('feedback_question_id', 'COMYTCOM');
+                $this->db->where('user_id', $trainee_id);
+                $this->db->update('trainer_feedback', $data);
+            } else {//modified by shubhranshu due to attrition end
+                $data = array('feedback_answer' => 'ABS');
+                $this->db->where('tenant_id', $tenant_id);
+                $this->db->where('course_id', $course_id);
+                $this->db->where('class_id', $class_id);
+                $this->db->where('feedback_question_id', 'COMYTCOM');
+                $this->db->where('user_id', $trainee_id);
                 $this->db->update('trainer_feedback', $data);
             }
-            $this->update_payment_due($payment_due_id, $user_id);
-           // $this->remove_payment_due($payment_due_id, $user_id);
-        
-
-      /*  $status = $this->update_invoice_audit_trail($curr_invoice_details->pymnt_due_id);
-
-        if ($status) {
-
-            $status = $this->remove_invoice($payment_due_id);
-
-            if ($status) {
-
-                list($status, $new_invoice_id) = $this->update_invoice($payment_due_id,($curr_invoice_details->total_inv_amount - $total_net_fees_due), ($curr_invoice_details->total_unit_fees - $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt - $total_discount_due), ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), ($curr_invoice_details->total_gst - $total_gst_due), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
-
-                if ($status) {
-
-                    $invoice_id = $new_invoice_id;
-
-                    $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
-                }
-            }
         }
- */
+        $this->update_payment_due($payment_due_id, $user_id);
+        // $this->remove_payment_due($payment_due_id, $user_id);
+
+
+        /*  $status = $this->update_invoice_audit_trail($curr_invoice_details->pymnt_due_id);
+
+          if ($status) {
+
+          $status = $this->remove_invoice($payment_due_id);
+
+          if ($status) {
+
+          list($status, $new_invoice_id) = $this->update_invoice($payment_due_id,($curr_invoice_details->total_inv_amount - $total_net_fees_due), ($curr_invoice_details->total_unit_fees - $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt - $total_discount_due), ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), ($curr_invoice_details->total_gst - $total_gst_due), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
+
+          if ($status) {
+
+          $invoice_id = $new_invoice_id;
+
+          $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
+          }
+          }
+          }
+         */
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {
@@ -1587,8 +1611,10 @@ class Class_Trainee_Model extends CI_Model {
 
         return $status;
     }
-    /*update invoice*/
-     private function update_invoice($payment_due_id, $total_inv_amount, $total_unit_fees, $total_inv_discnt, $total_inv_subsidy, $total_gst, $GSTRule, $GSTRate, $inv_type) {
+
+    /* update invoice */
+
+    private function update_invoice($payment_due_id, $total_inv_amount, $total_unit_fees, $total_inv_discnt, $total_inv_subsidy, $total_gst, $GSTRule, $GSTRate, $inv_type) {
 
         $insert_status = TRUE;
 
@@ -1627,11 +1653,13 @@ class Class_Trainee_Model extends CI_Model {
 
         return array($insert_status, $new_invoice_id);
     }
-    /*update invoice for indivisul*/
-     private function add_new_invoice($payment_due_id, $total_inv_amount, $total_unit_fees, $total_inv_discnt, $total_inv_subsidy, $total_gst, $GSTRule, $GSTRate, $inv_type) {
+
+    /* update invoice for indivisul */
+
+    private function add_new_invoice($payment_due_id, $total_inv_amount, $total_unit_fees, $total_inv_discnt, $total_inv_subsidy, $total_gst, $GSTRule, $GSTRate, $inv_type) {
 
         $insert_status = TRUE;
-        
+
         $cur_date = date('Y-m-d H:i:s');
 
         $invoice_id = $this->generate_invoice_id();
@@ -1655,7 +1683,7 @@ class Class_Trainee_Model extends CI_Model {
         $this->db->trans_start();
 
         $this->db->insert('enrol_invoice', $enrol_invoice_data);
-        
+
         $new_invoice_id = $invoice_id;
 
         $this->db->trans_complete();
@@ -1667,47 +1695,47 @@ class Class_Trainee_Model extends CI_Model {
 
         return array($insert_status, $new_invoice_id);
     }
-
 
     /*
      * *update payment due
      */
-    
+
     private function update_payment_due($payment_due_id, $user_id) {
         $data = array(
-                'att_status' => 0,
-                
-            );
+            'att_status' => 0,
+        );
         $this->db->where("pymnt_due_id", $payment_due_id);
 
         $this->db->where("user_id", $user_id);
 
-        $this->db->update("enrol_pymnt_due",$data);
+        $this->db->update("enrol_pymnt_due", $data);
     }
-     /*
+
+    /*
      * *update enroll
      */
-    
-    private function update_enrol($payment_due_id, $user_id,$flag) {
-    if($flag==0){
-        $data = array(
+
+    private function update_enrol($payment_due_id, $user_id, $flag) {
+        if ($flag == 0) {
+            $data = array(
                 'training_score' => 'ABS',
-                
-    );
-    } else {
-        $data = array(
+            );
+        } else {
+            $data = array(
                 'training_score' => 'C',);
-    }
+        }
         $this->db->where("pymnt_due_id", $payment_due_id);
 
         $this->db->where("user_id", $user_id);
 
-        $this->db->update("enrol_pymnt_due",$data);
-         $this->db->last_query();
+        $this->db->update("enrol_pymnt_due", $data);
+        $this->db->last_query();
     }
+
     /*
      * end remove absentee
      */
+
     public function is_attandance_exists($class_id, $user_id, $assmnt_date) {
 
         $cnt = $this->db->query("select count(*) as cnt from class_attendance where class_id = ? and user_id = ? and class_attdn_date = ?", array($class_id, $user_id, $assmnt_date))->row()->cnt;
@@ -2043,16 +2071,14 @@ class Class_Trainee_Model extends CI_Model {
      * function to get all the class details
 
      */
-    public function get_active_class_enrol($tenant_id, $course_id, $trainee_id) 
-    {
+    public function get_active_class_enrol($tenant_id, $course_id, $trainee_id) {
         $cur_date = date('Y-m-d');
-        $this->db->select('cc.class_name,cc.lock_status,cc.class_id,c.crse_name,c.course_id,cc.class_start_datetime,cc.class_end_datetime')
+        $this->db->select('cc.class_name,cc.lock_status,cc.class_id,c.crse_name,c.course_id,cc.class_start_datetime,cc.class_end_datetime, ce.eid_number, ce.tpg_enrolment_status')
                 ->from('class_enrol ce')->join('course_class cc', 'cc.class_id=ce.class_id')
                 ->join('course c', 'c.course_id=cc.course_id')->where('date(cc.class_end_datetime) >=', $cur_date)
                 ->where('ce.tenant_id', $tenant_id)
                 ->where('cc.class_status !=', 'INACTIV');
-        if (!empty($trainee_id)) 
-        {
+        if (!empty($trainee_id)) {
             $this->db->where('ce.user_id', $trainee_id);
             $this->db->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'));
         }
@@ -2061,10 +2087,11 @@ class Class_Trainee_Model extends CI_Model {
         }
         $this->db->order_by("date(cc.class_start_datetime)");
         $result = $this->db->get()->result_object();
+        //echo print_r($result); exit;
         return $result;
     }
-    
-      public function get_tg_number($tenant_id, $payment_due_id, $user_id){
+
+    public function get_tg_number($tenant_id, $payment_due_id, $user_id) {
         $this->db->select('tg_number');
         $this->db->from('class_enrol');
         $this->db->where('tenant_id', $tenant_id);
@@ -2073,9 +2100,9 @@ class Class_Trainee_Model extends CI_Model {
         $sql = $this->db->get();
         $tg = $sql->row();
         $tg_number = $tg->tg_number;
-        if($tg_number!=''){
+        if ($tg_number != '') {
             return $tg_number;
-        }else{
+        } else {
             return $sql = 0;
         }
     }
@@ -2145,7 +2172,7 @@ class Class_Trainee_Model extends CI_Model {
         if (!empty($course_ids)) {
 
             ///$this->db->where('cc.course_id', $course_ids);commented by shubhranshu
-            $this->db->where_in('cc.course_id', $course_ids);/////added by shubhranshu to show only the enrolled course id list
+            $this->db->where_in('cc.course_id', $course_ids); /////added by shubhranshu to show only the enrolled course id list
         }
 
         $this->db->order_by("date(cc.class_start_datetime)");
@@ -2231,7 +2258,7 @@ class Class_Trainee_Model extends CI_Model {
 
         return TRUE;
     }
-    
+
     public function update_eidnumber($tenant_id, $class, $user, $eid_number, $payid) {
 
         $this->db->trans_start();
@@ -2245,7 +2272,7 @@ class Class_Trainee_Model extends CI_Model {
             $this->db->where('pymnt_due_id', $payid);
 
             $this->db->where('user_id', $user);
-            
+
             $this->db->where('class_id', $class);
 
             $this->db->update('class_enrol', $data);
@@ -2284,22 +2311,19 @@ class Class_Trainee_Model extends CI_Model {
      * function to get  all invoice
 
      */
-    
-    public function get_invoice_list($payment_due_id,$invoice_no,$tenant_id,$inv_type){
-        
-        if($inv_type == 'INVCOMALL'){
+    public function get_invoice_list($payment_due_id, $invoice_no, $tenant_id, $inv_type) {
+
+        if ($inv_type == 'INVCOMALL') {
             $this->db->select('invoice_id,inv_type,cm.company_name,tup.first_name,tu.tax_code,total_inv_amount,ce.payment_status');
             $this->db->from('enrol_invoice ei');
             $this->db->join('company_master cm', 'cm.company_id=ei.company_id');
             $this->db->join('class_enrol ce', 'ce.pymnt_due_id=ei.pymnt_due_id');
-        
-        }else{
+        } else {
             $this->db->select('invoice_id,inv_type,tup.first_name,tu.tax_code,total_inv_amount,ce.payment_status');
             $this->db->from('enrol_invoice ei');
             $this->db->join('class_enrol ce', 'ce.pymnt_due_id=ei.pymnt_due_id');
-           
         }
-        
+
         $this->db->join('tms_users_pers tup', 'tup.user_id=ce.user_id and tup.tenant_id=ce.tenant_id');
         $this->db->join('tms_users tu', 'tu.user_id=ce.user_id and tu.tenant_id=ce.tenant_id');
         $this->db->like('ei.invoice_id', $invoice_no, 'both');
@@ -2310,13 +2334,15 @@ class Class_Trainee_Model extends CI_Model {
         //print_r($res);exit;
         return $res;
     }
-    public function invoice_list($tenant_id,$invoice_no){
+
+    public function invoice_list($tenant_id, $invoice_no) {
         $this->db->select('invoice_id,pymnt_due_id,inv_type');
         $this->db->from('enrol_invoice');
         $this->db->like('invoice_id', $invoice_no, 'both');
         $res = $this->db->get()->result();
         return $res;
     }
+
     public function get_invoice($tenant_id, $invoice, $paid = 0) {
 
         $this->db->select('ei.invoice_id,tup.first_name, tup.last_name, tu.tax_code')
@@ -2337,15 +2363,11 @@ class Class_Trainee_Model extends CI_Model {
                 ->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'));
 
         if (!empty($paid)) {
-          if($paid=="VOID")
-          {
-               $this->db->where('ce.payment_status',"VOID");
-          }
-          else
-          { 
-              $this->db->where('ce.payment_status', $paid);
-          }
-           
+            if ($paid == "VOID") {
+                $this->db->where('ce.payment_status', "VOID");
+            } else {
+                $this->db->where('ce.payment_status', $paid);
+            }
         }
 
         if (!empty($invoice)) {
@@ -2354,10 +2376,9 @@ class Class_Trainee_Model extends CI_Model {
         }
 
         $this->db->order_by('LENGTH(ei.invoice_id)');  //commented by shubhranshu as not required 
-
         //$this->db->order_by('ei.invoice_id','DESC');////addded by shubhranshu(desc)////
         //$this->db->limit(100);////Added by shubhranshu to optimize the query
-        
+
         return $this->db->get()->result_object();
     }
 
@@ -2385,16 +2406,15 @@ class Class_Trainee_Model extends CI_Model {
                 ->where('ce.enrolment_mode', 'SELF')
                 ->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'))
                 ->where_in('ce.payment_status', array('PARTPAID', 'NOTPAID'));
-                //->order_by('LENGTH(ei.invoice_id)')///commented by shubhranshu
-                //->order_by('ei.invoice_id');//commented by shubhranshu
+        //->order_by('LENGTH(ei.invoice_id)')///commented by shubhranshu
+        //->order_by('ei.invoice_id');//commented by shubhranshu
 
         if ($invoice) {
 
             $this->db->like('ei.invoice_id', $invoice, 'both');
         }
-        $this->db->order_by('ei.invoice_id','DESC');////addded by shubhranshu(desc)////
-	
-	//$this->db->limit(100);////Added by shubhranshu to optimize the query
+        $this->db->order_by('ei.invoice_id', 'DESC'); ////addded by shubhranshu(desc)////
+        //$this->db->limit(100);////Added by shubhranshu to optimize the query
 
         return $this->db->get()->result_object();
     }
@@ -2414,31 +2434,32 @@ class Class_Trainee_Model extends CI_Model {
             return 'pending payments';
         }
     }
-    
-     /* get company list whos payment status notpaid*/
-    public function get_company_list($tenant_id){
-        
+
+    /* get company list whos payment status notpaid */
+
+    public function get_company_list($tenant_id) {
+
         $this->db->select('cm.company_id,cm.company_name');
         $this->db->from('company_master cm');
-        $this->db->join('tenant_company tm','tm.company_id = cm.company_id');
-        $this->db->join('class_enrol ce','ce.company_id = cm.company_id');
+        $this->db->join('tenant_company tm', 'tm.company_id = cm.company_id');
+        $this->db->join('class_enrol ce', 'ce.company_id = cm.company_id');
 //        $this->db->group_by('ce.pymnt_due_id');
 //        $this->db->where('ce.payment_status','NOTPAID');
-        $this->db->where('tm.tenant_id',$tenant_id);
+        $this->db->where('tm.tenant_id', $tenant_id);
         $this->db->order_by('cm.company_name');
         $sql = $this->db->get();
         return $sql->result_array();
     }
-    
-     /* This function get only notpaid invoice of company */
-       public function get_company_notpaid_invoices_list($tenant_id, $company_id) 
-       {
+
+    /* This function get only notpaid invoice of company */
+
+    public function get_company_notpaid_invoices_list($tenant_id, $company_id) {
         if ($this->user->role_id == 'CRSEMGR') {
 
             $crsemgr_where = " AND FIND_IN_SET(" . $this->user->user_id . ",crse.crse_manager) !=0";
         }
--
-        $result_set = $this->db->query("SELECT
+        -
+                $result_set = $this->db->query("SELECT
             
         inv.`invoice_id`, inv.`pymnt_due_id`, enrl.payment_status, inv.company_id, 
 
@@ -2482,17 +2503,17 @@ class Class_Trainee_Model extends CI_Model {
             $flag = TRUE;
 
             $temp = array();
-            
-
-        foreach ($invoices as $invoice) {
-
-            $temp1 = $invoice;
 
 
-            $temp[] = $invoice->payment_status;
-        }
-            
-           if (in_array('PAID', $temp)) {
+            foreach ($invoices as $invoice) {
+
+                $temp1 = $invoice;
+
+
+                $temp[] = $invoice->payment_status;
+            }
+
+            if (in_array('PAID', $temp)) {
 
                 $flag = FALSE;
             } else if (in_array('PARTPAID', $temp)) {
@@ -2504,14 +2525,11 @@ class Class_Trainee_Model extends CI_Model {
 
                 $final[] = $temp1;
             }
-
-            
         }
 
 
         return $final;
     }
-    
 
     /**
 
@@ -2693,7 +2711,7 @@ class Class_Trainee_Model extends CI_Model {
         $this->db->group_by('enrol.pymnt_due_id');
 
         $result = $this->db->get()->result_object();
-        
+
 
         return $result;
     }
@@ -2703,14 +2721,14 @@ class Class_Trainee_Model extends CI_Model {
      * function to get not paid invoices for Individual Enrolments
 
      */
-   public function get_paid_invoice($tenant_id, $invoice) {
+    public function get_paid_invoice($tenant_id, $invoice) {
         $this->db->distinct();
         $this->db->select('epbd.invoice_id,tup.first_name, tup.last_name, tu.tax_code')
                 ->from('class_enrol ce')
                 ->join('enrol_invoice ei', 'ei.pymnt_due_id=ce.pymnt_due_id')
                 ->join('enrol_pymnt_due epd', 'epd.pymnt_due_id=ei.pymnt_due_id')
                 //->join('enrol_paymnt_recd epr', 'epr.invoice_id=ei.invoice_id')
-                ->join('enrol_pymnt_brkup_dt epbd','ce.user_id=epbd.user_id and epbd.invoice_id=ei.invoice_id')
+                ->join('enrol_pymnt_brkup_dt epbd', 'ce.user_id=epbd.user_id and epbd.invoice_id=ei.invoice_id')
                 ->join('tms_users tu', 'tu.user_id=ce.user_id')
                 ->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
 
@@ -2730,7 +2748,7 @@ class Class_Trainee_Model extends CI_Model {
         $this->db->order_by('LENGTH(ei.invoice_id)');
 
         $this->db->order_by('ei.invoice_id');
-        
+
         return $this->db->get()->result_object();
     }
 
@@ -2755,16 +2773,12 @@ class Class_Trainee_Model extends CI_Model {
                 ->like('ei.invoice_id', $invoice, 'both');
 
         //$this->db->order_by('LENGTH(ei.invoice_id)');//commented by shubhranshu
-
         //$this->db->order_by('ei.invoice_id');//commented by shubhranshu
-	$this->db->order_by('ei.invoice_id','DESC');////addded by shubhranshu(desc)////
-	$this->db->limit(1500);////Added by shubhranshu to optimize the query
+        $this->db->order_by('ei.invoice_id', 'DESC'); ////addded by shubhranshu(desc)////
+        $this->db->limit(1500); ////Added by shubhranshu to optimize the query
 
-	return $this->db->get()->result_object();
+        return $this->db->get()->result_object();
     }
-
-    
-    
 
     /* (*
 
@@ -2884,7 +2898,7 @@ class Class_Trainee_Model extends CI_Model {
 
      */
     public function calculate_discount_enroll($trainee_id, $company_id, $class_id, $course_id, $unit_fees) {
-     
+
         $tenant_id = $this->user->tenant_id;
 
         if ($company_id == 0) {
@@ -2900,7 +2914,7 @@ class Class_Trainee_Model extends CI_Model {
         $discount_rate = $result_array['discount_rate'];
 
         $discount_amount = $result_array['discount_amount'];
-        
+
 
         if ($discount_type == 'DISINDVI') {
 
@@ -3034,17 +3048,17 @@ class Class_Trainee_Model extends CI_Model {
      * function to get not paid invoice
 
      */
-     public function get_paid_user($tenant_id, $taxcode, $username) {
+    public function get_paid_user($tenant_id, $taxcode, $username) {
 
         $taxcode = trim($taxcode);
 
         $username = trim($username);
-         $this->db->distinct();
+        $this->db->distinct();
         $this->db->select('tup.user_id, tup.first_name, tup.last_name, tu.tax_code')
                 ->from('class_enrol ce')
                 ->join('enrol_invoice ei', 'ei.pymnt_due_id=ce.pymnt_due_id')
-              //  ->join('enrol_paymnt_recd epr', 'epr.invoice_id=ei.invoice_id')
-                ->join('enrol_pymnt_brkup_dt epbd','ce.user_id=epbd.user_id and epbd.invoice_id=ei.invoice_id')
+                //  ->join('enrol_paymnt_recd epr', 'epr.invoice_id=ei.invoice_id')
+                ->join('enrol_pymnt_brkup_dt epbd', 'ce.user_id=epbd.user_id and epbd.invoice_id=ei.invoice_id')
                 ->join('tms_users tu', 'tu.user_id=ce.user_id and tu.tenant_id=ce.tenant_id')
                 ->join('tms_users_pers tup', 'tup.user_id=tu.user_id and tup.tenant_id=tu.tenant_id')
                 ->where('ce.tenant_id', $tenant_id)
@@ -3188,14 +3202,18 @@ class Class_Trainee_Model extends CI_Model {
         $company_subsidy = 0;
 
         $company_total_gst = 0;
-        
+
         $logged_in_user_id = $this->user->user_id;
         $data = $this->get_current_invoice_data($input->pymnt_due_id);
-        
-        
-        if(in_array(1, $select_reinvoice)){$val = 'subsidy';}else{$val = 'discount';} 
-        $due_to = 'Regenrated Invoice due to changes in '.$val;
-        $status = $this->enrol_invoice_view($input->pymnt_due_id,$data,$logged_in_user_id,$due_to);
+
+
+        if (in_array(1, $select_reinvoice)) {
+            $val = 'subsidy';
+        } else {
+            $val = 'discount';
+        }
+        $due_to = 'Regenrated Invoice due to changes in ' . $val;
+        $status = $this->enrol_invoice_view($input->pymnt_due_id, $data, $logged_in_user_id, $due_to);
 
         foreach ($trainee as $k => $row) {
 
@@ -3224,13 +3242,13 @@ class Class_Trainee_Model extends CI_Model {
 
             $data = array(
                 'class_fees' => $input->class_fees,
-                'total_amount_due' => round($netdue, 2),//sk1
+                'total_amount_due' => round($netdue, 2), //sk1
                 'discount_type' => $discount_type,
                 'discount_rate' => round($discount_rate, 4),
                 'subsidy_type_id' => $subsidy_type,
                 'subsidy_amount' => round($subsidy_amount, 4),
                 'subsidy_recd_date' => $subsidy_recd_on,
-                'gst_amount' => round($totalgst, 2),//sk2
+                'gst_amount' => round($totalgst, 2), //sk2
             );
 
             if ($row == 2) {
@@ -3246,7 +3264,7 @@ class Class_Trainee_Model extends CI_Model {
 
             $company_total_gst = $company_total_gst + round($totalgst, 2); ### added by dummy //sk3
 
-            $company_net_due = $company_net_due + round($netdue, 2);//sk4
+            $company_net_due = $company_net_due + round($netdue, 2); //sk4
 
             $company_discount = $company_discount + round($discount_total, 4);
 
@@ -3254,8 +3272,8 @@ class Class_Trainee_Model extends CI_Model {
         }
 
         $invoice_id = $this->generate_invoice_id();
-        
-        
+
+
 
         $data = array(
             'invoice_id' => $invoice_id,
@@ -3263,20 +3281,20 @@ class Class_Trainee_Model extends CI_Model {
             'inv_date' => $cur_date,
             'inv_type' => 'INVCOMALL',
             'company_id' => $input->company_id,
-            'total_inv_amount' => round($company_net_due, 2),//sk5
+            'total_inv_amount' => round($company_net_due, 2), //sk5
             'total_unit_fees' => round($input->class_fees * count($trainee), 4),
             'total_inv_discnt' => round($company_discount, 4),
             'total_inv_subsdy' => round($company_subsidy, 4),
-            'total_gst' => round($company_total_gst, 2),//sk6
-            'gst_rate' => round($input->gst_rate, 2),//sk7
+            'total_gst' => round($company_total_gst, 2), //sk6
+            'gst_rate' => round($input->gst_rate, 2), //sk7
             'gst_rule' => $input->gst_rule,
             'invoiced_on' => $input->invoiced_on,
         );
-        
+
         $this->db->insert('enrol_invoice', $data);
 // commented by skm 02-01-17 because of refunded status remark in invoice st       
         /* Skm code if invoice is paid and then refund and after that re-generate due to change in discount start */
-        
+
 //        $previous_inv_id = $input->invoice_id;
 //        $new_invoice_id = $invoice_id;
 //        $query1="select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'";
@@ -3305,7 +3323,7 @@ class Class_Trainee_Model extends CI_Model {
 //
 //        }
         /* end */
-        
+
 
         $data = array(
             'invoice_id' => $input->invoice_id,
@@ -3318,8 +3336,8 @@ class Class_Trainee_Model extends CI_Model {
             'total_unit_fees' => $input->total_unit_fees,
             'total_inv_discnt' => $input->total_inv_discnt,
             'total_inv_subsdy' => $input->total_inv_subsdy,
-            'total_gst' => round($input->total_gst, 2),//sk8
-            'gst_rate' => round($input->gst_rate, 2),//sk9
+            'total_gst' => round($input->total_gst, 2), //sk8
+            'gst_rate' => round($input->gst_rate, 2), //sk9
             'gst_rule' => $input->gst_rule,
             'invoice_generated_on' => $cur_date,
             'invoiced_on' => $input->invoiced_on,
@@ -3328,14 +3346,13 @@ class Class_Trainee_Model extends CI_Model {
 
         $this->db->insert('enrol_invoice_audittrail', $data);
 
-         //$this->db->where('invoice_id', $post_invoice);
+        //$this->db->where('invoice_id', $post_invoice);
         //$delete_result = $this->db->delete('enrol_invoice');
-        if(!empty($post_invoice))
-        {
+        if (!empty($post_invoice)) {
             $this->db->where('invoice_id', $post_invoice);
             $delete_result = $this->db->delete('enrol_invoice');
         }
-         $this->set_viewinvoice_newinvoice_num($input->pymnt_due_id, $invoice_id);
+        $this->set_viewinvoice_newinvoice_num($input->pymnt_due_id, $invoice_id);
 
         return $invoice_id;
     }
@@ -3355,7 +3372,7 @@ class Class_Trainee_Model extends CI_Model {
      * @return type
 
      */
-public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $company_details, $discount_changed, $reschedule=0) {
+    public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $company_details, $discount_changed, $reschedule = 0) {
 
         $status = TRUE;
         extract($_POST);
@@ -3373,51 +3390,42 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
         $cal_discount['discount_metalabel'] = $dis_label;
         $total_trainee_count = count($data);
         //print_r($classes);
-        if ($discount_changed == 'Y') 
-        {
+        if ($discount_changed == 'Y') {
             $temp_ind_discnt_amt = $discount_amount;
             $indv_discount_rate = round((($temp_ind_discnt_amt / $classes->class_fees) * 100), 4);
             $indv_discount_amt = round(($classes->class_fees * ($indv_discount_rate / 100)), 4);
-        } 
-        else 
-        {
+        } else {
             $discount = $this->classtraineemodel->calculate_discount_enroll(0, $company, $classes->class_id, $classes->course_id, $classes->class_fees);
             $indv_discount_rate = $discount['discount_rate'];
             $indv_discount_amt = round(($classes->class_fees * ($indv_discount_rate / 100)), 4);
-            if ($indv_discount_amt > $classes->class_fees) 
-            {
+            if ($indv_discount_amt > $classes->class_fees) {
                 $indv_discount_rate = 100;
                 $indv_discount_amt = $classes->class_fees;
             }
         }
         $indv_fees_due = round(($classes->class_fees - $indv_discount_amt), 4);
         $gst_rate = $this->get_gst_current();
-         $i=0;
-         //$this->db->trans_start();
-        foreach ($data as $row) 
-        {
+        $i = 0;
+        //$this->db->trans_start();
+        foreach ($data as $row) {
             $user_id = $row['user_id'];
             $check = $this->db->select('*')
-            ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $classes->course_id)
-            ->where('class_id', $class)->where('user_id', $user_id)->get();
+                            ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $classes->course_id)
+                            ->where('class_id', $class)->where('user_id', $user_id)->get();
             //echo $this->db->last_query();
             $err_arr = array();
-            if ($check->num_rows() == 0) 
-            {
+            if ($check->num_rows() == 0) {
                 $subsidy_recd_on = ($row['subsidy_date'] == '') ? '' : date('Y-m-d', strtotime($row['subsidy_date']));
                 $subsidy_amount = $row['subsidy_amount'];
                 $ind_net_due = $this->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate);
-                
-                $ind_net_due = round($ind_net_due,2); //sk1 new add
-                $ind_gst = round($this->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate), 2);//sk2
-                if (($enrollment_type == 1) && ($payment_retake == 2)) 
-                {
+
+                $ind_net_due = round($ind_net_due, 2); //sk1 new add
+                $ind_gst = round($this->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate), 2); //sk2
+                if (($enrollment_type == 1) && ($payment_retake == 2)) {
                     $pay_status = 'PYNOTREQD';
                     $enrol_status = 'ENRLACT';
                     $payment_due_id = 0;
-                } 
-                else 
-                {
+                } else {
                     $pay_status = 'NOTPAID';
                     $enrol_status = 'ENRLBKD';
                 }
@@ -3426,55 +3434,50 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
                 $tg_number = $row['tg'];
                 $subsidy_type_id = $row['subsidy_type'];
                 $class_status = $this->get_class_statustext($class);
-                
-                  /* sales executive thread*/
-                if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') 
-                {
+
+                /* sales executive thread */
+                if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') {
                     $salesexec = $this->user->user_id;
-                }
-                else
-                {
-                ///$salesexec = empty($salesexec) ? NULL : $salesexec;
-                        if(empty($salesexec)){
-                            $salesexec = $this->user->user_id;
-                        }
-                        else{
-                            $salesexec =$salesexec;
-                        }
-                }
-                
-                $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
-                if($check_attendance>0)
-                {
-                    $check_attendance_trainee=$this->check_attendance_trainee($tenant_id,$course,$class,$user_id);
-                    if($check_attendance_trainee > 0){
-                        $training_score='C';
-                        $att_status=1;
-                    }else{
-                     $training_score='ABS';
-                     $att_status=0;
+                } else {
+                    ///$salesexec = empty($salesexec) ? NULL : $salesexec;
+                    if (empty($salesexec)) {
+                        $salesexec = $this->user->user_id;
+                    } else {
+                        $salesexec = $salesexec;
                     }
-                }else { $att_status=1;}
+                }
+
+                $check_attendance = $this->check_attendance_row($tenant_id, $course, $class);
+                if ($check_attendance > 0) {
+                    $check_attendance_trainee = $this->check_attendance_trainee($tenant_id, $course, $class, $user_id);
+                    if ($check_attendance_trainee > 0) {
+                        $training_score = 'C';
+                        $att_status = 1;
+                    } else {
+                        $training_score = 'ABS';
+                        $att_status = 0;
+                    }
+                } else {
+                    $att_status = 1;
+                }
                 // this code run on reschedule start   
-                
-                if($reschedule == 1)
-                {
-                    $res = $this->company_invoice_exists($classes->course_id,$class,$company);
+
+                if ($reschedule == 1) {
+                    $res = $this->company_invoice_exists($classes->course_id, $class, $company);
                     $total_val = count($res);
-                
-                    if($total_val == 0){
-    //                    echo "no invoice found--".$payment_due_id;
-                    }else
-                    {   
-    //                  echo "invoice found--"; 
-                        $selected_trainee = array('0'=>$user_id);
+
+                    if ($total_val == 0) {
+                        //                    echo "no invoice found--".$payment_due_id;
+                    } else {
+                        //                  echo "invoice found--"; 
+                        $selected_trainee = array('0' => $user_id);
                         $res1 = $this->add_to_company_enrollment($tenant_id, $loggedin_user_id, $classes->course_id, $class, $company, $res['invoice_id'], $res['pymnt_due_id'], $selected_trainee);
                         return array('err' => $err_arr, 'invoice' => $res['invoice_id'], 'status' => $status, 'pymnt_due_id' => $res['pymnt_due_id']);
-                    } 
+                    }
                 }
-                  // this code run on reschedule end 
+                // this code run on reschedule end 
                 $data = array(
-                   'tenant_id' => $tenant_id,
+                    'tenant_id' => $tenant_id,
                     'course_id' => $classes->course_id,
                     'class_id' => $class,
                     'user_id' => $user_id,
@@ -3494,100 +3497,88 @@ public function company_enrollment_db_update($tenant_id, $loggedin_user_id, $com
 
                 $this->db->insert('class_enrol', $data);
                 //echo $this->db->last_query();
-               
-                if (!empty($payment_due_id)) 
-                {
+
+                if (!empty($payment_due_id)) {
                     $data = array(
                         'user_id' => $user_id,
                         'pymnt_due_id' => $payment_due_id,
-                        'class_fees' => round($classes->class_fees, 2),//sk3
-                        'total_amount_due' => round($ind_net_due, 2),//sk4
+                        'class_fees' => round($classes->class_fees, 2), //sk3
+                        'total_amount_due' => round($ind_net_due, 2), //sk4
                         'discount_type' => $dis_label,
                         'discount_rate' => $indv_discount_rate,
                         'subsidy_type_id' => $subsidy_type_id,
-                        'subsidy_amount' => round($subsidy_amount, 2),//sk5
+                        'subsidy_amount' => round($subsidy_amount, 2), //sk5
                         'subsidy_recd_date' => $subsidy_recd_on,
                         'subsidy_modified_on' => $cur_date,
-                        'gst_amount' => round($ind_gst, 2),//sk6
+                        'gst_amount' => round($ind_gst, 2), //sk6
                         'att_status' => $att_status
                     );
                     $this->db->insert('enrol_pymnt_due', $data);
                     //echo $this->db->last_query();
-                  
                 }
-            } 
-            else 
-            {
-                 $err_arr[] = $row['user_id'];
+            } else {
+                $err_arr[] = $row['user_id'];
             }
-            if($check_attendance>0)
-            {
-                if($check_attendance_trainee > 0){
+            if ($check_attendance > 0) {
+                if ($check_attendance_trainee > 0) {
                     $company_net_due = round(($company_net_due + $ind_net_due), 4);
                     $company_subsidy = round(( $company_subsidy + round($subsidy_amount, 4)), 4);
-                    $company_gst = round(( $company_gst + $ind_gst), 2);//sk7
-                    $company_total_unitfees = round(($company_total_unitfees + $classes->class_fees), 4); 
+                    $company_gst = round(( $company_gst + $ind_gst), 2); //sk7
+                    $company_total_unitfees = round(($company_total_unitfees + $classes->class_fees), 4);
                     $i++;
                 }
-            }else { 
+            } else {
                 $company_net_due = round(($company_net_due + $ind_net_due), 4);
                 $company_subsidy = round(( $company_subsidy + round($subsidy_amount, 4)), 4);
-                $company_gst = round(( $company_gst + $ind_gst), 2);//sk8
-                $company_total_unitfees = round(($company_total_unitfees + $classes->class_fees), 4); 
-                 $i++;
+                $company_gst = round(( $company_gst + $ind_gst), 2); //sk8
+                $company_total_unitfees = round(($company_total_unitfees + $classes->class_fees), 4);
+                $i++;
             }
-        
         }
-        $total_trainee_count=$i;
-            
+        $total_trainee_count = $i;
+
         $data = $this->db->select('class_start_datetime as start')
-                ->from('course_class')
-                ->where('class_id', $class)
-                ->where('tenant_id', $tenant_id)
-                ->get()->row(0);
-                $start= $data->start;
-                //$this->db->last_query();
-                $cur_date = date('Y-m-d H:i:s');
-                if($start)
-                {
-                    $cur_date = $start;
-                }
-        if (!empty($payment_due_id)) 
-        {
+                        ->from('course_class')
+                        ->where('class_id', $class)
+                        ->where('tenant_id', $tenant_id)
+                        ->get()->row(0);
+        $start = $data->start;
+        //$this->db->last_query();
+        $cur_date = date('Y-m-d H:i:s');
+        if ($start) {
+            $cur_date = $start;
+        }
+        if (!empty($payment_due_id)) {
             $gst_rule = (empty($courses->gst_on_off)) ? '' : $courses->subsidy_after_before;
-                $data = array(
-                    'invoice_id' => $invoice_id,
-                    'pymnt_due_id' => $payment_due_id,
-                    'inv_date' => $cur_date,
-                    'inv_type' => 'INVCOMALL',
-                    'company_id' => $company,
-                    'total_inv_amount' => round($company_net_due,2),//sk9
-                    'total_unit_fees' => $company_total_unitfees,
-                    'total_inv_discnt' => round($indv_discount_amt * $total_trainee_count, 4),
-                    'total_inv_subsdy' => $company_subsidy,
-                    'total_gst' => round($company_gst,2),//sk10
-                    'gst_rate' => round($gst_rate, 2),//sk11
-                    'gst_rule' => $gst_rule,
-                );
-           // }
+            $data = array(
+                'invoice_id' => $invoice_id,
+                'pymnt_due_id' => $payment_due_id,
+                'inv_date' => $cur_date,
+                'inv_type' => 'INVCOMALL',
+                'company_id' => $company,
+                'total_inv_amount' => round($company_net_due, 2), //sk9
+                'total_unit_fees' => $company_total_unitfees,
+                'total_inv_discnt' => round($indv_discount_amt * $total_trainee_count, 4),
+                'total_inv_subsdy' => $company_subsidy,
+                'total_gst' => round($company_gst, 2), //sk10
+                'gst_rate' => round($gst_rate, 2), //sk11
+                'gst_rule' => $gst_rule,
+            );
+            // }
             $ins_sta = $this->db->insert('enrol_invoice', $data);
             //echo $this->db->last_query();exit;
-
-        } 
-        else 
-        {
+        } else {
             $invoice_id = '';
         }
         //$this->db->trans_complete();
 //        if ($this->db->trans_status() === FALSE) 
-        if (!$ins_sta) 
-        {
+        if (!$ins_sta) {
             $status = FALSE;
         }
         return array('err' => $err_arr, 'invoice' => $invoice_id, 'status' => $status, 'pymnt_due_id' => $payment_due_id);
-    }    
-    
-public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_id, $company_details, $discount_changed, $reschedule=0) {
+    }
+
+    public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_id, $company_details, $discount_changed, $reschedule = 0) {
 
         $status = TRUE;
         extract($_POST);
@@ -3605,48 +3596,39 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $cal_discount['discount_metalabel'] = $dis_label;
         //print_r($data);echo count($data);exit;
         $total_trainee_count = count($data);
-        if ($discount_changed == 'Y') 
-        {
+        if ($discount_changed == 'Y') {
             $temp_ind_discnt_amt = $discount_amount;
             $indv_discount_rate = round((($temp_ind_discnt_amt / $classes->class_fees) * 100), 4);
             $indv_discount_amt = round(($classes->class_fees * ($indv_discount_rate / 100)), 4);
-        } 
-        else 
-        {
+        } else {
             $discount = $this->classtraineemodel->calculate_discount_enroll(0, $company, $classes->class_id, $classes->course_id, $classes->class_fees);
             $indv_discount_rate = $discount['discount_rate'];
             $indv_discount_amt = round(($classes->class_fees * ($indv_discount_rate / 100)), 4);
-            if ($indv_discount_amt > $classes->class_fees) 
-            {
+            if ($indv_discount_amt > $classes->class_fees) {
                 $indv_discount_rate = 100;
                 $indv_discount_amt = $classes->class_fees;
             }
         }
         $indv_fees_due = round(($classes->class_fees - $indv_discount_amt), 4);
         $gst_rate = $this->get_gst_current();
-         $i=0;
-        foreach ($data as $row) 
-        {
+        $i = 0;
+        foreach ($data as $row) {
             $user_id = $row['user_id'];
             $check = $this->db->select('*')
-            ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $classes->course_id)
-            ->where('class_id', $class)->where('user_id', $user_id)->get();
+                            ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $classes->course_id)
+                            ->where('class_id', $class)->where('user_id', $user_id)->get();
             $err_arr = array();
-            if ($check->num_rows() == 0) 
-            {
+            if ($check->num_rows() == 0) {
                 $subsidy_recd_on = ($row['subsidy_date'] == '') ? '' : date('Y-m-d', strtotime($row['subsidy_date']));
                 $subsidy_amount = $row['subsidy_amount'];
                 $ind_net_due = $this->calculate_net_due($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate);
-                $ind_net_due = round($ind_net_due,2); //sk1 new add
-                $ind_gst = round($this->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate), 2);//sk2
-                if (($enrollment_type == 1) && ($payment_retake == 2)) 
-                {
+                $ind_net_due = round($ind_net_due, 2); //sk1 new add
+                $ind_gst = round($this->calculate_gst($courses->gst_on_off, $courses->subsidy_after_before, $indv_fees_due, $subsidy_amount, $gst_rate), 2); //sk2
+                if (($enrollment_type == 1) && ($payment_retake == 2)) {
                     $pay_status = 'PYNOTREQD';
                     $enrol_status = 'ENRLACT';
                     $payment_due_id = 0;
-                } 
-                else 
-                {
+                } else {
                     $pay_status = 'NOTPAID';
                     $enrol_status = 'ENRLBKD';
                 }
@@ -3655,53 +3637,48 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 $tg_number = $row['tg'];
                 $subsidy_type_id = $row['subsidy_type'];
                 $class_status = $this->get_class_statustext($class);
-                
-                  /* sales executive thread*/
-                if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') 
-                {
+
+                /* sales executive thread */
+                if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') {
                     $salesexec = $this->user->user_id;
-                }
-                else
-                {
-                ///$salesexec = empty($salesexec) ? NULL : $salesexec;
-                        if(empty($salesexec)){
-                            $salesexec = $this->user->user_id;
-                        }
-                        else{
-                            $salesexec =$salesexec;
-                        }
-                }
-                
-                $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
-                if($check_attendance>0)
-                {
-                    $check_attendance_trainee=$this->check_attendance_trainee($tenant_id,$course,$class,$user_id);
-                    if($check_attendance_trainee > 0){
-                        $training_score='C';
-                        $att_status=1;
-                    }else{
-                     $training_score='ABS';
-                     $att_status=0;
+                } else {
+                    ///$salesexec = empty($salesexec) ? NULL : $salesexec;
+                    if (empty($salesexec)) {
+                        $salesexec = $this->user->user_id;
+                    } else {
+                        $salesexec = $salesexec;
                     }
-                }else { $att_status=1;}
+                }
+
+                $check_attendance = $this->check_attendance_row($tenant_id, $course, $class);
+                if ($check_attendance > 0) {
+                    $check_attendance_trainee = $this->check_attendance_trainee($tenant_id, $course, $class, $user_id);
+                    if ($check_attendance_trainee > 0) {
+                        $training_score = 'C';
+                        $att_status = 1;
+                    } else {
+                        $training_score = 'ABS';
+                        $att_status = 0;
+                    }
+                } else {
+                    $att_status = 1;
+                }
                 // this code run on reschedule start   
-                if($reschedule == 1)
-                {
-                    $res = $this->company_invoice_exists($classes->course_id,$class,$company);
+                if ($reschedule == 1) {
+                    $res = $this->company_invoice_exists($classes->course_id, $class, $company);
                     $total_val = count($res);
-                    if($total_val == 0){
-    //                    echo "no invoice found--".$payment_due_id;
-                    }else
-                    {   
-    //                  echo "invoice found--"; 
-                        $selected_trainee = array('0'=>$user_id);
+                    if ($total_val == 0) {
+                        //                    echo "no invoice found--".$payment_due_id;
+                    } else {
+                        //                  echo "invoice found--"; 
+                        $selected_trainee = array('0' => $user_id);
                         $res1 = $this->add_to_company_enrollment($tenant_id, $loggedin_user_id, $classes->course_id, $class, $company, $res['invoice_id'], $res['pymnt_due_id'], $selected_trainee);
                         return array('err' => $err_arr, 'invoice' => $res['invoice_id'], 'status' => $status, 'pymnt_due_id' => $res['pymnt_due_id']);
-                    } 
+                    }
                 }
-                  // this code run on reschedule end 
+                // this code run on reschedule end 
                 $data = array(
-                   'tenant_id' => $tenant_id,
+                    'tenant_id' => $tenant_id,
                     'course_id' => $classes->course_id,
                     'class_id' => $class,
                     'user_id' => $user_id,
@@ -3721,66 +3698,59 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 //$this->db->trans_start();
                 $this->db->trans_begin();
                 $this->db->insert('class_enrol', $data);
-               //echo $this->db->last_query();
-                    
-                if (!empty($payment_due_id)) 
-                {
+                //echo $this->db->last_query();
+
+                if (!empty($payment_due_id)) {
                     $data = array(
-                        'user_id' => $user_id,
-                        'pymnt_due_id' => $payment_due_id,
-                        'class_fees' => round($classes->class_fees, 2),//sk3
-                        'total_amount_due' => round($ind_net_due, 2),//sk4
-                        'discount_type' => $dis_label,
-                        'discount_rate' => $indv_discount_rate,
-                        'subsidy_type_id' => $subsidy_type_id ?? 0,
-                        'subsidy_amount' => round($subsidy_amount, 2),//sk5
-                        'subsidy_recd_date' => $subsidy_recd_on,
-                        'subsidy_modified_on' => $cur_date,
-                        'gst_amount' => round($ind_gst, 2),//sk6
-                        'att_status' => $att_status
+                    'user_id' => $user_id,
+                    'pymnt_due_id' => $payment_due_id,
+                    'class_fees' => round($classes->class_fees, 2), //sk3
+                    'total_amount_due' => round($ind_net_due, 2), //sk4
+                    'discount_type' => $dis_label,
+                    'discount_rate' => $indv_discount_rate,
+                    'subsidy_type_id' => $subsidy_type_id ?? 0,
+                    'subsidy_amount' => round($subsidy_amount, 2), //sk5
+                    'subsidy_recd_date' => $subsidy_recd_on,
+                    'subsidy_modified_on' => $cur_date,
+                    'gst_amount' => round($ind_gst, 2), //sk6
+                    'att_status' => $att_status
                     );
                     $this->db->insert('enrol_pymnt_due', $data);
                     ///echo $this->db->last_query();
                 }
-            } 
-            else 
-            {
-                 $err_arr[] = $row['user_id'];
+            } else {
+                $err_arr[] = $row['user_id'];
             }
-            if($check_attendance>0)
-            {
-                if($check_attendance_trainee > 0){
+            if ($check_attendance > 0) {
+                if ($check_attendance_trainee > 0) {
                     $company_net_due = round(($company_net_due + $ind_net_due), 4);
                     $company_subsidy = round(( $company_subsidy + round($subsidy_amount, 4)), 4);
-                    $company_gst = round(( $company_gst + $ind_gst), 2);//sk7
-                    $company_total_unitfees = round(($company_total_unitfees + $classes->class_fees), 4); 
+                    $company_gst = round(( $company_gst + $ind_gst), 2); //sk7
+                    $company_total_unitfees = round(($company_total_unitfees + $classes->class_fees), 4);
                     $i++;
                 }
-            }else { 
+            } else {
                 $company_net_due = round(($company_net_due + $ind_net_due), 4);
                 $company_subsidy = round(( $company_subsidy + round($subsidy_amount, 4)), 4);
-                $company_gst = round(( $company_gst + $ind_gst), 2);//sk8
-                $company_total_unitfees = round(($company_total_unitfees + $classes->class_fees), 4); 
-                 $i++;
+                $company_gst = round(( $company_gst + $ind_gst), 2); //sk8
+                $company_total_unitfees = round(($company_total_unitfees + $classes->class_fees), 4);
+                $i++;
             }
-        
         }
-        $total_trainee_count=$i;
-            
+        $total_trainee_count = $i;
+
         $data = $this->db->select('class_start_datetime as start')
-                ->from('course_class')
-                ->where('class_id', $class)
-                ->where('tenant_id', $tenant_id)
-                ->get()->row(0);
-                $start= $data->start;
-                $this->db->last_query();
-                $cur_date = date('Y-m-d H:i:s');
-                if($start)
-                {
-                    $cur_date = $start;
-                }
-        if (!empty($payment_due_id)) 
-        {
+                        ->from('course_class')
+                        ->where('class_id', $class)
+                        ->where('tenant_id', $tenant_id)
+                        ->get()->row(0);
+        $start = $data->start;
+        $this->db->last_query();
+        $cur_date = date('Y-m-d H:i:s');
+        if ($start) {
+            $cur_date = $start;
+        }
+        if (!empty($payment_due_id)) {
             $gst_rule = (empty($courses->gst_on_off)) ? '' : $courses->subsidy_after_before;
 //            if($check_attendance>0)
 //            {
@@ -3801,69 +3771,61 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 //            }
 //            else
 //            {
-                $data = array(
-                    'invoice_id' => $invoice_id,
-                    'pymnt_due_id' => $payment_due_id,
-                    'inv_date' => $cur_date,
-                    'inv_type' => 'INVCOMALL',
-                    'company_id' => $company,
-                    'total_inv_amount' => round($company_net_due,2),//sk9
-                    'total_unit_fees' => $company_total_unitfees,
-                    'total_inv_discnt' => round($indv_discount_amt * $total_trainee_count, 4),
-                    'total_inv_subsdy' => $company_subsidy,
-                    'total_gst' => round($company_gst,2),//sk10
-                    'gst_rate' => round($gst_rate, 2),//sk11
-                    'gst_rule' => $gst_rule,
-                );
-           // }
+            $data = array(
+                'invoice_id' => $invoice_id,
+                'pymnt_due_id' => $payment_due_id,
+                'inv_date' => $cur_date,
+                'inv_type' => 'INVCOMALL',
+                'company_id' => $company,
+                'total_inv_amount' => round($company_net_due, 2), //sk9
+                'total_unit_fees' => $company_total_unitfees,
+                'total_inv_discnt' => round($indv_discount_amt * $total_trainee_count, 4),
+                'total_inv_subsdy' => $company_subsidy,
+                'total_gst' => round($company_gst, 2), //sk10
+                'gst_rate' => round($gst_rate, 2), //sk11
+                'gst_rule' => $gst_rule,
+            );
+            // }
             $this->db->insert('enrol_invoice', $data);
             //echo $this->db->last_query();
-        } 
-        else 
-        {
+        } else {
             $invoice_id = '';
         }
-       //$this->db->trans_complete();
+        //$this->db->trans_complete();
         //echo $this->db->trans_status().'d';exit;
-        if ($this->db->trans_status() === FALSE) 
-        {
-            $this->db->trans_rollback();///added by shubhranshu
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback(); ///added by shubhranshu
             $status = FALSE;
-        }else{
-             $this->db->trans_commit();///added by shubhranshu
+        } else {
+            $this->db->trans_commit(); ///added by shubhranshu
         }
         return array('err' => $err_arr, 'invoice' => $invoice_id, 'status' => $status, 'pymnt_due_id' => $payment_due_id);
     }
-    
-    public function company_invoice_exists($course_id,$class_id,$company_id)
-    {
+
+    public function company_invoice_exists($course_id, $class_id, $company_id) {
         $this->db->select('*');
         $this->db->from('class_enrol');
-        $this->db->where('course_id',$course_id);
-        $this->db->where('class_id',$class_id);
-        $this->db->where('company_id',$company_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        $this->db->where('company_id', $company_id);
         $sql = $this->db->get();
         //echo $this->db->last_query(); echo"<br/>";
-        if($sql->num_rows()>0)
-        {
-            foreach($sql->result() as $row)
-            {
-                $result = array('pymnt_due_id'=>$row->pymnt_due_id);
+        if ($sql->num_rows() > 0) {
+            foreach ($sql->result() as $row) {
+                $result = array('pymnt_due_id' => $row->pymnt_due_id);
             }
-           //echo $result['pymnt_due_id'];
+            //echo $result['pymnt_due_id'];
             return $res = $this->get_company_invoice($result['pymnt_due_id']);
         }
-
-       
     }
-    public function get_company_invoice($pymnt_due_id)
-    {
+
+    public function get_company_invoice($pymnt_due_id) {
         $this->db->select('*');
         $this->db->from('enrol_invoice');
-        $this->db->where('pymnt_due_id',$pymnt_due_id);
+        $this->db->where('pymnt_due_id', $pymnt_due_id);
         $query = $this->db->get()->row(0);
-        $array = array('invoice_id'=>$query->invoice_id,
-                       'pymnt_due_id'=>$pymnt_due_id);
+        $array = array('invoice_id' => $query->invoice_id,
+            'pymnt_due_id' => $pymnt_due_id);
         return $array;
     }
 
@@ -3880,11 +3842,11 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
      * @return boolean|string
 
      */
-      public function individual_enrollment_db_update($tenant_id, $loggedin_user_id, $unit_fees) {
-          //$this->user = $this->user;
-          //print_r($this->data);exit;
-		  
-		$cur_time = date('H:i:s'); //sk
+    public function individual_enrollment_db_update($tenant_id, $loggedin_user_id, $unit_fees) {
+        //$this->user = $this->user;
+        //print_r($this->data);exit;
+
+        $cur_time = date('H:i:s'); //sk
         $status = TRUE;
 
         extract($_POST);
@@ -3893,8 +3855,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $course)
                         ->where('class_id', $class)->where('user_id', $user_id)->get();
 
-        if ($check->num_rows() == 0) 
-       {
+        if ($check->num_rows() == 0) {
 
             $payment_due_id = get_max_lookup(ENROL_PYMNT_DUE);
 
@@ -3948,37 +3909,37 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             $enrollment_type_text = ($enrollment_type == 1) ? 'RETAKE' : 'FIRST';
             $cur_date = date('Y-m-d H:i:s');
             $class_status = $this->get_class_statustext($class);
-            
-           /* sales executive thread*/
+
+            /* sales executive thread */
             if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') {
                 $salesexec = $this->user->user_id;
             } else {
                 ///$salesexec = empty($salesexec) ? NULL : $salesexec;
-                if(empty($salesexec)){
+                if (empty($salesexec)) {
                     $salesexec = $this->user->user_id;
-                }
-                else{
-                    $salesexec =$salesexec;
+                } else {
+                    $salesexec = $salesexec;
                 }
             }
-            
-            
-           $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
-           
-            if($check_attendance>0)
-            {
-               $check_attendance_trainee=$this->check_attendance_trainee($tenant_id,$course,$class,$user_id);
-                 $this->db->last_query();
-                
-                if($check_attendance_trainee > 0){
-                     $training_score='C';
-                     $att_status=1;
-                }else{
-                     $training_score='ABS';
-                     $att_status=0;
+
+
+            $check_attendance = $this->check_attendance_row($tenant_id, $course, $class);
+
+            if ($check_attendance > 0) {
+                $check_attendance_trainee = $this->check_attendance_trainee($tenant_id, $course, $class, $user_id);
+                $this->db->last_query();
+
+                if ($check_attendance_trainee > 0) {
+                    $training_score = 'C';
+                    $att_status = 1;
+                } else {
+                    $training_score = 'ABS';
+                    $att_status = 0;
                 }
-            }else { $att_status=1;}
-          
+            } else {
+                $att_status = 1;
+            }
+
             $data = array(
                 'tenant_id' => $tenant_id,
                 'course_id' => $course,
@@ -3999,10 +3960,9 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             );
             $this->db->trans_start();
             $this->db->insert('class_enrol', $data);
-            
-            if (!empty($payment_due_id)) 
-            {
-                    $data = array(
+
+            if (!empty($payment_due_id)) {
+                $data = array(
                     'user_id' => $user_id,
                     'pymnt_due_id' => $payment_due_id,
                     'class_fees' => round($classes->class_fees, 4),
@@ -4017,19 +3977,18 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 );
                 log_message('debug', " Inserted into class_enrol");
                 $this->db->insert('enrol_pymnt_due', $data);
-                
+
                 $gst_rule = (empty($courses->gst_on_off)) ? '' : $courses->subsidy_after_before;
-                
+
                 $data = $this->db->select('class_start_datetime as start')
-                ->from('course_class')
-                ->where('class_id', $class)
-                ->where('tenant_id', $tenant_id)
-                ->get()->row(0);
-                $start= $data->start;
+                                ->from('course_class')
+                                ->where('class_id', $class)
+                                ->where('tenant_id', $tenant_id)
+                                ->get()->row(0);
+                $start = $data->start;
                 $this->db->last_query();
                 $cur_date = date('Y-m-d H:i:s');
-                if($start)
-                {
+                if ($start) {
                     $cur_date = $start;
                 }
                 $data = array(
@@ -4052,7 +4011,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     if ($mode_of_payment == 'CASH' || $mode_of_payment == 'NETS') {
                         $data = array(
                             'invoice_id' => $invoice_id,
-                            'recd_on' => date('Y-m-d ', strtotime($recd_on)). $cur_time,
+                            'recd_on' => date('Y-m-d ', strtotime($recd_on)) . $cur_time,
                             'mode_of_pymnt' => $mode_of_payment,
                             'amount_recd' => round($amount_rcd, 4),
                             'cheque_number' => NULL,
@@ -4063,7 +4022,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     } elseif ($mode_of_payment == 'CHQ') {
                         $data = array(
                             'invoice_id' => $invoice_id,
-                            'recd_on' => date('Y-m-d ', strtotime($recd_on)). $cur_time,
+                            'recd_on' => date('Y-m-d ', strtotime($recd_on)) . $cur_time,
                             'mode_of_pymnt' => $mode_of_payment,
                             'amount_recd' => round($amount_rcd, 4),
                             'cheque_number' => $chq_num,
@@ -4072,27 +4031,25 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                             'recd_by' => $loggedin_user_id,
                         );
                     }
-                $this->db->insert('enrol_paymnt_recd', $data);
+                    $this->db->insert('enrol_paymnt_recd', $data);
                     $data = array(
                         'invoice_id' => $invoice_id,
                         'user_id' => $user_id,
                         'amount_recd' => round($amount_rcd, 4),
-                        'recd_on' => date('Y-m-d ', strtotime($recd_on)). $cur_time
+                        'recd_on' => date('Y-m-d ', strtotime($recd_on)) . $cur_time
                     );
                     $this->db->insert('enrol_pymnt_brkup_dt', $data);
                 }
             }
             $this->db->trans_complete();
             if ($this->db->trans_status() === FALSE) {
-                    $status = FALSE;
+                $status = FALSE;
             }
         } else {
             $status = FALSE;
         }
         return $status;
     }
-
-
 
     /**
 
@@ -4123,9 +4080,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         return $result->num_rows();
     }
 
-    
     /// added by shubhranshu to fetch the company discount 
-    public function fetch_compnay_discount($tenant_id,$course,$company_id){
+    public function fetch_compnay_discount($tenant_id, $course, $company_id) {
         $this->db->select('*');
         $this->db->from('company_discount');
         $this->db->where('Tenant_ID', $tenant_id);
@@ -4134,6 +4090,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $res = $this->db->get()->row();
         return $res;
     }
+
     /**
 
      * Insert data into class_enrol,
@@ -4153,27 +4110,27 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         $company_total_unitfees = 0;
 
-        
+
         //// Below code added by shubhranshu to fetch the company discount 
-        
-        
-        $comp_discounts_details = $this->fetch_compnay_discount($tenant_id,$course,$company_id);
+
+
+        $comp_discounts_details = $this->fetch_compnay_discount($tenant_id, $course, $company_id);
         if (($comp_discounts_details->Discount_Percent > 0) || ($comp_discounts_details->Discount_Amount > 0)) {
 
-            if($comp_discounts_details->Discount_Percent > 0){
+            if ($comp_discounts_details->Discount_Percent > 0) {
                 $discount_rate = round($comp_discounts_details->Discount_Percent, 4);
                 $discount_total = ( $discount_rate * $class_detail->class_fees) / 100;
-            }else{
+            } else {
                 $discount_total = $comp_discounts_details->Discount_Amount;
-                $discount_rate =  round((($discount_total / $class_detail->class_fees) * 100), 4);
+                $discount_rate = round((($discount_total / $class_detail->class_fees) * 100), 4);
             }
             $discount_label = 'DISCOMP';
-        } else if($class_detail->class_discount > 0){
+        } else if ($class_detail->class_discount > 0) {
 
             $discount_rate = round($class_detail->class_discount, 4);
             $discount_total = ( $discount_rate * $class_detail->class_fees) / 100;
             $discount_label = 'DISCLASS';
-        }else{
+        } else {
             $discount_rate = 0;
             $discount_total = 0;
             $discount_label = 'DISCOMP';
@@ -4186,87 +4143,85 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $feesdue = $class_detail->class_fees - ($discount_total);
 
         $gst_rate = $this->get_gst_current();
-        
-       ///most important added by shubhranshu
+
+        ///most important added by shubhranshu
         $check = $this->db->select('*')
-                    ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $course)
-                    ->where('class_id', $class)->where('company_id', $company_id)->get();
-        if ($check->num_rows() == 0) { 
+                        ->from('class_enrol')->where('tenant_id', $tenant_id)->where('course_id', $course)
+                        ->where('class_id', $class)->where('company_id', $company_id)->get();
+        if ($check->num_rows() == 0) {
             $payment_due_id = get_max_lookup(ENROL_PYMNT_DUE);
 
             $invoice_id = $this->generate_invoice_id();
-        }else{
-            $inv_detls = $this->fetch_enrol_invoice_check($tenant_id,$course,$class,$company_id);
+        } else {
+            $inv_detls = $this->fetch_enrol_invoice_check($tenant_id, $course, $class, $company_id);
             $payment_due_id = $inv_detls->pymnt_due_id;
             $invoice_id = $this->generate_invoice_id();
             $check_regenerate_comp_discount = $this->db->select('*')
-                ->from('enrol_pymnt_due')->where('pymnt_due_id', $inv_detls->pymnt_due_id)->get()->result();
+                            ->from('enrol_pymnt_due')->where('pymnt_due_id', $inv_detls->pymnt_due_id)->get()->result();
             $regenet_comp_dis_rate = 0;
-            foreach($check_regenerate_comp_discount as $arrays){
-                if($arrays->discount_rate > $regenet_comp_dis_rate){
+            foreach ($check_regenerate_comp_discount as $arrays) {
+                if ($arrays->discount_rate > $regenet_comp_dis_rate) {
                     $regenet_comp_dis_rate = $arrays->discount_rate;
                 }
             }
-            if((!empty($regenet_comp_dis_rate)) && ($regenet_comp_dis_rate !=0)){
+            if ((!empty($regenet_comp_dis_rate)) && ($regenet_comp_dis_rate != 0)) {
                 $discount_total = ($regenet_comp_dis_rate * $class_detail->class_fees) / 100;
                 $discount_rate = round($regenet_comp_dis_rate, 4);
                 $discount_label = 'DISCOMP';
                 $feesdue = $class_detail->class_fees - ($discount_total);
             }
-            
-             
         }
-        
-       
+
+
 
         foreach ($insert_data as $key => $excel) {
-             ////////////////////////added by shubhranshu to prevent negative invoice due to subsidy on 4/1/2019////////////
-                $k= 4;
-                $subsidy_amount = $excel['subsidy_amount'];
-                $netdue = $this->calculate_net_due($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
+            ////////////////////////added by shubhranshu to prevent negative invoice due to subsidy on 4/1/2019////////////
+            $k = 4;
+            $subsidy_amount = $excel['subsidy_amount'];
+            $netdue = $this->calculate_net_due($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
 
-                if($netdue <= 0){
-                    $insert_data[$k]['status'] = 'FAILED';
-                    $excel['status']='FAILED';
-                    $insert_data[$k]['failure_reason'] = 'Subsidy amount can not be nagative';
+            if ($netdue <= 0) {
+                $insert_data[$k]['status'] = 'FAILED';
+                $excel['status'] = 'FAILED';
+                $insert_data[$k]['failure_reason'] = 'Subsidy amount can not be nagative';
+            }
+            $k++;
+            ////////////////////////added by shubhranshu to prevent negative invoice due to subsidy////////////
+            if ($excel['status'] == 'PASSED') {
+
+                //$subsidy_amount = $excel['subsidy_amount'];
+
+                $subsidy_recd_on = $excel['subsidy_recd_on'];
+
+                if ($subsidy_recd_on) {
+
+                    $subsidy_recd_on = date('Y-m-d', strtotime($subsidy_recd_on));
+                } else {
+
+                    $subsidy_recd_on = '';
                 }
-                $k++;
-                ////////////////////////added by shubhranshu to prevent negative invoice due to subsidy////////////
-                if ($excel['status'] == 'PASSED') {
 
-                    //$subsidy_amount = $excel['subsidy_amount'];
+                //$netdue = $this->calculate_net_due($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
 
-                    $subsidy_recd_on = $excel['subsidy_recd_on'];
+                $class_status = $this->get_class_statustext($class);
 
-                    if ($subsidy_recd_on) {
+                $totalgst = $this->calculate_gst($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
 
-                        $subsidy_recd_on = date('Y-m-d', strtotime($subsidy_recd_on));
-                    } else {
+                if (($excel['enrollment_type'] == 'RETAKE') && ($excel['enrol_retake_pay_mode'] == 'BYPASS')) {
 
-                        $subsidy_recd_on = '';
-                    }
+                    $pay_status = 'PYNOTREQD';
 
-                    //$netdue = $this->calculate_net_due($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
+                    $enrol_status = 'ENRLACT';
 
-                    $class_status = $this->get_class_statustext($class);
+                    $payment_due_id = '';
+                } else {
 
-                    $totalgst = $this->calculate_gst($course_detail->gst_on_off, $course_detail->subsidy_after_before, $feesdue, $subsidy_amount, $gst_rate);
+                    $pay_status = 'NOTPAID';
 
-                    if (($excel['enrollment_type'] == 'RETAKE') && ($excel['enrol_retake_pay_mode'] == 'BYPASS')) {
+                    $enrol_status = 'ENRLBKD';
+                }
 
-                        $pay_status = 'PYNOTREQD';
-
-                        $enrol_status = 'ENRLACT';
-
-                        $payment_due_id = '';
-                    } else {
-
-                        $pay_status = 'NOTPAID';
-
-                        $enrol_status = 'ENRLBKD';
-                    }
-
-                    $tg_number = $excel['tg_number'];
+                $tg_number = $excel['tg_number'];
 
 //                    if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') {
 //
@@ -4275,194 +4230,188 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 //
 //                        $salesexec = empty($salesexec) ? NULL : $salesexec;
 //                    }
-                    
-                    if(empty($salesexec)){
-                        if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') {
-                           $salesexec = $this->user->user_id;
-                        } else {
-                            $salesexec = NULL;
-                        }
-                    }
-                    
-                    /////////below block was added by shubhranshu for training score to be update for bulk enrol/////
-                    $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
-                    //echo $check_attendance.' -'.$tenant_id.'-'.$course.'-'.$class;exit;
-                    if($check_attendance>0)
-                    { 
-                        $training_score='ABS';
-                        $att_status=0;
 
-                    }else { 
-                        $att_status=1;$training_score='C';
-
+                if (empty($salesexec)) {
+                    if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') {
+                        $salesexec = $this->user->user_id;
+                    } else {
+                        $salesexec = NULL;
                     }
-                    /////////////////////////////end of code by shubhranshu////////////////////////////////
-                    
-                    
-                    
+                }
+
+                /////////below block was added by shubhranshu for training score to be update for bulk enrol/////
+                $check_attendance = $this->check_attendance_row($tenant_id, $course, $class);
+                //echo $check_attendance.' -'.$tenant_id.'-'.$course.'-'.$class;exit;
+                if ($check_attendance > 0) {
+                    $training_score = 'ABS';
+                    $att_status = 0;
+                } else {
+                    $att_status = 1;
+                    $training_score = 'C';
+                }
+                /////////////////////////////end of code by shubhranshu////////////////////////////////
+
+
+
+                $data = array(
+                    'tenant_id' => $tenant_id,
+                    'course_id' => $course,
+                    'class_id' => $class,
+                    'user_id' => $excel['user_id'],
+                    'enrolment_type' => $excel['enrollment_type'],
+                    'enrolment_mode' => 'COMPSPON',
+                    'pymnt_due_id' => $payment_due_id,
+                    'company_id' => $company_id,
+                    'enrolled_on' => $cur_date,
+                    'enrolled_by' => $curuser_id,
+                    'tg_number' => $tg_number,
+                    'training_score' => $training_score, ////added by shubhranshu to by default the score should be present.
+                    'payment_status' => $pay_status,
+                    'sales_executive_id' => $salesexec,
+                    'class_status' => $class_status,
+                    'enrol_status' => $enrol_status
+                );
+
+                $this->db->insert('class_enrol', $data);
+
+                ////added by shubhranshu if the invoice id re-generated  to fetch the discount
+                $fees_array = $this->fees_payable_check_discount($excel['user_id'], $tenant_id, $course, $class, 0, $company_id, $payment_due_id, $this->user->user_id);
+
+                $data = array(
+                    'user_id' => $user_id,
+                    'pymnt_due_id' => $payment_due_id,
+                    'class_fees' => round($fees_array["unit_fees"], 4), //sk1
+                    'total_amount_due' => round($fees_array["net_fees_due"], 2), //sk2
+                    'discount_type' => $fees_array["discount_type"],
+                    'discount_rate' => round($fees_array["discount_rate"], 4),
+                    'gst_amount' => round($fees_array["gst_amount"], 2), //sk3
+                    'subsidy_amount' => 0,
+                    'subsidy_recd_date' => '0000-00-00',
+                    'att_status' => $att_status
+                );
+                /////////////////////need to work on this//////////////////
+
+
+
+                if ($pay_status != 'PYNOTREQD') {
+
                     $data = array(
-                        'tenant_id' => $tenant_id,
-                        'course_id' => $course,
-                        'class_id' => $class,
                         'user_id' => $excel['user_id'],
-                        'enrolment_type' => $excel['enrollment_type'],
-                        'enrolment_mode' => 'COMPSPON',
                         'pymnt_due_id' => $payment_due_id,
-                        'company_id' => $company_id,
-                        'enrolled_on' => $cur_date,
-                        'enrolled_by' => $curuser_id,
-                        'tg_number' => $tg_number,
-                        'training_score' => $training_score,////added by shubhranshu to by default the score should be present.
-                        'payment_status' => $pay_status,
-                        'sales_executive_id' => $salesexec,
-                        'class_status' => $class_status,
-                        'enrol_status' => $enrol_status
+                        'class_fees' => round($class_detail->class_fees, 4),
+                        'total_amount_due' => round($netdue, 4),
+                        'discount_type' => $discount_label,
+                        'discount_rate' => round($discount_rate, 4),
+                        'subsidy_amount' => round($subsidy_amount, 4),
+                        'subsidy_recd_date' => $subsidy_recd_on,
+                        'subsidy_modified_on' => $cur_date,
+                        'gst_amount' => round($totalgst, 4),
+                        'att_status' => $att_status ///added by shubhranshu 
                     );
 
-                    $this->db->insert('class_enrol', $data);
-                    
-                    ////added by shubhranshu if the invoice id re-generated  to fetch the discount
-                    $fees_array = $this->fees_payable_check_discount($excel['user_id'], $tenant_id, $course, $class, 0,$company_id, $payment_due_id, $this->user->user_id);
-                    
-                    $data = array(
-                        'user_id' => $user_id,
-                        'pymnt_due_id' => $payment_due_id,
-                        'class_fees' => round($fees_array["unit_fees"], 4),//sk1
-                        'total_amount_due' => round($fees_array["net_fees_due"], 2),//sk2
-                        'discount_type' => $fees_array["discount_type"],
-                        'discount_rate' => round($fees_array["discount_rate"], 4),
-                        'gst_amount' => round($fees_array["gst_amount"], 2),//sk3
-                        'subsidy_amount' => 0,
-                        'subsidy_recd_date' => '0000-00-00',
-                        'att_status' => $att_status
-                    );
-                    /////////////////////need to work on this//////////////////
-                    
-                    
-                    
-                    if ($pay_status != 'PYNOTREQD') {
+                    $this->db->insert('enrol_pymnt_due', $data);
 
-                        $data = array(
-                            'user_id' => $excel['user_id'],
-                            'pymnt_due_id' => $payment_due_id,
-                            'class_fees' => round($class_detail->class_fees, 4),
-                            'total_amount_due' => round($netdue, 4),
-                            'discount_type' => $discount_label,
-                            'discount_rate' => round($discount_rate, 4),
-                            'subsidy_amount' => round($subsidy_amount, 4),
-                            'subsidy_recd_date' => $subsidy_recd_on,
-                            'subsidy_modified_on' => $cur_date,
-                            'gst_amount' => round($totalgst, 4),
-                            'att_status' => $att_status ///added by shubhranshu 
-                        );
+                    $company_net_due = $company_net_due + round($netdue, 4);
 
-                        $this->db->insert('enrol_pymnt_due', $data);
+                    $company_discount = $company_discount + round($discount_total, 4);
 
-                        $company_net_due = $company_net_due + round($netdue, 4);
+                    $company_subsidy = $company_subsidy + round($subsidy_amount, 4);
 
-                        $company_discount = $company_discount + round($discount_total, 4);
+                    $company_gst = $company_gst + round($totalgst, 4);
 
-                        $company_subsidy = $company_subsidy + round($subsidy_amount, 4);
-
-                        $company_gst = $company_gst + round($totalgst, 4);
-
-                        $company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
-                    }
+                    $company_total_unitfees = $company_total_unitfees + $class_detail->class_fees;
                 }
-                
-            } 
-            
-            /////////////////////addded by shubhranshu for company invoice which is exist/////////////
-               
+            }
+        }
 
-                if ($check->num_rows() == 0) { 
+        /////////////////////addded by shubhranshu for company invoice which is exist/////////////
 
-                    if ($company_net_due > 0) {
 
-                        $gst_rule = (empty($course_detail->gst_on_off)) ? '' : $course_detail->subsidy_after_before;
+        if ($check->num_rows() == 0) {
 
-                        $data = array(
-                            'invoice_id' => $invoice_id,
-                            'pymnt_due_id' => $payment_due_id,
-                            'inv_date' => $cur_date,
-                            'inv_type' => 'INVCOMALL',
-                            'company_id' => $company_id,
-                            'total_inv_amount' => round($company_net_due, 4),
-                            'total_unit_fees' => round($company_total_unitfees, 4),
-                            'total_inv_discnt' => round($company_discount, 4),
-                            'total_inv_subsdy' => round($company_subsidy, 4),
-                            'total_gst' => round($company_gst, 4),
-                            'gst_rate' => round($gst_rate, 4),
-                            'gst_rule' => $gst_rule,
-                        );
-                        //print_r($data);exit;
-                        $this->db->insert('enrol_invoice', $data);
+            if ($company_net_due > 0) {
 
-                        $insert_data['invoice_id'] = $invoice_id;
+                $gst_rule = (empty($course_detail->gst_on_off)) ? '' : $course_detail->subsidy_after_before;
 
-                    }
+                $data = array(
+                    'invoice_id' => $invoice_id,
+                    'pymnt_due_id' => $payment_due_id,
+                    'inv_date' => $cur_date,
+                    'inv_type' => 'INVCOMALL',
+                    'company_id' => $company_id,
+                    'total_inv_amount' => round($company_net_due, 4),
+                    'total_unit_fees' => round($company_total_unitfees, 4),
+                    'total_inv_discnt' => round($company_discount, 4),
+                    'total_inv_subsdy' => round($company_subsidy, 4),
+                    'total_gst' => round($company_gst, 4),
+                    'gst_rate' => round($gst_rate, 4),
+                    'gst_rule' => $gst_rule,
+                );
+                //print_r($data);exit;
+                $this->db->insert('enrol_invoice', $data);
 
-                }else{    
-  
-                        if (!empty($inv_detls->pymnt_due_id)) {
-                                 
-                           
-                            
-                            $gst_rule = (empty($course_detail->gst_on_off)) ? '' : $course_detail->subsidy_after_before;
-                            
-                            $company_net_due = $company_net_due + $inv_detls->total_inv_amount;
+                $insert_data['invoice_id'] = $invoice_id;
+            }
+        } else {
 
-                            $company_discount = $company_discount + $inv_detls->total_inv_discnt;
+            if (!empty($inv_detls->pymnt_due_id)) {
 
-                            $company_subsidy = $company_subsidy + $inv_detls->total_inv_subsdy;
 
-                            //$totalgst = $totalgst+$inv_detls->total_gst;
 
-                            $company_gst = $company_gst + $inv_detls->total_gst;
+                $gst_rule = (empty($course_detail->gst_on_off)) ? '' : $course_detail->subsidy_after_before;
 
-                            $company_total_unitfees = $company_total_unitfees + $inv_detls->total_unit_fees;
+                $company_net_due = $company_net_due + $inv_detls->total_inv_amount;
 
-                            $data = array(
-                                'invoice_id' => $invoice_id,
-                                'pymnt_due_id' => $inv_detls->pymnt_due_id,
-                                'inv_date' => $cur_date,
-                                'inv_type' => 'INVCOMALL',
-                                'company_id' => $company_id,
-                                'total_inv_amount' => round($company_net_due, 4),
-                                'total_unit_fees' => round($company_total_unitfees, 4),
-                                'total_inv_discnt' => round(($company_discount) , 4),
-                                'total_inv_subsdy' => round(($company_subsidy), 4),
-                                'total_gst' => round($company_gst, 4),
-                                'gst_rate' => round($gst_rate, 4),
-                                'gst_rule' => $gst_rule,
-                            );
+                $company_discount = $company_discount + $inv_detls->total_inv_discnt;
 
-                            $this->db->where('pymnt_due_id', $inv_detls->pymnt_due_id);
+                $company_subsidy = $company_subsidy + $inv_detls->total_inv_subsdy;
 
-                            $this->db->update('enrol_invoice', $data);
+                //$totalgst = $totalgst+$inv_detls->total_gst;
 
-                            $insert_data['invoice_id'] = $invoice_id;
+                $company_gst = $company_gst + $inv_detls->total_gst;
 
-                        }
+                $company_total_unitfees = $company_total_unitfees + $inv_detls->total_unit_fees;
 
-                }
-            
+                $data = array(
+                    'invoice_id' => $invoice_id,
+                    'pymnt_due_id' => $inv_detls->pymnt_due_id,
+                    'inv_date' => $cur_date,
+                    'inv_type' => 'INVCOMALL',
+                    'company_id' => $company_id,
+                    'total_inv_amount' => round($company_net_due, 4),
+                    'total_unit_fees' => round($company_total_unitfees, 4),
+                    'total_inv_discnt' => round(($company_discount), 4),
+                    'total_inv_subsdy' => round(($company_subsidy), 4),
+                    'total_gst' => round($company_gst, 4),
+                    'gst_rate' => round($gst_rate, 4),
+                    'gst_rule' => $gst_rule,
+                );
+
+                $this->db->where('pymnt_due_id', $inv_detls->pymnt_due_id);
+
+                $this->db->update('enrol_invoice', $data);
+
+                $insert_data['invoice_id'] = $invoice_id;
+            }
+        }
+
 
         return $insert_data;
     }
-    
-    public function fetch_enrol_invoice_check($tenant_id,$course_id,$class_id,$comp_id) {
+
+    public function fetch_enrol_invoice_check($tenant_id, $course_id, $class_id, $comp_id) {
 
         $result = $this->db->select('ei.*')->from('enrol_invoice ei')
-                        ->join('class_enrol ce', 'ce.pymnt_due_id=ei.pymnt_due_id')                       
-                        ->where('ce.course_id', $course_id) 
-                        ->where('ce.class_id', $class_id) 
-                         ->where('ce.tenant_id', $tenant_id) 
-                        ->where('ce.company_id',$comp_id)
+                        ->join('class_enrol ce', 'ce.pymnt_due_id=ei.pymnt_due_id')
+                        ->where('ce.course_id', $course_id)
+                        ->where('ce.class_id', $class_id)
+                        ->where('ce.tenant_id', $tenant_id)
+                        ->where('ce.company_id', $comp_id)
                         ->get()->row();
 
         return $result;
     }
+
     ///////////addded by shubhranshu for company invoice if exist
 
     /**
@@ -4559,21 +4508,19 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 //return ($feesdue + (($feesdue * $gst_rate) / 100));
                 $feesduetemp = ($feesdue * $gst_rate) / 100;
                 $feesduetemp = round($feesduetemp, 2, PHP_ROUND_HALF_UP);
-                return $feesduetemp+$feesdue;
+                return $feesduetemp + $feesdue;
                 //return round($feesduetemp, 2, PHP_ROUND_HALF_UP);/////ssp/////
             } else {
                 // added by shubhranshu to fixed calculation issue while round off upto 2decimal places on 5/12/2018/////
-                 $feesduetemp = ($feesdue - $subsidy);
-               // return $feesduetemp = ($feesdue - $subsidy);
-                return round($feesduetemp, 2, PHP_ROUND_HALF_UP);///////////////////ssp/////////////
+                $feesduetemp = ($feesdue - $subsidy);
+                // return $feesduetemp = ($feesdue - $subsidy);
+                return round($feesduetemp, 2, PHP_ROUND_HALF_UP); ///////////////////ssp/////////////
             }
         } else {
-            $feesduetemp=($feesdue - $subsidy);
+            $feesduetemp = ($feesdue - $subsidy);
             //return ($feesdue - $subsidy);
             return round($feesduetemp, 2, PHP_ROUND_HALF_UP);
         }
-        
-    
     }
 
     /**
@@ -4624,14 +4571,15 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         ->join('tms_users tu', 'tu.user_id=ce.user_id')
                         ->join('tms_users_pers tup', 'tup.user_id=tu.user_id')
                         ->join('tenant_master tm', 'tm.tenant_id=ce.tenant_id')
-                        ->where('ei.pymnt_due_id', $payid) 
-                        ->where('epd.att_status',1)
-
+                        ->where('ei.pymnt_due_id', $payid)
+                        ->where('epd.att_status', 1)
                         ->get()->row();
 
         return $result;
     }
-    /* This function get the invoice details of company skm*/
+
+    /* This function get the invoice details of company skm */
+
     public function get_company_enroll_invoice($payid) {
 
         $result = $this->db->select('*')->from('enrol_invoice ei')
@@ -4642,14 +4590,14 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         ->join('tms_users tu', 'tu.user_id=ce.user_id')
                         ->join('tms_users_pers tup', 'tup.user_id=tu.user_id')
                         ->join('tenant_master tm', 'tm.tenant_id=ce.tenant_id')
-                        ->where('ei.pymnt_due_id', $payid) 
-
+                        ->where('ei.pymnt_due_id', $payid)
                         ->get()->row();
-       
+
         return $result;
     }
-    
+
     /* skm */
+
     public function get_enroll_individual_invoice($payid) {
 
         $result = $this->db->select('*')->from('enrol_invoice ei')
@@ -4660,48 +4608,48 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         ->join('tms_users tu', 'tu.user_id=ce.user_id')
                         ->join('tms_users_pers tup', 'tup.user_id=tu.user_id')
                         ->join('tenant_master tm', 'tm.tenant_id=ce.tenant_id')
-                        ->where('ei.pymnt_due_id', $payid) 
-
+                        ->where('ei.pymnt_due_id', $payid)
                         ->get()->row();
-       
+
         return $result;
     }
-    
-     public function get_discount($pymnt_due_id){
+
+    public function get_discount($pymnt_due_id) {
         $this->db->select('discount_type,discount_rate');
         $this->db->from('enrol_pymnt_due');
-        $this->db->where('pymnt_due_id',$pymnt_due_id);
-        $this->db->where('att_status',1);
+        $this->db->where('pymnt_due_id', $pymnt_due_id);
+        $this->db->where('att_status', 1);
         $sql = $this->db->get();
         return $sql->row();
     }
- /**
+
+    /**
 
      * get previous invoice number ##enrollment
 
      */
-    public function get_enroll_prev_invoice($invoice_id) 
-    {
-        $query= 'select invoice_id as previous_inv_id from enrol_invoice_audittrail where regen_inv_id="'.$invoice_id.'"';
-        $query  = $this->db->query($query);
-         return $query->result();
+    public function get_enroll_prev_invoice($invoice_id) {
+        $query = 'select invoice_id as previous_inv_id from enrol_invoice_audittrail where regen_inv_id="' . $invoice_id . '"';
+        $query = $this->db->query($query);
+        return $query->result();
     }
-    public function get_enroll_prev_indvoice($payid) 
-    {
-        
-           $data = $this->db->select('invoice_id')
-            ->from('enrol_invoice')
-            ->where('pymnt_due_id', $payid)
-            ->get()->row(0);
 
-            $invoice_id= $data->invoice_id;
-            $query= 'select invoice_id as previous_inv_id from enrol_invoice_audittrail where regen_inv_id="'.$invoice_id.'"';
-                       
-            $query  = $this->db->query($query);
+    public function get_enroll_prev_indvoice($payid) {
+
+        $data = $this->db->select('invoice_id')
+                        ->from('enrol_invoice')
+                        ->where('pymnt_due_id', $payid)
+                        ->get()->row(0);
+
+        $invoice_id = $data->invoice_id;
+        $query = 'select invoice_id as previous_inv_id from enrol_invoice_audittrail where regen_inv_id="' . $invoice_id . '"';
+
+        $query = $this->db->query($query);
 //           sssecho $this->db->last_query();
 //            exit();
-            return $query->result();
-    }   
+        return $query->result();
+    }
+
     /**
 
      * function to get invoice for class and trainee id
@@ -4724,7 +4672,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $result = $this->get_invoice_paid_detail($invoice_id);
 
         $result->cheque_date = ($result->cheque_date) ? date('d-m-Y', strtotime($result->cheque_date)) : '';
-                                          
+
         $result->pymnt_due_id = $data->pymnt_due_id;
 
         return $result;
@@ -4753,6 +4701,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         return $result;
     }
+
     public function get_company_trainees_by_payid1($payid) {
 
         $this->db->select('tu.tax_code, tup.user_id, tup.first_name as first, tup.last_name as last, cc.class_name,
@@ -4764,7 +4713,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 ->join('tms_users_pers tup', 'tup.user_id=epd.user_id')
                 ->join('tms_users tu', 'tup.user_id=tu.user_id')
                 ->where('epd.pymnt_due_id', $payid)
-               ->where('epd.att_status', 1)
+                ->where('epd.att_status', 1)
                 ->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'));
 
         $result = $this->db->get()->result();
@@ -4793,8 +4742,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         return $this->db->get()->result();
     }
-    
-     /**
+
+    /**
 
      * function to get company payment received for individual forgeiner users
 
@@ -4808,18 +4757,17 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $this->db->select_sum('brk.amount_recd');
 
         $this->db->from('enrol_pymnt_brkup_dt brk');
-        $this->db->join('tms_users tu','tu.user_id=brk.user_id');
-      
+        $this->db->join('tms_users tu', 'tu.user_id=brk.user_id');
+
 //        $this->db->not_like('tu.tax_code','S','after');
 ////      $this->db->or_not_like('tu.tax_code','T','after');
 
         $this->db->where('invoice_id', $invoice);
-       
+
 
         $this->db->group_by('user_id');
 
         return $this->db->get()->result();
-       
     }
 
     /**
@@ -4843,29 +4791,32 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         return $this->db->get()->result();
     }
-      /**
+
+    /**
 
      * function to get company payment refunded for individual foreigner users
 
      */
     public function company_payment_refund_foreigner($invoice) {
-        $query= $this->db->query("SELECT epd.user_id,tu.tax_code FROM (enrol_pymnt_due epd) 
+        $query = $this->db->query("SELECT epd.user_id,tu.tax_code FROM (enrol_pymnt_due epd) 
                                 JOIN enrol_invoice ei ON ei.pymnt_due_id=epd.pymnt_due_id JOIN tms_users tu ON tu.user_id=epd.user_id WHERE ei.invoice_id = '$invoice_id' 
                                 AND (tu.tax_code LIKE 'S%' AND tu.tax_code LIKE 'T%')");
-        $users =array();
-        if ($query->num_rows() > 0){
-           foreach ($query->result() as $row){
-               $users[]=$row->user_id;}
+        $users = array();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $users[] = $row->user_id;
+            }
         }
         $this->db->select('brk.invoice_id');
         $this->db->select('brk.user_id');
         $this->db->select_sum('brk.refund_amount');
         $this->db->from('enrol_refund_brkup_dt brk');
-        $this->db->join('tms_users tu','tu.user_id=brk.user_id');
+        $this->db->join('tms_users tu', 'tu.user_id=brk.user_id');
         $this->db->where('invoice_id', $invoice);
         $this->db->group_by('user_id');
         return $this->db->get()->result();
     }
+
     /**
 
      * This function gets all the active company accounts for a Tenant
@@ -5022,25 +4973,24 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $amount_refund = $this->db->get()->row()->amount_refund;
 
         $result->amount_refund = empty($amount_refund) ? 0 : round($amount_refund, 2);
-        
+
         $result->amount_recd = $this->check_payment_recived($invoice);
 
         return $result;
     }
-    
-     public function check_payment_recived($invoice){
+
+    public function check_payment_recived($invoice) {
         $this->db->select_sum('epr.amount_recd', 'amount_recd');
         $this->db->from('enrol_paymnt_recd epr');
-        $this->db->where('epr.invoice_id', $invoice);          
+        $this->db->where('epr.invoice_id', $invoice);
         $this->db->group_by('epr.invoice_id');
         $sql = $this->db->get();
-        if($sql->num_rows()>0){
-        $amount_recd = $sql->row()->amount_recd;
-        return $result->$amount_recd = empty($amount_recd) ? 0 : round($amount_recd, 2);
-        }else{
+        if ($sql->num_rows() > 0) {
+            $amount_recd = $sql->row()->amount_recd;
+            return $result->$amount_recd = empty($amount_recd) ? 0 : round($amount_recd, 2);
+        } else {
             return $result = $sql->num_rows();
         }
-
     }
 
     /**
@@ -5053,71 +5003,70 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $result = $this->db->select('epr.invoice_id, epr.recd_on, epr.mode_of_pymnt,epr.amount_recd, epr.cheque_number, epr.cheque_date,epr.othr_mode_of_payment')
                         ->from('enrol_paymnt_recd epr')
                         ->where('epr.invoice_id', $invoice_id)
-                        ->order_by('epr.trigger_date','DESC')->get()->row();//added by shubhranshu
+                        ->order_by('epr.trigger_date', 'DESC')->get()->row(); //added by shubhranshu
 
         return $result;
     }
-     public function get_invoice_paid_details_indv($invoice_id, $user_id = 0) {
-                $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE');
-                $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
+
+    public function get_invoice_paid_details_indv($invoice_id, $user_id = 0) {
+        $mop = array('SFC_ATO', 'SFC_SELF', 'CASH', 'NETS', 'CHQ', 'GIRO', 'ONLINE');
+        $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
                 epr.mode_of_pymnt,epr.othr_mode_of_payment, epr.cheque_number,epr.sfc_claimed,epr.other_amount_recd,epr.cheque_date,
                 tup.first_name, tup.last_name, tup.gender');
-                $this->db->from('enrol_pymnt_brkup_dt epbd');
-                $this->db->join('enrol_paymnt_recd epr', 'epr.invoice_id=epbd.invoice_id and epr.recd_on=epbd.recd_on', 'left');
-                $this->db->join('tms_users_pers tup', 'tup.user_id = epbd.user_id', 'left');
-                $this->db->where('epbd.invoice_id', $invoice_id);
-                $this->db->where_in('epr.mode_of_pymnt',$mop);
-                $this->db->order_by('epbd.recd_on','DESC');
-                $this->db->limit(1);
-                if (!empty($user_id)) {
-                    $this->db->where('epbd.user_id', $user_id);
-                }
-                $result = $this->db->get()->result_object();
-                return $result;
+        $this->db->from('enrol_pymnt_brkup_dt epbd');
+        $this->db->join('enrol_paymnt_recd epr', 'epr.invoice_id=epbd.invoice_id and epr.recd_on=epbd.recd_on', 'left');
+        $this->db->join('tms_users_pers tup', 'tup.user_id = epbd.user_id', 'left');
+        $this->db->where('epbd.invoice_id', $invoice_id);
+        $this->db->where_in('epr.mode_of_pymnt', $mop);
+        $this->db->order_by('epbd.recd_on', 'DESC');
+        $this->db->limit(1);
+        if (!empty($user_id)) {
+            $this->db->where('epbd.user_id', $user_id);
+        }
+        $result = $this->db->get()->result_object();
+        return $result;
     }
+
     //// below function was added by shubhranshu to fix the sfc issue while giving the backdate
     public function get_invoice_paid_details_indv_new($invoice_id, $user_id = 0) {
-                $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
-                $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
+        $mop = array('SFC_ATO', 'SFC_SELF', 'CASH', 'NETS', 'CHQ', 'GIRO', 'ONLINE', 'PSEA');
+        $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
                 epr.mode_of_pymnt,epr.othr_mode_of_payment, epr.cheque_number,epr.sfc_claimed,epr.other_amount_recd,epr.cheque_date,
                 tup.first_name, tup.last_name, tup.gender');
-                $this->db->from('enrol_pymnt_brkup_dt epbd');
-                $this->db->join('enrol_paymnt_recd epr', 'epr.invoice_id=epbd.invoice_id and epr.recd_on=epbd.recd_on', 'left');
-                $this->db->join('tms_users_pers tup', 'tup.user_id = epbd.user_id', 'left');
-                $this->db->where('epbd.invoice_id', $invoice_id);
-                $this->db->where_in('epr.mode_of_pymnt',$mop);
-                $this->db->order_by('epbd.trigger_date','DESC');
-                $this->db->limit(1);
-                if (!empty($user_id)) {
-                    $this->db->where('epbd.user_id', $user_id);
-                }
-                $result = $this->db->get()->result_object();
-                return $result;
+        $this->db->from('enrol_pymnt_brkup_dt epbd');
+        $this->db->join('enrol_paymnt_recd epr', 'epr.invoice_id=epbd.invoice_id and epr.recd_on=epbd.recd_on', 'left');
+        $this->db->join('tms_users_pers tup', 'tup.user_id = epbd.user_id', 'left');
+        $this->db->where('epbd.invoice_id', $invoice_id);
+        $this->db->where_in('epr.mode_of_pymnt', $mop);
+        $this->db->order_by('epbd.trigger_date', 'DESC');
+        $this->db->limit(1);
+        if (!empty($user_id)) {
+            $this->db->where('epbd.user_id', $user_id);
+        }
+        $result = $this->db->get()->result_object();
+        return $result;
     }
-    
+
     /*
 
      * function to get trainee paid details
 
      */
 
-     public function get_invoice_paid_details($invoice_id, $user_id = 0) {
+    public function get_invoice_paid_details($invoice_id, $user_id = 0) {
 
         $mode_of_pymnt = $this->db->select('mode_of_pymnt')->from('enrol_paymnt_recd')->where('invoice_id', $invoice_id)
-                ->order_by('recd_on','DESC')
-                ->get()->row()->mode_of_pymnt;
-         $mode_of_pymnt;
-       
-        if($mode_of_pymnt=="SFC_ATO" || $mode_of_pymnt=="SFC_SELF")
-        {
-            $order='ASC';
+                        ->order_by('recd_on', 'DESC')
+                        ->get()->row()->mode_of_pymnt;
+        $mode_of_pymnt;
+
+        if ($mode_of_pymnt == "SFC_ATO" || $mode_of_pymnt == "SFC_SELF") {
+            $order = 'ASC';
             //$mop=array('SFC_ATO','SFC_SELF');
-            $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
-        }
-        else
-        {
-              $order='DESC';
-              $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
+            $mop = array('SFC_ATO', 'SFC_SELF', 'CASH', 'NETS', 'CHQ', 'GIRO', 'ONLINE', 'PSEA');
+        } else {
+            $order = 'DESC';
+            $mop = array('SFC_ATO', 'SFC_SELF', 'CASH', 'NETS', 'CHQ', 'GIRO', 'ONLINE', 'PSEA');
         }
         $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
 
@@ -5132,9 +5081,9 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $this->db->join('tms_users_pers tup', 'tup.user_id = epbd.user_id', 'left');
 
         $this->db->where('epbd.invoice_id', $invoice_id);
-        $this->db->where_in('epr.mode_of_pymnt',$mop);
+        $this->db->where_in('epr.mode_of_pymnt', $mop);
 
-        $this->db->order_by('epbd.recd_on',$order);
+        $this->db->order_by('epbd.recd_on', $order);
 
         if (!empty($user_id)) {
 
@@ -5145,25 +5094,22 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         //echo  $this->db->last_query();exit;
         return $result;
     }
-    
+
     ///// added by shubhranshu if rec on date given backdate issue
     public function get_invoice_paid_details_new($invoice_id, $user_id = 0) {
 
         $mode_of_pymnt = $this->db->select('mode_of_pymnt')->from('enrol_paymnt_recd')->where('invoice_id', $invoice_id)
-                ->order_by('recd_on','DESC')
-                ->get()->row()->mode_of_pymnt;
-         $mode_of_pymnt;
-       
-        if($mode_of_pymnt=="SFC_ATO" || $mode_of_pymnt=="SFC_SELF")
-        {
-            $order='ASC';
+                        ->order_by('recd_on', 'DESC')
+                        ->get()->row()->mode_of_pymnt;
+        $mode_of_pymnt;
+
+        if ($mode_of_pymnt == "SFC_ATO" || $mode_of_pymnt == "SFC_SELF") {
+            $order = 'ASC';
             //$mop=array('SFC_ATO','SFC_SELF');
-            $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
-        }
-        else
-        {
-              $order='DESC';
-              $mop=array('SFC_ATO','SFC_SELF','CASH','NETS','CHQ','GIRO','ONLINE','PSEA');
+            $mop = array('SFC_ATO', 'SFC_SELF', 'CASH', 'NETS', 'CHQ', 'GIRO', 'ONLINE', 'PSEA');
+        } else {
+            $order = 'DESC';
+            $mop = array('SFC_ATO', 'SFC_SELF', 'CASH', 'NETS', 'CHQ', 'GIRO', 'ONLINE', 'PSEA');
         }
         $this->db->select('epbd.invoice_id, epbd.recd_on, epbd.amount_recd, 
 
@@ -5178,10 +5124,10 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         $this->db->join('tms_users_pers tup', 'tup.user_id = epbd.user_id', 'left');
 
         $this->db->where('epbd.invoice_id', $invoice_id);
-        $this->db->where_in('epr.mode_of_pymnt',$mop);
+        $this->db->where_in('epr.mode_of_pymnt', $mop);
 
         //$this->db->order_by('epbd.recd_on',$order);
-        $this->db->order_by('epbd.trigger_date',$order); // added by shubhranshu to fetch the latest record
+        $this->db->order_by('epbd.trigger_date', $order); // added by shubhranshu to fetch the latest record
         if (!empty($user_id)) {
 
             $this->db->where('epbd.user_id', $user_id);
@@ -5191,8 +5137,9 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         return $result;
     }
+
     ////////////////////////
-    
+
 
     /*
 
@@ -5227,7 +5174,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 er.cheque_date, er.refund_by, er.refnd_reason, er.refnd_reason_ot')
                         ->from('enrol_refund er')
                         ->where('er.invoice_id', $invoice_id)
-                        ->order_by('er.trigger_date','DESC')->get()->result_object();/////addded by shubhranshu order by desc to fetch the latest record
+                        ->order_by('er.trigger_date', 'DESC')->get()->result_object(); /////addded by shubhranshu order by desc to fetch the latest record
 
         return $result;
     }
@@ -5266,7 +5213,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         ->join('course_class cc', 'cc.class_id=ce.class_id and cc.course_id=ce.course_id and cc.tenant_id=ce.tenant_id')
                         ->join('tms_users tu', 'tup.user_id=tu.user_id')
                         ->where('epd.pymnt_due_id', $payment_due_id)
-                        ->where('epd.att_status',1)
+                        ->where('epd.att_status', 1)
                         ->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'))
                         ->get()->result();
 
@@ -5385,15 +5332,15 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
      * function to post refund payment for a trainee
 
      */
-     public function refund_payment_post($tenant_id, $user_id) {
+    public function refund_payment_post($tenant_id, $user_id) {
 
         extract($_POST);
 
         $invoice_id = $invoice_hidden_id;
 
         $trainee_id = $trainee_hidden_id;
-         $refundable_total;
-         $refundable_total = round($refundable_total, 2);
+        $refundable_total;
+        $refundable_total = round($refundable_total, 2);
 
         if (!empty($invoice_id)) {
 
@@ -5454,21 +5401,18 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             }
             /* sfc statrs -- 
              * 
-             */
-            else if ($payment_type == 'SFC_SELF') 
-            {
-                if($payment_type1=='CASH1' || $payment_type1=='NETS1')
-                {
-                     $net_amount=$sfc_amount+$cash_amount1;
-                        $data = array(
+             */ else if ($payment_type == 'SFC_SELF') {
+                if ($payment_type1 == 'CASH1' || $payment_type1 == 'NETS1') {
+                    $net_amount = $sfc_amount + $cash_amount1;
+                    $data = array(
                         'invoice_id' => $invoice_id,
                         'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
                         'refund_type' => 'INDV',
                         'mode_of_refund' => $payment_type,
-                        'othr_mode_of_refund'=>$payment_type1,
+                        'othr_mode_of_refund' => $payment_type1,
                         'amount_refund' => round($net_amount, 2),
                         'sfc_claimed' => round($sfc_amount, 2),
-                        'other_amount_refund' =>round($cash_amount1, 2),
+                        'other_amount_refund' => round($cash_amount1, 2),
                         'cheque_number' => NULL,
                         'cheque_date' => NULL,
                         'bank_name' => NULL,
@@ -5485,78 +5429,70 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         'refund_by' => $user_id,
                     );
                     $refunding_amt = round($net_amount, 2);
-                }
-                else if ($payment_type1 == 'CHQ1') 
-                {
-                     $net_amount=$sfc_amount+$cheque_amount1;
-                $data = array(
-                    'invoice_id' => $invoice_id,
-                    'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
-                    'refund_type' => 'INDV',
-                    'mode_of_refund' => $payment_type,
-                    'othr_mode_of_refund' => $payment_type1,
-                    'amount_refund' => round($net_amount, 2),
-                     'sfc_claimed' => round($sfc_amount, 2),
-                    'other_amount_refund' =>round($cheque_amount1, 2),
-                    'cheque_number' => $cheque_number1,
-                    'cheque_date' => date('Y-m-d', strtotime($cheque_date1)),
-                    'bank_name' => $bank_name1,
-                    'refnd_reason' => $refund_reason,
-                    'refnd_reason_ot' => $other_reason,
-                    'refund_by' => $user_id,
-                );
-
-                $brk_data = array(
-                    'invoice_id' => $invoice_id,
-                    'refund_date' => date('Y-m-d H:i:S', strtotime($refund_date)),
-                    'user_id' => $trainee_id,
-                    'refund_amount' => round($net_amount, 2),
-                    'refund_by' => $user_id,
-                );
-                $refunding_amt = round($net_amount, 2);
-            }
-                else
-                {
-                        $data = array(
-                            'invoice_id' => $invoice_id,
-                            'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
-                            'refund_type' => 'INDV',
-                            'mode_of_refund' => $payment_type,
-                            'amount_refund' => round($sfc_amount, 2),
-                             'sfc_claimed' => round($sfc_amount, 2),
-                            'cheque_number' => NULL,
-                            'cheque_date' => NULL,
-                            'bank_name' => NULL,
-                            'refnd_reason' => $refund_reason,
-                            'refnd_reason_ot' => strtoupper($other_reason),
-                            'refund_by' => $user_id,
-                        );
-
-                        $brk_data = array(
-                            'invoice_id' => $invoice_id,
-                            'refund_date' => date('Y-m-d H:i:S', strtotime($refund_date)),
-                            'user_id' => $trainee_id,
-                            'refund_amount' => round($sfc_amount, 2),
-                            'refund_by' => $user_id,
-                        );
-                        $refunding_amt = round($sfc_amount, 2);
-                }
-                 
-            }
-            else if ($payment_type == 'SFC_ATO') 
-            {
-                if($payment_type1=='CASH1' || $payment_type1=='NETS1')
-                {
-                     $net_amount=$sfcato_amount+$cash_amount1;
-                        $data = array(
+                } else if ($payment_type1 == 'CHQ1') {
+                    $net_amount = $sfc_amount + $cheque_amount1;
+                    $data = array(
                         'invoice_id' => $invoice_id,
                         'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
                         'refund_type' => 'INDV',
                         'mode_of_refund' => $payment_type,
-                        'othr_mode_of_refund'=>$payment_type1,
+                        'othr_mode_of_refund' => $payment_type1,
+                        'amount_refund' => round($net_amount, 2),
+                        'sfc_claimed' => round($sfc_amount, 2),
+                        'other_amount_refund' => round($cheque_amount1, 2),
+                        'cheque_number' => $cheque_number1,
+                        'cheque_date' => date('Y-m-d', strtotime($cheque_date1)),
+                        'bank_name' => $bank_name1,
+                        'refnd_reason' => $refund_reason,
+                        'refnd_reason_ot' => $other_reason,
+                        'refund_by' => $user_id,
+                    );
+
+                    $brk_data = array(
+                        'invoice_id' => $invoice_id,
+                        'refund_date' => date('Y-m-d H:i:S', strtotime($refund_date)),
+                        'user_id' => $trainee_id,
+                        'refund_amount' => round($net_amount, 2),
+                        'refund_by' => $user_id,
+                    );
+                    $refunding_amt = round($net_amount, 2);
+                } else {
+                    $data = array(
+                        'invoice_id' => $invoice_id,
+                        'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
+                        'refund_type' => 'INDV',
+                        'mode_of_refund' => $payment_type,
+                        'amount_refund' => round($sfc_amount, 2),
+                        'sfc_claimed' => round($sfc_amount, 2),
+                        'cheque_number' => NULL,
+                        'cheque_date' => NULL,
+                        'bank_name' => NULL,
+                        'refnd_reason' => $refund_reason,
+                        'refnd_reason_ot' => strtoupper($other_reason),
+                        'refund_by' => $user_id,
+                    );
+
+                    $brk_data = array(
+                        'invoice_id' => $invoice_id,
+                        'refund_date' => date('Y-m-d H:i:S', strtotime($refund_date)),
+                        'user_id' => $trainee_id,
+                        'refund_amount' => round($sfc_amount, 2),
+                        'refund_by' => $user_id,
+                    );
+                    $refunding_amt = round($sfc_amount, 2);
+                }
+            } else if ($payment_type == 'SFC_ATO') {
+                if ($payment_type1 == 'CASH1' || $payment_type1 == 'NETS1') {
+                    $net_amount = $sfcato_amount + $cash_amount1;
+                    $data = array(
+                        'invoice_id' => $invoice_id,
+                        'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
+                        'refund_type' => 'INDV',
+                        'mode_of_refund' => $payment_type,
+                        'othr_mode_of_refund' => $payment_type1,
                         'amount_refund' => round($net_amount, 2),
                         'sfc_claimed' => round($sfcato_amount, 2),
-                        'other_amount_refund' =>round($cash_amount1, 2),
+                        'other_amount_refund' => round($cash_amount1, 2),
                         'cheque_number' => NULL,
                         'cheque_date' => NULL,
                         'bank_name' => NULL,
@@ -5573,45 +5509,41 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                         'refund_by' => $user_id,
                     );
                     $refunding_amt = round($net_amount, 2);
-                }
-                else if ($payment_type1 == 'CHQ1') 
-                {
-                     $net_amount=$sfcato_amount+$cheque_amount1;
-                $data = array(
-                    'invoice_id' => $invoice_id,
-                    'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
-                    'refund_type' => 'INDV',
-                    'mode_of_refund' => $payment_type,
-                    'othr_mode_of_refund' => $payment_type1,
-                    'amount_refund' => round($net_amount, 2),
-                    'sfc_claimed' => round($sfcato_amount, 2),
-                    'other_amount_refund' =>round($cheque_amount1, 2),
-                    'cheque_number' => $cheque_number1,
-                    'cheque_date' => date('Y-m-d', strtotime($cheque_date1)),
-                    'bank_name' => $bank_name1,
-                    'refnd_reason' => $refund_reason,
-                    'refnd_reason_ot' => $other_reason,
-                    'refund_by' => $user_id,
-                );
+                } else if ($payment_type1 == 'CHQ1') {
+                    $net_amount = $sfcato_amount + $cheque_amount1;
+                    $data = array(
+                        'invoice_id' => $invoice_id,
+                        'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
+                        'refund_type' => 'INDV',
+                        'mode_of_refund' => $payment_type,
+                        'othr_mode_of_refund' => $payment_type1,
+                        'amount_refund' => round($net_amount, 2),
+                        'sfc_claimed' => round($sfcato_amount, 2),
+                        'other_amount_refund' => round($cheque_amount1, 2),
+                        'cheque_number' => $cheque_number1,
+                        'cheque_date' => date('Y-m-d', strtotime($cheque_date1)),
+                        'bank_name' => $bank_name1,
+                        'refnd_reason' => $refund_reason,
+                        'refnd_reason_ot' => $other_reason,
+                        'refund_by' => $user_id,
+                    );
 
-                $brk_data = array(
-                    'invoice_id' => $invoice_id,
-                    'refund_date' => date('Y-m-d H:i:S', strtotime($refund_date)),
-                    'user_id' => $trainee_id,
-                    'refund_amount' => round($net_amount, 2),
-                    'refund_by' => $user_id,
-                );
-                $refunding_amt = round($net_amount, 2);
-            }
-                else
-                {
+                    $brk_data = array(
+                        'invoice_id' => $invoice_id,
+                        'refund_date' => date('Y-m-d H:i:S', strtotime($refund_date)),
+                        'user_id' => $trainee_id,
+                        'refund_amount' => round($net_amount, 2),
+                        'refund_by' => $user_id,
+                    );
+                    $refunding_amt = round($net_amount, 2);
+                } else {
                     $data = array(
                         'invoice_id' => $invoice_id,
                         'refund_on' => date('Y-m-d H:i:S', strtotime($refund_date)),
                         'refund_type' => 'INDV',
                         'mode_of_refund' => $payment_type,
                         'amount_refund' => round($sfcato_amount, 2),
-                         'sfc_claimed' => round($sfcato_amount, 2),
+                        'sfc_claimed' => round($sfcato_amount, 2),
                         'cheque_number' => NULL,
                         'cheque_date' => NULL,
                         'bank_name' => NULL,
@@ -5641,15 +5573,15 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
 
             $this->db->insert('enrol_refund', $data);
-          
+
             $this->db->insert('enrol_refund_brkup_dt', $brk_data);
-            
-           $this->db->set('sfc_claimed',0);
-            $this->db->set('othr_mode_of_payment',0);
-            $this->db->where('invoice_id',$invoice_id);
+
+            $this->db->set('sfc_claimed', 0);
+            $this->db->set('othr_mode_of_payment', 0);
+            $this->db->where('invoice_id', $invoice_id);
             $this->db->update('enrol_paymnt_recd');
             if ($refundable_total == $refunding_amt) {
-                
+
                 $ce_data = array(
                     'payment_status' => 'NOTPAID'
                 );
@@ -5660,7 +5592,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
                 $this->db->update('class_enrol', $ce_data);
             }
-             $this->db->trans_complete();
+            $this->db->trans_complete();
 
             if ($this->db->trans_status() === FALSE) {
 
@@ -5675,107 +5607,106 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             return FALSE;
         }
     }
-    
-     /* This method get the previous record of payment update for activity log skm start */
-    public function get_last_comp_payment_update($invoice_id){
+
+    /* This method get the previous record of payment update for activity log skm start */
+
+    public function get_last_comp_payment_update($invoice_id) {
         $this->db->select('epr.invoice_id,epr.recd_on,epr.sfc_recd_on,epr.mode_of_pymnt,epr.othr_mode_of_payment'
                 . ',epr.amount_recd as total_paid_amount,epr.sfc_claimed,epr.other_amount_recd,epr.cheque_number,epr.cheque_date,'
                 . 'epr.bank_name,epr.recd_by,epr.trigger_date');
         $this->db->from('enrol_paymnt_recd epr');
-        $this->db->join('enrol_pymnt_brkup_dt epbt','epr.invoice_id = epbt.invoice_id and epr.recd_on = epbt.recd_on');
-        $this->db->where('epr.invoice_id',$invoice_id);
-        $this->db->order_by('epr.recd_on','desc');
+        $this->db->join('enrol_pymnt_brkup_dt epbt', 'epr.invoice_id = epbt.invoice_id and epr.recd_on = epbt.recd_on');
+        $this->db->where('epr.invoice_id', $invoice_id);
+        $this->db->order_by('epr.recd_on', 'desc');
         $this->db->limit(1);
         $res = $this->db->get();
 //        echo $this->db->last_query(); echo "<br/>";
-        if($res->num_rows()>0)
-        {
+        if ($res->num_rows() > 0) {
             $data['company_details'] = $res->row();
             $date = $data['company_details']->recd_on;
-            $data['details'] = $this->get_company_breakup_dt($invoice_id,$date);
+            $data['details'] = $this->get_company_breakup_dt($invoice_id, $date);
             return $data;
-        }else{
+        } else {
             return $res = 0;
         }
-
     }
-    
-    public function get_company_breakup_dt($invoice_id,$date){
+
+    public function get_company_breakup_dt($invoice_id, $date) {
         $this->db->select('*');
         $this->db->from('enrol_pymnt_brkup_dt');
-        $this->db->where('invoice_id',$invoice_id);
-        $this->db->where('recd_on',$date);
+        $this->db->where('invoice_id', $invoice_id);
+        $this->db->where('recd_on', $date);
         $sql = $this->db->get();
 //        echo $this->db->last_query();
         $comp_breakup_data = $sql->result();
         return $comp_breakup_data;
     }
-    
-/* skm end */
-    
+
+    /* skm end */
+
     /* This method get the previous record of payment refund of company for activity log skm start */
-     public function get_last_comp_payment_refund($invoice_id){
+
+    public function get_last_comp_payment_refund($invoice_id) {
         $this->db->select('er.invoice_id,er.refund_on,er.refund_type,er.mode_of_refund,er.othr_mode_of_refund,er.amount_refund,'
                 . 'er.sfc_claimed,er.other_amount_refund,er.cheque_number,er.cheque_date,er.bank_name,er.refnd_reason,er.refnd_reason_ot,'
                 . 'er.refund_by,er.trigger_date');
         $this->db->from('enrol_refund er');
-        $this->db->where('er.invoice_id',$invoice_id);
-        $this->db->order_by('er.trigger_date','desc');
+        $this->db->where('er.invoice_id', $invoice_id);
+        $this->db->order_by('er.trigger_date', 'desc');
         $this->db->limit(1);
         $res = $this->db->get();
 //        echo $this->db->last_query();
-       // echo $res->num_rows();
+        // echo $res->num_rows();
 //        echo"<br/>";echo"<br/>";
-        if($res->num_rows()>0)
-        {
+        if ($res->num_rows() > 0) {
             $data['company_details'] = $res->row();
 //            $date = $data['company_details']->refund_on;
-             $date = $data['company_details']->trigger_date;
-            $data['details'] = $this->get_company_refund_breakup_dt($invoice_id,$date);
+            $date = $data['company_details']->trigger_date;
+            $data['details'] = $this->get_company_refund_breakup_dt($invoice_id, $date);
             return $data;
-        }else{
-            return $res=0;
+        } else {
+            return $res = 0;
         }
-
     }
-    
 
-    public function get_company_refund_breakup_dt($invoice_id,$date){
+    public function get_company_refund_breakup_dt($invoice_id, $date) {
         $this->db->select('*');
         $this->db->from('enrol_refund_brkup_dt');
-        $this->db->where('invoice_id',$invoice_id);
-        $this->db->where('trigger_date',$date);
+        $this->db->where('invoice_id', $invoice_id);
+        $this->db->where('trigger_date', $date);
         $sql = $this->db->get();
 //        echo $this->db->last_query();
         $comp_breakup_data = $sql->result();
         return $comp_breakup_data;
     }
-    /* skm end*/
-    
-     /* This function get the previous data of individual refund update for activity log skm start */
-    public function get_last_payment_refund($invoice_id){
+
+    /* skm end */
+
+    /* This function get the previous data of individual refund update for activity log skm start */
+
+    public function get_last_payment_refund($invoice_id) {
         $this->db->select('er.*,erbt.invoice_id,erbt.user_id,erbt.refund_amount,erbt.refund_date,erbt.trigger_date as refund_date');
         $this->db->from('enrol_refund er');
-        $this->db->join('enrol_refund_brkup_dt erbt','er.invoice_id = erbt.invoice_id and er.refund_on = erbt.refund_date');
-        $this->db->where('er.invoice_id',$invoice_id);
-        $this->db->order_by('er.refund_on','desc');
+        $this->db->join('enrol_refund_brkup_dt erbt', 'er.invoice_id = erbt.invoice_id and er.refund_on = erbt.refund_date');
+        $this->db->where('er.invoice_id', $invoice_id);
+        $this->db->order_by('er.refund_on', 'desc');
         $this->db->limit(1);
         $sql = $this->db->get();
 //        echo $this->db->last_query();
 
-        if($sql->num_rows()>0){
-              return $sql->row();
-        }else{
+        if ($sql->num_rows() > 0) {
+            return $sql->row();
+        } else {
 
-           return $sql = 0;
-           
+            return $sql = 0;
         }
-
     }
-    /* skm end*/
-    /**
+
+    /* skm end */
 
     /**
+
+      /**
 
      * function to update the posted Payment values
 
@@ -5919,26 +5850,26 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             return FALSE;
         }
     }
-    
+
     /* This function get the previous data of individual payment update for activity log skm start */
-    public function get_last_payment_update($invoice_id){
+
+    public function get_last_payment_update($invoice_id) {
         $this->db->select('epr.*,epbt.invoice_id,epbt.user_id,epbt.amount_recd,epbt.recd_on,epbt.trigger_date');
         $this->db->from('enrol_paymnt_recd epr');
-        $this->db->join('enrol_pymnt_brkup_dt epbt','epr.invoice_id = epbt.invoice_id and epr.recd_on = epbt.recd_on');
-        $this->db->where('epr.invoice_id',$invoice_id);
-        $this->db->order_by('epr.recd_on','desc');
+        $this->db->join('enrol_pymnt_brkup_dt epbt', 'epr.invoice_id = epbt.invoice_id and epr.recd_on = epbt.recd_on');
+        $this->db->where('epr.invoice_id', $invoice_id);
+        $this->db->order_by('epr.recd_on', 'desc');
         $this->db->limit(1);
         $sql = $this->db->get();
-       
-        if($sql->num_rows()>0){
-              return $sql->row();
-        }else{
+
+        if ($sql->num_rows() > 0) {
+            return $sql->row();
+        } else {
             return $sql = 0;
         }
     }
+
     /* skm end */
-    
-    
 
     /**
 
@@ -5951,8 +5882,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         $invoice_id = $this->db->select('invoice_id')->from('enrol_invoice')->where('pymnt_due_id', $payment_due_id)->get()->row()->invoice_id;
 
-         $trainee_id = $this->get_trainee_by_pymnt_due_id($payment_due_id)->user_id;
-        
+        $trainee_id = $this->get_trainee_by_pymnt_due_id($payment_due_id)->user_id;
+
 
         if (!empty($invoice_id)) {
             $cur_time = date('H:i:s');
@@ -6015,233 +5946,218 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 );
             }
             if ($payment_type == 'SFC_ATO') {
-                
-                
-                if ($payment_type1 == 'CASH1' || $payment_type1 == 'NETS1') 
-                {
-                   
 
-                     $sfcclaim_on;
-                     date('Y-m-d',strtotime($sfcatoclaim_on));
-                 
-                    $net_amount=$sfcato_amount+$cash_amount1;
-                        $data = array(
+
+                if ($payment_type1 == 'CASH1' || $payment_type1 == 'NETS1') {
+
+
+                    $sfcclaim_on;
+                    date('Y-m-d', strtotime($sfcatoclaim_on));
+
+                    $net_amount = $sfcato_amount + $cash_amount1;
+                    $data = array(
                         'invoice_id' => $invoice_id,
-                        'recd_on' =>   date('Y-m-d ', strtotime($cashpaid_on1)) . $cur_time,
-                        'sfc_recd_on' =>date('Y-m-d',strtotime($sfcatoclaim_on)),
+                        'recd_on' => date('Y-m-d ', strtotime($cashpaid_on1)) . $cur_time,
+                        'sfc_recd_on' => date('Y-m-d', strtotime($sfcatoclaim_on)),
                         'mode_of_pymnt' => $payment_type,
                         'othr_mode_of_payment' => $payment_type1,
                         'amount_recd' => round($net_amount, 2),
-                        'sfc_claimed'=>round($sfcato_amount,2),   
-                        'other_amount_recd'=>round($cash_amount1,2),
+                        'sfc_claimed' => round($sfcato_amount, 2),
+                        'other_amount_recd' => round($cash_amount1, 2),
                         'cheque_number' => NULL,
                         'cheque_date' => NULL,
                         'bank_name' => NULL,
                         'recd_by' => $user_id,
-                        );
+                    );
 
-                        $breakup_data = array(
+                    $breakup_data = array(
                         'invoice_id' => $invoice_id,
                         'user_id' => $trainee_id,
                         'amount_recd' => round($net_amount, 2),
                         'recd_on' => date('Y-m-d ', strtotime($cashpaid_on1)) . $cur_time
-                     );
-                }
-                elseif ($payment_type1 == 'CHQ1') 
-                {
-                      $net_amount=$sfcato_amount+$cheque_amount1;
+                    );
+                } elseif ($payment_type1 == 'CHQ1') {
+                    $net_amount = $sfcato_amount + $cheque_amount1;
 
                     $data = array(
-                    'invoice_id' => $invoice_id,
-                    'recd_on' => date('Y-m-d ', strtotime($paid_on1)) . $cur_time,
-                    'sfc_recd_on' =>date('Y-m-d',strtotime($sfcatoclaim_on)),
-                    'mode_of_pymnt' => $payment_type,
-                    'othr_mode_of_payment' => $payment_type1,
-                    'amount_recd' => round($net_amount, 2),
-                    'sfc_claimed'  => round($sfcato_amount, 2),
-                    'other_amount_recd'=>round($cheque_amount1,2),
-                    'cheque_number' => $cheque_number1,
-                    'cheque_date' => date('Y-m-d', strtotime($cheque_date1)),
-                    'bank_name' => $bank_name1,
-                    'recd_by' => $user_id,
-                );
-
-                $breakup_data = array(
-                    'invoice_id' => $invoice_id,
-                    'user_id' => $trainee_id,
-                    'amount_recd' => round($net_amount, 2),
-                    'recd_on' => date('Y-m-d ', strtotime($paid_on1)) . $cur_time
-                );
-            } 
-            else if ($payment_type1 == 'GIRO1') 
-            {
-                 $net_amount=$sfcato_amount+$giro_amount1;
-                $data = array(
-                    'invoice_id' => $invoice_id,
-                    'recd_on' => date('Y-m-d ', strtotime($transc_on1)) . $cur_time,
-                    'sfc_recd_on'=>date('Y-m-d',strtotime($sfcclaim_on)),
-                    'mode_of_pymnt' => $payment_type,
-                    'othr_mode_of_payment' => $payment_type1,
-                    'amount_recd' => round($net_amount, 2),
-                    'sfc_claimed'  => round($sfcato_amount, 2),
-                    //'amount_recd_other'=>round($giro_amount1,2),/// commented by shubhranshu
-                    'other_amount_recd'=>round($giro_amount1,2), 
-                    'cheque_number' => NULL,
-                    'cheque_date' => NULL,
-                    'bank_name' => $gbank_name1,
-                    'recd_by' => $user_id,
-                );
-
-                $breakup_data = array(
-                    'invoice_id' => $invoice_id,
-                    'user_id' => $trainee_id,
-                    'amount_recd' => round($net_amount, 2),
-                    'recd_on' => date('Y-m-d ', strtotime($transc_on1)) . $cur_time
-                );
-            }else {
-                $data = array(
-                    'invoice_id' => $invoice_id,
-                    'recd_on' => date('Y-m-d ', strtotime($sfcatoclaim_on)) . $cur_time,
-                    'sfc_recd_on'=>date('Y-m-d',strtotime($sfcatoclaim_on)),
-                    'mode_of_pymnt' => $payment_type,
-                    'amount_recd' => round($sfcato_amount, 2),
-                    'sfc_claimed' => round($sfcato_amount, 2),
-                    'cheque_number' => NULL,
-                    'cheque_date' => NULL,
-                    'bank_name' => NULL,
-                    'recd_by' => $user_id,
-                );
-
-                $breakup_data = array(
-                    'invoice_id' => $invoice_id,
-                    'user_id' => $trainee_id,
-                    'amount_recd' => round($sfcato_amount, 2),
-                    'recd_on' => date('Y-m-d ', strtotime($sfcatoclaim_on)) . $cur_time
-                );
-                }
-            }
-            else if ($payment_type == 'SFC_SELF') 
-            {
-                if ($payment_type1 == 'CASH1' || $payment_type1 == 'NETS1') 
-                {
-                     $sfcclaim_on;
-                     date('Y-m-d',strtotime($sfcclaim_on));
-                 
-                    $net_amount=$sfc_amount+$cash_amount1;
-                        $data = array(
                         'invoice_id' => $invoice_id,
-                        'recd_on' =>   date('Y-m-d ', strtotime($cashpaid_on1)) . $cur_time,
-                        'sfc_recd_on' =>date('Y-m-d',strtotime($sfcclaim_on)),
+                        'recd_on' => date('Y-m-d ', strtotime($paid_on1)) . $cur_time,
+                        'sfc_recd_on' => date('Y-m-d', strtotime($sfcatoclaim_on)),
+                        'mode_of_pymnt' => $payment_type,
+                        'othr_mode_of_payment' => $payment_type1,
+                        'amount_recd' => round($net_amount, 2),
+                        'sfc_claimed' => round($sfcato_amount, 2),
+                        'other_amount_recd' => round($cheque_amount1, 2),
+                        'cheque_number' => $cheque_number1,
+                        'cheque_date' => date('Y-m-d', strtotime($cheque_date1)),
+                        'bank_name' => $bank_name1,
+                        'recd_by' => $user_id,
+                    );
+
+                    $breakup_data = array(
+                        'invoice_id' => $invoice_id,
+                        'user_id' => $trainee_id,
+                        'amount_recd' => round($net_amount, 2),
+                        'recd_on' => date('Y-m-d ', strtotime($paid_on1)) . $cur_time
+                    );
+                } else if ($payment_type1 == 'GIRO1') {
+                    $net_amount = $sfcato_amount + $giro_amount1;
+                    $data = array(
+                        'invoice_id' => $invoice_id,
+                        'recd_on' => date('Y-m-d ', strtotime($transc_on1)) . $cur_time,
+                        'sfc_recd_on' => date('Y-m-d', strtotime($sfcclaim_on)),
+                        'mode_of_pymnt' => $payment_type,
+                        'othr_mode_of_payment' => $payment_type1,
+                        'amount_recd' => round($net_amount, 2),
+                        'sfc_claimed' => round($sfcato_amount, 2),
+                        //'amount_recd_other'=>round($giro_amount1,2),/// commented by shubhranshu
+                        'other_amount_recd' => round($giro_amount1, 2),
+                        'cheque_number' => NULL,
+                        'cheque_date' => NULL,
+                        'bank_name' => $gbank_name1,
+                        'recd_by' => $user_id,
+                    );
+
+                    $breakup_data = array(
+                        'invoice_id' => $invoice_id,
+                        'user_id' => $trainee_id,
+                        'amount_recd' => round($net_amount, 2),
+                        'recd_on' => date('Y-m-d ', strtotime($transc_on1)) . $cur_time
+                    );
+                } else {
+                    $data = array(
+                        'invoice_id' => $invoice_id,
+                        'recd_on' => date('Y-m-d ', strtotime($sfcatoclaim_on)) . $cur_time,
+                        'sfc_recd_on' => date('Y-m-d', strtotime($sfcatoclaim_on)),
+                        'mode_of_pymnt' => $payment_type,
+                        'amount_recd' => round($sfcato_amount, 2),
+                        'sfc_claimed' => round($sfcato_amount, 2),
+                        'cheque_number' => NULL,
+                        'cheque_date' => NULL,
+                        'bank_name' => NULL,
+                        'recd_by' => $user_id,
+                    );
+
+                    $breakup_data = array(
+                        'invoice_id' => $invoice_id,
+                        'user_id' => $trainee_id,
+                        'amount_recd' => round($sfcato_amount, 2),
+                        'recd_on' => date('Y-m-d ', strtotime($sfcatoclaim_on)) . $cur_time
+                    );
+                }
+            } else if ($payment_type == 'SFC_SELF') {
+                if ($payment_type1 == 'CASH1' || $payment_type1 == 'NETS1') {
+                    $sfcclaim_on;
+                    date('Y-m-d', strtotime($sfcclaim_on));
+
+                    $net_amount = $sfc_amount + $cash_amount1;
+                    $data = array(
+                        'invoice_id' => $invoice_id,
+                        'recd_on' => date('Y-m-d ', strtotime($cashpaid_on1)) . $cur_time,
+                        'sfc_recd_on' => date('Y-m-d', strtotime($sfcclaim_on)),
                         'mode_of_pymnt' => $payment_type,
                         'othr_mode_of_payment' => $payment_type1,
                         'amount_recd' => round($net_amount, 2),
                         'sfc_claimed' => round($sfc_amount, 2),
-                        'other_amount_recd'=>round($cash_amount1,2),
+                        'other_amount_recd' => round($cash_amount1, 2),
                         'cheque_number' => NULL,
                         'cheque_date' => NULL,
                         'bank_name' => NULL,
                         'recd_by' => $user_id,
-                        );
+                    );
 
-                        $breakup_data = array(
+                    $breakup_data = array(
                         'invoice_id' => $invoice_id,
                         'user_id' => $trainee_id,
                         'amount_recd' => round($net_amount, 2),
                         'recd_on' => date('Y-m-d ', strtotime($cashpaid_on1)) . $cur_time
-                     );
-                }
-                elseif ($payment_type1 == 'CHQ1') 
-                {
-                      $net_amount=$sfc_amount+$cheque_amount1;
+                    );
+                } elseif ($payment_type1 == 'CHQ1') {
+                    $net_amount = $sfc_amount + $cheque_amount1;
 
-                $data = array(
-                    'invoice_id' => $invoice_id,
-                    'recd_on' => date('Y-m-d ', strtotime($paid_on1)) . $cur_time,
-                    'sfc_recd_on' =>date('Y-m-d',strtotime($sfcclaim_on)),
-                    'mode_of_pymnt' => $payment_type,
-                    'othr_mode_of_payment' => $payment_type1,
-                    'amount_recd' => round($net_amount, 2),
-                    'sfc_claimed' => round($sfc_amount, 2),
-                    'other_amount_recd'=>round($cheque_amount1,2),
-                    'cheque_number' => $cheque_number1,
-                    'cheque_date' => date('Y-m-d', strtotime($cheque_date1)),
-                    'bank_name' => $bank_name1,
-                    'recd_by' => $user_id,
-                );
-
-                $breakup_data = array(
-                    'invoice_id' => $invoice_id,
-                    'user_id' => $trainee_id,
-                    'amount_recd' => round($net_amount, 2),
-                    'recd_on' => date('Y-m-d ', strtotime($paid_on1)) . $cur_time
-                );
-            } 
-            else if ($payment_type1 == 'GIRO1') 
-            {
-                 $net_amount=$sfc_amount+$giro_amount1;
-                $data = array(
-                    'invoice_id' => $invoice_id,
-                    'recd_on' => date('Y-m-d ', strtotime($transc_on1)) . $cur_time,
-                    'sfc_recd_on'=>date('Y-m-d',strtotime($sfcclaim_on)),
-                    'mode_of_pymnt' => $payment_type,
-                    'othr_mode_of_payment' => $payment_type1,
-                    'amount_recd' => round($net_amount, 2),
-                    'sfc_claimed' => round($sfc_amount, 2),
-                    'other_amount_recd'=>round($giro_amount1,2),
-                    'cheque_number' => NULL,
-                    'cheque_date' => NULL,
-                    'bank_name' => $gbank_name1,
-                    'recd_by' => $user_id,
-                );
-
-                $breakup_data = array(
-                    'invoice_id' => $invoice_id,
-                    'user_id' => $trainee_id,
-                    'amount_recd' => round($net_amount, 2),
-                    'recd_on' => date('Y-m-d ', strtotime($transc_on1)) . $cur_time
-                );
-            }
-                else
-                {
                     $data = array(
-                    'invoice_id' => $invoice_id,
-                    'recd_on' => date('Y-m-d ', strtotime($sfcclaim_on)) . $cur_time,
-                    'sfc_recd_on'=>date('Y-m-d',strtotime($sfcclaim_on)),
-                    'mode_of_pymnt' => $payment_type,
-                    'amount_recd' => round($sfc_amount, 2),
-                    'sfc_claimed' => round($sfc_amount, 2),
-                    
-                    'cheque_number' => NULL,
-                    'cheque_date' => NULL,
-                    'bank_name' => NULL,
-                    'recd_by' => $user_id,
-                );
+                        'invoice_id' => $invoice_id,
+                        'recd_on' => date('Y-m-d ', strtotime($paid_on1)) . $cur_time,
+                        'sfc_recd_on' => date('Y-m-d', strtotime($sfcclaim_on)),
+                        'mode_of_pymnt' => $payment_type,
+                        'othr_mode_of_payment' => $payment_type1,
+                        'amount_recd' => round($net_amount, 2),
+                        'sfc_claimed' => round($sfc_amount, 2),
+                        'other_amount_recd' => round($cheque_amount1, 2),
+                        'cheque_number' => $cheque_number1,
+                        'cheque_date' => date('Y-m-d', strtotime($cheque_date1)),
+                        'bank_name' => $bank_name1,
+                        'recd_by' => $user_id,
+                    );
 
-                $breakup_data = array(
-                    'invoice_id' => $invoice_id,
-                    'user_id' => $trainee_id,
-                    'amount_recd' => round($sfc_amount, 2),
-                    'recd_on' => date('Y-m-d ', strtotime($sfcclaim_on)) . $cur_time
-                );
+                    $breakup_data = array(
+                        'invoice_id' => $invoice_id,
+                        'user_id' => $trainee_id,
+                        'amount_recd' => round($net_amount, 2),
+                        'recd_on' => date('Y-m-d ', strtotime($paid_on1)) . $cur_time
+                    );
+                } else if ($payment_type1 == 'GIRO1') {
+                    $net_amount = $sfc_amount + $giro_amount1;
+                    $data = array(
+                        'invoice_id' => $invoice_id,
+                        'recd_on' => date('Y-m-d ', strtotime($transc_on1)) . $cur_time,
+                        'sfc_recd_on' => date('Y-m-d', strtotime($sfcclaim_on)),
+                        'mode_of_pymnt' => $payment_type,
+                        'othr_mode_of_payment' => $payment_type1,
+                        'amount_recd' => round($net_amount, 2),
+                        'sfc_claimed' => round($sfc_amount, 2),
+                        'other_amount_recd' => round($giro_amount1, 2),
+                        'cheque_number' => NULL,
+                        'cheque_date' => NULL,
+                        'bank_name' => $gbank_name1,
+                        'recd_by' => $user_id,
+                    );
+
+                    $breakup_data = array(
+                        'invoice_id' => $invoice_id,
+                        'user_id' => $trainee_id,
+                        'amount_recd' => round($net_amount, 2),
+                        'recd_on' => date('Y-m-d ', strtotime($transc_on1)) . $cur_time
+                    );
+                } else {
+                    $data = array(
+                        'invoice_id' => $invoice_id,
+                        'recd_on' => date('Y-m-d ', strtotime($sfcclaim_on)) . $cur_time,
+                        'sfc_recd_on' => date('Y-m-d', strtotime($sfcclaim_on)),
+                        'mode_of_pymnt' => $payment_type,
+                        'amount_recd' => round($sfc_amount, 2),
+                        'sfc_claimed' => round($sfc_amount, 2),
+                        'cheque_number' => NULL,
+                        'cheque_date' => NULL,
+                        'bank_name' => NULL,
+                        'recd_by' => $user_id,
+                    );
+
+                    $breakup_data = array(
+                        'invoice_id' => $invoice_id,
+                        'user_id' => $trainee_id,
+                        'amount_recd' => round($sfc_amount, 2),
+                        'recd_on' => date('Y-m-d ', strtotime($sfcclaim_on)) . $cur_time
+                    );
                 }
             }
-            
-           
+
+
             $this->db->trans_start();
             $this->db->insert('enrol_paymnt_recd', $data);
 
             $this->db->insert('enrol_pymnt_brkup_dt', $breakup_data);
-            
+
             /////added by shubhranshu sfc claim id
-           if ($payment_type == 'SFC_ATO') {
+            if ($payment_type == 'SFC_ATO') {
                 $sfc_claim_id = strtoupper($sfc_ato_claim_id);
-                
+
                 $data = array('payment_status' => 'PAID', 'enrol_status' => 'ENRLACT', 'sfc_claim_id' => $sfc_claim_id);
-           }else{
+            } else {
                 $data = array('payment_status' => 'PAID', 'enrol_status' => 'ENRLACT');
-           }
-           //////end of the code by ssp
-           
+            }
+            //////end of the code by ssp
+
 
             $this->db->where('tenant_id', $tenant_id);
 
@@ -6251,7 +6167,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
             $this->db->update('class_enrol', $data);
 
-            
+
 
             $this->db->trans_complete();
 
@@ -6268,7 +6184,6 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             return FALSE;
         }
     }
-
 
     /**
 
@@ -6339,7 +6254,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         return $payid;
     }
-     //to get eid by shubhranshu
+
+    //to get eid by shubhranshu
     public function get_eid_for_class_user($class, $user) {
 
         $eid = $this->db->select('eid_number')->from('class_enrol')->where('user_id', $user)
@@ -6574,8 +6490,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 $status = $this->update_rescheduled_reason($tenant_id, $data['pymnt_due_id'], $trainee_id, $course_id, $prev_class_id, $reschedule_reason, $other_reason, $new_class_id);
             }
 
-            if (count($temp_array) == 0 && $status) 
-            {
+            if (count($temp_array) == 0 && $status) {
 
                 $res = $this->reschedule_create_new_comp_enroll($tenant_id, $data, $course_id, $new_class_id, $trainee_id);
 
@@ -6588,12 +6503,12 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 $temp_array[$data['company_id']] = array('company_id' => $data['company_id'],
                     'invoice_id' => $new_invoice_id,
                     'paymnt_due_id' => $new_pymnt_due_id);
-                 /*skm start */
+                /* skm start */
 
                 $update_data = array(
-                                        "enrolled_by" => $data['enrolled_by'],
-                                        "sales_executive_id" => $data['sales_executive_id'],
-                                    ); 
+                    "enrolled_by" => $data['enrolled_by'],
+                    "sales_executive_id" => $data['sales_executive_id'],
+                );
 
                 $this->db->where("course_id", $course_id);
                 $this->db->where("class_id", $new_class_id);
@@ -6602,9 +6517,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 $this->db->update('class_enrol', $update_data);
 
                 /* skm end */
-            } 
-            else 
-            {
+            } else {
 
                 if (array_key_exists($data['company_id'], $temp_array)) {
 
@@ -6613,7 +6526,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                 } else {
 
                     $res = $this->reschedule_create_new_comp_enroll($tenant_id, $data, $course_id, $new_class_id, $trainee_id);
-                    
+
                     $new_invoice_id = $res['invoice'];
 
                     $new_pymnt_due_id = $res['pymnt_due_id'];
@@ -6623,10 +6536,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
                     $temp_array[$data['company_id']] = array('company_id' => $data['company_id'],
                         'invoice_id' => $new_invoice_id,
                         'paymnt_due_id' => $new_pymnt_due_id);
-                    
                 }
-                
-                
             }
         }
 
@@ -6675,7 +6585,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             $current_payment_status = $prev_payment_status;
         }
 
-        $fees_array = $this->fees_payable($trainee_id, $tenant_id, $course_id, $new_class_id,0, $company_id = 0, "");
+        $fees_array = $this->fees_payable($trainee_id, $tenant_id, $course_id, $new_class_id, 0, $company_id = 0, "");
 
         $new_invoice_amount = round($fees_array["net_fees_due"], 4);
 
@@ -6707,11 +6617,11 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
             $invoice_excess_amt = $prev_invoice_amount - $new_invoice_amount;
         }
-         $logged_in_user_id = $this->user->user_id; 
+        $logged_in_user_id = $this->user->user_id;
         $due_to = 'Regenrated Invoice due to Reschedule ';
-        $data1 = $this->get_current_individule_invoice_data($prev_pymnnt_due_id); 
-        $status = $this->enrol_invoice_view($prev_pymnnt_due_id,$data1,$logged_in_user_id,$due_to); 
-		
+        $data1 = $this->get_current_individule_invoice_data($prev_pymnnt_due_id);
+        $status = $this->enrol_invoice_view($prev_pymnnt_due_id, $data1, $logged_in_user_id, $due_to);
+
 
         $staus = $this->update_enrol_pymnt_due($prev_pymnnt_due_id, $new_invoice_amount, $discount_type, $discount_rate, $gst_amount, $prev_pymnnt_due_id, $class_current_fees);
 
@@ -6724,14 +6634,15 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
         if ($status) {
 
             $status = $this->set_audittrail_newinvoice_num($prev_pymnnt_due_id, $new_invoice_id);
-            $status = $this->set_viewinvoice_newinvoice_num($prev_pymnnt_due_id, $new_invoice_id);//s4
+            $status = $this->set_viewinvoice_newinvoice_num($prev_pymnnt_due_id, $new_invoice_id); //s4
         }
 
         $status = $this->change_class_enrol($prev_class_id, $new_class_id, $course_id, $tenant_id, $trainee_id, $prev_pymnnt_due_id, $current_payment_status);
 
         return $status;
     }
-     /**
+
+    /**
      * function to get classroom location for others
      */
     function get_classroom_location($venue, $other) {
@@ -6838,7 +6749,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
             $course_id = $this->db->select('course_id')->from('course_class')->where('class_id', $reschedule_class)->get()->row()->course_id;
         }
- 
+
         foreach ($user as $trainee_id) {
 
             $status = $this->reschedule_trainee($tenant_id, $trainee_id, $reschedule_class, $active_class, $course_id, $reschedule_reason, $other_reason);
@@ -6943,7 +6854,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
      * only for add new enrol
 
      */
-     public function get_trainee_classes($tenant_id, $course, $trainee_id, $taxcode_id) {
+    public function get_trainee_classes($tenant_id, $course, $trainee_id, $taxcode_id) {
 
         if ($trainee_id) {
 
@@ -6964,15 +6875,14 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         $cur_date = date('Y-m-d');
 
-            $this->db->select('cc.total_seats, cc.class_id, cc.class_name,cc.lock_status, cc.course_id, cc.class_pymnt_enrol');
-            $this->db->from('course_class cc');
-            
-            if(($this->user->role_id == 'SLEXEC'))
-            {
-                $this->db->join("course  crse", "crse.course_id = cc.course_id AND crse.tenant_id = cc.tenant_id", "left");
-                $this->db->join("course_sales_exec  sales", "sales.course_id = crse.course_id AND sales.tenant_id = crse.tenant_id", "left");
-            }
-            $this->db->where('cc.tenant_id', $tenant_id);
+        $this->db->select('cc.total_seats, cc.class_id, cc.class_name,cc.lock_status, cc.course_id, cc.class_pymnt_enrol');
+        $this->db->from('course_class cc');
+
+        if (($this->user->role_id == 'SLEXEC')) {
+            $this->db->join("course  crse", "crse.course_id = cc.course_id AND crse.tenant_id = cc.tenant_id", "left");
+            $this->db->join("course_sales_exec  sales", "sales.course_id = crse.course_id AND sales.tenant_id = crse.tenant_id", "left");
+        }
+        $this->db->where('cc.tenant_id', $tenant_id);
 
         if (!empty($course)) {
 
@@ -6991,9 +6901,8 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
         $this->db->where('cc.class_status !=', 'INACTIV');
 
-        if ($this->user->role_id == 'SLEXEC') 
-        {
-             $this->db->like('sales.user_id', $this->user->user_id, 'both');
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->like('sales.user_id', $this->user->user_id, 'both');
 //            if (!empty($course)){
 //             $this->db->like('sales.user_id', $this->user->user_id, 'both');
 //            }
@@ -7006,10 +6915,11 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
             $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",classroom_trainer) !=", 0);
         }
 
-        $this->db->order_by("DATE(cc.class_start_datetime)","DESC");
+        $this->db->order_by("DATE(cc.class_start_datetime)", "DESC");
 
         return $this->db->group_by('cc.class_id')->get()->result_object();
     }
+
     /**
 
      * get all course with course ids
@@ -7164,7 +7074,7 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
      * @return type
 
      */
-    public function list_all_classtrainee_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0, $eid=0) {
+    public function list_all_classtrainee_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0, $eid = 0) {
 
         $user_id = '';
 
@@ -7182,15 +7092,15 @@ public function company_enrollment_db_update_backup($tenant_id, $loggedin_user_i
 
             return;
         }
-        $query2 = $this->list_all_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit, $offset, $sort_by, $sort_order, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id,$eid);
+        $query2 = $this->list_all_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit, $offset, $sort_by, $sort_order, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
 
         //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
-        $this->db->select('c.course_id , c.crse_name, 
+        $this->db->select('c.course_id , c.crse_name, c.tpg_crse,
  cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
  ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode,ce.referral_details,ce.eid_number, ce.company_id, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
 tu . user_id ,tu.tenant_id, tu. account_type, tu.tax_code, tu.account_status,
-tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number, ce.sales_executive_id');
+tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number, ce.sales_executive_id, c.reference_num, c.external_reference_number, cc.tpg_course_run_id, due.class_fees, due.discount_rate, ce.tpg_enrolment_status');
 
         $this->db->from('course_class cc');
 
@@ -7224,7 +7134,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
             $this->db->where('cc.class_id', $class_id);
         }
-        
+
         if (!empty($eid)) {
 
             $this->db->where('ce.eid_number', $eid);
@@ -7285,8 +7195,8 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->last_query();  exit;
         //$query = $this->db->get();   
         //$query1 = $this->db->last_query();  exit;
-       // $query1 = $this->db->return_query_clear(); //commented by shubhranshu
-       $query1= $this->db->get_compiled_select();  ///added by shubhranshu
+        // $query1 = $this->db->return_query_clear(); //commented by shubhranshu
+        $query1 = $this->db->get_compiled_select();  ///added by shubhranshu
         $query1 = str_replace('`', " ", $query1);
 
 
@@ -7315,7 +7225,8 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         return $query3->result_array();
     }
 
-     /* List of public poratl enrolled trainee skm start*/
+    /* List of public poratl enrolled trainee skm start */
+
     public function online_list_classtrainee_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0) {
 
         $user_id = '';
@@ -7335,10 +7246,10 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
             return;
         }
 //        $query2 = $this->list_all_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit, $offset, $sort_by, $sort_order, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
-$query2 = $this->list_all_online_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit, $offset, $sort_by, $sort_order, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
+        $query2 = $this->list_all_online_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit, $offset, $sort_by, $sort_order, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
         //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
-        
-$this->db->select('c.course_id , c.crse_name, 
+
+        $this->db->select('c.course_id , c.crse_name, 
  cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
  ce . pymnt_due_id, ce.enrolment_mode, ce.enrolment_type, ce.company_id,ce.friend_id,ce.referral_details, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
@@ -7358,7 +7269,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
 
         $this->db->where('cc.tenant_id', $tenant_id);
-        
+
         $this->db->where('ce.enrolment_type', 'PUBLIC');
 
         $this->db->join('trainer_feedback tf', 'tf.tenant_id=ce.tenant_id and tf.course_id=ce.course_id and tf.class_id=ce.class_id and tf.user_id=ce.user_id and tf.feedback_question_id="COMYTCOM"', 'LEFT');
@@ -7438,8 +7349,8 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 //        $query = $this->db->get();   
 //        echo $query1 = $this->db->last_query(); 
 //        exit();
-       
-        $query1 = $this->db->get_compiled_select();//changed by shubhranshu since the previous funtion is deprecated
+
+        $query1 = $this->db->get_compiled_select(); //changed by shubhranshu since the previous funtion is deprecated
         $query1 = str_replace('`', " ", $query1);
 
 
@@ -7464,15 +7375,16 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         }
 
         $query3 = $this->db->query("(" . $query1 . ") UNION (" . $query2 . ") order by $union_sort_by $sort_order $union_limit");
- 
+
         return $query3->result_array();
     }
-    /*END*/
-    
-    /* This method gets the friend details skm start*/
-    
-    public function get_friend_details($tenant_id,$course_id,$class_id,$user_id,$friend_id){
-    
+
+    /* END */
+
+    /* This method gets the friend details skm start */
+
+    public function get_friend_details($tenant_id, $course_id, $class_id, $user_id, $friend_id) {
+
         $this->db->select('tu.user_id,tu.registered_email_id,tup.first_name,tup.contact_number');
         $this->db->from('class_enrol ce');
         $this->db->join('tms_users tu', 'tu.user_id=ce.friend_id');
@@ -7488,15 +7400,14 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->select('company_name');
         $this->db->from('tenant_company_users tcu');
         $this->db->join('company_master cm', 'cm.company_id = tcu.company_id');
-        $this->db->where('tcu.user_id',$friend_id);
-        $this->db->where('tcu.tenant_id',$tenant_id);
+        $this->db->where('tcu.user_id', $friend_id);
+        $this->db->where('tcu.tenant_id', $tenant_id);
         $qry = $this->db->get();
 //        echo $this->db->last_query();
 //        echo $qry->num_rows();
-        if($qry->num_rows()>0)
-        {
+        if ($qry->num_rows() > 0) {
             $qry = $qry->row_array();
-           $sql['company_name'] =  $qry['company_name'];
+            $sql['company_name'] = $qry['company_name'];
         }
 
 //        echo $this->db->last_query();
@@ -7504,11 +7415,10 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $sql = json_encode($sql);
 //        print_r($sql);exit();
         return $sql;
-        
     }
-    
+
     //end
-    
+
     public function get_all_online_classtrainee_count_by_tenant_id($tenant_id, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id = 0) {
 
         $user_id = '';
@@ -7547,7 +7457,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->where('cc.tenant_id', $tenant_id);
 
         $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
-        
+
         $this->db->where('ce.enrolment_type', 'PUBLIC');
 
         if (!empty($company_id)) {
@@ -7632,7 +7542,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $query3;
     }
-    
+
     public function get_all_pymt_not_required_onlineclasstrainee_by_tenant_id($tenant_id, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id = 0) {
 
         $user_id = '';
@@ -7667,7 +7577,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
 
         $this->db->where('cc.tenant_id', $tenant_id);
-        
+
         $this->db->where('ce.enrolment_type', 'PUBLIC');
 
         $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
@@ -7748,9 +7658,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $query->num_rows();
     }
-    
-     /* get all class trainee from public portal whos payment not required skm start */
-    
+
+    /* get all class trainee from public portal whos payment not required skm start */
+
     public function list_all_online_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0) {
 
         $user_id = '';
@@ -7771,7 +7681,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         }
 
         //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
-        $this->db->select('c.course_id , c.crse_name, 
+        $this->db->select('c.course_id , c.crse_name,
  cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
  ce . pymnt_due_id ,ce.enrolment_mode, ce.enrolment_type, ce.company_id,ce.friend_id,ce.referral_details, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
@@ -7789,7 +7699,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
 
         $this->db->where('cc.tenant_id', $tenant_id);
-        
+
         $this->db->where('ce.enrolment_type', 'PUBLIC');
 
         $this->db->join('enrol_pymnt_due due', 'ce.pymnt_due_id = due.pymnt_due_id', 'LEFT');
@@ -7877,10 +7787,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $query2;
     }
-    
-    
-     /* Fetch all trainee name which enrolled from  public portal skm start*/
-    
+
+    /* Fetch all trainee name which enrolled from  public portal skm start */
+
     public function get_online_user_with_class_course($tenant_id, $username, $taxcode, $class, $course) {
 
         $username = trim($username);
@@ -7914,8 +7823,8 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->join('class_enrol ce', 'ce.user_id=tup.user_id ' . $trainer_where);
 
         $this->db->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'));
-        
-         $this->db->where('ce.enrolment_type', 'PUBLIC');
+
+        $this->db->where('ce.enrolment_type', 'PUBLIC');
 
 
         if (!empty($taxcode)) {
@@ -7943,18 +7852,18 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $this->db->get()->result_object();
     }
-    /* end*/
-    
-     public function get_total_enrolled_trainee($tenant_id){
+
+    /* end */
+
+    public function get_total_enrolled_trainee($tenant_id) {
         $this->db->select('*');
         $this->db->from('class_enrol');
-        $this->db->where('enrolment_type','PUBLIC');
-        $this->db->where('tenant_id',$tenant_id);
+        $this->db->where('enrolment_type', 'PUBLIC');
+        $this->db->where('tenant_id', $tenant_id);
         $sql = $this->db->get();
         return $sql->num_rows();
     }
-    
-    
+
     /**
 
      * Used by Class Trainee - List View Page - Pagination
@@ -8097,31 +8006,34 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $query3;
     }
-    
+
     /* this funcatin get the trainer feedback of previous data for activity log skm start */
-    public function get_trainer_feedback($user_id, $course_id, $class_id){
+
+    public function get_trainer_feedback($user_id, $course_id, $class_id) {
         $this->db->select('feedback_question_id,feedback_answer');
         $this->db->from('trainer_feedback');
-        $this->db->where('user_id',$user_id);
-        $this->db->where('course_id',$course_id);
-        $this->db->where('class_id',$class_id);
+        $this->db->where('user_id', $user_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
         $sql = $this->db->get();
-        if($sql->num_rows()>0){
-        $lock = $this->class_lock_status($course_id, $class_id);
-        $result['trainer_feedback'] = $sql->result_array();
-        $result['details'] = array('user_id'=>$user_id,'course_id'=>$course_id,'class_id'=>$class_id,'class_lock_status'=>$lock->lock_status);
+        if ($sql->num_rows() > 0) {
+            $lock = $this->class_lock_status($course_id, $class_id);
+            $result['trainer_feedback'] = $sql->result_array();
+            $result['details'] = array('user_id' => $user_id, 'course_id' => $course_id, 'class_id' => $class_id, 'class_lock_status' => $lock->lock_status);
 //        $res = json_encode($result);
-        return $result;
-        }else{
-            return $sql=0;
+            return $result;
+        } else {
+            return $sql = 0;
         }
     }
+
     /* skm end */
-    public function class_lock_status($course_id, $class_id){
+
+    public function class_lock_status($course_id, $class_id) {
         $this->db->select('lock_status');
         $this->db->from('course_class');
-        $this->db->where('course_id',$course_id);
-        $this->db->where('class_id',$class_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
         return $this->db->get()->row();
     }
 
@@ -8239,26 +8151,23 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * This method gets the trainees with no subsidy for a company invoice
 
      */
-  public function get_company_invoice_no_subsidy($invoice_id) {
-       // $bind=array(0,NULL);
-       
-        $subsidy_amt=NULL;
+    public function get_company_invoice_no_subsidy($invoice_id) {
+        // $bind=array(0,NULL);
+
+        $subsidy_amt = NULL;
         $data = $this->db->select('total_inv_amount')
                         ->from('enrol_invoice')->where('invoice_id', $invoice_id)->get()->row(0);
 
         $total_inv_amount = $data->total_inv_amount;
-        if($total_inv_amount>0)
-        {
-           $query= $this->db->query("SELECT epd.user_id,tu.tax_code FROM (enrol_pymnt_due epd) 
+        if ($total_inv_amount > 0) {
+            $query = $this->db->query("SELECT epd.user_id,tu.tax_code FROM (enrol_pymnt_due epd) 
                                 JOIN enrol_invoice ei ON ei.pymnt_due_id=epd.pymnt_due_id JOIN tms_users tu ON tu.user_id=epd.user_id WHERE ei.invoice_id = '$invoice_id' 
                                 AND (tu.tax_code LIKE 'S%' OR tu.tax_code LIKE 'T%')");
-            $users =array();
-            if ($query->num_rows() > 0)
-            {
-               foreach ($query->result() as $row)
-               {
-                   $users[]=$row->user_id;
-               }
+            $users = array();
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $row) {
+                    $users[] = $row->user_id;
+                }
             }
             $result = $this->db->select('*');
             $this->db->from('enrol_invoice ei');
@@ -8270,25 +8179,21 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
             $this->db->join('tenant_master tm', 'tm.tenant_id=ce.tenant_id');
             $this->db->where('ei.invoice_id', $invoice_id);
-            $this->db->where_in('epd.user_id',$users);
-            $this->db->where('tu.tax_code_type','SNG_1');
+            $this->db->where_in('epd.user_id', $users);
+            $this->db->where('tu.tax_code_type', 'SNG_1');
             $this->db->where("(epd.subsidy_amount=0 or epd.subsidy_amount IS NULL)");
-            $this->db->where('epd.att_status',1);
+            $this->db->where('epd.att_status', 1);
             $result = $this->db->get()->result();
             return $result;
-        }
-        else
-        {
-            $query= $this->db->query("SELECT epd.user_id,tu.tax_code FROM (enrol_pymnt_due epd) 
+        } else {
+            $query = $this->db->query("SELECT epd.user_id,tu.tax_code FROM (enrol_pymnt_due epd) 
                                 JOIN enrol_invoice ei ON ei.pymnt_due_id=epd.pymnt_due_id JOIN tms_users tu ON tu.user_id=epd.user_id WHERE ei.invoice_id = '$invoice_id' 
                                 AND (tu.tax_code LIKE 'S%' OR tu.tax_code LIKE 'T%')");
-            $users =array();
-            if ($query->num_rows() > 0)
-            {
-               foreach ($query->result() as $row)
-               {
-                   $users[]=$row->user_id;
-               }
+            $users = array();
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $row) {
+                    $users[] = $row->user_id;
+                }
             }
             $result = $this->db->select('*');
             $this->db->from('enrol_invoice ei');
@@ -8299,82 +8204,81 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $this->db->join('tms_users tu', 'tu.user_id=ce.user_id');
             $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
             $this->db->join('tenant_master tm', 'tm.tenant_id=ce.tenant_id');
-            $this->db->where_in('epd.user_id',$users);
-            
+            $this->db->where_in('epd.user_id', $users);
+
             $this->db->where('ei.invoice_id', $invoice_id);
             $this->db->where("(epd.subsidy_amount=0 or epd.subsidy_amount IS NULL)");
             $result = $this->db->get()->result();
             return $result;
         }
     }
+
     /**
 
      * This method gets the trainees with no subsidy for a company invoice
 
      */
-   public function get_company_invoice_foreigner($invoice_id) {
-       // $bind=array(0,NULL);
-       
-        $subsidy_amt=NULL;
+    public function get_company_invoice_foreigner($invoice_id) {
+        // $bind=array(0,NULL);
+
+        $subsidy_amt = NULL;
         $data = $this->db->select('total_inv_amount')
                         ->from('enrol_invoice')->where('invoice_id', $invoice_id)->get()->row(0);
         $total_inv_amount = $data->total_inv_amount;
-        if($total_inv_amount>0)
-        {
-                $query= $this->db->query("SELECT epd.user_id,tu.tax_code FROM (enrol_pymnt_due epd) 
+        if ($total_inv_amount > 0) {
+            $query = $this->db->query("SELECT epd.user_id,tu.tax_code FROM (enrol_pymnt_due epd) 
                                 JOIN enrol_invoice ei ON ei.pymnt_due_id=epd.pymnt_due_id JOIN tms_users tu ON tu.user_id=epd.user_id WHERE ei.invoice_id = '$invoice_id' 
                                 AND (tu.tax_code_type!='SNG_1')");
-                $users =array();
-                if ($query->num_rows() > 0){
-                    foreach ($query->result() as $row){
-                        $users[]=$row->user_id;}
+            $users = array();
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $row) {
+                    $users[] = $row->user_id;
                 }
-                $result = $this->db->select('*');
-                $this->db->from('enrol_invoice ei');
-                $this->db->join('enrol_pymnt_due epd', 'epd.pymnt_due_id=ei.pymnt_due_id');
-                $this->db->join('class_enrol ce', 'ce.pymnt_due_id=ei.pymnt_due_id and ce.user_id=epd.user_id');
-                $this->db->join('course_class cc', 'cc.class_id=ce.class_id');
-                $this->db->join('course c', 'c.course_id=cc.course_id');
-                $this->db->join('tms_users tu', 'tu.user_id=ce.user_id');
-                $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
-                $this->db->join('tenant_master tm', 'tm.tenant_id=ce.tenant_id');
-                $this->db->where_in('epd.user_id',$users);
-                $this->db->where('ei.invoice_id', $invoice_id);
-                $this->db->where("(epd.subsidy_amount=0 or epd.subsidy_amount IS NULL)");
-                $this->db->where('epd.att_status',1);
-             
-               
-                $result = $this->db->get()->result();
+            }
+            $result = $this->db->select('*');
+            $this->db->from('enrol_invoice ei');
+            $this->db->join('enrol_pymnt_due epd', 'epd.pymnt_due_id=ei.pymnt_due_id');
+            $this->db->join('class_enrol ce', 'ce.pymnt_due_id=ei.pymnt_due_id and ce.user_id=epd.user_id');
+            $this->db->join('course_class cc', 'cc.class_id=ce.class_id');
+            $this->db->join('course c', 'c.course_id=cc.course_id');
+            $this->db->join('tms_users tu', 'tu.user_id=ce.user_id');
+            $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
+            $this->db->join('tenant_master tm', 'tm.tenant_id=ce.tenant_id');
+            $this->db->where_in('epd.user_id', $users);
+            $this->db->where('ei.invoice_id', $invoice_id);
+            $this->db->where("(epd.subsidy_amount=0 or epd.subsidy_amount IS NULL)");
+            $this->db->where('epd.att_status', 1);
 
-                return $result;
-        }
-        else
-        {
-                $query= $this->db->query("SELECT epd.user_id,tu.tax_code FROM (enrol_pymnt_due epd) 
+
+            $result = $this->db->get()->result();
+
+            return $result;
+        } else {
+            $query = $this->db->query("SELECT epd.user_id,tu.tax_code FROM (enrol_pymnt_due epd) 
                                 JOIN enrol_invoice ei ON ei.pymnt_due_id=epd.pymnt_due_id JOIN tms_users tu ON tu.user_id=epd.user_id WHERE ei.invoice_id = '$invoice_id' 
                                 AND  tu.tax_code_type!='SNG_1'");
-                $users =array();
-                if ($query->num_rows() > 0){
-                    foreach ($query->result() as $row){
-                        $users[]=$row->user_id;}
+            $users = array();
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $row) {
+                    $users[] = $row->user_id;
                 }
-                $result = $this->db->select('*');
-                $this->db->from('enrol_invoice ei');
-                $this->db->join('enrol_pymnt_due epd', 'epd.pymnt_due_id=ei.pymnt_due_id');
-                $this->db->join('class_enrol ce', 'ce.pymnt_due_id=ei.pymnt_due_id and ce.user_id=epd.user_id');
-                $this->db->join('course_class cc', 'cc.class_id=ce.class_id');
-                $this->db->join('course c', 'c.course_id=cc.course_id');
-                $this->db->join('tms_users tu', 'tu.user_id=ce.user_id');
-                $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
-                $this->db->join('tenant_master tm', 'tm.tenant_id=ce.tenant_id');
-                $this->db->where_in('epd.user_id',$users);
-                $this->db->where('ei.invoice_id', $invoice_id);
-                $this->db->where("(epd.subsidy_amount=0 or epd.subsidy_amount IS NULL)");
-                $result = $this->db->get()->result();
-                return $result;
+            }
+            $result = $this->db->select('*');
+            $this->db->from('enrol_invoice ei');
+            $this->db->join('enrol_pymnt_due epd', 'epd.pymnt_due_id=ei.pymnt_due_id');
+            $this->db->join('class_enrol ce', 'ce.pymnt_due_id=ei.pymnt_due_id and ce.user_id=epd.user_id');
+            $this->db->join('course_class cc', 'cc.class_id=ce.class_id');
+            $this->db->join('course c', 'c.course_id=cc.course_id');
+            $this->db->join('tms_users tu', 'tu.user_id=ce.user_id');
+            $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
+            $this->db->join('tenant_master tm', 'tm.tenant_id=ce.tenant_id');
+            $this->db->where_in('epd.user_id', $users);
+            $this->db->where('ei.invoice_id', $invoice_id);
+            $this->db->where("(epd.subsidy_amount=0 or epd.subsidy_amount IS NULL)");
+            $result = $this->db->get()->result();
+            return $result;
         }
     }
- 
 
     /**
 
@@ -8393,7 +8297,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 ->join('tenant_master tm', 'tm.tenant_id=ce.tenant_id')->where('ei.invoice_id', $invoice_id)
                 ->where_in('ce.enrol_status', array('ENRLACT', 'ENRLBKD'))
                 ->where('epd.subsidy_amount !=', 0)
-                ->where('epd.att_status',1);
+                ->where('epd.att_status', 1);
 
         $result = $this->db->get()->result();
 
@@ -8527,30 +8431,21 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * @return boolean
 
      */
-   public function get_enroll_invoice_details($course_id, $class_id, $company_id, $tenant_id, $opt_type = 'change', $payid, $user_id = NULL, $record = "first") 
-    {
+    public function get_enroll_invoice_details($course_id, $class_id, $company_id, $tenant_id, $opt_type = 'change', $payid, $user_id = NULL, $record = "first") {
 
-        if (empty($course_id) || empty($class_id) || empty($tenant_id)) 
-        {
+        if (empty($course_id) || empty($class_id) || empty($tenant_id)) {
 
             return FALSE;
-        } 
-        else 
-        {
+        } else {
 
-            if ($opt_type == "change")
-            {
+            if ($opt_type == "change") {
 
                 $result = $this->check_invoice_present($tenant_id, $user_id, $course_id, $class_id, $record);
-            } 
-            else if($opt_type=="remvind")
-            {
-                $result_set = $this->enrol_invoice_details_ind($tenant_id, $course_id, $class_id, $payid,$user_id);
+            } else if ($opt_type == "remvind") {
+                $result_set = $this->enrol_invoice_details_ind($tenant_id, $course_id, $class_id, $payid, $user_id);
 
                 $result = $result_set->row();
-            }
-            else 
-            {
+            } else {
                 $result_set = $this->enrol_invoice_details($tenant_id, $course_id, $class_id, $company_id, $payid);
                 $result = $result_set->row();
             }
@@ -8601,16 +8496,16 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $this->db->query($str_query);
     }
-    
+
     /*
      * get invice details to remove enrollment
      */
-    private function enrol_invoice_details_ind($tenant_id, $course_id, $class_id, $pay_id,$user_id) 
-    {
-            if ($pay_id != "" && $pay_id != 0)
+
+    private function enrol_invoice_details_ind($tenant_id, $course_id, $class_id, $pay_id, $user_id) {
+        if ($pay_id != "" && $pay_id != 0)
             $query = "and enrol.pymnt_due_id='$pay_id'";
-           
-             $str_query = "Select inv.*,enrol.*,due.*, DATE(inv.inv_date) as inv_date,"
+
+        $str_query = "Select inv.*,enrol.*,due.*, DATE(inv.inv_date) as inv_date,"
                 . " cc.gst_on_off,cc.crse_name,cc.course_id as courseId,cl.class_name,cl.class_id as classId,tu.user_name,tu.tax_code,tu.user_id,
 
                     enrol.payment_status
@@ -8619,15 +8514,16 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
                    where enrol.pymnt_due_id = inv.pymnt_due_id and due.pymnt_due_id = enrol.pymnt_due_id and
 
-                    enrol.enrolment_mode = 'SELF' and cc.course_id=enrol.course_id and cc.course_id='".$course_id."' "
-                    . "and cl.class_id='".$class_id."' and tu.user_id='".$user_id."'
+                    enrol.enrolment_mode = 'SELF' and cc.course_id=enrol.course_id and cc.course_id='" . $course_id . "' "
+                . "and cl.class_id='" . $class_id . "' and tu.user_id='" . $user_id . "'
 
                    and enrol.course_id ='" . $course_id . "' and enrol.class_id = '" . $class_id . "' "
-               . "and enrol.tenant_id='" . $tenant_id . "' and enrol.user_id='" . $user_id . "' " . $query;
-            
-            $this->db->query($str_query);
-            return $this->db->query($str_query);
+                . "and enrol.tenant_id='" . $tenant_id . "' and enrol.user_id='" . $user_id . "' " . $query;
+
+        $this->db->query($str_query);
+        return $this->db->query($str_query);
     }
+
     /**
 
      * for checking invoice_present in Change individual enrollment to company enrollment 
@@ -8807,15 +8703,16 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $result_set->result();
     }
-    /////added by shubhranshu for proper calculation
-    public function get_individual_enrol_trainees_subsidy($tenant_id,$pay_id,$user_id){
-        $str_query1 = "select subsidy_amount from enrol_pymnt_due where pymnt_due_id='$pay_id' and user_id='$user_id'";
-                
-             $result_set = $this->db->query($str_query1);
 
-        return $result_set->result();   
+    /////added by shubhranshu for proper calculation
+    public function get_individual_enrol_trainees_subsidy($tenant_id, $pay_id, $user_id) {
+        $str_query1 = "select subsidy_amount from enrol_pymnt_due where pymnt_due_id='$pay_id' and user_id='$user_id'";
+
+        $result_set = $this->db->query($str_query1);
+
+        return $result_set->result();
     }
-    
+
     public function get_remv_individual_enrol_trainees($tenant_id, $query = '') {
 
         if (!empty($query)) {
@@ -8839,9 +8736,10 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 . "AND cls.course_id=crs.course_id AND enrol.tenant_id='" . $tenant_id . "'" . $crsemgr_where . " $extra ORDER BY date(cls.class_start_datetime)";
 
         $result_set = $this->db->query($str_query1);
-       
+
         return $result_set->result();
     }
+
     /**
 
      * This Method get all company not paid invoices.
@@ -8852,12 +8750,12 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
      */
     public function get_company_not_paid_invoice($tenant_id, $query = '') {
-        $extra='';
+        $extra = '';
         if (!empty($query)) {
 
             $extra = " AND comp.company_name LIKE '%$query%' ";
         }
-        $crsemgr_where='';
+        $crsemgr_where = '';
         if ($this->user->role_id == 'CRSEMGR') {
 
             $crsemgr_where = " AND FIND_IN_SET(" . $this->user->user_id . ",crse.crse_manager) !=0";
@@ -8927,11 +8825,13 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $final;
     }
-    /*autocpmlete company invoice to move traine from one invoice to other invoice
+
+    /* autocpmlete company invoice to move traine from one invoice to other invoice
      * added by pritam
      * 
      */
-    public function get_company_not_paid_invoice1($tenant_id, $query = '',$company_id,$course_id,$class_id) {
+
+    public function get_company_not_paid_invoice1($tenant_id, $query = '', $company_id, $course_id, $class_id) {
 
         if (!empty($query)) {
 
@@ -9007,7 +8907,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 $final[] = $temp1;
             }
         }
-        
+
         return $final;
     }
 
@@ -9022,58 +8922,56 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * @return type
 
      */
-     public function merge_invoice($args) {
+    public function merge_invoice($args) {
 
         $status = FALSE;
 
         if (!empty($args)) {
-             $data = $this->db->select('user_id')
-                ->from('class_enrol')
-                ->where('pymnt_due_id', $args['individual_payment_due_id'])
-                 ->get()->row(0);
-            $user_id= $data->user_id;
+            $data = $this->db->select('user_id')
+                            ->from('class_enrol')
+                            ->where('pymnt_due_id', $args['individual_payment_due_id'])
+                            ->get()->row(0);
+            $user_id = $data->user_id;
             //// added by shubhranshu for update the sfc claim id to be zero
             $sfc_data = array('sfc_claim_id' => NULL);
-            $this->db->where('pymnt_due_id',$args['individual_payment_due_id']);
-            $this->db->where('user_id',$user_id);
-            $this->db->update('class_enrol',$sfc_data);
-          
-            $check_attendance=$this->check_attendance_row($args["tenant_id"],$args['course_id'],$args['class_id']);
-            if($check_attendance>0)
-            {
-                $check_attendance_trainee=$this->check_attendance_trainee($args["tenant_id"],$args['course_id'],$args['class_id'],$user_id);
-                if($check_attendance_trainee > 0){
-                    $training_score='C';
-                    $att_status=1;
-                }else{
-                 $training_score='ABS';
-                 $att_status=0;
+            $this->db->where('pymnt_due_id', $args['individual_payment_due_id']);
+            $this->db->where('user_id', $user_id);
+            $this->db->update('class_enrol', $sfc_data);
+
+            $check_attendance = $this->check_attendance_row($args["tenant_id"], $args['course_id'], $args['class_id']);
+            if ($check_attendance > 0) {
+                $check_attendance_trainee = $this->check_attendance_trainee($args["tenant_id"], $args['course_id'], $args['class_id'], $user_id);
+                if ($check_attendance_trainee > 0) {
+                    $training_score = 'C';
+                    $att_status = 1;
+                } else {
+                    $training_score = 'ABS';
+                    $att_status = 0;
                 }
             }
 
             $data1 = $this->get_current_individule_invoice_data($args['individual_payment_due_id']);
             $data2 = $this->get_current_invoice_data($args['comp_payment_due_id']);
             $due_to = 'Change individual enrollment to company enrollment';
-            $status = $this->enrol_invoice_view($args['individual_payment_due_id'],$data1,$args['logged_in_user_id'],$due_to);
-            $status = $this->enrol_invoice_view($args['comp_payment_due_id'],$data2,$args['logged_in_user_id'],$due_to);
+            $status = $this->enrol_invoice_view($args['individual_payment_due_id'], $data1, $args['logged_in_user_id'], $due_to);
+            $status = $this->enrol_invoice_view($args['comp_payment_due_id'], $data2, $args['logged_in_user_id'], $due_to);
 
             $status = $this->update_classenrol_audittrail($args["tenant_id"], $args["individual_payment_due_id"], $args["individual_user_id"], $args["course_id"], $args["class_id"]);
             if ($status) {
                 $status = $this->update_class_enrol($args, $args['individual_payment_due_id'], $args['comp_payment_due_id']);
                 if ($status) {
                     $class_enrol_data = array(
-                   'training_score' => $training_score
+                        'training_score' => $training_score
                     );
-                   $this->db->where("user_id", $user_id);
-                   $this->db->where("pymnt_due_id", $args['comp_payment_due_id']);
-                   $this->db->update("class_enrol", $class_enrol_data);
+                    $this->db->where("user_id", $user_id);
+                    $this->db->where("pymnt_due_id", $args['comp_payment_due_id']);
+                    $this->db->update("class_enrol", $class_enrol_data);
                     $status = $this->recalc_merged_pymnt($args);
                 }
             }
         }
         return $status;
     }
-
 
     /**
 
@@ -9091,15 +8989,15 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         if (!empty($args)) {
             //// added by shubhranshu for update the sfc claim id to be zero
             $sfc_data = array('sfc_claim_id' => NULL);
-            $this->db->where('pymnt_due_id',$args['individual_payment_due_id']);
-            $this->db->where('user_id',$args["individual_user_id"]);
-            $this->db->update('class_enrol',$sfc_data);
+            $this->db->where('pymnt_due_id', $args['individual_payment_due_id']);
+            $this->db->where('user_id', $args["individual_user_id"]);
+            $this->db->update('class_enrol', $sfc_data);
             //////end of code
             $status = $this->update_classenrol_audittrail($args["tenant_id"], $args["individual_payment_due_id"], $args["individual_user_id"], $args["course_id"], $args["class_id"]);
-             $due_to = ' Change individual enrollment to company enrollment';  // s1
+            $due_to = ' Change individual enrollment to company enrollment';  // s1
             $data = $this->get_current_individule_invoice_data($args["individual_payment_due_id"]); //s2
-            
-            $status = $this->enrol_invoice_view($args['individual_payment_due_id'],$data,$args['logged_in_user_id'],$due_to); //s3
+
+            $status = $this->enrol_invoice_view($args['individual_payment_due_id'], $data, $args['logged_in_user_id'], $due_to); //s3
             if ($status) {
 
                 $status = $this->update_class_enrol($args, $args['individual_payment_due_id'], $args['individual_payment_due_id']);
@@ -9140,36 +9038,34 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $net_due = 0;
 
         $GST_amount = 0;
-        
+
         $this->db->select('*');
         $this->db->from('enrol_pymnt_due epd');
-        $this->db->join('class_enrol ce','ce.pymnt_due_id = epd.pymnt_due_id');
-        $this->db->where('epd.pymnt_due_id',$args['comp_payment_due_id']);
-        $this->db->where('ce.course_id',$args['course_id']);
-        $this->db->where('ce.class_id',$args['class_id']);
-        $this->db->where('ce.tenant_id',$args['tenant_id']);
-        $this->db->where('epd.att_status',1);
+        $this->db->join('class_enrol ce', 'ce.pymnt_due_id = epd.pymnt_due_id');
+        $this->db->where('epd.pymnt_due_id', $args['comp_payment_due_id']);
+        $this->db->where('ce.course_id', $args['course_id']);
+        $this->db->where('ce.class_id', $args['class_id']);
+        $this->db->where('ce.tenant_id', $args['tenant_id']);
+        $this->db->where('epd.att_status', 1);
         $this->db->limit(1);
         $sql = $this->db->get();
-        if($sql->num_rows()>0)
-        {
+        if ($sql->num_rows() > 0) {
             $result_array = $sql->row_array();
 
-                $discount_type =   $result_array['discount_type'];
-                $discount_rate =   $result_array['discount_rate'];
-                $discount_amount = $unit_fees * ($discount_rate / 100);
+            $discount_type = $result_array['discount_type'];
+            $discount_rate = $result_array['discount_rate'];
+            $discount_amount = $unit_fees * ($discount_rate / 100);
+        } else {
 
-        }else{
+            $result_array = $this->get_discnt($args['tenant_id'], $args['company_id'], $args['course_id'], $args['class_id'], $unit_fees, 0);
 
-        $result_array = $this->get_discnt($args['tenant_id'], $args['company_id'], $args['course_id'], $args['class_id'], $unit_fees, 0);
+            $discount_type = $result_array['discount_label'];
 
-        $discount_type = $result_array['discount_label'];
+            $discount_rate = $result_array['discount_rate'];
 
-        $discount_rate = $result_array['discount_rate'];
-
-        $discount_amount = $result_array['discount_amount'];
+            $discount_amount = $result_array['discount_amount'];
         }
-        
+
         $result_array = $this->net_fees_payable($unit_fees, $discount_amount, $subsidy_amount, $GSTRate, $GSTRule);
 
         $net_due = $result_array['net_due'];
@@ -9187,27 +9083,25 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 $status = $this->remove_invoice($args['individual_payment_due_id']);
 
                 if ($status) {
-                    
-                    $attendance = $this->check_trainee_attendance( $args['course_id'], $args['class_id'],$args['individual_user_id'],$args['individual_payment_due_id'],$args['tenant_id']);
 
-                    if($attendance->att_status == 0)
-                    {
+                    $attendance = $this->check_trainee_attendance($args['course_id'], $args['class_id'], $args['individual_user_id'], $args['individual_payment_due_id'], $args['tenant_id']);
+
+                    if ($attendance->att_status == 0) {
                         $net_due = 0;
                         $unit_fees = 0;
                         $discount_amount = 0;
                         $subsidy_amount = 0;
-                        $GST_amount = 0 ;
+                        $GST_amount = 0;
 
                         list($status, $new_invoice_id) = $this->create_new_invoice($args['individual_payment_due_id'], $args['company_id'], $net_due, $unit_fees, $discount_amount, $subsidy_amount, $GST_amount, $GSTRule, $GSTRate, 'INVCOMALL');
-
-                    }else {
+                    } else {
                         list($status, $new_invoice_id) = $this->create_new_invoice($args['individual_payment_due_id'], $args['company_id'], $net_due, $unit_fees, $discount_amount, $subsidy_amount, $GST_amount, $GSTRule, $GSTRate, 'INVCOMALL');
                     }
-                    
+
 
                     //list($status, $new_invoice_id) = $this->create_new_invoice($args['individual_payment_due_id'], $args['company_id'], $net_due, $unit_fees, $discount_amount, $subsidy_amount, $GST_amount, $GSTRule, $GSTRate, 'INVCOMALL');
 // commented by skm 02-01-17 because of refunded status remark in invoice st                    
-                     /* update invoice id into invoice related table if invoice is paid and refund start */
+                    /* update invoice id into invoice related table if invoice is paid and refund start */
 //                        $previous_inv_id =  $invoice_details->invoice_id;                       
 //                        $query1="select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'";
 //			$query =  mysqli_query($query1);		   
@@ -9235,11 +9129,11 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 //				
 //			}
                     /* end */
-                    
+
                     if ($status) {
 
                         $status = $this->set_audittrail_newinvoice_num($args['individual_payment_due_id'], $new_invoice_id);
-                        $status = $this->set_viewinvoice_newinvoice_num($args['individual_payment_due_id'], $new_invoice_id);//s4
+                        $status = $this->set_viewinvoice_newinvoice_num($args['individual_payment_due_id'], $new_invoice_id); //s4
                     }
                 }
             }
@@ -9247,21 +9141,18 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $status;
     }
-    
-     public function check_trainee_attendance($course_id,$class_id,$trainee_id,$payment_due_id,$tenant_id){
+
+    public function check_trainee_attendance($course_id, $class_id, $trainee_id, $payment_due_id, $tenant_id) {
         $this->db->select('epd.att_status');
         $this->db->from('class_enrol ce');
-        $this->db->join('enrol_pymnt_due epd','epd.user_id = ce.user_id and epd.pymnt_due_id = ce.pymnt_due_id');
-        $this->db->where('ce.course_id',$course_id);
-        $this->db->where('ce.class_id',$class_id);
-        $this->db->where('ce.user_id',$trainee_id);
-        $this->db->where('epd.pymnt_due_id',$payment_due_id); 
-        $this->db->where('ce.tenant_id',$tenant_id);
+        $this->db->join('enrol_pymnt_due epd', 'epd.user_id = ce.user_id and epd.pymnt_due_id = ce.pymnt_due_id');
+        $this->db->where('ce.course_id', $course_id);
+        $this->db->where('ce.class_id', $class_id);
+        $this->db->where('ce.user_id', $trainee_id);
+        $this->db->where('epd.pymnt_due_id', $payment_due_id);
+        $this->db->where('ce.tenant_id', $tenant_id);
         $sql = $this->db->get();
         return $sql->row();
-        
-        
-        
     }
 
     /**
@@ -9273,8 +9164,8 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * @param type $args
 
      */
-     private function recalc_merged_pymnt($args) {
-        
+    private function recalc_merged_pymnt($args) {
+
 
         $status = TRUE;
 
@@ -9284,58 +9175,57 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $unit_fees = $args['unit_fees'];
 
-        $subsidy_amount = $args['subsidy_amount'];////added by shubhranshu to calculate and add subsidy of previous invoice
+        $subsidy_amount = $args['subsidy_amount']; ////added by shubhranshu to calculate and add subsidy of previous invoice
 
         $net_due = 0;
 
         $GST_amount = 0;
 
-          $data = $this->db->select('user_id')
-                ->from('enrol_pymnt_due')
-                ->where('pymnt_due_id', $args['individual_payment_due_id'])
-                 ->get()->row(0);
+        $data = $this->db->select('user_id')
+                        ->from('enrol_pymnt_due')
+                        ->where('pymnt_due_id', $args['individual_payment_due_id'])
+                        ->get()->row(0);
 
-        $user_id= $data->user_id;
-        $check_attendance=$this->check_attendance_row($args['tenant_id'],$args['course_id'],$args['class_id']);
-        if($check_attendance>0)
-        {
-            $check_attendance_trainee=$this->check_attendance_trainee($args['tenant_id'],$args['course_id'],$args['class_id'],$user_id);
-            if($check_attendance_trainee > 0){
-                $training_score='C';
-                $att_status=1;
-            }else{
-             $training_score='ABS';
-             $att_status=0;
+        $user_id = $data->user_id;
+        $check_attendance = $this->check_attendance_row($args['tenant_id'], $args['course_id'], $args['class_id']);
+        if ($check_attendance > 0) {
+            $check_attendance_trainee = $this->check_attendance_trainee($args['tenant_id'], $args['course_id'], $args['class_id'], $user_id);
+            if ($check_attendance_trainee > 0) {
+                $training_score = 'C';
+                $att_status = 1;
+            } else {
+                $training_score = 'ABS';
+                $att_status = 0;
             }
-        }else { $att_status=1;}
-        
+        } else {
+            $att_status = 1;
+        }
+
         $this->db->select('*');
         $this->db->from('enrol_pymnt_due epd');
-        $this->db->join('class_enrol ce','ce.pymnt_due_id = epd.pymnt_due_id');
-        $this->db->where('epd.pymnt_due_id',$args['comp_payment_due_id']);
-        $this->db->where('ce.course_id',$args['course_id']);
-        $this->db->where('ce.class_id',$args['class_id']);
-        $this->db->where('ce.tenant_id',$args['tenant_id']);
-        $this->db->where('epd.att_status',1);
+        $this->db->join('class_enrol ce', 'ce.pymnt_due_id = epd.pymnt_due_id');
+        $this->db->where('epd.pymnt_due_id', $args['comp_payment_due_id']);
+        $this->db->where('ce.course_id', $args['course_id']);
+        $this->db->where('ce.class_id', $args['class_id']);
+        $this->db->where('ce.tenant_id', $args['tenant_id']);
+        $this->db->where('epd.att_status', 1);
         $this->db->limit(1);
         $sql = $this->db->get();
-        if($sql->num_rows()>0)
-        {
+        if ($sql->num_rows() > 0) {
             $result_array = $sql->row_array();
 
-                $discount_type =   $result_array['discount_type'];
-                $discount_rate =   $result_array['discount_rate'];
-                $discount_amount = $unit_fees * ($discount_rate / 100);
+            $discount_type = $result_array['discount_type'];
+            $discount_rate = $result_array['discount_rate'];
+            $discount_amount = $unit_fees * ($discount_rate / 100);
+        } else {
 
-        }else{
-        
-        $result_array = $this->get_discnt($args['tenant_id'], $args['company_id'], $args['course_id'], $args['class_id'], $unit_fees, 0);
+            $result_array = $this->get_discnt($args['tenant_id'], $args['company_id'], $args['course_id'], $args['class_id'], $unit_fees, 0);
 
-        $discount_type = $result_array['discount_label'];
+            $discount_type = $result_array['discount_label'];
 
-        $discount_rate = $result_array['discount_rate'];
+            $discount_rate = $result_array['discount_rate'];
 
-        $discount_amount = $result_array['discount_amount'];
+            $discount_amount = $result_array['discount_amount'];
         }
 
         $result_array = $this->net_fees_payable($unit_fees, $discount_amount, $subsidy_amount, $GSTRate, $GSTRule);
@@ -9346,35 +9236,33 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $invoice_details = $this->get_invoice_details($args['comp_payment_due_id']);
 
-        if($check_attendance>0)
-        {
-            if($check_attendance_trainee > 0){
-                $total_inv_amount = (round($invoice_details->total_inv_amount,2) + round($net_due, 2));
+        if ($check_attendance > 0) {
+            if ($check_attendance_trainee > 0) {
+                $total_inv_amount = (round($invoice_details->total_inv_amount, 2) + round($net_due, 2));
                 $total_unit_fees = round($invoice_details->total_unit_fees + $unit_fees, 4);
                 $total_inv_discnt = round($invoice_details->total_inv_discnt + $discount_amount, 4);
                 $total_inv_subsidy = round($invoice_details->total_inv_subsdy + $subsidy_amount, 4);
-                $total_gst = (round($invoice_details->total_gst,2) + round($GST_amount, 2));
-            }else{
+                $total_gst = (round($invoice_details->total_gst, 2) + round($GST_amount, 2));
+            } else {
                 $total_inv_amount = $invoice_details->total_inv_amount;
-                $total_unit_fees = $invoice_details->total_unit_fees ;
-                $total_inv_discnt = $invoice_details->total_inv_discnt ;
-                $total_inv_subsidy = $invoice_details->total_inv_subsdy ;
-                $total_gst = $invoice_details->total_gst ;
+                $total_unit_fees = $invoice_details->total_unit_fees;
+                $total_inv_discnt = $invoice_details->total_inv_discnt;
+                $total_inv_subsidy = $invoice_details->total_inv_subsdy;
+                $total_gst = $invoice_details->total_gst;
             }
-        }else { 
-            $total_inv_amount = (round($invoice_details->total_inv_amount,2) + round($net_due, 2));
+        } else {
+            $total_inv_amount = (round($invoice_details->total_inv_amount, 2) + round($net_due, 2));
             $total_unit_fees = round($invoice_details->total_unit_fees + $unit_fees, 4);
             $total_inv_discnt = round($invoice_details->total_inv_discnt + $discount_amount, 4);
             $total_inv_subsidy = round($invoice_details->total_inv_subsdy + $subsidy_amount, 4);
-            $total_gst = (round($invoice_details->total_gst,2) + round($GST_amount, 2));
+            $total_gst = (round($invoice_details->total_gst, 2) + round($GST_amount, 2));
         }
-        $status = $this->update_enrol_pymnt_due($args['comp_payment_due_id'], $net_due, $discount_type, $discount_rate, 
-                                $GST_amount, $args['individual_payment_due_id']);
+        $status = $this->update_enrol_pymnt_due($args['comp_payment_due_id'], $net_due, $discount_type, $discount_rate, $GST_amount, $args['individual_payment_due_id']);
         if ($status) {
             $enrol_pymnt_due_array = array(
-            'att_status' => $att_status
-             );
-            $this->db->where("user_id",$user_id);
+                'att_status' => $att_status
+            );
+            $this->db->where("user_id", $user_id);
             $this->db->where("pymnt_due_id", $args['comp_payment_due_id']);
             $this->db->update("enrol_pymnt_due", $enrol_pymnt_due_array);
             $status = $this->update_invoice_audit_trail($args['individual_payment_due_id'], 0);
@@ -9382,17 +9270,15 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 $status = $this->remove_invoice($args['individual_payment_due_id']);
                 if ($status) {
                     $status = $this->update_invoice_audit_trail($args['comp_payment_due_id']);
-                        if ($status) { // typo error.
+                    if ($status) { // typo error.
                         $curr_comp_invoice_details = $this->get_invoice_details($args['comp_payment_due_id']);
-                       
+
                         $status = $this->remove_invoice($args['comp_payment_due_id']);
                         if ($status) {
-                            list($status, $new_invoice_id) = $this->create_new_invoice($args['comp_payment_due_id'], $args['company_id'], 
-                                    $total_inv_amount, $total_unit_fees, $total_inv_discnt, $total_inv_subsidy, $total_gst, $GSTRule, 
-                                    $GSTRate, 'INVCOMALL');
+                            list($status, $new_invoice_id) = $this->create_new_invoice($args['comp_payment_due_id'], $args['company_id'], $total_inv_amount, $total_unit_fees, $total_inv_discnt, $total_inv_subsidy, $total_gst, $GSTRule, $GSTRate, 'INVCOMALL');
                             if ($status) {
 // commented by skm 02-01-17 because of refunded status remark in invoice st                               
-                        /* update invoice id into invoice related table if invoice is paid and refund start */
+                                /* update invoice id into invoice related table if invoice is paid and refund start */
 //                        $previous_inv_id =  $args['comp_invoice_id'];                       
 //                        $query1="select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'";
 //			$query =  mysqli_query($query1);		   
@@ -9419,12 +9305,12 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 //				$sifi = mysqli_query($sql1);
 //				
 //			}
-                    /* */
+                                /* */
 
                                 $status = $this->set_audittrail_newinvoice_num($args['comp_payment_due_id'], $new_invoice_id);
-                                
-                                $status = $this->set_viewinvoice_newinvoice_num($args['comp_payment_due_id'], $new_invoice_id);// skm
-                                
+
+                                $status = $this->set_viewinvoice_newinvoice_num($args['comp_payment_due_id'], $new_invoice_id); // skm
+
                                 $status = $this->set_audittrail_newinvoice_num($args['individual_payment_due_id'], $new_invoice_id);
                             }
                         }
@@ -9443,30 +9329,30 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      */
     private function net_fees_payable($unit_fees, $discount_amount, $subsidy_amount, $GSTRate, $GSTRule) {
 
-        $discountedFees = round($unit_fees - $discount_amount, 2);//sk1
+        $discountedFees = round($unit_fees - $discount_amount, 2); //sk1
 
         if ($subsidy_amount != 0) {
 
             if ($GSTRule == 'GSTBSD') {
 
-                $GST_amount = round(($discountedFees * ($GSTRate / 100)), 2);//sk2
+                $GST_amount = round(($discountedFees * ($GSTRate / 100)), 2); //sk2
 
-                $net_due = round(($discountedFees + $GST_amount - $subsidy_amount), 2);//sk3
+                $net_due = round(($discountedFees + $GST_amount - $subsidy_amount), 2); //sk3
             }
 
             if ($GSTRule == 'GSTASD') {
 
-                $temp_net_due = round(($discountedFees - $subsidy_amount), 4);//sk4
+                $temp_net_due = round(($discountedFees - $subsidy_amount), 4); //sk4
 
-                $GST_amount = round(($temp_net_due * ($GSTRate / 100)), 2);//sk5
+                $GST_amount = round(($temp_net_due * ($GSTRate / 100)), 2); //sk5
 
-                $net_due = round(($temp_net_due + $GST_amount), 2);//sk6
+                $net_due = round(($temp_net_due + $GST_amount), 2); //sk6
             }
         } else {
 
-            $GST_amount = round(($discountedFees * ($GSTRate / 100)), 2);//sk7
+            $GST_amount = round(($discountedFees * ($GSTRate / 100)), 2); //sk7
 
-            $net_due = round(($discountedFees + $GST_amount), 2);//sk8
+            $net_due = round(($discountedFees + $GST_amount), 2); //sk8
         }
 
         return array('net_due' => $net_due, "GST_amount" => $GST_amount);
@@ -9543,15 +9429,15 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
     private function remove_invoice($payment_due_id) {
 
         $delete_status = TRUE;
-        if(!empty($payment_due_id)){
-        $this->db->where("pymnt_due_id", $payment_due_id);
+        if (!empty($payment_due_id)) {
+            $this->db->where("pymnt_due_id", $payment_due_id);
 
             $this->db->trans_start();
 
             $this->db->delete("enrol_invoice");
             $this->db->trans_complete();
         }
-        
+
 
         if ($this->db->trans_status() === FALSE) {
 
@@ -9584,8 +9470,8 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $this->db->where("pymnt_due_id", $payment_due_id);
 
-        $result =$this->db->get()->row();
-                //print_r($this->db->last_query());exit;
+        $result = $this->db->get()->row();
+        //print_r($this->db->last_query());exit;
 //print_r($result);
         $audit_inv_data = array(
             'invoice_id' => $result->invoice_id,
@@ -9981,9 +9867,8 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * @return type
 
      */
-    public function get_course_class_list($type = 'data', $tenant_id=0, $limit=0, $offset=0, $sort_by=0, $sort_order=0) 
-    {
-       $this->db->select("cls.course_id, cls.class_id,cls.lock_status, crse.crse_name,cls.class_name, cls.class_start_datetime, cls.class_end_datetime, "
+    public function get_course_class_list($type = 'data', $tenant_id = 0, $limit = 0, $offset = 0, $sort_by = 0, $sort_order = 0) {
+        $this->db->select("cls.course_id, cls.class_id,cls.lock_status, crse.crse_name,cls.class_name, cls.class_start_datetime, cls.class_end_datetime, "
                 . "cls.total_seats,cls.total_classroom_duration, cls.total_lab_duration, cls.assmnt_duration,"
                 . "cls.class_fees, cls.class_pymnt_enrol, count(enrol.user_id) as total_enrolled");
 
@@ -9992,9 +9877,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->join("course_class cls", "crse.course_id = cls.course_id AND crse.tenant_id = cls.tenant_id", "left");
 
         $this->db->join("class_enrol  enrol", "enrol.course_id = cls.course_id AND enrol.class_id = cls.class_id AND crse.tenant_id = cls.tenant_id", "left");
-        /*get the course class list for sales executive on course level*/
-        if($this->user->role_id == 'SLEXEC'){
-             $this->db->join("course_sales_exec  sales", "sales.course_id = crse.course_id AND sales.tenant_id = crse.tenant_id", "left");
+        /* get the course class list for sales executive on course level */
+        if ($this->user->role_id == 'SLEXEC') {
+            $this->db->join("course_sales_exec  sales", "sales.course_id = crse.course_id AND sales.tenant_id = crse.tenant_id", "left");
         }
         $this->db->where("cls.class_status !=", "INACTIV");
 
@@ -10026,15 +9911,16 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         if ($this->user->role_id == 'SLEXEC') {
 
             //$this->db->like('cls.sales_executive', $this->user->user_id, 'both');
-           $this->db->like('sales.user_id', $this->user->user_id, 'both');
+            $this->db->like('sales.user_id', $this->user->user_id, 'both');
         }
 
         $this->db->group_by("cls.course_id, cls.class_id");
 
         $result = $this->db->get();
-     
+
         return $result->result();
     }
+
     /**
 
      *  This method calculates the fees payable
@@ -10054,7 +9940,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * @return type Array
 
      */
-    public function fees_payable($trainee_id, $tenant_id, $course_id, $class_id,$subsidy, $company_id, $loggedin_user_id) {
+    public function fees_payable($trainee_id, $tenant_id, $course_id, $class_id, $subsidy, $company_id, $loggedin_user_id) {
 
 
 
@@ -10091,10 +9977,10 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $fees_due = $unit_fees - $discount_amount;
 
         $gst_amount = $this->calculate_gst($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due, 0, $gst_rate);
-        
-        $gst_amount = round($gst_amount,2);//sk1
-        
-        $net_fees_due = $this->calculate_net_due($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due,$subsidy, $gst_rate);
+
+        $gst_amount = round($gst_amount, 2); //sk1
+
+        $net_fees_due = $this->calculate_net_due($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due, $subsidy, $gst_rate);
 
 
 
@@ -10112,10 +9998,10 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $result_array;
     }
-    
-    
-     /* This function calculate discount on based on previous given discount on enroll class or company*/
-    public function reg_enroll_fees_payable($trainee_id, $tenant_id, $course_id, $class_id,$subsidy, $company_id, $loggedin_user_id,$payment_due_id) {
+
+    /* This function calculate discount on based on previous given discount on enroll class or company */
+
+    public function reg_enroll_fees_payable($trainee_id, $tenant_id, $course_id, $class_id, $subsidy, $company_id, $loggedin_user_id, $payment_due_id) {
 
         $courseDetails = $this->course->get_course_detailse($course_id);
 
@@ -10135,44 +10021,41 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
             $result_array = $this->get_discnt($tenant_id, 0, $course_id, $class_id, $unit_fees, $trainee_id);
         } else {
-                $this->db->select('*');
-                $this->db->from('enrol_pymnt_due epd');
-                $this->db->join('class_enrol ce','ce.pymnt_due_id = epd.pymnt_due_id');
-                $this->db->where('epd.pymnt_due_id',$payment_due_id);
-                $this->db->where('ce.course_id',$course_id);
-                $this->db->where('ce.class_id',$class_id);
-                $this->db->where('ce.tenant_id',$tenant_id);
-                $this->db->where('epd.att_status',1);
-                $this->db->limit(1);
-                $sql = $this->db->get();
-                if($sql->num_rows()>0)
-                {
-                    $result_array = $sql->row_array();
-                  
-                        $discount_type =   $result_array['discount_type'];
-                        $discount_rate =   $result_array['discount_rate'];
-                        $discount_amount = $unit_fees * ($discount_rate / 100);
-                    
-                }else
-                {
+            $this->db->select('*');
+            $this->db->from('enrol_pymnt_due epd');
+            $this->db->join('class_enrol ce', 'ce.pymnt_due_id = epd.pymnt_due_id');
+            $this->db->where('epd.pymnt_due_id', $payment_due_id);
+            $this->db->where('ce.course_id', $course_id);
+            $this->db->where('ce.class_id', $class_id);
+            $this->db->where('ce.tenant_id', $tenant_id);
+            $this->db->where('epd.att_status', 1);
+            $this->db->limit(1);
+            $sql = $this->db->get();
+            if ($sql->num_rows() > 0) {
+                $result_array = $sql->row_array();
 
-                        $result_array = $this->get_discnt($tenant_id, $company_id, $course_id, $class_id, $unit_fees, 0);
-                        $discount_type =   $result_array['discount_label'];
-                        $discount_rate =   $result_array['discount_rate'];
-                        $discount_amount = $result_array['discount_amount'];
-                }
+                $discount_type = $result_array['discount_type'];
+                $discount_rate = $result_array['discount_rate'];
+                $discount_amount = $unit_fees * ($discount_rate / 100);
+            } else {
+
+                $result_array = $this->get_discnt($tenant_id, $company_id, $course_id, $class_id, $unit_fees, 0);
+                $discount_type = $result_array['discount_label'];
+                $discount_rate = $result_array['discount_rate'];
+                $discount_amount = $result_array['discount_amount'];
+            }
         }
 
-      
+
 
 
         $fees_due = $unit_fees - $discount_amount;
 
         $gst_amount = $this->calculate_gst($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due, 0, $gst_rate);
-        
-        $gst_amount = round($gst_amount,2);//sk1
-        
-        $net_fees_due = $this->calculate_net_due($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due,$subsidy, $gst_rate);
+
+        $gst_amount = round($gst_amount, 2); //sk1
+
+        $net_fees_due = $this->calculate_net_due($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due, $subsidy, $gst_rate);
 
 
 
@@ -10190,14 +10073,15 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $result_array;
     }
+
     /**
-    
-    /**
+
+      /**
 
      * This method check company discount when invoice is re-genrated
 
      */
-    public function fees_payable_check_discount($trainee_id, $tenant_id, $course_id, $class_id,$subsidy, $company_id,$payment_due_id, $loggedin_user_id) {
+    public function fees_payable_check_discount($trainee_id, $tenant_id, $course_id, $class_id, $subsidy, $company_id, $payment_due_id, $loggedin_user_id) {
         $courseDetails = $this->course->get_course_detailse($course_id);
         $classDetails = $this->class->get_class_details($tenant_id, $class_id);
         $unit_fees = $classDetails->class_fees;
@@ -10206,30 +10090,27 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $gst_label = ($courseDetails->gst_on_off == 1) ? 'GST ON, ' . rtrim($this->course->get_metadata_on_parameter_id($courseDetails->subsidy_after_before), ', ') : 'GST OFF';
         if ($company_id == 0) {
             $result_array = $this->get_discnt($tenant_id, 0, $course_id, $class_id, $unit_fees, $trainee_id);
-        } else {   
+        } else {
             // this function check company discount applied on invoice or not
-            $check_comp_discount = $this->check_discount_rate($payment_due_id,$course_id,$class_id,$tenant_id,$company_id);
-            
-            if($check_comp_discount == 0)
-            {
-            $result_array = $this->get_discnt($tenant_id, $company_id, $course_id, $class_id, $unit_fees, 0);
-            $discount_type = $result_array['discount_label']; 
-            $discount_rate = $result_array['discount_rate']; 
-            $discount_amount = $result_array['discount_amount']; 
-            $fees_due = $unit_fees - $discount_amount;          
-            }
-            else{
-                $discount_type = $check_comp_discount['discount_type']; 
-                $discount_rate = $check_comp_discount['discount_rate']; 
+            $check_comp_discount = $this->check_discount_rate($payment_due_id, $course_id, $class_id, $tenant_id, $company_id);
+
+            if ($check_comp_discount == 0) {
+                $result_array = $this->get_discnt($tenant_id, $company_id, $course_id, $class_id, $unit_fees, 0);
+                $discount_type = $result_array['discount_label'];
+                $discount_rate = $result_array['discount_rate'];
+                $discount_amount = $result_array['discount_amount'];
+                $fees_due = $unit_fees - $discount_amount;
+            } else {
+                $discount_type = $check_comp_discount['discount_type'];
+                $discount_rate = $check_comp_discount['discount_rate'];
                 $discount_amount = $unit_fees * ($discount_rate / 100);
-                $fees_due = $unit_fees - $discount_amount; 
-                
+                $fees_due = $unit_fees - $discount_amount;
             }
         }
-        
+
         $gst_amount = $this->calculate_gst($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due, 0, $gst_rate);
-        $gst_amount = round($gst_amount,2);//sk1
-        $net_fees_due = $this->calculate_net_due($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due,$subsidy, $gst_rate);
+        $gst_amount = round($gst_amount, 2); //sk1
+        $net_fees_due = $this->calculate_net_due($courseDetails->gst_on_off, $courseDetails->subsidy_after_before, $fees_due, $subsidy, $gst_rate);
         $result_array = array(
             'unit_fees' => $unit_fees,
             'discount_type' => $discount_type,
@@ -10243,29 +10124,26 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         );
         return $result_array;
     }
-    
+
     /* This method check company discount which already applied on invoice */
-    public function check_discount_rate ($payment_due_id,$course_id,$class_id,$tenant_id,$company_id)
-    {
+
+    public function check_discount_rate($payment_due_id, $course_id, $class_id, $tenant_id, $company_id) {
         $this->db->select('*');
         $this->db->from('enrol_pymnt_due epd');
-        $this->db->join('class_enrol ce','ce.pymnt_due_id = epd.pymnt_due_id');
-        $this->db->where('epd.pymnt_due_id',$payment_due_id);
-        $this->db->where('ce.course_id',$course_id);
-        $this->db->where('ce.class_id',$class_id);
-        $this->db->where('ce.tenant_id',$tenant_id);
-        $this->db->where('ce.company_id',$company_id);
-        $this->db->where('epd.att_status',1);
+        $this->db->join('class_enrol ce', 'ce.pymnt_due_id = epd.pymnt_due_id');
+        $this->db->where('epd.pymnt_due_id', $payment_due_id);
+        $this->db->where('ce.course_id', $course_id);
+        $this->db->where('ce.class_id', $class_id);
+        $this->db->where('ce.tenant_id', $tenant_id);
+        $this->db->where('ce.company_id', $company_id);
+        $this->db->where('epd.att_status', 1);
         $this->db->limit(1);
         $sql = $this->db->get();
-        if($sql->num_rows()>0)
-        {
-           return $sql->row_array();
-        }else
-        {
-           return $sql = 0;
+        if ($sql->num_rows() > 0) {
+            return $sql->row_array();
+        } else {
+            return $sql = 0;
         }
-      
     }
 
     /**
@@ -10285,23 +10163,22 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * @param type $company_id
 
      */
-   public function enroll_db_update($trainee_id, $course_id, $class_id, $enrolment_mode, $parm_array, $company_id, $pay_status) {
+    public function enroll_db_update($trainee_id, $course_id, $class_id, $enrolment_mode, $parm_array, $company_id, $pay_status) {
         $status = TRUE;
 
         $tenant_id = $this->tenant_id;
 
-         
-        $data = $this->db->select('class_start_datetime as start')
-        ->from('course_class')
-        ->where('class_id', $class_id)
-        ->where('tenant_id', $tenant_id)
-        ->get()->row(0);
 
-        $start= $data->start;
-        
+        $data = $this->db->select('class_start_datetime as start')
+                        ->from('course_class')
+                        ->where('class_id', $class_id)
+                        ->where('tenant_id', $tenant_id)
+                        ->get()->row(0);
+
+        $start = $data->start;
+
         $cur_date = date('Y-m-d H:i:s');
-        if($start)
-        {
+        if ($start) {
             //$cur_date = $start;
         }
 
@@ -10319,52 +10196,48 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $enrol_status = 'ENRLBKD';
         }
 
-        $fees_array = $this->fees_payable($trainee_id, $tenant_id, $course_id, $class_id,0, $company_id, $loggedin_user_id);
+        $fees_array = $this->fees_payable($trainee_id, $tenant_id, $course_id, $class_id, 0, $company_id, $loggedin_user_id);
 
         $this->db->trans_start();
 
         // for implementing the sales executive missing in sales comission report         
         // Changes by ujwal 
         // Date : 24/07/2015        
-
-       // for implementing the sales executive missing in sales comission report         
+        // for implementing the sales executive missing in sales comission report         
         // Changes by ujwal 
         // Date : 24/07/2015        
 
-       /* $salesexec = $this->input->post('salesexec');
-        if (empty($salesexec)) {
-            $salesexec = ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN') ? $this->user->user_id : NULL;
-        }*/
-         /* sales executive thread to tagged who enrolles on 18-07-2015 by prti*/
-        if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') 
-        {
+        /* $salesexec = $this->input->post('salesexec');
+          if (empty($salesexec)) {
+          $salesexec = ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN') ? $this->user->user_id : NULL;
+          } */
+        /* sales executive thread to tagged who enrolles on 18-07-2015 by prti */
+        if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') {
             $salesexec = $this->user->user_id;
-        }
-        else
-        {
+        } else {
             ///$salesexec = empty($salesexec) ? NULL : $salesexec;
-                if(empty($salesexec)){
-                    $salesexec = $this->user->user_id;
-                }
-                else{
-                    $salesexec =$salesexec;
-                }
+            if (empty($salesexec)) {
+                $salesexec = $this->user->user_id;
+            } else {
+                $salesexec = $salesexec;
+            }
         }
         /* sk1 heck class attendance done or not start */
-        $check_attendance=$this->check_attendance_row($tenant_id,$course_id,$class_id);
-        if($check_attendance>0)
-        {
-            $check_attendance_trainee=$this->check_attendance_trainee($tenant_id,$course_id,$class,$class_id);
-            if($check_attendance_trainee > 0){
-                $training_score='C';
-                $att_status=1;
-            }else{
-             $training_score='ABS';
-             $att_status=0;
+        $check_attendance = $this->check_attendance_row($tenant_id, $course_id, $class_id);
+        if ($check_attendance > 0) {
+            $check_attendance_trainee = $this->check_attendance_trainee($tenant_id, $course_id, $class, $class_id);
+            if ($check_attendance_trainee > 0) {
+                $training_score = 'C';
+                $att_status = 1;
+            } else {
+                $training_score = 'ABS';
+                $att_status = 0;
             }
-        }else { $att_status=1;}
+        } else {
+            $att_status = 1;
+        }
         //end
-        
+
         $data = array(
             'tenant_id' => $tenant_id,
             'course_id' => $course_id,
@@ -10389,11 +10262,11 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             'user_id' => $trainee_id,
             'pymnt_due_id' => $payment_due_id,
             'class_fees' => round($fees_array['unit_fees'], 4),
-            'total_amount_due' => round($fees_array['net_fees_due'], 2),//sk3
+            'total_amount_due' => round($fees_array['net_fees_due'], 2), //sk3
             'discount_type' => $fees_array['discount_type'],
             'discount_rate' => round($fees_array['discount_rate'], 4),
-            'gst_amount' => round($fees_array['gst_amount'], 2),//sk4
-            'att_status' => $att_status,//sk5
+            'gst_amount' => round($fees_array['gst_amount'], 2), //sk4
+            'att_status' => $att_status, //sk5
             'subsidy_amount' => 0,
             'subsidy_recd_date' => '0000-00-00'
         );
@@ -10410,11 +10283,11 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 'inv_date' => $cur_date,
                 'inv_type' => 'INVINDV',
                 'company_id' => $company_id,
-                'total_inv_amount' => round($fees_array['net_fees_due'], 2),//sk6
+                'total_inv_amount' => round($fees_array['net_fees_due'], 2), //sk6
                 'total_unit_fees' => round($fees_array['unit_fees'], 4),
                 'total_inv_discnt' => round($fees_array['discount_amount'], 4),
-                'total_gst' => round($fees_array['gst_amount'], 2),//sk7
-                'gst_rate' => round($fees_array['gst_rate'], 2),//sk8
+                'total_gst' => round($fees_array['gst_amount'], 2), //sk7
+                'gst_rate' => round($fees_array['gst_rate'], 2), //sk8
                 'gst_rule' => $fees_array['gst_rule'],
                 'total_inv_subsdy' => 0
             );
@@ -10468,11 +10341,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 //                $total_inv_subsidy = round($invoice_array->total_inv_subsdy, 4);
 //
 //                $total_gst = round($invoice_array->total_gst + $fees_array['gst_amount'], 4);
-                
                 //sk9 start
-                if($check_attendance > 0)
-                {
-                    if($check_attendance_trainee > 0){
+                if ($check_attendance > 0) {
+                    if ($check_attendance_trainee > 0) {
 
                         $discount_rate = $fees_array["discount_rate"];
                         $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
@@ -10480,8 +10351,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                         $total_unit_fees_due += $fees_array["unit_fees"];
                         $total_net_fees_due += $fees_array["net_fees_due"];
                     }
-                }
-                else{
+                } else {
                     $discount_rate = $fees_array["discount_rate"];
                     $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
                     $total_gst_due += $fees_array["gst_amount"];
@@ -10499,7 +10369,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
                         //list($status, $new_invoice_id) = $this->create_new_invoice($invoice_array->pymnt_due_id, $company_id, $total_inv_amount, $total_unit_fees, $total_inv_discnt, $total_inv_subsidy, $total_gst, $fees_array['gst_rule'], $fees_array['gst_rate'], 'INVCOMALL');
                         //sk10
-                        list($status, $new_invoice_id) = $this->create_new_invoice($invoice_array->pymnt_due_id, $company_id, (round($invoice_array->total_inv_amount,2) + round($total_net_fees_due,2)), ($invoice_array->total_unit_fees + $total_unit_fees_due), ($invoice_array->total_inv_discnt + $total_discount_due), ($invoice_array->total_inv_subsdy + $total_subsidy_amount_due), (round($invoice_array->total_gst,2) + round($total_gst_due,2)), $invoice_array->gst_rule, $invoice_array->gst_rate, 'INVCOMALL');
+                        list($status, $new_invoice_id) = $this->create_new_invoice($invoice_array->pymnt_due_id, $company_id, (round($invoice_array->total_inv_amount, 2) + round($total_net_fees_due, 2)), ($invoice_array->total_unit_fees + $total_unit_fees_due), ($invoice_array->total_inv_discnt + $total_discount_due), ($invoice_array->total_inv_subsdy + $total_subsidy_amount_due), (round($invoice_array->total_gst, 2) + round($total_gst_due, 2)), $invoice_array->gst_rule, $invoice_array->gst_rate, 'INVCOMALL');
                         if ($status) {
 
                             $invoice_id = $new_invoice_id;
@@ -10550,26 +10420,25 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $status;
     }
-    
-     /* This method update data base with enrollment details and class or company discount based on previosuly given discount*/
-     
+
+    /* This method update data base with enrollment details and class or company discount based on previosuly given discount */
+
     public function regisetr_enroll_db_update($trainee_id, $course_id, $class_id, $enrolment_mode, $parm_array, $company_id, $pay_status) {
         $status = TRUE;
 
         $tenant_id = $this->tenant_id;
 
-         
-        $data = $this->db->select('class_start_datetime as start')
-        ->from('course_class')
-        ->where('class_id', $class_id)
-        ->where('tenant_id', $tenant_id)
-        ->get()->row(0);
 
-        $start= $data->start;
-        
+        $data = $this->db->select('class_start_datetime as start')
+                        ->from('course_class')
+                        ->where('class_id', $class_id)
+                        ->where('tenant_id', $tenant_id)
+                        ->get()->row(0);
+
+        $start = $data->start;
+
         $cur_date = date('Y-m-d H:i:s');
-        if($start)
-        {
+        if ($start) {
             //$cur_date = $start;
         }
 
@@ -10588,52 +10457,48 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         }
 
 //        $fees_array = $this->reg_enroll_fees_payable($trainee_id, $tenant_id, $course_id, $class_id,0, $company_id, $loggedin_user_id,$payment_due_id);
-        $fees_array = $this->fees_payable($trainee_id, $tenant_id, $course_id, $class_id,0, $company_id, $loggedin_user_id);
+        $fees_array = $this->fees_payable($trainee_id, $tenant_id, $course_id, $class_id, 0, $company_id, $loggedin_user_id);
         $this->db->trans_start();
 
         // for implementing the sales executive missing in sales comission report         
         // Changes by ujwal 
         // Date : 24/07/2015        
-
-       // for implementing the sales executive missing in sales comission report         
+        // for implementing the sales executive missing in sales comission report         
         // Changes by ujwal 
         // Date : 24/07/2015        
 
-       /* $salesexec = $this->input->post('salesexec');
-        if (empty($salesexec)) {
-            $salesexec = ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN') ? $this->user->user_id : NULL;
-        }*/
-         /* sales executive thread to tagged who enrolles on 18-07-2015 by prti*/
+        /* $salesexec = $this->input->post('salesexec');
+          if (empty($salesexec)) {
+          $salesexec = ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'ADMN') ? $this->user->user_id : NULL;
+          } */
+        /* sales executive thread to tagged who enrolles on 18-07-2015 by prti */
         //print_r($this->user);exit;
-        if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') 
-        {
+        if ($this->user->role_id == 'SLEXEC' || $this->user->role_id == 'CRSEMGR' || $this->user->role_id == 'TRAINER') {
             $salesexec = $this->user->user_id;
-        }
-        else
-        {
+        } else {
             ///$salesexec = empty($salesexec) ? NULL : $salesexec;
-                if(empty($salesexec)){
-                    $salesexec = $this->user->user_id;
-                }
-                else{
-                    $salesexec =$salesexec;
-                }
+            if (empty($salesexec)) {
+                $salesexec = $this->user->user_id;
+            } else {
+                $salesexec = $salesexec;
+            }
         }
         /* sk1 heck class attendance done or not start */
-        $check_attendance=$this->check_attendance_row($tenant_id,$course_id,$class_id);
-        if($check_attendance>0)
-        {
-            $check_attendance_trainee=$this->check_attendance_trainee($tenant_id,$course_id,$class,$class_id);
-            if($check_attendance_trainee > 0){
-                $training_score='C';
-                $att_status=1;
-            }else{
-             $training_score='ABS';
-             $att_status=0;
+        $check_attendance = $this->check_attendance_row($tenant_id, $course_id, $class_id);
+        if ($check_attendance > 0) {
+            $check_attendance_trainee = $this->check_attendance_trainee($tenant_id, $course_id, $class, $class_id);
+            if ($check_attendance_trainee > 0) {
+                $training_score = 'C';
+                $att_status = 1;
+            } else {
+                $training_score = 'ABS';
+                $att_status = 0;
             }
-        }else { $att_status=1;}
+        } else {
+            $att_status = 1;
+        }
         //end
-        
+
         $data = array(
             'tenant_id' => $tenant_id,
             'course_id' => $course_id,
@@ -10655,18 +10520,18 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->insert('class_enrol', $data);
 
         if ($enrolment_mode == 'SELF') {
-            
+
             $data = array(
-            'user_id' => $trainee_id,
-            'pymnt_due_id' => $payment_due_id,
-            'class_fees' => round($fees_array['unit_fees'], 4),
-            'total_amount_due' => round($fees_array['net_fees_due'], 2),//sk3
-            'discount_type' => $fees_array['discount_type'],
-            'discount_rate' => round($fees_array['discount_rate'], 4),
-            'gst_amount' => round($fees_array['gst_amount'], 2),//sk4
-            'att_status' => $att_status,//sk5
-            'subsidy_amount' => 0,
-            'subsidy_recd_date' => '0000-00-00'
+                'user_id' => $trainee_id,
+                'pymnt_due_id' => $payment_due_id,
+                'class_fees' => round($fees_array['unit_fees'], 4),
+                'total_amount_due' => round($fees_array['net_fees_due'], 2), //sk3
+                'discount_type' => $fees_array['discount_type'],
+                'discount_rate' => round($fees_array['discount_rate'], 4),
+                'gst_amount' => round($fees_array['gst_amount'], 2), //sk4
+                'att_status' => $att_status, //sk5
+                'subsidy_amount' => 0,
+                'subsidy_recd_date' => '0000-00-00'
             );
             $this->db->insert('enrol_pymnt_due', $data);
             $invoice_id = $this->generate_invoice_id();
@@ -10677,11 +10542,11 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 'inv_date' => $cur_date,
                 'inv_type' => 'INVINDV',
                 'company_id' => $company_id,
-                'total_inv_amount' => round($fees_array['net_fees_due'], 2),//sk6
+                'total_inv_amount' => round($fees_array['net_fees_due'], 2), //sk6
                 'total_unit_fees' => round($fees_array['unit_fees'], 4),
                 'total_inv_discnt' => round($fees_array['discount_amount'], 4),
-                'total_gst' => round($fees_array['gst_amount'], 2),//sk7
-                'gst_rate' => round($fees_array['gst_rate'], 2),//sk8
+                'total_gst' => round($fees_array['gst_amount'], 2), //sk7
+                'gst_rate' => round($fees_array['gst_rate'], 2), //sk8
                 'gst_rule' => $fees_array['gst_rule'],
                 'total_inv_subsdy' => 0
             );
@@ -10692,44 +10557,44 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
                 $this->insert_payment_recd($invoice_id, $trainee_id, $parm_array, $loggedin_user_id);
             }
-        } else if ($enrolment_mode == 'COMPSPON') { 
-        
-            
+        } else if ($enrolment_mode == 'COMPSPON') {
+
+
             $invoice_array = $this->get_enroll_invoice_details($course_id, $class_id, $company_id, $tenant_id, 'change', "", $trainee_id, 'second');
-            
-         
-            
+
+
+
             $msg_status = (array) $invoice_array;
 
             if (!in_array($msg_status['msg_status'], array('not_found', 'cannot_change', 'not_company_user'))) {
-                
-              
-               
-                $fees_array = $this->reg_enroll_fees_payable($trainee_id, $tenant_id, $course_id, $class_id,0, $company_id, $loggedin_user_id,$invoice_array->pymnt_due_id);
-                
+
+
+
+                $fees_array = $this->reg_enroll_fees_payable($trainee_id, $tenant_id, $course_id, $class_id, 0, $company_id, $loggedin_user_id, $invoice_array->pymnt_due_id);
+
                 $previous_inv_id = $invoice_array->invoice_id;
-           
+
                 $class_enrol_data = array(
                     'pymnt_due_id' => $invoice_array->pymnt_due_id
                 );
-                
-                
-                 $data = array(
-                                'user_id' => $trainee_id,
-                                'pymnt_due_id' => $invoice_array->pymnt_due_id,
-                                'class_fees' => round($fees_array['unit_fees'], 4),
-                                'total_amount_due' => round($fees_array['net_fees_due'], 2),//sk3
-                                'discount_type' => $fees_array['discount_type'],
-                                'discount_rate' => round($fees_array['discount_rate'], 4),
-                                'gst_amount' => round($fees_array['gst_amount'], 2),//sk4
-                                'att_status' => $att_status,//sk5
-                                'subsidy_amount' => 0,
-                                'subsidy_recd_date' => '0000-00-00'
-                                );
-                         
-                            $this->db->insert('enrol_pymnt_due', $data);
-                           
-         
+
+
+                $data = array(
+                    'user_id' => $trainee_id,
+                    'pymnt_due_id' => $invoice_array->pymnt_due_id,
+                    'class_fees' => round($fees_array['unit_fees'], 4),
+                    'total_amount_due' => round($fees_array['net_fees_due'], 2), //sk3
+                    'discount_type' => $fees_array['discount_type'],
+                    'discount_rate' => round($fees_array['discount_rate'], 4),
+                    'gst_amount' => round($fees_array['gst_amount'], 2), //sk4
+                    'att_status' => $att_status, //sk5
+                    'subsidy_amount' => 0,
+                    'subsidy_recd_date' => '0000-00-00'
+                );
+
+                $this->db->insert('enrol_pymnt_due', $data);
+
+
                 $this->db->where("pymnt_due_id", $payment_due_id);
 
                 $this->db->where("user_id", $trainee_id);
@@ -10742,13 +10607,12 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
                 $status = $this->db->update("class_enrol", $class_enrol_data);
 
-                
-                
-                
+
+
+
                 //sk9 start
-                if($check_attendance > 0)
-                {
-                    if($check_attendance_trainee > 0){
+                if ($check_attendance > 0) {
+                    if ($check_attendance_trainee > 0) {
 
                         $discount_rate = $fees_array["discount_rate"];
                         $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
@@ -10756,8 +10620,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                         $total_unit_fees_due += $fees_array["unit_fees"];
                         $total_net_fees_due += $fees_array["net_fees_due"];
                     }
-                }
-                else{
+                } else {
                     $discount_rate = $fees_array["discount_rate"];
                     $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
                     $total_gst_due += $fees_array["gst_amount"];
@@ -10775,9 +10638,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
                         //list($status, $new_invoice_id) = $this->create_new_invoice($invoice_array->pymnt_due_id, $company_id, $total_inv_amount, $total_unit_fees, $total_inv_discnt, $total_inv_subsidy, $total_gst, $fees_array['gst_rule'], $fees_array['gst_rate'], 'INVCOMALL');
                         //sk10
-                        list($status, $new_invoice_id) = $this->create_new_invoice($invoice_array->pymnt_due_id, $company_id, (round($invoice_array->total_inv_amount,2) + round($total_net_fees_due,2)), ($invoice_array->total_unit_fees + $total_unit_fees_due), ($invoice_array->total_inv_discnt + $total_discount_due), ($invoice_array->total_inv_subsdy + $total_subsidy_amount_due), (round($invoice_array->total_gst,2) + round($total_gst_due,2)), $invoice_array->gst_rule, $invoice_array->gst_rate, 'INVCOMALL');
-                        
-                        
+                        list($status, $new_invoice_id) = $this->create_new_invoice($invoice_array->pymnt_due_id, $company_id, (round($invoice_array->total_inv_amount, 2) + round($total_net_fees_due, 2)), ($invoice_array->total_unit_fees + $total_unit_fees_due), ($invoice_array->total_inv_discnt + $total_discount_due), ($invoice_array->total_inv_subsdy + $total_subsidy_amount_due), (round($invoice_array->total_gst, 2) + round($total_gst_due, 2)), $invoice_array->gst_rule, $invoice_array->gst_rate, 'INVCOMALL');
+
+
                         if ($status) {
 // commented by skm 02-01-17 because of refunded status remark in invoice st                           
 //                            $query1="select * from enrol_paymnt_recd where invoice_id='$previous_inv_id'";
@@ -10807,8 +10670,8 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 //                                $sql1 = mysqli_query("update enrol_refund_brkup_dt set invoice_id='$new_invoice_id' where invoice_id='$previous_inv_id'");
 //                                
 //                            }
-                            
-                            
+
+
                             $invoice_id = $new_invoice_id;
 
                             $status = $this->set_audittrail_newinvoice_num($invoice_array->pymnt_due_id, $new_invoice_id);
@@ -10817,26 +10680,25 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                         }
                     }
                 }
-            }
-            else {
-               
-            
-                   $data = array(
-                                'user_id' => $trainee_id,
-                                'pymnt_due_id' => $payment_due_id,
-                                'class_fees' => round($fees_array['unit_fees'], 4),
-                                'total_amount_due' => round($fees_array['net_fees_due'], 2),//sk3
-                                'discount_type' => $fees_array['discount_type'],
-                                'discount_rate' => round($fees_array['discount_rate'], 4),
-                                'gst_amount' => round($fees_array['gst_amount'], 2),//sk4
-                                'att_status' => $att_status,//sk5
-                                'subsidy_amount' => 0,
-                                'subsidy_recd_date' => '0000-00-00'
-                                ); 
-                      $this->db->insert('enrol_pymnt_due', $data);
-                           
-                    
-                
+            } else {
+
+
+                $data = array(
+                    'user_id' => $trainee_id,
+                    'pymnt_due_id' => $payment_due_id,
+                    'class_fees' => round($fees_array['unit_fees'], 4),
+                    'total_amount_due' => round($fees_array['net_fees_due'], 2), //sk3
+                    'discount_type' => $fees_array['discount_type'],
+                    'discount_rate' => round($fees_array['discount_rate'], 4),
+                    'gst_amount' => round($fees_array['gst_amount'], 2), //sk4
+                    'att_status' => $att_status, //sk5
+                    'subsidy_amount' => 0,
+                    'subsidy_recd_date' => '0000-00-00'
+                );
+                $this->db->insert('enrol_pymnt_due', $data);
+
+
+
                 $invoice_id = $this->generate_invoice_id();
 
                 $data = array(
@@ -10855,8 +10717,6 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 );
 
                 $this->db->insert('enrol_invoice', $data);
-                  
-             
             }
 
             if ($pay_status == 'PAID') {
@@ -10877,8 +10737,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $status;
     }
-    
-    
+
     /**
 
      * This method updates received details
@@ -10893,11 +10752,11 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
      */
     public function insert_payment_recd($invoice_id, $trainee_id, $parm_array, $loggedin_user_id) {
-		$cur_time = date('H:i:s'); //sk
-	
+        $cur_time = date('H:i:s'); //sk
+
         $payment_recd = array(
             'invoice_id' => $invoice_id,
-            'recd_on' => date('Y-m-d ', strtotime($parm_array['paid_on'])). $cur_time,
+            'recd_on' => date('Y-m-d ', strtotime($parm_array['paid_on'])) . $cur_time,
             'mode_of_pymnt' => $parm_array['payment_type'],
             'amount_recd' => round($parm_array['amount_recd'], 2),
             'cheque_number' => $parm_array['cheque_number'],
@@ -10912,7 +10771,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             'invoice_id' => $invoice_id,
             'user_id' => $trainee_id,
             'amount_recd' => round($parm_array['amount_recd'], 2),
-            'recd_on' => date('Y-m-d ', strtotime($parm_array['paid_on'])). $cur_time
+            'recd_on' => date('Y-m-d ', strtotime($parm_array['paid_on'])) . $cur_time
         );
 
         $this->db->insert('enrol_pymnt_brkup_dt', $payment_recd_brkup);
@@ -10986,13 +10845,13 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $total_subsidy_amount_due = 0;
         $data = $this->get_current_invoice_data($payment_due_id);
-   
+
         $curr_invoice_details = json_decode($data);
-           
-        if(empty($curr_invoice_details->pymnt_due_id)){// added by shubhranshu for blank data since attendance status 0 
+
+        if (empty($curr_invoice_details->pymnt_due_id)) {// added by shubhranshu for blank data since attendance status 0 
             return FALSE;
         }
-         
+
         $this->db->trans_start();
 
         foreach ($seleced_trainee_list as $user_id) {
@@ -11000,7 +10859,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $status = $this->update_classenrol_audittrail($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
 
             $this->remove_enrollment($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
-           
+
             $payments_result = $this->get_payment_due($payment_due_id, $user_id);
 
             $discount_rate = $payments_result->discount_rate;
@@ -11017,11 +10876,11 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
             $this->remove_payment_due($payment_due_id, $user_id);
         }
-         
-        $absent_trainee_present = $this->get_payment_due_absent($payment_due_id);////added by shubhranshu for remove enrollment issue
+
+        $absent_trainee_present = $this->get_payment_due_absent($payment_due_id); ////added by shubhranshu for remove enrollment issue
         $status = $this->update_invoice_audit_trail($curr_invoice_details->pymnt_due_id);
-        $due_to='Remove Enrollment From Company Invoice';
-        $status=$this->enrol_invoice_view($curr_invoice_details->pymnt_due_id,$data,$logged_in_user_id,$due_to);
+        $due_to = 'Remove Enrollment From Company Invoice';
+        $status = $this->enrol_invoice_view($curr_invoice_details->pymnt_due_id, $data, $logged_in_user_id, $due_to);
 
         if ($status) {
 
@@ -11029,22 +10888,22 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
             if ($status && ($curr_invoice_details->total_inv_amount - $total_net_fees_due) != 0) {
 
-                list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, (round($curr_invoice_details->total_inv_amount,2) - round($total_net_fees_due,2)), ($curr_invoice_details->total_unit_fees - $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt - $total_discount_due), ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), (round($curr_invoice_details->total_gst,2) - round($total_gst_due,2)), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
+                list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, (round($curr_invoice_details->total_inv_amount, 2) - round($total_net_fees_due, 2)), ($curr_invoice_details->total_unit_fees - $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt - $total_discount_due), ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), (round($curr_invoice_details->total_gst, 2) - round($total_gst_due, 2)), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
 
-                if ($status) {  
+                if ($status) {
                     /* update invoice id into invoice related table if invoice is paid and refund start */
-                    $total_amount = (round($curr_invoice_details->total_inv_amount,2) - round($total_net_fees_due,2));
+                    $total_amount = (round($curr_invoice_details->total_inv_amount, 2) - round($total_net_fees_due, 2));
                     $invoice_id = $new_invoice_id;
 
                     $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
                     $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);
                 }
-            }else if($status && (($curr_invoice_details->total_inv_amount - $total_net_fees_due) == 0) && (count($absent_trainee_present) > 0)){///added by shubhransu from this block
-               list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, (round($curr_invoice_details->total_inv_amount,2) - round($total_net_fees_due,2)), ($curr_invoice_details->total_unit_fees - $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt - $total_discount_due), ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), (round($curr_invoice_details->total_gst,2) - round($total_gst_due,2)), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
+            } else if ($status && (($curr_invoice_details->total_inv_amount - $total_net_fees_due) == 0) && (count($absent_trainee_present) > 0)) {///added by shubhransu from this block
+                list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, (round($curr_invoice_details->total_inv_amount, 2) - round($total_net_fees_due, 2)), ($curr_invoice_details->total_unit_fees - $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt - $total_discount_due), ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), (round($curr_invoice_details->total_gst, 2) - round($total_gst_due, 2)), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
 
-                if ($status) {  
+                if ($status) {
                     /* update invoice id into invoice related table if invoice is paid and refund start */
-                    $total_amount = (round($curr_invoice_details->total_inv_amount,2) - round($total_net_fees_due,2));
+                    $total_amount = (round($curr_invoice_details->total_inv_amount, 2) - round($total_net_fees_due, 2));
                     $invoice_id = $new_invoice_id;
 
                     $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
@@ -11052,7 +10911,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 }
             }
         }
-     
+
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {
@@ -11062,73 +10921,72 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $status;
     }
-    public function get_enroll_old_invoice($id,$inv)
-    {
-                $tenant_id=  $this->tenant_id;
-                $this->db->select('*');
-                $this->db->from('enrol_invoice_view');
-                $this->db->where('invoice_id',$inv);
-                $this->db->where('pymnt_due_id',$id);
-                $this->db->where('tenant_id',$tenant_id);
-                $results=  $this->db->get()->row();
-                return $results;
+
+    public function get_enroll_old_invoice($id, $inv) {
+        $tenant_id = $this->tenant_id;
+        $this->db->select('*');
+        $this->db->from('enrol_invoice_view');
+        $this->db->where('invoice_id', $inv);
+        $this->db->where('pymnt_due_id', $id);
+        $this->db->where('tenant_id', $tenant_id);
+        $results = $this->db->get()->row();
+        return $results;
     }
-    
-    
-     public function check_paid_refund_invoice($invoice_id,$user_id)
-    {
+
+    public function check_paid_refund_invoice($invoice_id, $user_id) {
         $this->db->select('*');
         $this->db->from('enrol_pymnt_brkup_dt epbt');
-        $this->db->join('enrol_refund_brkup_dt erbt','epbt.invoice_id = erbt.invoice_id and epbt.user_id = erbt.user_id');
-        $this->db->where('epbt.invoice_id',$invoice_id);
-        $this->db->where('epbt.user_id',$user_id);
+        $this->db->join('enrol_refund_brkup_dt erbt', 'epbt.invoice_id = erbt.invoice_id and epbt.user_id = erbt.user_id');
+        $this->db->where('epbt.invoice_id', $invoice_id);
+        $this->db->where('epbt.user_id', $user_id);
         $sql = $this->db->get();
         return $sql->num_rows();
     }
-    
-    public function remove_paid_user($invoice_id,$user_id){
-        
+
+    public function remove_paid_user($invoice_id, $user_id) {
+
         $this->db->where("invoice_id", $invoice_id);
 
         $this->db->where("user_id", $user_id);
 
         $this->db->delete("enrol_pymnt_brkup_dt");
     }
-    
-    public function remove_refund_user($invoice_id,$user_id){
-        
+
+    public function remove_refund_user($invoice_id, $user_id) {
+
         $this->db->where("invoice_id", $invoice_id);
 
         $this->db->where("user_id", $user_id);
 
         $this->db->delete("enrol_refund_brkup_dt");
     }
-    
-    public function get_enroll_old_invoice1()
-    {
-        $tenant_id=  $this->tenant_id;
+
+    public function get_enroll_old_invoice1() {
+        $tenant_id = $this->tenant_id;
         $this->db->select('eiv.invoice_id,eiv.pymnt_due_id,eiv.inv_date,eiv.reg_due_to,eiv.reg_by,eiv.regen_inv_id,tu.user_name');
         $this->db->from('enrol_invoice_view eiv');
-        $this->db->join('tms_users tu','tu.user_id=eiv.reg_by');
-        $this->db->where('eiv.tenant_id',$tenant_id);
-        $this->db->order_by('eiv.invoice_id','desc');   
-        $results=  $this->db->get()->result();
+        $this->db->join('tms_users tu', 'tu.user_id=eiv.reg_by');
+        $this->db->where('eiv.tenant_id', $tenant_id);
+        $this->db->order_by('eiv.invoice_id', 'desc');
+        $results = $this->db->get()->result();
         return $results;
     }
-     public function get_count_invoice($id) {
+
+    public function get_count_invoice($id) {
 
         $result = $this->db->select('*')->from('enrol_invoice ei')
-               ->where('ei.pymnt_due_id', $id);
-               
+                ->where('ei.pymnt_due_id', $id);
+
 
         $result = $this->db->get()->result();
 
         return $result;
     }
-     private function set_viewinvoice_newinvoice_num($payment_due_id, $reg_inv_id) {
+
+    private function set_viewinvoice_newinvoice_num($payment_due_id, $reg_inv_id) {
 
         $status = TRUE;
-         $tenant_id=  $this->tenant_id;
+        $tenant_id = $this->tenant_id;
         $audit_array = array('regen_inv_id' => $reg_inv_id);
         $this->db->where("tenant_id", $tenant_id);
         $this->db->where("pymnt_due_id", $payment_due_id);
@@ -11144,10 +11002,11 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $status;
     }
+
     //private function enrol_invoice_view($payment_due_id,$data,$logged_in_user_id,$due_to,$due_to,$reg_inv_id = 0) {
-    private function enrol_invoice_view($payment_due_id,$data,$logged_in_user_id,$due_to,$reg_inv_id = 0) {
-        
-         $tenant_id=  $this->tenant_id;  
+    private function enrol_invoice_view($payment_due_id, $data, $logged_in_user_id, $due_to, $reg_inv_id = 0) {
+
+        $tenant_id = $this->tenant_id;
         $insert_status = TRUE;
 
         $this->db->select("*");
@@ -11159,7 +11018,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $result = $this->db->get()->row();
 
         $audit_inv_data = array(
-            'tenant_id'=>$tenant_id,
+            'tenant_id' => $tenant_id,
             'invoice_id' => $result->invoice_id,
             'pymnt_due_id' => $result->pymnt_due_id,
             'inv_date' => $result->inv_date,
@@ -11176,18 +11035,18 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             'invoice_generated_on' => $result->invoice_generated_on,
             'invoiced_on' => $result->invoiced_on,
             'invoice_excess_amt' => $result->invoice_excess_amt,
-            'invoice_details' =>$data,
-            'reg_by'=> $logged_in_user_id,
-            'reg_due_to' =>$due_to
+            'invoice_details' => $data,
+            'reg_by' => $logged_in_user_id,
+            'reg_due_to' => $due_to
         );
 
         $this->db->trans_start();
 
         $this->db->insert('enrol_invoice_view', $audit_inv_data);
 
-        
+
         $this->db->trans_complete();
-       
+
 
         if ($this->db->trans_status() === FALSE) {
 
@@ -11196,7 +11055,8 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $insert_status;
     }
-     /**
+
+    /**
 
      * This method move the selected trainees from one company to other company
 
@@ -11218,15 +11078,14 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * added by pritam
 
      */
-     public function move_company_enrollment($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
+    public function move_company_enrollment($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
     , $invoice_id, $payment_due_id, $seleced_trainee_list) {
         $to_invoice_id = $this->input->post('to_comp_invoice_id');
         $to_payment_due_id = $this->input->post('to_comp_pymnt_due_id');
         $to_company_id = $this->input->post('to_company_id');
         $to_course_id = $this->input->post('to_course_id');
         $to_class_id = $this->input->post('to_class_id');
-        if($to_invoice_id=="")
-        {
+        if ($to_invoice_id == "") {
             return FALSE;
         }
 //        if (empty($seleced_trainee_list)) 
@@ -11244,12 +11103,11 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 //                return FALSE;
 //            }
 //        }
-       
-        $check_invoice= $this->db->query("select invoice_id from enrol_invoice_audittrail where invoice_id='$invoice_id' or invoice_id='$to_invoice_id'");
-       
-         $count=$check_invoice->num_rows();
-        if($count == 0)
-        {
+
+        $check_invoice = $this->db->query("select invoice_id from enrol_invoice_audittrail where invoice_id='$invoice_id' or invoice_id='$to_invoice_id'");
+
+        $count = $check_invoice->num_rows();
+        if ($count == 0) {
             $status = TRUE;
             if (empty($seleced_trainee_list)) {
 
@@ -11262,31 +11120,30 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $total_net_fees_due = 0;
             $total_discount_due = 0;
             $total_subsidy_amount_due = 0;
-           $due_to = 'Move Trainee from one company Invoice to other company invoice';
+            $due_to = 'Move Trainee from one company Invoice to other company invoice';
             $data = $this->get_current_invoice_data($payment_due_id);
             $this->db->trans_start();
-            $status = $this->enrol_invoice_view($payment_due_id,$data,$logged_in_user_id,$due_to);
-            $sales=array();
+            $status = $this->enrol_invoice_view($payment_due_id, $data, $logged_in_user_id, $due_to);
+            $sales = array();
 
-            foreach ($seleced_trainee_list as $user_id) 
-            {
+            foreach ($seleced_trainee_list as $user_id) {
 
                 //fetch sales executive 
                 $data = $this->db->select('sales_executive_id')
-                    ->from('class_enrol')
-                    ->where("pymnt_due_id", $payment_due_id)
-                    ->where("user_id", $user_id)
-                        ->where("course_id", $course_id)
-                        ->where('class_id', $class_id)
-                        ->where("tenant_id", $tenant_id)
-                     ->get()->row(0);
+                                ->from('class_enrol')
+                                ->where("pymnt_due_id", $payment_due_id)
+                                ->where("user_id", $user_id)
+                                ->where("course_id", $course_id)
+                                ->where('class_id', $class_id)
+                                ->where("tenant_id", $tenant_id)
+                                ->get()->row(0);
                 $this->db->last_query();
-                 $sales[]=$data->sales_executive_id;
-               //end
+                $sales[] = $data->sales_executive_id;
+                //end
 
-                $status = $this->update_classenrol_audittrail($tenant_id,$payment_due_id,$user_id,$course_id, $class_id);
+                $status = $this->update_classenrol_audittrail($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
 
-                $status= $this->remove_enrollment1($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
+                $status = $this->remove_enrollment1($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
 
                 $payments_result = $this->get_payment_due($payment_due_id, $user_id);
 
@@ -11302,44 +11159,29 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
                 $total_subsidy_amount_due += $payments_result->subsidy_amount;
 
-                $status= $this->remove_payment_due1($payment_due_id, $user_id);
-
+                $status = $this->remove_payment_due1($payment_due_id, $user_id);
             }
             $status = $this->update_invoice_audit_trail($curr_invoice_details->pymnt_due_id);
 
-            if ($status) 
-            {
+            if ($status) {
 
                 $status = $this->remove_invoice($payment_due_id);
-                if ($status && ($curr_invoice_details->total_inv_amount - $total_net_fees_due) != 0) 
-                {
+                if ($status && ($curr_invoice_details->total_inv_amount - $total_net_fees_due) != 0) {
 
-                    list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, 
-                                                            ($curr_invoice_details->total_inv_amount - $total_net_fees_due), 
-                                                            ($curr_invoice_details->total_unit_fees - $total_unit_fees_due),
-                                                            ($curr_invoice_details->total_inv_discnt - $total_discount_due), 
-                                                            ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), 
-                                                            ($curr_invoice_details->total_gst - $total_gst_due), 
-                                                            $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
-                    if ($status) 
-                    {
+                    list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, ($curr_invoice_details->total_inv_amount - $total_net_fees_due), ($curr_invoice_details->total_unit_fees - $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt - $total_discount_due), ($curr_invoice_details->total_inv_subsdy - $total_subsidy_amount_due), ($curr_invoice_details->total_gst - $total_gst_due), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
+                    if ($status) {
 
                         $invoice_id = $new_invoice_id;
 
-                    $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
-                     $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);//s4
-                    
-                    
+                        $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
+                        $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id); //s4
                     }
                 }
-            
             }
-            if($status)
-            {
+            if ($status) {
 
-                    $status= $this->move_to_company_enrollment($tenant_id, $logged_in_user_id, $to_course_id, $to_class_id, $to_company_id
-                      , $to_invoice_id, $to_payment_due_id, $seleced_trainee_list,$sales);
-
+                $status = $this->move_to_company_enrollment($tenant_id, $logged_in_user_id, $to_course_id, $to_class_id, $to_company_id
+                        , $to_invoice_id, $to_payment_due_id, $seleced_trainee_list, $sales);
             }
 
             $this->db->trans_complete();
@@ -11349,61 +11191,52 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 $status = FALSE;
             }
             return $status;
-        }
-        else
-        {
-           
+        } else {
+
             return FALSE;
         }
+    }
 
-        
-    }// remove individual traine from enrollment
+// remove individual traine from enrollment
     // added by pritam
-    public function remove_individual_enrollment($tenant_id, $logged_in_user_id,$user_id, $course_id, $class_id,$invoice_id, $payment_due_id) 
-    {
+
+    public function remove_individual_enrollment($tenant_id, $logged_in_user_id, $user_id, $course_id, $class_id, $invoice_id, $payment_due_id) {
         $status = TRUE;
-         $data = $this->get_current_individule_invoice_data($payment_due_id);
-        $due_to='Remove Individual Enrollment';
+        $data = $this->get_current_individule_invoice_data($payment_due_id);
+        $due_to = 'Remove Individual Enrollment';
         $this->db->trans_start();
         $status = $this->update_classenrol_audittrail($tenant_id, $payment_due_id, $user_id, $course_id, $class_id);
-        $status = $this->enrol_invoice_view($payment_due_id,$data,$logged_in_user_id,$due_to);
-        
-        if($status)
-        {
-            
-            if ($status) 
-            {
-                  
+        $status = $this->enrol_invoice_view($payment_due_id, $data, $logged_in_user_id, $due_to);
+
+        if ($status) {
+
+            if ($status) {
+
                 $this->db->where("pymnt_due_id", $payment_due_id);
                 $this->db->where("user_id", $user_id);
                 $this->db->where("course_id", $course_id);
                 $this->db->where("class_id", $class_id);
                 $this->db->where("tenant_id", $tenant_id);
-                $status= $this->db->delete("class_enrol");
-                if ($status) 
-                {
-                     
+                $status = $this->db->delete("class_enrol");
+                if ($status) {
+
                     $this->db->where("pymnt_due_id", $payment_due_id);
                     $this->db->where("user_id", $user_id);
-                    $status=  $this->db->delete("enrol_pymnt_due");
+                    $status = $this->db->delete("enrol_pymnt_due");
                     $curr_invoice_details = $this->get_invoice_details($payment_due_id);
                     $status = $this->update_invoice_audit_trail($curr_invoice_details->pymnt_due_id);
-                    if($status)
-                    {
-                       
-                        if($status)
-                        {
-                              
-                            if(!empty($payment_due_id) && !empty($invoice_id))
-                            {
+                    if ($status) {
+
+                        if ($status) {
+
+                            if (!empty($payment_due_id) && !empty($invoice_id)) {
                                 $this->db->where("pymnt_due_id", $payment_due_id);
                                 $this->db->where("invoice_id", $invoice_id);
-                                $status=$this->db->delete("enrol_invoice");
+                                $status = $this->db->delete("enrol_invoice");
                             }
                         }
-                   }
+                    }
                 }
-
             }
         }
 
@@ -11416,31 +11249,29 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $status;
     }
-     public function void_invoice($tenant_id, $logged_in_user_id,$invoice_id, $payment_due_id) 
-    {
+
+    public function void_invoice($tenant_id, $logged_in_user_id, $invoice_id, $payment_due_id) {
         $status = TRUE;
-        $data= array(
-            'payment_status'=>"VOID"
+        $data = array(
+            'payment_status' => "VOID"
         );
         $this->db->trans_start();
-        if ($status) 
-        {
+        if ($status) {
             $this->db->where("pymnt_due_id", $payment_due_id);
-            
+
             $this->db->where("tenant_id", $tenant_id);
-            
-            $status= $this->db->update("class_enrol",$data);
-             $this->db->last_query();
-           
+
+            $status = $this->db->update("class_enrol", $data);
+            $this->db->last_query();
         }
-     
+
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {
 
             $status = FALSE;
         }
-   
+
         return $status;
     }
 
@@ -11501,7 +11332,8 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $this->db->delete("class_enrol");
     }
-      private function remove_enrollment1($tenant_id, $payment_due_id, $user_id, $course_id, $class_id) {
+
+    private function remove_enrollment1($tenant_id, $payment_due_id, $user_id, $course_id, $class_id) {
         $status = TRUE;
         $this->db->where("pymnt_due_id", $payment_due_id);
 
@@ -11513,18 +11345,16 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $this->db->where("tenant_id", $tenant_id);
         $this->db->trans_start();
-        
+
         $this->db->delete("class_enrol");
-        
+
         $this->db->trans_complete();
-        if ($this->db->trans_status() === FALSE) 
-        {
+        if ($this->db->trans_status() === FALSE) {
             $status = FALSE;
         }
 
         return $status;
     }
-
 
     /**
 
@@ -11552,6 +11382,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $result_set;
     }
+
     /////added by shubhranshu
     private function get_payment_due_absent($payment_due_id) {
 
@@ -11585,18 +11416,18 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $this->db->delete("enrol_pymnt_due");
     }
-    private function remove_payment_due1($payment_due_id, $user_id) 
-    {
-        $status=TRUE;
+
+    private function remove_payment_due1($payment_due_id, $user_id) {
+        $status = TRUE;
 
         $this->db->where("pymnt_due_id", $payment_due_id);
 
         $this->db->where("user_id", $user_id);
         $this->db->trans_start();
-        
+
         $this->db->delete("enrol_pymnt_due");
         $this->db->trans_complete();
-        
+
         if ($this->db->trans_status() === FALSE) {
 
             $status = FALSE;
@@ -11604,6 +11435,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $status;
     }
+
     /**
 
      * To get trainee in a company but not enrolled in the selected class/ invoice.
@@ -11651,10 +11483,10 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * @param type $seleced_trainee_list
 
      */
-     public function add_to_company_enrollment($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
+    public function add_to_company_enrollment($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
     , $invoice_id, $payment_due_id, $seleced_trainee_list) {
-        
-          
+
+
         $status = TRUE;
         if (empty($seleced_trainee_list)) {
             return FALSE;
@@ -11665,34 +11497,34 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $total_net_fees_due = 0;
         $total_discount_due = 0;
         $total_subsidy_amount_due = 0;
-        $due_to='Add Enrollment To Company Invoice'; 
+        $due_to = 'Add Enrollment To Company Invoice';
         $data1 = $this->get_current_invoice_data($payment_due_id);
         $this->db->trans_start();
-        $status = $this->enrol_invoice_view($payment_due_id,$data1,$logged_in_user_id,$due_to);
+        $status = $this->enrol_invoice_view($payment_due_id, $data1, $logged_in_user_id, $due_to);
         $cur_date = date('Y-m-d');
         $crse_cls_detail = $this->get_class_detail($class_id, $course_id, $tenant_id);
         $str_class_status = $this->get_class_status($crse_cls_detail->class_status, $crse_cls_detail->class_start_datetime, $crse_cls_detail->class_end_datetime);
-        
-        $course=$course_id;
-        $class=$class_id;
-        $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
-           
-        foreach ($seleced_trainee_list as $user_id) 
-        {
-             if($check_attendance>0)
-            {
-                $check_attendance_trainee=$this->check_attendance_trainee($tenant_id,$course,$class,$user_id);
-                if($check_attendance_trainee > 0){
-                    $training_score='C';
-                    $att_status=1;
-                }else{
-                 $training_score='ABS';
-                 $att_status=0;
+
+        $course = $course_id;
+        $class = $class_id;
+        $check_attendance = $this->check_attendance_row($tenant_id, $course, $class);
+
+        foreach ($seleced_trainee_list as $user_id) {
+            if ($check_attendance > 0) {
+                $check_attendance_trainee = $this->check_attendance_trainee($tenant_id, $course, $class, $user_id);
+                if ($check_attendance_trainee > 0) {
+                    $training_score = 'C';
+                    $att_status = 1;
+                } else {
+                    $training_score = 'ABS';
+                    $att_status = 0;
                 }
-            }else { $att_status=1;}
-           // $fees_array = $this->fees_payable($user_id, $tenant_id, $course_id, $class_id, 0,$company_id, $logged_in_user_id);
-            /* above commented beacuase it was not checking invoice discount(re-genrated)*/
-            $fees_array = $this->fees_payable_check_discount($user_id, $tenant_id, $course_id, $class_id, 0,$company_id, $payment_due_id, $logged_in_user_id);//SK1
+            } else {
+                $att_status = 1;
+            }
+            // $fees_array = $this->fees_payable($user_id, $tenant_id, $course_id, $class_id, 0,$company_id, $logged_in_user_id);
+            /* above commented beacuase it was not checking invoice discount(re-genrated) */
+            $fees_array = $this->fees_payable_check_discount($user_id, $tenant_id, $course_id, $class_id, 0, $company_id, $payment_due_id, $logged_in_user_id); //SK1
             $previous_inv_id = $curr_invoice_details->invoice_id;
             $data = array(
                 'tenant_id' => $tenant_id,
@@ -11713,77 +11545,69 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 'enrol_status' => 'ENRLBKD'
             );
             $this->db->insert('class_enrol', $data);
-            
+
             $data = array(
                 'user_id' => $user_id,
                 'pymnt_due_id' => $payment_due_id,
-                'class_fees' => round($fees_array["unit_fees"], 4),//sk1
-                'total_amount_due' => round($fees_array["net_fees_due"], 2),//sk2
+                'class_fees' => round($fees_array["unit_fees"], 4), //sk1
+                'total_amount_due' => round($fees_array["net_fees_due"], 2), //sk2
                 'discount_type' => $fees_array["discount_type"],
                 'discount_rate' => round($fees_array["discount_rate"], 4),
-                'gst_amount' => round($fees_array["gst_amount"], 2),//sk3
+                'gst_amount' => round($fees_array["gst_amount"], 2), //sk3
                 'subsidy_amount' => 0,
                 'subsidy_recd_date' => '0000-00-00',
                 'att_status' => $att_status
             );
             $this->db->insert('enrol_pymnt_due', $data);
-            if($check_attendance > 0)
-            {
-                if($check_attendance_trainee > 0){
+            if ($check_attendance > 0) {
+                if ($check_attendance_trainee > 0) {
 
                     $discount_rate = $fees_array["discount_rate"];
                     $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
                     $total_gst_due += $fees_array["gst_amount"];
                     $total_unit_fees_due += $fees_array["unit_fees"];
-                    $total_net_fees_due += round($fees_array["net_fees_due"],2);
+                    $total_net_fees_due += round($fees_array["net_fees_due"], 2);
                 }
-            }
-            else{
+            } else {
                 $discount_rate = $fees_array["discount_rate"];
                 $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
                 $total_gst_due += $fees_array["gst_amount"];
                 $total_unit_fees_due += $fees_array["unit_fees"];
-                $total_net_fees_due += round($fees_array["net_fees_due"],2);
+                $total_net_fees_due += round($fees_array["net_fees_due"], 2);
             }
         }
         $status = $this->update_invoice_audit_trail($payment_due_id);
-        if ($status) 
-        {
+        if ($status) {
             $status = $this->remove_invoice($payment_due_id);
-            if ($status) 
-            {
+            if ($status) {
                 //sk4
-                list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, (round($curr_invoice_details->total_inv_amount,2) + round($total_net_fees_due,2)), ($curr_invoice_details->total_unit_fees + $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt + $total_discount_due), ($curr_invoice_details->total_inv_subsdy + $total_subsidy_amount_due), (round($curr_invoice_details->total_gst,2) + round($total_gst_due,2)), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
-                if ($status) 
-                {  
+                list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, (round($curr_invoice_details->total_inv_amount, 2) + round($total_net_fees_due, 2)), ($curr_invoice_details->total_unit_fees + $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt + $total_discount_due), ($curr_invoice_details->total_inv_subsdy + $total_subsidy_amount_due), (round($curr_invoice_details->total_gst, 2) + round($total_gst_due, 2)), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
+                if ($status) {
                     $invoice_id = $new_invoice_id;
                     $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
-                    $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);//s4
+                    $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id); //s4
                 }
             }
         }
         $this->db->trans_complete();
-        if ($this->db->trans_status() === FALSE) 
-        {
+        if ($this->db->trans_status() === FALSE) {
             $status = FALSE;
         }
         return $status;
-    }     
-    
-    
-     public function get_current_invoice_data($payment_due_id){
+    }
+
+    public function get_current_invoice_data($payment_due_id) {
         //starts
-        $id=$payment_due_id;
-        if (empty($id)) 
-        {
+        $id = $payment_due_id;
+        if (empty($id)) {
             return show_404();
         }
-        
+
         $result = $this->get_enroll_invoice($id);
-       
+
         $result->previous_inv_id = $this->get_enroll_prev_invoice($result->invoice_id);
-        
-       
+
+
         $result->tenant_state = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_state), ', ');
         $result->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_country), ', ');
         $result->inv_year = date('Y', strtotime($result->inv_date));
@@ -11821,60 +11645,59 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $result->indi_disc_total = ($result->class_fees * ($result->discount_rate / 100));
 
         $feesdue = $result->total_unit_fees - $result->total_inv_discnt;
-     
+
         $result->payment_due_details = $this->classtraineemodel->get_company_payment_due_details($id);
-       
+
         $company_received = $this->classtraineemodel->company_payment_recd($result->invoice_id);
         $user_paid = array();
         foreach ($company_received as $k => $v) {
-            $user_paid[$v->user_id] = round($v->amount_recd,2);
+            $user_paid[$v->user_id] = round($v->amount_recd, 2);
         }
         $company_refunded = $this->classtraineemodel->company_payment_refund($result->invoice_id);
         $user_refund = array();
         foreach ($company_refunded as $k => $v) {
-            $user_refund[$v->user_id] = round($v->refund_amount,2);
+            $user_refund[$v->user_id] = round($v->refund_amount, 2);
         }
-        foreach($result->payment_due_details as $key=>$val){
+        foreach ($result->payment_due_details as $key => $val) {
             $received = empty($user_paid[$val->user_id]) ? 0 : $user_paid[$val->user_id];
             $refunded = empty($user_refund[$val->user_id]) ? 0 : $user_refund[$val->user_id];
             $inv_amt+=$val->total_amount_due;
             $received_amt+=$received;
             $refunded_amt+=$refunded;
-            if((($val->total_amount_due + $refunded) - $received) <= 0){
+            if ((($val->total_amount_due + $refunded) - $received) <= 0) {
                 $payment_label = 'PAID';
-            }else{ 
-                if($refunded > 0){
-                  $payment_label = 'REFUNDED';  
-                } else{ 
-                    if($received == 0){
+            } else {
+                if ($refunded > 0) {
+                    $payment_label = 'REFUNDED';
+                } else {
+                    if ($received == 0) {
                         $payment_label = 'NOT PAID';
-                    }else if($received > 0){
+                    } else if ($received > 0) {
                         $payment_label = 'PART PAID';
                     }
                 }
             }
             $result->payment_due_details[$key]->payment_label = $payment_label;
-        } 
-        $payable_amount=$inv_amt-$received_amt;
-        $result->payble_amount=$inv_amt+$refunded_amt-$received_amt;
-        $data= json_encode($result);
+        }
+        $payable_amount = $inv_amt - $received_amt;
+        $result->payble_amount = $inv_amt + $refunded_amt - $received_amt;
+        $data = json_encode($result);
         return $data;
     }
-    
-     public function get_current_individule_invoice_data($payment_due_id)
-  {
-      $tenant_id = $this->tenant_id;
-        $payid=$payment_due_id;
+
+    public function get_current_individule_invoice_data($payment_due_id) {
+        $tenant_id = $this->tenant_id;
+        $payid = $payment_due_id;
         $tenant_details = $this->classtraineemodel->get_tenant_masters($tenant_id);
         $result = $this->classtraineemodel->get_enroll_invoice($payid);
         //added by pritam to generate previous invoice number
-         $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_indvoice($payid);
+        $result->previous_inv_id = $this->classtraineemodel->get_enroll_prev_indvoice($payid);
         //
         $result->invoiced_on = ($result->invoiced_on == NULL || $result->invoiced_on == '0000-00-00 00:00:00') ? '' : date('d-m-Y', strtotime($result->invoiced_on));
-        
+
         $result->personal_address_state = rtrim($this->course->get_metadata_on_parameter_id($result->personal_address_state), ', ');
         $result->personal_address_country = rtrim($this->course->get_metadata_on_parameter_id($result->personal_address_country), ', ');
-        
+
         $result->tenant_state = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_state), ', ');
         $result->tenant_country = rtrim($this->course->get_metadata_on_parameter_id($result->tenant_country), ', ');
         $result->total_inv_amount = number_format($result->total_inv_amount, 2, '.', '');
@@ -11888,11 +11711,11 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $result->total_inv_discnt_hidden = number_format($result->total_inv_discnt, 4, '.', '');
         $result->total_inv_discnt = number_format($result->total_inv_discnt, 2, '.', '');
         $result->total_inv_subsdy = number_format(($result->total_inv_subsdy), 2, '.', '');
-       
+
         $trainee_id = $this->classtraineemodel->get_trainee_by_pymnt_due_id($payid)->user_id;
-       
+
         $gst_label = ($result->total_gst) ? 'GST ON, ' : 'GST OFF, ';
-       
+
         if ($result->total_gst) {
             $gst_label .= rtrim($this->course->get_metadata_on_parameter_id($result->gst_rule), ', ');
         }
@@ -11900,50 +11723,44 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $result->gst_label = $gst_label;
         $result->total_gst = number_format($result->total_gst, 2);
         $feesdue = $result->total_unit_fees - (($result->total_unit_fees * $result->discount_rate) / 100);
-        $result->after_gst = $this->classtraineemodel->calculate_after_before_gst($result->gst_on_off, $result->gst_rule, $feesdue, $result->total_inv_subsdy, $result->gst_rate); 
-      
+        $result->after_gst = $this->classtraineemodel->calculate_after_before_gst($result->gst_on_off, $result->gst_rule, $feesdue, $result->total_inv_subsdy, $result->gst_rate);
+
         if ($result->gst_on_off = 1 && $result->gst_rule == 'GSTBSD') {
             $result->after_discount = $result->total_unit_fees - $result->total_inv_discnt;
         } else {
             $result->after_discount = $result->total_unit_fees - $result->total_inv_discnt - $result->total_inv_subsdy;
         }
-        
+
         $paid_details = $this->classtraineemodel->get_invoice_paid_details($result->invoice_id);
-       
+
         $paid_arr = array();
         $paid_rcd_till_date = 0;
         //sfc_start
-         $result->sfc_claimed=0;
-        foreach ($paid_details as $row) 
-        {
-           
-            if($row->mode_of_pymnt=="SFC_SELF")
-            {
-              
-                $mode_of_payment=explode('_',$row->mode_of_pymnt);
-                $result->mode_of_pymnt=$mode_of_payment[1];
-                $row->other_payment;
-                 $sfc_claimed=$row->sfc_claimed;
+        $result->sfc_claimed = 0;
+        foreach ($paid_details as $row) {
 
-                 $result->sfc_claimed=number_format($sfc_claimed, 2, '.', '');
-                
+            if ($row->mode_of_pymnt == "SFC_SELF") {
+
+                $mode_of_payment = explode('_', $row->mode_of_pymnt);
+                $result->mode_of_pymnt = $mode_of_payment[1];
+                $row->other_payment;
+                $sfc_claimed = $row->sfc_claimed;
+
+                $result->sfc_claimed = number_format($sfc_claimed, 2, '.', '');
             }
-            if($row->mode_of_pymnt=="SFC_ATO")
-            {
-                $mode_of_payment=explode('_',$row->mode_of_pymnt);
-                $result->mode_of_pymnt=$mode_of_payment[1];
+            if ($row->mode_of_pymnt == "SFC_ATO") {
+                $mode_of_payment = explode('_', $row->mode_of_pymnt);
+                $result->mode_of_pymnt = $mode_of_payment[1];
                 $row->other_payment;
-                $sfc_claimed=$row->sfc_claimed;
+                $sfc_claimed = $row->sfc_claimed;
 
-                $result->sfc_claimed=number_format($sfc_claimed, 2, '.', '');
+                $result->sfc_claimed = number_format($sfc_claimed, 2, '.', '');
             }
         }
         //sfc_start
-        if (!empty($paid_details)) 
-        {
+        if (!empty($paid_details)) {
             $label = 'active';
-            foreach ($paid_details as $row) 
-            {
+            foreach ($paid_details as $row) {
                 $mode_ext = ($row->mode_of_pymnt == 'CHQ') ? ' Chq#: ' . $row->cheque_number : '';
                 $mode = rtrim($this->course->get_metadata_on_parameter_id($row->mode_of_pymnt), ', ');
                 $paid_arr[] = array(
@@ -11953,14 +11770,13 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 );
                 $paid_rcd_till_date = $row->amount_recd + $paid_rcd_till_date;
             }
-             $total_paid = $paid_rcd_till_date;
+            $total_paid = $paid_rcd_till_date;
 
             $result->refund_details = $refund_details = $this->classtraineemodel->get_refund_paid_details($result->invoice_id);
             $refund_amount = 0;
-            foreach ($refund_details as $k => $row) 
-            {
-                 $row->mode_of_refund;
-             
+            foreach ($refund_details as $k => $row) {
+                $row->mode_of_refund;
+
                 if ($row->refnd_reason != 'OTHERS') {
                     $result->refund_details[$k]->refnd_reason = $this->course->get_metadata_on_parameter_id($row->refnd_reason);
                 } else {
@@ -11971,12 +11787,12 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                 $result->refund_details[$k]->mode_of_refund = $this->course->get_metadata_on_parameter_id($row->mode_of_refund);
                 $refund_amount = $refund_amount + $row->amount_refund;
             }
-        
+
 
             $paid_rcd_till_date = $paid_rcd_till_date - $refund_amount;
-            
+
             $result->paid_rcd_till_date = number_format($paid_rcd_till_date, 2, '.', '');
-                 
+
             $course_manager = $this->course->get_managers($result->crse_manager, 1);
             $stripos = stripos($course_manager, ', ');
             $result->course_manager = (empty($stripos)) ? $course_manager : substr($course_manager, 0, $stripos);
@@ -11991,40 +11807,39 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             $invoice->recd_on_year = date('Y', strtotime($invoice->recd_on));
             $invoice->recd_on = date('d/m/Y', strtotime($invoice->recd_on));
             $invoice->mode_of_pymnt = rtrim($this->course->get_metadata_on_parameter_id($invoice->mode_of_pymnt), ', ');
-        } 
-        else {
+        } else {
             $label = 'inactive';
         }
         $result->att_status;
         $result->enrolment_mode;
-        if((($result->total_inv_amount + $refund_amount) - $total_paid) == 0){
+        if ((($result->total_inv_amount + $refund_amount) - $total_paid) == 0) {
             $payment_label = 'PAID';
-        }else{ 
-            if($refund_amount > 0){
-                $payment_label = 'REFUNDED';  
-            } elseif($total_paid == 0){
+        } else {
+            if ($refund_amount > 0) {
+                $payment_label = 'REFUNDED';
+            } elseif ($total_paid == 0) {
                 $payment_label = 'NOT PAID';
             }
         }
-        if($result->att_status==0 && $result->enrolment_mode!="COMPSPON")
-        {
+        if ($result->att_status == 0 && $result->enrolment_mode != "COMPSPON") {
             $payment_label = $result->payment_status;
         }
-       // echo $paid_rcd_till_date."/".$result->sfc_claimed."/".$result->total_inv_amount."/<br />";
-        
-        $result->payble=$result->total_inv_amount-$paid_rcd_till_date;
-      
+        // echo $paid_rcd_till_date."/".$result->sfc_claimed."/".$result->total_inv_amount."/<br />";
+
+        $result->payble = $result->total_inv_amount - $paid_rcd_till_date;
+
         $result->subsidy_recd_date = (($result->subsidy_recd_date == '0000-00-00') || ($result->subsidy_recd_date == null)) ? '' : date('d-m-Y', strtotime($result->subsidy_recd_date));
         $result->payment_label = $payment_label;
         $subsidy_type = $this->classtraineemodel->get_subsidy_type($this->tenant_id);
         $subsidy_type_label = $this->classtraineemodel->get_subsidy_type_label($this->tenant_id, $result->subsidy_type_id);
-        $subsidy_type_label = empty($subsidy_type_label)? 'NA':$subsidy_type_label;
-        $res = array('data'=>$result, 'recd' => $paid_arr, 'label' => $label, 'tenant' => $tenant_details,
-            'invoice' => $invoice, 'trainee' => $trainee, 'subsidy_type' => $subsidy_type,'subsidy_type_label' => $subsidy_type_label);        
-        
-        $data= json_encode($res);
+        $subsidy_type_label = empty($subsidy_type_label) ? 'NA' : $subsidy_type_label;
+        $res = array('data' => $result, 'recd' => $paid_arr, 'label' => $label, 'tenant' => $tenant_details,
+            'invoice' => $invoice, 'trainee' => $trainee, 'subsidy_type' => $subsidy_type, 'subsidy_type_label' => $subsidy_type_label);
+
+        $data = json_encode($res);
         return $data;
-  }
+    }
+
     /**
 
      * This method adds the selected trainees to move an existing company invoice
@@ -12047,11 +11862,10 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * added by pritam
 
      */
-     private function move_to_company_enrollment($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
-    , $invoice_id, $payment_due_id, $seleced_trainee_list,$sales) {
+    private function move_to_company_enrollment($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
+    , $invoice_id, $payment_due_id, $seleced_trainee_list, $sales) {
         $status = TRUE;
-        if (empty($seleced_trainee_list)) 
-        {
+        if (empty($seleced_trainee_list)) {
 
             return FALSE;
         }
@@ -12073,71 +11887,67 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $str_class_status = $this->get_class_status($crse_cls_detail->class_status, $crse_cls_detail->class_start_datetime, $crse_cls_detail->class_end_datetime);
 
-       $data = $this->get_current_invoice_data($payment_due_id); 
-        $due_to = 'Move Trainee from one company Invoice to other company invoice'; 
+        $data = $this->get_current_invoice_data($payment_due_id);
+        $due_to = 'Move Trainee from one company Invoice to other company invoice';
         $this->db->trans_start();
-        $status = $this->enrol_invoice_view($payment_due_id,$data,$logged_in_user_id,$due_to); 
-            
-       
+        $status = $this->enrol_invoice_view($payment_due_id, $data, $logged_in_user_id, $due_to);
+
+
         $count = 0;
-        
-        foreach ($sales as $key=>$value) 
-         {
-            if ($value!= '') {
+
+        foreach ($sales as $key => $value) {
+            if ($value != '') {
                 $count++;
             }
         }
-       
-       
-        if($count>0)
-        {
-           
-            $user_sales=array_combine($seleced_trainee_list,$sales);
-            foreach($user_sales as $user_id=>$sales)
-            {
-            
-            $sales_course= $this->db->query("select * from course_sales_exec where tenant_id='$tenant_id' and course_id='$course_id' and user_id='$sales'");
-            $count=$sales_course->num_rows();
-            if($count<=0)
-            {
-                $sales_details = $this->db->select('*') ->from('course_sales_exec')->where("user_id", $sales)
-                                               ->where("tenant_id", $tenant_id)
-                        ->get()->row(0);
-                       
-                       $sales_array=array(
-                           'tenant_id'=>$tenant_id,
-                           'course_id'=>$course_id,
-                           'user_id'=>$sales,
-                           'commission_rate'=>'5',
-                           'status'=>$sales_details->status,
-                           'acti_date_time'=>$sales_details->acti_date_time,
-                           'deacti_date_time'=>$sales_details->deacti_date_time,
-                           'deacti_reason'=>$sales_details->deacti_reason,
-                           'deacti_reason_oth'=>$sales_details->deacti_reason_oth,
-                           'deacti_by'=>$sales_details->deacti_by,
-                           'assigned_on'=>$sales_details->assigned_on,
-                           'assigned_by'=>$sales_details->assigned_by,
-                           'last_modified_by'=>$sales_details->last_modified_by,
-                           'last_modified_on'=>$sales_details->last_modified_on
-                       );
-                       $this->db->insert('course_sales_exec',$sales_array);
-                
-            }
-                $fees_array = $this->fees_payable($user_id, $tenant_id, $course_id, $class_id,0, $company_id, $logged_in_user_id);
-                $course=$course_id;
-                $class=$class_id;
-                $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
-                if($check_attendance>0)
-                {
-                    $check_attendance_trainee=$this->check_attendance_trainee($tenant_id,$course,$class,$user_id);
-                    if($check_attendance_trainee > 0){
-                        $training_score='C';
-                        $att_status=1;
-                    }else{
-                     $training_score='ABS';
-                     $att_status=0;
+
+
+        if ($count > 0) {
+
+            $user_sales = array_combine($seleced_trainee_list, $sales);
+            foreach ($user_sales as $user_id => $sales) {
+
+                $sales_course = $this->db->query("select * from course_sales_exec where tenant_id='$tenant_id' and course_id='$course_id' and user_id='$sales'");
+                $count = $sales_course->num_rows();
+                if ($count <= 0) {
+                    $sales_details = $this->db->select('*')->from('course_sales_exec')->where("user_id", $sales)
+                                    ->where("tenant_id", $tenant_id)
+                                    ->get()->row(0);
+
+                    $sales_array = array(
+                        'tenant_id' => $tenant_id,
+                        'course_id' => $course_id,
+                        'user_id' => $sales,
+                        'commission_rate' => '5',
+                        'status' => $sales_details->status,
+                        'acti_date_time' => $sales_details->acti_date_time,
+                        'deacti_date_time' => $sales_details->deacti_date_time,
+                        'deacti_reason' => $sales_details->deacti_reason,
+                        'deacti_reason_oth' => $sales_details->deacti_reason_oth,
+                        'deacti_by' => $sales_details->deacti_by,
+                        'assigned_on' => $sales_details->assigned_on,
+                        'assigned_by' => $sales_details->assigned_by,
+                        'last_modified_by' => $sales_details->last_modified_by,
+                        'last_modified_on' => $sales_details->last_modified_on
+                    );
+                    $this->db->insert('course_sales_exec', $sales_array);
+                }
+                $fees_array = $this->fees_payable($user_id, $tenant_id, $course_id, $class_id, 0, $company_id, $logged_in_user_id);
+                $course = $course_id;
+                $class = $class_id;
+                $check_attendance = $this->check_attendance_row($tenant_id, $course, $class);
+                if ($check_attendance > 0) {
+                    $check_attendance_trainee = $this->check_attendance_trainee($tenant_id, $course, $class, $user_id);
+                    if ($check_attendance_trainee > 0) {
+                        $training_score = 'C';
+                        $att_status = 1;
+                    } else {
+                        $training_score = 'ABS';
+                        $att_status = 0;
                     }
-                }else { $att_status=1;}
+                } else {
+                    $att_status = 1;
+                }
                 $data = array(
                     'tenant_id' => $tenant_id,
                     'course_id' => $course_id,
@@ -12157,84 +11967,80 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
                     'enrol_status' => 'ENRLBKD'
                 );
 
-            $this->db->insert('class_enrol', $data);
+                $this->db->insert('class_enrol', $data);
 
 
 
-            $data = array(
-                'user_id' => $user_id,
-                'pymnt_due_id' => $payment_due_id,
-                'class_fees' => round($fees_array["unit_fees"], 4),
-                'total_amount_due' => round($fees_array["net_fees_due"], 4),
-                'discount_type' => $fees_array["discount_type"],
-                'discount_rate' => round($fees_array["discount_rate"], 4),
-                'gst_amount' => round($fees_array["gst_amount"], 4),
-                'subsidy_amount' => 0,
-                'subsidy_recd_date' => '0000-00-00',
-                 'att_status' => $att_status
-            );
+                $data = array(
+                    'user_id' => $user_id,
+                    'pymnt_due_id' => $payment_due_id,
+                    'class_fees' => round($fees_array["unit_fees"], 4),
+                    'total_amount_due' => round($fees_array["net_fees_due"], 4),
+                    'discount_type' => $fees_array["discount_type"],
+                    'discount_rate' => round($fees_array["discount_rate"], 4),
+                    'gst_amount' => round($fees_array["gst_amount"], 4),
+                    'subsidy_amount' => 0,
+                    'subsidy_recd_date' => '0000-00-00',
+                    'att_status' => $att_status
+                );
 
-            $this->db->insert('enrol_pymnt_due', $data);
+                $this->db->insert('enrol_pymnt_due', $data);
 
-            $discount_rate = $fees_array["discount_rate"];
-                if($check_attendance>0)
-                {
-                    if($check_attendance_trainee > 0){
+                $discount_rate = $fees_array["discount_rate"];
+                if ($check_attendance > 0) {
+                    if ($check_attendance_trainee > 0) {
                         $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
                         $total_gst_due += $fees_array["gst_amount"];
                         $total_unit_fees_due += $fees_array["unit_fees"];
                         $total_net_fees_due += $fees_array["net_fees_due"];
-                        
                     }
-                }else { 
+                } else {
                     $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
                     $total_gst_due += $fees_array["gst_amount"];
                     $total_unit_fees_due += $fees_array["unit_fees"];
                     $total_net_fees_due += $fees_array["net_fees_due"];
                 }
-        }
-       }
-       else
-       {
-          
-            foreach ($seleced_trainee_list as $user_id) 
-            {
-                    $fees_array = $this->fees_payable($user_id, $tenant_id, $course_id, $class_id, 0,$company_id, $logged_in_user_id);
-                    $course=$course_id;
-                    $class=$class_id;
-                    $check_attendance=$this->check_attendance_row($tenant_id,$course,$class);
-                    if($check_attendance>0)
-                    {
-                        $check_attendance_trainee=$this->check_attendance_trainee($tenant_id,$course,$class,$user_id);
-                        if($check_attendance_trainee > 0){
-                            $training_score='C';
-                            $att_status=1;
-                        }else{
-                         $training_score='ABS';
-                         $att_status=0;
-                        }
-                    }else { $att_status=1;}
-                    $data = array(
-                       'tenant_id' => $tenant_id,
-                       'course_id' => $course_id,
-                       'class_id' => $class_id,
-                       'user_id' => $user_id,
-                       'enrolment_type' => 'FIRST',
-                       'enrolment_mode' => 'COMPSPON',
-                       'pymnt_due_id' => $payment_due_id,
-                       'company_id' => $company_id,
-                       'enrolled_on' => $cur_date,
-                       'enrolled_by' => $logged_in_user_id,
-                       'tg_number' => '',
-                       'training_score' => $training_score,
-                       'payment_status' => 'NOTPAID',
-                       'sales_executive_id' => '',
-                       'class_status' => $str_class_status,
-                       'enrol_status' => 'ENRLBKD'
-                   );
+            }
+        } else {
+
+            foreach ($seleced_trainee_list as $user_id) {
+                $fees_array = $this->fees_payable($user_id, $tenant_id, $course_id, $class_id, 0, $company_id, $logged_in_user_id);
+                $course = $course_id;
+                $class = $class_id;
+                $check_attendance = $this->check_attendance_row($tenant_id, $course, $class);
+                if ($check_attendance > 0) {
+                    $check_attendance_trainee = $this->check_attendance_trainee($tenant_id, $course, $class, $user_id);
+                    if ($check_attendance_trainee > 0) {
+                        $training_score = 'C';
+                        $att_status = 1;
+                    } else {
+                        $training_score = 'ABS';
+                        $att_status = 0;
+                    }
+                } else {
+                    $att_status = 1;
+                }
+                $data = array(
+                    'tenant_id' => $tenant_id,
+                    'course_id' => $course_id,
+                    'class_id' => $class_id,
+                    'user_id' => $user_id,
+                    'enrolment_type' => 'FIRST',
+                    'enrolment_mode' => 'COMPSPON',
+                    'pymnt_due_id' => $payment_due_id,
+                    'company_id' => $company_id,
+                    'enrolled_on' => $cur_date,
+                    'enrolled_by' => $logged_in_user_id,
+                    'tg_number' => '',
+                    'training_score' => $training_score,
+                    'payment_status' => 'NOTPAID',
+                    'sales_executive_id' => '',
+                    'class_status' => $str_class_status,
+                    'enrol_status' => 'ENRLBKD'
+                );
 
                 $this->db->insert('class_enrol', $data);
-             $data = array(
+                $data = array(
                     'user_id' => $user_id,
                     'pymnt_due_id' => $payment_due_id,
                     'class_fees' => round($fees_array["unit_fees"], 4),
@@ -12251,47 +12057,44 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
                 $discount_rate = $fees_array["discount_rate"];
 
-                if($check_attendance>0)
-                {
-                    if($check_attendance_trainee > 0){
+                if ($check_attendance > 0) {
+                    if ($check_attendance_trainee > 0) {
                         $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
                         $total_gst_due += $fees_array["gst_amount"];
                         $total_unit_fees_due += $fees_array["unit_fees"];
                         $total_net_fees_due += $fees_array["net_fees_due"];
-
                     }
-                }else { 
-                $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
-                $total_gst_due += $fees_array["gst_amount"];
-                $total_unit_fees_due += $fees_array["unit_fees"];
-                $total_net_fees_due += $fees_array["net_fees_due"];
+                } else {
+                    $total_discount_due += ($fees_array["unit_fees"] * $discount_rate) / 100;
+                    $total_gst_due += $fees_array["gst_amount"];
+                    $total_unit_fees_due += $fees_array["unit_fees"];
+                    $total_net_fees_due += $fees_array["net_fees_due"];
                 }
             }
-       }
+        }
 
         $status = $this->update_invoice_audit_trail($payment_due_id);
-       
-        if ($status) 
-        { 
-          
+
+        if ($status) {
+
 
             $status = $this->remove_invoice($payment_due_id);
 
             if ($status) {
-                       
+
                 list($status, $new_invoice_id) = $this->create_new_invoice($payment_due_id, $company_id, ($curr_invoice_details->total_inv_amount + $total_net_fees_due), ($curr_invoice_details->total_unit_fees + $total_unit_fees_due), ($curr_invoice_details->total_inv_discnt + $total_discount_due), ($curr_invoice_details->total_inv_subsdy + $total_subsidy_amount_due), ($curr_invoice_details->total_gst + $total_gst_due), $curr_invoice_details->gst_rule, $curr_invoice_details->gst_rate, 'INVCOMALL');
 
                 if ($status) {
-                   
+
                     $invoice_id = $new_invoice_id;
-                    
+
                     $status = $this->set_audittrail_newinvoice_num($payment_due_id, $new_invoice_id);
-                     $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id);//s4
+                    $status = $this->set_viewinvoice_newinvoice_num($payment_due_id, $new_invoice_id); //s4
                 }
             }
         }
-       
-       
+
+
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {
@@ -12303,6 +12106,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $status;
     }
+
     /**
 
      * This methods returns back the status string of a class
@@ -12482,7 +12286,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->where("credit_id", $credit_id);
 
         $result_set = $this->db->get();
-        
+
         return $result_set->row();
     }
 
@@ -12545,30 +12349,30 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         return $data->invoice_id;
     }
-     /*check attendance is marked or not
-    */
-    public function check_attendance_row($tenant_id,$course_id,$class_id)
-    {
+
+    /* check attendance is marked or not
+     */
+
+    public function check_attendance_row($tenant_id, $course_id, $class_id) {
         $this->db->select('*');
         $this->db->from('class_attendance ca');
-        $this->db->where('ca.tenant_id',$tenant_id);
-        $this->db->where('ca.course_id',$course_id);
-        $this->db->where('ca.class_id',$class_id);
-        $query=$this->db->get();
-        
+        $this->db->where('ca.tenant_id', $tenant_id);
+        $this->db->where('ca.course_id', $course_id);
+        $this->db->where('ca.class_id', $class_id);
+        $query = $this->db->get();
+
         $query->num_rows();
         return $query->num_rows();
-        
     }
-      /*check attendance is marked or not for trainee
-    */
-  public function check_attendance_trainee($tenant_id,$course_id,$class_id,$user_id)
-    {
+
+    /* check attendance is marked or not for trainee
+     */
+
+    public function check_attendance_trainee($tenant_id, $course_id, $class_id, $user_id) {
         $query = $this->db->query("select * from class_schld where course_id='$course_id' and class_id='$class_id' and tenant_id='$tenant_id'");
         $query->num_rows();
-        if($query->num_rows() > 0)
-        {
-            $query  = $this->db->query("select att.user_id as user_id,
+        if ($query->num_rows() > 0) {
+            $query = $this->db->query("select att.user_id as user_id,
                     SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) 
                     / (select count(cs.class_id) from class_schld cs where cs.course_id='$course_id' and cs.class_id='$class_id' and cs.tenant_id='$tenant_id') as attendence
             from class_attendance att
@@ -12576,16 +12380,14 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             where att.class_id='$class_id' and att.course_id='$course_id' and att.user_id='$user_id'
             group by att.user_id,att.class_id
             having attendence >= 0.75");
-            $this->db->last_query(); 
-        }
-        else 
-        {
-            $sql=$this->db->query("select class_start_datetime,class_end_datetime from course_class where course_id='$course_id' and class_id='$class_id'");
-            foreach($sql->result_array() as $row){
+            $this->db->last_query();
+        } else {
+            $sql = $this->db->query("select class_start_datetime,class_end_datetime from course_class where course_id='$course_id' and class_id='$class_id'");
+            foreach ($sql->result_array() as $row) {
                 $row['class_start_datetime'];
                 $row['class_start_datetime'];
             }
-            $query  = $this->db->query("select att.user_id as user_id,
+            $query = $this->db->query("select att.user_id as user_id,
                             SUM(COALESCE(att.session_01 + att.session_02,att.session_01,att.session_02, 0 )) 
                             / (count(att.user_id)* cc.class_session_day) as attendence
             from class_attendance att
@@ -12593,32 +12395,30 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             where att.class_id='$class_id' and att.course_id='$course_id' and att.user_id='$user_id'
             group by att.user_id,att.class_id
             having attendence >= 0.75");
-             $this->db->last_query(); 
+            $this->db->last_query();
         }
-      
+
         return $query->num_rows();
     }
-    /*check competent in trainer feedback
-    */
-    public function check_competent($tenant_id,$course_id,$class_id,$user_id)
-    {
+
+    /* check competent in trainer feedback
+     */
+
+    public function check_competent($tenant_id, $course_id, $class_id, $user_id) {
         $this->db->select('*');
         $this->db->from('trainer_feedback tf');
-        $this->db->where('tf.tenant_id',$tenant_id);
-        $this->db->where('tf.course_id',$course_id);
-        $this->db->where('tf.class_id',$class_id);
-        $this->db->where('tf.user_id',$user_id);
-        $this->db->where('tf.feedback_question_id','COMYTCOM');
-        $this->db->where('tf.feedback_answer','C');
-        
-        $query=$this->db->get();
+        $this->db->where('tf.tenant_id', $tenant_id);
+        $this->db->where('tf.course_id', $course_id);
+        $this->db->where('tf.class_id', $class_id);
+        $this->db->where('tf.user_id', $user_id);
+        $this->db->where('tf.feedback_question_id', 'COMYTCOM');
+        $this->db->where('tf.feedback_answer', 'C');
+
+        $query = $this->db->get();
         $query->num_rows();
         return $query->num_rows();
-        
     }
-    
-    
-    
+
     /**
 
      * function to get enrol_payment_due
@@ -12644,7 +12444,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->select('user_id')->from('enrol_refund_brkup_dt')->where('invoice_id', $inv_id);
 
         return $this->db->get()->result();
-        }
+    }
 
     /**
 
@@ -12786,11 +12586,15 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $company_subsidy = 0;
 
         $company_total_gst = 0;
-         $logged_in_user_id = $this->user->user_id;
+        $logged_in_user_id = $this->user->user_id;
         $data = $this->get_current_individule_invoice_data($input->pymnt_due_id);
-        if(in_array(1, $select_reinvoice)){$val = 'subsidy';}else{$val = 'discount';} 
-        $due_to = 'Regenrated Invoice due to changes in '.$val;
-        $status = $this->enrol_invoice_view($input->pymnt_due_id,$data,$logged_in_user_id,$due_to);
+        if (in_array(1, $select_reinvoice)) {
+            $val = 'subsidy';
+        } else {
+            $val = 'discount';
+        }
+        $due_to = 'Regenrated Invoice due to changes in ' . $val;
+        $status = $this->enrol_invoice_view($input->pymnt_due_id, $data, $logged_in_user_id, $due_to);
 
         foreach ($trainee as $k => $row) {
 
@@ -12891,14 +12695,14 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         $this->db->insert('enrol_invoice_audittrail', $data);
 
-       // $this->db->where('invoice_id', $post_invoice);
+        // $this->db->where('invoice_id', $post_invoice);
         //$delete_result = $this->db->delete('enrol_invoice');
-        
-        if(!empty($post_invoice)){
+
+        if (!empty($post_invoice)) {
             $this->db->where('invoice_id', $post_invoice);
             $delete_result = $this->db->delete('enrol_invoice');
         }
-        
+
         $this->set_viewinvoice_newinvoice_num($input->pymnt_due_id, $invoice_id);
         return $invoice_id;
     }
@@ -12944,39 +12748,40 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 //
 //        return $invoice_id;
 //    }
-    
+
     private function generate_invoice_id() {
 
         //$date_array = explode("-",$class_start_date);
 
-        $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.","T17" => "EVI","T20" => "WABLAB","T23" => "DEMO", "T24" => "RLIS", "T18" => "SSI");
+        $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.", "T16" => "XPR.B.", "T17" => "EVI", "T20" => "WABLAB", "T23" => "DEMO", "T24" => "RLIS" , "T18" => "SSI", "T25" => "FGE");
 
-        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id","T17" => "ei_new_invoice_id","T20" => "wablab_invoice_id","T23" => "demo_invoice_id", "T24" => "rlis_invoice_id", "T18" => "ssi_invoice_id");
+        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id", "T16" => "xprienz3_invoice_id", "T17" => "ei_new_invoice_id", "T20" => "wablab_invoice_id", "T23" => "demo_invoice_id", "T24" => "rlis_invoice_id", "T18" => "ssi_invoice_id", "T25" => "fge_invoice_id");
 
         $tenant_id = $this->tenant_id;
 
         $invoice_id_tmp = get_max_lookup($lookup_table[$tenant_id]);
 
-        if($tenant_id == 'T17'){
-            if(strlen($invoice_id_tmp)== 1){
-                $invoice_id_tmp = '000'.$invoice_id_tmp;
-            }elseif(strlen($invoice_id_tmp)== 2){
-                $invoice_id_tmp = '00'.$invoice_id_tmp;
-            }elseif(strlen($invoice_id_tmp)== 3){
-                $invoice_id_tmp = '0'.$invoice_id_tmp;
-            }elseif(strlen($invoice_id_tmp)== 4){
+        if ($tenant_id == 'T17') {
+            if (strlen($invoice_id_tmp) == 1) {
+                $invoice_id_tmp = '000' . $invoice_id_tmp;
+            } elseif (strlen($invoice_id_tmp) == 2) {
+                $invoice_id_tmp = '00' . $invoice_id_tmp;
+            } elseif (strlen($invoice_id_tmp) == 3) {
+                $invoice_id_tmp = '0' . $invoice_id_tmp;
+            } elseif (strlen($invoice_id_tmp) == 4) {
                 $invoice_id_tmp = $invoice_id_tmp;
-            }else{
+            } else {
                 $invoice_id_tmp = $invoice_id_tmp;
             }
-            
-            $invoice_id = $pre_fix_array[$tenant_id] .'-20'.date('y').'-'.date('m').$invoice_id_tmp;
-        }else{
+
+            $invoice_id = $pre_fix_array[$tenant_id] . '-20' . date('y') . '-' . date('m') . $invoice_id_tmp;
+        } else {
             $invoice_id = $pre_fix_array[$tenant_id] . $invoice_id_tmp;
         }
 
         return $invoice_id;
     }
+
     /**
 
      * This method clean orphan data.
@@ -13018,37 +12823,38 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
             return $delete_status;
         }
     }
- /* starts check existing invoice for compay*/
-     
-        public function check_invoice($tenant_id,$company,$class)
-        {   
-            $this->db->select('pymnt_due_id');
-            $this->db->from('class_enrol');        
-            $this->db->where('tenant_id', $tenant_id);        
-            $this->db->where('company_id', $company);        
-            $this->db->where('class_id', $class);       
 
-           return $this->db->get()->row();
-         
-        }
-      
-     /* ends * /
-      * 
-      * 
-      */
-        ////below code added by shubhranshu to check if the invoice is  paid/partpaid
-     public function check_if_invoice_paid($company,$course,$class){
-        
+    /* starts check existing invoice for compay */
+
+    public function check_invoice($tenant_id, $company, $class) {
         $this->db->select('pymnt_due_id');
-        $this->db->from('class_enrol');        
-        $this->db->where('tenant_id', $this->tenant_id);        
-        $this->db->where('company_id', $company);  
-        $this->db->where('course_id', $course);  
-        $this->db->where('class_id', $class);    
-        $this->db->where('payment_status', 'PAID'); 
-        $this->db->where("(payment_status='PAID' OR payment_status='PARTPAID')", NULL,FALSE);
+        $this->db->from('class_enrol');
+        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('company_id', $company);
+        $this->db->where('class_id', $class);
+
         return $this->db->get()->row();
-     }
+    }
+
+    /* ends * /
+     * 
+     * 
+     */
+
+    ////below code added by shubhranshu to check if the invoice is  paid/partpaid
+    public function check_if_invoice_paid($company, $course, $class) {
+
+        $this->db->select('pymnt_due_id');
+        $this->db->from('class_enrol');
+        $this->db->where('tenant_id', $this->tenant_id);
+        $this->db->where('company_id', $company);
+        $this->db->where('course_id', $course);
+        $this->db->where('class_id', $class);
+        $this->db->where('payment_status', 'PAID');
+        $this->db->where("(payment_status='PAID' OR payment_status='PARTPAID')", NULL, FALSE);
+        return $this->db->get()->row();
+    }
+
     /**
 
      * This method returns the payment not required data.
@@ -13080,7 +12886,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
      * @return type
 
      */
-    public function list_all_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0,$eid=0) {
+    public function list_all_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0, $eid = 0) {
 
         $user_id = '';
 
@@ -13100,12 +12906,12 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         }
 
         //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
-        $this->db->select('c.course_id , c.crse_name, 
+        $this->db->select('c.course_id , c.crse_name, c.tpg_crse,
  cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
  ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode, ce.company_id,ce.referral_details,ce.eid_number, ce.certificate_coll_on, ce.payment_status,  
  tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
 tu . user_id ,tu.tenant_id, tu. account_type, tu.tax_code, tu.account_status,
-tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number,cc.sales_executive');
+tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number,cc.sales_executive, c.reference_num, c.external_reference_number, cc.tpg_course_run_id, due.class_fees, due.discount_rate, ce.tpg_enrolment_status');
 
         $this->db->from('course_class cc');
 
@@ -13138,7 +12944,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
             $this->db->where('cc.class_id', $class_id);
         }
-        
+
         if (!empty($eid)) {
 
             $this->db->where('ce.eid_number', $eid);
@@ -13200,11 +13006,10 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         }
 
         //$query = $this->db->get();        
-
         ///$query2 = $this->db->return_query_clear(); commented by shubhranshu
-        
-        $query2= $this->db->get_compiled_select();   ///added by shubhranshu
-        
+
+        $query2 = $this->db->get_compiled_select();   ///added by shubhranshu
+
         $query2 = str_replace('`', " ", $query2);
 
         $query2 = str_replace('( course_class  cc)', 'course_class cc', $query2);
@@ -13869,20 +13674,20 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
         return $this->db->get();
     }
-    
-    public function get_class_enrol_data($course_id,$class_id,$user_id=null,$company_id=null){
+
+    public function get_class_enrol_data($course_id, $class_id, $user_id = null, $company_id = null) {
         $this->db->select('*');
         $this->db->from('class_enrol');
-        $this->db->where('course_id',$course_id);
-        $this->db->where('class_id',$class_id);
-        if($user_id!=null){
-              $this->db->where('user_id',$user_id);
-        }else if($company_id!=null){
-             $this->db->where('company_id',$company_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        if ($user_id != null) {
+            $this->db->where('user_id', $user_id);
+        } else if ($company_id != null) {
+            $this->db->where('company_id', $company_id);
         }
         $sql = $this->db->get();
         return $data = $sql->result_array();
-       // $data['payment_due'] = $this->payment_tbl($data['pymnt_due_id']);
+        // $data['payment_due'] = $this->payment_tbl($data['pymnt_due_id']);
     }
 
     /**
@@ -14007,7 +13812,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
         foreach ($seleced_trainee_list as $user_id) {
 
-            $fees_array = $this->fees_payable($user_id, $tenant_id, $course_id, $class_id, 0,$company_id, $logged_in_user_id);
+            $fees_array = $this->fees_payable($user_id, $tenant_id, $course_id, $class_id, 0, $company_id, $logged_in_user_id);
 
             $data = array(
                 'tenant_id' => $tenant_id,
@@ -14177,11 +13982,11 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $_POST['payment_retake'] = ($data['payment_status'] == 'PYNOTREQD') ? 2 : 1;
 
         $_POST['salesexec'] = $data['sales_executive_id'];
-        
+
         $reschedule = 1;
-        
+
         $res = $this->company_enrollment_db_update($tenant_id, $this->user->user_id, '', 'N', $reschedule);
-        
+
         return $res;
     }
 
@@ -14268,12 +14073,12 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
             $payment_id_arr[] = $payment['pymnt_due_id'];
         }
-        if(!empty($payment_id_arr)){////added by shubhranshu tp prvent query error while payment_due_id not exist///
+        if (!empty($payment_id_arr)) {////added by shubhranshu tp prvent query error while payment_due_id not exist///
             $paid_array = $this->db->select('pymnt_due_id')->from('class_enrol')
-                ->where('class_id', $class_id)
-                ->where_in('payment_status', array("PARTPAID", "PAID"))
-                ->where_in('pymnt_due_id', $payment_id_arr)
-                ->get();
+                    ->where('class_id', $class_id)
+                    ->where_in('payment_status', array("PARTPAID", "PAID"))
+                    ->where_in('pymnt_due_id', $payment_id_arr)
+                    ->get();
             if ($paid_array->num_rows() > 0) {
 
                 return array('status' => 'PAID');
@@ -14281,12 +14086,9 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
                 return array('status' => 'NOTPAID');
             }
-        }else{
-            return FALSE;///added by shubhranshu tp prvent query error while payment_due_id not exist//
+        } else {
+            return FALSE; ///added by shubhranshu tp prvent query error while payment_due_id not exist//
         }
-        
-
-        
     }
 
     /**
@@ -14320,45 +14122,43 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->get_compiled_select(); exit;
         return $this->db->get()->result_object();
     }
-	// skm code start
-	public function get_rows_count($course_id,$class_id)
-    {
-       
+
+    // skm code start
+    public function get_rows_count($course_id, $class_id) {
+
         $this->db->select('class_id,course_id');
         $this->db->from('class_attendance');
-        $this->db->where('course_id',$course_id);
-        $this->db->where('class_id',$class_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
         $sql = $this->db->get();
 
-       return $sql->num_rows();
-   
-    
+        return $sql->num_rows();
     }
-	// skm code end
-/*
-   * skm start-> this function called from export helper which count the total session at particular date
-   */  
-    public function scheduled_session_count($class_id,$course_id,$formatted_day)
-    {
-           $this->db->select('class_id,course_id,class_date');
-           $this->db->from('class_schld');
-           $this->db->where('course_id',$course_id);
-           $this->db->where('class_id',$class_id);
-           $this->db->where('class_date',$formatted_day);
-           $sql = $this->db->get();           
-           return $sql->num_rows();
 
+    // skm code end
+    /*
+     * skm start-> this function called from export helper which count the total session at particular date
+     */
+    public function scheduled_session_count($class_id, $course_id, $formatted_day) {
+        $this->db->select('class_id,course_id,class_date');
+        $this->db->from('class_schld');
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        $this->db->where('class_date', $formatted_day);
+        $sql = $this->db->get();
+        return $sql->num_rows();
     }
+
     /*
      * skm end 
      */
-    
-   // added by shubhranshu for invoice audit trail
+
+    // added by shubhranshu for invoice audit trail
     public function get_all_invoice_audit_trail($tenant_id, $invoice, $paid = 0) {
         //$this->db->distinct();
         $this->db->select('eia.invoice_id, enrolment_mode, tup.first_name, tup.last_name, cm.company_name,cm.comp_regist_num, tu.tax_code')
                 ->from('enrol_invoice_audittrail eia')
-                 ->join('class_enrol ce', 'ce.pymnt_due_id=eia.pymnt_due_id')
+                ->join('class_enrol ce', 'ce.pymnt_due_id=eia.pymnt_due_id')
                 ->join('tms_users tu', 'tu.user_id=ce.user_id')
                 ->join('tms_users_pers tup', 'tup.user_id=tu.user_id')
                 ->join('company_master cm', 'cm.company_id=ce.company_id', 'left');
@@ -14380,7 +14180,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->get_compiled_select();exit;
         return $this->db->get()->result_object();
     }
-    
+
     /* This Function get the sfc claim id of trainee by shubhranshu start */
 
     public function get_sfc_claim_id($class_id, $user_id, $payid, $tenant_id) {
@@ -14394,29 +14194,32 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $result = $qry->row();
         return $result->sfc_claim_id;
     }
+
     ///addded by shubhranshu for evrest pdf generation rcvd details all
     public function get_pymnt_rcvd_detailsforrpt($inv_id) {
         $this->db->select('*');
         $this->db->from('enrol_paymnt_recd');
         $this->db->where('invoice_id', $inv_id);
-        $this->db->order_by('trigger_date','desc');
+        $this->db->order_by('trigger_date', 'desc');
         $this->db->limit('1');
         $qry = $this->db->get();
         $result = $qry->row();
         //echo $this->db->last_query();exit;
         return $result;
     }
+
     ///addded by shubhranshu for evrest pdf generation rcvd details
     public function get_pymnt_rcvd_detailsforrpt_all($inv_id) {
         $this->db->select('*,sum(amount_recd) as total');
         $this->db->from('enrol_paymnt_recd');
         $this->db->where('invoice_id', $inv_id);
-        $this->db->order_by('trigger_date','desc');
+        $this->db->order_by('trigger_date', 'desc');
         $qry = $this->db->get();
         $result = $qry->row();
         //echo $this->db->last_query();exit;
         return $result;
     }
+
     ///addded by shubhranshu for evrest pdf generation refund details
     public function get_refund_rcvd_detailsforrpt($inv_id) {
         $this->db->select('*,sum(amount_refund) as total');
@@ -14426,32 +14229,32 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $result = $qry->row();
         return $result;
     }
+
     ////added by shubhranshu to get the invoice details whether comp or ind
-    public function check_enrol_invoice_compind($id,$inv)
-    {
-        $tenant_id=  $this->tenant_id;
+    public function check_enrol_invoice_compind($id, $inv) {
+        $tenant_id = $this->tenant_id;
         $this->db->select('*');
         $this->db->from('enrol_invoice');
-        $this->db->where('invoice_id',$inv);
-        $this->db->where('pymnt_due_id',$id);
-        $results=  $this->db->get()->row();
+        $this->db->where('invoice_id', $inv);
+        $this->db->where('pymnt_due_id', $id);
+        $results = $this->db->get()->row();
         return $results;
     }
+
     ///added by shubhranshu to get old invoice 
-    public function get_enroll_old_invoice_new($id,$inv)
-    {
-        $tenant_id=  $this->tenant_id;
+    public function get_enroll_old_invoice_new($id, $inv) {
+        $tenant_id = $this->tenant_id;
         $this->db->select('*');
         $this->db->from('enrol_invoice_view');
-        $this->db->where('invoice_id',$inv);
-        $this->db->where('pymnt_due_id',$id);
-        $this->db->where('tenant_id',$tenant_id);
-        $results=  $this->db->get()->row();
+        $this->db->where('invoice_id', $inv);
+        $this->db->where('pymnt_due_id', $id);
+        $this->db->where('tenant_id', $tenant_id);
+        $results = $this->db->get()->row();
         return $results;
     }
-    
+
     ///addded by shubhranshu for evrest pdf generation individual rcvd details
-    public function get_ind_trainee_pymnt_rcvd_amt($inv_id,$trn_id) {
+    public function get_ind_trainee_pymnt_rcvd_amt($inv_id, $trn_id) {
         $this->db->select('sum(amount_recd) as total');
         $this->db->from('enrol_pymnt_brkup_dt');
         $this->db->where('invoice_id', $inv_id);
@@ -14461,6 +14264,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->last_query();exit;
         return $result;
     }
+
     ////added by shubhranshu to fetch traineee who are absent
     public function fetch_absent_trainees($pay_due) {
         $this->db->select('*');
@@ -14472,8 +14276,9 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         //echo $this->db->last_query();exit;
         return $result;
     }
+
     //// added by shubhranshu to get company name for acknowledgement
-    public function get_company_name($invoice_id,$trainee_id,$class_id, $tenant_id) {
+    public function get_company_name($invoice_id, $trainee_id, $class_id, $tenant_id) {
 
         $this->db->select('cm.company_name')
                 ->from('class_enrol ce')
@@ -14487,17 +14292,15 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
             $this->db->where('ei.invoice_id', $invoice_id);
         }
-        
+
         if ($trainee_id) {
-            
+
             $this->db->where('ce.user_id', $trainee_id);
- 
         }
 
         return $this->db->get()->row();
     }
-    
-    
+
     public function internal_eid_list_autocomplete($name_startsWith) {
         $name_startsWith = trim($name_startsWith);
         $user = $this->session->userdata('userDetails');
@@ -14512,7 +14315,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
             $results = $this->db->get()->result();
             //echo $this->db->last_query();exit;
         }
-        
+
         foreach ($results as $k => $v) {
             $output[] = array(
                 'key' => $v->user_id,
@@ -14522,6 +14325,135 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         }
 
         return $output;
+    }
+
+    public function get_full_trainee_details($id) {
+
+        if ($id) {
+
+            $this->db->select('*');
+
+            $this->db->from('tms_users_pers pers');
+
+            $this->db->join('tms_users usr', 'usr.user_id=pers.user_id');
+
+            $this->db->join('tenant_master tm', 'tm.tenant_id=pers.tenant_id');
+
+            $this->db->where('usr.account_type', 'TRAINE');
+
+            $this->db->where('usr.tenant_id', $this->session->userdata('userDetails')->tenant_id);
+
+            $this->db->where('usr.user_id', $id);
+
+            $results = $this->db->get()->result_array();
+
+            return $results[0];
+        }
+    }
+
+    //// added by shubhranshu to fetch all trainee that are enrolled to the class
+    public function get_enrolled_trainee($tenant_id, $courseID, $classID) {
+
+        $today_date = date('Y-m-d');
+
+        $sql = "SELECT             
+                tu.user_id,
+                tu.tax_code
+                FROM ( course_class cc) 
+                JOIN course c ON c.course_id = cc.course_id 
+                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                left join tms_users_pers tup on tup.user_id =ce.user_id 
+                left join company_master cm on cm.company_id=ce.company_id
+                WHERE cc . tenant_id = '$tenant_id'
+                AND c.course_id = '$courseID'
+                AND cc.class_id = '$classID'
+                AND ce.eid_number != ''
+                AND date(cc.class_end_datetime) <= '$today_date'";
+        $res = $this->db->query($sql)->result();
+        //echo $this->db->last_query();exit;
+        $result = array();
+        foreach ($res as $row) {
+            $result[$row->user_id] = $row->tax_code;
+        }
+
+        return $result;
+    }
+
+    //////addded by shubhranshu to get the trainee session data for mark attendance to tpg
+    function get_trainee_sessions_data($tenant_id, $course, $class, $userid) {
+        $today_date = date('Y-m-d');
+        $sql = "select tu.user_id,
+                ce.course_id,
+                ce.class_id,
+                c.reference_num,
+                cc.tpg_course_run_id,
+                tup.first_name as fullname,
+                tu.registered_email_id,
+                tup.contact_number,
+                cc.total_classroom_duration,
+                cc.survey_language,
+                tu.tax_code,
+                tu.tax_code_type,
+                cs.tpg_session_id, 
+                cs.session_type_id,
+                (CASE 
+                    WHEN cs.session_type_id like '%S1%' THEN ca.session_01_tpg_uploaded_status ELSE ca.session_02_tpg_uploaded_status END
+                ) as tpg_uploaded_status,
+                
+                cs.class_date,
+                (CASE 
+                    WHEN cs.session_type_id like '%S1%' THEN ca.session_01 ELSE 0 END
+                ) as session_01,
+                (CASE 
+                    WHEN cs.session_type_id like '%S2%' THEN ca.session_02 ELSE 0 END
+                ) as session_02,
+                tup.nationality as idtype,
+                cc.tpg_course_run_id
+                FROM course_class cc
+                JOIN course c ON c.course_id = cc.course_id 
+                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                left join tms_users_pers tup on tup.user_id =tu.user_id 
+                LEFT JOIN class_schld cs ON cs.class_id = cc.class_id and cs.tenant_id = ce.tenant_id and cs.course_id = c.course_id
+                JOIN class_attendance ca ON ca.class_id = cc.class_id and ca.user_id = ce.user_id and ca.course_id = c.course_id and ca.class_attdn_date = cs.class_date
+                WHERE cc . tenant_id = '$tenant_id'
+                AND c.course_id = '$course'
+                AND cc.class_id = '$class'
+                AND ce.user_id = '$userid'
+                AND cs.session_type_id !='BRK'
+                AND ce.eid_number != ''
+                AND date(cc.class_end_datetime) <= '$today_date'";
+                $res = $this->db->query($sql)->result();
+        //echo $this->db->last_query();exit;
+        return $res;
+    }
+    
+    function uploadTmsClassShdl($tenant_id,$course_id,$class_id,$tpg_session_id,$user_id){
+        $this->db->select('*');
+        $this->db->from('class_schld');
+        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('tpg_session_id', $tpg_session_id);
+        $this->db->where('class_id', $class_id);
+        $schd_data = $this->db->get()->row();
+
+        if ((strpos($tpg_session_id, 'S1') !== false) || (strpos($tpg_session_id, 'S3') !== false) || (strpos($tpg_session_id, 'S5') !== false) || (strpos($tpg_session_id, 'S7') !== false)) {
+            $data = array(
+                'session_01_tpg_uploaded_status' => '1'
+            );
+        }else if((strpos($tpg_session_id, 'S2') !== false) || (strpos($tpg_session_id, 'S4') !== false) || (strpos($tpg_session_id, 'S6') !== false) || (strpos($tpg_session_id, 'S8') !== false)){
+            $data = array(
+                'session_02_tpg_uploaded_status' => '1'
+            );
+        }
+        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        $this->db->where('class_attdn_date', $schd_data->class_date);
+        $this->db->where('user_id', $user_id);
+        $status = $this->db->update('class_attendance', $data);
+        return $status;
     }
 
 }

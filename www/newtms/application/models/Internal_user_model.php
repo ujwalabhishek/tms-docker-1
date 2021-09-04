@@ -429,8 +429,7 @@ class Internal_User_Model extends CI_Model {
     public function user_role_check($edit_user_id, $tenant_id) {
         if(empty($edit_user_id) || empty($tenant_id)) {
             return FALSE;
-        }				
-		
+        }
         $this->db->select("crse_name as course_class_name");
         $this->db->from("course");
         $this->db->where("crse_status","ACTIVE");

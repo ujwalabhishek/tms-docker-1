@@ -235,4 +235,5 @@ class Settings extends CI_Controller {
         echo ($exists) ? '1' : '0';
         return;
     }
+
 }

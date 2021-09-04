@@ -501,7 +501,7 @@
 
                                 <td><span class="crse_des">Classroom Location :</span></td>
 
-                               <td><?php if($class['classroom_location'] == 'OTH'){echo $class['classroom_venue_oth']; }else{echo $status_lookup_location[$class['classroom_location']]; }?></td>
+                                <td><?php if($class['classroom_location'] == 'OTH'){echo $class['classroom_venue_oth']; }else{echo $status_lookup_location[$class['classroom_location']]; }?></td>
 
                             </tr>
 

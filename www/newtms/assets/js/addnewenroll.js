@@ -1313,6 +1313,7 @@ function get_select_box($type)
                            </option>';
                        
                         $('#change_taxcode').append($value);
+                       
                     });
                     $('#change_taxcode').hide();
                     $('#change_taxcode_autocomplete').show();

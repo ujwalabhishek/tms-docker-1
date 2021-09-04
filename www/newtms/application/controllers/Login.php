@@ -1,6 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 class Login extends CI_Controller {
     public function __construct() {
         parent::__construct();
@@ -153,6 +153,7 @@ class Login extends CI_Controller {
             redirect('login/administrator');
         }
         //////above block of code added by shubhranshu for google captcha
+        
 //        if(strtolower($captcha) != strtolower($this->session->userdata('captcha_key'))){//added by shubhranshu
 //            $this->session->set_flashdata('invalid_captcha', 'Invalid captcha code');//added by shubhranshu
 //            redirect('login/administrator');//added by shubhranshu
@@ -178,6 +179,7 @@ class Login extends CI_Controller {
             unlink(FCPATH .'captcha/'.$this->session->userdata('captcha_file')); // added by shubhranshu to delete the captcha file
             $user = $this->assign_my_role($user);
             $this->session->set_userdata('userDetails', $user);
+          
             if (empty($user->role_id)) {
                 $this->session->sess_destroy();
                 redirect('login/');
@@ -255,7 +257,9 @@ class Login extends CI_Controller {
      */
     public function _404() {
         $session_data = $this->session->all_userdata();
-        $tenant_id == $session_data['userDetails']->tenant_id;
+        //Commented by abdulla
+		//$tenant_id == $session_data['userDetails']->tenant_id;
+		$tenant_id = $this->session->userdata('userDetails')->tenant_id;    
         if ($tenant_id) {
             $data['tenant_details'] = $this->login->fetch_tenant_details($tenant_id);
             $data['session_data'] = $session_data;

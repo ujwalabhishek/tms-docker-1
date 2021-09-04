@@ -15,11 +15,11 @@ $tms_route['TRAINEE']['ops'] = array(
     'ADD' => 'add_new_trainee', 'EDIT' => 'edit_trainee', 'BULKREG' => 'bulk_registration', 'REFFRND' => 'referrals');
 //------------------------ Course mapping ---------------Modified for DM June 02/2015----------------------
 $tms_route['CRSE']['controller_name'] = 'course';
-$tms_route['CRSE']['ops'] = array('ADD' => 'add_new_course', 'EDIT' => 'edit_course','ASSMT_TMP'=>'assessment_templates',
+$tms_route['CRSE']['ops'] = array('ADD' => 'add_new_course', 'ADDTPGCRSE' => 'add_new_tpg_course', 'EDIT' => 'edit_course', 'ASSMT_TMP'=>'assessment_templates',
     'BULKREG' => 'bulk_registration', 'REFFRND' => 'referrals', 'COPY' => 'copy_course', 'SALESCOMM' => 'sales_commission_rate', 'WEPT' => 'wedgit');
 //------------------------ Class mapping -------------------------------------
 $tms_route['CLSS']['controller_name'] = 'classes';
-$tms_route['CLSS']['ops'] = array('ADD' => 'add_new_class', 'EDIT' => 'edit_class', 'COPY' => 'copy_class', 'SCHD' => 'calendar');
+$tms_route['CLSS']['ops'] = array('ADD' => 'add_new_class', 'ADDTPGCLS' => 'add_new_tpg_class', 'EDIT' => 'edit_class', 'COPY' => 'copy_class', 'SCHD' => 'calendar', 'ADASTOTPG' => 'tpg_assessments');
 //------------------------ Class-Trainee mapping -------------------------------------
 $tms_route['CLTRAINE']['controller_name'] = 'class_trainee';
 $tms_route['CLTRAINE']['ops'] = array(
@@ -30,7 +30,9 @@ $tms_route['CLTRAINE']['ops'] = array(
     'ONENROL' => 'online_trainee',
     'RESCHD' => 're_schedule',
     'UPDT_TRFDB'=>'update_trainer_feedback',
-    'CHG_PYMODE'=>'change_payment_mode');
+    'CHG_PYMODE'=>'change_payment_mode',
+    'STPGENR' => 'tpg_search_enrolment',
+    'MATTPG' => 'mark_attendance_tpg');
 //------------------------ Company mapping -------------------------------------
 $tms_route['COMP']['controller_name'] = 'company';
 $tms_route['COMP']['ops'] = array('ADD' => 'add_new_company', 'EDIT' => 'edit_company');
@@ -49,7 +51,7 @@ $tms_route['RPTS']['ops'] = array(
     'WDA' => 'wda',  
     'TRAQOM' => 'traqom_report',
     'MENRLCT'=>'monthly_enrollment_count',
-     'SCNRPT' => 'search_company_name',
+    'SCNRPT' => 'search_company_name',
     'CRTD'=>'certificate_distribution',
     'ERFS'=>'enrolment_report_for_tpg'
     );

@@ -155,3 +155,8 @@ define('GOOGLE_CAPTCHA_SECRETKEY', "6LfFt-AUAAAAAJ5j-dygHmPcCTw_dKg4se_fjCOz");
 
 /////added by shubhranshu for NSA courses mail send to anther mail id for FRCS
 define('FRCSMAILID', "nsa@frcs.sg"); 
+
+//TPG Environment Variables
+define('TPG_ENVIRONMENT', "PRODUCTION");
+
+define('TPG_URL', "api.ssg-wsg.sg");

@@ -267,10 +267,8 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                                 ?>
                                 <span id="pers_gender_err"></span>
                             </td>
-                            <td class="td_heading">Date of Birth:
-							<?php if($tenant_id=='T24'){ ?>
+                            <td class="td_heading">Date of Birth:							
 								<span class="required">*
-							<?php } ?>
 							</td>						
                             <td> <?php
                                 $dob_input = (empty($trainee[userdetails]['dob'])) ? '' : date('d-m-Y', strtotime($trainee[userdetails]['dob']));
@@ -529,7 +527,8 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
                         </tr>
                         <tr>
                             <td class="td_heading">Email Id:
-                                <span id="span_email_id" class="required" style="display:<?php echo $display_email; ?>">*</span>
+                                <!--<span id="span_email_id" class="required" style="display:<?php //echo $display_email; ?>">*</span>-->
+								<span id="span_email_id" class="required">*</span>
                             </td>
                             <?php
                             $email = array(
@@ -1639,22 +1638,22 @@ endif;
             if ($("#bypassemail_1").is(":checked")) {
                 var email = $.trim($('#user_registered_email').val());
                 if (email == '') {
-                    $("#user_registered_email_err").text("").removeClass('error');
-                    $("#user_registered_email").removeClass('error');
-                    $("#pers_conf_email_err").text("").removeClass('error');
-                    $("#pers_conf_email").removeClass('error');
+                    //$("#user_registered_email_err").text("").removeClass('error');
+                    //$("#user_registered_email").removeClass('error');
+                    //$("#pers_conf_email_err").text("").removeClass('error');
+                    //$("#pers_conf_email").removeClass('error');
                 }
                 $('#span_activate_user').css("display", "");
                 $('#BPEMAC_content').css("display", "");
                 $('#EMACRQ_content').css("display", "none");
-                $("#span_email_id").css("display", "none");
-                $("#span_confirm_email_id").css("display", "none");
+                //$("#span_email_id").css("display", "none");
+                //$("#span_confirm_email_id").css("display", "none");
             } else {
                 $('#span_activate_user').css("display", "none");
                 $('#BPEMAC_content').css("display", "none");
                 $('#EMACRQ_content').css("display", "");
-                $("#span_email_id").css("display", "");
-                $("#span_confirm_email_id").css("display", "");
+                //$("#span_email_id").css("display", "");
+                //$("#span_confirm_email_id").css("display", "");
             }
             return false;
         });
@@ -2018,7 +2017,7 @@ endif;
 //Added by abdulla
 $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>";
 
-			if($tenant_id == 'T24') {
+			//if($tenant_id == 'T24') {
 				pers_dob = $.trim($("#pers_dob").val());            
 				if (valid_date_field(pers_dob) == false && pers_dob.trim().length > 0) {
 					$("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
@@ -2031,17 +2030,17 @@ $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>"
 					$("#pers_dob_err").text("").removeClass('error');
 					$("#pers_dob").removeClass('error');
 				}
-			} else {
-				pers_dob = $.trim($("#pers_dob").val());            
-				if (valid_date_field(pers_dob) == false && pers_dob.trim().length > 0) {
-					$("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
-					$("#pers_dob").removeClass('error');
-					retVal = false;
-				} else {
-					$("#pers_dob_err").text("").removeClass('error');
-					$("#pers_dob").removeClass('error');
-				}
-			}
+			//} else {
+			//	pers_dob = $.trim($("#pers_dob").val());            
+			//	if (valid_date_field(pers_dob) == false && pers_dob.trim().length > 0) {
+			//		$("#pers_dob_err").text("[dd-mm-yy format]").addClass('error');
+			//		$("#pers_dob").removeClass('error');
+			//		retVal = false;
+			//	} else {
+			//		$("#pers_dob_err").text("").removeClass('error');
+			//		$("#pers_dob").removeClass('error');
+			//	}
+			//}
 
             pers_contact_number = $.trim($("#pers_contact_number").val());
             if (pers_contact_number == "") {
@@ -2101,7 +2100,7 @@ $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>"
             }
 
             user_registered_email = $.trim($("#user_registered_email").val());
-            if ($("#bypassemail_2").is(":checked")) {
+            //if ($("#bypassemail_2").is(":checked")) {
                 if (user_registered_email == "") {
                     $("#user_registered_email_err").text("[required]").addClass('error');
                     $("#user_registered_email").addClass('error');
@@ -2114,12 +2113,12 @@ $tenant_id = "<?php echo $this->session->userdata('userDetails')->tenant_id; ?>"
                     $("#pers_conf_email_err").text("").removeClass('error');
                     $("#pers_conf_email").removeClass('error');
                 }
-            } else {
-                $("#user_registered_email_err").text("").removeClass('error');
-                $("#user_registered_email").removeClass('error');
-                $("#pers_conf_email_err").text("").removeClass('error');
-                $("#pers_conf_email").removeClass('error');
-            }            
+            //} else {
+            //    $("#user_registered_email_err").text("").removeClass('error');
+            //    $("#user_registered_email").removeClass('error');
+            //    $("#pers_conf_email_err").text("").removeClass('error');
+            //    $("#pers_conf_email").removeClass('error');
+            //}            
 
             pers_conf_email = $.trim($("#pers_conf_email").val());
             if (pers_conf_email != user_registered_email) {

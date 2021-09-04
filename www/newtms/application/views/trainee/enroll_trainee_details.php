@@ -643,7 +643,7 @@
                 );
                 echo form_input($data);
                 ?>
-                <span style="float:right;">                                        
+                <span style="float:right;" id='declra'>                                        
                     <button type="submit" name="submit" value="enroll_now" class="pay_now btn btn-sm btn-info enroll_now_btn" style="float: right;"><strong>Pay Now</strong></button>                                                                    
                 </span>
                 <?php
@@ -659,7 +659,7 @@
                 );
                 echo form_input($data);
                 ?>
-                <span style="float:right;"> 
+                <span style="float:right;" id='declra'> 
                         <button type="submit" name="submit" value="book_now" class="book_now btn btn-sm btn-info" style="float: right;margin-left: 10px;"><strong>Book Now</strong></button>
                          
                 </span>
@@ -680,7 +680,6 @@
     </div> 
     
 </div>
-
 
 <!----------------modal by ssp start----------------------->
 <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02' && $trainee_data->company_id =='0'){$show='display:block';}else{$show='display:none';}?>
@@ -724,7 +723,7 @@
                            
                         </div>
                     </div>
-                    <!--Grid column--->
+                    <!--Grid column-->
                     <!--Grid column-->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
@@ -792,12 +791,13 @@
 <!----------------modal by ssp end----------------------->
 <script>
     $(document).ready(function(){
+         $('#declra').show();
         $('.book_now').click(function(){
             $(this).hide();
         });
         
-        $('#declra').show();
-         //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol 
+    //added by shubhranshu on 30 jan 2020 new declaration for trainee enrol 
+   
     <?php if ($this->session->userdata('userDetails')->tenant_id == 'T02' && $trainee_data->company_id =='0'){?>
     //$('#declra').hide();
     $('#declarations').click(function(){
@@ -847,7 +847,7 @@
                 }
             });
         }else{
-            $('.statuserr').html('<span style="color:red">Please fill all the (*) Mark fields to Continue!</span>');
+             $('.statuserr').html('<span style="color:red">Please fill all the (*) Mark fields to Continue!</span>');
         }
     }); 
      <?php } ?>

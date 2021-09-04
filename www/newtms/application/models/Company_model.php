@@ -6,13 +6,13 @@
 
 class Company_Model extends CI_Model {
     
-    private $user;
+     private $user;
 
     public function __construct() {
         parent::__construct();
         $this->load->library('bcrypt');
         $this->load->helper('common');
-         $this->user = $this->session->userdata('userDetails');
+        $this->user = $this->session->userdata('userDetails');
     }
 
     /*
@@ -96,6 +96,7 @@ class Company_Model extends CI_Model {
             $this->db->limit($limit, $limitvalue);
         }
        $query = $this->db->get();
+      
         return $query->result_array();
     }
 
@@ -445,6 +446,31 @@ class Company_Model extends CI_Model {
      * @param type $company_id
      * @return type
      */
+    //////added by shubhranshu for bulk enrollment company discount issue on 11-02-2020
+     public function get_company_details_discount($tenant_id, $company_id,$course) {
+
+        $this->db->select('*');
+        $this->db->from('tenant_company company');
+        $this->db->join('company_master companymaster', 'company.company_id = companymaster.company_id');
+        if($course > 0 && $course !=''){
+             $this->db->join('company_discount cd', 'company.company_id = cd.company_id');
+            $this->db->where('cd.Course_ID', $course);
+        }
+        $this->db->where('company.tenant_id', $tenant_id);
+        $this->db->where('company.company_id', $company_id);
+        
+        $qry = $this->db->get();
+
+        if ($qry->num_rows() > 0) {
+            $comp_details = array();
+            foreach ($qry->result() as $row) {
+                $comp_details[] = $row;
+            }
+        }
+        return $comp_details;
+    }
+    
+    
     public function get_company_details($tenant_id, $company_id) {
 
         $this->db->select('*');
@@ -453,7 +479,6 @@ class Company_Model extends CI_Model {
         $this->db->where('company.tenant_id', $tenant_id);
         $this->db->where('company.company_id', $company_id);
         $qry = $this->db->get();
-
         if ($qry->num_rows() > 0) {
             $comp_details = array();
             foreach ($qry->result() as $row) {

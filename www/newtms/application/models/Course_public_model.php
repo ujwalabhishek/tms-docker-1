@@ -12,7 +12,7 @@ class Course_Public_Model extends CI_Model {
         parent::__construct();
 
         $this->load->helper('common');
-
+        
         $this->load->library('bcrypt');
     }
     /*
@@ -2610,7 +2610,7 @@ class Course_Public_Model extends CI_Model {
 //                    }
 //
 //        }
-
+        $this->load->model('user_model');
         /* Check existing user details skm start */
         if ($res_found1 == 1 && $taxcode_found != '') {
 
@@ -3167,21 +3167,9 @@ class Course_Public_Model extends CI_Model {
 
         /* when user loggedin and enroll for some */
 
-//        if(!empty($loggedin) && !empty($this->session->userdata('userDetails')->user_id))
-//        {
-//                $user_data = $this->user_model->r_userDetails($r_user_id);
-//                $r_someone = array(
-//                                    'firstname' => strtoupper($user_data->first_name),
-//                                    'lastname' => strtoupper($user_data->last_name),
-//                                    'email' => $user_data->registered_email_id
-//                                  );
-//                $this->send_reg_someone_referance_email($r_someone, $user_details, 'BPEMAC'); // referance
-//                $this->send_reg_someone_referal_email($r_someone, $user_details, 'BPEMAC'); // referance referal
-//                $this->send_tenant_mail($user_details, 'BPEMAC'); // tenent email
-//                $data = array('tax_code'=>$tax_code,'user_id'=>$user_id,'friend_id'=>$r_user_id);
-//                return $data;
-//        }
-
+  
+        $this->send_reg_someone_referance_email($r_someone, $user_details, 'BPEMAC'); // send mail
+               
         $data = array(
             'tax_code' => $tax_code,
             'user_id' => $user_id,
@@ -5342,10 +5330,12 @@ class Course_Public_Model extends CI_Model {
 
             $body .= $footer_data;
         }
+
         // added by shubhranshu for FRCS requirement dt 18.05.2021 to send mail to different mail id for NSA courses!
         if ((strpos($traineedata[1][0]['crse_name'], 'NSA') !== false) && TENANT_ID == 'T24') {
             $tenant_details->tenant_email_id = FRCSMAILID;
         }
+        
         return send_mail($tenant_details->tenant_email_id, '', $subject, $body);
     }
 
@@ -5563,13 +5553,14 @@ class Course_Public_Model extends CI_Model {
 
 
      */
+    ////added by shubhranshu for everest invoice id changes
     private function generate_invoice_id() {
 
         //$date_array = explode("-",$class_start_date);
 
-       $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.","T17" => "EVI","T20" => "WABLAB","T23" => "DEMO", "T24" => "RLIS", "T18" => "SSI");
+        $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.","T16" => "XPR.B.","T17" => "EVI","T20" => "WABLAB","T23" => "DEMO", "T24" => "RLIS", "T18" => "SSI", "T25" => "FGE");
 
-        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id","T17" => "ei_new_invoice_id","T20" => "wablab_invoice_id","T23" => "demo_invoice_id", "T24" => "rlis_invoice_id", "T18" => "ssi_invoice_id");
+        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id","T16" => "xprienz3_invoice_id","T17" => "ei_new_invoice_id","T20" => "wablab_invoice_id","T23" => "demo_invoice_id", "T24" => "rlis_invoice_id", "T18" => "ssi_invoice_id", "T25" => "fge_invoice_id");
 
         $tenant_id = $this->tenant_id ?? TENANT_ID;
 
@@ -5924,6 +5915,8 @@ class Course_Public_Model extends CI_Model {
         
        exit();
     }
+    
+
 
 }
 

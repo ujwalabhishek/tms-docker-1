@@ -98,7 +98,7 @@ class User_Model extends CI_Model {
         $uname = trim($username);
         $pwd = trim($password);
    
-        //$this->configurationfunction($uname);// added by shubhranshu for dynamic teanant_id
+       // $this->configurationfunction($uname);// added by shubhranshu for dynamic teanant_id
         
 
         $this->db->select('usr.password, pers.first_name, pers.last_name, pers.tenant_id, usr.user_id, ten.logo, ten.copyrighttext, '

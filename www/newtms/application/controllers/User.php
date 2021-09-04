@@ -716,14 +716,15 @@ class User extends CI_Controller {
                  $li = "Report at center at 8:30 AM to register for class";
             }
         /* end */
-          $message3 = '<strong>Remark *: </strong>
+            $message3 = '<strong>Remark *: </strong>
              <ol>
                             <li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>
                             <li>Your NRIC, work permit or will be photocopied on the class date</li>
                             <li>Trim finger nails and remove nail polish</li>
                             <li>'.$li.'</li>
                         </ol>';
-          if(TENANT_ID == 'T20'){////added by shubhranshu due to points fow wablab
+            
+            if(TENANT_ID == 'T20'){////added by shubhranshu due to points fow wablab
                 $message3 = '<strong>Remark *: </strong>
              <ol>
                         
@@ -732,6 +733,7 @@ class User extends CI_Controller {
                             <li>'.$li.'</li>
                         </ol>';
             }
+          
         /* skm end */
         if ($booking_details) {
             $booking_no = date('Y', strtotime($booking_details->inv_date)) . ' ' . $booking_details->invoice_id;
@@ -1684,17 +1686,7 @@ class User extends CI_Controller {
      */
 
     public function add_refer_trainee() {
-//        $this->load->library('email');
-//        $this->email->from('info@xprienz.net', 'BIIPMI');
-//        $this->email->to('shubhranshu2010@gmail.com');
-//        //$this->email->cc('nofal09@gmail.com');
-//        //$this->email->bcc('them@their-example.com');
-//        $this->email->subject('Email Test');
-//        $this->email->message('Testing the email class.');
-//        $this->email->send();
-//        
-//        
-//        exit;
+
         
         if($this->session->userdata('userDetails')->user_id==""){
             redirect("course_public/class_member_check");
@@ -1733,6 +1725,42 @@ class User extends CI_Controller {
         }
         $data['main_content'] = 'user/refer_trainee';
         $this->load->view('layout_public', $data);
+    }
+    
+    
+    ///// added by shubhranshu for add new trainee from public portal
+    public function add_new_trainee($course_id=null,$class_id=null) { 
+   
+            $data['page_title'] = 'Trainee Register';
+            $registration = '';
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            
+            $course_id = $this->input->post('course_id');
+            $class_id = $this->input->post('class_id');
+            $registration = $this->input->post('registration');
+            $relation = $this->input->post('relationship');
+
+            $res = $this->course_public_model->loggedin_enroll_someone(); 
+                if($res['user_id']!=0)
+                {
+                   
+                   $error= "<div style='color:green;font-weight: bold;text-align:center;padding: 9px;'>Congratulation! Trainee Registration Successful</div>";
+                            
+                        
+                    $uid = $res["user_id"];
+                    $tax_code = $res['tax_code'];
+                    $friend_id = $res['friend_id']; 
+                    $user_password = $res['user_password'];
+                    $this->session->set_flashdata('error', $error);
+                    return redirect('course_public/class_member_check_elearning'); 
+                }else{
+                      $error= "<div style='color:red;font-weight: bold;text-align:center;padding: 9px;'>Oops!!. Please try again later or contact your Administrator</div>";
+                                          
+                    $this->session->set_flashdata('error', $error);
+                    return redirect('course_public/class_member_check_elearning'); 
+                }
+              
+            }
     }
 
     

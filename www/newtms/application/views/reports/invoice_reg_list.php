@@ -6,7 +6,7 @@
 
 </script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/invoice_reg_list.js?1.0"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/invoice_reg_list.js?1.03565766666555"></script>
 
 <div class="col-md-10">
 
@@ -319,7 +319,7 @@
                             <tr>
                             <td>
                                 <a href="javascript:;" class="print_old_invoice" data-old_invoice_id="<?php echo $row->invoice_id;?>"
-                                                                             data-pdi="<?php echo $row->pymnt_due_id ;?>">
+                                                                             data-pdi="<?php echo $row->pymnt_due_id;?>">
                                     <?php echo $row->invoice_id;?>
                                 </a>
                             </td>
@@ -329,7 +329,7 @@
                                  } else{
                               ?>
                                <a href="javascript:;" class="print_new_invoice" data-invoice="<?php echo $row->regen_inv_id ;?>" 
-                                            data-pdi="<?php echo $row->pymnt_due_id ;?> "><?php echo $row->regen_inv_id ;?>
+                                            data-pdi="<?php echo $row->pymnt_due_id;?>"><?php echo $row->regen_inv_id;?>
                             </a>
                            <?php }  ?>
                             </td>

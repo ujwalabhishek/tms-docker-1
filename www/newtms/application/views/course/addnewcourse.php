@@ -1,19 +1,19 @@
-<?php  
+<?php
 $this->load->helper('form');
 $CI = & get_instance();
 $CI->load->model('settings_model');
 ?>
-<?php
-$form_attributes = 'id="addNewCourseForm" name="addNewCourseForm" onsubmit="return(validate());"';
-echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes);
-?>
 <div class="col-md-10">
-    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Add New</h2>
+    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/course.png"> Course - Add New</h2>    
     <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png"> Course Details</h2>    
+    <?php
+    $form_attributes = 'id="addNewCourseForm" name="addNewCourseForm" onsubmit="return(validate());"';
+    echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes);
+    ?>
     <div class="bs-example">
         <div class="table-responsive">
             <table class="table table-striped">      
-                <tbody>
+                <tbody>                    
                     <tr>
                         <td class="td_heading" width="30%">Course Name:<span class="required">*</span></td>
                         <?php
@@ -38,7 +38,7 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                             ?>
                             <td class="td_heading">Pre-requisite:</td>
                             <td>
-                                <?php                                            
+                                <?php
                                 $tenant_courses_js = 'id="pre_requisite"';
                                 echo form_multiselect('pre_requisites[]', $tenant_courses, array('', ''), $tenant_courses_js);
                                 ?>                                      
@@ -103,7 +103,7 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                             if ($gst_rates->gst_rate != false) {
                                 $gst = number_format($gst_rates->gst_rate, 2);
                                 echo form_label("$gst %", '', $gst_rates_attributes);
-                            }else
+                            } else
                                 echo form_label("GST-Not Defined", '', $gst_rates_attributes);
                             ?>
                         </td>
@@ -164,7 +164,6 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                             <span id="course_duration_err"></span>
                             <?php echo form_error('course_duration', '<div class="error">', '</div>'); ?>
                         </td>
-
                         <td class="td_heading">Course Reference Number:<span class="required">*</span></td>
                         <td>
                             <?php
@@ -179,9 +178,9 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                             echo form_input($course_reference_num);
                             ?>
                             <span id="course_reference_num_err"></span>
-                            <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>
+                            <?php echo form_error('course_reference_num', '<div class="error">', '</div>'); ?>                        
                         </td>
-                    </tr>             
+                    </tr>                                
                     <tr>
                         <td class="td_heading">Course Competency Code:<span class="required">*</span></td>
                         <td>
@@ -192,7 +191,7 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
                                 'value' => set_value('course_competency_code'),
                                 'maxlength' => 50,
                                 'class' => 'upper_case',
-                                 'style' => 'width:200px',
+                                'style' => 'width:200px',
                             );
                             echo form_input($course_competency_code);
                             ?>
@@ -379,12 +378,14 @@ echo form_open_multipart("course/create_new_course_by_tenant", $form_attributes)
         <div class="button_class99">                
             <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-saved"></span>&nbsp;Save</button> &nbsp; &nbsp;                
         </div>    
-    </div>          
+    </div>    
 </div>
-<?php echo form_close(); ?>  
-    
+<?php
+echo form_hidden('tpg_crse', '0');
+echo form_close();
+?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-multiselect.css" type="text/css" />
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-2.3.2.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-multiselect.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_course.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/add_new_course.js?0.00001"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/course_common.js"></script>

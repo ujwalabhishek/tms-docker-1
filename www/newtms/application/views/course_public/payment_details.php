@@ -145,8 +145,9 @@
 
             <?php echo form_close(); ?>
         </span>
-    </div>
+    </div><br><br><br>
 </div>
+
 <!----------------modal by ssp start----------------------->
 <?php if (TENANT_ID == 'T02'){$show='display:block';}else{$show='display:none';}?>
 <div class="modal" id="ex1011" style="<?php //echo $show;?>;margin:auto;margin-top:20px;margin-bottom:20px;height: auto;left: 0px !important;">
@@ -177,7 +178,7 @@
                             
                         </div>
                     </div>
-                    <!--Grid column--->
+                    <!--Grid column-->
                 </div>
                 
                 <div class="row">
@@ -303,7 +304,7 @@
                     mobile: $('#dec_mobile').val(),
                     user_id:'<?php echo $user_id;?>',
                     res: $('input[name="dec_res"]:checked').val(),
-                    class_id:'<?php echo $class_details->class_id;?>',
+                     class_id:'<?php echo $class_details->class_id;?>',
                     lesson_timing: $('#dec_les_time').val(),
                     overseas: $('#dec_overseas').val()
                 },

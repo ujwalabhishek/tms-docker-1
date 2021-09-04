@@ -128,8 +128,6 @@ if ($trainee['userdetails']['account_status'] == 'INACTIV'):
     </script>
     <?php
 endif;
-
-
 ?>
 <script>
     $siteurl = '<?php echo site_url(); ?>';
@@ -219,50 +217,50 @@ endif;
     <div class="table-responsive d-table-scroll">
         <table class="table table-striped">
             <thead>
-                <?php
-                if (!empty($training_history)) { ?>
-                <tr>
-                    <th width="25%">Course Name</th>
-                    <?php if (TENANT_ID == 'T18') { ?>
+                <?php if (!empty($training_history)) { ?>
+                    <tr>
+                        <th width="25%">Course Name</th>
+                        <?php if (TENANT_ID == 'T18') { ?>
                             <th width="25%">Enrollment Date</th>
-                    <?php } else { ?>
+                        <?php } else { ?>
                             <th width="25%">Course Date</th>
-                    <?php } ?>
-                    <th width="25%">Training Score</th>
-                    <th width="25%">Company Name</th>
-                    <th width="25%">Assessment Date</th>
-                </tr>
-                <?php } else {
+                        <?php } ?>
+                        <th width="25%">Training Score</th>
+                        <th width="25%">Company Name</th>
+                        <th width="25%">Assessment Date</th>
+                    </tr>
+                    <?php
+                } else {
                     echo "<tr class='danger'><td colspan='8' style='text-align:center;color:red'><label>No historical training data available.</label></td></tr>";
-                } ?>
+                }
+                ?>
             </thead>
             <tbody>                
-                <?php                 
-                foreach ($training_history as $item): ?>
+                <?php foreach ($training_history as $item): ?>
                     <tr>
                         <td>
                             <label class="label_font"><?php echo $item->course_name; ?></label>
                         </td>
                         <td>
-						<?php if (TENANT_ID == 'T18') { ?>
-							<label class="label_font"><?php echo $item->enrollment_date; ?></label>
-                        <?php } else { ?>
-                            <label class="label_font"><?php echo ($item->course_date && $item->course_date != '0000-00-00') ? date('d-m-Y',strtotime($item->course_date)) : ''; ?></label>    
-						<?php } ?>                        
+                            <?php if (TENANT_ID == 'T18') { ?>
+                                <label class="label_font"><?php echo $item->enrollment_date; ?></label>
+                            <?php } else { ?>
+                                <label class="label_font"><?php echo ($item->course_date && $item->course_date != '0000-00-00') ? date('d-m-Y', strtotime($item->course_date)) : ''; ?></label>    
+                            <?php } ?> 
                         </td>
                         <td><label class="label_font"><?php echo get_catname_by_parm($item->training_score); ?></label></td>
                         <td><label class="label_font"><?php echo $item->company_name; ?></label></td>
-                        <td><label class="label_font"><?php echo ($item->assessment_date && $item->assessment_date != '0000-00-00 00:00:00') ? date('d-m-Y',strtotime($item->assessment_date)) : ''; ?></label></td>
+                        <td><label class="label_font"><?php echo ($item->assessment_date && $item->assessment_date != '0000-00-00 00:00:00') ? date('d-m-Y', strtotime($item->assessment_date)) : ''; ?></label></td>
                     </tr>
                 <?php endforeach; ?>
-				<?php if (TENANT_ID == 'T18') { ?>
+                <?php if (TENANT_ID == 'T18') { ?>
                     <tr> <td colspan="6"> <center><a href="#ex145" rel="modal:open" style="color: blue;"><b>Module History</b></a></center></td></tr>
-				<?php } ?> 
+            <?php } ?> 
             </tbody>
         </table>  
     </div>
-    <?php if(trim($trainee[userdetails]['history_remarks']) != ''){ ?>
-    <table class="table table-striped">
+    <?php if (trim($trainee[userdetails]['history_remarks']) != '') { ?>
+        <table class="table table-striped">
             <tbody>
                 <tr>
                     <td class="td_heading" width="15%">Historical Remarks:</td>
@@ -293,33 +291,27 @@ endif;
 
 
                             <?php
+                            $nationalityLabel = '';
 
 
-                                $nationalityLabel = '';
+                            $nationality = fetch_metavalues_by_category_id(Meta_Values::NATIONALITY);
 
 
-                                $nationality = fetch_metavalues_by_category_id(Meta_Values::NATIONALITY);
+                            foreach ($nationality as $item):
 
 
-                                foreach ($nationality as $item):
+                                if ($item['parameter_id'] == $trainee[userdetails]['nationality']) {
 
 
-                                    if($item['parameter_id'] ==  $trainee[userdetails]['nationality']){
+                                    $nationalityLabel = $item['category_name'];
 
 
-                                        $nationalityLabel = $item['category_name'];
+                                    break;
+                                }
 
 
-                                        break;
-
-
-                                    }
-
-
-                                endforeach;
-
-
-                             ?>    
+                            endforeach;
+                            ?>    
 
 
                             <?php echo ($nationalityLabel); ?></label>
@@ -357,31 +349,26 @@ endif;
                     <td class="td_heading">Race:</td>
                     <td><label class="label_font"><?php echo ($trainee[userdetails]['race']) ? get_catname_by_parm($trainee[userdetails]['race']) : ''; ?></label></td>                    
                     <!--add by pritam-->
-                    <?php 
-                    //echo "com".$trainee['company']['company_name'];
-                    if($trainee['company']['company_name']=="NA")
-                    {
-                        if($trainee[userdetails]['company_name'])
-                        {?>
-                            <td class="td_heading">Certificate Sent To:</td>
-                           <td><label class="label_font"><?php echo $trainee[userdetails]['company_name']; ?></label></td> 
-                        <?php 
-                        }
-                        else
-                        {
-                        ?>
-                           <td class="td_heading">Assign Trainee to Company:</td>
-                         <td><label class="label_font"><?php echo $trainee['company']['company_name']; ?></label></td>
-                        <?php    
-                        }
-                   }
-                    else
-                    {?>
-                    <td class="td_heading">Assign Trainee to Company:</td>
-                    <td><label class="label_font"><?php echo $trainee['company']['company_name']; ?></label></td>
                     <?php
+//echo "com".$trainee['company']['company_name'];
+                    if ($trainee['company']['company_name'] == "NA") {
+                        if ($trainee[userdetails]['company_name']) {
+                            ?>
+                            <td class="td_heading">Certificate Sent To:</td>
+                            <td><label class="label_font"><?php echo $trainee[userdetails]['company_name']; ?></label></td> 
+                            <?php
+                        } else {
+                            ?>
+                            <td class="td_heading">Assign Trainee to Company:</td>
+                            <td><label class="label_font"><?php echo $trainee['company']['company_name']; ?></label></td>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <td class="td_heading">Assign Trainee to Company:</td>
+                        <td><label class="label_font"><?php echo $trainee['company']['company_name']; ?></label></td>
+                        <?php
                     }
-                   
                     ?>
                     <!--end-->
                 </tr>        
@@ -650,89 +637,69 @@ endif;
 
 
                             $linkStr = '<span style="color:red;">Account not yet activated.</span>';
-
-
                         } else if ($trainee['userdetails']['account_status'] == 'INACTIV') {
 
 
-                            $linkStr = get_links($item->attn_stats,$item->enrolment_mode, $item->payment_status, $item->invoice_id, $item->user_id, $item->pymnt_due_id, $item->class_id, $this, $trainee['userdetails']['account_status'],$item->company_id,$assmnt_links);
-
-
-                        } 
-                         else 
-                        {
+                            $linkStr = get_links($item->attn_stats, $item->enrolment_mode, $item->payment_status, $item->invoice_id, $item->user_id, $item->pymnt_due_id, $item->class_id, $this, $trainee['userdetails']['account_status'], $item->company_id, $assmnt_links);
+                        } else {
                             $linkStr = '';
                             $classStatus = '';
-                            if ($cur_date >= $class_end_datetime_str) 
-                            {
-                                if ($cur_date == $class_end_datetime_str) 
-                                {
+                            if ($cur_date >= $class_end_datetime_str) {
+                                if ($cur_date == $class_end_datetime_str) {
                                     $classStatus = 'IN_PROG';
-                                } 
-                                else if ($class_end_datetime_str < $cur_date ) 
-                                {
-                                       $classStatus = 'COMPLTD';
+                                } else if ($class_end_datetime_str < $cur_date) {
+                                    $classStatus = 'COMPLTD';
                                 }
                                 $linkStr = '';
                                 if ($item->payment_status != 'PYNOTREQD' &&
-                                        (($this->data['user']->role_id == 'ADMN' || $this->data['user']->role_id == 'CRSEMGR') && $trainee['userdetails']['account_status'] == 'ACTIVE'))
-                                {
+                                        (($this->data['user']->role_id == 'ADMN' || $this->data['user']->role_id == 'CRSEMGR') && $trainee['userdetails']['account_status'] == 'ACTIVE')) {
                                     $linkStr = '<a href="javascript:;" class="get_update" data-class="' . $item->class_id . '" data-user="' . $item->user_id . '">Update TG# </a>&nbsp;&nbsp;&nbsp;';
                                 }
-                                if ($this->data['user']->role_id == 'ADMN' ||$this->data['user']->role_id == 'CRSEMGR') 
-                                {
-                                    $ci =&get_instance();
+                                if ($this->data['user']->role_id == 'ADMN' || $this->data['user']->role_id == 'CRSEMGR') {
+                                    $ci = &get_instance();
                                     $ci->load->model("classtraineemodel");
-                                     $check_attendance= $ci->classtraineemodel->check_attendance_row($item->tenant_id,$item->course_id,$item->class_id);
-                                    
+                                    $check_attendance = $ci->classtraineemodel->check_attendance_row($item->tenant_id, $item->course_id, $item->class_id);
+
                                     $feedback_status = TRUE;
                                     $crsemgr_array = explode(",", $item->crse_manager);
-                                    if(!in_array($this->data['user']->user_id,$crsemgr_array) && $this->data['user']->role_id == 'CRSEMGR') 
-                                    {
-                                            $feedback_status = FALSE;
+                                    if (!in_array($this->data['user']->user_id, $crsemgr_array) && $this->data['user']->role_id == 'CRSEMGR') {
+                                        $feedback_status = FALSE;
                                     }
-                                    if($feedback_status == TRUE) 
-                                    {
-                                        if($classStatus=='COMPLTD')
-                                        {
-                                            if($check_attendance>0){
-                                            $linkStr .= '<a id="training_update" href="#ex7" rel="modal:open" data-course="' . 
-                                                    $item->course_id . '" data-class="' . $item->class_id . '" data-user="' . 
-                                                    $item->user_id . '" data-payment="' . $item->pymnt_due_id . '" class="training_update small_text1">Feedback.</a>'
-                                                    . '&nbsp;&nbsp;&nbsp;';
-                                            }
-                                            else{
-                                                $linkStr.='<form action="'.base_url().'class_trainee/mark_attendance" method="post" name="maarkatt[]">'
-                                                        . '<input type="hidden" name="course_id" value="'.$item->course_id.'" /><input type="hidden" name="class_id" value="'.$item->class_id.'" />'
+                                    if ($feedback_status == TRUE) {
+                                        if ($classStatus == 'COMPLTD') {
+                                            if ($check_attendance > 0) {
+                                                $linkStr .= '<a id="training_update" href="#ex7" rel="modal:open" data-course="' .
+                                                        $item->course_id . '" data-class="' . $item->class_id . '" data-user="' .
+                                                        $item->user_id . '" data-payment="' . $item->pymnt_due_id . '" class="training_update small_text1">Feedback.</a>'
+                                                        . '&nbsp;&nbsp;&nbsp;';
+                                            } else {
+                                                $linkStr.='<form action="' . base_url() . 'class_trainee/mark_attendance" method="post" name="maarkatt[]">'
+                                                        . '<input type="hidden" name="course_id" value="' . $item->course_id . '" /><input type="hidden" name="class_id" value="' . $item->class_id . '" />'
                                                         . '<input type="submit" class="red" value ="Mark Attendance" /></form><br />';
                                             }
                                         }
-                                        
-                                    }    
+                                    }
                                 }
-                                $check_competent=$this->classtraineemodel->check_competent($item->tenant_id,$item->course_id,$item->class_id,$item->user_id);
-                                
-                                if($check_competent > 0){
+                                $check_competent = $this->classtraineemodel->check_competent($item->tenant_id, $item->course_id, $item->class_id, $item->user_id);
+
+                                if ($check_competent > 0) {
                                     $wsq_courses_array = $this->config->item('wsq_courses'); // wsq courses modified by shubhranshu
-                                    
-                                    $tenant_array = array('T02','T12'); // xp and xp2 
-                                    $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/'. $item->class_id . '/' . $item->user_id . '">LOC</a><br/>';
+
+                                    $tenant_array = array('T02', 'T12'); // xp and xp2 
+                                    $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/' . $item->class_id . '/' . $item->user_id . '">LOC</a><br/>';
                                     //////added by shubhranshu for wablab and everest TCS for all courses
                                     $tenant_id = $trainee[userdetails]['tenant_id'];
-                                   
-                                    if(($tenant_id == 'T20') || ($tenant_id == 'T17')){
-                                        $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$item->course_id.'/'. $item->class_id  . '/' . $item->user_id . '">TCS</a><br/>';
 
-                                    }else{
-                                        if (in_array($item->course_id, $wsq_courses_array) && in_array($tenant_id, $tenant_array))
-                                        { 
-                                           $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' .$item->course_id.'/'. $item->class_id . '/' . $item->user_id . '">TCS</a><br/>'; 
+                                    if (($tenant_id == 'T20') || ($tenant_id == 'T17')) {
+                                        $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' . $item->course_id . '/' . $item->class_id . '/' . $item->user_id . '">TCS</a><br/>';
+                                    } else {
+                                        if (in_array($item->course_id, $wsq_courses_array) && in_array($tenant_id, $tenant_array)) {
+                                            $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' . $item->course_id . '/' . $item->class_id . '/' . $item->user_id . '">TCS</a><br/>';
                                         }
                                     }
-
                                 }
                             } else {
-                            if ($item->payment_status != 'PYNOTREQD' &&
+                                if ($item->payment_status != 'PYNOTREQD' &&
                                         $this->data['user']->role_id == 'ADMN') {
                                     $linkStr = '<a href="javascript:;" class="get_update" data-class="' . $item->class_id . '" data-user="' . $item->user_id . '">Update TG# </a>&nbsp;&nbsp;&nbsp;';
                                 }
@@ -742,22 +709,18 @@ endif;
 
 
                                     $classStatus = 'IN_PROG';
+                                } elseif ($class_start_datetime_str > $cur_date) {
 
 
-                                }elseif ($class_start_datetime_str > $cur_date) { 
-
-
-                                    $classStatus = 'YET_TO_START'; 
-
-
+                                    $classStatus = 'YET_TO_START';
                                 }
                             }
-                           
 
-						/*   added $item->attn_stats by shubhranshu due to receipt issue for absent trainee      */
-                        //    $linkStr .= get_links($item->enrolment_mode, $item->payment_status, $item->invoice_id, $item->user_id, $item->pymnt_due_id, $item->class_id, $this, $trainee['userdetails']['account_status'], $classStatus,$item->company_id,$assmnt_links);
-						$linkStr .= get_links($item->attn_stats,$item->enrolment_mode, $item->payment_status, $item->invoice_id, $item->user_id, $item->pymnt_due_id, $item->class_id, $this, $trainee['userdetails']['account_status'], $classStatus,$item->company_id,$assmnt_links);
-                            /*--------------------------------------------------------------------------*/
+
+                            /*   added $item->attn_stats by shubhranshu due to receipt issue for absent trainee      */
+                            //    $linkStr .= get_links($item->enrolment_mode, $item->payment_status, $item->invoice_id, $item->user_id, $item->pymnt_due_id, $item->class_id, $this, $trainee['userdetails']['account_status'], $classStatus,$item->company_id,$assmnt_links);
+                            $linkStr .= get_links($item->attn_stats, $item->enrolment_mode, $item->payment_status, $item->invoice_id, $item->user_id, $item->pymnt_due_id, $item->class_id, $this, $trainee['userdetails']['account_status'], $classStatus, $item->company_id, $assmnt_links);
+                            /* -------------------------------------------------------------------------- */
                         }
                         ?>
                         <tr>                
@@ -774,12 +737,12 @@ endif;
 
                             <td><?php echo $linkStr; ?></td>                 
                         </tr>
-        <?php
-    endforeach;
-} else {
-    echo "<tr class='danger'><td colspan='8' style='text-align:center'><label>No training attended details available.</label></td></tr>";
-}
-?>
+                        <?php
+                    endforeach;
+                } else {
+                    echo "<tr class='danger'><td colspan='8' style='text-align:center'><label>No training attended details available.</label></td></tr>";
+                }
+                ?>
             </tbody>      
         </table>    
     </div>
@@ -828,27 +791,27 @@ endif;
         <tbody>
 
 
-<?php
-$data = array(
-    'id' => 'h_class',
-    'type' => 'hidden',
-    'name' => 'h_class',
-);
-echo form_input($data);
-$data = array(
-    'id' => 'h_user',
-    'type' => 'hidden',
-    'name' => 'h_user',
-);
-echo form_input($data);
-?>
+            <?php
+            $data = array(
+                'id' => 'h_class',
+                'type' => 'hidden',
+                'name' => 'h_class',
+            );
+            echo form_input($data);
+            $data = array(
+                'id' => 'h_user',
+                'type' => 'hidden',
+                'name' => 'h_user',
+            );
+            echo form_input($data);
+            ?>
 
 
             <tr>
                 <td class="td_heading">TG#:</td>
                 <td><?php
-            echo form_input('tg_number', $this->input->post('tg_number'), ' id="tg_number"');
-?>
+                    echo form_input('tg_number', $this->input->post('tg_number'), ' id="tg_number"');
+                    ?>
                     <span id="tg_number_err"></span></td>
             </tr>
         </tbody>
@@ -916,226 +879,226 @@ echo form_open("trainee/trainer_feedback/$item->user_id/$item->course_id/$item->
 ?>
 <div class="modal1_050" id="ex7" style="display:none; height:535px;">
     <h2 class="panel_heading_style">Training Update</h2> 
-    
-        <center> <span id="skm" style="display:none"></span></center>
-            <span id="tbl" style="display:none">
-                
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <td class="td_heading"><?php echo get_catname_by_parm('CERTCOLDT'); ?>:</td>
-                            <td>
-            <?php
-            $collected_on = array(
-                'name' => 'CERTCOLDT',
-                'id' => 'collected_on',
-                'placeholder' => 'dd-mm-yyyy',
-                'readonly' => 'readonly',
-            );
-            echo form_input($collected_on);
-            ?>                    
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading"><?php echo get_catname_by_parm('SATSRATE'); ?>:</td>
-                            <td>                    
-            <?php
-            $satisfaction_rating = array('' => 'Select', '1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5);
-            $satisfaction_rating_attr = 'id="satisfaction_rating"';
-            echo form_dropdown('SATSRATE', $satisfaction_rating, '', $satisfaction_rating_attr);
-            ?>   
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading"><?php echo get_catname_by_parm('CERTCOM1'); ?>:</td>
-                            <td>
-            <?php
-            $CERTCOM1_YES = array(
-                'name' => 'CERTCOM1',
-                'value' => 'Y',
-                'id' => 'CERTCOM1_YES'
-            );
-            $CERTCOM1_NO = array(
-                'name' => 'CERTCOM1',
-                'id' => 'CERTCOM1_NO',
-                'value' => 'N',
-            );
-            ?>              
-                                <?php echo form_radio($CERTCOM1_YES); ?> Yes &nbsp;&nbsp;
-                                <?php echo form_radio($CERTCOM1_NO); ?> No
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading"><?php echo get_catname_by_parm('APPKNLSKL'); ?>?</td>
-                            <td>                    
-            <?php
-            $APPKNLSKL_YES = array(
-                'name' => 'APPKNLSKL',
-                'value' => 'Y',
-                'id' => 'APPKNLSKL_YES'
-            );
-            $APPKNLSKL_NO = array(
-                'name' => 'APPKNLSKL',
-                'id' => 'APPKNLSKL_NO',
-                'value' => 'N',
-            );
-            ?>              
-                                <?php echo form_radio($APPKNLSKL_YES); ?> Yes &nbsp;&nbsp;
-                                <?php echo form_radio($APPKNLSKL_NO); ?> No
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading"><?php echo get_catname_by_parm('EXPJOBSCP'); ?>?</td>
-                            <td>                    
-            <?php
-            $EXPJOBSCP_YES = array(
-                'name' => 'EXPJOBSCP',
-                'value' => 'Y',
-                'id' => 'EXPJOBSCP_YES'
-            );
-            $EXPJOBSCP_NO = array(
-                'name' => 'EXPJOBSCP',
-                'id' => 'EXPJOBSCP_NO',
-                'value' => 'N',
-            );
-            ?>              
-                                <?php echo form_radio($EXPJOBSCP_YES); ?> Yes &nbsp;&nbsp;
-                                <?php echo form_radio($EXPJOBSCP_NO); ?> No
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading"><?php echo get_catname_by_parm('RT3MNTHS'); ?>?</td>
-                            <td>                   
-            <?php
-            $RT3MNTHS_YES = array(
-                'name' => 'RT3MNTHS',
-                'value' => 'Y',
-                'id' => 'RT3MNTHS_YES'
-            );
-            $RT3MNTHS_NO = array(
-                'name' => 'RT3MNTHS',
-                'id' => 'RT3MNTHS_NO',
-                'value' => 'N',
-            );
-            ?>              
-                                <?php echo form_radio($RT3MNTHS_YES); ?> Yes &nbsp;&nbsp;
-                                <?php echo form_radio($RT3MNTHS_NO); ?> No
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading"><?php echo get_catname_by_parm('DTCOMMEMP'); ?>:</td>
-                            <td>
-            <?php
-            $new_entrance = array(
-                'name' => 'DTCOMMEMP',
-                'id' => 'new_entrance',
-                'placeholder' => 'dd-mm-yyyy',
-                'readonly' => 'readonly',
-            );
-            echo form_input($new_entrance);
-            ?>
-                            </td>
-                        </tr>
 
-                        <tr>
-                            <td class="td_heading"><?php echo get_catname_by_parm('COMYTCOM'); ?>?</td>
-                            <td>                    
-            <?php
-            $COMYTCOM_C = array(
-                'name' => 'COMYTCOM',
-                'value' => 'C',
-                'id' => 'COMYTCOM_C',
-            );
-            $COMYTCOM_NYC = array(
-                'name' => 'COMYTCOM',
-                'id' => 'COMYTCOM_NYC',
-                'value' => 'NYC',
-            );
-            $COMYTCOM_EX = array(
-                'name' => 'COMYTCOM',
-                'id' => 'COMYTCOM_EX',
-                'value' => 'EX',
-            );
+    <center> <span id="skm" style="display:none"></span></center>
+    <span id="tbl" style="display:none">
 
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td class="td_heading"><?php echo get_catname_by_parm('CERTCOLDT'); ?>:</td>
+                    <td>
+                        <?php
+                        $collected_on = array(
+                            'name' => 'CERTCOLDT',
+                            'id' => 'collected_on',
+                            'placeholder' => 'dd-mm-yyyy',
+                            'readonly' => 'readonly',
+                        );
+                        echo form_input($collected_on);
+                        ?>                    
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_heading"><?php echo get_catname_by_parm('SATSRATE'); ?>:</td>
+                    <td>                    
+                        <?php
+                        $satisfaction_rating = array('' => 'Select', '1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5);
+                        $satisfaction_rating_attr = 'id="satisfaction_rating"';
+                        echo form_dropdown('SATSRATE', $satisfaction_rating, '', $satisfaction_rating_attr);
+                        ?>   
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_heading"><?php echo get_catname_by_parm('CERTCOM1'); ?>:</td>
+                    <td>
+                        <?php
+                        $CERTCOM1_YES = array(
+                            'name' => 'CERTCOM1',
+                            'value' => 'Y',
+                            'id' => 'CERTCOM1_YES'
+                        );
+                        $CERTCOM1_NO = array(
+                            'name' => 'CERTCOM1',
+                            'id' => 'CERTCOM1_NO',
+                            'value' => 'N',
+                        );
+                        ?>              
+                        <?php echo form_radio($CERTCOM1_YES); ?> Yes &nbsp;&nbsp;
+                        <?php echo form_radio($CERTCOM1_NO); ?> No
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_heading"><?php echo get_catname_by_parm('APPKNLSKL'); ?>?</td>
+                    <td>                    
+                        <?php
+                        $APPKNLSKL_YES = array(
+                            'name' => 'APPKNLSKL',
+                            'value' => 'Y',
+                            'id' => 'APPKNLSKL_YES'
+                        );
+                        $APPKNLSKL_NO = array(
+                            'name' => 'APPKNLSKL',
+                            'id' => 'APPKNLSKL_NO',
+                            'value' => 'N',
+                        );
+                        ?>              
+                        <?php echo form_radio($APPKNLSKL_YES); ?> Yes &nbsp;&nbsp;
+                        <?php echo form_radio($APPKNLSKL_NO); ?> No
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_heading"><?php echo get_catname_by_parm('EXPJOBSCP'); ?>?</td>
+                    <td>                    
+                        <?php
+                        $EXPJOBSCP_YES = array(
+                            'name' => 'EXPJOBSCP',
+                            'value' => 'Y',
+                            'id' => 'EXPJOBSCP_YES'
+                        );
+                        $EXPJOBSCP_NO = array(
+                            'name' => 'EXPJOBSCP',
+                            'id' => 'EXPJOBSCP_NO',
+                            'value' => 'N',
+                        );
+                        ?>              
+                        <?php echo form_radio($EXPJOBSCP_YES); ?> Yes &nbsp;&nbsp;
+                        <?php echo form_radio($EXPJOBSCP_NO); ?> No
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_heading"><?php echo get_catname_by_parm('RT3MNTHS'); ?>?</td>
+                    <td>                   
+                        <?php
+                        $RT3MNTHS_YES = array(
+                            'name' => 'RT3MNTHS',
+                            'value' => 'Y',
+                            'id' => 'RT3MNTHS_YES'
+                        );
+                        $RT3MNTHS_NO = array(
+                            'name' => 'RT3MNTHS',
+                            'id' => 'RT3MNTHS_NO',
+                            'value' => 'N',
+                        );
+                        ?>              
+                        <?php echo form_radio($RT3MNTHS_YES); ?> Yes &nbsp;&nbsp;
+                        <?php echo form_radio($RT3MNTHS_NO); ?> No
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_heading"><?php echo get_catname_by_parm('DTCOMMEMP'); ?>:</td>
+                    <td>
+                        <?php
+                        $new_entrance = array(
+                            'name' => 'DTCOMMEMP',
+                            'id' => 'new_entrance',
+                            'placeholder' => 'dd-mm-yyyy',
+                            'readonly' => 'readonly',
+                        );
+                        echo form_input($new_entrance);
+                        ?>
+                    </td>
+                </tr>
 
-            $COMYTCOM_ABS = array(
-                'name' => 'COMYTCOM',
-                'id' => 'COMYTCOM_ABS',
-                'value' => 'ABS',
-            );
-            $COMYTCOM_2NYC = array(
-                'name' => 'COMYTCOM',
-                'id' => 'COMYTCOM_2NYC',
-                'value' => '2NYC',
-            );
-            $COMYTCOM_ATTRITION = array(
-                'name' => 'COMYTCOM',
-                'id' => 'COMYTCOM_ATTRITION',
-                'value' => 'ATR',
-            );
-
-            ?>              
-                                <?php echo form_radio($COMYTCOM_C); ?> Competent <br/>
-                                <?php echo form_radio($COMYTCOM_NYC); ?> Not Yet Competent <br/>
+                <tr>
+                    <td class="td_heading"><?php echo get_catname_by_parm('COMYTCOM'); ?>?</td>
+                    <td>                    
+                        <?php
+                        $COMYTCOM_C = array(
+                            'name' => 'COMYTCOM',
+                            'value' => 'C',
+                            'id' => 'COMYTCOM_C',
+                        );
+                        $COMYTCOM_NYC = array(
+                            'name' => 'COMYTCOM',
+                            'id' => 'COMYTCOM_NYC',
+                            'value' => 'NYC',
+                        );
+                        $COMYTCOM_EX = array(
+                            'name' => 'COMYTCOM',
+                            'id' => 'COMYTCOM_EX',
+                            'value' => 'EX',
+                        );
 
 
-                                <?php echo form_radio($COMYTCOM_EX); ?> Exempted<br/>                    
-                                <?php echo form_radio($COMYTCOM_ABS); ?> Absent<br/>
-                                <?php 
-                                if(TENANT_ID == 'T02'){/////below code was added by shubhranshu for xp for attrition option start-----
-                                    echo form_radio($COMYTCOM_ATTRITION); echo "Attrition <br/>";
-                                }
-                                ?> 
-                                <?php echo form_radio($COMYTCOM_2NYC); ?> Twice Not Competent
+                        $COMYTCOM_ABS = array(
+                            'name' => 'COMYTCOM',
+                            'id' => 'COMYTCOM_ABS',
+                            'value' => 'ABS',
+                        );
+                        $COMYTCOM_2NYC = array(
+                            'name' => 'COMYTCOM',
+                            'id' => 'COMYTCOM_2NYC',
+                            'value' => '2NYC',
+                        );
+                        $COMYTCOM_ATTRITION = array(
+                            'name' => 'COMYTCOM',
+                            'id' => 'COMYTCOM_ATTRITION',
+                            'value' => 'ATR',
+                        );
+                        ?>              
+                        <?php echo form_radio($COMYTCOM_C); ?> Competent <br/>
+                        <?php echo form_radio($COMYTCOM_NYC); ?> Not Yet Competent <br/>
 
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="td_heading">
-                                <span style="vertical-align:top;"><?php echo get_catname_by_parm('COMMNTS'); ?>:</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span>                        
-            <?php
-            $data = array(
-                'name' => 'COMMNTS',
-                'id' => 'COMMNTS',
-                'rows' => '1',
-                'cols' => '60',
-                'style' => 'width:70%',
-                'class' => 'upper_case',
-                'maxlength' => '250'
-            );
+                        <?php echo form_radio($COMYTCOM_EX); ?> Exempted<br/>                    
+                        <?php echo form_radio($COMYTCOM_ABS); ?> Absent<br/>
+                        <?php
+                        if (TENANT_ID == 'T02') {/////below code was added by shubhranshu for xp for attrition option start-----
+                            echo form_radio($COMYTCOM_ATTRITION);
+                            echo "Attrition <br/>";
+                        }
+                        ?> 
+                        <?php echo form_radio($COMYTCOM_2NYC); ?> Twice Not Competent
 
-            echo form_textarea($data);
-            ?>
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div style="color: blue;">
-                    <span>1 - Strongly Disagree</span>&nbsp;&nbsp;
-                    <span>2 - Disagree</span>&nbsp;&nbsp;
-                    <span>3 - Neutral</span>&nbsp;&nbsp;
-                    <span>4 - Agree</span><br/>
-                    <span>5 - Strongly Agree</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="td_heading">
+                        <span style="vertical-align:top;"><?php echo get_catname_by_parm('COMMNTS'); ?>:</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>                        
+                            <?php
+                            $data = array(
+                                'name' => 'COMMNTS',
+                                'id' => 'COMMNTS',
+                                'rows' => '1',
+                                'cols' => '60',
+                                'style' => 'width:70%',
+                                'class' => 'upper_case',
+                                'maxlength' => '250'
+                            );
+
+                            echo form_textarea($data);
+                            ?>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="color: blue;">
+            <span>1 - Strongly Disagree</span>&nbsp;&nbsp;
+            <span>2 - Disagree</span>&nbsp;&nbsp;
+            <span>3 - Neutral</span>&nbsp;&nbsp;
+            <span>4 - Agree</span><br/>
+            <span>5 - Strongly Agree</span>
+        </div>
+        <div class="popup_cance89">        
+            <div class="popup_cancel9">
+                <div rel="modal:close">
+                    <button class="btn btn-primary" id="lock_att" type="submit">Save</button>&nbsp;&nbsp;
+                    <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Cancel</button></a>
                 </div>
-                <div class="popup_cance89">        
-                    <div class="popup_cancel9">
-                        <div rel="modal:close">
-                            <button class="btn btn-primary" id="lock_att" type="submit">Save</button>&nbsp;&nbsp;
-                            <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Cancel</button></a>
-                        </div>
-                    </div>
-                </div>
-                </p>
-                <div class="attendance_lock" style="display: none; height: 50px;text-align: center">                    
-                    <span style="color:red;"> <i>Can`t update the trainer feedback because class attendance is locked. To change it please contact to Administrator.</i>
-                    </span>
-                    <br/>                       
             </div>
-                
+        </div>
+        </p>
+        <div class="attendance_lock" style="display: none; height: 50px;text-align: center">                    
+            <span style="color:red;"> <i>Can`t update the trainer feedback because class attendance is locked. To change it please contact to Administrator.</i>
             </span>
+            <br/>                       
+        </div>
+
+    </span>
 </div>
 <?php
 echo form_close();
@@ -1163,15 +1126,15 @@ echo form_close();
                     </tr>
                 </thead>
                 <tbody>
-    <?php
-    foreach ($trainee['discountdetails'] as $k => $row):
-        echo "<tr>"
-        . "<td>" . $row['crse_name'] . "</td>"
-        . "<td>" . number_format($row['discount_percent'], 2, '.', '') . "%</td>"
-        . "<td>$ " . number_format($row['discount_amount'], 2, '.', '') . "</td>"
-        . "</tr>";
-    endforeach;
-    ?>
+                    <?php
+                    foreach ($trainee['discountdetails'] as $k => $row):
+                        echo "<tr>"
+                        . "<td>" . $row['crse_name'] . "</td>"
+                        . "<td>" . number_format($row['discount_percent'], 2, '.', '') . "%</td>"
+                        . "<td>$ " . number_format($row['discount_amount'], 2, '.', '') . "</td>"
+                        . "</tr>";
+                    endforeach;
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -1316,7 +1279,8 @@ echo form_close();
             </tbody>
             
         </table>
-    </p> 
+    </p>
+ 
 </div>
 
 <!--  Dialog for selecting the assessment report -->
@@ -1324,15 +1288,15 @@ echo form_close();
 $form_attributes = array('name' => 'select_assessment_rep_form', 'id' => 'select_assessment_rep_form', "onsubmit" => "return(false);");
 echo form_open("", $form_attributes);
 ?>
-    <div class="modal1_077" id="assessment_form" style="display:none;">
-        <p>
-            
-        <h2 class="panel_heading_style">View Assessment Forms</h2>   
- 
-        <strong>Click on the assessment template to view</strong>         
-        
-        <br><br>  
-        <span id="assessment_links">
+<div class="modal1_077" id="assessment_form" style="display:none;">
+    <p>
+
+    <h2 class="panel_heading_style">View Assessment Forms</h2>   
+
+    <strong>Click on the assessment template to view</strong>         
+
+    <br><br>  
+    <span id="assessment_links">
         <!--?php
                 
         if(count($forms[0]) == 0) {
@@ -1353,16 +1317,16 @@ echo form_open("", $form_attributes);
         }
         
         ?-->
-         </span>
-        <br>
-       
-        
-        <div class="popup_cancel9">
-            <div rel="modal:close">
+    </span>
+    <br>
+
+
+    <div class="popup_cancel9">
+        <div rel="modal:close">
             <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Cancel</button></a>
-            </div>
         </div>
     </div>
+</div>
 <?php
 echo form_close();
 ?>
@@ -1373,11 +1337,12 @@ echo form_close();
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/view_trainee.js?0.000000001"></script>
 <?php
+
 // added by shubhranshu $attn_status due to receipt issue for viewtrainee absent trainee
-function get_links($attn_status,$enrolment_mode, $payment_status, $invoice_id, $user_id, $pymnt_due_id, $class_id, $view_trainee_data, $trainee_Status,$classStatus,$company_id, $assmnt_links) {
+function get_links($attn_status, $enrolment_mode, $payment_status, $invoice_id, $user_id, $pymnt_due_id, $class_id, $view_trainee_data, $trainee_Status, $classStatus, $company_id, $assmnt_links) {
 
 
-    if ($payment_status == 'PYNOTREQD') {  
+    if ($payment_status == 'PYNOTREQD') {
 
 
         $tempLinkStr .= '<span style="color:red">Payment Not Required</span>';
@@ -1399,40 +1364,36 @@ function get_links($attn_status,$enrolment_mode, $payment_status, $invoice_id, $
                 $tempLinkStr .='<a href="' . base_url() . 'class_trainee/export_payment_received/' . $pymnt_due_id . '">Receipt (Paid)</a> &nbsp;&nbsp;';
             } else if ($enrolment_mode == 'COMPSPON' && $payment_status == 'PARTPAID') {
                 $tempLinkStr .='<a href="' . base_url() . 'class_trainee/export_payment_received/' . $pymnt_due_id . '">Receipt (Part Paid)</a> &nbsp;&nbsp;';
-
-
             } else {
 
 
                 $tempLinkStr .= '<span style="color:red">Not Paid</span>';
             }
-
-
         } else {
-            
-     
-            if ($enrolment_mode == 'SELF' && $payment_status == 'PAID') { 
+
+
+            if ($enrolment_mode == 'SELF' && $payment_status == 'PAID') {
 
 
                 $tempLinkStr = '<a href="' . base_url() . 'class_trainee/export_payment_received/' . $pymnt_due_id . '">Paid</a> &nbsp;&nbsp;';
-				/*   added by shubhranshu due to receipt issue for absent trainee      */
-                if($attn_status==1){
-                     $tempLinkStr .= '<a href="' . base_url() . 'class_trainee/export_payment_receipt/' . $pymnt_due_id . '">Receipt</a>';
-                }else{
+                /*   added by shubhranshu due to receipt issue for absent trainee      */
+                if ($attn_status == 1) {
+                    $tempLinkStr .= '<a href="' . base_url() . 'class_trainee/export_payment_receipt/' . $pymnt_due_id . '">Receipt</a>';
+                } else {
                     $tempLinkStr .= '<div><i>Receipt Not Available(Trainee is absent)</i></div>';
                 }
                 /*  -----------------------------------------------------------------    */
-				
+
                 //$tempLinkStr .= '<a href="' . base_url() . 'class_trainee/export_payment_receipt/' . $pymnt_due_id . '">Receipt</a>';
             } elseif ($enrolment_mode == 'SELF' && $payment_status == 'NOTPAID') {
 
 
                 if ($trainee_Status == 'ACTIVE') {
-                    $tempLinkStr = '<a href="' . base_url() . 'accounting/update_payment?invoice_id='.$invoice_id.'&enrol_mode=individual" style="color:red" >Not Paid</a> &nbsp;&nbsp;';
-                    if($classStatus != 'COMPLTD'){
+                    $tempLinkStr = '<a href="' . base_url() . 'accounting/update_payment?invoice_id=' . $invoice_id . '&enrol_mode=individual" style="color:red" >Not Paid</a> &nbsp;&nbsp;';
+                    if ($classStatus != 'COMPLTD') {
                         $tempLinkStr .= '<a href="' . base_url() . 'class_trainee/booking_acknowledge_pdf/' . $user_id . '/' . $class_id . '">Booking ACK.</a>';
-                     }
-            } else {
+                    }
+                } else {
                     $tempLinkStr = '<span style="color:red;" >Not Paid</span> &nbsp;&nbsp;';
                 }
             } elseif ($enrolment_mode == 'COMPSPON' && $payment_status == 'PAID') {
@@ -1446,33 +1407,32 @@ function get_links($attn_status,$enrolment_mode, $payment_status, $invoice_id, $
 
 
                 $label = ($payment_status == 'NOTPAID') ? 'Not Paid' : 'Part Paid';
-                $tempLinkStr = '<a href="' . base_url() . 'accounting/update_payment?invoice_id='.$invoice_id.'&enrol_mode=company&company_id='.$company_id.'" style="color:red;">' . $label . '</a>&nbsp;&nbsp;';
+                $tempLinkStr = '<a href="' . base_url() . 'accounting/update_payment?invoice_id=' . $invoice_id . '&enrol_mode=company&company_id=' . $company_id . '" style="color:red;">' . $label . '</a>&nbsp;&nbsp;';
                 if ($trainee_Status == 'ACTIVE' && $classStatus != 'COMPLTD')
                     $tempLinkStr .='<a href="' . base_url() . 'class_trainee/booking_acknowledge_pdf/' . $user_id . '/' . $class_id . '">Booking ACK.</a>';
             }
- 
         }
         //Added by Sutapa for Assessment Link in ADMIN role ONLY
-        if ($classStatus == 'COMPLTD') {                        
-            
-            $assmt_data = $assmnt_links[$class_id];
-            
-            $link_data = "";
-            foreach($assmt_data as $link) {
+        if ($classStatus == 'COMPLTD') {
 
-                if(strlen($link_data) != 0) $link_data .="~";
-                
-                if(strlen(trim($link[0])) > 0) {
-                
-                    $link_data .= base_url() . 'uploads/files/filled_templates/template_' . 
-                                    $link[0] . '_' . $user_id . '.pdf' . "^" .
-                                    $link[2];
+            $assmt_data = $assmnt_links[$class_id];
+
+            $link_data = "";
+            foreach ($assmt_data as $link) {
+
+                if (strlen($link_data) != 0)
+                    $link_data .="~";
+
+                if (strlen(trim($link[0])) > 0) {
+
+                    $link_data .= base_url() . 'uploads/files/filled_templates/template_' .
+                            $link[0] . '_' . $user_id . '.pdf' . "^" .
+                            $link[2];
                 }
             }
-            
+
             $tempLinkStr .= '<a href="#" onClick="launch_form_dialog(\'' . $link_data . '\');return false;"> Assessment</a> &nbsp;&nbsp;';
         }
-    
     }
     return $tempLinkStr;
 }

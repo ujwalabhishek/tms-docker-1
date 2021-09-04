@@ -1271,7 +1271,7 @@ class Reports_finance extends CI_Controller {
 
     public function activity_log() {
         //$this->output->enable_profiler(true);
-        ini_set('memory_limit', '512M');
+        ini_set('memory_limit', '256M');
         $data['sideMenuData'] = fetch_non_main_page_content();
 
 
@@ -1360,9 +1360,9 @@ class Reports_finance extends CI_Controller {
         $offset = ($pageno * $records_per_page);
 
         $data['tenant'] = $tenant_id;
-
-        $data['err']='Choose Filter To Display The Data';
         
+        $data['err']='Choose Filter To Display The Data';
+
         if (!empty($module)) {//added by shubhranshu due to memory limit issue
             
             $this->db->cache_on();
@@ -1381,7 +1381,7 @@ class Reports_finance extends CI_Controller {
             $data['err']='No Activity Available';
         
         }
-        
+
         $data['sort_order'] = $order_by;
 
         $data['controllerurl'] = 'reports_finance/activity_log/';
