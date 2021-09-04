@@ -98,7 +98,7 @@ class tp_gateway extends CI_Controller {
         $resp = $this->tpgModel->update_void_assessment_to_tpg($fullname, $result, $assessment_date, $score_tpg, $grade, $skillcode, $action, $assessment_ref_no);
         $obj_resp = json_decode($resp);
         if ($obj_resp->status == 200) {
-            $this->classModel->updateAssessmentData($score, $assessment_date, $grade, $user_id, $class_id, $course_id, $tenant_id);
+            $this->classModel->updateAssessmentData($score, $assessment_date, $grade, $user_id, $class_id, $course_id, $tenant_id, $assessment_ref_no);
         }
         echo $resp;
         exit;
