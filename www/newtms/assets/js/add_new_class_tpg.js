@@ -1012,7 +1012,7 @@ $(document).ready(function () {
     });
     //Added by abdulla
     $('#ab_asses').click(function () {
-        if ($("#tblNames tr").length > 0) {
+        if ($("#tblNames tr").length > 2) {
             $('#ab_ss_moda').modal();
             return false;
         }
