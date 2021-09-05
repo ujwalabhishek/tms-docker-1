@@ -639,7 +639,7 @@ echo form_open("classes/add_new_tpg_class", $atr);
                 &nbsp;&nbsp;</h4>
             <div class="scroll_schedule1 def_schld_div">
                 <div class="table-responsive  table-scroll-x">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="tblNames">
                         <thead>
                             <tr>
                                 <th width="">Action</th>
