@@ -635,16 +635,15 @@ echo form_open("classes/add_new_tpg_class", $atr);
         </div>
         <div class="col-lg-6">
             <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Assessment Schedule 
-                <span class="label label-default push_right black-btn"><a href="#ex2" rel="modal:open" class="small_text alert_message1"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Assessment Schedule</a></span>
+                <span class="label label-default push_right black-btn"><a href="#ex2" rel="modal:open" id="ab_asses" class="small_text alert_message1"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Assessment Schedule</a></span>
                 &nbsp;&nbsp;</h4>
             <div class="scroll_schedule1 def_schld_div">
                 <div class="table-responsive  table-scroll-x">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="tblNames">
                         <thead>
                             <tr>
                                 <th width="">Action</th>
-                                <th width="">Assmnt. Date</th>
-                              
+                                <th width="">Assmnt. Date</th>                              
                                 <th width="">Assessor</th>
                                 <th width="">Assmnt. Time</th>
                                 <th width="">Assmnt. Venue</th>
@@ -1038,6 +1037,16 @@ echo form_open("classes/add_new_tpg_class", $atr);
         <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Ok</button></a></div>
 </p>
 </div>
+
+<div class="modal0000" id="ab_ss_moda" style="display:none;">
+    <p>
+    <h2 class="panel_heading_style">Alert Message</h2>
+    Assessment Schedule can have only one date. You can delete and create new.<br>
+    <div class="popup_cancel popup_cancel001">
+        <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Ok</button></a></div>
+</p>
+</div>
+
 <script>  
     $(document).ready(function() {
         $tax_error = '<?php echo $tax_error_status; ?>';
