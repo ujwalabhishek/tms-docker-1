@@ -153,13 +153,13 @@ $role_array = array("COMPACT");
     if (!empty($SalesExec)) {
         foreach ($SalesExec as $row) {
             ?>
-                                                                                    <tr>
-                                                                                        <td class="td_heading">Sales Executive:</td>
-                                                                                        <td><label class="label_font"><?php echo $row['first_name'] . ' ' . $row['last_name']; ?></label>
-                                                                                        </td>
-                                                                                        <td class="td_heading">Commission Rate:</td>
-                                                                                        <td><label class="label_font"><?php echo number_format($row['commission_rate'], 2, '.', ''); ?>%</label></td>
-                                                                                    </tr>
+                                                                                                                    <tr>
+                                                                                                                        <td class="td_heading">Sales Executive:</td>
+                                                                                                                        <td><label class="label_font"><?php echo $row['first_name'] . ' ' . $row['last_name']; ?></label>
+                                                                                                                        </td>
+                                                                                                                        <td class="td_heading">Commission Rate:</td>
+                                                                                                                        <td><label class="label_font"><?php echo number_format($row['commission_rate'], 2, '.', ''); ?>%</label></td>
+                                                                                                                    </tr>
             <?php
         }
     } else {
@@ -280,9 +280,15 @@ $role_array = array("COMPACT");
                                         ?>
                                         <tr>
                                             <td><?php echo $assess_date; ?></td>
-                                            <?php if (!in_array($this->session->userdata('userDetails')->role_id, $role_array)) { ?>
-                                                <td><?php echo implode(', ', $row['trainee']); ?></td>
-                                            <?php } ?>
+                                            <?php
+                                            if (!$tpg_crse) {
+                                                if (!in_array($this->session->userdata('userDetails')->role_id, $role_array)) {
+                                                    ?>
+                                                    <td><?php echo implode(', ', $row['trainee']); ?></td>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
                                             <td><?php echo $row['DefAssId']; ?></td>
                                             <td><?php echo $start_time . ' - ' . $end_date; ?></td>
                                             <td><?php echo $row['DefAssLoc']; ?></td>
