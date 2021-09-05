@@ -254,7 +254,7 @@
                         <th width="8%" class="th_header">Class Status</th>
                         <th width="9%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=ce.payment_status&o=" . $ancher; ?>">Payment</a></th>
                         <th width="11%" class="th_header">Action</th>
-                        <?php if ($this->data['user']->role_id == 'ADMN') { ?>
+                        <?php if ($this->data['user']->role_id == 'ADMN' && $tenant_id != 'T20') { ?>
                         <th width="16%" class="th_header">TPG</th>
                         <?php } ?>
                     </tr>
@@ -348,7 +348,7 @@
                                 </td>
                                 <td><?php echo $row['paid']; ?></td>
                                 <td><?php echo $row['action_link']; ?></td>
-                                <?php if ($this->data['user']->role_id == 'ADMN') { ?>
+                                <?php if ($this->data['user']->role_id == 'ADMN' && $tenant_id != 'T20') { ?>
                                 <td>
                                     <?php if ($row['tpg_crse']) { ?>
                                         <?php
