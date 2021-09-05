@@ -3,13 +3,13 @@ $colspan = 5;
 if (!empty($deactivate_reason)) {
     $colspan = 1;
 }
-$role_array = array("COMPACT"); 
+$role_array = array("COMPACT");
 ?>
 <div class="col-md-10">
-    <?php if(!in_array($this->session->userdata('userDetails')->role_id,$role_array)) { ?>
-    <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class.png"> Class Detail 
-        <span class="label label-default pull-right white-btn"><a href="<?php echo base_url() . 'classes/print_class/' . $class->class_id; ?>"><span class="glyphicon glyphicon-print"></span> Print as PDF</a></span>
-    </h2>
+    <?php if (!in_array($this->session->userdata('userDetails')->role_id, $role_array)) { ?>
+        <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class.png"> Class Detail 
+            <span class="label label-default pull-right white-btn"><a href="<?php echo base_url() . 'classes/print_class/' . $class->class_id; ?>"><span class="glyphicon glyphicon-print"></span> Print as PDF</a></span>
+        </h2>
     <?php } ?>
     <div class="bs-example">
         <div class="table-responsive">
@@ -27,14 +27,14 @@ $role_array = array("COMPACT");
                             <?php echo $class_status; ?>
                             <?php
                             if (!empty($deactivate_reason)) {
+                                ?>
+                                De-activation Reason:&nbsp; 
+                                <span class="red"><?php echo $deactivate_reason; ?></span>
+                                <?php
+                            }
                             ?>
-                            De-activation Reason:&nbsp; 
-                            <span class="red"><?php echo $deactivate_reason; ?></span>
-                            <?php
-                        }
-                        ?>
-                       </td>
-                     </tr>
+                        </td>
+                    </tr>
                     <tr>
                         <td width="18%" class="td_heading">Class Name:</td>
                         <td width="14%"><label class="label_font"><?php echo $class->class_name; ?></label></td>
@@ -84,15 +84,15 @@ $role_array = array("COMPACT");
                                 }
                                 ?></label></td>
                     </tr>
-                   <?php if($tpg_crse) { ?>
-                    <tr>
-                        <td class="td_heading">TPGateway Course Run ID:</td>
-                        <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_course_run_id; ?></label></td>
-                    </tr>
-                    <tr>
-                        <td class="td_heading">TPGateway QR-Code Link:</td>
-                        <td colspan="5"><label class="label_font" id='crs_run_id'><a href='<?php echo $class->tpg_qr_code; ?>' target="_blank"><?php echo $class->tpg_qr_code; ?></a></label></td>
-                    </tr>
+                    <?php if ($tpg_crse) { ?>
+                        <tr>
+                            <td class="td_heading">TPGateway Course Run ID:</td>
+                            <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_course_run_id; ?></label></td>
+                        </tr>
+                        <tr>
+                            <td class="td_heading">TPGateway QR-Code Link:</td>
+                            <td colspan="5"><label class="label_font" id='crs_run_id'><a href='<?php echo $class->tpg_qr_code; ?>' target="_blank"><?php echo $class->tpg_qr_code; ?></a></label></td>
+                        </tr>
                     <?php } ?>
                     <tr>
                         <td class="td_heading">Class Language:</td>
@@ -130,7 +130,7 @@ $role_array = array("COMPACT");
                             </div>
                         </td>
                     </tr>
-                   
+
                     <?php
                     if (!empty($copy_reason)) {
                         ?>
@@ -145,40 +145,40 @@ $role_array = array("COMPACT");
             </table>
         </div>
     </div>
-<!--    <div class="table-responsive"><br>
-        <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/officail_details.png"> Sales Executive and Commission Payable</h2>
-        <table class="table table-striped">
-            <tbody>
-                <?php
-                if (!empty($SalesExec)) {
-                    foreach ($SalesExec as $row) {
-                        ?>
-                        <tr>
-                            <td class="td_heading">Sales Executive:</td>
-                            <td><label class="label_font"><?php echo $row['first_name'] . ' ' . $row['last_name']; ?></label>
-                            </td>
-                            <td class="td_heading">Commission Rate:</td>
-                            <td><label class="label_font"><?php echo number_format($row['commission_rate'], 2, '.', ''); ?>%</label></td>
-                        </tr>
-                        <?php
-                    }
-                } else {
-                    echo '<tr class="error"><td colspan="4">There is no sales executive available.</td></tr>';
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>-->
+    <!--    <div class="table-responsive"><br>
+            <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/officail_details.png"> Sales Executive and Commission Payable</h2>
+            <table class="table table-striped">
+                <tbody>
+    <?php
+    if (!empty($SalesExec)) {
+        foreach ($SalesExec as $row) {
+            ?>
+                                                                                    <tr>
+                                                                                        <td class="td_heading">Sales Executive:</td>
+                                                                                        <td><label class="label_font"><?php echo $row['first_name'] . ' ' . $row['last_name']; ?></label>
+                                                                                        </td>
+                                                                                        <td class="td_heading">Commission Rate:</td>
+                                                                                        <td><label class="label_font"><?php echo number_format($row['commission_rate'], 2, '.', ''); ?>%</label></td>
+                                                                                    </tr>
+            <?php
+        }
+    } else {
+        echo '<tr class="error"><td colspan="4">There is no sales executive available.</td></tr>';
+    }
+    ?>
+                </tbody>
+            </table>
+        </div>-->
 
     <div style="clear:both;"></div><br>
     <div class="row marketing">
         <div class="col-lg-6">
-           <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule 
-               <?php if($tpg_crse) { ?>
+            <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Class / Lab Schedule 
+                <?php if ($tpg_crse) { ?>
                     <a class="small_text" rel="modal:open" href="#view_ssg_session_modal" id='view_ssg_session' style='float:right;cursor:pointer;color:blue;'>View TPG Sessions
                     </a>
-               <?php } ?>
-           </h4> 
+                <?php } ?>
+            </h4> 
             <p>
             <div class="scroll_schedule">
                 <div class="table-responsive">
@@ -228,7 +228,7 @@ $role_array = array("COMPACT");
             </p>
         </div>
         <div class="col-lg-6">
-          <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Assessment Schedule</h4>
+            <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Assessment Schedule</h4>
             <p>
             <div class="scroll_schedule1">
                 <div class="table-responsive">
@@ -237,9 +237,15 @@ $role_array = array("COMPACT");
                         <thead>
                             <tr>
                                 <th width="18%">Assmnt. Date</th>
-                                <?php if(!in_array($this->session->userdata('userDetails')->role_id,$role_array)) { ?>
-                                <th>Trainee Name</th>
-                                <?php } ?>
+                                <?php
+                                if (!$tpg_crse) {
+                                    if (!in_array($this->session->userdata('userDetails')->role_id, $role_array)) {
+                                        ?>
+                                        <th>Trainee Name</th>
+                                        <?php
+                                    }
+                                }
+                                ?>
                                 <th>Assessor</th>
                                 <th width="20%">Assmnt. Time</th>
                                 <th width="20%">Assmnt. Venue</th>
@@ -252,9 +258,15 @@ $role_array = array("COMPACT");
                                     ?>
                                     <tr>
                                         <td><?php echo date('F d Y', strtotime($def_assessment->assmnt_date)); ?></td>
-                                        <?php if(!in_array($this->session->userdata('userDetails')->role_id,$role_array)) { ?>
-                                        <td><?php echo ($def_assessment->assmnt_type == 'DEFAULT') ? 'ALL' : ''; ?></td>
-                                        <?php } ?>
+                                        <?php
+                                        if (!$tpg_crse) {
+                                            if (!in_array($this->session->userdata('userDetails')->role_id, $role_array)) {
+                                                ?>
+                                                <td><?php echo ($def_assessment->assmnt_type == 'DEFAULT') ? 'ALL' : ''; ?></td>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
                                         <td><?php echo $DefAssId; ?></td>
                                         <td><?php echo date('h:i A', strtotime($def_assessment->assmnt_start_time)) . ' - ' . date('h:i A', strtotime($def_assessment->assmnt_end_time)); ?></td>
                                         <td><?php echo $DefAssLoc; ?></td>
@@ -268,8 +280,8 @@ $role_array = array("COMPACT");
                                         ?>
                                         <tr>
                                             <td><?php echo $assess_date; ?></td>
-                                            <?php if(!in_array($this->session->userdata('userDetails')->role_id,$role_array)) { ?>
-                                            <td><?php echo implode(', ', $row['trainee']); ?></td>
+                                            <?php if (!in_array($this->session->userdata('userDetails')->role_id, $role_array)) { ?>
+                                                <td><?php echo implode(', ', $row['trainee']); ?></td>
                                             <?php } ?>
                                             <td><?php echo $row['DefAssId']; ?></td>
                                             <td><?php echo $start_time . ' - ' . $end_date; ?></td>
@@ -288,9 +300,9 @@ $role_array = array("COMPACT");
             </div>
             </p>
             <div style="clear:both;">&nbsp;</div>
-           <div class="button_class">
+            <div class="button_class">
                 <a href="<?php echo site_url(); ?>classes?course_id=<?php echo $class->course_id; ?>">
-                     <button class="btn btn-primary" type="button">
+                    <button class="btn btn-primary" type="button">
                         <span class="glyphicon glyphicon-step-backward"></span></span>&nbsp;Back</button>
                 </a>
             </div>
@@ -314,34 +326,34 @@ $role_array = array("COMPACT");
             </tr>
         </thead>
         <tbody id='ssg_sess'>
-            
-            
+
+
         </tbody>
     </table>
 </div>
 
 <script>
- $(document).ready(function() {
-      $siteurl = '<?php echo site_url(); ?>';
-       $('#view_ssg_session').click(function(){
-           $('#ssg_sess').html('');
-          $crs_run_id= $('#crs_run_id').html();
-          $class_id= '<?php echo $classid;?>';
-           $.ajax({
-            type: 'post',
-            url: $siteurl + 'classes/get_ssg_session',
-            data: {crs_run_id: $crs_run_id,class_id:$class_id},
-            async: false,
-            success: function(res) {
-                json_data = $.parseJSON(res);
-                if (json_data != '') {
-                   $.each(json_data.data.sessions, function(i, item) {
-                       $('#ssg_sess').append('<tr><td>'+(i+1)+'</td><td>'+item.id+'</td><td>'+item.startDate+'</td><td>'+item.endDate+'</td><td>'+item.startTime+'</td><td>'+item.endTime+'</td><td>'+item.attendanceTaken+'</td></tr>');
-                    });
+    $(document).ready(function () {
+        $siteurl = '<?php echo site_url(); ?>';
+        $('#view_ssg_session').click(function () {
+            $('#ssg_sess').html('');
+            $crs_run_id = $('#crs_run_id').html();
+            $class_id = '<?php echo $classid; ?>';
+            $.ajax({
+                type: 'post',
+                url: $siteurl + 'classes/get_ssg_session',
+                data: {crs_run_id: $crs_run_id, class_id: $class_id},
+                async: false,
+                success: function (res) {
+                    json_data = $.parseJSON(res);
+                    if (json_data != '') {
+                        $.each(json_data.data.sessions, function (i, item) {
+                            $('#ssg_sess').append('<tr><td>' + (i + 1) + '</td><td>' + item.id + '</td><td>' + item.startDate + '</td><td>' + item.endDate + '</td><td>' + item.startTime + '</td><td>' + item.endTime + '</td><td>' + item.attendanceTaken + '</td></tr>');
+                        });
+                    }
                 }
-            }
+            });
         });
-       });
-    });    
+    });
 
 </script>
