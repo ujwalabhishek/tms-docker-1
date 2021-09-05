@@ -1041,7 +1041,7 @@ echo form_open("classes/add_new_tpg_class", $atr);
 <div class="modal0000" id="ab_ss_moda" style="display:none;">
     <p>
     <h2 class="panel_heading_style">Alert Message</h2>
-    Assessment Schedule can have only one date. <br>
+    Assessment Schedule can have only one date. You can delete and create new.<br>
     <div class="popup_cancel popup_cancel001">
         <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Ok</button></a></div>
 </p>
