@@ -1012,6 +1012,7 @@ $(document).ready(function () {
     });
     //Added by abdulla
     $('#ab_asses').click(function () {
+        alert('aaa');
         $val = $(this).children('input').data('del');
         if ($val.length != 0) {
             $('#ab_ss_moda').modal();
