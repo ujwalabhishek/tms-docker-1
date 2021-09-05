@@ -1,7 +1,8 @@
+<script>
+    var CLIENT_DATE_FORMAT = 'yy-mm-dd';
+</script>
 <?php
 $this->load->helper('common_helper');
-
-
 $reacti_btn = '';
 $reacti_popup = '';
 if ($trainee['userdetails']['account_status'] == 'INACTIV'):
