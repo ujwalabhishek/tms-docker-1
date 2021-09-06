@@ -1267,7 +1267,7 @@ class tp_gateway extends CI_Controller {
 
             //Employer
             $employerUEN = $company[0]->comp_regist_num;
-            $emploerFullName = $company[0]->company_name;
+            $emploerFullName = $company[0]->comp_attn;
             $employerEmailAddress = $company[0]->comp_email;
             $employerContactNumber = $company[0]->comp_phone;
         } else {
