@@ -127,7 +127,7 @@
                             ?>                
                         <td><a href="<?php echo base_url() . $controllerurl . 'view_course/' . $data['course_id']; ?>"><?php echo $data['course_id']; ?></a></td>
                         <td><?php echo $data['crse_name']; ?></td>
-                        <td><?php echo isset($data['tpg_crse']) ? "Yes": "No"; ?></td>
+                        <td><?php echo ($data['tpg_crse'] == '1') ? "Yes": "No"; ?></td>
                         <td><?php echo rtrim($CI->course_model->get_managers($data['crse_manager']), ', '); ?></td>
                         <td><?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($data['crse_type']), ', '); ?></td>
                         <td><?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($data['class_type']), ', '); ?></td>
