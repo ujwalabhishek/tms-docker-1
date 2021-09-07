@@ -107,6 +107,7 @@
                     <tr>            
                         <th width="6%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=course_id&o=" . $ancher; ?>" >Code</a></th>
                         <th width="12%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=crse_name&o=" . $ancher; ?>" >Course Name</a></th>
+                        <th width="12%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=tpg_crse&o=" . $ancher; ?>" >TPG</a></th>
                         <th width="13%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=crse_manager&o=" . $ancher; ?>" >Course Manager</a></th>
                         <th width="12%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=crse_type&o=" . $ancher; ?>" >Course Type</a></th>
                         <th width="13%" class="th_header"><a style="color:#000000;" href="<?php echo base_url() . $pageurl . "?" . $sort_link . "&f=class_type&o=" . $ancher; ?>" >Class Type</a></th>
@@ -126,6 +127,7 @@
                             ?>                
                         <td><a href="<?php echo base_url() . $controllerurl . 'view_course/' . $data['course_id']; ?>"><?php echo $data['course_id']; ?></a></td>
                         <td><?php echo $data['crse_name']; ?></td>
+                        <td><?php echo ($data['tpg_crse'] == '1') ? "Yes": "No"; ?></td>
                         <td><?php echo rtrim($CI->course_model->get_managers($data['crse_manager']), ', '); ?></td>
                         <td><?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($data['crse_type']), ', '); ?></td>
                         <td><?php echo rtrim($CI->course_model->get_metadata_on_parameter_id($data['class_type']), ', '); ?></td>
