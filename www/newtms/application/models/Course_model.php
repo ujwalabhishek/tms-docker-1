@@ -496,7 +496,7 @@ class Course_Model extends CI_Model {
             return;
         }
 
-        $this->db->select("c.course_id, c.crse_name, c.crse_manager, c.crse_type, c.class_type, c.certi_level, "
+        $this->db->select("c.course_id, c.crse_name, c.crse_manager, c.crse_type, c.class_type, c.tpg_crse, c.certi_level, "
                 . "c.language, c.pre_requisite,c.crse_status");
 
         $this->db->from('course c');
