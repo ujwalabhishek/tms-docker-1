@@ -542,6 +542,9 @@ $config['TPG_KEY_T18'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
 //Key for WABLAB Tenant
 $config['TPG_KEY_T20'] = "";
 
+//Key for DEMO Tenant
+$config['TPG_KEY_T23'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
+
 //Key for FRCS Tenant
 $config['TPG_KEY_T24'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
 
