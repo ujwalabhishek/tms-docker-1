@@ -2255,7 +2255,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                     join course_class cc on cc.class_id='$class' and cc.course_id='$course' and cc.tenant_id='T02'
                     where att.class_id='$class' and att.course_id='$course' and att.user_id='$user'
                     group by att.user_id,att.class_id
-                    having attendence <= 0.50");
+                    having attendence <= 0.75");
                 $result['att_percentage'] =$qr->result_array()[0][attendence];
             }
             //////below code was added by shubhranshu for xp2 for attrition option end-----
