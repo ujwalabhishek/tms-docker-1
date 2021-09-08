@@ -801,7 +801,7 @@ class Class_Trainee_Model extends CI_Model {
                 }
 
 
-                if ($att_percentage != null && $att_percentage >= 0 && $att_percentage < 0.75 && TENANT_ID == 'T02') {
+                if ($att_percentage != null && $att_percentage >= 0 && $att_percentage <= 0.50 && TENANT_ID == 'T02') {
                     $this->db->set('ce.training_score', 'ATR');
                     $this->db->where('ce.pymnt_due_id', $payment_due_id);
                     $this->db->where('epd.pymnt_due_id', $payment_due_id);
@@ -818,23 +818,23 @@ class Class_Trainee_Model extends CI_Model {
                     $this->db->where('feedback_question_id', 'COMYTCOM');
                     $this->db->where('user_id', $trainee_id);
                     $this->db->update('trainer_feedback', $data);
-//                } else if ($att_percentage != null && $att_percentage > 0.50 && $att_percentage < 0.75 && TENANT_ID == 'T02') {
-//                    $this->db->set('ce.training_score', 'ABS');
-//                    $this->db->where('ce.pymnt_due_id', $payment_due_id);
-//                    $this->db->where('epd.pymnt_due_id', $payment_due_id);
-//                    $this->db->where('epd.att_status', 0);
-//                    $this->db->where('ce.user_id', $trainee_id);
-//                    $this->db->where('epd.user_id', $trainee_id);
-//                    $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
-//
-//
-//                    $data = array('feedback_answer' => 'ABS');
-//                    $this->db->where('tenant_id', $tenant_id);
-//                    $this->db->where('course_id', $course_id);
-//                    $this->db->where('class_id', $class_id);
-//                    $this->db->where('feedback_question_id', 'COMYTCOM');
-//                    $this->db->where('user_id', $trainee_id);
-//                    $this->db->update('trainer_feedback', $data);
+                } else if ($att_percentage != null && $att_percentage > 0.50 && $att_percentage < 0.75 && TENANT_ID == 'T02') {
+                    $this->db->set('ce.training_score', 'ABS');
+                    $this->db->where('ce.pymnt_due_id', $payment_due_id);
+                    $this->db->where('epd.pymnt_due_id', $payment_due_id);
+                    $this->db->where('epd.att_status', 0);
+                    $this->db->where('ce.user_id', $trainee_id);
+                    $this->db->where('epd.user_id', $trainee_id);
+                    $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
+
+
+                    $data = array('feedback_answer' => 'ABS');
+                    $this->db->where('tenant_id', $tenant_id);
+                    $this->db->where('course_id', $course_id);
+                    $this->db->where('class_id', $class_id);
+                    $this->db->where('feedback_question_id', 'COMYTCOM');
+                    $this->db->where('user_id', $trainee_id);
+                    $this->db->update('trainer_feedback', $data);
                 } else {//////below code was added by shubhranshu for xp for attrition option end-----
                     $this->db->set('ce.training_score', 'ABS');
                     $this->db->where('ce.pymnt_due_id', $payment_due_id);
@@ -845,7 +845,7 @@ class Class_Trainee_Model extends CI_Model {
                     $this->db->update('class_enrol ce join enrol_pymnt_due epd ON ce.pymnt_due_id=epd.pymnt_due_id');
 
                     //////below code was added by shubhranshu for xp for attrition option START-----
-                    if (($att_percentage >= 0 && $att_percentage <= 0.75 && TENANT_ID == 'T02') || ($att_percentage == null && TENANT_ID == 'T02')) {                    
+                    if (($att_percentage >= 0 && $att_percentage <= 0.50 && TENANT_ID == 'T02') || ($att_percentage == null && TENANT_ID == 'T02')) {                    
                         $data = array('feedback_answer' => '');
                         $this->db->where('tenant_id', $tenant_id);
                         $this->db->where('course_id', $course_id);
@@ -1380,7 +1380,7 @@ class Class_Trainee_Model extends CI_Model {
 
         $total_subsidy_amount_due += $payments_result->subsidy_amount;
         //modified by shubhranshu due to attrition starts
-        if ($att_percentage <= 0.75 && TENANT_ID == 'T02') {
+        if ($att_percentage <= 0.50 && TENANT_ID == 'T02') {
             $data = array('training_score' => 'ATR');
             $this->db->where('pymnt_due_id', $payment_due_id);
             $this->db->where('user_id', $trainee_id);
@@ -1396,7 +1396,7 @@ class Class_Trainee_Model extends CI_Model {
         $query = $this->db->select('*')->from('trainer_feedback')->where('tenant_id', $tenant_id)->where('course_id', $course_id)
                         ->where('class_id', $class_id)->where('user_id', $trainee_id)->get();
         if ($query->num_rows() > 0) {//modified by shubhranshu due to attrition starts
-            if ($att_percentage <= 0.75 && TENANT_ID == 'T02') {
+            if ($att_percentage <= 0.50 && TENANT_ID == 'T02') {
                 $data = array('feedback_answer' => 'ATR');
                 $this->db->where('tenant_id', $tenant_id);
                 $this->db->where('course_id', $course_id);
@@ -1543,7 +1543,7 @@ class Class_Trainee_Model extends CI_Model {
 
         $total_subsidy_amount_due += $payments_result->subsidy_amount;
         //modified by shubhranshu due to attrition starts
-        if ($att_percentage <= 0.75 && TENANT_ID == 'T02') {
+        if ($att_percentage <= 0.50 && TENANT_ID == 'T02') {
 
             $data = array('training_score' => 'ATR');
             $this->db->where('pymnt_due_id', $payment_due_id);
@@ -1560,7 +1560,7 @@ class Class_Trainee_Model extends CI_Model {
         $query = $this->db->select('*')->from('trainer_feedback')->where('tenant_id', $tenant_id)->where('course_id', $course_id)
                         ->where('class_id', $class_id)->where('user_id', $trainee_id)->get();
         if ($query->num_rows() > 0) {/////modified by shubhranshu due to attrition starts
-            if ($att_percentage <= 0.75 && TENANT_ID == 'T02') {
+            if ($att_percentage <= 0.50 && TENANT_ID == 'T02') {
                 $data = array('feedback_answer' => 'ATR');
                 $this->db->where('tenant_id', $tenant_id);
                 $this->db->where('course_id', $course_id);
