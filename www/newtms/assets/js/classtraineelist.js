@@ -719,16 +719,15 @@ $(document).ready(function() {
                     if(item.training_score == "NYC" || item.training_score == "C" || item.training_score == "2NYC"){
                         $('#COMYTCOM_ATTRITION').prop('disabled', true);
                     }else{
-//                        if((res.att_percentage <= 0.50) && (res.att_percentage != null) && (res.att_percentage >= 0)){
-//                            $('#COMYTCOM_ATTRITION').prop('disabled', false);
-//                            $('#COMYTCOM_C').prop('disabled', true);
-//                            $('#COMYTCOM_NYC').prop('disabled', true);     
-//                            $('#COMYTCOM_EX').prop('disabled', true);
-//                            $('#COMYTCOM_2NYC').prop('disabled', true);
-//                            $('#COMYTCOM_ABS').prop('disabled', false);
-//                        }else 
-                        if((res.att_percentage <= 0.75) && (res.att_percentage != null) && (res.att_percentage >= 0)){
+                        if((res.att_percentage <= 0.50) && (res.att_percentage != null) && (res.att_percentage >= 0)){
                             $('#COMYTCOM_ATTRITION').prop('disabled', false);
+                            $('#COMYTCOM_C').prop('disabled', true);
+                            $('#COMYTCOM_NYC').prop('disabled', true);     
+                            $('#COMYTCOM_EX').prop('disabled', true);
+                            $('#COMYTCOM_2NYC').prop('disabled', true);
+                            $('#COMYTCOM_ABS').prop('disabled', false);
+                        }else if((res.att_percentage < 0.75) && (res.att_percentage != null) && (res.att_percentage >= 0)){
+                            $('#COMYTCOM_ATTRITION').prop('disabled', true);
                             $('#COMYTCOM_C').prop('disabled', true);
                             $('#COMYTCOM_NYC').prop('disabled', true);     
                             $('#COMYTCOM_EX').prop('disabled', true);
