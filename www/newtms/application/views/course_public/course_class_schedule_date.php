@@ -50,9 +50,9 @@
                                         <th width="11%" >Duration(hrs)</th>
 
                                         <th width="11%" >Trainer Aide</th>
-
+                                        <?php if(TENANT_ID != 'T02') { ?>
                                         <th width="10%" >Trainer</th>
-
+                                        <?php } ?>
                                         <th width="15%" ><a  href="<?php echo base_url() . $pageurl . "?f=classroom_location&o=" . $ancher; ?>" >Location/Address</a></th>
 
                                         <th width="10%" ><a  href="<?php echo base_url() . $pageurl . "?f=class_language&o=" . $ancher; ?>" >Language</a></th>
@@ -146,9 +146,9 @@
                                             <td><?php echo $class['total_classroom_duration'] + $class['total_lab_duration'] + $class['assmnt_duration']; ?></td>
 
                                             <td><div class="table-scrol" style="    height: 200px;"><?php echo $class['crse_manager']; ?></div></td>
-
-                                            <td><div class="table-scrol" style="    height: 200px;"><?php echo $class['classroom_trainer']; ?></div></td>
-
+                                            <?php if(TENANT_ID != 'T02') { ?>
+                                                <td><div class="table-scrol" style="    height: 200px;"><?php echo $class['classroom_trainer']; ?></div></td>
+                                            <?php } ?>
                                             <td><?php echo $status_lookup_location[$class['classroom_location']]; ?></td>
 
                                             <td><?php echo $status_lookup_language[$class['class_language']]; ?></td>
