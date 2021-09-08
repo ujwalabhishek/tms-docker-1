@@ -30,7 +30,9 @@
                                     <th width="10%" class="">Class Schedule</th>
 					 <th width="6%" class="">Duration <br/>(hrs)</th>
                                     <th width="11%" class="">Trainer Aide</th>
+                                    <?php if(TENANT_ID != 'T02') {?>
                                     <th width="10%" class="">Trainer</th>
+                                    <?php } ?>
                                     <th width="12%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=classroom_location&o=" . $ancher; ?>" >Location/Address</a></th>
                                     <th width="7%" class=""><a  href="<?php echo base_url() . $pageurl . "?f=class_language&o=" . $ancher; ?>" >Language</a></th>
                                     <th width="20%" class="" colspan="3"><center>Seats</center></th>
@@ -113,7 +115,9 @@
 
                                             <td><?php echo $class['total_classroom_duration'] + $class['total_lab_duration'] + $class['assmnt_duration']; ?></td>
                                             <td ><div class="table-scrol" style="    height: 75px;"><?php echo $class['crse_manager']; ?></div></td>
+                                            <?php if(TENANT_ID != 'T02') {?>
                                             <td ><div class="table-scrol" style="    height: 75px;"><?php echo $class['classroom_trainer']; ?></div></td>
+                                            <?php } ?>
                                             <td><?php echo $status_lookup_location[$class['classroom_location']]; ?></td>
                                             <td><?php echo $status_lookup_language[$class['class_language']]; ?></td>
                                             <td><?php echo $class_count[$class['class_id']]; ?></td>
