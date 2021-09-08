@@ -39,7 +39,11 @@
                                     <th width="22%" class="">Status</th>
                                 </tr>
                                 <tr>
-                                    <th colspan="9">&nbsp;</th>
+                                    <?php if(TENANT_ID != 'T02') {?>
+                                        <th colspan="9">&nbsp;</th>
+                                    <?php } else {?>
+                                        <th colspan="8">&nbsp;</th>
+                                    <?php } ?>
                                     <th width="5%" class="text_move">Booked</th>
                                     <th width="10%" class="text_move">Available</th>
                                     <th width="5%" class="text_move">Total</th>
