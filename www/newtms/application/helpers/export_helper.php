@@ -2413,11 +2413,11 @@ function export_classtrainee_page($result, $tenant_id) {
     $sheet = $CI->excel->getActiveSheet();
 
     $sheet->setCellValue('A1', '');
-    $sheet->mergeCells('B1:I1');
+    $sheet->mergeCells('B1:L1');
     $sheet->getStyle('B1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     $sheet->setCellValue('B1', 'List of all Class-Trainee Enrollment Details as on ' . date('M j Y, l'));
-    $sheet->getStyle('A1:I1')->getFont()->setBold(true);
-    foreach (range('A', 'I') as $columnID) {
+    $sheet->getStyle('A1:L1')->getFont()->setBold(true);
+    foreach (range('A', 'L') as $columnID) {
         $CI->excel->getActiveSheet()->getColumnDimension($columnID)
                 ->setAutoSize(true);
     }
@@ -2430,14 +2430,18 @@ function export_classtrainee_page($result, $tenant_id) {
     $sheet->setCellValue('G2', 'Certi. Coll.');
     $sheet->setCellValue('H2', 'Class Status');
     $sheet->setCellValue('I2', 'Payment Status');
+    //Added by abdulla
+    $sheet->setCellValue('J2', 'TG Number');
+    $sheet->setCellValue('K2', 'Enrolment Reference Number');
+    $sheet->setCellValue('L2', 'Enrolment Status');
 
-    $sheet->getStyle('A2:I2')->applyFromArray(
+    $sheet->getStyle('A2:L2')->applyFromArray(
             array('fill' => array(
                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
                     'color' => array('argb' => 'FFCCCCFF')
                 )
     ));
-    $sheet->getStyle('A2:I2')->getFont()->setBold(true);
+    $sheet->getStyle('A2:L2')->getFont()->setBold(true);
     $rn = 4;
 
     foreach ($result as $row) {
@@ -2465,8 +2469,11 @@ function export_classtrainee_page($result, $tenant_id) {
         $sheet->setCellValue('G' . $rn, !empty($row['certificate_coll_on']) ? date('d/m/Y',  strtotime($row['certificate_coll_on'])):'');
         $result_text = !empty($row['feedback_answer']) ? ' (Result: ' . $row['feedback_answer'].')' : '';
         $sheet->setCellValue('H' . $rn, $CI->class->get_class_status($row['class_id'], '') . $result_text);
-        $sheet->setCellValue('I' . $rn, rtrim($CI->course->get_metadata_on_parameter_id($row['payment_status']), ', ')
-        );
+        $sheet->setCellValue('I' . $rn, rtrim($CI->course->get_metadata_on_parameter_id($row['payment_status']), ', '));
+        //Added by abdulla
+        $sheet->setCellValue('J' . $rn, $row['tg_number']);
+        $sheet->setCellValue('K' . $rn, $row['eid_number']);
+        $sheet->setCellValue('L' . $rn, $row['tpg_enrolment_status']);
         $rn++;
     }
     ob_end_clean();
