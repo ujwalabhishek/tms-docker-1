@@ -2435,13 +2435,13 @@ function export_classtrainee_page($result, $tenant_id) {
     $sheet->setCellValue('K2', 'Enrolment Reference Number');
     $sheet->setCellValue('L2', 'Enrolment Status');
 
-    $sheet->getStyle('A2:I2')->applyFromArray(
+    $sheet->getStyle('A2:L2')->applyFromArray(
             array('fill' => array(
                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
                     'color' => array('argb' => 'FFCCCCFF')
                 )
     ));
-    $sheet->getStyle('A2:I2')->getFont()->setBold(true);
+    $sheet->getStyle('A2:L2')->getFont()->setBold(true);
     $rn = 4;
 
     foreach ($result as $row) {

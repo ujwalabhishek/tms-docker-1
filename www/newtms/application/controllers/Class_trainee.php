@@ -3091,7 +3091,9 @@ class Class_Trainee extends CI_Controller {
         $field = ($this->input->get('f')) ? $this->input->get('f') : 'ce.pymnt_due_id';
         $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'DESC';
         $company_id = $this->input->get('company_id');
-        $result = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, '', '1', $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
+        //added by abdulla
+        $enrolment_id = $this->input->get('eid');
+        $result = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, '', '1', $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $enrolment_id);
         $this->load->helper('export_helper');
         export_classtrainee_page($result, $tenant_id);
     }
