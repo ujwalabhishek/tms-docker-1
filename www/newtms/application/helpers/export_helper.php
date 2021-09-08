@@ -2413,11 +2413,11 @@ function export_classtrainee_page($result, $tenant_id) {
     $sheet = $CI->excel->getActiveSheet();
 
     $sheet->setCellValue('A1', '');
-    $sheet->mergeCells('B1:I1');
+    $sheet->mergeCells('B1:L1');
     $sheet->getStyle('B1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     $sheet->setCellValue('B1', 'List of all Class-Trainee Enrollment Details as on ' . date('M j Y, l'));
-    $sheet->getStyle('A1:I1')->getFont()->setBold(true);
-    foreach (range('A', 'I') as $columnID) {
+    $sheet->getStyle('A1:L1')->getFont()->setBold(true);
+    foreach (range('A', 'L') as $columnID) {
         $CI->excel->getActiveSheet()->getColumnDimension($columnID)
                 ->setAutoSize(true);
     }
@@ -2431,7 +2431,7 @@ function export_classtrainee_page($result, $tenant_id) {
     $sheet->setCellValue('H2', 'Class Status');
     $sheet->setCellValue('I2', 'Payment Status');
     //Added by abdulla
-    $sheet->setCellValue('J2', 'TG No.');
+    $sheet->setCellValue('J2', 'TG Number');
     $sheet->setCellValue('K2', 'Enrolment Reference Number');
     $sheet->setCellValue('L2', 'Enrolment Status');
 
