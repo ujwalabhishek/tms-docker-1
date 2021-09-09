@@ -20,10 +20,11 @@ class Company extends CI_Controller {
     }
 
     /*
-    * This function loads the initial list view page for company.
-    */
-   public function index() {
-       $data['sideMenuData'] = fetch_non_main_page_content();
+     * This function loads the initial list view page for company.
+     */
+
+    public function index() {
+        $data['sideMenuData'] = fetch_non_main_page_content();
         $user = $this->session->userdata('userDetails');
         $tenant_id = $user->tenant_id;
         $data['page_title'] = 'Company';
@@ -64,7 +65,7 @@ class Company extends CI_Controller {
             if ($last_modified_by->user_name) {
                 $tabledata[$i]['last_activity_details'] = $last_modified_by->first_name . ' ' . $last_modified_by->last_name . ', ' . $tabledata[$i]['last_modified_on'];
             }
-            
+
             $tabledata[$i]['company_discount'] = $this->companymodel->get_company_discount($tenant_id, $tabledata[$i]['company_id'], "all");
         }
         $data['tabledata'] = $tabledata;
@@ -81,6 +82,7 @@ class Company extends CI_Controller {
     /*
      * This function loads the empty Add company form.
      */
+
     public function add_new_company() {
         //$this->output->enable_profiler(true);
         $data['sideMenuData'] = fetch_non_main_page_content();
@@ -89,11 +91,17 @@ class Company extends CI_Controller {
         $this->load->library('form_validation');
         $data['page_title'] = 'Add New Company';
         $this->load->model('course_model', 'course');
-        $data['courses'] = $this->course->get_active_course_list_by_tenant($tenant_id,'discount');
+        $regno = $this->input->post('regno');
+        $data['courses'] = $this->course->get_active_course_list_by_tenant($tenant_id, 'discount');
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             extract($_POST);
             $this->form_validation->set_rules('company_name', 'Company Name', 'required|max_length[250]');
-            $this->form_validation->set_rules('regno', 'Registration Number', 'required|callback_check_registration_number[' . $regno . ']');
+            //Added by Abdulla
+            if ($tenant_id != 'T02') {
+                $this->form_validation->set_rules('regno', 'Registration Number', 'required|callback_check_registration_number[' . $regno . ']');
+            } else {
+                $this->form_validation->set_rules('regno', 'Registration Number', 'required');
+            }
             $this->form_validation->set_rules('business_type', 'Business Type', 'required');
             $this->form_validation->set_rules('business_s', 'Business Size', 'required');
             $this->form_validation->set_rules('phoneno', 'Phone Number', 'required');
@@ -123,17 +131,20 @@ class Company extends CI_Controller {
             }
             if ($this->form_validation->run() == TRUE) {
                 $regno = $this->input->post('regno');
-                  $regnoStatus = $this->commonmodel->is_registration_number_exist($regno);
-                  if($regnoStatus){
-                      $failure_msg = 'Duplicate Registration No. Please change Registration No.';
-                  }                  
+                $regnoStatus = $this->commonmodel->is_registration_number_exist($regno);
+                if ($tenant_id == 'T02' && $regnoStatus) {
+                    $regnoStatus = FALSE;
+                }
+                if ($regnoStatus) {
+                    $failure_msg = 'Duplicate Registration No. Please change Registration No.';
+                }
             }
             if ($this->form_validation->run() == TRUE && (!$regnoStatus)) {
                 $this->companymodel->save_company_details();
                 $this->session->set_flashdata('companyadded', 'Company has been added successfully!');
                 redirect('company');
             } else {
-                $data['tax_error'] = ($data['tax_error'])?$data['tax_error']:$failure_msg;
+                $data['tax_error'] = ($data['tax_error']) ? $data['tax_error'] : $failure_msg;
             }
         }
 
@@ -145,6 +156,7 @@ class Company extends CI_Controller {
     /*
      * This function loads the Edit company form.
      */
+
     public function edit_company() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $user = $this->session->userdata('userDetails');
@@ -174,7 +186,11 @@ class Company extends CI_Controller {
             if ($this->input->post('submit_button') != '') {
                 extract($_POST);
                 $this->form_validation->set_rules('company_name', 'Company Name', 'required|max_length[250]');
-                $this->form_validation->set_rules('regno', 'Registration Number', 'required|callback_check_registration_number_edit[' . $regno_current . ']');
+                if ($tenant_id != 'T02') {
+                    $this->form_validation->set_rules('regno', 'Registration Number', 'required|callback_check_registration_number_edit[' . $regno_current . ']');
+                } else {
+                    $this->form_validation->set_rules('regno', 'Registration Number', 'required');
+                }                
                 $this->form_validation->set_rules('business_type', 'Business Type', 'required');
                 $this->form_validation->set_rules('business_s', 'Business Size', 'required');
                 $this->form_validation->set_rules('phoneno', 'Phone Number', 'required');
@@ -205,19 +221,22 @@ class Company extends CI_Controller {
                 if ($this->form_validation->run() == TRUE) {
                     $regno = $this->input->post('regno');
                     $regnoStatus = $this->commonmodel->is_registration_number_exist($regno);
-                    if($regnoStatus) {
+                    if ($tenant_id == 'T02' && $regnoStatus) {
+                        $regnoStatus = FALSE;
+                    }
+                    if ($regnoStatus) {
                         $failure_msg = 'Duplicate Registration No. Please change Registration No.';
-                    }                  
+                    }
                 }
                 if ($this->form_validation->run() == TRUE) {
-                    $result = $this->companymodel->get_company_status_info($company_id);                   
+                    $result = $this->companymodel->get_company_status_info($company_id);
                     $previous_data = json_encode($result);
                     $this->companymodel->update_company_details($company_id);
-                    user_activity(2,$company_id,$previous_data);
+                    user_activity(2, $company_id, $previous_data);
                     $this->session->set_flashdata('companyupdated', 'Company has been updated successfully!');
                     redirect('company');
-                }else {
-                    $data['tax_error'] = ($data['tax_error'])?$data['tax_error']:$failure_msg;
+                } else {
+                    $data['tax_error'] = ($data['tax_error']) ? $data['tax_error'] : $failure_msg;
                 }
             }
         }
@@ -292,6 +311,7 @@ class Company extends CI_Controller {
             echo 0;
         }
     }
+
     /**
      * checks if user name already exists
      * @param type $arg_username
@@ -302,7 +322,7 @@ class Company extends CI_Controller {
         extract($_POST);
         $user_name = trim(($username));
         $curr_user_name = trim(($curr_username));
-       if ($arg_username != '') {
+        if ($arg_username != '') {
             $user_name = $arg_username;
             $curr_user_name = $arg_curr_username;
         }
@@ -321,15 +341,16 @@ class Company extends CI_Controller {
             echo 0;
         }
     }
+
     /**
      * checks if email id is already exists (Add company)
      * @param type $arg_email
      * @return boolean
      */
     public function check_email($arg_email = '') {
-         extract($_POST);
+        extract($_POST);
         $email_id = trim($email);
-       if ($arg_email != '') {
+        if ($arg_email != '') {
             $email_id = $arg_email;
         }
         $num_rows = $this->companymodel->check_email($email_id);
@@ -347,6 +368,7 @@ class Company extends CI_Controller {
             echo 0;
         }
     }
+
     /**
      * checks if email id is already exists (Edit company)
      * @param type $arg_email
@@ -389,10 +411,13 @@ class Company extends CI_Controller {
         if ($arg_reg_num != '') {
             $reg_num = $arg_reg_num;
         }
-        $num_rows = $this->companymodel->check_registration_number($reg_num,$tenant_id);
+        $num_rows = $this->companymodel->check_registration_number($reg_num, $tenant_id);
         if ($arg_reg_num != '') {
             if ($num_rows >= 1) {
                 $this->form_validation->set_message('check_registration_number', "Registration Number exists!");
+                if ($tenant_id == 'T02') {
+                    return true;
+                }
                 return false;
             } else {
                 return true;
@@ -400,6 +425,9 @@ class Company extends CI_Controller {
         }
         if ($num_rows >= 1) {
             echo 1;
+            if ($tenant_id == 'T02') {
+                echo 0;
+            }
         } else {
             echo 0;
         }
@@ -412,7 +440,7 @@ class Company extends CI_Controller {
      * @return boolean
      */
     public function check_registration_number_edit($arg_reg_num = '', $arg_curr_reg_num = '') {
-         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
+        $tenant_id = $this->session->userdata('userDetails')->tenant_id;
         extract($_POST);
         $reg_num = trim($reg_num);
         $curr_reg_num = trim($curr_reg_num);
@@ -420,10 +448,13 @@ class Company extends CI_Controller {
             $reg_num = $arg_reg_num;
             $curr_reg_num = $arg_curr_reg_num;
         }
-        $num_rows = $this->companymodel->check_registration_number_edit($reg_num, $curr_reg_num,$tenant_id);
+        $num_rows = $this->companymodel->check_registration_number_edit($reg_num, $curr_reg_num, $tenant_id);
         if ($arg_reg_num != '') {
             if ($num_rows >= 1) {
                 $this->form_validation->set_message('check_registration_number_edit', "Registration Number exists!");
+                if ($tenant_id == 'T02') {
+                    return true;
+                }
                 return false;
             } else {
                 return true;
@@ -431,10 +462,14 @@ class Company extends CI_Controller {
         }
         if ($num_rows >= 1) {
             echo 1;
+            if ($tenant_id == 'T02') {
+                echo 0;
+            }
         } else {
             echo 0;
         }
     }
+
     /**
      * get company list used by auto-complete
      */
@@ -447,6 +482,7 @@ class Company extends CI_Controller {
         print json_encode($result);
         exit;
     }
+
     /**
      * get trainee list auto-complete
      */
@@ -458,6 +494,7 @@ class Company extends CI_Controller {
         print json_encode($result);
         exit;
     }
+
     /**
      * get trainee tax code auto-complete
      */
@@ -469,6 +506,7 @@ class Company extends CI_Controller {
         print json_encode($result);
         exit;
     }
+
     /**
      * deactivate company
      */
@@ -483,11 +521,12 @@ class Company extends CI_Controller {
             $res = $this->companymodel->get_company_status_info($company_id);
             $previous_data = json_encode($res);
             $this->companymodel->company_deactivate($tenant_id, $company_id, $company_reason_for_deactivation, $company_other_reason_for_deactivation);
-            user_activity(2,$company_id,$previous_data);
+            user_activity(2, $company_id, $previous_data);
             $this->session->set_flashdata('company_deactivated', 'Company has been deactivated successfully!');
             redirect('company');
         }
     }
+
     /**
      * get trainees by company id
      * @param type $company_id
@@ -529,12 +568,13 @@ class Company extends CI_Controller {
         $data['main_content'] = 'company/trainees';
         $this->load->view('layout', $data);
     }
+
     /**
      * export company data to xls
      */
     public function export_company_page_fields() {
-        set_time_limit(0); 
-        ini_set("memory_limit","-1"); 
+        set_time_limit(0);
+        ini_set("memory_limit", "-1");
         $user = $this->session->userdata('userDetails');
         $tenant_id = $user->tenant_id;
         $this->db->select('cm.company_id');
@@ -550,8 +590,8 @@ class Company extends CI_Controller {
         $search_company_name_arr = explode(' (', $search_company_name);
         $business_type = $this->input->get('business_type');
         $filter_status = $this->input->get('filter_status');
-        if(count($search_company_name_arr)>0)
-            $indexPos = count($search_company_name_arr) -1;
+        if (count($search_company_name_arr) > 0)
+            $indexPos = count($search_company_name_arr) - 1;
         else
             $indexPos = 0;
         if ($search_company_name_arr[$indexPos] != '') {
@@ -609,19 +649,20 @@ class Company extends CI_Controller {
             $excel_data[$i][] = $data[$i]->SCN;
             $comp_status = get_param_value($data[$i]->comp_status);
             $excel_data[$i][] = $comp_status->category_name;
-        }        
+        }
         $excel_filename = 'company_list_page_fields.xls';
         $excel_sheetname = 'Company List';
         $heading = 'List of all companies registered with ' . $this->data['tenant_details']->tenant_name . ' as on ' . date('F d Y l');
         $this->load->helper('export_helper');
         export_page_fields($excel_titles, $excel_data, $excel_filename, $excel_sheetname, $heading);
     }
+
     /**
      * export all fields
      */
     public function export_company_all_fields() {
-        set_time_limit(0); 
-        ini_set("memory_limit","-1"); 
+        set_time_limit(0);
+        ini_set("memory_limit", "-1");
         $user = $this->session->userdata('userDetails');
         $tenant_id = $user->tenant_id;
         $this->db->select('cm.company_id');
@@ -641,8 +682,8 @@ class Company extends CI_Controller {
         $search_company_name_arr = explode(' (', $search_company_name);
         $business_type = $this->input->get('business_type');
         $filter_status = $this->input->get('filter_status');
-        if(count($search_company_name_arr)>0)
-            $indexPos = count($search_company_name_arr) -1;
+        if (count($search_company_name_arr) > 0)
+            $indexPos = count($search_company_name_arr) - 1;
         else
             $indexPos = 0;
         if ($search_company_name_arr[$indexPos] != '') {
@@ -749,6 +790,7 @@ class Company extends CI_Controller {
         $this->load->helper('export_helper');
         export_all_fields($excel_titles, $excel_sub_titles, $excel_data, $excel_sub_data, $excel_filename, $excel_sheetname, $heading);
     }
+
     /**
      * export trainee data
      * @param type $company_id
@@ -851,21 +893,23 @@ class Company extends CI_Controller {
         $this->load->helper('export_helper');
         export_page_fields($excel_titles, $excel_data, $excel_filename, $excel_sheetname, $heading);
     }
+
     /**
      * method to reactivate company
      */
-    
-    /*shubhranshu  start: replace nric first 5 character with mask */
-    function mask_format($nric) {  
-        if(is_numeric($nric) == 1){
+    /* shubhranshu  start: replace nric first 5 character with mask */
+    function mask_format($nric) {
+        if (is_numeric($nric) == 1) {
             return $nric;
-        }else{
-            $new_nric = substr_replace($nric,'XXXXX',0,5);   
+        } else {
+            $new_nric = substr_replace($nric, 'XXXXX', 0, 5);
             //$new_nric = substr_replace($nric,'XXXX',5);        
             return $new_nric;
-        }   
+        }
     }
+
     /* shubhranshu end */
+
     public function reactivate_company() {
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $reason_for_reactivation = $this->input->post('reason_for_reactivation');
@@ -880,59 +924,63 @@ class Company extends CI_Controller {
                 $res = $this->companymodel->get_company_status_info($company_id);
                 $previous_data = json_encode($res);
                 $result = $this->companymodel->reactivate_company($company_id, $reason_for_reactivation, $other_reason_for_reactivation);
-                if ($result == TRUE){
-                    user_activity(2,$company_id,$previous_data);
+                if ($result == TRUE) {
+                    user_activity(2, $company_id, $previous_data);
                     $this->session->set_flashdata('company_deactivated', 'Company has been reactivated successfully');
-                }else{
+                } else {
                     $this->session->set_flashdata('company_db_error', 'Oops! Sorry, it looks like something went wrong.Please try again!.');
-            }}
+                }
+            }
         }
         redirect('company');
     }
-/**
- * save company discount
- */
-    public function update_companydiscount(){
+
+    /**
+     * save company discount
+     */
+    public function update_companydiscount() {
         $user = $this->session->userdata('userDetails');
         $tenant_id = $user->tenant_id;
         $result = $this->companymodel->update_companydiscount($tenant_id);
         echo ($result) ? 1 : 0;
         exit();
     }
+
     /**
      * reset password
      * @param type $user_id
      * @param type $company_id
      */
-    public function reset_password($user_id, $company_id){
-        if(empty($user_id) || empty($company_id)){
+    public function reset_password($user_id, $company_id) {
+        if (empty($user_id) || empty($company_id)) {
             $this->session->set_flashdata("companyadded", "<span class='error1'>Unable to reset password. Try again.</span>");
             redirect('company');
-        }else{
+        } else {
             $status = common_reset_password($user_id);
-            if($status){
-                 $user = $this->session->userdata('userDetails');
+            if ($status) {
+                $user = $this->session->userdata('userDetails');
                 $tenant_id = $user->tenant_id;
-                $res = $this->companymodel->get_username($user_id,$tenant_id);
-                 $date_time = date('Y-m-d h:i:s');
-                $data = array('user_id'=>$user_id,
-                                'company_id'=>$company_id,
+                $res = $this->companymodel->get_username($user_id, $tenant_id);
+                $date_time = date('Y-m-d h:i:s');
+                $data = array('user_id' => $user_id,
+                    'company_id' => $company_id,
 //                                'old_password'=>$old_password,
-                                'date_time'=>$date_time);
+                    'date_time' => $date_time);
                 $previous_details = json_encode($data);
 
-                user_activity(16, $res->user_name, $previous_details,2);
+                user_activity(16, $res->user_name, $previous_details, 2);
 //                $this->session->set_flashdata("success", "Password has been reset successfully.");
                 $comp_user_email_id = company_user_email_id($user_id);
-                $this->session->set_flashdata("success", "Password has been reset successfully. An email has sent on ".$comp_user_email_id." and password is :".$status);
-            }else{
+                $this->session->set_flashdata("success", "Password has been reset successfully. An email has sent on " . $comp_user_email_id . " and password is :" . $status);
+            } else {
                 $this->session->set_flashdata("error", "Unable to reset password. Try again.");
             }
-            redirect('company/view_company/'.$company_id);
+            redirect('company/view_company/' . $company_id);
         }
     }
+
     ///////function created by shubhranshu to test email
-    public function sendnewmail(){
+    public function sendnewmail() {
         $this->load->library('email');
 
         $this->email->from('biipmisg2020@gmail.com');
@@ -943,12 +991,12 @@ class Company extends CI_Controller {
         $this->email->subject('Email Test');
         $this->email->message('Testing the email class.');
 
-        if($this->email->send()){
-            echo "mail sent";exit;
-        }else{
-           echo $this->email->print_debugger(); 
+        if ($this->email->send()) {
+            echo "mail sent";
+            exit;
+        } else {
+            echo $this->email->print_debugger();
         }
     }
 
 }
-
