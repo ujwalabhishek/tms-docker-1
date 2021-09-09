@@ -426,8 +426,9 @@ class Company extends CI_Controller {
         if ($num_rows >= 1) {
             if ($tenant_id == 'T02') {
                 echo 0;
-            }
-            echo 1;
+            } else {
+                echo 1;
+            }            
         } else {
             echo 0;
         }
@@ -463,8 +464,9 @@ class Company extends CI_Controller {
         if ($num_rows >= 1) {
             if ($tenant_id == 'T02') {
                 echo 0;
-            }
-            echo 1;            
+            } else {
+                echo 1; 
+            }               
         } else {
             echo 0;
         }
