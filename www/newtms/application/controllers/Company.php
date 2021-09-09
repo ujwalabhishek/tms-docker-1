@@ -405,6 +405,7 @@ class Company extends CI_Controller {
      * @return boolean
      */
     public function check_registration_number($arg_reg_num = '') {
+        echo "aaa"; exit;
         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
         extract($_POST);
         $reg_num = trim($reg_num);
