@@ -405,7 +405,7 @@ class Company extends CI_Controller {
      * @return boolean
      */
     public function check_registration_number($arg_reg_num = '') {
-        echo "aaa"; exit;
+        echo "aaa ";
         $tenant_id = $this->session->userdata('userDetails')->tenant_id;
         extract($_POST);
         $reg_num = trim($reg_num);
@@ -414,6 +414,7 @@ class Company extends CI_Controller {
         }
         $num_rows = $this->companymodel->check_registration_number($reg_num, $tenant_id);
         if ($arg_reg_num != '') {
+            echo "bbb ";
             if ($num_rows >= 1) {
                 $this->form_validation->set_message('check_registration_number', "Registration Number exists!");
                 if ($tenant_id == 'T02') {
@@ -425,6 +426,7 @@ class Company extends CI_Controller {
             }
         }
         if ($num_rows >= 1) {
+            echo "ccc "; exit;
             echo 1;
             if ($tenant_id == 'T02') {
                 echo 0;
