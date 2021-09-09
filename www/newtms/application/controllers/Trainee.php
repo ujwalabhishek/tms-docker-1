@@ -603,6 +603,17 @@ class Trainee extends CI_Controller {
             $trainee[$i]['failure_reason'] = 'Mandatory Check Fail.';
         }//// added by shubhranshu for notax code problem on 03/12/2018////////////////
         
+        //Added by abdulla
+        if ($trainee[$i][dob] == '') {
+            $trainee[$i][rowstatus] = 'fail';
+            $trainee[$i]['failure_reason'] = 'DOB - Mandatory Check Fail.';
+        }
+        //Added by abdulla
+        if ($trainee[$i][EmailId] == '') {
+            $trainee[$i][rowstatus] = 'fail';
+            $trainee[$i]['failure_reason'] = 'Email - Mandatory Check Fail.';
+        }
+        
         if($trainee[$i][taxcode] !=''){
             if (preg_match('/\s/',$trainee[$i][taxcode])){
                 $trainee[$i][rowstatus] = 'fail';
