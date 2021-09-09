@@ -598,7 +598,7 @@ class Trainee extends CI_Controller {
             $trainee[$i][taxcodetype] = $trainee[$i][countryofresidence];
         }
         $country_state = $this->get_states($trainee[$i][Country]);
-        if (($trainee[$i][countryofresidence] == '') || ($trainee[$i][nrictype] == '') || ($trainee[$i][nationality] == '') || ($trainee[$i][education] == '') || ($trainee[$i][firstname] == '') || ($trainee[$i][gender] == '') || ($trainee[$i][ContactNumber] == '')) {
+        if (($trainee[$i][countryofresidence] == '') || ($trainee[$i][nrictype] == '') || ($trainee[$i][nationality] == '') || ($trainee[$i][education] == '') || ($trainee[$i][firstname] == '') || ($trainee[$i][gender] == '') || ($trainee[$i][ContactNumber] == '') || ($trainee[$i][dob] == '') || ($trainee[$i][EmailId] == '')) {
             $trainee[$i][rowstatus] = 'fail';
             $trainee[$i]['failure_reason'] = 'Mandatory Check Fail.';
         }//// added by shubhranshu for notax code problem on 03/12/2018////////////////
