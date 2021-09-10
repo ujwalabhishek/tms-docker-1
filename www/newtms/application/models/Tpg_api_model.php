@@ -106,11 +106,12 @@ class Tpg_api_Model extends CI_Model {
         $tids = explode(',', $trainer_ids);
         $ids = join("','", $tids);
 
-        $sql = "SELECT iued.off_email_id,pers.user_id,tu.registered_email_id, pers.first_name, pers.last_name, rl.role_id
+        $sql = "SELECT iued.off_email_id,pers.user_id,tu.registered_email_id, pers.first_name, pers.last_name, rl.role_id, mtv.category_name
                         FROM `tms_users_pers` pers
                         JOIN internal_user_role rl on rl.tenant_id = pers.tenant_id AND rl.user_id = pers.user_id
                         JOIN tms_users tu on tu.user_id = pers.user_id
                         JOIN internal_user_emp_detail iued on iued.user_id = pers.user_id AND iued.tenant_id = pers.tenant_id
+						JOIN metadata_values mtv on mtv.parameter_id = pers.highest_educ_level
                         WHERE pers.tenant_id = '$tenantId' 
                         AND rl.role_id='TRAINER' 
                         AND rl.user_id in ('$ids')";
@@ -157,12 +158,12 @@ class Tpg_api_Model extends CI_Model {
         $crse_ref_no = $this->input->post('crse_ref_no');
         $modeoftraining = $this->input->post('modeoftraining');
         $crs_admin_email = $this->input->post('crs_admin_email'); //Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'
-        $reg_open_date = $this->input->post('start_date');
-        $reg_close_date = $this->input->post('end_date');
+        $reg_open_date = date("d-m-Y");
+        $reg_close_date = date("d-m-Y");
         $crse_start_date = $this->input->post('start_date');
         $crse_end_date = $this->input->post('end_date');
         $schedule_info_des = 'Description'; //Course run schedule info Description
-        $schedule_info = date('dM', strtotime($reg_open_date)) . ' : ' . date('D', strtotime($reg_open_date)) . ' / ' . date('h:i A', strtotime($this->input->post('start_time'))) . ' - ' . date('h:i A', strtotime($this->input->post('end_date')));
+        $schedule_info = date('dM', strtotime($crse_start_date)) . ' : ' . date('D', strtotime($crse_start_date)) . ' / ' . date('h:i A', strtotime($this->input->post('start_time'))) . ' - ' . date('h:i A', strtotime($this->input->post('end_date')));
         $venue_building = $this->input->post('venue_building');
         $venue_block = $this->input->post('venue_block');
         $venue_street = $this->input->post('venue_street');
@@ -268,21 +269,21 @@ class Tpg_api_Model extends CI_Model {
                         ),
                         "indexNumber" => 0,
                         "id" => "",
-                        "name" => "$trainer->first_name.' '.$trainer->last_name",
+                        "name" => "$trainer->first_name",
                         "email" => "$trainer->off_email_id",
                         "inTrainingProviderProfile" => true,
-                        "domainAreaOfPractice" => "Testing Management in Computer Application and Diploma in Computer Application",
-                        "experience" => "Testing ABC",
-                        "linkedInURL" => "https=>//sg.linkedin.com/company/linkedin/abc",
+                        "domainAreaOfPractice" => "$trainer->category_name",
+                        "experience" => "",
+                        "linkedInURL" => "",
                         "salutationId" => 1,
                         "photo" => array(
                             "name" => "",
                             "content" => ""
                         ),
                         "linkedSsecEQAs" => array(
-                            "description" => "EQA test 4",
+                            "description" => "",
                             "ssecEQA" => array(
-                                "code" => "12"
+                                "code" => ""
                             )
                         )
                     )
