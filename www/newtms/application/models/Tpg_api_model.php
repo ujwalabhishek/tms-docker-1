@@ -290,7 +290,6 @@ class Tpg_api_Model extends CI_Model {
                 );
             }
         }
-        echo print_r($trainers, true); exit;
         ///salutationId    = Available value - 1(Mr) 2(Ms) 3(Mdm) 4(Mrs) 5(Dr) 6(Prof).
 
         $retun = $this->correct_live_dev_api_data($crse_ref_no, $tp_uen);
