@@ -162,7 +162,6 @@ class Tpg_api_Model extends CI_Model {
         $reg_close_date = date("d-m-Y");
         $crse_start_date = $this->input->post('start_date');
         $crse_end_date = $this->input->post('end_date');
-        echo 'Registration Open Date : '.$reg_open_date.' Class start date : '.$crse_start_date; exit;
         $schedule_info_des = 'Description'; //Course run schedule info Description
         $schedule_info = date('dM', strtotime($crse_start_date)) . ' : ' . date('D', strtotime($crse_start_date)) . ' / ' . date('h:i A', strtotime($this->input->post('start_time'))) . ' - ' . date('h:i A', strtotime($this->input->post('end_date')));
         $venue_building = $this->input->post('venue_building');
@@ -291,6 +290,7 @@ class Tpg_api_Model extends CI_Model {
                 );
             }
         }
+        echo print_r($trainers, true); exit;
         ///salutationId    = Available value - 1(Mr) 2(Ms) 3(Mdm) 4(Mrs) 5(Dr) 6(Prof).
 
         $retun = $this->correct_live_dev_api_data($crse_ref_no, $tp_uen);
