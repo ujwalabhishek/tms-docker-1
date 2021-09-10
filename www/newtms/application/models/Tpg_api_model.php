@@ -259,7 +259,7 @@ class Tpg_api_Model extends CI_Model {
 
         //print_r($session_arr);exit;
         $ClassTrainers = $this->get_trainer_details($control_5);
-        print_r($ClassTrainers);exit;
+        //print_r($ClassTrainers);exit;
         if (!empty($ClassTrainers)) {
             foreach ($ClassTrainers as $trainer) {
                 $trainers[] = array("trainer" => array(
