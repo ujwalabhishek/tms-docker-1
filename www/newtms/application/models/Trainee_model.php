@@ -831,6 +831,19 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             {
                     $taxcode_prefix = 'EV';
             }
+            //Added by abdulla
+            if($this->user->tenant_id=='T18')
+            {
+                    $taxcode_prefix = 'SS';
+            }
+            if($this->user->tenant_id=='T24')
+            {
+                    $taxcode_prefix = 'RL';
+            }
+            if($this->user->tenant_id=='T25')
+            {
+                    $taxcode_prefix = 'FG';
+            }            
         }
         
         if ($country_of_residence == 'USA') 
