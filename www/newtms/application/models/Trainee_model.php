@@ -844,6 +844,10 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             {
                     $taxcode_prefix = 'FG';
             }
+            if($this->user->tenant_id=='T26')
+            {
+                    $taxcode_prefix = 'CE';
+            }
         }
         
         if ($country_of_residence == 'USA') 
