@@ -1251,7 +1251,7 @@ class tp_gateway extends CI_Controller {
             $traineeIdType = "Others";
         }
 
-        $traineeFullName = $traineeDetails['first_name'];
+        $traineeFullName = htmlentities($traineeDetails['first_name'], ENT_QUOTES);
         $traineeDateOfBirth = $traineeDetails['dob'];
         $traineeEmailAddress = $traineeDetails['registered_email_id'];
         $traineeContactNumber = $traineeDetails['contact_number'];
