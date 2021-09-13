@@ -47,7 +47,7 @@
                         <b>Full Name.:<span class="required">*</span></b> 
                     </td>
                     <td> 
-                        <input type="text" name="fullname" id="fullname" style="" value='<?php echo $traineeFullName; ?>' disabled="disabled"/>
+                        <input type="text" name="fullname" id="fullname" style="" value='<?php echo htmlentities($traineeFullName, ENT_QUOTES); ?>' disabled="disabled"/>
                         <span id="fullname_err"></span>
                     </td>
                 </tr>
