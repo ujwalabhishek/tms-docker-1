@@ -1251,7 +1251,7 @@ class tp_gateway extends CI_Controller {
             $traineeIdType = "Others";
         }
 
-        $traineeFullName = $traineeDetails['first_name'];
+        $traineeFullName = str_replace("'","\'", $traineeDetails['first_name']);
         $traineeDateOfBirth = $traineeDetails['dob'];
         $traineeEmailAddress = $traineeDetails['registered_email_id'];
         $traineeContactNumber = $traineeDetails['contact_number'];
@@ -1345,7 +1345,7 @@ class tp_gateway extends CI_Controller {
         );
 
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-        echo print_r($tpg_enrolment_json);exit;
+        //echo print_r($tpg_enrolment_json);exit;
         $data['trainingPartnerCode'] = $trainingPartnerCode;
         $data['trainingPartnerUEN'] = $trainingPartnerUEN;
 
