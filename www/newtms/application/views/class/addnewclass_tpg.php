@@ -410,7 +410,7 @@ echo form_open("classes/add_new_tpg_class", $atr);
                     </tr>
                     <tr>
                         <td class="td_heading">Venue Room:<span class="required">*</span></td>
-                        <td>
+                        <td colspan='3'>
                             <label class="label_font">
                             <?php
                             $venue_room = array(
@@ -509,7 +509,7 @@ echo form_open("classes/add_new_tpg_class", $atr);
                          <span id="venue_street_err"></span>
                     </td>
                     <td class="td_heading"> Venue Building:</td>
-                        <td colspan='3'>
+                        <td>
                             <label class="label_font">
                                 <?php
                                 $venue_building = array(
