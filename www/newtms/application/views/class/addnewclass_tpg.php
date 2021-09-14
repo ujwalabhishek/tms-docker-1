@@ -409,7 +409,7 @@ echo form_open("classes/add_new_tpg_class", $atr);
                         </td>
                     </tr>
                     <tr>                        
-                        <td class="td_heading"> Venue Building:<span class="required">*</span></td>
+                        <td class="td_heading"> Venue Building:</td>
                         <td colspan='3'>
                             <label class="label_font">
                                 <?php
@@ -443,7 +443,7 @@ echo form_open("classes/add_new_tpg_class", $atr);
                     </tr>
                 
                 <tr>  
-                    <td class="td_heading"> Venue Block:<span class="required">*</span></td>
+                    <td class="td_heading"> Venue Block:</td>
                     <td>
                         <label class="label_font">
                             <?php
@@ -459,7 +459,7 @@ echo form_open("classes/add_new_tpg_class", $atr);
                         </label>
                         <span id="venue_block_err"></span>
                     </td>
-                    <td class="td_heading">Venue Street:<span class="required">*</span></td>
+                    <td class="td_heading">Venue Street:</td>
                     <td>
                         <label class="label_font">
                         <?php

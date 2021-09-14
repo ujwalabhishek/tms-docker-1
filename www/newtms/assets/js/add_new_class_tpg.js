@@ -562,13 +562,14 @@ function validate() {
     } else {
         $("#venue_floor_err").text("").removeClass('error');
     }
-    $venue_building = $('#venue_building').val();
-    if ($venue_building == null || $venue_building == '') {
-        $("#venue_building_err").text("[required]").addClass('error');
-        retVal = false;
-    } else {
-        $("#venue_building_err").text("").removeClass('error');
-    }
+//Commented by abdulla based on API    
+//    $venue_building = $('#venue_building').val();
+//    if ($venue_building == null || $venue_building == '') {
+//        $("#venue_building_err").text("[required]").addClass('error');
+//        retVal = false;
+//    } else {
+//        $("#venue_building_err").text("").removeClass('error');
+//    }
     $venue_unit = $('#venue_unit').val();
     if ($venue_unit == null || $venue_unit == '') {
         $("#venue_unit_err").text("[required]").addClass('error');
@@ -591,22 +592,23 @@ function validate() {
     } else {
         $("#venue_room_err").text("").removeClass('error');
     }
+//Commented by abdulla based on API
+//    $venue_block = $('#venue_block').val();
+//    if ($venue_block == null || $venue_block == '') {
+//        $("#venue_block_err").text("[required]").addClass('error');
+//        retVal = false;
+//    } else {
+//        $("#venue_block_err").text("").removeClass('error');
+//    }
 
-    $venue_block = $('#venue_block').val();
-    if ($venue_block == null || $venue_block == '') {
-        $("#venue_block_err").text("[required]").addClass('error');
-        retVal = false;
-    } else {
-        $("#venue_block_err").text("").removeClass('error');
-    }
-
-    $venue_street = $('#venue_street').val();
-    if ($venue_street == null || $venue_street == '') {
-        $("#venue_street_err").text("[required]").addClass('error');
-        retVal = false;
-    } else {
-        $("#venue_street_err").text("").removeClass('error');
-    }
+//Commented by abdulla based on API
+//    $venue_street = $('#venue_street').val();
+//    if ($venue_street == null || $venue_street == '') {
+//        $("#venue_street_err").text("[required]").addClass('error');
+//        retVal = false;
+//    } else {
+//        $("#venue_street_err").text("").removeClass('error');
+//    }
     $fees = $.trim($('#fees').val());
     if ($fees.length == 0) {
         disp_err('#fees');
