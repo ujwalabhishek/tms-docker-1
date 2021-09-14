@@ -1968,6 +1968,7 @@ class Class_Model extends CI_Model {
      */
     public function create_class_tpg($tenantId, $userId, $tpg_course_run_id) {
         $display_class = 0;
+        $wheel_chair_accessible = 0;
         $control_4 = '';
         $control_5 = '';
         $control_6 = '';
