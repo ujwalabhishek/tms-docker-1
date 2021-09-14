@@ -171,6 +171,13 @@ class Tpg_api_Model extends CI_Model {
         $venue_unit = $this->input->post('venue_unit');
         $venue_postalcode = $this->input->post('venue_postalcode');
         $venue_room = $this->input->post('venue_room');
+        //Added by abdulla
+        $wheel_chair_access = $this->input->post('wheel_chair_accessible');
+        if($wheel_chair_access == '0') {
+            $wheel_chair_access = 'false';
+        } else {
+            $wheel_chair_access = 'true';
+        }
         $crse_intake_size = $this->input->post('total_seats'); //Course run intake size. It's maximum pax for a class
         $crse_vacancy_code = "A"; //A - Available ,F - Full, L - Limited Vacancy
         $crse_vacancy_description = "Available"; /////A - Available ,F - Full, L - Limited Vacancy
@@ -215,7 +222,7 @@ class Tpg_api_Model extends CI_Model {
                             "building" => "$venue_building",
                             "postalCode" => "$venue_postalcode",
                             "room" => "$venue_room",
-                            "wheelChairAccess" => true,
+                            "wheelChairAccess" => "$wheel_chair_access",
                             "primaryVenue" => true,
                         ),
                     );
@@ -245,7 +252,7 @@ class Tpg_api_Model extends CI_Model {
                         "building" => "$venue_building",
                         "postalCode" => "$venue_postalcode",
                         "room" => "$venue_room",
-                        "wheelChairAccess" => true,
+                        "wheelChairAccess" => "$wheel_chair_access",
                         "primaryVenue" => true,
                     ),
                 );
@@ -325,7 +332,7 @@ class Tpg_api_Model extends CI_Model {
                               "building": "",
                               "postalCode": "' . $venue_postalcode . '",
                               "room": "' . $venue_room . '",
-                              "wheelChairAccess": true
+                              "wheelChairAccess": "' . $wheel_chair_access . '"
                           },
                           "intakeSize": ' . $crse_intake_size . ',
                           "courseAdminEmail": "' . $crs_admin_email . '",
@@ -368,6 +375,8 @@ class Tpg_api_Model extends CI_Model {
         //print_r($datas);exit;
         $crse_vacancy_code = "A"; //A - Available ,F - Full, L - Limited Vacancy
         $crse_vacancy_description = "Available"; /////A - Available ,F - Full, L - Limited Vacancy
+        $reg_open_date = date("d-m-Y"); 
+        $reg_close_date = date("d-m-Y");
         $class_name = $this->input->post('class_name');
         $start_date = $this->input->post('start_date');
         $start_time = $this->input->post('start_time');
@@ -418,6 +427,14 @@ class Tpg_api_Model extends CI_Model {
         $venue_building = $datas['class']->venue_building;
         $venue_postalcode = $datas['class']->venue_postalcode;
         $venue_room = $datas['class']->venue_room;
+        
+        //Added by abdulla
+        $wheel_chair_access = $this->input->post('wheel_chair_accessible');
+        if($wheel_chair_access == '0') {
+            $wheel_chair_access = 'false';
+        } else {
+            $wheel_chair_access = 'true';
+        }
 
         if (!empty($session_schdl_arr)) {
             foreach ($session_schdl_arr as $objj) {
@@ -440,7 +457,7 @@ class Tpg_api_Model extends CI_Model {
                         "building" => "$venue_building",
                         "postalCode" => "$venue_postalcode",
                         "room" => "$venue_room",
-                        "wheelChairAccess" => true,
+                        "wheelChairAccess" => "$wheel_chair_access",
                         "primaryVenue" => true,
                     ),
                 );
@@ -492,7 +509,7 @@ class Tpg_api_Model extends CI_Model {
                         "building" => "$venue_building",
                         "postalCode" => "$venue_postalcode",
                         "room" => "$venue_room",
-                        "wheelChairAccess" => true,
+                        "wheelChairAccess" => "$wheel_chair_access",
                         "primaryVenue" => true,
                     ),
                 );
@@ -519,21 +536,21 @@ class Tpg_api_Model extends CI_Model {
                         ),
                         "indexNumber" => 0,
                         "id" => "",
-                        "name" => "$trainer->first_name.' '.$trainer->last_name",
+                        "name" => "$trainer->first_name",
                         "email" => "$trainer->off_email_id",
                         "inTrainingProviderProfile" => true,
-                        "domainAreaOfPractice" => "Testing Management in Computer Application and Diploma in Computer Application",
-                        "experience" => "Testing ABC",
-                        "linkedInURL" => "https=>//sg.linkedin.com/company/linkedin/abc",
+                        "domainAreaOfPractice" => "$trainer->category_name",
+                        "experience" => "",
+                        "linkedInURL" => "",
                         "salutationId" => 1,
                         "photo" => array(
                             "name" => "",
                             "content" => ""
                         ),
                         "linkedSsecEQAs" => array(
-                            "description" => "EQA test 4",
+                            "description" => "",
                             "ssecEQA" => array(
-                                "code" => "12"
+                                "code" => ""
                             )
                         )
                     )
@@ -555,8 +572,8 @@ class Tpg_api_Model extends CI_Model {
                           "sequenceNumber": 0,
                           "modeOfTraining": "' . $modeoftraining . '",
                           "registrationDates": {
-                            "opening": "' . date("Ymd", strtotime($start_date)) . '",
-                            "closing": "' . date("Ymd", strtotime($end_date)) . '"
+                            "opening": "' . date("Ymd", strtotime($reg_open_date)) . '",
+                            "closing": "' . date("Ymd", strtotime($reg_close_date)) . '"
                           },
                           "courseDates": {
                             "start": "' . date("Ymd", strtotime($start_date)) . '",
@@ -575,7 +592,7 @@ class Tpg_api_Model extends CI_Model {
                               "building": "' . $venue_building . '",
                               "postalCode": "' . $venue_postalcode . '",
                               "room": "' . $venue_room . '",
-                              "wheelChairAccess": true
+                              "wheelChairAccess": "' . $wheel_chair_access . '"
                           },
                           "intakeSize": ' . $datas['class']->total_seats . ',
                           "courseAdminEmail": "' . $datas['course']->crse_admin_email . '",

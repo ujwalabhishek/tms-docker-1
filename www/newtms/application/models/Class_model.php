@@ -2056,6 +2056,7 @@ class Class_Model extends CI_Model {
             'venue_unit' => $venue_unit,
             'venue_postalcode' => $venue_postalcode,
             'venue_floor' => $venue_floor,
+            'wheel_chair_access' => $wheel_chair_accessible,
             'modeoftraining' => $modeoftraining,
             'survey_language' => $survey_language
         );
