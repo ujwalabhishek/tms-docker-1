@@ -408,24 +408,24 @@ echo form_open("classes/add_new_tpg_class", $atr);
                             <span id="lab_venue_err" class="lab_venue_oth_err"></span>
                         </td>
                     </tr>
-                    <tr>                        
-                        <td class="td_heading"> Venue Building:</td>
-                        <td colspan='3'>
+                    <tr>
+                        <td class="td_heading">Venue Room:<span class="required">*</span></td>
+                        <td>
                             <label class="label_font">
-                                <?php
-                                $venue_building = array(
-                                    'name' => 'venue_building',
-                                    'id' => 'venue_building',
-                                    'value' => $this->input->post('venue_building'),
-                                    'maxlength' => 50,
-                                    "class" => "upper_case"
-                                );
-                                echo form_input($venue_building);
-                                ?>
+                            <?php
+                            $venue_room = array(
+                                'name' => 'venue_room',
+                                'id' => 'venue_room',
+                                'value' => $this->input->post('venue_room'),
+                                'maxlength' => 200,
+                                "class" => "upper_case"
+                            );
+                            echo form_input($venue_room);
+                            ?>
                             </label>
-                            <span id="venue_building_err"></span>
+                             <span id="venue_room_err"></span>
                         </td>
-                         <td class="td_heading"> Survey Language:<span class="required">*</span></td>
+                        <td class="td_heading"> Survey Language:<span class="required">*</span></td>
                         <td>
                             <label class="label_font">
                                 <?php
@@ -440,61 +440,8 @@ echo form_open("classes/add_new_tpg_class", $atr);
                             </label>
                             <span id="survey_language_err"></span>
                         </td>
-                    </tr>
-                
-                <tr>  
-                    <td class="td_heading"> Venue Block:</td>
-                    <td>
-                        <label class="label_font">
-                            <?php
-                            $venue_block = array(
-                                'name' => 'venue_block',
-                                'id' => 'venue_block',
-                                'value' => $this->input->post('venue_block'),
-                                'maxlength' => 50,
-                                "class" => "upper_case"
-                            );
-                            echo form_input($venue_block);
-                            ?>
-                        </label>
-                        <span id="venue_block_err"></span>
-                    </td>
-                    <td class="td_heading">Venue Street:</td>
-                    <td>
-                        <label class="label_font">
-                        <?php
-                        $venue_street = array(
-                            'name' => 'venue_street',
-                            'id' => 'venue_street',
-                            'value' => $this->input->post('venue_street'),
-                            'maxlength' => 50,
-                            "class" => "upper_case"
-                        );
-                        echo form_input($venue_street);
-                        ?>
-                        </label>
-                         <span id="venue_street_err"></span>
-                    </td>
-                    <td class="td_heading"> Venue Floor:<span class="required">*</span></td>
-                    <td>
-                        <label class="label_font">
-                            <?php
-                            $venue_floor = array(
-                                'name' => 'venue_floor',
-                                'id' => 'venue_floor',
-                                'value' => $this->input->post('venue_floor'),
-                                'maxlength' => 50,
-                                "class" => "upper_case"
-                            );
-                            echo form_input($venue_floor);
-                            ?>
-                        </label>
-                        <span id="venue_floor_err"></span>
-                    </td>
-                    
-                </tr>
-
-                <tr>  
+                    </tr>                
+                <tr>
                     <td class="td_heading">Venue Unit:<span class="required">*</span></td>
                     <td>
                         <label class="label_font">
@@ -511,6 +458,72 @@ echo form_open("classes/add_new_tpg_class", $atr);
                         </label>
                          <span id="venue_unit_err"></span>
                     </td>
+                    <td class="td_heading"> Venue Block:</td>
+                    <td>
+                        <label class="label_font">
+                            <?php
+                            $venue_block = array(
+                                'name' => 'venue_block',
+                                'id' => 'venue_block',
+                                'value' => $this->input->post('venue_block'),
+                                'maxlength' => 50,
+                                "class" => "upper_case"
+                            );
+                            echo form_input($venue_block);
+                            ?>
+                        </label>
+                        <span id="venue_block_err"></span>
+                    </td>
+                    <td class="td_heading"> Venue Floor:<span class="required">*</span></td>
+                    <td>
+                        <label class="label_font">
+                            <?php
+                            $venue_floor = array(
+                                'name' => 'venue_floor',
+                                'id' => 'venue_floor',
+                                'value' => $this->input->post('venue_floor'),
+                                'maxlength' => 50,
+                                "class" => "upper_case"
+                            );
+                            echo form_input($venue_floor);
+                            ?>
+                        </label>
+                        <span id="venue_floor_err"></span>
+                    </td>                    
+                </tr>
+                <tr>  
+                    <td class="td_heading">Venue Street:</td>
+                    <td>
+                        <label class="label_font">
+                        <?php
+                        $venue_street = array(
+                            'name' => 'venue_street',
+                            'id' => 'venue_street',
+                            'value' => $this->input->post('venue_street'),
+                            'maxlength' => 50,
+                            "class" => "upper_case"
+                        );
+                        echo form_input($venue_street);
+                        ?>
+                        </label>
+                         <span id="venue_street_err"></span>
+                    </td>
+                    <td class="td_heading"> Venue Building:</td>
+                        <td colspan='3'>
+                            <label class="label_font">
+                                <?php
+                                $venue_building = array(
+                                    'name' => 'venue_building',
+                                    'id' => 'venue_building',
+                                    'value' => $this->input->post('venue_building'),
+                                    'maxlength' => 50,
+                                    "class" => "upper_case"
+                                );
+                                echo form_input($venue_building);
+                                ?>
+                            </label>
+                            <span id="venue_building_err"></span>
+                        </td>
                     <td class="td_heading">Venue Postal Code:<span class="required">*</span></td>
                     <td>
                         <label class="label_font">
@@ -526,22 +539,6 @@ echo form_open("classes/add_new_tpg_class", $atr);
                         ?>
                         </label>
                         <span id="venue_postalcode_err"></span>
-                    </td>
-                    <td class="td_heading">Venue Room:<span class="required">*</span></td>
-                    <td>
-                        <label class="label_font">
-                        <?php
-                        $venue_room = array(
-                            'name' => 'venue_room',
-                            'id' => 'venue_room',
-                            'value' => $this->input->post('venue_room'),
-                            'maxlength' => 50,
-                            "class" => "upper_case"
-                        );
-                        echo form_input($venue_room);
-                        ?>
-                        </label>
-                         <span id="venue_room_err"></span>
                     </td>
                 </tr>
                     <tr>
