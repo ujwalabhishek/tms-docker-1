@@ -329,7 +329,7 @@ class Tpg_api_Model extends CI_Model {
                               "street": "' . $venue_street . '",
                               "floor": "' . $venue_floor . '",
                               "unit": "' . $venue_unit . '",
-                              "building": "",
+                              "building": "' . $venue_building . '",
                               "postalCode": "' . $venue_postalcode . '",
                               "room": "' . $venue_room . '",
                               "wheelChairAccess": "' . $wheel_chair_access . '"
