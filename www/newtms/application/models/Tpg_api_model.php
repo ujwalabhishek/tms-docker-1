@@ -464,7 +464,7 @@ class Tpg_api_Model extends CI_Model {
             }
         }
 
-        //print_r($sessions);exit;
+        print_r($datas['def_assessment']);exit;
         $new_date1 = date("Y-m-d", strtotime($start_date));
         echo 'Tenant ID : '.$tenant_id;
         echo ' Class ID : '.$datas['class']->class_id;

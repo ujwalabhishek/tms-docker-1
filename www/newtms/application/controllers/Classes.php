@@ -910,7 +910,7 @@ class Classes extends CI_Controller {
             $data['SalesExec'] = $this->classmodel->get_class_salesexec($tenant_id, $class->course_id, $class->sales_executive);
             $data['class_schedule'] = $this->classmodel->get_all_class_schedules($tenant_id, $class_hid);
             $def_assmnt = $this->classmodel->get_def_assessment_new($tenant_id, $class_hid, $class->assmnt_type);
-echo "AAAA".print_r($def_assmnt, true); exit;
+            
             $data['def_assessment'] = $def_assmnt;
             $data['page_title'] = 'Class';
             $data['classid'] = $class_hid;
