@@ -464,7 +464,7 @@ class Tpg_api_Model extends CI_Model {
             }
         }
 
-        print_r($sessions);exit;
+        //print_r($sessions);exit;
         $new_date1 = date("Y-m-d", strtotime($start_date));
         foreach ($period as $dt) {
             $assm_schedule = $this->get_def_assessments_new($tenant_id, $datas['class']->class_id, $datas['class']->course_id, $datas['def_assessment'][0]->assmnt_type, $dt->format("Y-m-d"));
@@ -486,7 +486,7 @@ class Tpg_api_Model extends CI_Model {
                 $new_date1 = date("Y-m-d", $your_date1);
             }
         }
-        // print_r($assmt_schdl_arr);exit;
+         print_r($assmt_schdl_arr);exit;
 
         if (!empty($assmt_schdl_arr)) {
             foreach ($assmt_schdl_arr as $kv) {
