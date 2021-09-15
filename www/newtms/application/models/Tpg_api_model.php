@@ -467,11 +467,13 @@ class Tpg_api_Model extends CI_Model {
         //print_r($sessions);exit;
         $new_date1 = date("Y-m-d", strtotime($start_date));
         echo 'Tenant ID : '.$tenant_id;
-        echo 'Class ID : '.$datas['class']->class_id;
-        echo 'Course ID : '.$datas['class']->course_id;
-        echo 'Assesment Type : '.$datas['def_assessment'][0]->assmnt_type;
-        echo 'Date : '.$dt->format("Y-m-d");
-        echo 'Period '.print_r($period, true); exit;
+        echo ' Class ID : '.$datas['class']->class_id;
+        echo ' Course ID : '.$datas['class']->course_id;
+        echo ' Date : '.$dt->format("Y-m-d");
+        echo ' Period '.print_r($period, true);
+        echo ' Assesment Type : '.$datas['def_assessment'][0]->assmnt_type;
+        echo ' Date : '.$dt->format("Y-m-d");
+         exit;
         foreach ($period as $dt) {
             $assm_schedule = $this->get_def_assessments_new($tenant_id, $datas['class']->class_id, $datas['class']->course_id, $datas['def_assessment'][0]->assmnt_type, $dt->format("Y-m-d"));
             print_r($assm_schedule);exit;
