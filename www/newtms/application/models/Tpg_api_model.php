@@ -468,7 +468,7 @@ class Tpg_api_Model extends CI_Model {
         $new_date1 = date("Y-m-d", strtotime($start_date));        
         foreach ($period as $dt) {
             $assm_schedule = $this->get_def_assessments_new($tenant_id, $datas['class']->class_id, $datas['class']->course_id, $datas['def_assessment']->assmnt_type, $dt->format("Y-m-d"));
-            print_r($assm_schedule);exit;
+            //print_r($assm_schedule);exit;
             if (empty($assm_schedule)) {
                 $your_date1 = strtotime("1 day", strtotime($new_date1));
                 $new_date1 = date("Y-m-d", $your_date1);
