@@ -1162,7 +1162,7 @@ class Class_Model extends CI_Model {
             }
         }
 
-        //print_r($data1['def_assessment']);exit;
+        print_r($data1['def_assessment']);exit;
         foreach ($data1['def_assessment'] as $ass) {
             $ass->class_id = $latest_class_id;
             unset($ass->assmnt_id);
