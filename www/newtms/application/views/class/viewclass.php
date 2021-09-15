@@ -177,11 +177,16 @@ $role_array = array("COMPACT");
                         </tr>
                         <tr>
                             <td colspan="2" class="td_heading">  
-                                <?php
+                                <?php                                
+                                if($class->wheel_chair_access == '1') {
+                                    $checked = 'checked';
+                                } else {
+                                    $checked = '';
+                                }                                
                                 $wheel_chair_accessible = array(
                                     'name' => 'wheel_chair_accessible',
                                     'id' => 'wheel_chair_accessible',
-                                    'value' => $class->wheel_chair_access
+                                    'checked' => $checked                                    
                                 );
                                 echo form_checkbox($wheel_chair_accessible, '1', set_checkbox('wheel_chair_accessible', '1'));
                                 ?>
