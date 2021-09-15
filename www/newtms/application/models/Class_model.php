@@ -664,6 +664,21 @@ class Class_Model extends CI_Model {
     public function get_def_assessment_new($tenant_id, $class_id, $assmnt_type = '') {
         if ($assmnt_type == 'DEFAULT') {
             $result = $this->db->select('*')->from('class_assmnt_schld')->where('tenant_id', $tenant_id)
+                            ->where('class_id', $class_id)->get()->row();
+        } elseif ($assmnt_type == 'CUSTOM') {
+            $this->db->select('*');
+            $this->db->from('class_assmnt_schld');
+            $this->db->where('tenant_id', $tenant_id);
+            $this->db->where('class_id', $class_id);
+
+            $result = $this->db->get()->result();
+        }
+        return $result;
+    }
+    
+    public function get_def_assessment_new_tpg($tenant_id, $class_id, $assmnt_type = '') {
+        if ($assmnt_type == 'DEFAULT') {
+            $result = $this->db->select('*')->from('class_assmnt_schld')->where('tenant_id', $tenant_id)
                             ->where('class_id', $class_id)->get()->result_array();
         } elseif ($assmnt_type == 'CUSTOM') {
             $this->db->select('*');
@@ -1162,7 +1177,7 @@ class Class_Model extends CI_Model {
             }
         }
 
-        //print_r($data1['def_assessment']);exit;
+        print_r($data1['def_assessment']);exit;
         foreach ($data1['def_assessment'] as $ass) {
             //$ass->class_id = $latest_class_id;
             $data_asses['tenant_id'] =  $ass['tenant_id'];
@@ -1170,8 +1185,10 @@ class Class_Model extends CI_Model {
             $data_asses['class_id'] =  $latest_class_id;
             $data_asses['assmnt_date'] =  $ass['assmnt_date'];
             $data_asses['mode_of_training'] =  $ass['mode_of_training'];
+            $data_asses['assessor_id'] =  $ass['assessor_id'];
             $data_asses['assmnt_start_time'] =  $ass['assmnt_start_time'];
             $data_asses['assmnt_end_time'] =  $ass['assmnt_end_time'];
+            $data_asses['assmnt_type'] =  $ass['assmnt_type'];
             $data_asses['assmnt_venue'] =  $ass['assmnt_venue'];
             $data_asses['assmnt_venue_oth'] =  $ass['assmnt_venue_oth'];                       
             $this->db->insert('class_assmnt_schld', $data_asses);
