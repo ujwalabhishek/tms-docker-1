@@ -486,7 +486,7 @@ class Tpg_api_Model extends CI_Model {
                 $new_date1 = date("Y-m-d", $your_date1);
             }
         }
-         print_r($assmt_schdl_arr);exit;
+         //print_r($assmt_schdl_arr);exit;
 
         if (!empty($assmt_schdl_arr)) {
             foreach ($assmt_schdl_arr as $kv) {
@@ -521,7 +521,7 @@ class Tpg_api_Model extends CI_Model {
             $session_arr = $sessions;
         }
 
-        print_r($session_arr);exit;
+        //print_r($session_arr);exit;
         if (!empty($datas['ClassTrainer'])) {
             $control_6 = implode(",", $control_6);
         }
