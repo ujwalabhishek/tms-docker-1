@@ -108,6 +108,86 @@ $role_array = array("COMPACT");
                         <td class="td_heading">Lab Venue:</td>
                         <td colspan="5"><label class="label_font"><?php echo rtrim($LabLoc, ', '); ?></label></td>
                     </tr>
+                    <?php if ($tpg_crse) { ?>
+                        <tr>
+                            <td class="td_heading">Venue Room:</td>
+                            <td colspan='3'>
+                                <label class="label_font">                                    
+                                    <?php echo $class->venue_room; ?>
+                                </label>                                
+                            </td>
+                            <td class="td_heading">Survey Language:</td>
+                            <td>
+                                <label class="label_font">                                    
+                                    <?php 
+                                    if($class->survey_language == 'EL') {
+                                        echo 'English'; 
+                                    } else if($class->survey_language == 'MN') {
+                                        echo 'Mandarin';
+                                    } else if($class->survey_language == 'MY') {
+                                        echo 'Malay';
+                                    } else if($class->survey_language == 'TM') {
+                                        echo 'Tamil';
+                                    } else {
+                                        echo 'N/A';
+                                    }                                    
+                                    ?>
+                                </label>                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_heading">Venue Unit:</td>
+                            <td>
+                                <label class="label_font">
+                                    <?php echo $class->venue_unit; ?>
+                                </label>                            
+                            </td>
+                            <td class="td_heading">Venue Block:</td>
+                            <td>
+                                <label class="label_font">
+                                    <?php echo $class->venue_block; ?>
+                                </label>                                
+                            </td>
+                            <td class="td_heading">Venue Floor:</td>
+                            <td>
+                                <label class="label_font">
+                                    <?php echo $class->venue_floor; ?>
+                                </label>                                
+                            </td>                    
+                        </tr>
+                        <tr>  
+                            <td class="td_heading">Venue Street:</td>
+                            <td>
+                                <label class="label_font">
+                                    <?php echo $class->venue_street; ?>
+                                </label>                                
+                            </td>
+                            <td class="td_heading">Venue Building:</td>
+                            <td>
+                                <label class="label_font">
+                                    <?php echo $class->venue_building; ?>
+                                </label>
+                            </td>
+                            <td class="td_heading">Venue Postal Code:</td>
+                            <td>
+                                <label class="label_font">
+                                    <?php echo $class->venue_postalcode; ?>
+                                </label>                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="td_heading">  
+                                <?php
+                                $wheel_chair_accessible = array(
+                                    'name' => 'wheel_chair_accessible',
+                                    'id' => 'wheel_chair_accessible',
+                                    'value' => $class->wheel_chair_access
+                                );
+                                echo form_checkbox($wheel_chair_accessible, '1', set_checkbox('wheel_chair_accessible', '1'));
+                                ?>
+                                &nbsp;The course run location is wheel chair accessible</td>
+                        </tr>
+                    <?php } ?>
                     <tr>
                         <td class="td_heading">Classroom Trainer:</td>
                         <td><label class="label_font"><?php echo rtrim($ClassTrainer, ', '); ?></label></td>
@@ -153,13 +233,13 @@ $role_array = array("COMPACT");
     if (!empty($SalesExec)) {
         foreach ($SalesExec as $row) {
             ?>
-                                                                                                                    <tr>
-                                                                                                                        <td class="td_heading">Sales Executive:</td>
-                                                                                                                        <td><label class="label_font"><?php echo $row['first_name'] . ' ' . $row['last_name']; ?></label>
-                                                                                                                        </td>
-                                                                                                                        <td class="td_heading">Commission Rate:</td>
-                                                                                                                        <td><label class="label_font"><?php echo number_format($row['commission_rate'], 2, '.', ''); ?>%</label></td>
-                                                                                                                    </tr>
+                                                                                                                            <tr>
+                                                                                                                                <td class="td_heading">Sales Executive:</td>
+                                                                                                                                <td><label class="label_font"><?php echo $row['first_name'] . ' ' . $row['last_name']; ?></label>
+                                                                                                                                </td>
+                                                                                                                                <td class="td_heading">Commission Rate:</td>
+                                                                                                                                <td><label class="label_font"><?php echo number_format($row['commission_rate'], 2, '.', ''); ?>%</label></td>
+                                                                                                                            </tr>
             <?php
         }
     } else {
