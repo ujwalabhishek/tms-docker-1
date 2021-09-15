@@ -186,7 +186,8 @@ $role_array = array("COMPACT");
                                 $wheel_chair_accessible = array(
                                     'name' => 'wheel_chair_accessible',
                                     'id' => 'wheel_chair_accessible',
-                                    'checked' => $checked                                    
+                                    'checked' => $checked,
+                                    'disabled' => 'disabled'
                                 );
                                 echo form_checkbox($wheel_chair_accessible, '1', set_checkbox('wheel_chair_accessible', '1'));
                                 ?>
