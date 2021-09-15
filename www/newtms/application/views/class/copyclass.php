@@ -235,7 +235,7 @@ if (!empty($tax_error)) {
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="td_heading">  
+                                <td class="td_heading">  
                                     <?php
                                     if ($class->wheel_chair_access == '1') {
                                         $checked_wheel = 'checked';
