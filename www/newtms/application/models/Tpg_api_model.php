@@ -400,7 +400,7 @@ class Tpg_api_Model extends CI_Model {
         $session_schdl_arr = array();
         foreach ($period as $dt) {
             $class_schedule = $this->get_all_class_schedule_new($tenant_id, $datas['class']->class_id, $dt->format("Y-m-d"));
-            print_r($class_schedule);exit;
+            //print_r($class_schedule);exit;
             if (empty($class_schedule)) {
                 $your_date = strtotime("1 day", strtotime($new_date));
                 $new_date = date("Y-m-d", $your_date);
@@ -464,7 +464,7 @@ class Tpg_api_Model extends CI_Model {
             }
         }
 
-        //print_r($sessions);exit;
+        print_r($sessions);exit;
         $new_date1 = date("Y-m-d", strtotime($start_date));        
         foreach ($period as $dt) {
             $assm_schedule = $this->get_def_assessments_new($tenant_id, $datas['class']->class_id, $datas['class']->course_id, $datas['def_assessment']->assmnt_type, $dt->format("Y-m-d"));
