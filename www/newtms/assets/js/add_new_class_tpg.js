@@ -1014,7 +1014,7 @@ $(document).ready(function () {
     });
     //Added by abdulla
     $('#ab_asses').click(function () {
-        if ($("#tblNames tr").length > 1) {
+        if ($("#tblNames tr").length > 3) {
             $('#ab_ss_moda').modal();
             return false;
         }
