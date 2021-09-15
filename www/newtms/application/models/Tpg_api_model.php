@@ -395,7 +395,7 @@ class Tpg_api_Model extends CI_Model {
 
         $interval = DateInterval::createFromDateString('1 day');
         $period = new DatePeriod($begin, $interval, $end);
-        //print_r($period);exit;
+        print_r($period);exit;
         $new_date = date("Y-m-d", strtotime($start_date));
         $session_schdl_arr = array();
         foreach ($period as $dt) {
