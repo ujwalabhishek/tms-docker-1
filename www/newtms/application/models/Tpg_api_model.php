@@ -159,7 +159,7 @@ class Tpg_api_Model extends CI_Model {
         $modeoftraining = $this->input->post('modeoftraining');
         $crs_admin_email = $this->input->post('crs_admin_email'); //Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'
         $reg_open_date = date("d-m-Y");
-        $reg_close_date = date("d-m-Y");
+        $reg_close_date = $this->input->post('start_date');
         $crse_start_date = $this->input->post('start_date');
         $crse_end_date = $this->input->post('end_date');
         $schedule_info_des = 'Description'; //Course run schedule info Description
@@ -376,7 +376,7 @@ class Tpg_api_Model extends CI_Model {
         $crse_vacancy_code = "A"; //A - Available ,F - Full, L - Limited Vacancy
         $crse_vacancy_description = "Available"; /////A - Available ,F - Full, L - Limited Vacancy
         $reg_open_date = date("d-m-Y"); 
-        $reg_close_date = date("d-m-Y");
+        $reg_close_date = $this->input->post('start_date');
         $class_name = $this->input->post('class_name');
         $start_date = $this->input->post('start_date');
         $start_time = $this->input->post('start_time');
