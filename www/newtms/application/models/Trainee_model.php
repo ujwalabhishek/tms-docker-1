@@ -2555,6 +2555,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
             return $result->row()->assmnt_date;
         } else {
             if(!empty($user_id)) {
+                echo "BBBB"; exit;
                 $result = $this->db->select('cas.assmnt_date')
                             ->from('class_assmnt_trainee cat')
                             ->join('class_assmnt_schld cas', 'cas.assmnt_id=cat.assmnt_id and cas.class_id=cat.class_id')
@@ -2562,6 +2563,7 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
                             ->where('cat.user_id', $user_id)
                             ->where('cas.assmnt_type', 'CUSTOM')->get()->row()->assmnt_date;
             } else {
+                echo "CCCC"; exit;
                 $result = $this->db->select('cas.assmnt_date')
                             ->from('class_assmnt_schld cas')                            
                             ->where('cas.class_id', $class_id)                            
