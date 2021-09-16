@@ -159,7 +159,7 @@ class Tpg_api_Model extends CI_Model {
         $modeoftraining = $this->input->post('modeoftraining');
         $crs_admin_email = $this->input->post('crs_admin_email'); //Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'
         $reg_open_date = date("d-m-Y"); 
-        $reg_close_date = date("d-m-Y");
+        $reg_close_date = $this->input->post('start_date');
         $crse_start_date = $this->input->post('start_date');
         $crse_end_date = $this->input->post('end_date');
         $schedule_info_des = 'Description'; //Course run schedule info Description
@@ -376,7 +376,7 @@ class Tpg_api_Model extends CI_Model {
         $crse_vacancy_code = "A"; //A - Available ,F - Full, L - Limited Vacancy
         $crse_vacancy_description = "Available"; /////A - Available ,F - Full, L - Limited Vacancy
         $reg_open_date = date("d-m-Y"); 
-        $reg_close_date = date("d-m-Y");
+        $reg_close_date = $this->input->post('start_date');
         $class_name = $this->input->post('class_name');
         $start_date = $this->input->post('start_date');
         $start_time = $this->input->post('start_time');
@@ -467,7 +467,7 @@ class Tpg_api_Model extends CI_Model {
         //print_r($sessions);exit;
         $new_date1 = date("Y-m-d", strtotime($start_date));        
         foreach ($period as $dt) {
-            $assm_schedule = $this->get_def_assessments_new($tenant_id, $datas['class']->class_id, $datas['class']->course_id, $datas['def_assessment']->assmnt_type, $dt->format("Y-m-d"));
+            $assm_schedule = $this->get_def_assessments_new($tenant_id, $datas['class']->class_id, $datas['class']->course_id, $datas['def_assessment'][0]->assmnt_type, $dt->format("Y-m-d"));
             //print_r($assm_schedule);exit;
             if (empty($assm_schedule)) {
                 $your_date1 = strtotime("1 day", strtotime($new_date1));
@@ -636,7 +636,7 @@ class Tpg_api_Model extends CI_Model {
     public function get_def_assessments_new($tenant_id, $class_id, $course_id, $assmnt_type = '', $assdate) {
         if ($assmnt_type == 'DEFAULT') {
             $result = $this->db->select('*')->from('class_assmnt_schld')->where('tenant_id', $tenant_id)
-                            ->where('class_id', $class_id)->get()->result_array();
+                            ->where('class_id', $class_id)->get()->row();
         } elseif ($assmnt_type == 'CUSTOM') {
             $this->db->select('*');
             $this->db->from('class_assmnt_schld');
@@ -644,7 +644,7 @@ class Tpg_api_Model extends CI_Model {
             $this->db->where('course_id', $course_id);
             $this->db->where('assmnt_date', $assdate);
             $this->db->where('class_id', $class_id);
-            $result = $this->db->get()->result_array();
+            $result = $this->db->get()->result();
         }
         return $result;
     }

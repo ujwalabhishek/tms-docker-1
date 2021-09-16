@@ -1179,19 +1179,23 @@ class Class_Model extends CI_Model {
 
         //print_r($data1['def_assessment']);exit;
         foreach ($data1['def_assessment'] as $ass) {
-            //$ass->class_id = $latest_class_id;
-            $data_asses['tenant_id'] =  $ass['tenant_id'];
-            $data_asses['course_id'] =  $ass['course_id'];
-            $data_asses['class_id'] =  $latest_class_id;
-            $data_asses['assmnt_date'] =  $ass['assmnt_date'];
-            $data_asses['mode_of_training'] =  $ass['mode_of_training'];            
-            $data_asses['assmnt_start_time'] =  $ass['assmnt_start_time'];
-            $data_asses['assmnt_end_time'] =  $ass['assmnt_end_time'];
-            $data_asses['assessor_id'] =  $ass['assessor_id'];            
-            $data_asses['assmnt_venue'] =  $ass['assmnt_venue'];
-            $data_asses['assmnt_type'] =  $ass['assmnt_type'];
-            $data_asses['assmnt_venue_oth'] =  $ass['assmnt_venue_oth'];                       
-            $this->db->insert('class_assmnt_schld', $data_asses);
+//            //$ass->class_id = $latest_class_id;
+//            $data_asses['tenant_id'] =  $ass['tenant_id'];
+//            $data_asses['course_id'] =  $ass['course_id'];
+//            $data_asses['class_id'] =  $latest_class_id;
+//            $data_asses['assmnt_date'] =  $ass['assmnt_date'];
+//            $data_asses['mode_of_training'] =  $ass['mode_of_training'];            
+//            $data_asses['assmnt_start_time'] =  $ass['assmnt_start_time'];
+//            $data_asses['assmnt_end_time'] =  $ass['assmnt_end_time'];
+//            $data_asses['assessor_id'] =  $ass['assessor_id'];            
+//            $data_asses['assmnt_venue'] =  $ass['assmnt_venue'];
+//            $data_asses['assmnt_type'] =  $ass['assmnt_type'];
+//            $data_asses['assmnt_venue_oth'] =  $ass['assmnt_venue_oth'];                       
+//            $this->db->insert('class_assmnt_schld', $data_asses);
+            $ass->class_id = $latest_class_id;
+            unset($ass->assmnt_id);
+            unset($ass->trigger_date);
+            $this->db->insert('class_assmnt_schld', $ass);
         }
 
         $new_date1 = date("Y-m-d", strtotime($start_date));
@@ -2153,7 +2157,7 @@ class Class_Model extends CI_Model {
                         'assmnt_end_time' => $assmt_end_time,
                         'assessor_id' => rtrim($assmnt_assessor[$k], ','),
                         'assmnt_venue' => $ass_venues[$k],
-                        'assmnt_type' => 'DEFAULT',
+                        'assmnt_type' => 'CUSTOM',
                         'assmnt_venue_oth' => strtoupper($assm_venue_oth),
                     );
                     $this->db->insert('class_assmnt_schld', $class_assmnt_data);
