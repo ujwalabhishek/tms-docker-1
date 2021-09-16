@@ -674,22 +674,7 @@ class Class_Model extends CI_Model {
             $result = $this->db->get()->result();
         }
         return $result;
-    }
-    
-    public function get_def_assessment_new_tpg($tenant_id, $class_id, $assmnt_type = '') {
-        if ($assmnt_type == 'DEFAULT') {
-            $result = $this->db->select('*')->from('class_assmnt_schld')->where('tenant_id', $tenant_id)
-                            ->where('class_id', $class_id)->get()->result_array();
-        } elseif ($assmnt_type == 'CUSTOM') {
-            $this->db->select('*');
-            $this->db->from('class_assmnt_schld');
-            $this->db->where('tenant_id', $tenant_id);
-            $this->db->where('class_id', $class_id);
-
-            $result = $this->db->get()->result_array();
-        }
-        return $result;
-    }
+    }        
 
     public function get_def_assessments_new($tenant_id, $class_id, $course_id, $assmnt_type = '', $assdate) {
         if ($assmnt_type == 'DEFAULT') {

@@ -2554,12 +2554,20 @@ public function get_training_details($user_id = NULL, $limit = NULL, $offset = N
         if ($result->num_rows() == 1) {
             return $result->row()->assmnt_date;
         } else {
-            $result = $this->db->select('cas.assmnt_date')
+            if(isset($user_id)) {
+                $result = $this->db->select('cas.assmnt_date')
                             ->from('class_assmnt_trainee cat')
                             ->join('class_assmnt_schld cas', 'cas.assmnt_id=cat.assmnt_id and cas.class_id=cat.class_id')
                             ->where('cat.class_id', $class_id)
                             ->where('cat.user_id', $user_id)
                             ->where('cas.assmnt_type', 'CUSTOM')->get()->row()->assmnt_date;
+            } else {
+                $result = $this->db->select('cas.assmnt_date')
+                            ->from('class_assmnt_trainee cat')
+                            ->join('class_assmnt_schld cas', 'cas.assmnt_id=cat.assmnt_id and cas.class_id=cat.class_id')
+                            ->where('cat.class_id', $class_id)                            
+                            ->where('cas.assmnt_type', 'CUSTOM')->get()->row()->assmnt_date;
+            }            
             return $result;
         }
     }
