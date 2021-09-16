@@ -427,6 +427,14 @@ class Tpg_api_Model extends CI_Model {
         $venue_building = $datas['class']->venue_building;
         $venue_postalcode = $datas['class']->venue_postalcode;
         $venue_room = $datas['class']->venue_room;
+        
+        //Added by abdulla
+        $wheel_chair_access = $datas['class']->wheel_chair_accessible;
+        if($wheel_chair_access == '0') {
+            $wheel_chair_access = 'false';
+        } else {
+            $wheel_chair_access = 'true';
+        }
 
         if (!empty($session_schdl_arr)) {
             foreach ($session_schdl_arr as $objj) {

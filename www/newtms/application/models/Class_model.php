@@ -2057,6 +2057,7 @@ class Class_Model extends CI_Model {
             'venue_unit' => $venue_unit,
             'venue_postalcode' => $venue_postalcode,
             'venue_floor' => $venue_floor,
+            'wheel_chair_access' => $wheel_chair_accessible,
             'modeoftraining' => $modeoftraining,
             'survey_language' => $survey_language
         );
@@ -2128,7 +2129,7 @@ class Class_Model extends CI_Model {
                         'assmnt_end_time' => $assmt_end_time,
                         'assessor_id' => rtrim($assmnt_assessor[$k], ','),
                         'assmnt_venue' => $ass_venues[$k],
-                        'assmnt_type' => 'DEFAULT',
+                        'assmnt_type' => 'CUSTOM',
                         'assmnt_venue_oth' => strtoupper($assm_venue_oth),
                     );
                     $this->db->insert('class_assmnt_schld', $class_assmnt_data);

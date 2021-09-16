@@ -123,6 +123,16 @@ if (!empty($tax_error)) {
                                     }
                                     ?></label></td>
                         </tr>
+                        <?php if ($tpg_crse) { ?>
+                            <tr>
+                                <td class="td_heading">TPGateway Course Run ID:</td>
+                                <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_course_run_id; ?></label></td>
+                            </tr>
+                            <tr>
+                                <td class="td_heading">TPGateway QR-Code Link:</td>
+                                <td colspan="5"><label class="label_font" id='crs_run_id'><a href='<?php echo $class->tpg_qr_code; ?>' target="_blank"><?php echo $class->tpg_qr_code; ?></a></label></td>
+                            </tr>
+                        <?php } ?>
                         <tr>
                             <td colspan="2" class="td_heading">
                                 <?php
@@ -157,6 +167,92 @@ if (!empty($tax_error)) {
                             <td class="td_heading">Lab Location:</td>
                             <td colspan="5"><label class="label_font"><?php echo rtrim($LabLoc, ', '); ?></label></td>
                         </tr>
+                        <?php if ($tpg_crse) { ?>
+                            <tr>
+                                <td class="td_heading">Venue Room:</td>
+                                <td colspan='3'>
+                                    <label class="label_font">                                    
+                                        <?php echo $class->venue_room; ?>
+                                    </label>                                
+                                </td>
+                                <td class="td_heading">Survey Language:</td>
+                                <td>
+                                    <label class="label_font">                                    
+                                        <?php
+                                        if ($class->survey_language == 'EL') {
+                                            echo 'English';
+                                        } else if ($class->survey_language == 'MN') {
+                                            echo 'Mandarin';
+                                        } else if ($class->survey_language == 'MY') {
+                                            echo 'Malay';
+                                        } else if ($class->survey_language == 'TM') {
+                                            echo 'Tamil';
+                                        } else {
+                                            echo 'N/A';
+                                        }
+                                        ?>
+                                    </label>                                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_heading">Venue Unit:</td>
+                                <td>
+                                    <label class="label_font">
+                                        <?php echo $class->venue_unit; ?>
+                                    </label>                            
+                                </td>
+                                <td class="td_heading">Venue Block:</td>
+                                <td>
+                                    <label class="label_font">
+                                        <?php echo $class->venue_block; ?>
+                                    </label>                                
+                                </td>
+                                <td class="td_heading">Venue Floor:</td>
+                                <td>
+                                    <label class="label_font">
+                                        <?php echo $class->venue_floor; ?>
+                                    </label>                                
+                                </td>                    
+                            </tr>
+                            <tr>  
+                                <td class="td_heading">Venue Street:</td>
+                                <td>
+                                    <label class="label_font">
+                                        <?php echo $class->venue_street; ?>
+                                    </label>                                
+                                </td>
+                                <td class="td_heading">Venue Building:</td>
+                                <td>
+                                    <label class="label_font">
+                                        <?php echo $class->venue_building; ?>
+                                    </label>
+                                </td>
+                                <td class="td_heading">Venue Postal Code:</td>
+                                <td>
+                                    <label class="label_font">
+                                        <?php echo $class->venue_postalcode; ?>
+                                    </label>                                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="td_heading">  
+                                    <?php
+                                    if ($class->wheel_chair_access == '1') {
+                                        $checked_wheel = 'checked';
+                                    } else {
+                                        $checked_wheel = '';
+                                    }
+                                    $wheel_chair_accessible = array(
+                                        'name' => 'wheel_chair_accessible',
+                                        'id' => 'wheel_chair_accessible',
+                                        'checked' => $checked_wheel,
+                                        'disabled' => 'disabled'
+                                    );
+                                    echo form_checkbox($wheel_chair_accessible, '1', set_checkbox('wheel_chair_accessible', '1'));
+                                    ?>
+                                    &nbsp;The course run location is wheel chair accessible</td>
+                            </tr>
+                        <?php } ?>
                         <tr>
                             <td class="td_heading">Classroom Trainer:</td>
                             <td><label class="label_font"><?php echo rtrim($ClassTrainer, ', '); ?></label></td>
