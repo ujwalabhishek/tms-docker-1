@@ -13785,7 +13785,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
     public function reschedule_add_to_company_enrollment($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
     , $invoice_id, $payment_due_id, $seleced_trainee_list) {
 
-
+echo "Abdulla testing"; exit;
 
         $status = TRUE;
 
