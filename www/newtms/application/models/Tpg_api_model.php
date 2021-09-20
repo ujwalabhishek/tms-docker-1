@@ -898,7 +898,6 @@ class Tpg_api_Model extends CI_Model {
 
         $retun = $this->correct_live_dev_api_data($crs_reference_num, $tp_uen);
 
-echo "ABD".$retun[corpassid]; exit;
         $tpg_attn_json_data = '{"uen": "' . $retun[tp_uen] . '",
                                         "course": {
                                           "sessionID": "' . $tpg_session_id . '",
