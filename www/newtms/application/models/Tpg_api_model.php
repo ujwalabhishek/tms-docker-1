@@ -80,7 +80,7 @@ class Tpg_api_Model extends CI_Model {
             $domain = TPG_URL;
             $skillCode = $skillCode;
             $nric = $nric;
-            $corpassid = '201223502K';
+            $corpassid = 'K2576800';
         } else {
             $crse_ref_no = 'TGS-2020002096';
             $tp_uen = '201000372W';            
