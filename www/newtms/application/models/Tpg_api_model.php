@@ -81,6 +81,7 @@ class Tpg_api_Model extends CI_Model {
             $skillCode = $skillCode;
             $nric = $nric;
             $corpassid = 'K2576800';
+            echo $corpassid; exit;
         } else {
             $crse_ref_no = 'TGS-2020002096';
             $tp_uen = '201000372W';            
