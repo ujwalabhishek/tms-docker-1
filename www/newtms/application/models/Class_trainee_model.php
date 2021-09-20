@@ -3406,6 +3406,8 @@ class Class_Trainee_Model extends CI_Model {
         $gst_rate = $this->get_gst_current();
         $i = 0;
         //$this->db->trans_start();
+        echo " aaa ".print_r($data, true);
+exit;
         foreach ($data as $row) {
             $user_id = $row['user_id'];
             $check = $this->db->select('*')
@@ -13964,7 +13966,8 @@ echo "Abdulla testing"; exit;
 
      */
     private function reschedule_create_new_comp_enroll($tenant_id, $data, $course_id, $new_class_id, $trainee_id) {
-echo "Abdulla testing 123"; exit;
+echo "Abdulla testing 123"; 
+
         $_POST['company'] = $data['company_id'];
 
         $_POST['class'] = $new_class_id;
