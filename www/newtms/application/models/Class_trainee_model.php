@@ -13964,7 +13964,7 @@ echo "Abdulla testing"; exit;
 
      */
     private function reschedule_create_new_comp_enroll($tenant_id, $data, $course_id, $new_class_id, $trainee_id) {
-
+echo "Abdulla testing 123"; exit;
         $_POST['company'] = $data['company_id'];
 
         $_POST['class'] = $new_class_id;
