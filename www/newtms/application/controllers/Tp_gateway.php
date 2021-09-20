@@ -1940,12 +1940,18 @@ class tp_gateway extends CI_Controller {
     }
 
     public function correct_live_dev_api_data($crse_ref_no, $tp_uen, $skillCode = '', $nric = '') {
+        
+        //Training Partner
+        $tenant_id = $this->tenant_id;
+        $tenant_details = fetch_tenant_details($tenant_id);
+        
         if (TPG_ENVIRONMENT == 'PRODUCTION') {
             $crse_ref_no = $crse_ref_no;
             $tp_uen = $tp_uen;
             $domain = TPG_URL;
             $skillCode = $skillCode;
             $nric = $nric;
+            $corpassid = $tenant_details->corp_pass_id;
         } else {
             $crse_ref_no = 'TGS-2020002096';            
             $tp_uen = '201000372W';            
