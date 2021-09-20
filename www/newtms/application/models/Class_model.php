@@ -2625,7 +2625,7 @@ class Class_Model extends CI_Model {
         $this->db->where('date(cc.class_end_datetime) >=', $cur_date);
         $this->db->where('cc.tenant_id', $tenantId);
         $this->db->where('cc.course_id', $courseId);
-        $this->db->where('cc.class_id !=', $classId);
+        //$this->db->where('cc.class_id !=', $classId);
 
         if (empty($is_allclass)) {
             $this->db->where('cc.class_status !=', 'INACTIV');
