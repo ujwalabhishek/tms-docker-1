@@ -132,7 +132,7 @@ function fetch_tenant_details($tenant_id = NULL) {
         return FALSE;
     }
     $CI->db->select('ten.tenant_id, ten.logo, ten.copyrighttext, ten.currency, '
-            . 'ten.country,ten.applicationname, ten.tenant_name, ten.website_url, ten.tenant_email_id, ten.tenant_contact_num, ten.comp_reg_no'); // ten.website_url added by dummy for changing home link on Nov 27 2014.
+            . 'ten.country,ten.applicationname, ten.tenant_name, ten.website_url, ten.tenant_email_id, ten.tenant_contact_num, ten.comp_reg_no, ten.corp_pass_id'); // ten.website_url added by dummy for changing home link on Nov 27 2014.
     $CI->db->from('tenant_master ten');
     $CI->db->where('ten.tenant_id', $tenant_id);
     $CI->db->limit(1);
