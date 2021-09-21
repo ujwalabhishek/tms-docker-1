@@ -6512,6 +6512,8 @@ class Class_Trainee_Model extends CI_Model {
                 $update_data = array(
                     "enrolled_by" => $data['enrolled_by'],
                     "sales_executive_id" => $data['sales_executive_id'],
+                    "eid_number" => $data['eid_number'],
+                    "tpg_enrolment_status" => $data['tpg_enrolment_status'],                    
                 );
 
                 $this->db->where("course_id", $course_id);
@@ -13785,8 +13787,6 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
     public function reschedule_add_to_company_enrollment($tenant_id, $logged_in_user_id, $course_id, $class_id, $company_id
     , $invoice_id, $payment_due_id, $seleced_trainee_list) {
 
-echo "Abdulla testing"; exit;
-
         $status = TRUE;
 
         if (empty($seleced_trainee_list)) {
@@ -13964,7 +13964,6 @@ echo "Abdulla testing"; exit;
 
      */
     private function reschedule_create_new_comp_enroll($tenant_id, $data, $course_id, $new_class_id, $trainee_id) {
-echo "Abdulla testing 123"; 
 
         $_POST['company'] = $data['company_id'];
 
