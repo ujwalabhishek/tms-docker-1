@@ -3715,7 +3715,6 @@ class Class_Trainee extends CI_Controller {
             return show_404();
         }
         $result = $this->get_payid_details($payid, 1);
-        echo print_r($result, true); exit;
         if ($result['data']->enrolment_mode == 'COMPSPON') {
             if ($result['data']->company_id[0] == 'T') {
                 $tenant_details = fetch_tenant_details($result['data']->company_id);
