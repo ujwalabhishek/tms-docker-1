@@ -6507,6 +6507,8 @@ class Class_Trainee_Model extends CI_Model {
                 $update_data = array(
                     "enrolled_by" => $data['enrolled_by'],
                     "sales_executive_id" => $data['sales_executive_id'],
+                    "eid_number" => $data['eid_number'],
+                    "tpg_enrolment_status" => $data['tpg_enrolment_status'],
                 );
 
                 $this->db->where("course_id", $course_id);
