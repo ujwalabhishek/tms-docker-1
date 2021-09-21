@@ -3430,10 +3430,7 @@ class Class_Trainee_Model extends CI_Model {
                 }
                 $enrollment_type_text = ($enrollment_type == 1) ? 'RETAKE' : 'FIRST';
                 $cur_date = date('Y-m-d H:i:s');
-                $tg_number = $row['tg'];
-                //Added by abdulla
-                $eid_number = $row['eid_number'];
-                $tpg_enrolment_status = $row['tpg_enrolment_status'];
+                $tg_number = $row['tg'];                
                 $subsidy_type_id = $row['subsidy_type'];
                 $class_status = $this->get_class_statustext($class);
 
@@ -3493,14 +3490,12 @@ class Class_Trainee_Model extends CI_Model {
                     'training_score' => $training_score,
                     'payment_status' => $pay_status,
                     'sales_executive_id' => $salesexec,
-                    'eid_number' => $eid_number,
-                    'tpg_enrolment_status' => $tpg_enrolment_status,
                     'class_status' => $class_status,
                     'enrol_status' => $enrol_status
                 );
 
                 $this->db->insert('class_enrol', $data);
-                echo $this->db->last_query();
+                //echo $this->db->last_query();
 
                 if (!empty($payment_due_id)) {
                     $data = array(
