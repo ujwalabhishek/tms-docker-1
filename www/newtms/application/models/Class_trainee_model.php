@@ -3405,9 +3405,7 @@ class Class_Trainee_Model extends CI_Model {
         $indv_fees_due = round(($classes->class_fees - $indv_discount_amt), 4);
         $gst_rate = $this->get_gst_current();
         $i = 0;
-        //$this->db->trans_start();
-        echo " aaa ".print_r($data, true);
-exit;
+        //$this->db->trans_start();        
         foreach ($data as $row) {
             $user_id = $row['user_id'];
             $check = $this->db->select('*')
@@ -3502,7 +3500,7 @@ exit;
                 );
 
                 $this->db->insert('class_enrol', $data);
-                //echo $this->db->last_query();
+                echo $this->db->last_query();
 
                 if (!empty($payment_due_id)) {
                     $data = array(
