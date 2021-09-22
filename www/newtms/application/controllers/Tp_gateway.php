@@ -58,7 +58,10 @@ class tp_gateway extends CI_Controller {
         if ($asessment_resp->status == 200) {
             $this->classModel->updateAssessmentRefNo($asessment_resp->data->assessment->referenceNumber, $course_id, $class_id, $user_id, $tenant_id);
             $this->session->set_flashdata("success", "Assessment Created Successfully With Referance ID: " . $asessment_resp->data->assessment->referenceNumber);
-            redirect($controller);
+            //redirect($controller);            
+            //Modified by abdulla
+            redirect('classes/tpg_assessments?course=' . $course_id . '&class=' . $class_id. '&nric=' . $user_id. '&nric_id=' . $trainee['tax_code']);
+            
         } else {
             $this->handle_error($controller, $asessment_resp);
         }
