@@ -14392,7 +14392,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 tup.first_name as fullname,
                 tu.registered_email_id,
                 tup.contact_number,
-                cc.total_classroom_duration,
+                ROUND(TIMESTAMPDIFF(second, cs.session_start_time, cs.session_end_time) / 3600, 1) as total_classroom_duration,
                 cc.survey_language,
                 tu.tax_code,
                 tu.tax_code_type,

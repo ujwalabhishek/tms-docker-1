@@ -1828,7 +1828,9 @@ class tp_gateway extends CI_Controller {
             //if(true){
             $this->classTraineeModel->uploadTmsClassShdl($tenant_id, $course_id, $class_id, $tpg_session_id, $user_id); ///update tms record
             $this->session->set_flashdata("success", "Attendance Uploaded Successfully To TPG ");
-            redirect($controller);
+            //redirect($controller);            
+            //Modified by abdulla
+            redirect('class_trainee/mark_attendance_tpg?course=' . $course_id . '&class=' . $class_id. '&nric=' . $user_id. '&nric_id=' . $tax_code);
         } else {
             $this->handle_error($controller, $obj_resp);
         }
