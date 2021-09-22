@@ -123,6 +123,7 @@
                     $pageurl = 'class_trainee';
                     ?>
                     <tr>
+                        <th width="4%" class="th_header">Sl. No.</th>
                         <th width="9%" class="th_header">NRIC/FIN No</th>
                         <th width="10%" class="th_header">Full Name</th>
                         <th width="10%" class="th_header">Assessment Date</th>
@@ -143,11 +144,11 @@
                         $err_msg = 'No data available for the search criteria entered.';
                     }
                     if (!empty($tabledata)) {
-                        foreach ($tabledata as $row) {
-                          
-                            ?>
-                                                                              
-                            <tr>                        
+                        $i = 1;
+                        foreach ($tabledata as $row) {                          
+                            ?>                                                                      
+                            <tr>
+                                <td><?php echo $i; ?></td>
                                 <td><?php echo $row->tax_code; ?></td>
                                 <td class="name"><?php echo $row->fullname; ?></td>
                                 <td><?php echo $row->assmnt_date ?? $row->assessmentDate; ?></td>
@@ -170,17 +171,18 @@
                                 </td>
                             </tr>
                             <?php
+                            $i++;
                         }
                     } 
                     
                     
                     //////data for tpg search
                      if (!empty($tabledata_tpg)) {
-                        foreach ($tabledata_tpg->data as $row) {
-                          
-                            ?>
-                                                                              
-                            <tr>                        
+                          $i = 1;
+                        foreach ($tabledata_tpg->data as $row) {                          
+                            ?>                                  
+                            <tr>
+                                <td><?php echo $i; ?></td>
                                 <td><?php echo $row->trainee->id; ?></td>
                                 <td class="name"><?php echo $row->trainee->fullName; ?></td>
                                 <td><?php echo $row->assessmentDate; ?></td>
@@ -197,6 +199,7 @@
                                 </td>
                             </tr>
                             <?php
+                            $i++;
                         }
                     } 
                     ?>
