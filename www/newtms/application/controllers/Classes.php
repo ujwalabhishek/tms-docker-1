@@ -1062,7 +1062,7 @@ class Classes extends CI_Controller {
         $tenantId = $this->tenant_id;
         $courseId = $this->input->post('course_id');
         $mark_attendance = $this->input->post('mark_attendance');
-        $course_classes = $this->classmodel->get_course_class($tenantId, $courseId, $mark_attendance, "ACTIVE", "classTrainee");
+        $course_classes = $this->classmodel->get_course_class($tenantId, $courseId, $mark_attendance, "", "classTrainee");
         $classes_arr = array();
         foreach ($course_classes as $k => $v) {
             $classes_arr[] = array('key' => $k, 'value' => $v);
