@@ -180,11 +180,13 @@
                     
                     //////data for tpg search
                      if (!empty($tabledata_tpg)) {
+                         $i = 1;
                         foreach ($tabledata_tpg->data as $row) {
                           
                             ?>
                                                                               
-                            <tr>                        
+                            <tr>
+                                <td><?php echo $i; ?></td>
                                 <td><?php echo $row->trainee->id; ?></td>
                                 <td class="name"><?php echo $row->trainee->fullName; ?></td>
                                 <td><?php echo $row->assessmentDate; ?></td>
@@ -201,6 +203,7 @@
                                 </td>
                             </tr>
                             <?php
+                            $i++;
                         }
                     } 
                     ?>
