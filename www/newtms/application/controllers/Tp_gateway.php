@@ -1825,7 +1825,7 @@ class tp_gateway extends CI_Controller {
         $tpg_course_run_id = $this->input->post('tpg_course_run_id');
         $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $obj_resp = $this->tpgModel->submit_attendance_to_tpg($tenant->comp_reg_no, $tpg_course_run_id, $tax_code, $crs_reference_num, $tenant_id, $user_id, $course_id, $class_id, $survey_language, $noOfHours, $tpgCourseId, $tpg_session_id, $attn_status_code, $fullname, $registered_email_id, $idtype, $mobileNo);
-        $controller = 'class_trainee/mark_attendance_tpg';
+        $controller = 'class_trainee/mark_attendance_tpg?course=' . $course_id . '&class=' . $class_id. '&nric=' . $user_id. '&nric_id=' . $tax_code;
 
         if ($obj_resp->status == 200) {
             //if(true){
