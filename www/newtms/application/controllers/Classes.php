@@ -1178,6 +1178,7 @@ class Classes extends CI_Controller {
             $crse_details = $this->coursemodel->get_course_detailse($class_details->course_id);
             $data['classes'] = $this->classmodel->get_course_class($tenant_id, $course, $mark_attendance, "ACTIVE", "classTrainee");
             $data['tabledata_tpg'] = $this->tpgModel->search_assessments($tenant_id, $tenant->comp_reg_no, $crse_details->crse_ref_no, $class_details->tpg_course_run_id);
+            $data['nric'] = $this->classmodel->get_Trainee_For_Assessments_json($tenant_id, $course, $class);
             //print_r($data['tabledata_tpg']);exit;
         } else {
             if (!empty($course) && !empty($class)) {
