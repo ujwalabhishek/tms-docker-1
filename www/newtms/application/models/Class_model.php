@@ -2513,13 +2513,16 @@ class Class_Model extends CI_Model {
                 tu.tax_code,
                 tu.tax_code_type,
                 cc.class_id,
+                ce.eid_number,
+                max(cas.assmnt_date) as assmnt_date,
+                ce.assessment_reference_No,
                 ce.user_id,
                 tup.first_name as fullname,
                 CURDATE() as assessmentDate,
                 c.competency_code as skillCode,
                 ce.feedback_score,
                 ce.feedback_grade,
-                (CASE WHEN ce.training_score ='C' THEN 'Pass' ELSE 'Fail' END) as 'result',
+                (CASE WHEN ce.training_score ='C' THEN 'Pass' WHEN ce.training_score ='EX' THEN 'Exempt' ELSE 'Fail' END) as 'result',
                 cc.class_start_datetime,
                 cc.class_end_datetime,
                 cc.class_name,
@@ -2530,14 +2533,16 @@ class Class_Model extends CI_Model {
                 JOIN tms_users tu ON tu.user_id = ce.user_id 
                 left join tms_users_pers tup on tup.user_id =ce.user_id 
                 left join company_master cm on cm.company_id=ce.company_id
+                left join class_assmnt_schld cas on cas.course_id = cc.course_id and cas.class_id = cc.class_id and cas.tenant_id = cc.tenant_id
                 WHERE cc . tenant_id = '$tenant_id'
                 AND c.course_id = '$courseID'
-                AND cc.class_id = '$classID'
+                AND cc.class_id = '$classID'                
                 AND c.competency_code !=''
                 AND c.reference_num !=''
                 AND ce.tpg_enrolment_status = 'Confirmed'
                 AND ce.training_score !='' $str
-                AND date(cc.class_end_datetime) <= '$today_date'";
+                AND date(cc.class_end_datetime) <= '$today_date'
+                group by tu.tax_code";
         $result = $this->db->query($sql)->result();
         //echo $this->db->last_query();exit;
         return $result[0];

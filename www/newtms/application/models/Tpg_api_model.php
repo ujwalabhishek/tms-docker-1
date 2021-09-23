@@ -729,6 +729,9 @@ class Tpg_api_Model extends CI_Model {
         } else if ($trainee->tax_code_type == 'SNG_3') {
             $taxcode_type = 'OTHERS';
         }
+        
+        $assessment_date = !empty($trainee->assmnt_date) ? $trainee->assmnt_date : $trainee->assessmentDate;
+        
         $assessment_json = '{"assessment": {
                       "trainingPartner": {
                         "code": "' . $retun[tp_uen] . '-03",
@@ -748,7 +751,7 @@ class Tpg_api_Model extends CI_Model {
                       "result": "' . $trainee->result . '",
                       "score": ' . $score . ',
                       "grade": "' . $grade . '",
-                      "assessmentDate": "' . $trainee->assessmentDate . '",
+                      "assessmentDate": "' . $assessment_date . '",
                       "skillCode": "' . $retun[skillcode] . '",
                       "conferringInstitute": {
                         "code": "' . $retun[tp_uen] . '-03"
