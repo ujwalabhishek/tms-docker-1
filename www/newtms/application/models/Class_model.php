@@ -2425,7 +2425,7 @@ class Class_Model extends CI_Model {
                 tu.tax_code_type,
                 cc.class_id,
                 ce.eid_number,
-                max(cas.assmnt_date),
+                max(cas.assmnt_date) as assmnt_date,
                 ce.assessment_reference_No,
                 ce.user_id,
                 tup.first_name as fullname,
