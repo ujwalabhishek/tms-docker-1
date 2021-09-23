@@ -2425,7 +2425,7 @@ class Class_Model extends CI_Model {
                 tu.tax_code_type,
                 cc.class_id,
                 ce.eid_number,
-                cas.assmnt_date,
+                max(cas.assmnt_date),
                 ce.assessment_reference_No,
                 ce.user_id,
                 tup.first_name as fullname,
@@ -2452,7 +2452,8 @@ class Class_Model extends CI_Model {
                 AND c.reference_num !=''
                 AND ce.tpg_enrolment_status = 'Confirmed'
                 AND ce.training_score !='' $str
-                AND date(cc.class_end_datetime) <= '$today_date'";
+                AND date(cc.class_end_datetime) <= '$today_date'
+                group by tu.tax_code";
         $result = $this->db->query($sql)->result();
         //echo $this->db->last_query();exit;
         return $result;
