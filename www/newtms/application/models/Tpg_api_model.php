@@ -747,7 +747,7 @@ class Tpg_api_Model extends CI_Model {
                       "trainee": {
                         "idType": "' . $taxcode_type . '",
                         "id": "' . $trainee->tax_code . '",
-                        "fullName": "' . trim($trainee->fullname) . '"
+                        "fullName": "' . $trainee->fullname . '"
                       },
                       "result": "' . $trainee->result . '",
                       "score": ' . $score . ',
@@ -760,7 +760,7 @@ class Tpg_api_Model extends CI_Model {
                     }
 
                   }';
-        echo print_r($assessment_json, true);exit;
+        //echo print_r($assessment_json, true);exit;
         $encrypted_data = $this->encrypt_decrypt('encrypt', $assessment_json);
         //echo $encrypted_data;exit;
         $api_version = 'v1';
