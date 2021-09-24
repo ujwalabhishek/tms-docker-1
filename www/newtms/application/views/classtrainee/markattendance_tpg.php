@@ -196,7 +196,7 @@
                                 <td><?php echo $row->survey_language; ?></td>
                                 <td>
                                     <?php if ($row->tpg_uploaded_status == 1) { ?>                                                                               
-                                        <a href="<?php echo base_url() . 'tp_gateway/retrieve_course_sess_att/' . $row->tpg_course_run_id . '/' . $row->reference_num . '/' . $row->tpg_session_id; ?>"><button class="btnblue">View Session</button></a>
+                                        <a href="<?php echo base_url() . 'tp_gateway/retrieve_course_sess_att/' . $row->tpg_course_run_id . '/' . $row->reference_num . '/' . $row->tpg_session_id . '/' . $row->tax_code; ?>"><button class="btnblue">View Session</button></a>
                                         <?php
                                     } else {
                                         $atr = 'id="submit_attendance_form" name="submit_attendance" method="post"';

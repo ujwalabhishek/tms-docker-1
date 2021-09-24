@@ -1838,7 +1838,7 @@ class tp_gateway extends CI_Controller {
         }
     }
 
-    public function retrieve_course_sess_att($tpg_course_run_id, $courseReferenceNumber, $sessionId) {
+    public function retrieve_course_sess_att($tpg_course_run_id, $courseReferenceNumber, $sessionId, $nric) {
 
         $tenant_id = $this->tenant_id;
         $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
@@ -1859,8 +1859,8 @@ class tp_gateway extends CI_Controller {
 
         if ($tpg_response->status == 200) {
 
-            $data['courseEndDate'] = $tpg_response->data->courseRun->courseDates->end;
-            $data['courseStartDate'] = $tpg_response->data->courseRun->courseDates->start;
+            $data['courseEndDate'] = date('Y-m-d', strtotime($tpg_response->data->courseRun->courseDates->end));
+            $data['courseStartDate'] = date('Y-m-d', strtotime($tpg_response->data->courseRun->courseDates->start));
             $data['externalReferenceNumber'] = $tpg_response->data->courseRun->externalReferenceNumber;
             $modeOfTraining = $tpg_response->data->courseRun->modeOfTraining;
             if ($modeOfTraining == 1) {
@@ -1888,10 +1888,10 @@ class tp_gateway extends CI_Controller {
             $data['title'] = $tpg_response->data->courseRun->title;
 
             //Sessions
-            $data['sessionEndDate'] = $tpg_response->data->courseRun->sessions[0]->endDate;
+            $data['sessionEndDate'] = date('Y-m-d', strtotime($tpg_response->data->courseRun->sessions[0]->endDate));
             $data['sessionEndTime'] = $tpg_response->data->courseRun->sessions[0]->endTime;
             $data['sessionId'] = $tpg_response->data->courseRun->sessions[0]->id;
-            $data['sessionStartDate'] = $tpg_response->data->courseRun->sessions[0]->startDate;
+            $data['sessionStartDate'] = date('Y-m-d', strtotime($tpg_response->data->courseRun->sessions[0]->startDate));
             $data['sessionStartTime'] = $tpg_response->data->courseRun->sessions[0]->startTime;
 
             //venue
@@ -1904,23 +1904,47 @@ class tp_gateway extends CI_Controller {
             $data['venueUnit'] = $tpg_response->data->courseRun->sessions[0]->venue->unit;
             $data['venueWheelChairAccess'] = $tpg_response->data->courseRun->sessions[0]->venue->wheelChairAccess;
 
-            //attendance
-            $data['SessionEntryMode'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->entryMode;
-            $data['SessionAttendanceId'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->id;
-            $data['SessionnumberOfHours'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->numberOfHours;
-            $data['SessionsentToTraqom'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->sentToTraqom;
-            $data['Sessionstatus'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->status;
-            $data['SessioneditedByTP'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->editedByTP;
-
-            ///trainee
-            $data['TraineeaccountType'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->accountType;
-            $data['TraineecontactNumber'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->contactNumber->mobile;
-            $data['Traineeemail'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->email;
-            $data['Traineeid'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->id;
-            $data['TraineeidType'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->idType;
-            $data['TraineeindividualId'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->individualId;
-            $data['Traineename'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->name;
-            $data['TraineesurveyLanguageCode'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->surveyLanguage->description;
+//            //attendance
+//            $data['SessionEntryMode'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->entryMode;
+//            $data['SessionAttendanceId'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->id;
+//            $data['SessionnumberOfHours'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->numberOfHours;
+//            $data['SessionsentToTraqom'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->sentToTraqom;
+//            $data['Sessionstatus'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->status;
+//            $data['SessioneditedByTP'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->editedByTP;
+//
+//            ///trainee
+//            $data['TraineeaccountType'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->accountType;
+//            $data['TraineecontactNumber'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->contactNumber->mobile;
+//            $data['Traineeemail'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->email;
+//            $data['Traineeid'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->id;
+//            $data['TraineeidType'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->idType;
+//            $data['TraineeindividualId'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->individualId;
+//            $data['Traineename'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->name;
+//            $data['TraineesurveyLanguageCode'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->trainee->surveyLanguage->description;
+            
+            foreach ($tpg_response->data->courseRun->sessions[0]->attendance as $sess) {
+                
+                if($nric == $sess->nric) {
+                    
+                    //attendance
+                    $data['SessionEntryMode'] = $sess->entryMode;
+                    $data['SessionAttendanceId'] = $sess->id;
+                    $data['SessionnumberOfHours'] = $sess->numberOfHours;
+                    $data['SessionsentToTraqom'] = $sess->sentToTraqom;
+                    $data['Sessionstatus'] = $sess->status;
+                    $data['SessioneditedByTP'] = $sess->editedByTP;
+                    
+                    //trainee
+                    $data['TraineeaccountType'] = $sess->trainee->accountType;
+                    $data['TraineecontactNumber'] = $sess->trainee->contactNumber->mobile;
+                    $data['Traineeemail'] = $sess->trainee->email;
+                    $data['Traineeid'] = $sess->trainee->id;
+                    $data['TraineeidType'] = $sess->trainee->idType->description;
+                    $data['TraineeindividualId'] = $sess->trainee->individualId;
+                    $data['Traineename'] = $sess->trainee->name;
+                    $data['TraineesurveyLanguageCode'] = $sess->trainee->surveyLanguage->description;
+                }                
+            }
 
             $data['sideMenuData'] = fetch_non_main_page_content();
             $data['page_title'] = 'TPG View Course Session Attendance';
