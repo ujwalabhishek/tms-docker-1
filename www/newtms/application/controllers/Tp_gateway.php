@@ -1856,7 +1856,7 @@ class tp_gateway extends CI_Controller {
         $tpg_response = json_decode($response);
 
 
-        print_r(json_decode($tpg_response));
+        echo print_r($tpg_response);
         exit;
 
         if ($tpg_response->status == 200) {
