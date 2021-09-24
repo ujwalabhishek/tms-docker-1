@@ -1941,7 +1941,7 @@ class tp_gateway extends CI_Controller {
                     $data['TraineecontactNumber'] = $sess->trainee->contactNumber->mobile;
                     $data['Traineeemail'] = $sess->trainee->email;
                     $data['Traineeid'] = $sess->trainee->id;
-                    $data['TraineeidType'] = $sess->trainee->idType;
+                    $data['TraineeidType'] = $sess->trainee->idType->description;
                     $data['TraineeindividualId'] = $sess->trainee->individualId;
                     $data['Traineename'] = $sess->trainee->name;
                     $data['TraineesurveyLanguageCode'] = $sess->trainee->surveyLanguage->description;
