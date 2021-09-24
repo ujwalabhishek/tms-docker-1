@@ -1840,7 +1840,7 @@ class tp_gateway extends CI_Controller {
         }
     }
 
-    public function retrieve_course_sess_att($tpg_course_run_id, $courseReferenceNumber, $sessionId) {
+    public function retrieve_course_sess_att($tpg_course_run_id, $courseReferenceNumber, $sessionId, $nric) {
 
         $tenant_id = $this->tenant_id;
         $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
