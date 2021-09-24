@@ -760,7 +760,7 @@ class Tpg_api_Model extends CI_Model {
                     }
 
                   }';
-        print_r($assessment_json);exit;
+        //print_r($assessment_json);exit;
         $encrypted_data = $this->encrypt_decrypt('encrypt', $assessment_json);
         //echo $encrypted_data;exit;
         $api_version = 'v1';
