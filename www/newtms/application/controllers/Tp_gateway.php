@@ -1862,7 +1862,7 @@ class tp_gateway extends CI_Controller {
         if ($tpg_response->status == 200) {
 
             $data['courseEndDate'] = date('Y-m-d', strtotime($tpg_response->data->courseRun->courseDates->end));
-            $data['courseStartDate'] = $tpg_response->data->courseRun->courseDates->start;
+            $data['courseStartDate'] = date('Y-m-d', strtotime($tpg_response->data->courseRun->courseDates->start));
             $data['externalReferenceNumber'] = $tpg_response->data->courseRun->externalReferenceNumber;
             $modeOfTraining = $tpg_response->data->courseRun->modeOfTraining;
             if ($modeOfTraining == 1) {
@@ -1890,10 +1890,10 @@ class tp_gateway extends CI_Controller {
             $data['title'] = $tpg_response->data->courseRun->title;
 
             //Sessions
-            $data['sessionEndDate'] = $tpg_response->data->courseRun->sessions[0]->endDate;
+            $data['sessionEndDate'] = date('Y-m-d', strtotime($tpg_response->data->courseRun->sessions[0]->endDate));
             $data['sessionEndTime'] = $tpg_response->data->courseRun->sessions[0]->endTime;
             $data['sessionId'] = $tpg_response->data->courseRun->sessions[0]->id;
-            $data['sessionStartDate'] = $tpg_response->data->courseRun->sessions[0]->startDate;
+            $data['sessionStartDate'] = date('Y-m-d', strtotime($tpg_response->data->courseRun->sessions[0]->startDate));
             $data['sessionStartTime'] = $tpg_response->data->courseRun->sessions[0]->startTime;
 
             //venue
