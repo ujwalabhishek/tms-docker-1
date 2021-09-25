@@ -1047,8 +1047,7 @@ class Tpg_api_Model extends CI_Model {
                 $assendtime = date("H:i", strtotime($assmnt_end_time[$k]));
                 $assessments[] = array(
                     "startDate" => "$assdates",
-                    "endDate" => "$assdates",
-                    "sessionId" => "Fuchun 019-41618-S1",
+                    "endDate" => "$assdates",                    
                     "startTime" => "$assstarttime",
                     "endTime" => "$assendtime",
                     "modeOfTraining" => "8",
@@ -1162,7 +1161,7 @@ class Tpg_api_Model extends CI_Model {
                                   "courseReferenceNumber": "' . $retun[ref_no] . '"
                                 }
                             }';
-        print_r($tpg_course_run_json);exit;
+        //print_r($tpg_course_run_json);exit;
         $api_version = 'v1.3';
         $url = "https://" . $retun[domain] . "/courses/runs/". $tpg_course_run_id;
         $response = $this->curl_request('POST', $url, $tpg_course_run_json, $api_version);        
