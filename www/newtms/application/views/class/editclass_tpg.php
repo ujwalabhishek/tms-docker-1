@@ -678,7 +678,7 @@ if (!empty($tax_error)) {
                                 echo form_checkbox($wheel_chair_accessible, '0');
                                 ?>
                                 &nbsp;The course run location is wheel chair accessible
-                                <input type="hidden" id="wheel_chair_hidden" name="wheel_chair_hidden" value="">
+                                <input type="hidden" id="wheel_chair_hidden" name="wheel_chair_hidden" value="<?php echo $class->wheel_chair_access; ?>">
                             </td>
                         </tr>
                         <tr>
