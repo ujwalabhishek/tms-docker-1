@@ -675,7 +675,7 @@ class Classes extends CI_Controller {
         $this->form_validation->set_rules('crs_admin_email', 'Course Admin Email', 'trim|required|valid_email|max_length[30]');            
         
         if ($this->form_validation->run() == FALSE) {
-            echo "bb"; exit;
+            //echo "bb"; exit;
             $data['page_title'] = 'Class';
             $data['main_content'] = 'class/editclass_tpg';
             //$data['sideMenuData'] = $this->sideMenu;
@@ -727,9 +727,8 @@ class Classes extends CI_Controller {
             } else {
                 $this->session->set_flashdata("error", "Unable to update class. Please try again later.");
             }
-        }
-
-        redirect("classes?course_id=" . $this->input->post('course_id'));
+            redirect("classes?course_id=" . $this->input->post('course_id'));
+        }        
     }
         
     /**
