@@ -700,6 +700,23 @@ class Classes extends CI_Controller {
 
                 if ($tpg_response->status == 200) {
                     $result = $this->classmodel->update_class_tpg($tenant_id, $user_id);
+                } else {
+                    if ($tpg_response->status == 400) {
+                        $this->session->set_flashdata('error', "Oops! Bad request!");
+                    } elseif ($tpg_response->status == 403) {
+                        $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
+                    } elseif ($tpg_response->status == 404) {
+                        $this->session->set_flashdata('error', "Oops! Not Found!");
+                    } elseif ($tpg_response->status == 500) {
+                        $this->session->set_flashdata('error', "Oops! Internal Error!!");
+                    } else {
+                        $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
+                    }
+
+                    $data['error'] = $tpg_response->error->details;
+                    $data['display'] = 'display:block;';
+                    $data['main_content'] = 'class/editclass_tpg';
+                    $this->load->view('layout', $data);
                 }
 
             
