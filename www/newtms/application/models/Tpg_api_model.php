@@ -1014,7 +1014,7 @@ class Tpg_api_Model extends CI_Model {
                     $sessions[] = array(
                         "startDate" => "$dates",
                         "endDate" => "$dates",
-                        "sessionId" => "$tpg_session_id",
+                        "sessionId" => "$tpg_session_id[$k]",
                         "startTime" => "$starttime",
                         "endTime" => "$endtime",
                         "modeOfTraining" => "$mode_of_training[$k]",                        
