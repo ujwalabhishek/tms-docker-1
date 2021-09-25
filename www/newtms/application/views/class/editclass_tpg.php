@@ -1410,11 +1410,10 @@ function array_to_input($array, $prefix = '') {
 ?>
 <script>
     function wheel_fun() {
-        if(document.getElementById("wheel_chair_accessible").checked == true) {
-            alert('11');
-            document.getElementById("wheel_chair_accessible").val = 1;
+        if(document.getElementById("wheel_chair_accessible").checked == true) {           
+            document.getElementById("wheel_chair_accessible").value = 1;
         } else {
-            document.getElementById("wheel_chair_accessible").val = 0;
+            document.getElementById("wheel_chair_accessible").value = 0;
         }
     }
 </script>
