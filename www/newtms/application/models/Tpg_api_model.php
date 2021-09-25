@@ -980,7 +980,7 @@ class Tpg_api_Model extends CI_Model {
         $venue_postalcode = $this->input->post('venue_postalcode');
         $venue_room = $this->input->post('venue_room');
         //Added by abdulla
-        $wheel_chair_access = $this->input->post('wheel_chair_accessible');
+        $wheel_chair_access = $this->input->post('wheel_chair_hidden');
         if($wheel_chair_access == 0) {
             $wheel_chair_access = 'false';
         } else {

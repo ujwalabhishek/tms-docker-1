@@ -677,7 +677,9 @@ if (!empty($tax_error)) {
                                 );                                
                                 echo form_checkbox($wheel_chair_accessible, '0');
                                 ?>
-                                &nbsp;The course run location is wheel chair accessible</td>
+                                &nbsp;The course run location is wheel chair accessible
+                                <input type="hidden" id="wheel_chair_hidden" name="wheel_chair_hidden" value="">
+                            </td>
                         </tr>
                         <tr>
                             <td class="td_heading">Class Room Trainer:<span class="required">*</span></td>
@@ -1411,9 +1413,9 @@ function array_to_input($array, $prefix = '') {
 <script>
     function wheel_fun() {
         if(document.getElementById("wheel_chair_accessible").checked == true) {           
-            document.getElementById("wheel_chair_accessible").value = 1;
+            document.getElementById("wheel_chair_hidden").value = 1;
         } else {
-            document.getElementById("wheel_chair_accessible").value = 0;
+            document.getElementById("wheel_chair_hidden").value = 0;
         }
     }
 </script>
