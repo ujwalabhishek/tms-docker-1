@@ -696,7 +696,7 @@ class Class_Model extends CI_Model {
      * this function to get all class schedules
      */
     public function get_all_class_schedule($tenant_id, $cid) {
-        $result = $this->db->query("select class_date, session_type_id, session_start_time,session_end_time
+        $result = $this->db->query("select class_date, session_type_id, session_start_time,session_end_time,tpg_session_id,mode_of_training
                 from class_schld where tenant_id='$tenant_id' and class_id='$cid'
                 order by class_date DESC, session_start_time ASC");
         return $result->result_array();
