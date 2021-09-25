@@ -12,8 +12,7 @@ class Tpg_api_Model extends CI_Model {
         $this->load->helper('common');
         $this->sess_user = $this->session->userdata('userDetails'); // added by shubhranshu to het the user data
         $this->user = $this->session->userdata('userDetails');
-        $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;
-        $this->load->model('class_Model', 'classModel');
+        $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;        
     }
 
     function encrypt_decrypt($action, $string) {
@@ -1014,7 +1013,7 @@ class Tpg_api_Model extends CI_Model {
                     $dates = date('Ymd', strtotime($schlded_date[$k]));
                     $starttime = date("H:i", strtotime($schlded_start_time[$k]));
                     $endtime = date("H:i", strtotime($schlded_end_time[$k]));
-                    $class_asss = $this->class_Model->get_all_class_schedule_tpg($tenant_id, $class_id, $schlded_session_type[$k]);
+                    $class_asss = $this->get_all_class_schedule_tpg($tenant_id, $class_id, $schlded_session_type[$k]);
                     echo print_r($class_asss, true); exit;
                     $sessions[] = array(
                         "startDate" => "$dates",
@@ -1174,4 +1173,12 @@ class Tpg_api_Model extends CI_Model {
         $this->session->set_flashdata('cid', $class_id);        
         return $obj;                       
     }
+    
+    public function get_all_class_schedule_tpg($tenant_id, $cid, $session) {
+        $result = $this->db->query("select class_date, session_type_id, session_start_time,session_end_time,tpg_session_id,mode_of_training
+                from class_schld where tenant_id='$tenant_id' and class_id='$cid' and session_type_id = '$session'
+                order by class_date DESC, session_start_time ASC");
+        return $result->result_array();
+    }
+    
 }
