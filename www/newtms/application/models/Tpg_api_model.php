@@ -1013,8 +1013,7 @@ class Tpg_api_Model extends CI_Model {
                     $dates = date('Ymd', strtotime($schlded_date[$k]));
                     $starttime = date("H:i", strtotime($schlded_start_time[$k]));
                     $endtime = date("H:i", strtotime($schlded_end_time[$k]));
-                    $class_asss = $this->get_all_class_schedule_tpg($tenant_id, $class_id, $schlded_session_type[$k]);
-                    echo print_r($class_asss, true); exit;
+                    $class_asss = $this->get_all_class_schedule_tpg($tenant_id, $class_id, $schlded_session_type[$k]);                    
                     $sessions[] = array(
                         "startDate" => "$dates",
                         "endDate" => "$dates",
