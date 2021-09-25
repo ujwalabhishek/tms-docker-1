@@ -273,13 +273,14 @@ class Tpg_api_Model extends CI_Model {
         $ClassTrainers = $this->get_trainer_details($control_5);
         //print_r($ClassTrainers);exit;
         if (!empty($ClassTrainers)) {
+            $i=1;
             foreach ($ClassTrainers as $trainer) {
                 $trainers[] = array("trainer" => array(
                         "trainerType" => array(
                             "code" => "2",
                             "description" => "New"
                         ),
-                        "indexNumber" => 0,
+                        "indexNumber" => "$i",
                         "id" => "",
                         "name" => "$trainer->first_name",
                         "email" => "$trainer->off_email_id",
@@ -300,6 +301,7 @@ class Tpg_api_Model extends CI_Model {
                         )
                     )
                 );
+                $i++;
             }
         }
         ///salutationId    = Available value - 1(Mr) 2(Ms) 3(Mdm) 4(Mrs) 5(Dr) 6(Prof).
@@ -946,5 +948,204 @@ class Tpg_api_Model extends CI_Model {
         $attn_resp = json_decode($response);
         return $attn_resp;
     }
+    
+    /*
+     * Created by abdulla nofal
+     * Update class API
+     */
 
+    public function update_courserun_tpg($tenant_id, $tpg_course_run_id, $tp_uen) {
+        
+        extract($_POST);
+        $crse_ref_no = $this->input->post('crse_ref_no');
+        $modeoftraining = $this->input->post('modeoftraining');
+        $crs_admin_email = $this->input->post('crs_admin_email'); //Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'                
+        $reg_open_date = date("d-m-Y"); 
+        $reg_close_date = $this->input->post('start_date');
+        $crse_start_date = $this->input->post('start_date');
+        $crse_end_date = $this->input->post('end_date');
+        $schedule_info_des = 'Description'; //Course run schedule info Description
+        $schedule_info = date('dM', strtotime($crse_start_date)) . ' : ' . date('D', strtotime($crse_start_date)) . ' / ' . date('h:i A', strtotime($this->input->post('start_time'))) . ' - ' . date('h:i A', strtotime($this->input->post('end_date')));
+        $venue_building = $this->input->post('venue_building');
+        $venue_block = $this->input->post('venue_block');
+        $venue_street = $this->input->post('venue_street');
+        $venue_floor = $this->input->post('venue_floor');
+        $venue_unit = $this->input->post('venue_unit');
+        $venue_postalcode = $this->input->post('venue_postalcode');
+        $venue_room = $this->input->post('venue_room');
+        //Added by abdulla
+        $wheel_chair_access = $this->input->post('wheel_chair_accessible');
+        if($wheel_chair_access == '0') {
+            $wheel_chair_access = 'false';
+        } else {
+            $wheel_chair_access = 'true';
+        }
+        $crse_intake_size = $this->input->post('total_seats'); //Course run intake size. It's maximum pax for a class
+        $crse_vacancy_code = "A"; //A - Available ,F - Full, L - Limited Vacancy
+        $crse_vacancy_description = "Available"; /////A - Available ,F - Full, L - Limited Vacancy
+        
+        if (!empty($schlded_date)) {
+            foreach ($schlded_date as $k => $v) {
+                if ($schlded_session_type[$k] != 'BRK') {
+                    $dates = date('Ymd', strtotime($schlded_date[$k]));
+                    $starttime = date("H:i", strtotime($schlded_start_time[$k]));
+                    $endtime = date("H:i", strtotime($schlded_end_time[$k]));
+                    $sessions[] = array(
+                        "startDate" => "$dates",
+                        "endDate" => "$dates",
+                        "sessionId" => "Fuchun 019-41618-S1",
+                        "startTime" => "$starttime",
+                        "endTime" => "$endtime",
+                        "modeOfTraining" => "$mode_of_training[$k]",                        
+                        "action" => "update",          
+                        "venue" => array
+                            (
+                            "room" => "$venue_room",
+                            "unit" => "$venue_unit",
+                            "block" => "$venue_block",
+                            "floor" => "$venue_floor",
+                            "street" => "$venue_street",                                                        
+                            "building" => "$venue_building",
+                            "postalCode" => "$venue_postalcode",                            
+                            "primaryVenue" => true,
+                            "wheelChairAccess" => "$wheel_chair_access",                            
+                        ),
+                    );
+                }
+            }
+        }
+
+
+        if (!empty($assmnt_date)) {
+            foreach ($assmnt_date as $k => $v) {
+
+                $assdates = date('Ymd', strtotime($assmnt_date[$k]));
+                $assstarttime = date("H:i", strtotime($assmnt_start_time[$k]));
+                $assendtime = date("H:i", strtotime($assmnt_end_time[$k]));
+                $assessments[] = array(
+                    "startDate" => "$assdates",
+                    "endDate" => "$assdates",
+                    "sessionId" => "Fuchun 019-41618-S1",
+                    "startTime" => "$assstarttime",
+                    "endTime" => "$assendtime",
+                    "modeOfTraining" => "8",
+                    "action" => "update",
+                    "venue" => array
+                        (
+                        "room" => "$venue_room",
+                        "unit" => "$venue_unit",
+                        "block" => "$venue_block",
+                        "floor" => "$venue_floor",
+                        "street" => "$venue_street",                                                
+                        "building" => "$venue_building",
+                        "postalCode" => "$venue_postalcode",
+                        "primaryVenue" => true,
+                        "wheelChairAccess" => "$wheel_chair_access",                        
+                    ),
+                );
+            }
+        }
+        if (!empty($assessments)) {
+            $session_arr = array_merge($sessions, $assessments);
+        } else {
+            $session_arr = $sessions;
+        }
+        
+        //print_r($session_arr);exit;
+        $ClassTrainers = $this->get_trainer_details($control_5);
+        //print_r($ClassTrainers);exit;
+        if (!empty($ClassTrainers)) {
+            $i=1;
+            foreach ($ClassTrainers as $trainer) {
+                $trainers[] = array("trainer" => array(
+                        "id" => "",
+                        "name" => "$trainer->first_name",
+                        "email" => "$trainer->off_email_id",
+                        "photo" => array(
+                                "name" => "",
+                                "content" => ""
+                            ),
+                        "experience" => "",
+                        "indexNumber" => "$i",
+                        "linkedInURL" => "",
+                        "trainerType" => array(
+                                "code" => "2",
+                                "description" => "New"
+                            ),
+                        "salutationId" => 1,
+                        "inTrainingProviderProfile" => true,
+                        "domainAreaOfPractice" => "$trainer->category_name",                                                                                                                        
+                        "linkedSsecEQAs" => array(
+                            "description" => "",
+                            "ssecEQA" => array(
+                                "code" => ""
+                            )
+                        )
+                    )
+                );
+                $i++;
+            }
+        }
+                        
+        $retun = $this->correct_live_dev_api_data($crse_ref_no, $tp_uen);
+
+        $tpg_course_run_json = '{
+                                "course": {
+                                  "run": {
+                                    "file": {
+                                        "Name": "",
+                                        "content": ""
+                                      },
+                                    "venue": {
+                                      "room": "' . $venue_room . '",
+                                      "unit": "' . $venue_unit . '",
+                                      "block": "' . $venue_block . '",
+                                      "floor": "' . $venue_floor . '",
+                                      "street": "' . $venue_street . '",
+                                      "building": "' . $venue_building . '",
+                                      "postalCode": ' . $venue_postalcode . ',
+                                      "wheelChairAccess": ' . $wheel_chair_access . '
+                                    },
+                                    "action": "update",
+                                    "sessions": ' . json_encode($session_arr) . ',
+                                    "threshold": 0,
+                                    "intakeSize": ' . $crse_intake_size . ',
+                                    "courseDates": {
+                                        "start": "' . date("Ymd", strtotime($crse_start_date)) . '",
+                                        "end": "' . date("Ymd", strtotime($crse_end_date)) . '"
+                                    },
+                                    "scheduleInfo": "' . $schedule_info . '",
+                                    "courseVacancy": {
+                                        "code": "' . $crse_vacancy_code . '",
+                                        "description": "' . $crse_vacancy_description . '"
+                                    },
+                                    "modeOfTraining": "' . $modeoftraining . '",
+                                    "sequenceNumber": 0,
+                                    "courseAdminEmail": "' . $crs_admin_email . '",
+                                    "scheduleInfoType": {
+                                      "code": "01",
+                                      "description": "Description"
+                                    },
+                                    "registrationDates": {
+                                        "closing": "' . date("Ymd", strtotime($reg_close_date)) . '",
+                                        "opening": "' . date("Ymd", strtotime($reg_open_date)) . '"                                       
+                                    },
+                                    "registeredUserCount": "",
+                                    "linkCourseRunTrainer": ' . json_encode($trainers) . '
+                                  },
+                                  "trainingProvider": {
+                                    "uen": "' . $retun[tp_uen] . '"
+                                  },
+                                  "courseReferenceNumber": "' . $retun[ref_no] . '"
+                                }
+                            }';
+        //print_r($tpg_course_run_json);exit;
+        $api_version = 'v1.3';
+        $url = "https://" . $retun[domain] . "/courses/runs/". $tpg_course_run_id;
+        $response = $this->curl_request('POST', $url, $tpg_course_run_json, $api_version);        
+        $obj = json_decode($response);       
+        //$this->session->set_flashdata('resp', $obj);
+        //$this->session->set_flashdata('cid', $class_id);        
+        return $obj;                       
+    }
 }

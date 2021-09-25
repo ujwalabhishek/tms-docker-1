@@ -328,6 +328,61 @@ if (!empty($tax_error)) {
                                 &nbsp;</td>
                         </tr>                        
                         <tr>
+                            <td class="td_heading">TPGateway Course Run ID:</td>
+                            <td colspan="5">
+                                <?php
+                                $tpg_course_run_id = array(
+                                    'name' => 'tpg_course_run_id',
+                                    'id' => 'tpg_course_run_id',
+                                    'value' => $class->tpg_course_run_id,
+                                    'maxlength' => 60,
+                                    'width' => '300px',
+                                    "class" => 'upper_case'
+                                );
+                                echo form_input($tpg_course_run_id);
+                                ?>
+                                </span>
+                                <br>
+                                <span id="tpg_crse_err" class="tpg_crse_err"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
+                            <td colspan='2'> <label class="label_font"></label>
+                                <label class="label_font">
+                                    <?php
+                                    $crs_admin_email = array(
+                                        'name' => 'crs_admin_email',
+                                        'id' => 'crs_admin_email',
+                                        'value' => $crs_admin_email_val,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case",
+                                        "readonly" => "readonly"
+                                    );
+                                    echo form_input($crs_admin_email);
+                                    ?>
+                                </label>
+                                <span id="crs_admin_email_err"></span>
+                            </td>
+                            <td class="td_heading" width="20%">Course Reference Number:<span class="required">*</span></td>
+                            <td colspan='2'> <label class="label_font"></label>
+                                <label class="label_font">
+                                    <?php
+                                    $crse_ref_no = array(
+                                        'name' => 'crse_ref_no',
+                                        'id' => 'crse_ref_no',
+                                        'value' => $reference_num_val,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case",
+                                        "readonly" => "readonly"
+                                    );
+                                    echo form_input($crse_ref_no);
+                                    ?>
+                                </label>
+                                <span id="crse_ref_no_err"></span>
+                            </td>
+                        </tr>                        
+                        <tr>
                             <td colspan="2" class="td_heading">  
                                 <?php
                                 $display_class_checked = ($class->display_class_public == 1) ? true : false;
@@ -490,6 +545,150 @@ if (!empty($tax_error)) {
                             </td>
                         </tr>
                         <tr>
+                            <td class="td_heading">Venue Room:<span class="required">*</span></td>
+                            <td colspan='3'>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_room = array(
+                                        'name' => 'venue_room',
+                                        'id' => 'venue_room',
+                                        'value' => $class->venue_room,
+                                        'maxlength' => 200,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_room);
+                                    ?>
+                                </label>
+                                <span id="venue_room_err"></span>
+                            </td>
+                            <td class="td_heading"> Survey Language:<span class="required">*</span></td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $survey_language = array();
+                                    $survey_language[''] = 'Please Choose';
+                                    $survey_language['EL'] = 'EL- English';
+                                    $survey_language['MN'] = 'MN- Mandarin';
+                                    $survey_language['MY'] = 'MY- Malay';
+                                    $survey_language['TM'] = 'TM- Tamil';
+                                    echo form_dropdown('survey_language', $survey_language, $this->input->post('survey_language'), 'id="survey_language"');
+                                    ?>
+                                </label>
+                                <span id="survey_language_err"></span>
+                            </td>
+                        </tr>                
+                        <tr>
+                            <td class="td_heading">Venue Unit:<span class="required">*</span></td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_unit = array(
+                                        'name' => 'venue_unit',
+                                        'id' => 'venue_unit',
+                                        'value' => $class->venue_unit,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_unit);
+                                    ?>
+                                </label>
+                                <span id="venue_unit_err"></span>
+                            </td>
+                            <td class="td_heading"> Venue Block:</td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_block = array(
+                                        'name' => 'venue_block',
+                                        'id' => 'venue_block',
+                                        'value' => $class->venue_block,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_block);
+                                    ?>
+                                </label>
+                                <span id="venue_block_err"></span>
+                            </td>
+                            <td class="td_heading"> Venue Floor:<span class="required">*</span></td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_floor = array(
+                                        'name' => 'venue_floor',
+                                        'id' => 'venue_floor',
+                                        'value' => $class->venue_floor,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_floor);
+                                    ?>
+                                </label>
+                                <span id="venue_floor_err"></span>
+                            </td>                    
+                        </tr>
+                        <tr>  
+                            <td class="td_heading">Venue Street:</td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_street = array(
+                                        'name' => 'venue_street',
+                                        'id' => 'venue_street',
+                                        'value' => $class->venue_street,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_street);
+                                    ?>
+                                </label>
+                                <span id="venue_street_err"></span>
+                            </td>
+                            <td class="td_heading"> Venue Building:</td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_building = array(
+                                        'name' => 'venue_building',
+                                        'id' => 'venue_building',
+                                        'value' => $class->venue_building,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_building);
+                                    ?>
+                                </label>
+                                <span id="venue_building_err"></span>
+                            </td>
+                            <td class="td_heading">Venue Postal Code:<span class="required">*</span></td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_postalcode = array(
+                                        'name' => 'venue_postalcode',
+                                        'id' => 'venue_postalcode',
+                                        'value' => $class->venue_postalcode,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_postalcode);
+                                    ?>
+                                </label>
+                                <span id="venue_postalcode_err"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="td_heading">  
+                                <?php
+                                $wheel_chair_accessible = array(
+                                    'name' => 'wheel_chair_accessible',
+                                    'id' => 'wheel_chair_accessible'
+                                );
+                                echo form_checkbox($wheel_chair_accessible, '1', set_checkbox('wheel_chair_accessible', '1'));
+                                ?>
+                                &nbsp;The course run location is wheel chair accessible</td>
+                        </tr>
+                        <tr>
                             <td class="td_heading">Class Room Trainer:<span class="required">*</span></td>
                             <td><?php
                                 $cls_trainer_options = array();
@@ -616,7 +815,7 @@ if (!empty($tax_error)) {
             </div>
 
             <div class="col-lg-6">
-                <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png" /> Assessment Schedule <span class="label label-default push_right  black-btn"><a class="small_text alert_message1" rel="modal:open" href="#ex2"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Assessment Schedule</a></span>&nbsp;&nbsp;<span class="label label-default push_right moving_right  black-btn alert_message2" style="margin-right:5px;"><a href="#ex3" rel="modal:open" class="small_text ex3_check"><span class="glyphicon glyphicon-chevron-left"></span> Default Schedule</a></span></h4>
+                <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png" /> Assessment Schedule <span class="label label-default push_right  black-btn"><a class="small_text alert_message1" rel="modal:open" href="#ex2"><span class="glyphicon glyphicon-plus glyphicon1"></span>Add Assessment Schedule</a></span></h4>
                 <p>
                 <div class="scroll_schedule def_schld_div">
                     <div class="table-responsive table-scroll-x">
@@ -709,14 +908,34 @@ if (!empty($tax_error)) {
         <span class="required required_i">* Required Fields</span>
         <?php $deactivate_class = (!empty($label['deactivate'])) ? 'cancel_deactivate' : ''; ?>
         <div class="button_class">            
-            <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button>&nbsp; &nbsp; 
-            <a href="#ex8" rel="modal:open" class="small_text <?php echo $deactivate_class; ?> check_deactivate" data-class="<?php echo $this->input->post('class_id'); ?>"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Deactivate</button></a> &nbsp; &nbsp;            
+            <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button> &nbsp; &nbsp; 
+            <a href="#ex8" rel="modal:open" class="small_text <?php echo $deactivate_class; ?> check_deactivate" data-class="<?php echo $this->input->post('class_id'); ?>"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Delete</button></a> &nbsp; &nbsp;            
         </div>
         <div class="modalassessment009911 modal-al" id="ex1" style="display:none;">
             <h2 class="panel_heading_style">Class / Lab Schedule</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <tbody>
+                        <tr>
+                            <td class="td_heading">Mode Of Training:<span class="required">*</span></td>
+                            <td width="20%">
+                                <?php
+                                $modeoftraining = array();
+                                $modeoftraining[''] = 'Please Choose';
+                                $modeoftraining[1] = '1-Classroom';
+                                $modeoftraining[2] = '2-Asynchronous eLearning';
+                                $modeoftraining[3] = '3-In-house';
+                                $modeoftraining[4] = '4-On-the-Job';
+                                $modeoftraining[5] = '5-Practical / Practicum';
+                                $modeoftraining[6] = '6-Supervised Field';
+                                $modeoftraining[7] = '7-Traineeship';
+                                //$modeoftraining[8] = '8-Assessment';
+                                $modeoftraining[9] = '9-Synchronous eLearning';
+                                echo form_dropdown('modeoftraining', $modeoftraining, $this->input->post('modeoftraining'), 'id="modeoftraining"');
+                                ?>
+                                <span id="modeoftraining_err"></span>
+                            </td>
+                        </tr>
                         <tr>
                             <td class="td_heading">Date:<span class="required">*</span></td>
                             <td><?php
@@ -1105,8 +1324,8 @@ if (!empty($tax_error)) {
 </p>
 </div>
 <?php
-    $form_attributes = array('name' => 'deactivate_class_form', 'id' => 'deactivate_class_form');
-    echo form_open("classes/deactivate_class", $form_attributes);
+$form_attributes = array('name' => 'deactivate_class_form', 'id' => 'deactivate_class_form');
+echo form_open("classes/deactivate_class_tpg", $form_attributes);
 ?>
 <div class="modal1_051" id="ex8" style="display:none;">
     <p>

@@ -419,6 +419,9 @@ class Classes extends CI_Controller {
             } else {
                 $course_details = $this->coursemodel->get_course_detailse($course_id);
                 $data['tpg_crse'] = $course_details->tpg_crse;
+                //Update class API
+                $data['reference_num_val'] = $course_details->reference_num;
+                $data['crs_admin_email_val'] = $course_details->crs_admin_email;
                 $data['classid'] = $class_id;
                 $data['coursename'] = $this->coursemodel->course_name($course_id);
                 $data['classes'] = $this->classmodel->get_course_class_for_edit($tenant_id, $course_id);
@@ -490,7 +493,11 @@ class Classes extends CI_Controller {
         $data['tenant_id'] = $tenant_id;
         $data['tax_error'] = $tax_error;
         $data['page_title'] = 'Class';
-        $data['main_content'] = 'class/editclass';
+        if($data['tpg_crse'] == '0') {
+            $data['main_content'] = 'class/editclass';
+        } else {
+            $data['main_content'] = 'class/editclass_tpg';
+        }        
         //$data['sideMenuData'] = $this->sideMenu;
         $this->load->view('layout', $data);
     }
