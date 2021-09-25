@@ -989,6 +989,22 @@ class Tpg_api_Model extends CI_Model {
         $crse_vacancy_code = "A"; //A - Available ,F - Full, L - Limited Vacancy
         $crse_vacancy_description = "Available"; /////A - Available ,F - Full, L - Limited Vacancy
         
+        if (!empty($control_4)) {
+            $control_4 = implode(",", $control_4);
+        }
+        if (!empty($control_5)) {
+            $control_5 = implode(",", $control_5);
+        }
+        if (!empty($control_6)) {
+            $control_6 = implode(",", $control_6);
+        }
+        if (!empty($control_7)) {
+            $control_7 = implode(",", $control_7);
+        }
+        if (!empty($control_3)) {
+            $control_3 = implode(",", $control_3);
+        }
+        
         if (!empty($schlded_date)) {
             foreach ($schlded_date as $k => $v) {
                 if ($schlded_session_type[$k] != 'BRK') {
@@ -998,7 +1014,7 @@ class Tpg_api_Model extends CI_Model {
                     $sessions[] = array(
                         "startDate" => "$dates",
                         "endDate" => "$dates",
-                        "sessionId" => "Fuchun 019-41618-S1",
+                        "sessionId" => "$tpg_session_id",
                         "startTime" => "$starttime",
                         "endTime" => "$endtime",
                         "modeOfTraining" => "$mode_of_training[$k]",                        

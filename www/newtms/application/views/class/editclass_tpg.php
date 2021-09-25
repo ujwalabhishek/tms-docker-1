@@ -760,6 +760,8 @@ if (!empty($tax_error)) {
                                 foreach ($class_schedule as $row) {
                                     $data_arr[$row['class_date']][] = array(
                                         'session' => $row['session_type_id'],
+                                        'tpg_session_id' => $row['tpg_session_id'],
+                                        'mode_of_training' => $row['mode_of_training'],
                                         'start' => $row['session_start_time'],
                                         'end' => $row['session_end_time']
                                     );
@@ -781,6 +783,8 @@ if (!empty($tax_error)) {
                                         echo '<tr class = "schld_tr' . $d_cnt . ' schlddate_' . $schld_date . '" data-session = "' . $r['session'] . '" data-date = "' . $schld_date . '"  data-count = "' . $d_cnt . '">
                                     <input type = "hidden" value = "' . $schld_date . '" name = "schlded_date[]" class = "schlded_date">
                                     <input type = "hidden" value = "' . $r['session'] . '" name = "schlded_session_type[]" class = "schlded_session_type">
+                                    <input type = "hidden" value = "' . $r['tpg_session_id'] . '" name = "tpg_session_id[]" class = "tpg_session_id">
+                                    <input type = "hidden" value = "' . $r['mode_of_training'] . '" name = "mode_of_training[]" class = "mode_of_training">
                                     <input type = "hidden" value = "' . $start_time . '" name = "schlded_start_time[]" class = "schlded_start_time">
                                     <input type = "hidden" value = "' . $end_time . '" name = "schlded_end_time[]" class = "schlded_end_time">
                                     ' . $rowspan_td . '
