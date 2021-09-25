@@ -341,7 +341,10 @@ if (!empty($tax_error)) {
                         <tr>                            
                             <tr>
                                 <td class="td_heading">TPGateway Course Run ID:</td>
-                                <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_course_run_id; ?></label></td>
+                                <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_course_run_id; ?></label>
+                                <input type="hidden" id="tpg_crse_run_id" name = "tpg_crse_run_id" value="<?php echo $class->tpg_course_run_id; ?>"/>
+                                <input type="hidden" id="crse_ref_no" name = "crse_ref_no" value="<?php echo $reference_num; ?>"/>
+                                </td>                                
                             </tr>
                             <tr>
                                 <td class="td_heading">TPGateway QR-Code Link:</td>

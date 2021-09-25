@@ -421,6 +421,7 @@ class Classes extends CI_Controller {
                 $data['tpg_crse'] = $course_details->tpg_crse;
                 //Update class API                
                 $data['crs_admin_email_val'] = $course_details->crse_admin_email;
+                $data['reference_num'] = $course_details->reference_num;
                 $data['classid'] = $class_id;
                 $data['coursename'] = $this->coursemodel->course_name($course_id);
                 $data['classes'] = $this->classmodel->get_course_class_for_edit($tenant_id, $course_id);
@@ -694,8 +695,8 @@ class Classes extends CI_Controller {
 
             $class_id = $this->input->post('class_hid');
             $result = $this->classmodel->get_class_info($class_id);
-            $previous_data = json_encode($result);            
-            $tpg_response = $this->tpgModel->update_courserun_tpg($tenant_id, $tenant->comp_reg_no);
+            $previous_data = json_encode($result);   
+            $tpg_response = $this->tpgModel->update_courserun_tpg();
 
                 if ($tpg_response->status == 200) {
                     $result = $this->classmodel->update_class_tpg($tenant_id, $user_id);

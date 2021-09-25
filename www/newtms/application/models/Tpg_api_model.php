@@ -954,11 +954,16 @@ class Tpg_api_Model extends CI_Model {
      * Update class API
      */
 
-    public function update_courserun_tpg($tenant_id, $tpg_course_run_id, $tp_uen) {
+    public function update_courserun_tpg() {
+        //Training Partner
+        $tenant_id = $this->tenant_id;        
+        $tenant_details = fetch_tenant_details($tenant_id);
+        $trainingPartnerUEN = $tenant_details->comp_reg_no;
         
         extract($_POST);
-        $crse_ref_no = $this->input->post('crse_ref_no');
-        $modeoftraining = $this->input->post('modeoftraining');
+        $class_id = $this->input->post('class_hid');
+        $tpg_course_run_id = $this->input->post('tpg_crse_run_id');
+        $crse_ref_no = $this->input->post('crse_ref_no');        
         $crs_admin_email = $this->input->post('crs_admin_email'); //Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'                
         $reg_open_date = date("d-m-Y"); 
         $reg_close_date = $this->input->post('start_date');
@@ -1087,7 +1092,7 @@ class Tpg_api_Model extends CI_Model {
             }
         }
                         
-        $retun = $this->correct_live_dev_api_data($crse_ref_no, $tp_uen);
+        $retun = $this->correct_live_dev_api_data($crse_ref_no, $trainingPartnerUEN);
 
         $tpg_course_run_json = '{
                                 "course": {
