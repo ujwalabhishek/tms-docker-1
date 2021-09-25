@@ -29,6 +29,17 @@ if (!empty($tax_error)) {
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/editclass.js?0.01"></script>
 
 <div class="col-md-10">
+    <?php echo validation_errors('<div class="error1">', '</div>');
+    if (!empty($error)) {
+        ?>
+        <div class="alert alert-danger dang" style="text-align:left;">
+            <?php
+            foreach ($error as $err) {
+                echo 'Field Name : ' . $err->field . '</br>Message : ' . $err->message . '</br></br>';
+            }
+            ?>
+        </div>
+<?php } ?>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class.png" /> Class - Edit</h2>    
     <div class="table-responsive">
         <?php
