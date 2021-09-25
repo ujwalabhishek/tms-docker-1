@@ -673,7 +673,7 @@ if (!empty($tax_error)) {
                                     'name' => 'wheel_chair_accessible',
                                     'id' => 'wheel_chair_accessible',
                                     'checked' => $wheel_chair_checked,
-                                    'onclick' =>'wheel_fun()'
+                                    'onclick' =>'javascript:wheel_fun()'
                                 );                                
                                 echo form_checkbox($wheel_chair_accessible, '0');
                                 ?>
@@ -1411,6 +1411,7 @@ function array_to_input($array, $prefix = '') {
 <script>
     function wheel_fun() {
         if(document.getElementById("wheel_chair_accessible").checked == true) {
+            alert('11');
             document.getElementById("wheel_chair_accessible").val = 1;
         } else {
             document.getElementById("wheel_chair_accessible").val = 0;
