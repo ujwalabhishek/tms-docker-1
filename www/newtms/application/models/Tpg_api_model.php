@@ -13,6 +13,7 @@ class Tpg_api_Model extends CI_Model {
         $this->sess_user = $this->session->userdata('userDetails'); // added by shubhranshu to het the user data
         $this->user = $this->session->userdata('userDetails');
         $this->tenant_id = $this->session->userdata('userDetails')->tenant_id;
+        $this->load->model('class_Model', 'classModel');
     }
 
     function encrypt_decrypt($action, $string) {
@@ -1013,13 +1014,14 @@ class Tpg_api_Model extends CI_Model {
                     $dates = date('Ymd', strtotime($schlded_date[$k]));
                     $starttime = date("H:i", strtotime($schlded_start_time[$k]));
                     $endtime = date("H:i", strtotime($schlded_end_time[$k]));
+                    $class_asss = $this->class_Model->get_all_class_schedule_tpg($tenant_id, $class_id, $schlded_session_type[$k]);
                     $sessions[] = array(
                         "startDate" => "$dates",
                         "endDate" => "$dates",
-                        "sessionId" => "$tpg_session_id[$k]",
+                        "sessionId" => $class_asss->tpg_session_id,
                         "startTime" => "$starttime",
                         "endTime" => "$endtime",
-                        "modeOfTraining" => "$mode_of_training[$k]",                        
+                        "modeOfTraining" => $class_asss->mode_of_training,                        
                         "action" => "update",          
                         "venue" => array
                             (
