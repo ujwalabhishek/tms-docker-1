@@ -911,7 +911,7 @@ if (!empty($tax_error)) {
             <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button> &nbsp; &nbsp; 
             <a href="#ex8" rel="modal:open" class="small_text <?php echo $deactivate_class; ?> check_deactivate" data-class="<?php echo $this->input->post('class_id'); ?>"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Delete</button></a> &nbsp; &nbsp;            
         </div>
-        <div class="modalassessment009911 modal-al" id="ex1" style="display:none;">
+        <div class="modalassessment009911 modal-al" id="ex1" style="display:none;height:300px;">
             <h2 class="panel_heading_style">Class / Lab Schedule</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -1273,15 +1273,10 @@ if (!empty($tax_error)) {
                     ?>
                     <span id="control_8_err"></span>
                 </td>
-            </tr>
-            <tr>
-                <td class="td_heading">Select Trainees:<span class="red">*</span></td>
-                <td class="select_trainee">
-                </td>
-            </tr>
+            </tr>            
             <tr>
                 <td class="td_heading">Venue:<span class="red">*</span></td>
-                <td>
+                <td style="width: 200px;">
                     <?php
                     $ass_venue_options[''] = 'Select';
                     $cls_venue = fetch_metavalues_by_category_id(Meta_Values::LOCATION);

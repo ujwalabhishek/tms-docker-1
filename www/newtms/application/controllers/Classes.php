@@ -421,7 +421,7 @@ class Classes extends CI_Controller {
                 $data['tpg_crse'] = $course_details->tpg_crse;
                 //Update class API
                 $data['reference_num_val'] = $course_details->reference_num;
-                $data['crs_admin_email_val'] = $course_details->crs_admin_email;
+                $data['crs_admin_email_val'] = $course_details->crse_admin_email;
                 $data['classid'] = $class_id;
                 $data['coursename'] = $this->coursemodel->course_name($course_id);
                 $data['classes'] = $this->classmodel->get_course_class_for_edit($tenant_id, $course_id);
