@@ -1787,6 +1787,8 @@ class Class_Model extends CI_Model {
                         'course_id' => $course_id,
                         'class_id' => $class_id,
                         'class_date' => $class_date,
+                        'tpg_session_id' => $tpg_session_id[$k],
+                        'mode_of_training' => $mode_of_training[$k],
                         'session_type_id' => $schlded_session_type[$k],
                         'session_start_time' => $session_start_time,
                         'session_end_time' => $session_end_time
