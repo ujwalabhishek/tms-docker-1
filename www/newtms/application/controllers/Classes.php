@@ -699,7 +699,7 @@ class Classes extends CI_Controller {
             $tpg_response = $this->tpgModel->update_courserun_tpg();
 
                 if ($tpg_response->status == 200) {
-                    $result = $this->classmodel->update_class_tpg($tenant_id, $user_id);
+                    $result_tpg = $this->classmodel->update_class_tpg($tenant_id, $user_id);
                 } else {
                     if ($tpg_response->status == 400) {
                         $this->session->set_flashdata('error', "Oops! Bad request!");
@@ -720,7 +720,7 @@ class Classes extends CI_Controller {
                 }
 
             
-            if ($result == TRUE) {
+            if ($result_tpg == TRUE) {
                 user_activity(5, $class_id, $previous_data);
                 $this->session->set_flashdata("success", "Class updated successfully.");
             } else {

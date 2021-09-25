@@ -1165,7 +1165,8 @@ class Tpg_api_Model extends CI_Model {
         $api_version = 'v1.3';
         $url = "https://" . $retun[domain] . "/courses/runs/". $tpg_course_run_id;
         $response = $this->curl_request('POST', $url, $tpg_course_run_json, $api_version);        
-        $obj = json_decode($response);       
+        $obj = json_decode($response); 
+        echo print_r($obj, true); exit;
         $this->session->set_flashdata('resp', $obj);
         $this->session->set_flashdata('cid', $class_id);        
         return $obj;                       
