@@ -707,6 +707,7 @@ class Classes extends CI_Controller {
                 } else {
                     $this->session->set_flashdata("error", "Unable to update class. Please try again later.");
                 }
+                redirect("classes?course_id=" . $this->input->post('course_id'));
             } else {
                 if ($tpg_response->status == 400) {
                     $this->session->set_flashdata('error', "Oops! Bad request!");
