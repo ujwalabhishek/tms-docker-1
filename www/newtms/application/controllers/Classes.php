@@ -660,7 +660,7 @@ class Classes extends CI_Controller {
         $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
         $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
         $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'required');
-        $this->form_validation->set_rules('modeoftraining', 'modeoftraining', 'required');
+        //$this->form_validation->set_rules('modeoftraining', 'modeoftraining', 'required');
         $this->form_validation->set_rules('survey_language', 'survey_language', 'required|alpha');
         
         //Modified by abdulla according to API
