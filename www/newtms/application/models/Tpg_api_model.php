@@ -1017,10 +1017,10 @@ class Tpg_api_Model extends CI_Model {
                     $sessions[] = array(
                         "startDate" => "$dates",
                         "endDate" => "$dates",
-                        "sessionId" => $class_asss->tpg_session_id,
+                        "sessionId" => $class_asss[0]->tpg_session_id,
                         "startTime" => "$starttime",
                         "endTime" => "$endtime",
-                        "modeOfTraining" => $class_asss->mode_of_training,                        
+                        "modeOfTraining" => $class_asss[0]->mode_of_training,                        
                         "action" => "update",          
                         "venue" => array
                             (
