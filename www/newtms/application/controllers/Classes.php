@@ -419,8 +419,7 @@ class Classes extends CI_Controller {
             } else {
                 $course_details = $this->coursemodel->get_course_detailse($course_id);
                 $data['tpg_crse'] = $course_details->tpg_crse;
-                //Update class API
-                $data['reference_num_val'] = $course_details->reference_num;
+                //Update class API                
                 $data['crs_admin_email_val'] = $course_details->crse_admin_email;
                 $data['classid'] = $class_id;
                 $data['coursename'] = $this->coursemodel->course_name($course_id);
@@ -493,6 +492,7 @@ class Classes extends CI_Controller {
         $data['tenant_id'] = $tenant_id;
         $data['tax_error'] = $tax_error;
         $data['page_title'] = 'Class';
+        //Update class API
         if($data['tpg_crse'] == '0') {
             $data['main_content'] = 'class/editclass';
         } else {
@@ -638,6 +638,63 @@ class Classes extends CI_Controller {
         redirect("classes?course_id=" . $this->input->post('course_id'));
     }
 
+    /**
+     * this function to update the edited class
+     */
+    public function update_class_tpg() {
+        $data['sideMenuData'] = fetch_non_main_page_content(); // added by shubhranshu
+        $tenant_id = $this->tenant_id;
+        $user_id = $this->session->userdata('userDetails')->user_id;
+        $role_id = $this->session->userdata('userDetails')->role_id; // added by shubhranshu for fetching role id
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('class_name', 'Class Name', 'max_length[50]');
+        $this->form_validation->set_rules('start_date', 'Start Date', 'required');
+        $this->form_validation->set_rules('end_date', 'End Date', 'required');
+        $this->form_validation->set_rules('total_seats', 'Total Seats', 'required|max_length[10]|integer');
+        $this->form_validation->set_rules('minimum_students', 'Minimum Students', 'max_length[10]|integer');
+        $this->form_validation->set_rules('fees', 'Fees', 'required|numeric');
+        $this->form_validation->set_rules('class_discount', 'Class Discount', 'numeric');
+        $this->form_validation->set_rules('display_class', 'Check box', 'trim');
+        $this->form_validation->set_rules('languages', 'Languages', 'required');
+        $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
+        $this->form_validation->set_rules('tpg_course_run_id', 'TPG Course Run ID', 'trim|numeric');
+        $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
+        $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
+        $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $data['page_title'] = 'Class';
+            $data['main_content'] = 'class/editclass_tpg';
+            //$data['sideMenuData'] = $this->sideMenu;
+            $data['sideMenuData'] = fetch_non_main_page_content();
+            $this->load->view('layout', $data);
+        } else {
+            if ($role_id != 'ADMN') { // changed by shubhranshu for userdata issue
+                $start_date_timestamp = strtotime($this->input->post('start_date'));
+                $start_date_timestamp_hidden = strtotime($this->input->post('start_date_hidden'));
+                $today_date = strtotime(date('Y-m-d'));
+                if ($start_date_timestamp < $today_date && $start_date_timestamp != $start_date_timestamp_hidden) {
+                    $tax_error = "You donot have permission to update class with start date lesser than today's date. Please get in touch with your Administrator to make this change.";
+                    $this->edit_class($tax_error);
+                    return;
+                }
+            }
+
+            $class_id = $this->input->post('class_hid');
+            $result = $this->classmodel->get_class_info($class_id);
+            $previous_data = json_encode($result);
+
+            $result = $this->classmodel->update_class($tenant_id, $user_id);
+            if ($result == TRUE) {
+                user_activity(5, $class_id, $previous_data);
+                $this->session->set_flashdata("success", "Class updated successfully.");
+            } else {
+                $this->session->set_flashdata("error", "Unable to update class. Please try again later.");
+            }
+        }
+
+        redirect("classes?course_id=" . $this->input->post('course_id'));
+    }
+        
     /**
      * function to export booked seats
      */

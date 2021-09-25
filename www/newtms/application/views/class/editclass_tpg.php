@@ -90,7 +90,7 @@ if (!empty($tax_error)) {
     <?php
     if (!empty($class)) {
         $atr = 'id="EditClassForm" name="EditClassForm"';
-        echo form_open("classes/update_class", $atr);
+        echo form_open("classes/update_class_tpg", $atr);
         ?>  
         <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png" /> Class Details</h2>
         <div class="bs-example" id="mks">
@@ -327,28 +327,19 @@ if (!empty($tax_error)) {
                                 ?>
                                 &nbsp;</td>
                         </tr>                        
-                        <tr>
-                            <td class="td_heading">TPGateway Course Run ID:</td>
-                            <td colspan="5">
-                                <?php
-                                $tpg_course_run_id = array(
-                                    'name' => 'tpg_course_run_id',
-                                    'id' => 'tpg_course_run_id',
-                                    'value' => $class->tpg_course_run_id,
-                                    'maxlength' => 60,
-                                    'width' => '300px',
-                                    "class" => 'upper_case'
-                                );
-                                echo form_input($tpg_course_run_id);
-                                ?>
-                                </span>
-                                <br>
-                                <span id="tpg_crse_err" class="tpg_crse_err"></span>
-                            </td>
+                        <tr>                            
+                            <tr>
+                                <td class="td_heading">TPGateway Course Run ID:</td>
+                                <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_course_run_id; ?></label></td>
+                            </tr>
+                            <tr>
+                                <td class="td_heading">TPGateway QR-Code Link:</td>
+                                <td colspan="5"><label class="label_font" id='crs_run_id'><a href='<?php echo $class->tpg_qr_code; ?>' target="_blank"><?php echo $class->tpg_qr_code; ?></a></label></td>
+                            </tr>
                         </tr>
                         <tr>
                             <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
-                            <td colspan='2'> <label class="label_font"></label>
+                            <td colspan='5'> <label class="label_font"></label>
                                 <label class="label_font">
                                     <?php
                                     $crs_admin_email = array(
@@ -363,24 +354,7 @@ if (!empty($tax_error)) {
                                     ?>
                                 </label>
                                 <span id="crs_admin_email_err"></span>
-                            </td>
-                            <td class="td_heading" width="20%">Course Reference Number:<span class="required">*</span></td>
-                            <td colspan='2'> <label class="label_font"></label>
-                                <label class="label_font">
-                                    <?php
-                                    $crse_ref_no = array(
-                                        'name' => 'crse_ref_no',
-                                        'id' => 'crse_ref_no',
-                                        'value' => $reference_num_val,
-                                        'maxlength' => 50,
-                                        "class" => "upper_case",
-                                        "readonly" => "readonly"
-                                    );
-                                    echo form_input($crse_ref_no);
-                                    ?>
-                                </label>
-                                <span id="crse_ref_no_err"></span>
-                            </td>
+                            </td>                            
                         </tr>                        
                         <tr>
                             <td colspan="2" class="td_heading">  
