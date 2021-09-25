@@ -1626,6 +1626,8 @@ class Class_Model extends CI_Model {
         $classroom_venue_oth = empty($classroom_venue_oth) ? NULL : strtoupper($classroom_venue_oth);
         $lab_venue_oth = empty($lab_venue_oth) ? NULL : strtoupper($lab_venue_oth);
 
+        $wheel_chair_accessible = $this->input->post('wheel_chair_hidden');        
+        
         $data_class = array(
             'tenant_id' => $tenantId,
             'class_name' => strtoupper($class_name),           
@@ -1777,6 +1779,7 @@ class Class_Model extends CI_Model {
             $this->db->where('tenant_id', $tenantId);
             $this->db->where('class_id', $class_id);
             $delete_result = $this->db->delete('class_schld');
+            
             if (!empty($schlded_date)) {
                 foreach ($schlded_date as $k => $v) {
                     $class_date = date('Y-m-d', strtotime($schlded_date[$k]));
@@ -1796,32 +1799,11 @@ class Class_Model extends CI_Model {
                     $this->db->insert('class_schld', $class_schld_data);
                 }
             }
+            
             $this->db->where('tenant_id', $tenantId);
             $this->db->where('class_id', $class_id);
             $delete_result = $this->db->delete('class_assmnt_schld');
-            $this->db->where('tenant_id', $tenantId);
-            $this->db->where('class_id', $class_id);
-            $delete_result = $this->db->delete('class_assmnt_trainee');
-            if (isset($def_schlded_date)) {
-                $assmt_date = date('Y-m-d', strtotime($def_schlded_date));
-                $assmt_start_time = $def_schlded_start_time . ':00';
-                $assmt_end_time = $def_schlded_end_time . ':00';
-                $def_schlded_venue_oth = empty($def_schlded_venue_oth) ? NULL : $def_schlded_venue_oth;
-                $class_assmnt_data = array(
-                    'tenant_id' => $tenantId,
-                    'course_id' => $course_id,
-                    'class_id' => $class_id,
-                    'assmnt_date' => $assmt_date,
-                    'assmnt_start_time' => $assmt_start_time,
-                    'assmnt_end_time' => $assmt_end_time,
-                    'assessor_id' => rtrim($def_schlded_assessor, ','),
-                    'assmnt_venue' => $def_schlded_venue,
-                    'assmnt_type' => 'DEFAULT',
-                    'assmnt_venue_oth' => strtoupper($def_schlded_venue_oth),
-                );
-                $this->db->insert('class_assmnt_schld', $class_assmnt_data);
-            }
-
+            
             if (isset($assmnt_date)) {
                 foreach ($assmnt_date as $k => $v) {
                     $assmnt_date = date('Y-m-d', strtotime($v));
@@ -1840,21 +1822,7 @@ class Class_Model extends CI_Model {
                         'assmnt_type' => 'CUSTOM',
                         'assmnt_venue_oth' => strtoupper($assm_venue_oth),
                     );
-                    $this->db->insert('class_assmnt_schld', $class_assmnt_data);
-                    $assmnt_id = $this->db->insert_id();
-                    $user_id = rtrim($assmnt_trainee[$k], ',');
-                    $uids = explode(',', $user_id);
-                    foreach ($uids as $uid) {
-                        $class_assmnt_trainee = array(
-                            'tenant_id' => $tenantId,
-                            'course_id' => $course_id,
-                            'class_id' => $class_id,
-                            'assmnt_date' => $assmnt_date,
-                            'user_id' => $uid,
-                            'assmnt_id' => $assmnt_id
-                        );
-                        $this->db->insert('class_assmnt_trainee', $class_assmnt_trainee);
-                    }
+                    $this->db->insert('class_assmnt_schld', $class_assmnt_data);                    
                 }
             }
             $this->db->trans_complete();
