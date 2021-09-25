@@ -981,7 +981,7 @@ class Tpg_api_Model extends CI_Model {
         $venue_room = $this->input->post('venue_room');
         //Added by abdulla
         $wheel_chair_access = $this->input->post('wheel_chair_accessible');
-        if($wheel_chair_access == '0') {
+        if($wheel_chair_access == 0) {
             $wheel_chair_access = 'false';
         } else {
             $wheel_chair_access = 'true';
