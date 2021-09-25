@@ -660,7 +660,6 @@ class Classes extends CI_Controller {
         $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
         $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
         $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'required');
-        //$this->form_validation->set_rules('modeoftraining', 'modeoftraining', 'required');
         $this->form_validation->set_rules('survey_language', 'survey_language', 'required|alpha');
         
         //Modified by abdulla according to API
@@ -695,8 +694,7 @@ class Classes extends CI_Controller {
 
             $class_id = $this->input->post('class_hid');
             $result = $this->classmodel->get_class_info($class_id);
-            $previous_data = json_encode($result);
-            echo "aa"; exit;
+            $previous_data = json_encode($result);            
             $tpg_response = $this->tpgModel->update_courserun_tpg($tenant_id, $tenant->comp_reg_no);
 
                 if ($tpg_response->status == 200) {
