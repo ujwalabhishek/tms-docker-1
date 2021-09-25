@@ -668,11 +668,13 @@ if (!empty($tax_error)) {
                         <tr>
                             <td colspan="5" class="td_heading">  
                                 <?php
+                                $wheel_chair_checked = ($class->wheel_chair_access == 1) ? true : false;
                                 $wheel_chair_accessible = array(
                                     'name' => 'wheel_chair_accessible',
-                                    'id' => 'wheel_chair_accessible'
-                                );
-                                echo form_checkbox($wheel_chair_accessible, '1', set_checkbox('wheel_chair_accessible', '1'));
+                                    'id' => 'wheel_chair_accessible',
+                                    'checked' => $wheel_chair_checked
+                                );                                
+                                echo form_checkbox($wheel_chair_accessible, '1');
                                 ?>
                                 &nbsp;The course run location is wheel chair accessible</td>
                         </tr>
