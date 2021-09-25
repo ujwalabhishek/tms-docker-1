@@ -217,7 +217,7 @@ class Classes extends CI_Controller {
             $this->form_validation->set_rules('venue_street', 'Venue Street', 'max_length[32]|alpha_numeric_spaces');
             $this->form_validation->set_rules('venue_building', 'Venue Building', 'max_length[66]|alpha_numeric_spaces');
             $this->form_validation->set_rules('venue_postalcode', 'Venue Postal Code', 'required|max_length[6]|numeric');
-            
+
             $this->form_validation->set_rules('crs_admin_email', 'Course Admin Email', 'trim|required|valid_email|max_length[30]');
             $this->form_validation->set_rules('crse_ref_no', 'Course Reference No', 'required');
 
@@ -494,11 +494,11 @@ class Classes extends CI_Controller {
         $data['tax_error'] = $tax_error;
         $data['page_title'] = 'Class';
         //Update class API
-        if($data['tpg_crse'] == '0') {
+        if ($data['tpg_crse'] == '0') {
             $data['main_content'] = 'class/editclass';
         } else {
             $data['main_content'] = 'class/editclass_tpg';
-        }        
+        }
         //$data['sideMenuData'] = $this->sideMenu;
         $this->load->view('layout', $data);
     }
@@ -657,12 +657,12 @@ class Classes extends CI_Controller {
         $this->form_validation->set_rules('class_discount', 'Class Discount', 'numeric');
         $this->form_validation->set_rules('display_class', 'Check box', 'trim');
         $this->form_validation->set_rules('languages', 'Languages', 'required');
-        $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');        
+        $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
         $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
         $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
         $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'required');
         $this->form_validation->set_rules('survey_language', 'survey_language', 'required|alpha');
-        
+
         //Modified by abdulla according to API
         $this->form_validation->set_rules('venue_room', 'Venue Room', 'required|max_length[255]|alpha_numeric_spaces');
         $this->form_validation->set_rules('venue_unit', 'Venue Unit', 'required|max_length[5]|alpha_numeric_spaces');
@@ -671,9 +671,9 @@ class Classes extends CI_Controller {
         $this->form_validation->set_rules('venue_street', 'Venue Street', 'max_length[32]|alpha_numeric_spaces');
         $this->form_validation->set_rules('venue_building', 'Venue Building', 'max_length[66]|alpha_numeric_spaces');
         $this->form_validation->set_rules('venue_postalcode', 'Venue Postal Code', 'required|max_length[6]|numeric');
-            
-        $this->form_validation->set_rules('crs_admin_email', 'Course Admin Email', 'trim|required|valid_email|max_length[30]');            
-        
+
+        $this->form_validation->set_rules('crs_admin_email', 'Course Admin Email', 'trim|required|valid_email|max_length[30]');
+
         if ($this->form_validation->run() == FALSE) {
             //echo "bb"; exit;
             $data['page_title'] = 'Class';
@@ -695,41 +695,39 @@ class Classes extends CI_Controller {
 
             $class_id = $this->input->post('class_hid');
             $result = $this->classmodel->get_class_info($class_id);
-            $previous_data = json_encode($result);   
+            $previous_data = json_encode($result);
             $tpg_response = $this->tpgModel->update_courserun_tpg();
 
-                if ($tpg_response->status == 200) {
-                    $result_tpg = $this->classmodel->update_class_tpg($tenant_id, $user_id);
-                } else {
-                    if ($tpg_response->status == 400) {
-                        $this->session->set_flashdata('error', "Oops! Bad request!");
-                    } elseif ($tpg_response->status == 403) {
-                        $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
-                    } elseif ($tpg_response->status == 404) {
-                        $this->session->set_flashdata('error', "Oops! Not Found!");
-                    } elseif ($tpg_response->status == 500) {
-                        $this->session->set_flashdata('error', "Oops! Internal Error!!");
-                    } else {
-                        $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
-                    }
+            if ($tpg_response->status == 200) {
+                $result_tpg = $this->classmodel->update_class_tpg($tenant_id, $user_id);
 
-                    $data['error'] = $tpg_response->error->details;
-                    $data['display'] = 'display:block;';
-                    $data['main_content'] = 'class/editclass_tpg';
-                    $this->load->view('layout', $data);
+                if ($result_tpg == TRUE) {
+                    user_activity(5, $class_id, $previous_data);
+                    $this->session->set_flashdata("success", "Class updated successfully.");
+                } else {
+                    $this->session->set_flashdata("error", "Unable to update class. Please try again later.");
+                }
+            } else {
+                if ($tpg_response->status == 400) {
+                    $this->session->set_flashdata('error', "Oops! Bad request!");
+                } elseif ($tpg_response->status == 403) {
+                    $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
+                } elseif ($tpg_response->status == 404) {
+                    $this->session->set_flashdata('error', "Oops! Not Found!");
+                } elseif ($tpg_response->status == 500) {
+                    $this->session->set_flashdata('error', "Oops! Internal Error!!");
+                } else {
+                    $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
                 }
 
-            
-            if ($result_tpg == TRUE) {
-                user_activity(5, $class_id, $previous_data);
-                $this->session->set_flashdata("success", "Class updated successfully.");
-            } else {
-                $this->session->set_flashdata("error", "Unable to update class. Please try again later.");
+                $data['error'] = $tpg_response->error->details;                
+                $data['main_content'] = 'class/editclass_tpg';
+                $this->load->view('layout', $data);
             }
-            redirect("classes?course_id=" . $this->input->post('course_id'));            
-        }        
+            //redirect("classes?course_id=" . $this->input->post('course_id'));
+        }
     }
-        
+
     /**
      * function to export booked seats
      */
@@ -915,23 +913,23 @@ class Classes extends CI_Controller {
 
     /**
      * this function to get post values and copy the class
-     */    
+     */
     public function copy_classes() {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $user_id = $this->session->userdata('userDetails')->user_id;
         extract($_POST);
-        if (!empty($class_hid)) {    
-            if($this->user->role_id != 'ADMN'){
-                $start_date_timestamp = date('Y-m-d', strtotime($this->input->post('start_date')));        
-                $today_date = strtotime(date('Y-m-d'));                                            
-                if($start_date_timestamp < $today_date){                       
+        if (!empty($class_hid)) {
+            if ($this->user->role_id != 'ADMN') {
+                $start_date_timestamp = date('Y-m-d', strtotime($this->input->post('start_date')));
+                $today_date = strtotime(date('Y-m-d'));
+                if ($start_date_timestamp < $today_date) {
                     $tax_error = "You donot have permission to create class with start date lesser than today's date. Please get in touch with your Administratot to make this change.";
-                    $this->copy_class($tax_error); 
+                    $this->copy_class($tax_error);
                     return;
-                }                                     
-            }                
-            $course_name= $course_name_hidden;            
+                }
+            }
+            $course_name = $course_name_hidden;
             $result = $this->classmodel->copy_classes($tenant_id, $course_name, $user_id);
             if ($result == TRUE) {
                 $this->session->set_flashdata("success", "Class copied successfully.");
@@ -1009,7 +1007,7 @@ class Classes extends CI_Controller {
             $data['SalesExec'] = $this->classmodel->get_class_salesexec($tenant_id, $class->course_id, $class->sales_executive);
             $data['class_schedule'] = $this->classmodel->get_all_class_schedules($tenant_id, $class_hid);
             $def_assmnt = $this->classmodel->get_def_assessment_new($tenant_id, $class_hid, $class->assmnt_type);
-            
+
             $data['def_assessment'] = $def_assmnt;
             $data['page_title'] = 'Class';
             $data['classid'] = $class_hid;
