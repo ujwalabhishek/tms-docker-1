@@ -694,7 +694,7 @@ echo form_open("classes/add_new_tpg_class", $atr);
                         $modeoftraining[7] = '7-Traineeship';
                         //$modeoftraining[8] = '8-Assessment';
                         $modeoftraining[9] = '9-Synchronous eLearning';
-                        echo form_dropdown('modeoftraining', $modeoftraining, $this->input->post('modeoftraining'), 'id="modeoftraining"');
+                        echo form_dropdown('modeoftraining', $modeoftraining, $class->modeoftraining, 'id="modeoftraining"');
                         ?>
                         <span id="modeoftraining_err"></span>
                     </td>
