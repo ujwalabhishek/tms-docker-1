@@ -571,7 +571,7 @@ if (!empty($tax_error)) {
                                     $survey_language['MN'] = 'MN- Mandarin';
                                     $survey_language['MY'] = 'MY- Malay';
                                     $survey_language['TM'] = 'TM- Tamil';
-                                    echo form_dropdown('survey_language', $survey_language, $this->input->post('survey_language'), 'id="survey_language"');
+                                    echo form_dropdown('survey_language', $survey_language, $class->survey_language, 'id="survey_language"');
                                     ?>
                                 </label>
                                 <span id="survey_language_err"></span>
