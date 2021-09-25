@@ -672,9 +672,10 @@ if (!empty($tax_error)) {
                                 $wheel_chair_accessible = array(
                                     'name' => 'wheel_chair_accessible',
                                     'id' => 'wheel_chair_accessible',
-                                    'checked' => $wheel_chair_checked
+                                    'checked' => $wheel_chair_checked,
+                                    'onclick' =>'wheel_fun()'
                                 );                                
-                                echo form_checkbox($wheel_chair_accessible, '1');
+                                echo form_checkbox($wheel_chair_accessible, '0');
                                 ?>
                                 &nbsp;The course run location is wheel chair accessible</td>
                         </tr>
@@ -1407,3 +1408,12 @@ function array_to_input($array, $prefix = '') {
     }
 }
 ?>
+<script>
+    function wheel_fun() {
+        if(document.getElementById("wheel_chair_accessible").checked == true) {
+            document.getElementById("wheel_chair_accessible").val = 1;
+        } else {
+            document.getElementById("wheel_chair_accessible").val = 0;
+        }
+    }
+</script>
