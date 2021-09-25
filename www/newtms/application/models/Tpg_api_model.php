@@ -971,7 +971,8 @@ class Tpg_api_Model extends CI_Model {
         $crse_start_date = $this->input->post('start_date');
         $crse_end_date = $this->input->post('end_date');
         $schedule_info_des = 'Description'; //Course run schedule info Description
-        $schedule_info = date('dM', strtotime($crse_start_date)) . ' : ' . date('D', strtotime($crse_start_date)) . ' / ' . date('h:i A', strtotime($this->input->post('start_time'))) . ' - ' . date('h:i A', strtotime($this->input->post('end_date')));
+        $schedule_info = date('dM', strtotime($crse_start_date)) . ' to ' .date('dM', strtotime($crse_end_date));
+        //$schedule_info = date('dM', strtotime($crse_start_date)) . ' : ' . date('D', strtotime($crse_start_date)) . ' / ' . date('h:i A', strtotime($this->input->post('start_time'))) . ' - ' . date('h:i A', strtotime($this->input->post('end_date')));
         $venue_building = $this->input->post('venue_building');
         $venue_block = $this->input->post('venue_block');
         $venue_street = $this->input->post('venue_street');
