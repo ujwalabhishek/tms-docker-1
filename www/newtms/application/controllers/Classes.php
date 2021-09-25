@@ -726,10 +726,7 @@ class Classes extends CI_Controller {
             } else {
                 $this->session->set_flashdata("error", "Unable to update class. Please try again later.");
             }
-            //redirect("classes?course_id=" . $this->input->post('course_id'));
-            $data['display'] = 'display:block;';
-            $data['main_content'] = 'class/editclass_tpg';
-            $this->load->view('layout', $data);
+            redirect("classes?course_id=" . $this->input->post('course_id'));            
         }        
     }
         
