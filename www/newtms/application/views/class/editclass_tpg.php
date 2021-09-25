@@ -652,7 +652,7 @@ if (!empty($tax_error)) {
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2" class="td_heading">  
+                            <td colspan="5" class="td_heading">  
                                 <?php
                                 $wheel_chair_accessible = array(
                                     'name' => 'wheel_chair_accessible',

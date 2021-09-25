@@ -656,11 +656,24 @@ class Classes extends CI_Controller {
         $this->form_validation->set_rules('class_discount', 'Class Discount', 'numeric');
         $this->form_validation->set_rules('display_class', 'Check box', 'trim');
         $this->form_validation->set_rules('languages', 'Languages', 'required');
-        $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
-        $this->form_validation->set_rules('tpg_course_run_id', 'TPG Course Run ID', 'trim|numeric');
+        $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');        
         $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
         $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
         $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'required');
+        $this->form_validation->set_rules('modeoftraining', 'modeoftraining', 'required');
+        $this->form_validation->set_rules('survey_language', 'survey_language', 'required|alpha');
+        
+        //Modified by abdulla according to API
+        $this->form_validation->set_rules('venue_room', 'Venue Room', 'required|max_length[255]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('venue_unit', 'Venue Unit', 'required|max_length[5]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('venue_block', 'Venue Block', 'max_length[10]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('venue_floor', 'Venue Floor', 'required|max_length[3]|numeric');
+        $this->form_validation->set_rules('venue_street', 'Venue Street', 'max_length[32]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('venue_building', 'Venue Building', 'max_length[66]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('venue_postalcode', 'Venue Postal Code', 'required|max_length[6]|numeric');
+            
+        $this->form_validation->set_rules('crs_admin_email', 'Course Admin Email', 'trim|required|valid_email|max_length[30]');            
+        
         if ($this->form_validation->run() == FALSE) {
             $data['page_title'] = 'Class';
             $data['main_content'] = 'class/editclass_tpg';
@@ -682,8 +695,14 @@ class Classes extends CI_Controller {
             $class_id = $this->input->post('class_hid');
             $result = $this->classmodel->get_class_info($class_id);
             $previous_data = json_encode($result);
+            
+            $tpg_response = $this->tpgModel->update_courserun_tpg($tenant_id, $tenant->comp_reg_no);
 
-            $result = $this->classmodel->update_class($tenant_id, $user_id);
+                if ($tpg_response->status == 200) {
+                    $result = $this->classmodel->update_class_tpg($tenant_id, $user_id);
+                }
+
+            
             if ($result == TRUE) {
                 user_activity(5, $class_id, $previous_data);
                 $this->session->set_flashdata("success", "Class updated successfully.");
