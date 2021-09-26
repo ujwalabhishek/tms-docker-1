@@ -968,13 +968,13 @@ class Tpg_api_Model extends CI_Model {
         $crs_admin_email = $this->input->post('crs_admin_email'); //Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'                
         $modeoftraining = $this->input->post('modeoftraining');
         $ssg_data = $this->getCourseByRunId($tpg_course_run_id);
-        print_r($ssg_data);exit;
-        $reg_open_date = date("d-m-Y");
-        $reg_close_date = $this->input->post('start_date');
-        $crse_start_date = $this->input->post('start_date');
-        $crse_end_date = $this->input->post('end_date');
+        //print_r($ssg_data);exit;
+        $reg_open_date = $ssg_data->data->course->run->registrationOpeningDate;
+        $reg_close_date = $ssg_data->data->course->run->registrationClosingDate;
+        $crse_start_date = $ssg_data->data->course->run->courseStartDate;
+        $crse_end_date = $ssg_data->data->course->run->courseEndDate;
         $schedule_info_des = 'Description'; //Course run schedule info Description
-        $schedule_info = date('dM', strtotime($crse_start_date)) . ' to ' .date('dM', strtotime($crse_end_date));
+        $schedule_info = $ssg_data->data->course->run->scheduleInfo;
         //$schedule_info = date('dM', strtotime($crse_start_date)) . ' : ' . date('D', strtotime($crse_start_date)) . ' / ' . date('h:i A', strtotime($this->input->post('start_time'))) . ' - ' . date('h:i A', strtotime($this->input->post('end_date')));
         $venue_building = $this->input->post('venue_building');
         $venue_block = $this->input->post('venue_block');
@@ -1097,7 +1097,7 @@ class Tpg_api_Model extends CI_Model {
                                   "courseReferenceNumber": "' . $retun[ref_no] . '"
                                 }
                             }';
-        //print_r($tpg_course_run_json);exit;
+        print_r($tpg_course_run_json);exit;
         $api_version = 'v1.3';
         $url = "https://" . $retun[domain] . "/courses/runs/". $tpg_course_run_id;
         $response = $this->curl_request('POST', $url, $tpg_course_run_json, $api_version);        
