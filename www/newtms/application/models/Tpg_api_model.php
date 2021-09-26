@@ -966,9 +966,9 @@ class Tpg_api_Model extends CI_Model {
         $tpg_course_run_id = $this->input->post('tpg_crse_run_id');
         $crse_ref_no = $this->input->post('crse_ref_no');        
         $crs_admin_email = $this->input->post('crs_admin_email'); //Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'                
-        $modeoftraining = $this->input->post('modeoftraining');
         $ssg_data = $this->getCourseByRunId($tpg_course_run_id);
         //print_r($ssg_data);exit;
+        $modeoftraining = $ssg_data->data->course->run->modeOfTraining;
         $reg_open_date = $ssg_data->data->course->run->registrationOpeningDate;
         $reg_close_date = $ssg_data->data->course->run->registrationClosingDate;
         $crse_start_date = $ssg_data->data->course->run->courseStartDate;
