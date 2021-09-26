@@ -273,15 +273,14 @@ class Tpg_api_Model extends CI_Model {
         //print_r($session_arr);exit;
         $ClassTrainers = $this->get_trainer_details($control_5);
         //print_r($ClassTrainers);exit;
-        if (!empty($ClassTrainers)) {
-            $i=1;
+        if (!empty($ClassTrainers)) {            
             foreach ($ClassTrainers as $trainer) {
                 $trainers[] = array("trainer" => array(
                         "trainerType" => array(
                             "code" => "2",
                             "description" => "New"
                         ),
-                        "indexNumber" => "$i",
+                        "indexNumber" => 0,
                         "id" => "",
                         "name" => "$trainer->first_name",
                         "email" => "$trainer->off_email_id",
@@ -301,8 +300,7 @@ class Tpg_api_Model extends CI_Model {
                             )
                         )
                     )
-                );
-                $i++;
+                );                
             }
         }
         ///salutationId    = Available value - 1(Mr) 2(Ms) 3(Mdm) 4(Mrs) 5(Dr) 6(Prof).
@@ -967,7 +965,7 @@ class Tpg_api_Model extends CI_Model {
         $crse_ref_no = $this->input->post('crse_ref_no');        
         $crs_admin_email = $this->input->post('crs_admin_email'); //Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'                
         $ssg_data = $this->getCourseByRunId($tpg_course_run_id);
-        print_r($ssg_data);exit;
+        //print_r($ssg_data);exit;
         $modeoftraining = $ssg_data->data->course->run->modeOfTraining;
         $reg_open_date = $ssg_data->data->course->run->registrationOpeningDate;
         $reg_close_date = $ssg_data->data->course->run->registrationClosingDate;
@@ -1013,8 +1011,7 @@ class Tpg_api_Model extends CI_Model {
         //print_r($session_arr);exit;
         $ClassTrainers = $this->get_trainer_details($control_5);
         //print_r($ClassTrainers);exit;
-        if (!empty($ClassTrainers)) {
-            $i=1;
+        if (!empty($ClassTrainers)) {            
             foreach ($ClassTrainers as $trainer) {
                 $trainers[] = array("trainer" => array(
                         "id" => "",
@@ -1025,7 +1022,7 @@ class Tpg_api_Model extends CI_Model {
                                 "content" => ""
                             ),
                         "experience" => "",
-                        "indexNumber" => $i,
+                        "indexNumber" => 0,
                         "linkedInURL" => "",
                         "trainerType" => array(
                                 "code" => "2",
@@ -1041,8 +1038,7 @@ class Tpg_api_Model extends CI_Model {
                             )
                         )
                     )
-                );
-                $i++;
+                );                
             }
         }
                         
