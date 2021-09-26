@@ -1630,9 +1630,7 @@ class Class_Model extends CI_Model {
         
         $data_class = array(
             'tenant_id' => $tenantId,
-            'class_name' => strtoupper($class_name),           
-            'class_start_datetime' => $start_date_timestamp,
-            'class_end_datetime' => $end_date_timestamp,
+            'class_name' => strtoupper($class_name),            
             'total_seats' => $total_seats,
             'total_classroom_duration' => $cls_duration,
             'total_lab_duration' => $lab_duration,

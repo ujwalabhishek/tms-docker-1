@@ -139,84 +139,32 @@ if (!empty($tax_error)) {
                                 <span id="class_name_err"></span>
                             </td>
                             <td width="18%" class="td_heading">Start Date & Time:<span class="required">*</span></td>
-                            <td width="19%">
-                                <?php
-                                if (!empty($label['start'])) {
-                                    $style = 'width:45%;display:none';
-                                    $style_attr = form_label(date('d-m-Y', strtotime($class->class_start_datetime)));
-                                } else {
-                                    $style = 'width:45%;';
-                                    $style_attr = '';
-                                }
-                                $start_date = array(
-                                    'name' => 'start_date',
-                                    'id' => 'start_date',
-                                    'readonly' => 'true',
-                                    'style' => $style,
-                                    'value' => date('d-m-Y', strtotime($class->class_start_datetime)),
-                                );
-
-                                $start_date_hidden = array(
-                                    'name' => 'start_date_hidden',
-                                    'id' => 'start_date_hidden',
-                                    'readonly' => 'readonly',
-                                    'style' => "display:none",
-                                    'value' => date('d-m-Y', strtotime($class->class_start_datetime)),
-                                );
-                                echo form_input($start_date_hidden);
-
-                                echo form_input($start_date);
-                                echo $style_attr;
-                                if (!empty($label['start'])) {
-                                    $style = 'width:45%;display:none';
-                                    $style_attr = form_label(date('H:i', strtotime($class->class_start_datetime)));
-                                } else {
-                                    $style = 'width:45%;float:right;';
-                                    $style_attr = '';
-                                }
-                                $start_time = array(
-                                    'name' => 'start_time',
-                                    'id' => 'start_time',
-                                    'readonly' => 'true',
-                                    'style' => $style,
-                                    'value' => date('H:i', strtotime($class->class_start_datetime)),
-                                );
-                                echo form_input($start_time);
-                                echo '&nbsp;&nbsp;' . $style_attr;
+                            <td width="19%">                                
+                                <?php 
+                                
+                                    echo date('d-m-Y h:i A', strtotime($class->class_start_datetime)); 
+                                    
+                                    $start_date = array(
+                                        'name' => 'start_date',
+                                        'id' => 'start_date',
+                                        'type' => 'hidden',                                  
+                                        'value' => date('d-m-Y', strtotime($class->class_start_datetime)),
+                                    );
+                                    echo form_input($start_date);                                
                                 ?>
-                                &nbsp; 
-                                <div>
-                                    <span style="max-width:45%;" id="start_date_err"></span>
-                                    <span id="start_time_err" style="max-width:45%;float:right;"></span>
-                                </div>
                             </td>
                             <td width="14%" class="td_heading">End Date & Time:<span class="required">*</span></td>
                             <td width="18%">
-                                <?php
+                                <?php echo date('d-m-Y h:i A', strtotime($class->class_end_datetime)); 
+                                
                                 $end_date = array(
                                     'name' => 'end_date',
                                     'id' => 'end_date',
-                                    'readonly' => 'true',
-                                    'style' => 'width:45%;',
+                                    'type' => 'hidden',                                   
                                     'value' => date('d-m-Y', strtotime($class->class_end_datetime)),
                                 );
-                                echo form_input($end_date);
+                                echo form_input($end_date);                                
                                 ?>
-                                <?php
-                                $end_time = array(
-                                    'name' => 'end_time',
-                                    'id' => 'end_time',
-                                    'readonly' => 'true',
-                                    'style' => 'width:45%;float:right;',
-                                    'value' => date('H:i', strtotime($class->class_end_datetime)),
-                                );
-                                echo form_input($end_time);
-                                ?>
-                                &nbsp; 
-                                <div>
-                                    <span style="max-width:45%;" id="end_date_err"></span>
-                                    <span id="end_time_err" style="max-width:100%;float:right;"></span>
-                                </div>
                             </td>
                         </tr>
                         <tr>
