@@ -1673,8 +1673,6 @@ class Class_Model extends CI_Model {
             'survey_language' => $survey_language
         );
 
-
-
         $this->db->where('tenant_id', $tenantId);
         $this->db->where('class_id', $class_id);
         $this->db->trans_start();
@@ -1775,58 +1773,8 @@ class Class_Model extends CI_Model {
                         'footer' => $footer_data
                     );
                 }
-            }           
-                        
+            }
             
-//            $this->db->where('tenant_id', $tenantId);
-//            $this->db->where('class_id', $class_id);
-//            $delete_result = $this->db->delete('class_schld');
-            
-//            if (!empty($schlded_date)) {
-//                foreach ($schlded_date as $k => $v) {
-//                    $class_date = date('Y-m-d', strtotime($schlded_date[$k]));
-//                    $session_start_time = $schlded_start_time[$k] . ':00';
-//                    $session_end_time = $schlded_end_time[$k] . ':00';
-//                    $class_schld_data = array(
-//                        'tenant_id' => $tenantId,
-//                        'course_id' => $course_id,
-//                        'class_id' => $class_id,
-//                        'class_date' => $class_date,
-//                        'tpg_session_id' => $tpg_session_id[$k],
-//                        'mode_of_training' => $mode_of_training[$k],
-//                        'session_type_id' => $schlded_session_type[$k],
-//                        'session_start_time' => $session_start_time,
-//                        'session_end_time' => $session_end_time
-//                    );
-//                    $this->db->insert('class_schld', $class_schld_data);
-//                }
-//            }
-//            
-//            $this->db->where('tenant_id', $tenantId);
-//            $this->db->where('class_id', $class_id);
-//            $delete_result = $this->db->delete('class_assmnt_schld');
-            
-//            if (isset($assmnt_date)) {
-//                foreach ($assmnt_date as $k => $v) {
-//                    $assmnt_date = date('Y-m-d', strtotime($v));
-//                    $assmt_start_time = $assmnt_start_time[$k] . ':00';
-//                    $assmt_end_time = $assmnt_end_time[$k] . ':00';
-//                    $assm_venue_oth = (empty($ass_venue_oth[$k])) ? NULL : $ass_venue_oth[$k];
-//                    $class_assmnt_data = array(
-//                        'tenant_id' => $tenantId,
-//                        'course_id' => $course_id,
-//                        'class_id' => $class_id,
-//                        'assmnt_date' => $assmnt_date,
-//                        'assmnt_start_time' => $assmt_start_time,
-//                        'assmnt_end_time' => $assmt_end_time,
-//                        'assessor_id' => rtrim($assmnt_assessor[$k], ','),
-//                        'assmnt_venue' => $ass_venue[$k],
-//                        'assmnt_type' => 'CUSTOM',
-//                        'assmnt_venue_oth' => strtoupper($assm_venue_oth),
-//                    );
-//                    $this->db->insert('class_assmnt_schld', $class_assmnt_data);                    
-//                }
-//            }
             $this->db->trans_complete();
             if ($this->db->trans_status() === FALSE) {
                 return FALSE;

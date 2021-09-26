@@ -742,7 +742,7 @@ if (!empty($tax_error)) {
         <div class="row marketing">
             <div class="col-lg-6">
                 <span id="dis-error"></span>
-                <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png" /> Class / Lab Schedule <span class="label label-default push_right black-btn"><a class="small_text" rel="modal:open" href="#ex1"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Class / Lab Schedule</a></span></h4> 
+                <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png" /> Class / Lab Schedule</h4> 
                 <p>
                 <div class="scroll_schedule schld_div">
 
@@ -808,7 +808,7 @@ if (!empty($tax_error)) {
             </div>
 
             <div class="col-lg-6">
-                <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png" /> Assessment Schedule <span class="label label-default push_right  black-btn"><a class="small_text alert_message1" rel="modal:open" href="#ex2"><span class="glyphicon glyphicon-plus glyphicon1"></span>Add Assessment Schedule</a></span></h4>
+                <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png" /> Assessment Schedule</h4>
                 <p>
                 <div class="scroll_schedule def_schld_div">
                     <div class="table-responsive table-scroll-x">
