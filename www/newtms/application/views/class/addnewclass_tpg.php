@@ -555,7 +555,7 @@ echo form_open("classes/add_new_tpg_class", $atr);
                             echo form_checkbox($wheel_chair_accessible, '1', set_checkbox('wheel_chair_accessible', '1'));
                             ?>
                             &nbsp;The course run location is wheel chair accessible
-                            <input type="hidden" id="wheel_chair_hidden" name="wheel_chair_hidden" value="<?php echo $class->wheel_chair_access; ?>">
+                            <input type="hidden" id="wheel_chair_hidden" name="wheel_chair_hidden" value="0">
                         </td>
                     </tr>
                     <tr>
