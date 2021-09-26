@@ -101,7 +101,7 @@ if (!empty($tax_error)) {
     <?php
     if (!empty($class)) {
         $atr = 'id="EditClassForm" name="EditClassForm"';
-        echo form_open("classes/update_class_tpg", $atr);
+        echo form_open("classes/update_class", $atr);
         ?>  
         <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png" /> Class Details</h2>
         <div class="bs-example" id="mks">
