@@ -1069,8 +1069,8 @@ class Tpg_api_Model extends CI_Model {
                                     "threshold": 0,
                                     "intakeSize": ' . $crse_intake_size . ',
                                     "courseDates": {
-                                        "start": "' . date("Ymd", strtotime($crse_start_date)) . '",
-                                        "end": "' . date("Ymd", strtotime($crse_end_date)) . '"
+                                        "start": "' . $crse_start_date . '",
+                                        "end": "' . $crse_end_date . '"
                                     },
                                     "scheduleInfo": "' . $schedule_info . '",
                                     "courseVacancy": {
@@ -1085,8 +1085,8 @@ class Tpg_api_Model extends CI_Model {
                                       "description": "Description"
                                     },
                                     "registrationDates": {
-                                        "closing": "' . date("Ymd", strtotime($reg_close_date)) . '",
-                                        "opening": "' . date("Ymd", strtotime($reg_open_date)) . '"                                       
+                                        "closing": "' . $reg_close_date . '",
+                                        "opening": "' . $reg_open_date . '"                                       
                                     },
                                     "registeredUserCount": "",
                                     "linkCourseRunTrainer": ' . json_encode($trainers) . '
@@ -1097,7 +1097,7 @@ class Tpg_api_Model extends CI_Model {
                                   "courseReferenceNumber": "' . $retun[ref_no] . '"
                                 }
                             }';
-        print_r($tpg_course_run_json);exit;
+        //print_r($tpg_course_run_json);exit;
         $api_version = 'v1.3';
         $url = "https://" . $retun[domain] . "/courses/runs/". $tpg_course_run_id;
         $response = $this->curl_request('POST', $url, $tpg_course_run_json, $api_version);        
