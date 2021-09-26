@@ -459,7 +459,7 @@ class Classes extends CI_Controller {
                 $data['label'] = $label;
                 $data['course_duration'] = $this->coursemodel->get_course_detailse($course_id)->crse_duration;
                 $data['class_schedule'] = $this->classmodel->get_all_class_schedule($tenant_id, $class_id);
-                $def_assmnt = $this->classmodel->get_def_assessment($tenant_id, $class_id, $class->assmnt_type);
+                $def_assmnt = $this->classmodel->get_def_assessment_new($tenant_id, $class_id, $class->assmnt_type);
                 if ($class->assmnt_type == 'DEFAULT') {
                     $data['DefAssLoc'] = ($def_assmnt->assmnt_venue == 'OTH') ? 'Others (' . $def_assmnt->assmnt_venue_oth . ')' : $this->coursemodel->get_metadata_on_parameter_id($def_assmnt->assmnt_venue);
                     $data['DefAssId'] = $this->classmodel->get_trainer_names($def_assmnt->assessor_id);
