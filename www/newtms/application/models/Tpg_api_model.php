@@ -1098,7 +1098,7 @@ class Tpg_api_Model extends CI_Model {
                             ),
                         "salutationId" => 1,
                         "inTrainingProviderProfile" => true,
-                        "domainAreaOfPractice" => "",                                                                                                                        
+                        "domainAreaOfPractice" => "$trainer->category_name",                                                                                                                        
                         "linkedSsecEQAs" => array(
                             "description" => "",
                             "ssecEQA" => array(
