@@ -650,20 +650,7 @@ $(document).ready(function() {
                 onClose: function() {
                     $(this).trigger("change");
                 }
-    });
-    get_trainee();
-    function get_trainee() {
-        $div = $('.select_trainee');
-        $div.empty();
-        $div.append('<select name="sel_trainee" multiple="multiple" class="control_2" id="control_2"><option value="">Select</option></select>');
-        $select_div = $('.control_2');
-        $.each($trainee_enroll, function(i, item) {
-            $select_div.append("<option value='" + item.user_id + "'>" + item.first_name + "</option>");
-       });
-        $("#control_2").multiSelect({oneOrMoreSelected: '*'});
-        $('#control_2 span').css({'width': '200px'});
-        $('.multiSelectOptions').css({'width': '250px'});
-    }
+    });    
     $val = $('#cls_venue').val();
     $div = $('.clsven_oth_span');
     if ($val == 'OTH') {
