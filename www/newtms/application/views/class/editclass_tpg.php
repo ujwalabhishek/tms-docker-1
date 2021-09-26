@@ -755,8 +755,7 @@ if (!empty($tax_error)) {
                         <table class="table table-striped">
                             <thead>
                                 <tr>                                    
-                                    <th width="18%">Assmnt. Date</th>
-                                    <th width="30%">Trainee Name</th>
+                                    <th width="18%">Assmnt. Date</th>                                    
                                     <th width="30%">Assessor</th>
                                     <th width="20%">Assmnt. Time</th>
                                     <th width="20%">Assmnt. Venue</th>
@@ -802,8 +801,7 @@ if (!empty($tax_error)) {
                                         <input type="hidden" value="<?php echo $row['assmnt_venue']; ?>" name="ass_venue[]" class="ass_venue">
 
                                         <input type="hidden" value="<?php echo $row['assmnt_venue_oth']; ?>" name="ass_venue_oth[]" class="ass_venue_oth">                                        
-                                        <td><?php echo $assess_date; ?></td>
-                                        <td><?php echo implode(', ', $row['trainee']); ?></td>
+                                        <td><?php echo $assess_date; ?></td>                                        
                                         <td><?php echo $row['DefAssId']; ?></td>
                                         <td><?php echo $start_time . ' - ' . $end_date; ?></td>
                                         <td><?php echo $row['DefAssLoc']; ?></td>
