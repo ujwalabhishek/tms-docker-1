@@ -761,44 +761,44 @@ function validate() {
             }
         });
     }
-    $start_date = $('#start_date').val();
-    if ($start_date.length == 0) {
-        disp_err('#start_date');
-        $retval = false;
-    } else {
-        remove_err('#start_date');
-    }
-    $start_time = $('#start_time').val();
-    if ($start_time.length == 0) {
-        disp_err('#start_time');
-        $retval = false;
-    } else {
-        remove_err('#start_time');
-    }
-    $end_date = $('#end_date').val();
-    if ($end_date.length == 0) {
-        disp_err('#end_date');
-        $retval = false;
-    } else {
-        remove_err('#end_date');
-    }
-    $end_time = $('#end_time').val();
-    if ($end_time.length == 0) {
-        disp_err('#end_time');
-        $retval = false;
-    } else if ($start_date == $end_date) {
-        if (parseInt($start_time.replace(':', '')) == parseInt($end_time.replace(':', ''))) {
-            disp_err('#end_time', '[start and end date-time are equal.]');
-            $retval = false;
-        } else if (parseInt($start_time.replace(':', '')) > parseInt($end_time.replace(':', ''))) {
-            disp_err('#end_time', '[start date-time is greater than end date-time.]');
-            $retval = false;
-        } else {
-            remove_err('#end_time');
-        }
-    } else {
-        remove_err('#end_time');
-    }
+//    $start_date = $('#start_date').val();
+//    if ($start_date.length == 0) {
+//        disp_err('#start_date');
+//        $retval = false;
+//    } else {
+//        remove_err('#start_date');
+//    }
+//    $start_time = $('#start_time').val();
+//    if ($start_time.length == 0) {
+//        disp_err('#start_time');
+//        $retval = false;
+//    } else {
+//        remove_err('#start_time');
+//    }
+//    $end_date = $('#end_date').val();
+//    if ($end_date.length == 0) {
+//        disp_err('#end_date');
+//        $retval = false;
+//    } else {
+//        remove_err('#end_date');
+//    }
+//    $end_time = $('#end_time').val();
+//    if ($end_time.length == 0) {
+//        disp_err('#end_time');
+//        $retval = false;
+//    } else if ($start_date == $end_date) {
+//        if (parseInt($start_time.replace(':', '')) == parseInt($end_time.replace(':', ''))) {
+//            disp_err('#end_time', '[start and end date-time are equal.]');
+//            $retval = false;
+//        } else if (parseInt($start_time.replace(':', '')) > parseInt($end_time.replace(':', ''))) {
+//            disp_err('#end_time', '[start date-time is greater than end date-time.]');
+//            $retval = false;
+//        } else {
+//            remove_err('#end_time');
+//        }
+//    } else {
+//        remove_err('#end_time');
+//    }
     $total_seats = $.trim($('#total_seats').val());
     if ($total_seats.length == 0) {
         disp_err('#total_seats');
