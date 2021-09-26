@@ -801,15 +801,7 @@ if (!empty($tax_error)) {
                                         <input type="hidden" value="<?php echo $row['assessor_id']; ?>" name="assmnt_assessor[]" class="assmnt_assessor">
                                         <input type="hidden" value="<?php echo $row['assmnt_venue']; ?>" name="ass_venue[]" class="ass_venue">
 
-                                        <input type="hidden" value="<?php echo $row['assmnt_venue_oth']; ?>" name="ass_venue_oth[]" class="ass_venue_oth">
-                                        <td class="a_button">
-                                            <a class="small_text ass_edit" rel="modal:open" href="#ex2">
-                                                <input type="button" data-edit="<?php echo $cnt; ?>" value="E" style="color:#000000; text-decoration:none;" />
-                                            </a><br>
-                                            <a href="#ex9" rel="modal:open" class="small_text delete_color ass_delete">
-                                                <input type="button" data-del="<?php echo $cnt; ?>" value="D" style="color:#000000; text-decoration:none;" />
-                                            </a>
-                                        </td>
+                                        <input type="hidden" value="<?php echo $row['assmnt_venue_oth']; ?>" name="ass_venue_oth[]" class="ass_venue_oth">                                        
                                         <td><?php echo $assess_date; ?></td>
                                         <td><?php echo implode(', ', $row['trainee']); ?></td>
                                         <td><?php echo $row['DefAssId']; ?></td>
