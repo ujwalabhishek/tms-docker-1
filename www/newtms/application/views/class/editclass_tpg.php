@@ -151,7 +151,7 @@ if (!empty($tax_error)) {
                                 $start_date = array(
                                     'name' => 'start_date',
                                     'id' => 'start_date',
-                                    'readonly' => 'readonly',
+                                    'readonly' => 'true',
                                     'style' => $style,
                                     'value' => date('d-m-Y', strtotime($class->class_start_datetime)),
                                 );
@@ -177,7 +177,7 @@ if (!empty($tax_error)) {
                                 $start_time = array(
                                     'name' => 'start_time',
                                     'id' => 'start_time',
-                                    'readonly' => 'readonly',
+                                    'readonly' => 'true',
                                     'style' => $style,
                                     'value' => date('H:i', strtotime($class->class_start_datetime)),
                                 );
@@ -196,7 +196,7 @@ if (!empty($tax_error)) {
                                 $end_date = array(
                                     'name' => 'end_date',
                                     'id' => 'end_date',
-                                    'readonly' => 'readonly',
+                                    'readonly' => 'true',
                                     'style' => 'width:45%;',
                                     'value' => date('d-m-Y', strtotime($class->class_end_datetime)),
                                 );
@@ -206,7 +206,7 @@ if (!empty($tax_error)) {
                                 $end_time = array(
                                     'name' => 'end_time',
                                     'id' => 'end_time',
-                                    'readonly' => 'readonly',
+                                    'readonly' => 'true',
                                     'style' => 'width:45%;float:right;',
                                     'value' => date('H:i', strtotime($class->class_end_datetime)),
                                 );
