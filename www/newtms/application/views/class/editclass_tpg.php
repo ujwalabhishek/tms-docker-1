@@ -26,7 +26,7 @@ if (!empty($tax_error)) {
     $siteurl = '<?php echo site_url(); ?>';
     $course_duration = '<?php echo $course_duration; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/editclass.js?0.01"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/editclass_tpg.js?0.01"></script>
 
 <div class="col-md-10">
     <?php echo validation_errors('<div class="error1">', '</div>');
