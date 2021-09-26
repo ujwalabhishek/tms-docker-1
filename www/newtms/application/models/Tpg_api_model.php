@@ -1008,72 +1008,72 @@ class Tpg_api_Model extends CI_Model {
             $control_3 = implode(",", $control_3);
         }
         
-        if (!empty($schlded_date)) {
-            foreach ($schlded_date as $k => $v) {
-                if ($schlded_session_type[$k] != 'BRK') {
-                    $dates = date('Ymd', strtotime($schlded_date[$k]));
-                    $starttime = date("H:i", strtotime($schlded_start_time[$k]));
-                    $endtime = date("H:i", strtotime($schlded_end_time[$k]));
-                    $class_asss = $this->get_all_class_schedule_tpg($tenant_id, $class_id, $schlded_session_type[$k]);                    
-                    $sessions[] = array(
-                        "startDate" => "$dates",
-                        "endDate" => "$dates",
-                        "sessionId" => $class_asss[0]->tpg_session_id,
-                        "startTime" => "$starttime",
-                        "endTime" => "$endtime",
-                        "modeOfTraining" => $class_asss[0]->mode_of_training,                        
-                        "action" => "update",          
-                        "venue" => array
-                            (
-                            "room" => "$venue_room",
-                            "unit" => "$venue_unit",
-                            "block" => "$venue_block",
-                            "floor" => "$venue_floor",
-                            "street" => "$venue_street",                                                        
-                            "building" => "$venue_building",
-                            "postalCode" => "$venue_postalcode",                            
-                            "primaryVenue" => true,
-                            "wheelChairAccess" => "$wheel_chair_access",                            
-                        ),
-                    );
-                }
-            }
-        }
-
-
-        if (!empty($assmnt_date)) {
-            foreach ($assmnt_date as $k => $v) {
-
-                $assdates = date('Ymd', strtotime($assmnt_date[$k]));
-                $assstarttime = date("H:i", strtotime($assmnt_start_time[$k]));
-                $assendtime = date("H:i", strtotime($assmnt_end_time[$k]));
-                $assessments[] = array(
-                    "startDate" => "$assdates",
-                    "endDate" => "$assdates",                    
-                    "startTime" => "$assstarttime",
-                    "endTime" => "$assendtime",
-                    "modeOfTraining" => "8",
-                    "action" => "update",
-                    "venue" => array
-                        (
-                        "room" => "$venue_room",
-                        "unit" => "$venue_unit",
-                        "block" => "$venue_block",
-                        "floor" => "$venue_floor",
-                        "street" => "$venue_street",                                                
-                        "building" => "$venue_building",
-                        "postalCode" => "$venue_postalcode",
-                        "primaryVenue" => true,
-                        "wheelChairAccess" => "$wheel_chair_access",                        
-                    ),
-                );
-            }
-        }
-        if (!empty($assessments)) {
-            $session_arr = array_merge($sessions, $assessments);
-        } else {
-            $session_arr = $sessions;
-        }
+//        if (!empty($schlded_date)) {
+//            foreach ($schlded_date as $k => $v) {
+//                if ($schlded_session_type[$k] != 'BRK') {
+//                    $dates = date('Ymd', strtotime($schlded_date[$k]));
+//                    $starttime = date("H:i", strtotime($schlded_start_time[$k]));
+//                    $endtime = date("H:i", strtotime($schlded_end_time[$k]));
+//                    $class_asss = $this->get_all_class_schedule_tpg($tenant_id, $class_id, $schlded_session_type[$k]);                    
+//                    $sessions[] = array(
+//                        "startDate" => "$dates",
+//                        "endDate" => "$dates",
+//                        "sessionId" => $class_asss[0]->tpg_session_id,
+//                        "startTime" => "$starttime",
+//                        "endTime" => "$endtime",
+//                        "modeOfTraining" => $class_asss[0]->mode_of_training,                        
+//                        "action" => "update",          
+//                        "venue" => array
+//                            (
+//                            "room" => "$venue_room",
+//                            "unit" => "$venue_unit",
+//                            "block" => "$venue_block",
+//                            "floor" => "$venue_floor",
+//                            "street" => "$venue_street",                                                        
+//                            "building" => "$venue_building",
+//                            "postalCode" => "$venue_postalcode",                            
+//                            "primaryVenue" => true,
+//                            "wheelChairAccess" => "$wheel_chair_access",                            
+//                        ),
+//                    );
+//                }
+//            }
+//        }
+//
+//
+//        if (!empty($assmnt_date)) {
+//            foreach ($assmnt_date as $k => $v) {
+//
+//                $assdates = date('Ymd', strtotime($assmnt_date[$k]));
+//                $assstarttime = date("H:i", strtotime($assmnt_start_time[$k]));
+//                $assendtime = date("H:i", strtotime($assmnt_end_time[$k]));
+//                $assessments[] = array(
+//                    "startDate" => "$assdates",
+//                    "endDate" => "$assdates",                    
+//                    "startTime" => "$assstarttime",
+//                    "endTime" => "$assendtime",
+//                    "modeOfTraining" => "8",
+//                    "action" => "update",
+//                    "venue" => array
+//                        (
+//                        "room" => "$venue_room",
+//                        "unit" => "$venue_unit",
+//                        "block" => "$venue_block",
+//                        "floor" => "$venue_floor",
+//                        "street" => "$venue_street",                                                
+//                        "building" => "$venue_building",
+//                        "postalCode" => "$venue_postalcode",
+//                        "primaryVenue" => true,
+//                        "wheelChairAccess" => "$wheel_chair_access",                        
+//                    ),
+//                );
+//            }
+//        }
+//        if (!empty($assessments)) {
+//            $session_arr = array_merge($sessions, $assessments);
+//        } else {
+//            $session_arr = $sessions;
+//        }
         
         //print_r($session_arr);exit;
         $ClassTrainers = $this->get_trainer_details($control_5);
@@ -1130,8 +1130,7 @@ class Tpg_api_Model extends CI_Model {
                                       "postalCode": ' . $venue_postalcode . ',
                                       "wheelChairAccess": ' . $wheel_chair_access . '
                                     },
-                                    "action": "update",
-                                    "sessions": ' . json_encode($session_arr) . ',
+                                    "action": "update",                                    
                                     "threshold": 0,
                                     "intakeSize": ' . $crse_intake_size . ',
                                     "courseDates": {
@@ -1163,7 +1162,7 @@ class Tpg_api_Model extends CI_Model {
                                   "courseReferenceNumber": "' . $retun[ref_no] . '"
                                 }
                             }';
-        print_r($tpg_course_run_json);exit;
+        //print_r($tpg_course_run_json);exit;
         $api_version = 'v1.3';
         $url = "https://" . $retun[domain] . "/courses/runs/". $tpg_course_run_id;
         $response = $this->curl_request('POST', $url, $tpg_course_run_json, $api_version);        
