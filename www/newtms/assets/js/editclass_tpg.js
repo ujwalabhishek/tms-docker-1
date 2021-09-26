@@ -852,44 +852,44 @@ function validate() {
         remove_err('#minimum_students');
     }
     
-//    $crs_admin_email = $.trim($('#crs_admin_email').val());
-//    if (!valid_email_address($crs_admin_email)) {
-//        disp_err('#crs_admin_email', '[Invalid Email Address]');
-//        $retval = false;
-//    } else {
-//        remove_err('#crs_admin_email');
-//    }
-//    $venue_floor = $('#venue_floor').val();
-//    if ($venue_floor == null || $venue_floor == '') {
-//        $("#venue_floor_err").text("[required]").addClass('error');
-//        retVal = false;
-//    } else {
-//        $("#venue_floor_err").text("").removeClass('error');
-//    }
-//    
-//    $venue_unit = $('#venue_unit').val();
-//    if ($venue_unit == null || $venue_unit == '') {
-//        $("#venue_unit_err").text("[required]").addClass('error');
-//        retVal = false;
-//    } else {
-//        $("#venue_unit_err").text("").removeClass('error');
-//    }
-//    $venue_postalcode = $('#venue_postalcode').val();
-//    if ($venue_postalcode == null || $venue_postalcode == '') {
-//        $("#venue_postalcode_err").text("[required]").addClass('error');
-//        retVal = false;
-//    } else {
-//        $("#venue_postalcode_err").text("").removeClass('error');
-//    }
-//
-//    $venue_room = $('#venue_room').val();
-//    if ($venue_room == null || $venue_room == '') {
-//        $("#venue_room_err").text("[required]").addClass('error');
-//        retVal = false;
-//    } else {
-//        $("#venue_room_err").text("").removeClass('error');
-//    }
-//    
+    $crs_admin_email = $.trim($('#crs_admin_email').val());
+    if (!valid_email_address($crs_admin_email)) {
+        disp_err('#crs_admin_email', '[Invalid Email Address]');
+        $retval = false;
+    } else {
+        remove_err('#crs_admin_email');
+    }
+    $venue_floor = $('#venue_floor').val();
+    if ($venue_floor == null || $venue_floor == '') {
+        $("#venue_floor_err").text("[required]").addClass('error');
+        retVal = false;
+    } else {
+        $("#venue_floor_err").text("").removeClass('error');
+    }
+    
+    $venue_unit = $('#venue_unit').val();
+    if ($venue_unit == null || $venue_unit == '') {
+        $("#venue_unit_err").text("[required]").addClass('error');
+        retVal = false;
+    } else {
+        $("#venue_unit_err").text("").removeClass('error');
+    }
+    $venue_postalcode = $('#venue_postalcode').val();
+    if ($venue_postalcode == null || $venue_postalcode == '') {
+        $("#venue_postalcode_err").text("[required]").addClass('error');
+        retVal = false;
+    } else {
+        $("#venue_postalcode_err").text("").removeClass('error');
+    }
+
+    $venue_room = $('#venue_room').val();
+    if ($venue_room == null || $venue_room == '') {
+        $("#venue_room_err").text("[required]").addClass('error');
+        retVal = false;
+    } else {
+        $("#venue_room_err").text("").removeClass('error');
+    }
+    
     
     $fees = $.trim($('#fees').val());
     if ($fees.length == 0) {
