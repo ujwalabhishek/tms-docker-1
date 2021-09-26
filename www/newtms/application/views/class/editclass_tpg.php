@@ -806,8 +806,7 @@ if (!empty($tax_error)) {
                     <div class="table-responsive table-scroll-x">
                         <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th width="8%">Action</th>
+                                <tr>                                    
                                     <th width="18%">Assmnt. Date</th>
                                     <th width="30%">Trainee Name</th>
                                     <th width="30%">Assessor</th>
@@ -829,15 +828,7 @@ if (!empty($tax_error)) {
                                     <input type="hidden" value="<?php echo $end_date; ?>" name="def_schlded_end_time" class="def_schlded_end_time">
                                     <input type="hidden" value="<?php echo $def_assessment->assessor_id; ?>" name="def_schlded_assessor" class="def_schlded_assessor">
                                     <input type="hidden" value="<?php echo $def_assessment->assmnt_venue; ?>" name="def_schlded_venue" class="def_schlded_venue">
-                                    <input type="hidden" value="<?php echo $def_assessment->assmnt_venue_oth; ?>" name="def_schlded_venue_oth" class="def_schlded_venue_oth">
-                                    <td class="a_button">
-                                        <a class="small_text" rel="modal:open" href="#ex3">
-                                            <input type="button" value="E" style="color:#000000; text-decoration:none;" />
-                                        </a><br>
-                                        <a href="#ex9" rel="modal:open" class="small_text delete_color def_schld_delete">
-                                            <input type="button" value="D" style="color:#000000; text-decoration:none;" />
-                                        </a>
-                                    </td>
+                                    <input type="hidden" value="<?php echo $def_assessment->assmnt_venue_oth; ?>" name="def_schlded_venue_oth" class="def_schlded_venue_oth">                                    
                                     <td><?php echo $assess_date; ?></td>
                                     <td>All</td>
                                     <td><?php echo $DefAssId; ?></td>
