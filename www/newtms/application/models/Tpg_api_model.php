@@ -169,7 +169,8 @@ class Tpg_api_Model extends CI_Model {
         $crse_start_date = $this->input->post('start_date');
         $crse_end_date = $this->input->post('end_date');
         $schedule_info_des = 'Description'; //Course run schedule info Description
-        $schedule_info = date('dM', strtotime($crse_start_date)) . ' : ' . date('D', strtotime($crse_start_date)) . ' / ' . date('h:i A', strtotime($this->input->post('start_time'))) . ' - ' . date('h:i A', strtotime($this->input->post('end_date')));
+        $schedule_info = date('dM', strtotime($crse_start_date)) . ' to ' .date('dM', strtotime($crse_end_date));
+        //$schedule_info = date('dM', strtotime($crse_start_date)) . ' : ' . date('D', strtotime($crse_start_date)) . ' / ' . date('h:i A', strtotime($this->input->post('start_time'))) . ' - ' . date('h:i A', strtotime($this->input->post('end_date')));
         $venue_building = $this->input->post('venue_building');
         $venue_block = $this->input->post('venue_block');
         $venue_street = $this->input->post('venue_street');
@@ -178,8 +179,8 @@ class Tpg_api_Model extends CI_Model {
         $venue_postalcode = $this->input->post('venue_postalcode');
         $venue_room = $this->input->post('venue_room');
         //Added by abdulla
-        $wheel_chair_access = $this->input->post('wheel_chair_accessible');
-        if($wheel_chair_access == '0') {
+        $wheel_chair_access = $this->input->post('wheel_chair_hidden');
+        if($wheel_chair_access == 0) {
             $wheel_chair_access = 'false';
         } else {
             $wheel_chair_access = 'true';
