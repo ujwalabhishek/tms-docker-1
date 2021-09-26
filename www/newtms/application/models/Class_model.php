@@ -1626,7 +1626,7 @@ class Class_Model extends CI_Model {
         $classroom_venue_oth = empty($classroom_venue_oth) ? NULL : strtoupper($classroom_venue_oth);
         $lab_venue_oth = empty($lab_venue_oth) ? NULL : strtoupper($lab_venue_oth);
 
-        $wheel_chair_accessible = $this->input->post('wheel_chair_hidden');        
+        $wheel_chair_accessible = $this->input->post('wheel_chair_hidden');
         
         $data_class = array(
             'tenant_id' => $tenantId,
@@ -2241,8 +2241,7 @@ class Class_Model extends CI_Model {
      * @param type $courseId
      */
     public function create_class_tpg($tenantId, $userId, $tpg_course_run_id) {
-        $display_class = 0;
-        $wheel_chair_accessible = 0;
+        $display_class = 0;        
         $control_4 = '';
         $control_5 = '';
         $control_6 = '';
@@ -2287,6 +2286,9 @@ class Class_Model extends CI_Model {
         $control_4 = empty($control_4) ? NULL : $control_4;
         $classroom_venue_oth = empty($classroom_venue_oth) ? NULL : strtoupper($classroom_venue_oth);
         $lab_venue_oth = empty($lab_venue_oth) ? NULL : strtoupper($lab_venue_oth);
+        
+        $wheel_chair_accessible = $this->input->post('wheel_chair_hidden');
+        
         $data = array(
             'tenant_id' => $tenantId,
             'course_id' => $class_course,

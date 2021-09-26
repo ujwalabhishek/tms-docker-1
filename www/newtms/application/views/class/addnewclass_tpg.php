@@ -548,11 +548,14 @@ echo form_open("classes/add_new_tpg_class", $atr);
                             <?php
                             $wheel_chair_accessible = array(
                                 'name' => 'wheel_chair_accessible',
-                                'id' => 'wheel_chair_accessible'
+                                'id' => 'wheel_chair_accessible',
+                                'onclick' =>'javascript:wheel_fun()'
                             );
                             echo form_checkbox($wheel_chair_accessible, '1', set_checkbox('wheel_chair_accessible', '1'));
                             ?>
-                            &nbsp;The course run location is wheel chair accessible</td>
+                            &nbsp;The course run location is wheel chair accessible
+                            <input type="hidden" id="wheel_chair_hidden" name="wheel_chair_hidden" value="<?php echo $class->wheel_chair_access; ?>">
+                        </td>
                     </tr>    
                     <tr>
                         <td class="td_heading">Class Room Trainer:<span class="required">*</span></td>
@@ -1066,6 +1069,15 @@ echo form_open("classes/add_new_tpg_class", $atr);
             $('#class_course').val('<?php echo $this->input->post('class_course'); ?>').trigger('change');
 <?php } ?>
     });
+    
+    function wheel_fun() {
+        if(document.getElementById("wheel_chair_accessible").checked == true) {           
+            document.getElementById("wheel_chair_hidden").value = 1;
+        } else {
+            document.getElementById("wheel_chair_hidden").value = 0;
+        }
+    }
+    
 </script>
 <style>
     .dang{
