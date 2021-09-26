@@ -698,10 +698,8 @@ class Classes extends CI_Controller {
             $previous_data = json_encode($result);
             $tpg_response = $this->tpgModel->update_courserun_tpg();
 
-            if ($tpg_response->status == 200) {
-                
+            if ($tpg_response->status == 200) {                
                 $result_tpg = $this->classmodel->update_class_tpg($tenant_id, $user_id);
-echo "success"; exit;
                 if ($result_tpg == TRUE) {
                     user_activity(5, $class_id, $previous_data);
                     $this->session->set_flashdata("success", "Class updated successfully.");
