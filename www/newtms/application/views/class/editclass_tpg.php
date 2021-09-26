@@ -753,8 +753,7 @@ if (!empty($tax_error)) {
                                     <th>Class Date</th>
                                     <th>Session Type</th>
                                     <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Action</th>
+                                    <th>End Time</th>                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -774,13 +773,8 @@ if (!empty($tax_error)) {
                                     //$x[]= $d_cnt;
                                     $rowspan = count($v);
                                     $schld_date = date('d-m-Y', strtotime($k));
-                                    $rowspan_td = '<td rowspan="' . $rowspan . '">' . $schld_date . '</td>';
-                                    $delete = '<td class="a_button">
-                                       
-                                    <a class="small_text delete_color schld_delete" href="#ex9" rel="modal:open"><input type="button" value="Delete" style="color:#000000; text-decoration:none;" /></a>
-                                </td>';
-                                    foreach ($v as $r) {
-                                        $delete_td = ($rowspan == 1) ? $delete : '<td></td>';
+                                    $rowspan_td = '<td rowspan="' . $rowspan . '">' . $schld_date . '</td>';                                    
+                                    foreach ($v as $r) {                                        
                                         $start_time = date('H:i ', strtotime($r['start']));
                                         $end_time = date('H:i', strtotime($r['end']));
                                         echo '<tr class = "schld_tr' . $d_cnt . ' schlddate_' . $schld_date . '" data-session = "' . $r['session'] . '" data-date = "' . $schld_date . '"  data-count = "' . $d_cnt . '">
@@ -791,9 +785,7 @@ if (!empty($tax_error)) {
                                     ' . $rowspan_td . '
                                     <td>' . $session_arr[$r['session']] . ' </td>
                                     <td>' . $start_time . ' </td>
-                                    <td>' . $end_time . ' </td>
-                                    ' . $delete_td . '
-                                    </tr>';
+                                    <td>' . $end_time . ' </td></tr>';
                                         $rowspan_td = '';
                                         $d_cnt++;
                                         $rowspan--;
