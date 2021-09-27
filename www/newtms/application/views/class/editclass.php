@@ -739,13 +739,7 @@ if (!empty($tax_error)) {
             $label_but = 'Delete';
         }
         ?>
-        <div class="button_class">
-            <?php
-            if ((TENANT_ID == 'T02' && $CI->session->userdata('userDetails')->user_id == '118985') || (TENANT_ID == 'T02' && $CI->session->userdata('userDetails')->user_id == '171163') || (TENANT_ID == 'T02' && $CI->session->userdata('userDetails')->user_id == '220471')) {
-                ?>
-                <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button>
-            <?php }
-            ?>
+        <div class="button_class">            
             <?php if ($tpg_crse == '0') { ?><button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button><?php } ?> &nbsp; &nbsp; 
             <a href="#ex8" rel="modal:open" class="small_text <?php echo $deactivate_class; ?> check_deactivate" data-class="<?php echo $this->input->post('class_id'); ?>"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;<?php echo $label_but; ?></button></a> &nbsp; &nbsp;            
         </div>
