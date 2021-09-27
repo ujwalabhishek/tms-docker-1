@@ -1064,7 +1064,7 @@ class Class_Trainee extends CI_Controller {
             $li_first = "All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.";
         }
 
-        if(($tenant_id == 'T02') && ($classes->course_id == '189') && ($classes->course_id == '190')) {
+        if(($tenant_id == 'T02' && $classes->course_id == '189') || (($tenant_id == 'T02' && $classes->course_id == '190')) {
             $li_trim = "";
         } else {
             $li_trim = "<li>Trim finger nails and remove nail polish.</li>";
