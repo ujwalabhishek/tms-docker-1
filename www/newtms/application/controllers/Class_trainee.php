@@ -962,9 +962,9 @@ class Class_Trainee extends CI_Controller {
             }
             ///// added by shubhranshu for wablab points
             if ($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17') {
-                $li_first = "<li>Your NRIC, work permit or will be photocopied on the class date.</li>";
+                $li_first = "Your NRIC, work permit or will be photocopied on the class date.";
             } else {
-                $li_first = "<li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>";
+                $li_first = "All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.";
             }
             
             if(($tenant_id == 'T02' && $classes->course_id == 189) || ($tenant_id == 'T02' && $classes->course_id == 190)) {
@@ -975,7 +975,7 @@ class Class_Trainee extends CI_Controller {
             
             $message3 = '
              <ol style="font-size:13px;color:#4f4b4b">
-                          ' . $li_first . '                            
+                          <li>' . $li_first . '</li>
                             ' . $li_trim . '
                             <li>' . $li . '</li>
                             ' . $li2 . '
