@@ -962,15 +962,21 @@ class Class_Trainee extends CI_Controller {
             }
             ///// added by shubhranshu for wablab points
             if ($tenant_details->tenant_id == 'T20' || $tenant_details->tenant_id == 'T17') {
-                $li_first = "<li>Your NRIC, work permit or will be photocopied on the class date.</li>";
+                $li_first = "Your NRIC, work permit or will be photocopied on the class date.";
             } else {
-                $li_first = "<li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>";
+                $li_first = "All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.";
             }
+            
+            if(($tenant_id == 'T02' && $classes->course_id == 189) || ($tenant_id == 'T02' && $classes->course_id == 190)) {
+                $li_trim = "";
+            } else {
+                $li_trim = "<li>Trim finger nails and remove nail polish.</li>";
+            }
+            
             $message3 = '
              <ol style="font-size:13px;color:#4f4b4b">
-                          ' . $li_first . '
-                            
-                            <li>Trim finger nails and remove nail polish.</li>
+                          <li>' . $li_first . '</li>
+                            ' . $li_trim . '
                             <li>' . $li . '</li>
                             ' . $li2 . '
                         </ol>';
@@ -1063,7 +1069,12 @@ class Class_Trainee extends CI_Controller {
         } else {
             $li_first = "All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.";
         }
-
+        
+        if(($tenant_id == 'T02' && $classes->course_id == 189) || ($tenant_id == 'T02' && $classes->course_id == 190)) {
+            $li_trim = "";
+        } else {
+            $li_trim = "<li>Trim finger nails and remove nail polish.</li>";
+        }
 
         $booking_details = $this->classtraineemodel->get_paydue_invoice($trainee_id, $class_id);
         $company_details = $this->classtraineemodel->get_company_name($booking_details->invoice_id, $trainee_id, $class_id, $tenant_id); //added by shubhranshu to fetch the company name
@@ -1100,7 +1111,7 @@ class Class_Trainee extends CI_Controller {
                         <strong style="font-size:13px">Remark *: </strong>
                         <ol style="font-size:13px;color:#4f4b4b">
                             <li>' . $li_first . '</li>
-                            <li>Trim finger nails and remove nail polish.</li>
+                            ' . $li_trim . '
                             <li>' . $li . '</li>
                             ' . $li2 . '
                         </ol>
