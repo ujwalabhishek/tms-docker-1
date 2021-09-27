@@ -966,11 +966,17 @@ class Class_Trainee extends CI_Controller {
             } else {
                 $li_first = "<li>All participants please bring along their photo ID card with either their Nric/Fin number stated upon class date.</li>";
             }
+            
+            if(($tenant_id == 'T02' && $classes->course_id == 189) || ($tenant_id == 'T02' && $classes->course_id == 190)) {
+                $li_trim = "";
+            } else {
+                $li_trim = "<li>Trim finger nails and remove nail polish.</li>";
+            }
+            
             $message3 = '
              <ol style="font-size:13px;color:#4f4b4b">
-                          ' . $li_first . '
-                            
-                            <li>Trim finger nails and remove nail polish.</li>
+                          ' . $li_first . '                            
+                            ' . $li_trim . '
                             <li>' . $li . '</li>
                             ' . $li2 . '
                         </ol>';
