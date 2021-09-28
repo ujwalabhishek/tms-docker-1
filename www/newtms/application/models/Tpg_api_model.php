@@ -1051,16 +1051,6 @@ class Tpg_api_Model extends CI_Model {
                                         "Name": "",
                                         "content": ""
                                       },
-                                    "venue": {
-                                      "room": "' . $venue_room . '",
-                                      "unit": "' . $venue_unit . '",
-                                      "block": "' . $venue_block . '",
-                                      "floor": "' . $venue_floor . '",
-                                      "street": "' . $venue_street . '",
-                                      "building": "' . $venue_building . '",
-                                      "postalCode": ' . $venue_postalcode . ',
-                                      "wheelChairAccess": ' . $wheel_chair_access . '
-                                    },
                                     "action": "update",                                    
                                     "threshold": 0,
                                     "intakeSize": ' . $crse_intake_size . ',
@@ -1084,7 +1074,8 @@ class Tpg_api_Model extends CI_Model {
                                         "closing": "' . $reg_close_date . '",
                                         "opening": "' . $reg_open_date . '"                                       
                                     },
-                                    "registeredUserCount": ""                                  
+                                    "registeredUserCount": "",
+                                    "linkCourseRunTrainer": ' . json_encode($trainers) . '
                                   },
                                   "trainingProvider": {
                                     "uen": "' . $retun[tp_uen] . '"
