@@ -1068,13 +1068,8 @@ class Tpg_api_Model extends CI_Model {
                                         "start": "' . $crse_start_date . '",
                                         "end": "' . $crse_end_date . '"
                                     },
-                                    "scheduleInfo": "' . $schedule_info . '",
-                                    "courseVacancy": {
-                                        "code": "' . $crse_vacancy_code . '",
-                                        "description": "' . $crse_vacancy_description . '"
-                                    },
-                                    "modeOfTraining": "' . $modeoftraining . '",
-                                    "sequenceNumber": 0,
+                                    "scheduleInfo": "' . $schedule_info . '",                                    
+                                    "modeOfTraining": "' . $modeoftraining . '",                                   
                                     "courseAdminEmail": "' . $crs_admin_email . '",
                                     "scheduleInfoType": {
                                       "code": "01",
