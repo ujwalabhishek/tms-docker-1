@@ -1062,7 +1062,8 @@ class Tpg_api_Model extends CI_Model {
                                       "wheelChairAccess": ' . $wheel_chair_access . '
                                     },
                                     "action": "update",                                    
-                                    "threshold": 0                                    
+                                    "threshold": 0,
+                                    "intakeSize": ' . $crse_intake_size . ',
                                     "courseDates": {
                                         "start": "' . $crse_start_date . '",
                                         "end": "' . $crse_end_date . '"
