@@ -1030,7 +1030,7 @@ class Tpg_api_Model extends CI_Model {
                             ),
                         "salutationId" => 1,
                         "inTrainingProviderProfile" => true,
-                        "domainAreaOfPractice" => "$trainer->category_name",                                                                                                                        
+                        "domainAreaOfPractice" => "hhhh",                                                                                                                        
                         "linkedSsecEQAs" => array(
                             "description" => "",
                             "ssecEQA" => array(
@@ -1068,8 +1068,13 @@ class Tpg_api_Model extends CI_Model {
                                         "start": "' . $crse_start_date . '",
                                         "end": "' . $crse_end_date . '"
                                     },
-                                    "scheduleInfo": "' . $schedule_info . '",                                    
-                                    "modeOfTraining": "' . $modeoftraining . '",                                   
+                                    "scheduleInfo": "' . $schedule_info . '",
+                                    "courseVacancy": {
+                                        "code": "' . $crse_vacancy_code . '",
+                                        "description": "' . $crse_vacancy_description . '"
+                                    },
+                                    "modeOfTraining": "' . $modeoftraining . '",
+                                    "sequenceNumber": 0,
                                     "courseAdminEmail": "' . $crs_admin_email . '",
                                     "scheduleInfoType": {
                                       "code": "01",
