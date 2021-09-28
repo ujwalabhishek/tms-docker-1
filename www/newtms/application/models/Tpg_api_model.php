@@ -1084,7 +1084,8 @@ class Tpg_api_Model extends CI_Model {
                                         "closing": "' . $reg_close_date . '",
                                         "opening": "' . $reg_open_date . '"                                       
                                     },
-                                    "registeredUserCount": ""                                  
+                                    "registeredUserCount": "",
+                                    "linkCourseRunTrainer": ' . json_encode($trainers) . '
                                   },
                                   "trainingProvider": {
                                     "uen": "' . $retun[tp_uen] . '"
