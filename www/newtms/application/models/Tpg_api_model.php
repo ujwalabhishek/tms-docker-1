@@ -1030,7 +1030,7 @@ class Tpg_api_Model extends CI_Model {
                             ),
                         "salutationId" => 1,
                         "inTrainingProviderProfile" => true,
-                        "domainAreaOfPractice" => "hhhh",                                                                                                                        
+                        "domainAreaOfPractice" => "$trainer->category_name",                                                                                                                        
                         "linkedSsecEQAs" => array(
                             "description" => "",
                             "ssecEQA" => array(
@@ -1095,14 +1095,14 @@ class Tpg_api_Model extends CI_Model {
                             }';
         //print_r($tpg_course_run_json);exit;
         
-        echo "Timestamp of API Call :".$today = date("Y-m-d H:i:s");        
+        //echo "Timestamp of API Call :".$today = date("Y-m-d H:i:s");        
         $api_version = 'v1.3';
         $url = "https://" . $retun[domain] . "/courses/runs/". $tpg_course_run_id;
-        echo "Request URL : ".$url; 
-        echo "Full Request Payload : ".print_r($tpg_course_run_json, true);
+        //echo "Request URL : ".$url; 
+        //echo "Full Request Payload : ".print_r($tpg_course_run_json, true);
         $response = $this->curl_request('POST', $url, $tpg_course_run_json, $api_version);        
         $obj = json_decode($response); 
-        echo "Full Response Payload :".print_r($obj, true); exit;
+        //echo "Full Response Payload :".print_r($obj, true); exit;
         $this->session->set_flashdata('resp', $obj);
         $this->session->set_flashdata('cid', $class_id);        
         return $obj;                       
