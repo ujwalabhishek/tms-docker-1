@@ -419,6 +419,9 @@ class Classes extends CI_Controller {
             } else {
                 $course_details = $this->coursemodel->get_course_detailse($course_id);
                 $data['tpg_crse'] = $course_details->tpg_crse;
+                //Update class API                
+                $data['crs_admin_email_val'] = $course_details->crse_admin_email;
+                $data['reference_num'] = $course_details->reference_num;
                 $data['classid'] = $class_id;
                 $data['coursename'] = $this->coursemodel->course_name($course_id);
                 $data['classes'] = $this->classmodel->get_course_class_for_edit($tenant_id, $course_id);
@@ -456,7 +459,11 @@ class Classes extends CI_Controller {
                 $data['label'] = $label;
                 $data['course_duration'] = $this->coursemodel->get_course_detailse($course_id)->crse_duration;
                 $data['class_schedule'] = $this->classmodel->get_all_class_schedule($tenant_id, $class_id);
-                $def_assmnt = $this->classmodel->get_def_assessment($tenant_id, $class_id, $class->assmnt_type);
+                if($data['tpg_crse'] == 1) {
+                    $def_assmnt = $this->classmodel->get_def_assessment_new($tenant_id, $class_id, $class->assmnt_type);
+                } else {
+                    $def_assmnt = $this->classmodel->get_def_assessment($tenant_id, $class_id, $class->assmnt_type);
+                }
                 if ($class->assmnt_type == 'DEFAULT') {
                     $data['DefAssLoc'] = ($def_assmnt->assmnt_venue == 'OTH') ? 'Others (' . $def_assmnt->assmnt_venue_oth . ')' : $this->coursemodel->get_metadata_on_parameter_id($def_assmnt->assmnt_venue);
                     $data['DefAssId'] = $this->classmodel->get_trainer_names($def_assmnt->assessor_id);
@@ -490,7 +497,12 @@ class Classes extends CI_Controller {
         $data['tenant_id'] = $tenant_id;
         $data['tax_error'] = $tax_error;
         $data['page_title'] = 'Class';
-        $data['main_content'] = 'class/editclass';
+        //Update class API
+        if ($data['tpg_crse'] == '0') {
+            $data['main_content'] = 'class/editclass';
+        } else {
+            $data['main_content'] = 'class/editclass_tpg';
+        }
         //$data['sideMenuData'] = $this->sideMenu;
         $this->load->view('layout', $data);
     }
@@ -538,7 +550,11 @@ class Classes extends CI_Controller {
         $data['TrainingAide'] = $this->classmodel->get_course_manager_names($class->training_aide);
         $data['SalesExec'] = $this->classmodel->get_class_salesexec($tenant_id, $class->course_id, $class->sales_executive);
         $data['class_schedule'] = $this->classmodel->get_all_class_schedule($tenant_id, $class_id);
-        $def_assmnt = $this->classmodel->get_def_assessment_new($tenant_id, $class_id, $class->assmnt_type);
+        if($coursedetails->tpg_crse == 1) {
+            $def_assmnt = $this->classmodel->get_def_assessment_new($tenant_id, $class_id, $class->assmnt_type);
+        } else {
+            $def_assmnt = $this->classmodel->get_def_assessment($tenant_id, $class_id, $class->assmnt_type);
+        }
         if ($class->assmnt_type == 'DEFAULT') {
             $data['DefAssLoc'] = ($def_assmnt->assmnt_venue == 'OTH') ? 'Others (' . $def_assmnt->assmnt_venue_oth . ')' : $this->coursemodel->get_metadata_on_parameter_id($def_assmnt->assmnt_venue);
             $data['DefAssId'] = $this->classmodel->get_trainer_names($def_assmnt->assessor_id);
@@ -593,7 +609,7 @@ class Classes extends CI_Controller {
         $this->form_validation->set_rules('display_class', 'Check box', 'trim');
         $this->form_validation->set_rules('languages', 'Languages', 'required');
         $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
-        $this->form_validation->set_rules('tpg_course_run_id', 'TPG Course Run ID', 'trim|numeric');
+        //$this->form_validation->set_rules('tpg_course_run_id', 'TPG Course Run ID', 'trim|numeric');
         $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
         $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
         $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'required');
@@ -631,6 +647,95 @@ class Classes extends CI_Controller {
         redirect("classes?course_id=" . $this->input->post('course_id'));
     }
 
+    /**
+     * this function to update the edited class
+     */
+    public function update_class_tpg() {
+        $data['sideMenuData'] = fetch_non_main_page_content(); // added by shubhranshu
+        $tenant_id = $this->tenant_id;
+        $user_id = $this->session->userdata('userDetails')->user_id;
+        $role_id = $this->session->userdata('userDetails')->role_id; // added by shubhranshu for fetching role id
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('class_name', 'Class Name', 'max_length[50]');
+        $this->form_validation->set_rules('start_date', 'Start Date', 'required');
+        $this->form_validation->set_rules('end_date', 'End Date', 'required');
+        $this->form_validation->set_rules('total_seats', 'Total Seats', 'required|max_length[10]|integer');
+        $this->form_validation->set_rules('minimum_students', 'Minimum Students', 'max_length[10]|integer');
+        $this->form_validation->set_rules('fees', 'Fees', 'required|numeric');
+        $this->form_validation->set_rules('class_discount', 'Class Discount', 'numeric');
+        $this->form_validation->set_rules('display_class', 'Check box', 'trim');
+        $this->form_validation->set_rules('languages', 'Languages', 'required');
+        $this->form_validation->set_rules('sessions_perday', 'Radio', 'trim');
+        $this->form_validation->set_rules('payment_details', 'Radio', 'trim');
+        $this->form_validation->set_rules('cls_venue', 'Classroom Venue', 'required');
+        $this->form_validation->set_rules('control_5[]', 'Class Room Trainer', 'required');
+        $this->form_validation->set_rules('survey_language', 'survey_language', 'required|alpha');
+
+        //Modified by abdulla according to API
+        $this->form_validation->set_rules('venue_room', 'Venue Room', 'required|max_length[255]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('venue_unit', 'Venue Unit', 'required|max_length[5]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('venue_block', 'Venue Block', 'max_length[10]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('venue_floor', 'Venue Floor', 'required|max_length[3]|numeric');
+        $this->form_validation->set_rules('venue_street', 'Venue Street', 'max_length[32]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('venue_building', 'Venue Building', 'max_length[66]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('venue_postalcode', 'Venue Postal Code', 'required|max_length[6]|numeric');
+
+        $this->form_validation->set_rules('crs_admin_email', 'Course Admin Email', 'trim|required|valid_email|max_length[30]');
+
+        if ($this->form_validation->run() == FALSE) {
+            //echo "bb"; exit;
+            $data['page_title'] = 'Class';
+            $data['main_content'] = 'class/editclass_tpg';
+            //$data['sideMenuData'] = $this->sideMenu;
+            $data['sideMenuData'] = fetch_non_main_page_content();
+            $this->load->view('layout', $data);
+        } else {
+            if ($role_id != 'ADMN') { // changed by shubhranshu for userdata issue
+                $start_date_timestamp = strtotime($this->input->post('start_date'));
+                $start_date_timestamp_hidden = strtotime($this->input->post('start_date_hidden'));
+                $today_date = strtotime(date('Y-m-d'));
+                if ($start_date_timestamp < $today_date && $start_date_timestamp != $start_date_timestamp_hidden) {
+                    $tax_error = "You donot have permission to update class with start date lesser than today's date. Please get in touch with your Administrator to make this change.";
+                    $this->edit_class($tax_error);
+                    return;
+                }
+            }
+
+            $class_id = $this->input->post('class_hid');
+            $result = $this->classmodel->get_class_info($class_id);
+            $previous_data = json_encode($result);
+            $tpg_response = $this->tpgModel->update_courserun_tpg();
+
+            if ($tpg_response->status == 200) {                
+                $result_tpg = $this->classmodel->update_class_tpg($tenant_id, $user_id);
+                if ($result_tpg == TRUE) {
+                    user_activity(5, $class_id, $previous_data);
+                    $this->session->set_flashdata("success", "Class updated successfully.");
+                } else {
+                    $this->session->set_flashdata("error", "Unable to update class. Please try again later.");
+                }
+                redirect("classes?course_id=" . $this->input->post('course_id'));
+            } else {
+                if ($tpg_response->status == 400) {
+                    $this->session->set_flashdata('error', "Oops! Bad request!");
+                } elseif ($tpg_response->status == 403) {
+                    $this->session->set_flashdata('error', "Oops! Forbidden. Authorization information is missing or invalid.");
+                } elseif ($tpg_response->status == 404) {
+                    $this->session->set_flashdata('error', "Oops! Not Found!");
+                } elseif ($tpg_response->status == 500) {
+                    $this->session->set_flashdata('error', "Oops! Internal Error!!");
+                } else {
+                    $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
+                }
+
+                $data['error'] = $tpg_response->error->details;                
+                $data['main_content'] = 'class/editclass_tpg';
+                $this->load->view('layout', $data);
+            }
+            //redirect("classes?course_id=" . $this->input->post('course_id'));
+        }
+    }    
+    
     /**
      * function to export booked seats
      */

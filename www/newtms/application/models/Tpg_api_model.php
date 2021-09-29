@@ -948,5 +948,164 @@ class Tpg_api_Model extends CI_Model {
         $attn_resp = json_decode($response);
         return $attn_resp;
     }
+    
+    /*
+     * Created by abdulla nofal
+     * Update class API
+     */
+
+    public function update_courserun_tpg() {
+        //Training Partner
+        $tenant_id = $this->tenant_id;        
+        $tenant_details = fetch_tenant_details($tenant_id);
+        $trainingPartnerUEN = $tenant_details->comp_reg_no;
+        
+        extract($_POST);
+        $class_id = $this->input->post('class_hid');
+        $tpg_course_run_id = $this->input->post('tpg_crse_run_id');
+        $crse_ref_no = $this->input->post('crse_ref_no');        
+        $crs_admin_email = $this->input->post('crs_admin_email'); //Course admin email is under course run level that can be received the email from 'QR code Attendance Taking','Course Attendance with error' and 'Trainer information not updated'                
+        $ssg_data = $this->getCourseByRunId($tpg_course_run_id);
+        //print_r($ssg_data);exit;
+        $modeoftraining = $ssg_data->data->course->run->modeOfTraining;
+        $reg_open_date = $ssg_data->data->course->run->registrationOpeningDate;
+        $reg_close_date = $ssg_data->data->course->run->registrationClosingDate;
+        $crse_start_date = $ssg_data->data->course->run->courseStartDate;
+        $crse_end_date = $ssg_data->data->course->run->courseEndDate;
+        $schedule_info_des = 'Description'; //Course run schedule info Description
+        $schedule_info = $ssg_data->data->course->run->scheduleInfo;
+        //$schedule_info = date('dM', strtotime($crse_start_date)) . ' : ' . date('D', strtotime($crse_start_date)) . ' / ' . date('h:i A', strtotime($this->input->post('start_time'))) . ' - ' . date('h:i A', strtotime($this->input->post('end_date')));
+        $venue_building = $this->input->post('venue_building');
+        $venue_block = $this->input->post('venue_block');
+        $venue_street = $this->input->post('venue_street');
+        $venue_floor = $this->input->post('venue_floor');
+        $venue_unit = $this->input->post('venue_unit');
+        $venue_postalcode = $this->input->post('venue_postalcode');
+        $venue_room = $this->input->post('venue_room');
+        //Added by abdulla
+        $wheel_chair_access = $this->input->post('wheel_chair_hidden');
+        if($wheel_chair_access == 0) {
+            $wheel_chair_access = 'false';
+        } else {
+            $wheel_chair_access = 'true';
+        }
+        $crse_intake_size = $this->input->post('total_seats'); //Course run intake size. It's maximum pax for a class
+        $crse_vacancy_code = "A"; //A - Available ,F - Full, L - Limited Vacancy
+        $crse_vacancy_description = "Available"; /////A - Available ,F - Full, L - Limited Vacancy
+        
+        if (!empty($control_4)) {
+            $control_4 = implode(",", $control_4);
+        }
+        if (!empty($control_5)) {
+            $control_5 = implode(",", $control_5);
+        }
+        if (!empty($control_6)) {
+            $control_6 = implode(",", $control_6);
+        }
+        if (!empty($control_7)) {
+            $control_7 = implode(",", $control_7);
+        }
+        if (!empty($control_3)) {
+            $control_3 = implode(",", $control_3);
+        }
+                
+        //print_r($session_arr);exit;
+        $ClassTrainers = $this->get_trainer_details($control_5);
+        //print_r($ClassTrainers);exit;
+        if (!empty($ClassTrainers)) {            
+            foreach ($ClassTrainers as $trainer) {
+                $trainers[] = array("trainer" => array(
+                        "id" => "",
+                        "name" => "$trainer->first_name",
+                        "email" => "$trainer->off_email_id",
+                        "photo" => array(
+                                "name" => "",
+                                "content" => ""
+                            ),
+                        "experience" => "",
+                        "indexNumber" => 0,
+                        "linkedInURL" => "",
+                        "trainerType" => array(
+                                "code" => "2",
+                                "description" => "New"
+                            ),
+                        "salutationId" => 1,
+                        "inTrainingProviderProfile" => true,
+                        "domainAreaOfPractice" => "$trainer->category_name",                                                                                                                        
+                        "linkedSsecEQAs" => array(
+                            "description" => "",
+                            "ssecEQA" => array(
+                                "code" => ""
+                            )
+                        )
+                    )
+                );                
+            }
+        }
+                        
+        $retun = $this->correct_live_dev_api_data($crse_ref_no, $trainingPartnerUEN);
+
+        $tpg_course_run_json = '{
+                                "course": {
+                                  "run": {
+                                    "file": {
+                                        "Name": "",
+                                        "content": ""
+                                      },
+                                    "venue": {
+                                      "room": "' . $venue_room . '",
+                                      "unit": "' . $venue_unit . '",
+                                      "block": "' . $venue_block . '",
+                                      "floor": "' . $venue_floor . '",
+                                      "street": "' . $venue_street . '",
+                                      "building": "' . $venue_building . '",
+                                      "postalCode": ' . $venue_postalcode . ',
+                                      "wheelChairAccess": ' . $wheel_chair_access . '
+                                    },
+                                    "action": "update",                                    
+                                    "threshold": 0,
+                                    "intakeSize": ' . $crse_intake_size . ',
+                                    "courseDates": {
+                                        "start": "' . $crse_start_date . '",
+                                        "end": "' . $crse_end_date . '"
+                                    },
+                                    "scheduleInfo": "' . $schedule_info . '",
+                                    "courseVacancy": {
+                                        "code": "' . $crse_vacancy_code . '",
+                                        "description": "' . $crse_vacancy_description . '"
+                                    },
+                                    "modeOfTraining": "' . $modeoftraining . '",
+                                    "sequenceNumber": 0,
+                                    "courseAdminEmail": "' . $crs_admin_email . '",
+                                    "scheduleInfoType": {
+                                      "code": "01",
+                                      "description": "Description"
+                                    },
+                                    "registrationDates": {
+                                        "closing": "' . $reg_close_date . '",
+                                        "opening": "' . $reg_open_date . '"                                       
+                                    },
+                                    "registeredUserCount": "",
+                                    "linkCourseRunTrainer": ' . json_encode($trainers) . '
+                                  },
+                                  "trainingProvider": {
+                                    "uen": "' . $retun[tp_uen] . '"
+                                  },
+                                  "courseReferenceNumber": "' . $retun[ref_no] . '"
+                                }
+                            }';
+        //print_r($tpg_course_run_json);exit;
+                    
+        $api_version = 'v1.3';
+        $url = "https://" . $retun[domain] . "/courses/runs/". $tpg_course_run_id;
+        
+        $response = $this->curl_request('POST', $url, $tpg_course_run_json, $api_version);        
+        $obj = json_decode($response); 
+        
+        $this->session->set_flashdata('resp', $obj);
+        $this->session->set_flashdata('cid', $class_id);        
+        
+        return $obj;                       
+    }
 
 }

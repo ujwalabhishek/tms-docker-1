@@ -26,9 +26,20 @@ if (!empty($tax_error)) {
     $siteurl = '<?php echo site_url(); ?>';
     $course_duration = '<?php echo $course_duration; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/editclass.js?0.01"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/editclass_tpg.js?0.01"></script>
 
 <div class="col-md-10">
+    <?php echo validation_errors('<div class="error1">', '</div>');
+    if (!empty($error)) {
+        ?>
+        <div class="alert alert-danger dang" style="text-align:left;">
+            <?php
+            foreach ($error as $err) {
+                echo 'Field Name : ' . $err->field . '</br>Message : ' . $err->message . '</br></br>';
+            }
+            ?>
+        </div>
+<?php } ?>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class.png" /> Class - Edit</h2>    
     <div class="table-responsive">
         <?php
@@ -90,7 +101,7 @@ if (!empty($tax_error)) {
     <?php
     if (!empty($class)) {
         $atr = 'id="EditClassForm" name="EditClassForm"';
-        echo form_open("classes/update_class", $atr);
+        echo form_open("classes/update_class_tpg", $atr);
         ?>  
         <h2 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company-detail.png" /> Class Details</h2>
         <div class="bs-example" id="mks">
@@ -128,84 +139,32 @@ if (!empty($tax_error)) {
                                 <span id="class_name_err"></span>
                             </td>
                             <td width="18%" class="td_heading">Start Date & Time:<span class="required">*</span></td>
-                            <td width="19%">
-                                <?php
-                                if (!empty($label['start'])) {
-                                    $style = 'width:45%;display:none';
-                                    $style_attr = form_label(date('d-m-Y', strtotime($class->class_start_datetime)));
-                                } else {
-                                    $style = 'width:45%;';
-                                    $style_attr = '';
-                                }
-                                $start_date = array(
-                                    'name' => 'start_date',
-                                    'id' => 'start_date',
-                                    'readonly' => 'readonly',
-                                    'style' => $style,
-                                    'value' => date('d-m-Y', strtotime($class->class_start_datetime)),
-                                );
-
-                                $start_date_hidden = array(
-                                    'name' => 'start_date_hidden',
-                                    'id' => 'start_date_hidden',
-                                    'readonly' => 'readonly',
-                                    'style' => "display:none",
-                                    'value' => date('d-m-Y', strtotime($class->class_start_datetime)),
-                                );
-                                echo form_input($start_date_hidden);
-
-                                echo form_input($start_date);
-                                echo $style_attr;
-                                if (!empty($label['start'])) {
-                                    $style = 'width:45%;display:none';
-                                    $style_attr = form_label(date('H:i', strtotime($class->class_start_datetime)));
-                                } else {
-                                    $style = 'width:45%;float:right;';
-                                    $style_attr = '';
-                                }
-                                $start_time = array(
-                                    'name' => 'start_time',
-                                    'id' => 'start_time',
-                                    'readonly' => 'readonly',
-                                    'style' => $style,
-                                    'value' => date('H:i', strtotime($class->class_start_datetime)),
-                                );
-                                echo form_input($start_time);
-                                echo '&nbsp;&nbsp;' . $style_attr;
+                            <td width="19%">                                
+                                <?php 
+                                
+                                    echo date('d-m-Y h:i A', strtotime($class->class_start_datetime)); 
+                                    
+                                    $start_date = array(
+                                        'name' => 'start_date',
+                                        'id' => 'start_date',
+                                        'type' => 'hidden',                                  
+                                        'value' => date('d-m-Y', strtotime($class->class_start_datetime)),
+                                    );
+                                    echo form_input($start_date);                                
                                 ?>
-                                &nbsp; 
-                                <div>
-                                    <span style="max-width:45%;" id="start_date_err"></span>
-                                    <span id="start_time_err" style="max-width:45%;float:right;"></span>
-                                </div>
                             </td>
                             <td width="14%" class="td_heading">End Date & Time:<span class="required">*</span></td>
                             <td width="18%">
-                                <?php
+                                <?php echo date('d-m-Y h:i A', strtotime($class->class_end_datetime)); 
+                                
                                 $end_date = array(
                                     'name' => 'end_date',
                                     'id' => 'end_date',
-                                    'readonly' => 'readonly',
-                                    'style' => 'width:45%;',
+                                    'type' => 'hidden',                                   
                                     'value' => date('d-m-Y', strtotime($class->class_end_datetime)),
                                 );
-                                echo form_input($end_date);
+                                echo form_input($end_date);                                
                                 ?>
-                                <?php
-                                $end_time = array(
-                                    'name' => 'end_time',
-                                    'id' => 'end_time',
-                                    'readonly' => 'readonly',
-                                    'style' => 'width:45%;float:right;',
-                                    'value' => date('H:i', strtotime($class->class_end_datetime)),
-                                );
-                                echo form_input($end_time);
-                                ?>
-                                &nbsp; 
-                                <div>
-                                    <span style="max-width:45%;" id="end_date_err"></span>
-                                    <span id="end_time_err" style="max-width:100%;float:right;"></span>
-                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -326,6 +285,38 @@ if (!empty($tax_error)) {
                                 echo form_input($coll_date);
                                 ?>
                                 &nbsp;</td>
+                        </tr>                        
+                        <tr>                            
+                            <tr>
+                                <td class="td_heading">TPGateway Course Run ID:</td>
+                                <td colspan="5"><label class="label_font" id='crs_run_id'><?php echo $class->tpg_course_run_id; ?></label>
+                                <input type="hidden" id="tpg_crse_run_id" name = "tpg_crse_run_id" value="<?php echo $class->tpg_course_run_id; ?>"/>
+                                <input type="hidden" id="crse_ref_no" name = "crse_ref_no" value="<?php echo $reference_num; ?>"/>
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_heading">TPGateway QR-Code Link:</td>
+                                <td colspan="5"><label class="label_font" id='crs_run_id'><a href='<?php echo $class->tpg_qr_code; ?>' target="_blank"><?php echo $class->tpg_qr_code; ?></a></label></td>
+                            </tr>
+                        </tr>
+                        <tr>
+                            <td class="td_heading">Course Admin Email:<span class="required">*</span></td>
+                            <td colspan='5'> <label class="label_font"></label>
+                                <label class="label_font">
+                                    <?php
+                                    $crs_admin_email = array(
+                                        'name' => 'crs_admin_email',
+                                        'id' => 'crs_admin_email',
+                                        'value' => $crs_admin_email_val,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case",
+                                        "readonly" => "readonly"
+                                    );
+                                    echo form_input($crs_admin_email);
+                                    ?>
+                                </label>
+                                <span id="crs_admin_email_err"></span>
+                            </td>                            
                         </tr>                        
                         <tr>
                             <td colspan="2" class="td_heading">  
@@ -490,6 +481,155 @@ if (!empty($tax_error)) {
                             </td>
                         </tr>
                         <tr>
+                            <td class="td_heading">Venue Room:<span class="required">*</span></td>
+                            <td colspan='3'>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_room = array(
+                                        'name' => 'venue_room',
+                                        'id' => 'venue_room',
+                                        'value' => $class->venue_room,
+                                        'maxlength' => 200,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_room);
+                                    ?>
+                                </label>
+                                <span id="venue_room_err"></span>
+                            </td>
+                            <td class="td_heading"> Survey Language:<span class="required">*</span></td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $survey_language = array();
+                                    $survey_language[''] = 'Please Choose';
+                                    $survey_language['EL'] = 'EL- English';
+                                    $survey_language['MN'] = 'MN- Mandarin';
+                                    $survey_language['MY'] = 'MY- Malay';
+                                    $survey_language['TM'] = 'TM- Tamil';
+                                    echo form_dropdown('survey_language', $survey_language, $class->survey_language, 'id="survey_language"');
+                                    ?>
+                                </label>
+                                <span id="survey_language_err"></span>
+                            </td>
+                        </tr>                
+                        <tr>
+                            <td class="td_heading">Venue Unit:<span class="required">*</span></td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_unit = array(
+                                        'name' => 'venue_unit',
+                                        'id' => 'venue_unit',
+                                        'value' => $class->venue_unit,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_unit);
+                                    ?>
+                                </label>
+                                <span id="venue_unit_err"></span>
+                            </td>
+                            <td class="td_heading"> Venue Block:</td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_block = array(
+                                        'name' => 'venue_block',
+                                        'id' => 'venue_block',
+                                        'value' => $class->venue_block,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_block);
+                                    ?>
+                                </label>
+                                <span id="venue_block_err"></span>
+                            </td>
+                            <td class="td_heading"> Venue Floor:<span class="required">*</span></td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_floor = array(
+                                        'name' => 'venue_floor',
+                                        'id' => 'venue_floor',
+                                        'value' => $class->venue_floor,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_floor);
+                                    ?>
+                                </label>
+                                <span id="venue_floor_err"></span>
+                            </td>                    
+                        </tr>
+                        <tr>  
+                            <td class="td_heading">Venue Street:</td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_street = array(
+                                        'name' => 'venue_street',
+                                        'id' => 'venue_street',
+                                        'value' => $class->venue_street,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_street);
+                                    ?>
+                                </label>
+                                <span id="venue_street_err"></span>
+                            </td>
+                            <td class="td_heading"> Venue Building:</td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_building = array(
+                                        'name' => 'venue_building',
+                                        'id' => 'venue_building',
+                                        'value' => $class->venue_building,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_building);
+                                    ?>
+                                </label>
+                                <span id="venue_building_err"></span>
+                            </td>
+                            <td class="td_heading">Venue Postal Code:<span class="required">*</span></td>
+                            <td>
+                                <label class="label_font">
+                                    <?php
+                                    $venue_postalcode = array(
+                                        'name' => 'venue_postalcode',
+                                        'id' => 'venue_postalcode',
+                                        'value' => $class->venue_postalcode,
+                                        'maxlength' => 50,
+                                        "class" => "upper_case"
+                                    );
+                                    echo form_input($venue_postalcode);
+                                    ?>
+                                </label>
+                                <span id="venue_postalcode_err"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" class="td_heading">  
+                                <?php
+                                $wheel_chair_checked = ($class->wheel_chair_access == 1) ? true : false;
+                                $wheel_chair_accessible = array(
+                                    'name' => 'wheel_chair_accessible',
+                                    'id' => 'wheel_chair_accessible',
+                                    'checked' => $wheel_chair_checked,
+                                    'onclick' =>'javascript:wheel_fun()'
+                                );                                
+                                echo form_checkbox($wheel_chair_accessible, '0');
+                                ?>
+                                &nbsp;The course run location is wheel chair accessible
+                                <input type="hidden" id="wheel_chair_hidden" name="wheel_chair_hidden" value="<?php echo $class->wheel_chair_access; ?>">
+                            </td>
+                        </tr>
+                        <tr>
                             <td class="td_heading">Class Room Trainer:<span class="required">*</span></td>
                             <td><?php
                                 $cls_trainer_options = array();
@@ -550,7 +690,7 @@ if (!empty($tax_error)) {
         <div class="row marketing">
             <div class="col-lg-6">
                 <span id="dis-error"></span>
-                <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png" /> Class / Lab Schedule <span class="label label-default push_right black-btn"><a class="small_text" rel="modal:open" href="#ex1"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Class / Lab Schedule</a></span></h4> 
+                <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png" /> Class / Lab Schedule</h4> 
                 <p>
                 <div class="scroll_schedule schld_div">
 
@@ -561,8 +701,7 @@ if (!empty($tax_error)) {
                                     <th>Class Date</th>
                                     <th>Session Type</th>
                                     <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Action</th>
+                                    <th>End Time</th>                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -572,7 +711,7 @@ if (!empty($tax_error)) {
                                 $session_arr = array('S1' => 'Session 1', 'BRK' => 'Break', 'S2' => 'Session 2');
                                 foreach ($class_schedule as $row) {
                                     $data_arr[$row['class_date']][] = array(
-                                        'session' => $row['session_type_id'],
+                                        'session' => $row['session_type_id'],                                        
                                         'start' => $row['session_start_time'],
                                         'end' => $row['session_end_time']
                                     );
@@ -582,26 +721,19 @@ if (!empty($tax_error)) {
                                     //$x[]= $d_cnt;
                                     $rowspan = count($v);
                                     $schld_date = date('d-m-Y', strtotime($k));
-                                    $rowspan_td = '<td rowspan="' . $rowspan . '">' . $schld_date . '</td>';
-                                    $delete = '<td class="a_button">
-                                       
-                                    <a class="small_text delete_color schld_delete" href="#ex9" rel="modal:open"><input type="button" value="Delete" style="color:#000000; text-decoration:none;" /></a>
-                                </td>';
-                                    foreach ($v as $r) {
-                                        $delete_td = ($rowspan == 1) ? $delete : '<td></td>';
+                                    $rowspan_td = '<td rowspan="' . $rowspan . '">' . $schld_date . '</td>';                                    
+                                    foreach ($v as $r) {                                        
                                         $start_time = date('H:i ', strtotime($r['start']));
                                         $end_time = date('H:i', strtotime($r['end']));
                                         echo '<tr class = "schld_tr' . $d_cnt . ' schlddate_' . $schld_date . '" data-session = "' . $r['session'] . '" data-date = "' . $schld_date . '"  data-count = "' . $d_cnt . '">
                                     <input type = "hidden" value = "' . $schld_date . '" name = "schlded_date[]" class = "schlded_date">
-                                    <input type = "hidden" value = "' . $r['session'] . '" name = "schlded_session_type[]" class = "schlded_session_type">
+                                    <input type = "hidden" value = "' . $r['session'] . '" name = "schlded_session_type[]" class = "schlded_session_type">                                    
                                     <input type = "hidden" value = "' . $start_time . '" name = "schlded_start_time[]" class = "schlded_start_time">
                                     <input type = "hidden" value = "' . $end_time . '" name = "schlded_end_time[]" class = "schlded_end_time">
                                     ' . $rowspan_td . '
                                     <td>' . $session_arr[$r['session']] . ' </td>
                                     <td>' . $start_time . ' </td>
-                                    <td>' . $end_time . ' </td>
-                                    ' . $delete_td . '
-                                    </tr>';
+                                    <td>' . $end_time . ' </td></tr>';
                                         $rowspan_td = '';
                                         $d_cnt++;
                                         $rowspan--;
@@ -616,16 +748,14 @@ if (!empty($tax_error)) {
             </div>
 
             <div class="col-lg-6">
-                <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png" /> Assessment Schedule <span class="label label-default push_right  black-btn"><a class="small_text alert_message1" rel="modal:open" href="#ex2"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Assessment Schedule</a></span>&nbsp;&nbsp;<span class="label label-default push_right moving_right  black-btn alert_message2" style="margin-right:5px;"><a href="#ex3" rel="modal:open" class="small_text ex3_check"><span class="glyphicon glyphicon-chevron-left"></span> Default Schedule</a></span></h4>
+                <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png" /> Assessment Schedule</h4>
                 <p>
                 <div class="scroll_schedule def_schld_div">
                     <div class="table-responsive table-scroll-x">
                         <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th width="8%">Action</th>
-                                    <th width="18%">Assmnt. Date</th>
-                                    <th width="30%">Trainee Name</th>
+                                <tr>                                    
+                                    <th width="18%">Assmnt. Date</th>                                    
                                     <th width="30%">Assessor</th>
                                     <th width="20%">Assmnt. Time</th>
                                     <th width="20%">Assmnt. Venue</th>
@@ -645,15 +775,7 @@ if (!empty($tax_error)) {
                                     <input type="hidden" value="<?php echo $end_date; ?>" name="def_schlded_end_time" class="def_schlded_end_time">
                                     <input type="hidden" value="<?php echo $def_assessment->assessor_id; ?>" name="def_schlded_assessor" class="def_schlded_assessor">
                                     <input type="hidden" value="<?php echo $def_assessment->assmnt_venue; ?>" name="def_schlded_venue" class="def_schlded_venue">
-                                    <input type="hidden" value="<?php echo $def_assessment->assmnt_venue_oth; ?>" name="def_schlded_venue_oth" class="def_schlded_venue_oth">
-                                    <td class="a_button">
-                                        <a class="small_text" rel="modal:open" href="#ex3">
-                                            <input type="button" value="E" style="color:#000000; text-decoration:none;" />
-                                        </a><br>
-                                        <a href="#ex9" rel="modal:open" class="small_text delete_color def_schld_delete">
-                                            <input type="button" value="D" style="color:#000000; text-decoration:none;" />
-                                        </a>
-                                    </td>
+                                    <input type="hidden" value="<?php echo $def_assessment->assmnt_venue_oth; ?>" name="def_schlded_venue_oth" class="def_schlded_venue_oth">                                    
                                     <td><?php echo $assess_date; ?></td>
                                     <td>All</td>
                                     <td><?php echo $DefAssId; ?></td>
@@ -678,17 +800,8 @@ if (!empty($tax_error)) {
                                         <input type="hidden" value="<?php echo $row['assessor_id']; ?>" name="assmnt_assessor[]" class="assmnt_assessor">
                                         <input type="hidden" value="<?php echo $row['assmnt_venue']; ?>" name="ass_venue[]" class="ass_venue">
 
-                                        <input type="hidden" value="<?php echo $row['assmnt_venue_oth']; ?>" name="ass_venue_oth[]" class="ass_venue_oth">
-                                        <td class="a_button">
-                                            <a class="small_text ass_edit" rel="modal:open" href="#ex2">
-                                                <input type="button" data-edit="<?php echo $cnt; ?>" value="E" style="color:#000000; text-decoration:none;" />
-                                            </a><br>
-                                            <a href="#ex9" rel="modal:open" class="small_text delete_color ass_delete">
-                                                <input type="button" data-del="<?php echo $cnt; ?>" value="D" style="color:#000000; text-decoration:none;" />
-                                            </a>
-                                        </td>
-                                        <td><?php echo $assess_date; ?></td>
-                                        <td><?php echo implode(', ', $row['trainee']); ?></td>
+                                        <input type="hidden" value="<?php echo $row['assmnt_venue_oth']; ?>" name="ass_venue_oth[]" class="ass_venue_oth">                                        
+                                        <td><?php echo $assess_date; ?></td>                                        
                                         <td><?php echo $row['DefAssId']; ?></td>
                                         <td><?php echo $start_time . ' - ' . $end_date; ?></td>
                                         <td><?php echo $row['DefAssLoc']; ?></td>
@@ -709,80 +822,9 @@ if (!empty($tax_error)) {
         <span class="required required_i">* Required Fields</span>
         <?php $deactivate_class = (!empty($label['deactivate'])) ? 'cancel_deactivate' : ''; ?>
         <div class="button_class">            
-            <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button>&nbsp; &nbsp; 
-            <a href="#ex8" rel="modal:open" class="small_text <?php echo $deactivate_class; ?> check_deactivate" data-class="<?php echo $this->input->post('class_id'); ?>"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Deactivate</button></a> &nbsp; &nbsp;            
-        </div>
-        <div class="modalassessment009911 modal-al" id="ex1" style="display:none;">
-            <h2 class="panel_heading_style">Class / Lab Schedule</h2>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <td class="td_heading">Date:<span class="required">*</span></td>
-                            <td><?php
-                                $schld_date = array(
-                                    'name' => 'schld_date',
-                                    'id' => 'schld_date',
-                                    'readonly' => 'readonly',
-                                    'value' => $this->input->post('schld_date'),
-                                );
-                                echo form_input($schld_date);
-                                ?>
-                                &nbsp; 
-                                <span id="schld_date_err"></span> </td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading">Session Type:<span class="required">*</span></td>
-                            <td>
-                                <?php
-                                $schld_session_type_options = array(
-                                    '' => 'Select',
-                                    'S1' => 'Session 1',
-                                    'BRK' => 'Break',
-                                    'S2' => 'Session 2'
-                                );
-                                echo form_dropdown('schld_session_type', $schld_session_type_options, $this->input->post('schld_session_type'), 'id = "schld_session_type" style = "width:50%"');
-                                ?>
-                                <span id="schld_session_type_err"></span> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading">Start Time:<span class="required">*</span></td>
-                            <td><?php
-                                $schld_start_time = array(
-                                    'name' => 'schld_start_time',
-                                    'id' => 'schld_start_time',
-                                    'readonly' => 'readonly',
-                                    'value' => $this->input->post('schld_start_time'),
-                                );
-                                echo form_input($schld_start_time);
-                                ?>
-                                &nbsp; 
-                                <span id="schld_start_time_err"></span></td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading">End Time:<span class="required">*</span></td>
-                            <td><?php
-                                $schld_end_time = array(
-                                    'name' => 'schld_end_time',
-                                    'id' => 'schld_end_time',
-                                    'readonly' => 'readonly',
-                                    'value' => $this->input->post('schld_end_time'),
-                                );
-                                echo form_input($schld_end_time);
-                                ?>
-                                &nbsp; 
-                                <span id="schld_end_time_err"></span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="clear:both;"></div><br>
-            <span class="required_i red">*Required Field</span>
-
-            <div class="button_class"><a href="#" rel="modal:close"><button class="btn btn-primary schld_save" type="button"><span class="glyphicon glyphicon-saved"></span>&nbsp;Save</button></a> &nbsp; &nbsp; <a href="#" rel="modal:close"><button class="btn btn-primary cls_schld_remove" type="button"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel/ Delete</button></a></div>
-            </p>
-        </div>
+            <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-retweet"></span>&nbsp;Update</button> &nbsp; &nbsp; 
+            <a href="#ex8" rel="modal:open" class="small_text <?php echo $deactivate_class; ?> check_deactivate" data-class="<?php echo $this->input->post('class_id'); ?>"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Delete</button></a> &nbsp; &nbsp;            
+        </div>        
         <div class="modalassessment00991 modal-al" id="ex4" style="display:none;">
             <h2 class="panel_heading_style">Reminders (Days)</h2>
             <div class="table-responsive">
@@ -834,93 +876,6 @@ if (!empty($tax_error)) {
             </div>
             </p>
         </div>
-        <div class="modalassessment099 modal-al" id="ex3" style="display:none;height:350px;">
-            <h2 class="panel_heading_style">Default Schedule</h2>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <td class="td_heading">Date:<span class="required">*</span></td>
-                            <td><?php
-                                $def_date = !empty($def_assessment->assmnt_date) ? date('d-m-Y', strtotime($def_assessment->assmnt_date)) : '';
-                                $def_date = array(
-                                    'name' => 'def_date',
-                                    'id' => 'def_date',
-                                    'readonly' => 'readonly',
-                                    'placeholder' => 'dd/mm/yyyy',
-                                    'value' => $def_date,
-                                );
-                                echo form_input($def_date);
-                                ?>
-                                &nbsp; 
-                                <span id="def_date_err"></span></td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading">Start Time:<span class="required">*</span></td>
-                            <td><?php
-                                $def_schld_start_time = array(
-                                    'name' => 'def_schld_start_time',
-                                    'id' => 'def_schld_start_time',
-                                    'readonly' => 'readonly',
-                                    'value' => date('H:i', strtotime($def_assessment->assmnt_start_time)),
-                                );
-                                echo form_input($def_schld_start_time);
-                                ?><span id="def_schld_start_time_err"></span></td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading">End Time:<span class="required">*</span></td>
-                            <td><?php
-                                $def_schld_end_time = array(
-                                    'name' => 'def_schld_end_time',
-                                    'id' => 'def_schld_end_time',
-                                    'readonly' => 'readonly',
-                                    'value' => date('H:i', strtotime($def_assessment->assmnt_end_time)),
-                                );
-                                echo form_input($def_schld_end_time);
-                                ?><span id="def_schld_end_time_err"></span></td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading">Select Assessor:<span class="required">*</span></td>
-                            <td><?php
-                                echo form_dropdown('control_9[]', $assessor_options, explode(',', $def_assessment->assessor_id), 'id = "control_9" style = "width:78%;" multiple = "multiple"');
-                                ?><span id="control_9_err"></span></td>
-                        </tr>
-                        <tr>
-                            <td class="td_heading">Venue:<span class="required">*</span></td>
-                            <td><?php
-                                $def_schld_venue = $lab_venue_options;
-                                echo form_dropdown('def_schld_venue', $def_schld_venue, $def_assessment->assmnt_venue, 'id = "def_schld_venue"');
-                                ?><span id="def_schld_venue_err"></span>
-                                <br/>
-
-                                &nbsp; &nbsp; &nbsp; &nbsp; 
-
-                                <span class="defven_oth_span" style="<?php echo ($def_assessment->assmnt_venue == 'OTH') ? '' : 'display:none;'; ?>">
-                                    <?php
-                                    $def_venue_oth = array(
-                                        'name' => 'def_venue_oth',
-                                        'id' => 'def_venue_oth',
-                                        'maxlength' => '250',
-                                        'style' => 'width:220px;',
-                                        'class' => 'upper_case',
-                                        'value' => $def_assessment->assmnt_venue_oth,
-                                    );
-                                    echo form_input($def_venue_oth);
-                                    ?>
-                                </span>
-                                <br>
-                                <span id="def_venue_oth_err" class="def_venue_oth_err"></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <br>
-            <div class="button_class" ><a href="#" rel="modal:close"><button class="btn btn-primary def_save" type="button"><span class="glyphicon glyphicon-saved"></span>&nbsp;Save</button></a> &nbsp; &nbsp; <a href="#" rel="modal:close"><button class="btn btn-primary def_schld_remove" type="button"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel/ Delete</button></a></div>
-            <span class="required_i red">*Required Field</span>
-            </p>
-        </div>
-
         <div class="modal1_5 modal-al" id="ex9" style="display:none;">
             <h2 class="panel_heading_style">Delete</h2>
             Are you sure you want to delete this schedule?  <br>
@@ -990,123 +945,9 @@ if (!empty($tax_error)) {
     }
     ?>
 </div>
-<div class="modalassessment" id="ex2" style="display:none;height:420px;">
-    <p>
-    <h2 class="panel_heading_style">Assessment Schedule</h2>
-    <table class="table table-striped">
-        <tbody>
-            <tr>
-                <td class="td_heading">Date:<span class="red">*</span></td>
-                <td>
-                    <?php
-                    $ass_date = array(
-                        'name' => 'ass_date',
-                        'id' => 'ass_date',
-                        'readonly' => 'readonly',
-                        'placeholder' => 'dd/mm/yyyy',
-                        'value' => '',
-                    );
-                    echo form_input($ass_date);
-                    ?>
-                    <span id="ass_date_err"></span>
-                </td>
-            </tr>
-            <tr>
-                <td class="td_heading">Start Time:<span class="red">*</span></td>
-                <td>
-                    <?php
-                    $ass_start_time = array(
-                        'name' => 'ass_start_time',
-                        'id' => 'ass_start_time',
-                        'readonly' => 'readonly',
-                        'value' => $this->input->post('ass_start_time'),
-                    );
-                    echo form_input($ass_start_time);
-                    ?>
-                    <span id="ass_start_time_err"></span>
-                </td>
-            </tr>
-            <tr>
-                <td class="td_heading">End Time:<span class="red">*</span></td>
-                <td>
-                    <?php
-                    $ass_end_time = array(
-                        'name' => 'ass_end_time',
-                        'id' => 'ass_end_time',
-                        'readonly' => 'readonly',
-                        'value' => $this->input->post('ass_end_time'),
-                    );
-                    echo form_input($ass_end_time);
-                    ?>
-                    <span id="ass_end_time_err"></span>
-                </td>
-            </tr>
-            <tr>
-                <td class="td_heading">Select Assessor:<span class="red">*</span></td>
-                <td><?php
-                    $cls_trainer_options = array();
-                    $cls_trainer_options[''] = 'Select';
-
-                    foreach ($trainer as $k => $v):
-                        $cls_trainer_options[$k] = $v;
-                    endforeach;
-                    echo form_dropdown('control_8[]', $cls_trainer_options, '', 'id="control_8" style="width:78%;" multiple="multiple"');
-                    ?>
-                    <span id="control_8_err"></span>
-                </td>
-            </tr>
-            <tr>
-                <td class="td_heading">Select Trainees:<span class="red">*</span></td>
-                <td class="select_trainee">
-                </td>
-            </tr>
-            <tr>
-                <td class="td_heading">Venue:<span class="red">*</span></td>
-                <td>
-                    <?php
-                    $ass_venue_options[''] = 'Select';
-                    $cls_venue = fetch_metavalues_by_category_id(Meta_Values::LOCATION);
-                    foreach ($cls_venue as $val):
-                        $ass_venue_options[$val['parameter_id']] = $val['category_name'];
-                    endforeach;
-
-                    $ass_venue_options['OTH'] = 'Others';
-                    echo form_dropdown('ass_venue', $ass_venue_options, '', 'id="ass_venue" maxlength="250"');
-                    ?>
-                    <span id="ass_venue_err"></span>
-                    <br/>
-
-                    &nbsp; &nbsp; &nbsp; &nbsp; 
-                    <span class="assven_oth_span" style="display:none;">
-                        <?php
-                        $ass_venue_oth = array(
-                            'name' => 'ass_venue_oth',
-                            'id' => 'ass_venue_oth',
-                            'maxlength' => '250',
-                            'style' => 'width:220px;',
-                            'class' => 'upper_case',
-                            'maxlength' => '250',
-                            'value' => $class->ass_venue_oth,
-                        );
-                        echo form_input($ass_venue_oth);
-                        ?>
-                    </span>
-                    <br>
-                    <span id="ass_venue_oth_err" class="ass_venue_oth_err"></span>
-                    <input type="hidden" id="ass_editid"/>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div style="clear:both;"></div>
-    <span class="required_i red">*Required Field</span>
-    <br><br>
-    <div class="button_class"><a href="javascript:;" rel="modal:close"><button class="btn btn-primary ass_save" type="button"><span class="glyphicon glyphicon-saved"></span>&nbsp;Save</button></a> &nbsp; &nbsp; <a href="#" rel="modal:close"><button class="btn btn-primary ass_schld_remove" type="button"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel/ Delete</button></a></div>
-</p>
-</div>
 <?php
-    $form_attributes = array('name' => 'deactivate_class_form', 'id' => 'deactivate_class_form');
-    echo form_open("classes/deactivate_class", $form_attributes);
+$form_attributes = array('name' => 'deactivate_class_form', 'id' => 'deactivate_class_form');
+echo form_open("classes/deactivate_class_tpg", $form_attributes);
 ?>
 <div class="modal1_051" id="ex8" style="display:none;">
     <p>
@@ -1199,3 +1040,12 @@ function array_to_input($array, $prefix = '') {
     }
 }
 ?>
+<script>
+    function wheel_fun() {
+        if(document.getElementById("wheel_chair_accessible").checked == true) {           
+            document.getElementById("wheel_chair_hidden").value = 1;
+        } else {
+            document.getElementById("wheel_chair_hidden").value = 0;
+        }
+    }
+</script>

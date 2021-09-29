@@ -696,7 +696,7 @@ class Class_Model extends CI_Model {
      * this function to get all class schedules
      */
     public function get_all_class_schedule($tenant_id, $cid) {
-        $result = $this->db->query("select class_date, session_type_id, session_start_time,session_end_time
+        $result = $this->db->query("select class_date, session_type_id, session_start_time,session_end_time,tpg_session_id,mode_of_training
                 from class_schld where tenant_id='$tenant_id' and class_id='$cid'
                 order by class_date DESC, session_start_time ASC");
         return $result->result_array();
@@ -1333,8 +1333,7 @@ class Class_Model extends CI_Model {
 
         $data_class = array(
             'tenant_id' => $tenantId,
-            'class_name' => strtoupper($class_name),
-            'tpg_course_run_id' => $tpg_course_run_id,
+            'class_name' => strtoupper($class_name),            
             'class_start_datetime' => $start_date_timestamp,
             'class_end_datetime' => $end_date_timestamp,
             'total_seats' => $total_seats,
@@ -1551,6 +1550,227 @@ class Class_Model extends CI_Model {
                     }
                 }
             }
+            $this->db->trans_complete();
+            if ($this->db->trans_status() === FALSE) {
+                return FALSE;
+            } else {
+                if (!empty($mail_arr) && $tenantId != 'T02') {
+                    foreach ($mail_arr as $mail_row) {
+                        $this->class_update_send_email($mail_row['email'], $mail_row['content'], $mail_row['subject'], $mail_row['footer']);
+                    }
+                }
+            }
+
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    
+    /**
+     * This method updates a class for a course
+     * @param type $tenantId
+     * @param type $userId
+     * @param type $courseId
+     */
+    public function update_class_tpg($tenantId, $userId) {
+        $display_class = 0;
+        $control_4 = '';
+        $control_5 = '';
+        $control_6 = '';
+        $control_7 = '';
+        $control_3 = '';
+        extract($_POST);
+        $class_id = $class_hid;
+        $class_details = $this->get_class_details($tenantId, $class_hid);
+        $course_name = $this->db->select('crse_name')->from('course')->where('course_id', $class_details->course_id)->get()->row()->crse_name;
+        $start_date_timestamp = date('Y-m-d H:i:s', strtotime($start_date . ' ' . $start_time . ':00'));
+        $end_date_timestamp = date('Y-m-d H:i:s', strtotime($end_date . ' ' . $end_time . ':00'));
+        if (empty($class_name)) {
+            $class_name = $course_name . '-' . $class_id;
+        }
+        if ($coll_date) {
+            $coll_date = date('Y-m-d', strtotime($coll_date));
+        } else {
+            $coll_date = NULL;
+        }
+        $description = htmlspecialchars($description, ENT_QUOTES);
+        if (!empty($control_4)) {
+            $control_4 = implode(",", $control_4);
+        }
+        if (!empty($control_5)) {
+            $control_5 = implode(",", $control_5);
+        }
+        if (!empty($control_6)) {
+            $control_6 = implode(",", $control_6);
+        }
+        if (!empty($control_7)) {
+            $control_7 = implode(",", $control_7);
+        }
+        if (!empty($control_3)) {
+            $control_3 = implode(",", $control_3);
+        }
+        $class_name = strtoupper($class_name);
+        $cur_date = strtotime(date('Y-m-d'));
+        $class_start_date = strtotime($start_date);
+        $class_end_date = strtotime($end_date);
+        if ($class_start_date > $cur_date && $class_end_date > $cur_date) {
+            $class_status = 'YTOSTRT';
+        } else if ($class_start_date <= $cur_date && $class_end_date >= $cur_date) {
+            $class_status = 'IN_PROG';
+        } else {
+            $class_status = 'COMPLTD';
+        }
+        $control_4 = empty($control_4) ? NULL : $control_4;
+        $classroom_venue_oth = empty($classroom_venue_oth) ? NULL : strtoupper($classroom_venue_oth);
+        $lab_venue_oth = empty($lab_venue_oth) ? NULL : strtoupper($lab_venue_oth);
+
+        $wheel_chair_accessible = $this->input->post('wheel_chair_hidden');
+        
+        $data_class = array(
+            'tenant_id' => $tenantId,
+            'class_name' => strtoupper($class_name),            
+            'total_seats' => $total_seats,
+            'total_classroom_duration' => $cls_duration,
+            'total_lab_duration' => $lab_duration,
+            'assmnt_duration' => $class_assmnt_duration,
+            'class_fees' => $fees,
+            'class_discount' => $class_discount,
+            'certi_coll_date' => $coll_date,
+            'class_session_day' => $sessions_perday,
+            'class_pymnt_enrol' => $payment_details,
+            'classroom_location' => $cls_venue,
+            'lab_location' => $lab_venue,
+            'class_language' => $languages,
+            'description' => $description,
+            'display_class_public' => $display_class,
+            'min_reqd_students' => $minimum_students,
+            'min_reqd_noti_freq1' => $reminder1,
+            'min_reqd_noti_freq2' => $reminder2,
+            'min_reqd_noti_freq3' => $reminder3,
+            'classroom_trainer' => $control_5,
+            'lab_trainer' => $control_6,
+            'assessor' => $control_7,
+            'training_aide' => $control_3,
+            'sales_executive' => $control_4,
+            'last_modified_by' => $userId,
+            'last_modified_on' => date('Y-m-d H:i:s'),
+            'class_status' => $class_status,
+            'classroom_venue_oth' => $classroom_venue_oth,
+            'lab_venue_oth' => $lab_venue_oth,
+            'venue_building' => $venue_building,
+            'venue_block' => $venue_block,
+            'venue_street' => $venue_street,
+            'venue_room' => $venue_room,
+            'venue_unit' => $venue_unit,
+            'venue_postalcode' => $venue_postalcode,
+            'venue_floor' => $venue_floor,
+            'wheel_chair_access' => $wheel_chair_accessible,            
+            'survey_language' => $survey_language
+        );
+
+        $this->db->where('tenant_id', $tenantId);
+        $this->db->where('class_id', $class_id);
+        $this->db->trans_start();
+
+        $update_result = $this->db->update('course_class', $data_class);
+        if ($update_result) {
+            $totalbooked = $this->get_class_booked($course_id, $class_id, $tenantId);
+            if (!empty($totalbooked)) {
+                $content = '';
+                $trigger_mail = 0;
+                $class_schedule_check = $this->check_class_schedule_update($class_id);
+                $assmnt_check = $this->check_class_assmnt_update($class_id);
+                $curr_date = strtotime(date('Y-m-d'));
+                if (strtotime(date('Y-m-d', strtotime($class_details->class_start_datetime))) < $curr_date && strtotime(date('Y-m-d', strtotime($class_details->class_end_datetime))) < $curr_date) {
+                    $trigger_mail = 0;
+                } else if (($class_details->class_start_datetime != $start_date_timestamp) || ($class_details->class_end_datetime != $end_date_timestamp) || ($class_details->classroom_location != $cls_venue) || ($class_schedule_check == FALSE) || $assmnt_check == 'DEFAULT FAILED' || $assmnt_check == 'CUSTOM FAILED') {
+                    $trigger_mail = 1;
+                    $content = 'Your <b>' . $course_name . ' - ' . $class_details->class_name . '</b> scheduled for ' . date('F j Y, h:i A', strtotime($class_details->class_start_datetime)) . ' has been modified as follows: <br/><br/>';
+                    $content .= '<b>Class Start Date-Time:</b> ' . date('F j Y, h:i A', strtotime($start_date_timestamp)) . '. <br/>';
+                    $content .= '<b>Class End Date-Time:</b> ' . date('F j Y, h:i A', strtotime($end_date_timestamp)) . '. <br/>';
+                    if ($cls_venue == 'OTH') {
+                        $class_venue = $classroom_venue_oth;
+                    } else {
+                        $class_venue = $this->db->select('category_name')->from('metadata_values')->where('parameter_id', $cls_venue)->get()->row()->category_name;
+                    }
+                    $content .= '<b>Classroom Venue:</b> ' . $class_venue . '. <br/>';
+                    if (($class_schedule_check == FALSE)) {
+                        $content .= '<b><u>Classroom schedule changed.</u></b><br/><br/>';
+                        $content .= $this->build_class_shedule();
+                    }
+                    $subject = 'Your TMS Class information has changed - ';
+                    $subject_label = '';
+                    if (($class_details->class_start_datetime != $start_date_timestamp) || ($class_details->class_end_datetime != $end_date_timestamp)) {
+                        $subject_label .= 'Class Timings';
+                    }
+
+                    if ($class_details->classroom_location != $cls_venue) {
+                        $subject_label .= ', Classroom Venue';
+                    }
+                    if ($class_schedule_check == FALSE) {
+                        $subject_label .= ', Classroom Schedule';
+                    }
+                    if ($assmnt_check == 'DEFAULT FAILED' || $assmnt_check == 'CUSTOM FAILED') {
+                        $subject_label .= ', Assessment Schedule';
+                    }
+                    $subject = $subject . trim($subject_label, ',');
+                }
+                if ($trigger_mail == 1) {
+                    $tenant_details = fetch_tenant_details($tenantId);
+                    $footer_data = str_replace("<Tenant_Company_Name>", $tenant_details->tenant_name, MAIL_FOOTER);
+                    $footer_data = str_replace("<Tenant_Company_Email>", $tenant_details->tenant_email_id, $footer_data);
+                    $this->db->select('usrs.user_id,usrs.registered_email_id as email, pers.first_name, pers.last_name, pers.gender');
+                    $this->db->from('class_enrol enrol');
+                    $this->db->join('tms_users usrs', 'usrs.user_id=enrol.user_id');
+                    $this->db->join('tms_users_pers pers', 'pers.user_id=enrol.user_id and pers.user_id=usrs.user_id');
+                    $this->db->where('enrol.tenant_id', $tenantId);
+                    $this->db->where('enrol.class_id', $class_id);
+                    $this->db->where_in('enrol.enrol_status', array('ENRLACT', 'ENRLBKD'));
+                    $emails = $this->db->get()->result_object();
+                    $mail_arr = array();
+                    foreach ($emails as $row) {
+                        $assmnt_content = '';
+                        if ($assmnt_check == 'DEFAULT FAILED' || $assmnt_check == 'CUSTOM FAILED') {
+                            $assmnt_content = $this->class_assmnt_content($row->user_id, $assmnt_check);
+                            if ($assmnt_check == 'DEFAULT FAILED' && empty($assmnt_content)) {
+                                $prev_assmnt_date = $this->get_previous_assmnt_date($class_id, $row->user_id);
+                                $assmnt_content = '<br/><br/>Your Assessment Scheduled for \'' . $prev_assmnt_date . '\' has been cancelled. Kindly get in touch with your Administrator for the new Assessment Dates.';
+                            }
+                            if ($assmnt_check == 'CUSTOM FAILED' && empty($assmnt_content)) {
+                                $assmnt_content = '<br/><br/><b>Kindly contact your Trainer for the assessment date.</b><br/>';
+                            }
+                        }
+                        $mailcontent = $content . $assmnt_content;
+                        $mail_arr[] = array(
+                            'email' => $row,
+                            'content' => $mailcontent,
+                            'subject' => $subject,
+                            'footer' => $footer_data
+                        );
+                    }
+                    $def_schded_date = $this->input->post('def_schlded_date');
+                    $assmnt_trinee = $this->input->post('assmnt_trainee');
+                    if (!empty($def_schded_date)) { //$assmnt_check == 'DEFAULT FAILED' && 
+                        $mailcontent = $content . $assmnt_content;
+                    } elseif (!empty($assmnt_trinee)) {
+                        $msg = '<br/><br/>Custom Assessment dates has changed for this class. Please check the class details in the application.<br/>';
+                        $mailcontent = $content . $msg;
+                    } else {
+                        $msg = '<br/><br/>Assessment dates has changed for this class. Please check the class details in the application.<br/>';
+                        $mailcontent = $content . $msg;
+                    }
+                    $admin = $this->session->userdata('userDetails');
+                    $admin->email = $admin->registered_email_id;
+                    $mail_arr[] = array(
+                        'email' => $admin,
+                        'content' => $mailcontent,
+                        'subject' => $subject,
+                        'footer' => $footer_data
+                    );
+                }
+            }
+            
             $this->db->trans_complete();
             if ($this->db->trans_status() === FALSE) {
                 return FALSE;
