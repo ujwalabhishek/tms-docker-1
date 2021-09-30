@@ -1673,7 +1673,8 @@ class Class_Model extends CI_Model {
         $this->db->where('class_id', $class_id);
         $this->db->trans_start();
 
-        $update_result = $this->db->update('course_class', $data_class);
+        $update_result = $this->db->update('course_class', $data_class);                
+        
         if ($update_result) {
             $totalbooked = $this->get_class_booked($course_id, $class_id, $tenantId);
             if (!empty($totalbooked)) {
@@ -1771,6 +1772,17 @@ class Class_Model extends CI_Model {
                 }
             }
             
+            if (isset($assmnt_date)) {
+                $assessor_data = array(            
+                    'assessor_id' => $control_7,
+                    'assmnt_venue' => $cls_venue,
+                    'assmnt_venue_oth' => strtoupper($classroom_venue_oth),
+            );
+        
+            $this->db->where('tenant_id', $tenantId);
+            $this->db->where('class_id', $class_id);        
+            $assessor_result = $this->db->update('class_assmnt_schld', $assessor_data);
+            }            
             $this->db->trans_complete();
             if ($this->db->trans_status() === FALSE) {
                 return FALSE;
