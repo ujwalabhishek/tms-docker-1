@@ -705,7 +705,7 @@ class Classes extends CI_Controller {
             $result = $this->classmodel->get_class_info($class_id);
             $previous_data = json_encode($result);
             $tpg_response = $this->tpgModel->update_courserun_tpg();
-echo $tpg_response->status; exit;
+
             if ($tpg_response->status == 200) {                
                 $result_tpg = $this->classmodel->update_class_tpg($tenant_id, $user_id);
                 if ($result_tpg == TRUE) {
