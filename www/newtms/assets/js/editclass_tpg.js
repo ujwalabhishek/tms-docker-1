@@ -859,22 +859,24 @@ function validate() {
     } else {
         remove_err('#crs_admin_email');
     }
-    $venue_floor = $('#venue_floor').val();
+    
+    $venue_floor = $.trim($('#venue_floor').val());
     if ($venue_floor == null || $venue_floor == '') {
         $("#venue_floor_err").text("[required]").addClass('error');
         retVal = false;
     } else {
         $("#venue_floor_err").text("").removeClass('error');
     }
-    
-    $venue_unit = $('#venue_unit').val();
+        
+    $venue_unit = $.trim($('#venue_unit').val());
     if ($venue_unit == null || $venue_unit == '') {
         $("#venue_unit_err").text("[required]").addClass('error');
         retVal = false;
     } else {
         $("#venue_unit_err").text("").removeClass('error');
     }
-    $venue_postalcode = $('#venue_postalcode').val();
+        
+    $venue_postalcode = $.trim($('#venue_postalcode').val());
     if ($venue_postalcode == null || $venue_postalcode == '') {
         $("#venue_postalcode_err").text("[required]").addClass('error');
         retVal = false;
