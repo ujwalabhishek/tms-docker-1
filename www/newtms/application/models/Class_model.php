@@ -1675,7 +1675,7 @@ class Class_Model extends CI_Model {
 
         $update_result = $this->db->update('course_class', $data_class);
         if ($update_result) {
-            //echo "Test : ".print_r($data_class, true); exit;
+            
             $totalbooked = $this->get_class_booked($course_id, $class_id, $tenantId);
             if (!empty($totalbooked)) {
                 $content = '';
@@ -1773,8 +1773,7 @@ class Class_Model extends CI_Model {
             }
             
             $this->db->trans_complete();
-            if ($this->db->trans_status() === FALSE) {
-                echo "Failed"; exit;
+            if ($this->db->trans_status() === FALSE) {                
                 return FALSE;
             } else {
                 if (!empty($mail_arr) && $tenantId != 'T02') {
