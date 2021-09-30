@@ -880,6 +880,9 @@ function validate() {
     if ($venue_postalcode == null || $venue_postalcode == '') {
         disp_err('#venue_postalcode');
         $retval = false;
+    } else if (valid_number($venue_postalcode) == false) {
+        disp_err('#venue_postalcode', '[invalid]');
+        $retval = false;
     } else {
         remove_err('#venue_postalcode');
     }
