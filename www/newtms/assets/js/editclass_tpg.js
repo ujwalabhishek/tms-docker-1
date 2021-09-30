@@ -862,26 +862,26 @@ function validate() {
     
     $venue_floor = $.trim($('#venue_floor').val());
     if ($venue_floor == null || $venue_floor == '') {
-        $("#venue_floor_err").text("[required]").addClass('error');
-        retVal = false;
+        disp_err('#venue_floor');
+        $retval = false;
     } else {
-        $("#venue_floor_err").text("").removeClass('error');
+        remove_err('#venue_floor');
     }
         
     $venue_unit = $.trim($('#venue_unit').val());
-    if ($venue_unit == null || $venue_unit == '') {
-        $("#venue_unit_err").text("[required]").addClass('error');
-        retVal = false;
+    if ($venue_unit == null || $venue_unit == '') {        
+        disp_err('#venue_unit');
+        $retval = false;
     } else {
-        $("#venue_unit_err").text("").removeClass('error');
+        remove_err('#venue_unit');
     }
         
     $venue_postalcode = $.trim($('#venue_postalcode').val());
     if ($venue_postalcode == null || $venue_postalcode == '') {
-        $("#venue_postalcode_err").text("[required]").addClass('error');
-        retVal = false;
+        disp_err('#venue_postalcode');
+        $retval = false;
     } else {
-        $("#venue_postalcode_err").text("").removeClass('error');
+        remove_err('#venue_postalcode');
     }
     
     $venue_room = $.trim($('#venue_room').val());
@@ -890,8 +890,7 @@ function validate() {
         $retval = false;
     } else {        
         remove_err('#venue_room');
-    }
-    
+    }    
     
     $fees = $.trim($('#fees').val());
     if ($fees.length == 0) {
