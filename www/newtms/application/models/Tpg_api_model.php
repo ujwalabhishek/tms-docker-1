@@ -1059,7 +1059,7 @@ class Tpg_api_Model extends CI_Model {
                                       "floor": "' . $venue_floor . '",
                                       "street": "' . $venue_street . '",
                                       "building": "' . $venue_building . '",
-                                      "postalCode": ' . $venue_postalcode . ',
+                                      "postalCode": "' . $venue_postalcode . '",
                                       "wheelChairAccess": ' . $wheel_chair_access . '
                                     },
                                     "action": "update",                                    
