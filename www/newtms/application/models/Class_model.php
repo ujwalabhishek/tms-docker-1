@@ -1772,6 +1772,18 @@ class Class_Model extends CI_Model {
                 }
             }
             
+            if (isset($assmnt_date)) {
+                $assessor_data = array(            
+                    'assessor_id' => $control_7,
+                    'assmnt_venue' => $cls_venue,
+                    'assmnt_venue_oth' => strtoupper($classroom_venue_oth),
+            );
+        
+            $this->db->where('tenant_id', $tenantId);
+            $this->db->where('class_id', $class_id);        
+            $assessor_result = $this->db->update('class_assmnt_schld', $assessor_data);
+            }            
+            
             $this->db->trans_complete();
             if ($this->db->trans_status() === FALSE) {                
                 return FALSE;
