@@ -1668,7 +1668,7 @@ class Class_Model extends CI_Model {
             'wheel_chair_access' => $wheel_chair_accessible,            
             'survey_language' => $survey_language
         );
-
+echo "Test : ".print_r($data_class, true); exit;
         $this->db->where('tenant_id', $tenantId);
         $this->db->where('class_id', $class_id);
         $this->db->trans_start();
