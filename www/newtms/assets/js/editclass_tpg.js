@@ -881,13 +881,13 @@ function validate() {
     } else {
         $("#venue_postalcode_err").text("").removeClass('error');
     }
-
-    $venue_room = $('#venue_room').val();
-    if ($venue_room == null || $venue_room == '') {
-        $("#venue_room_err").text("[required]").addClass('error');
-        retVal = false;
-    } else {
-        $("#venue_room_err").text("").removeClass('error');
+    
+    $venue_room = $.trim($('#venue_room').val());
+    if ($venue_room == null || $venue_room == '') {        
+        disp_err('#venue_room');
+        $retval = false;
+    } else {        
+        remove_err('#venue_room');
     }
     
     
