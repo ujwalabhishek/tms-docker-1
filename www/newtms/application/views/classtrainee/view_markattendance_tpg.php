@@ -155,7 +155,7 @@
                     <td class="td_heading" width="15%">Wheel Chair Access</td>
                     <td colspan="3">
                         <?php
-                        if ($venueWheelChairAccess) {
+                        if ($venueWheelChairAccess == TRUE) {
                             echo "Yes";
                         } else {
                             echo "No";

@@ -1905,7 +1905,7 @@ class tp_gateway extends CI_Controller {
             $data['venueStreet'] = $tpg_response->data->courseRun->sessions[0]->venue->street;
             $data['venueUnit'] = $tpg_response->data->courseRun->sessions[0]->venue->unit;
             $data['venueWheelChairAccess'] = $tpg_response->data->courseRun->sessions[0]->venue->wheelChairAccess;
-
+echo "Wheel chair".$data['venueWheelChairAccess']; exit;
             //attendance
 //            $data['SessionEntryMode'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->entryMode;
 //            $data['SessionAttendanceId'] = $tpg_response->data->courseRun->sessions[0]->attendance[0]->id;
