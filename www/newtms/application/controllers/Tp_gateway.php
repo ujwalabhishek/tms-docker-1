@@ -1743,7 +1743,7 @@ class tp_gateway extends CI_Controller {
                                               "areaCode": "00",
                                               "phoneNumber": "' . $traineeContactNumber . '"
                                             },
-                                            "emailAddress": "' . $traineeEmailAddress . '"
+                                            "email": "' . $traineeEmailAddress . '"
                                           },
                                           "employer": {
                                             "fullName": "' . $employerContactFullName . '",
@@ -1752,11 +1752,11 @@ class tp_gateway extends CI_Controller {
                                               "areaCode": "00",
                                               "phoneNumber": "' . $employerContactNumber . '"
                                             },
-                                            "emailAddress": "' . $employerEmailAddress . '"
+                                            "email": "' . $employerEmailAddress . '"
                                           },
                                           "fees": {
                                             "discountAmount": "' . $feeDiscountAmount . '",
-                                            "collectionStatus": "' . $feeCollectionStatus . '"
+                                            "feecollectionStatus": "' . $feeCollectionStatus . '"
                                           }
                                         }
                                       }';
