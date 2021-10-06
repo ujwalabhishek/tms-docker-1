@@ -248,10 +248,10 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                         $color = $i % 2 == 0 ? 'white' : 'grey';
                                         ?>
                                         <tr class="<?php echo $color ?>">
-                                            <td <?php echo ($class_session_day == '1' ? '' : 'rowspan="2"') ?>>
+                                            <td>
                                                 <span style=" float:left;"><?php echo $data['record']['tax_code'] ?></span>
                                             </td>
-                                            <td <?php echo ($class_session_day == '1' ? '' : 'rowspan="2"') ?>>
+                                            <td>
                                                 <span style="float:left;"><?php echo $data['record']['name'] ?></span>
                                             </td>
                                             <?php
@@ -259,7 +259,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                                 $cur_date = $days[$day];
                                                 $ses_date = $cur_date->format('Y-m-d');
                                                 ?>
-                                                <td align="center"><?php if ($data_arr[$ses_date][0]['session'] == 'S1' || $same_values == 1) { ?><?php echo ($is_report_page ? '' : 'Session 1') ?> <?php } ?>
+                                                <td align="center">
                                                     <?php
                                                     //echo $days_count;
                                                     if (check_class_date_range($start_class, $end_class, $cur_date)) {
@@ -299,26 +299,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                         echo form_hidden('from_date', $from_date);
                         echo form_hidden('to_date', $to_date);
                         echo form_hidden('week_start', $week_start);
-                        echo form_hidden('week_end', $week_end);
-                        if ($lock_status == 0) {
-                            ?>
-                            <div class="button_class">
-                                <button id="update_button" type="button" class="btn btn-primary" act>
-                                    <span class="glyphicon glyphicon-upload"></span> Update Attendance</button>
-                            </div>
-                            <?php
-                        }
-                        if ($lock_status == 1) {
-                            ?>
-                            <div class="button_class">
-                                <button id="update_button" type="button" class="btn btn-primary" disabled="disabled">
-                                    <span class="glyphicon glyphicon-upload"></span> Update Attendance</button>
-                            </div>
-                            <div style="background-color: whitesmoke;text-align-last: center;"> 
-                                <label class="red">Can`t update the attendance because attendance is locked. Please Contact to administrator to unlock it. </label>
-                            </div>
-                            <?php
-                        }
+                        echo form_hidden('week_end', $week_end);                        
                         echo form_close();
                     }
                 } else {
@@ -500,49 +481,8 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                 $week_end_date = date_create_from_format("d/m/Y", $week_end);
 
                 $ifPrevWeekDisabled = $week_start_date <= $start_class;
-                $ifNextWeekDisabled = $week_end_date >= $end_class;
-
-                if ($is_report_page) {
-                    ?>
-                    <h2 class="sub_panel_heading_style"><span class="glyphicon glyphicon-th-list"></span> Course Class Details</h2>
-                    <div class="highlight2 table-responsive">
-                        <table class="table table-striped">
-                            <tbody>
-                                <tr>
-                                    <td class="td_heading">Course Code:</td>
-                                    <td><label class="label_font"><?php echo $class_details->competency_code ?></label></td>
-                                    <td class="td_heading">Course Name:</td>
-                                    <td><label class="label_font"><?php echo $class_details->crse_name ?></label></td>
-                                    <td class="td_heading">Course Manager:</td>
-                                    <td><label class="label_font"><?php echo $class_details->crse_manager ?></label></td>
-                                </tr>
-                                <tr>
-                                    <td class="td_heading">Class Name:</td>
-                                    <td><label class="label_font"><?php echo $class_details->class_name ?></label></td>
-                                    <td class="td_heading">Start Date & Time:</td>
-                                    <td><label class="label_font"><?php echo $class_details->class_start_date_formatted ?></label></td>
-                                    <td class="td_heading">End Date & Time:</td>
-                                    <td><label class="label_font"><?php echo $class_details->class_end_date_formatted ?></label></td>
-                                </tr>
-                                <tr>
-                                    <td class="td_heading">Classroom Trainer:</td>
-                                    <td><label class="label_font"><?php echo $class_details->classroom_trainer ?></label></td>
-                                    <td class="td_heading">Lab Trainer:</td>
-                                    <td><label class="label_font"><?php echo $class_details->lab_trainer ?></label></td>
-                                    <td class="td_heading">Assessor:</td>
-                                    <td><label class="label_font"><?php echo $class_details->assessor ?></label></td>
-                                </tr>
-                                <tr>
-                                    <td class="td_heading">Total Seats:</td>
-                                    <td><label class="label_font"><?php echo $class_details->total_seats ?></label></td>
-                                    <td class="td_heading">Total Booked:</td>
-                                    <td colspan="3"><label class="label_font"><?php echo $class_details->total_booked_seats; ?></label></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div style="clear:both;"></div><br>
-                <?php } ?>
+                $ifNextWeekDisabled = $week_end_date >= $end_class;                
+            ?>
                 <div class="row_dim1">                    
                     <div class="add_button space_style">
                         <?php
@@ -599,16 +539,16 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                             $color = $i % 2 == 0 ? 'white' : 'grey';
                                             ?>
                                             <tr class="<?php echo $color ?>">
-                                                <td <?php echo ($class_session_day == '1' ? '' : 'rowspan="2"') ?>>
+                                                <td>
                                                     <span style=" float:left;"><?php echo $data['record']['tax_code'] ?></span>
                                                 </td>
-                                                <td <?php echo ($class_session_day == '1' ? '' : 'rowspan="2"') ?>>
+                                                <td>
                                                     <span style="float:left;"><?php echo $data['record']['name'] ?></span>
                                                 </td>
                                                 <?php
                                                 for ($day = 0; $day < $days_count; $day++) {
                                                     ?>
-                                                    <td align="center"><?php echo ($is_report_page ? '' : 'Session 1') ?>
+                                                    <td align="center">
                                                         <?php
                                                         $cur_date = $days[$day];
                                                         if (check_class_date_range($start_class, $end_class, $cur_date)) {
