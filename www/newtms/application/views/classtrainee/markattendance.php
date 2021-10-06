@@ -315,13 +315,13 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
 
                 if ($data_arr[$curr_day->format('Y-m-d')][0]['session'] == 'S1') {
                     ?>
-                                            <td align="center"><strong>aa<?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
+                                            <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
                     <?php $days[] = clone $curr_day; ?>
 
                                             <?php
                                         } elseif ($start_class->format('Y-m-d') == $end_class->format('Y-m-d') && $curr_day->format('Y-m-d') == $start_class->format('Y-m-d')) {
                                             ?>
-                                            <td align="center"><strong>bb<?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
+                                            <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
                                             <?php $days[] = clone $curr_day; ?>
 
                                             <?php
