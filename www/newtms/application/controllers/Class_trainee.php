@@ -1976,7 +1976,7 @@ class Class_Trainee extends CI_Controller {
      */
 
     public function mark_assessment($message = NULL) {
-        echo "aaa"; exit;
+        
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $course_id = $this->input->post('course_id');
@@ -1992,9 +1992,9 @@ class Class_Trainee extends CI_Controller {
         //echo print_r($from_date);print_r($to_date);print_r($week_start_date);exit;
 
         $week = $this->input->post('week');        
-
+echo "bbb"; 
         $data = get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order, '');
-
+echo "ccc"; exit;
         $data['class_schedule'] = $this->class->get_all_class_schedule($tenant_id, $class_id);
         $att = $this->classtraineemodel->get_attendance_lock_status($tenant_id, $course_id, $class_id);            
         $data['class_start_datetime'] = $att->class_start_datetime;
