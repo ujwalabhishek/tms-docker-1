@@ -1976,6 +1976,7 @@ class Class_Trainee extends CI_Controller {
      */
 
     public function mark_assessment($message = NULL) {
+        echo "aaa"; exit;
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         $course_id = $this->input->post('course_id');
