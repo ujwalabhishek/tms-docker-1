@@ -31,8 +31,105 @@ $tenant_id = $this->session->userdata('userDetails')->tenant_id;
 $value_of_schedule_class = count($class_schedule);
 $start_class = date_create_from_format("d/m/Y", $class_start);
 $end_class = date_create_from_format("d/m/Y", $class_end);
-if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condition on line no : 526
-    echo "aaa";
+
+if ($value_of_schedule_class <= 0) {
+    echo "bbbb";
+    $attendance_status = $this->input->post('attendance_status');
+    $start_class = date_create_from_format("d/m/Y", $class_start);
+    $end_class = date_create_from_format("d/m/Y", $class_end);
+    $from_date_post_value = set_value('from_date');
+    $from_date = empty($from_date_post_value) ? $class_start : $from_date_post_value;
+    $to_date_post_value = set_value('to_date');
+    $to_date = empty($to_date_post_value) ? $class_start : $to_date_post_value;
+
+    $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
+    ?>
+    <script type="text/javascript">
+        var CLIENT_DATE_FORMAT = 'dd/mm/yy';
+        var SITE_URL = '<?php echo site_url(); ?>';
+        var class_start = '<?php echo $class_start; ?>';
+        var class_end = '<?php echo $class_end; ?>';
+        var pageurl = '<?php echo $controllerurl; ?>';
+        var ancher = '<?php echo $ancher; ?>';
+    </script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/mark_attendance.js"></script>
+    <div class="overlay">
+        <div id="loading-img"></div>
+    </div>
+    <div class="col-md-10">
+
+        <h2 class="panel_heading_style"><span class="glyphicon glyphicon-pencil"></span> <?php echo $page_title; ?></h2>
+        <?php
+        if (!empty($message)) {
+            echo "<div class='success'>" . $message . "</div>";
+        }
+        ?>
+        <div class="table-responsive">
+            <span class="error" id="markAttendanceSubmitErrorForm"></span>
+            <?php
+            $atr = 'id="search_form" name="search_form"';
+            echo form_open($controllerurl, $atr);
+            echo form_hidden('orientation', 'P', 'orientation');
+            ?>
+            <table class="table table-striped">
+
+                <tbody>
+                    <tr>
+                        <td class="td_heading">Course Name:<span class="required">*</span></td>
+                        <td>
+                            <?php echo form_dropdown("course_id", $courses, set_value('course_id'), 'id="select_course_id"') ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_heading">Class Name:<span class="required">*</span></td>
+
+                        <td colspan='3'>
+                            <?php
+                            $attr_js = 'id="select_class_id"';
+                            echo form_dropdown('class_id', $classes, set_value('class_id'), $attr_js);
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_heading">Subsidy</td>
+                        <td <?php echo ($is_report_page) ? '' : "colspan='2'"; ?>>                        
+                            <?php
+                            $subsidy_array = array('' => 'All', 'ws' => 'With Subsidy', 'wts' => 'Without Subsidy', 'fr' => 'Foreginer');
+                            $attr_js = 'id="subsidy">';
+                            echo form_dropdown('subsidy', $subsidy_array, $subsidy, $attr_js);
+                            ?>
+                        </td>                        
+                        <td>
+                            <?php
+                            $attr_js = 'id="input_to_date" style="width:40%;"';
+                            ?>
+
+                            <div class="pull-right">
+                                <?php
+                                echo form_hidden('week_start', $week_start);
+                                echo form_hidden('week_end', $week_end);
+                                echo form_hidden('week', null);
+                                echo form_hidden('export', null);
+                                echo form_hidden('export1', null);
+                                ?>
+                                <button id="markAttendanceSubmit" class="btn btn-xs btn-primary no-mar" name="markattendance_search_button" title="Search" value="Search"><span class="glyphicon glyphicon-search"></span> Search</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <?php echo form_close(); ?>
+        </div>
+        <br>
+        <table class="table table-striped">
+            <tr class="danger">
+                <td colspan="10" style="color:red;text-align: center;">There is no assessment schedule.</td>
+            </tr>
+        </table>
+    </div>
+    <?php
+} else if ($start_class != $end_class) {  // else condition on line no : 526
+    echo "bbbb";
     $attendance_status = $this->input->post('attendance_status');
     $start_class = date_create_from_format("d/m/Y", $class_start);
     $end_class = date_create_from_format("d/m/Y", $class_end);
@@ -153,7 +250,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
         $data_arr = array();
         $datas_arr_list = array();
         foreach ($class_schedule as $row) {
-            $data_arr[$row['assmnt_date']][] = array(                
+            $data_arr[$row['assmnt_date']][] = array(
                 'start' => $row['assmnt_start_time'],
                 'end' => $row['assmnt_end_time']
             );
@@ -186,7 +283,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
             <div class="row_dim1">            
                 <div class="add_button space_style">
                     <?php
-                    $current_date_time = strtotime(date("Y-m-d H:i:s"));                    
+                    $current_date_time = strtotime(date("Y-m-d H:i:s"));
                     ?>
                 </div>
                 <div style="clear:both;"></div>
@@ -214,7 +311,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                     <?php
                                     $days = array();
 
-                                    for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {                                        
+                                    for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {
                                         if ($start_class->format('Y-m-d') == $end_class->format('Y-m-d') && $curr_day->format('Y-m-d') == $start_class->format('Y-m-d')) {
                                             ?>
                                             <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
@@ -224,7 +321,8 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                         } else {
                                             ?>
                                             <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
-                                            <?php $days[] = clone $curr_day;                                          
+                                            <?php
+                                            $days[] = clone $curr_day;
                                         }
                                     }
 
@@ -258,8 +356,8 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                                     <?php
                                                     //echo $days_count;
                                                     if (check_class_date_range($start_class, $end_class, $cur_date)) {
-                                                        $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);                                                        
-                                                            echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);                                                        
+                                                        $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);
+                                                        echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);
                                                     }
                                                     ?>
                                                 </td>
@@ -292,7 +390,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                         echo form_hidden('from_date', $from_date);
                         echo form_hidden('to_date', $to_date);
                         echo form_hidden('week_start', $week_start);
-                        echo form_hidden('week_end', $week_end);                        
+                        echo form_hidden('week_end', $week_end);
                         echo form_close();
                     }
                 } else {
@@ -310,17 +408,17 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
     </div>
     <div class="modal" id="ex1" style="display:none;">
         <p>
-            <h2 class="panel_heading_style">Heading Goes Here...</h2>
-            Detail Goes here.  <br>
+        <h2 class="panel_heading_style">Heading Goes Here...</h2>
+        Detail Goes here.  <br>
 
-            <div class="popup_cancel">
-                <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Cancel</button></a>
-            </div>
-        </p>
+        <div class="popup_cancel">
+            <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Cancel</button></a>
+        </div>
+    </p>
     </div>        
     <?php
 } else {
-echo "bbb"; 
+    echo "ccc";
     $attendance_status = $this->input->post('attendance_status');
     $start_class = date_create_from_format("d/m/Y", $class_start);
     $end_class = date_create_from_format("d/m/Y", $class_end);
@@ -402,7 +500,7 @@ echo "bbb";
                     <tr>
                         <td class="td_heading">Course Name:<span class="required">*</span></td>
                         <td>
-                            <?php echo form_dropdown("course_id", $courses, set_value('course_id'), 'id="select_course_id"') ?>
+    <?php echo form_dropdown("course_id", $courses, set_value('course_id'), 'id="select_course_id"') ?>
                         </td>
 
                         <td class="td_heading">Class Name:<span class="required">*</span></td>
@@ -444,7 +542,7 @@ echo "bbb";
                     </tr>
                 </tbody>
             </table>
-            <?php echo form_close(); ?>
+    <?php echo form_close(); ?>
         </div>
         <br>
         <?php
@@ -464,13 +562,13 @@ echo "bbb";
                 $week_end_date = date_create_from_format("d/m/Y", $week_end);
 
                 $ifPrevWeekDisabled = $week_start_date <= $start_class;
-                $ifNextWeekDisabled = $week_end_date >= $end_class;                
-            ?>
+                $ifNextWeekDisabled = $week_end_date >= $end_class;
+                ?>
                 <div class="row_dim1">                    
                     <div class="add_button space_style">
                         <?php
                         //echo $this->session->flashdata('success');
-                        $current_date_time = strtotime(date("Y-m-d H:i:s"));                        
+                        $current_date_time = strtotime(date("Y-m-d H:i:s"));
                         ?>
                     </div>
                     <div style="clear:both;"></div>
@@ -486,7 +584,7 @@ echo "bbb";
                                         <th colspan="7" align="center">
                                             <button class="btn btn-info nxt pull-left" <?php echo ($ifPrevWeekDisabled ? "disabled" : "") ?> type="button" id="prev_week_but"><span class="glyphicon glyphicon-backward"></span> Prev Week </button>
                                             <b class="pad-top-1 display-d">Class Dates for the period <?php echo $week_start_date->format('d F Y') ?> to
-                                                <?php echo $week_end_date->format('d F Y') ?> </b>
+                <?php echo $week_end_date->format('d F Y') ?> </b>
                                             <button class="btn btn-info nxt pull-right" <?php echo ($ifNextWeekDisabled ? "disabled" : "") ?> type="button" id="next_week_but">Next Week <span class="glyphicon glyphicon-forward"></span></button>
                                         <!--<div>Check All:<input type="checkbox" id='checkall1'></div>-->
                                         </th>
@@ -535,8 +633,8 @@ echo "bbb";
                                                         $cur_date = $days[$day];
                                                         if (check_class_date_range($start_class, $end_class, $cur_date)) {
                                                             $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);
-                                                            $ses_date = $cur_date->format('Y-m-d');                                                           
-                                                            echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);                                                            
+                                                            $ses_date = $cur_date->format('Y-m-d');
+                                                            echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);
                                                         }
                                                         ?>
                                                     </td>
@@ -544,7 +642,7 @@ echo "bbb";
                                                 }
                                                 ?>
                                             </tr>
-                                            <?php                                            
+                                            <?php
                                             $i++;
                                         }
                                     }
