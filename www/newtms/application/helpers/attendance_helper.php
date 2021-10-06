@@ -369,53 +369,30 @@ function get_data_for_renderring_assessment($tenant_id, $course_id, $class_id, $
     $data['subsidy'] = $subsidy;
 
     if (!empty($course_id)) {
-
-        $data['classes'] = $CI->class->get_course_class($tenant_id, $course_id, 'mark_attendance',1,'classTrainee');
-
+        $data['classes'] = $CI->class->get_course_class($tenant_id, $course_id, 'mark_assessment',1,'classTrainee');
         if (!empty($class_id)) {
-
             $class_details = $CI->class->get_class_by_id($tenant_id, $course_id, $class_id);
-
         }
-
     }
 
     if (!$data['courses'])
-
         $data['courses'] = array('0' => 'Please Select');
-
     else {
-
         $crse = $data['courses'];
-
         $data['courses'] = array(0 => 'Please Select');
-
-
-
         foreach ($crse as $key => $val) {
-
             $data['courses'][$key] = $val;
-
         }
-
     }
 
     if (!$data['classes'])
-
         $data['classes'] = array('0' => 'Please Select');
-
     else {
-
         $class = $data['classes'];
-
         $data['classes'] = array(0 => 'Please Select');
-
         foreach ($class as $key => $val) {
-
             $data['classes'][$key] = $val;
-
         }
-
     }
 
     $class_start = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);
@@ -475,38 +452,7 @@ function get_data_for_renderring_assessment($tenant_id, $course_id, $class_id, $
 
         $week_end_date = clone $week_start_date;
 
-    $data['tabledata'] = $tabledata = $CI->classtraineemodel->get_class_trainee_list_for_attendance($tenant_id, $course_id, $class_id, $subsidy, $week_start_date, $week_end_date, $sort_by, $sort_order, $attendance_status);
-
-
-    if ($attendance_status == 'ab' || $attendance_status == 'pr') {
-
-
-
-        $date1 = $week_start_date->format('Y-m-d');
-        $date2 = $week_end_date->format('Y-m-d');
-       
-
-        if (strtotime($date2) > strtotime(date('Y-m-d'))) {
-                $date2 = date('Y-m-d'); 
-        }
-        if (strtotime($date2) < strtotime($date1)) {
-
-            $user_present = array();
-            $data['tabledata'] = array();
-        } else {
-            $second_diff = strtotime($date2) - strtotime($date1);
-            $interval = floor($second_diff / 3600 / 24);
-            $user_present = array();
-            foreach ($tabledata as $row)
-            {
-              //  if ($row['user_count'] == ($interval + 1)) {
-                    $user_present[] = $row['user_id'];
-            }
-           // }
-            $data['tabledata'] = $CI->classtraineemodel->present_absent_attendance_list($tenant_id, $course_id, $class_id, $subsidy, $week_start_date, $week_end_date, $sort_by, $sort_order, $attendance_status, $user_present);
-        }
-
-    }
+    $data['tabledata'] = $tabledata = $CI->classtraineemodel->get_class_trainee_list_for_attendance($tenant_id, $course_id, $class_id, $subsidy, $week_start_date, $week_end_date, $sort_by, $sort_order, $attendance_status);    
 
     $data['week_start'] = $week_start_date->format(CLIENT_DATE_FORMAT);
     $data['week_end'] = $week_end_date->format(CLIENT_DATE_FORMAT);
@@ -517,7 +463,7 @@ function get_data_for_renderring_assessment($tenant_id, $course_id, $class_id, $
     $data['class_start_date'] = date('Y-m-d',strtotime($class_details->class_start_datetime));
     $data['class_end_date'] = date('Y-m-d',strtotime($class_details->class_end_datetime));
 
-//print_r($data);exit;
+print_r($data);exit;
 
     return $data;
 
