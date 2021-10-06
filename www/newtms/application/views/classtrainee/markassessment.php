@@ -320,7 +320,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
     </div>        
     <?php
 } else {
-echo "bbb"; exit;
+//echo "bbb"; exit;
     $attendance_status = $this->input->post('attendance_status');
     $start_class = date_create_from_format("d/m/Y", $class_start);
     $end_class = date_create_from_format("d/m/Y", $class_end);
