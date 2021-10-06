@@ -224,7 +224,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                         } else {
                                             ?>
                                             <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
-                                            <?php $days[] = clone $curr_day; ?>                                            
+                                            <?php $days[] = clone $curr_day;                                          
                                         }
                                     }
 
