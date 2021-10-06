@@ -314,32 +314,27 @@ if ($value_of_schedule_class <= 0) {
                                     for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {
                                         if ($start_class->format('Y-m-d') == $end_class->format('Y-m-d') && $curr_day->format('Y-m-d') == $start_class->format('Y-m-d')) {
                                             ?>
-                                            <td align="center"><strong>fg<?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
+                                            <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
                                             <?php $days[] = clone $curr_day; ?>
 
                                             <?php
-                                        } else {
-                                            ?>
-                                            <td align="center"><strong>gf<?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
-                                            <?php
-                                            $days[] = clone $curr_day;
                                         }
                                     }
 
                                     $days_count = count($days);
                                     ?>
                                 </tr>
-                                <?php
-                                if (count($tabledata) == 0) {
-                                    echo '<tr><td align="center" colspan="' . ($i + 2) . '" style="color:red">No result found for the search criteria.</td></tr>';
-                                } else {
-                                    $i = 0;
-                                    $trainees = array();
-                                    foreach ($tabledata as $key => $data) {
-                                        $trainees[] = $key;
+                                    <?php
+                                    if (count($tabledata) == 0) {
+                                        echo '<tr><td align="center" colspan="' . ($i + 2) . '" style="color:red">No result found for the search criteria.</td></tr>';
+                                    } else {
+                                        $i = 0;
+                                        $trainees = array();
+                                        foreach ($tabledata as $key => $data) {
+                                            $trainees[] = $key;
 
-                                        $color = $i % 2 == 0 ? 'white' : 'grey';
-                                        ?>
+                                            $color = $i % 2 == 0 ? 'white' : 'grey';
+                                            ?>
                                         <tr class="<?php echo $color ?>">
                                             <td>
                                                 <span style=" float:left;"><?php echo $data['record']['tax_code'] ?></span>
@@ -347,64 +342,64 @@ if ($value_of_schedule_class <= 0) {
                                             <td>
                                                 <span style="float:left;"><?php echo $data['record']['name'] ?></span>
                                             </td>
-                                            <?php
-                                            for ($day = 0; $day < $days_count; $day++) {
-                                                $cur_date = $days[$day];
-                                                $ses_date = $cur_date->format('Y-m-d');
-                                                ?>
+                    <?php
+                    for ($day = 0; $day < $days_count; $day++) {
+                        $cur_date = $days[$day];
+                        $ses_date = $cur_date->format('Y-m-d');
+                        ?>
                                                 <td align="center">
-                                                    <?php
-                                                    //echo $days_count;
-                                                    if (check_class_date_range($start_class, $end_class, $cur_date)) {
-                                                        $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);
-                                                        echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);
-                                                    }
-                                                    ?>
-                                                </td>
                                                 <?php
-                                            }
-                                            ?>
+                                                //echo $days_count;
+                                                if (check_class_date_range($start_class, $end_class, $cur_date)) {
+                                                    $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);
+                                                    echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);
+                                                }
+                                                ?>
+                                                </td>
+                                                    <?php
+                                                }
+                                                ?>
                                         </tr>
-                                        <?php
-                                        $i++;
+                                            <?php
+                                            $i++;
+                                        }
                                     }
-                                }
-                                ?>
+                                    ?>
 
                             </tbody>
                         </table>
                     </div>            
                     <div style="clear:both;"></div>
                     <br>
-                    <?php
-                    if (!$is_report_page) {
-                        $atr = 'id="update_form" name="update_form"';
-                        echo form_open("class_trainee/mark_attendance_update", $atr);
-                        echo form_hidden('course_id', set_value('course_id'));
-                        echo form_hidden('class_id', set_value('class_id'));
-                        echo form_hidden('subsidy', set_value('subsidy'));
-                        $trainees = array();
-                        foreach ($tabledata as $key => $data) {
-                            echo form_hidden('trainees[]', $key);
-                        }
-                        echo form_hidden('from_date', $from_date);
-                        echo form_hidden('to_date', $to_date);
-                        echo form_hidden('week_start', $week_start);
-                        echo form_hidden('week_end', $week_end);
-                        echo form_close();
-                    }
-                } else {
-                    ?>
+            <?php
+            if (!$is_report_page) {
+                $atr = 'id="update_form" name="update_form"';
+                echo form_open("class_trainee/mark_attendance_update", $atr);
+                echo form_hidden('course_id', set_value('course_id'));
+                echo form_hidden('class_id', set_value('class_id'));
+                echo form_hidden('subsidy', set_value('subsidy'));
+                $trainees = array();
+                foreach ($tabledata as $key => $data) {
+                    echo form_hidden('trainees[]', $key);
+                }
+                echo form_hidden('from_date', $from_date);
+                echo form_hidden('to_date', $to_date);
+                echo form_hidden('week_start', $week_start);
+                echo form_hidden('week_end', $week_end);
+                echo form_close();
+            }
+        } else {
+            ?>
                     <div class="scroll"> 
                         <label class="red">This class has not yet started. You will only be able to print the manual attendance sheet for the class at point of time. </label>
                     </div>
-                    <?php
-                }
-                ?>
-            </div>
             <?php
         }
         ?>
+            </div>
+                <?php
+            }
+            ?>
     </div>
     <div class="modal" id="ex1" style="display:none;">
         <p>
@@ -482,18 +477,18 @@ if ($value_of_schedule_class <= 0) {
     <div class="col-md-10">
 
         <h2 class="panel_heading_style"><span class="glyphicon glyphicon-pencil"></span> <?php echo $page_title; ?></h2>
-        <?php
-        if (!empty($message)) {
-            echo "<div class='success'>" . $message . "</div>";
-        }
-        ?>
+    <?php
+    if (!empty($message)) {
+        echo "<div class='success'>" . $message . "</div>";
+    }
+    ?>
         <div class="table-responsive">
             <span class="error" id="markAttendanceSubmitErrorForm"></span>
-            <?php
-            $atr = 'id="search_form" name="search_form"';
-            echo form_open($controllerurl, $atr);
-            echo form_hidden('orientation', 'P', 'orientation');
-            ?>
+    <?php
+    $atr = 'id="search_form" name="search_form"';
+    echo form_open($controllerurl, $atr);
+    echo form_hidden('orientation', 'P', 'orientation');
+    ?>
             <table class="table table-striped">
 
                 <tbody>
@@ -506,34 +501,34 @@ if ($value_of_schedule_class <= 0) {
                         <td class="td_heading">Class Name:<span class="required">*</span></td>
 
                         <td colspan='3'>
-                            <?php
-                            $attr_js = 'id="select_class_id">';
-                            echo form_dropdown('class_id', $classes, set_value('class_id'), $attr_js);
-                            ?>
+    <?php
+    $attr_js = 'id="select_class_id">';
+    echo form_dropdown('class_id', $classes, set_value('class_id'), $attr_js);
+    ?>
                         </td>
                     </tr>
                     <tr>
                         <td class="td_heading">Subsidy</td>
                         <td <?php echo ($is_report_page) ? '' : "colspan='2'"; ?>>                        
-                            <?php
-                            $subsidy_array = array('' => 'All', 'ws' => 'With Subsidy', 'wts' => 'Without Subsidy', 'fr' => 'Foreginer');
-                            $attr_js = 'id="subsidy">';
-                            echo form_dropdown('subsidy', $subsidy_array, $subsidy, $attr_js);
-                            ?>
+    <?php
+    $subsidy_array = array('' => 'All', 'ws' => 'With Subsidy', 'wts' => 'Without Subsidy', 'fr' => 'Foreginer');
+    $attr_js = 'id="subsidy">';
+    echo form_dropdown('subsidy', $subsidy_array, $subsidy, $attr_js);
+    ?>
                         </td>                        
                         <td>
-                            <?php
-                            $attr_js = 'id="input_to_date" style="width:40%;"';
-                            ?>
+    <?php
+    $attr_js = 'id="input_to_date" style="width:40%;"';
+    ?>
 
                             <div class="pull-right">
-                                <?php
-                                echo form_hidden('week_start', $week_start);
-                                echo form_hidden('week_end', $week_end);
-                                echo form_hidden('week', null);
-                                echo form_hidden('export', null);
-                                echo form_hidden('export1', null);
-                                ?>
+    <?php
+    echo form_hidden('week_start', $week_start);
+    echo form_hidden('week_end', $week_end);
+    echo form_hidden('week', null);
+    echo form_hidden('export', null);
+    echo form_hidden('export1', null);
+    ?>
                                 <button id="markAttendanceSubmit" class="btn btn-xs btn-primary no-mar" name="markattendance_search_button" title="Search" value="Search">
                                     <span class="glyphicon glyphicon-search"></span> Search
                                 </button>
@@ -545,36 +540,36 @@ if ($value_of_schedule_class <= 0) {
     <?php echo form_close(); ?>
         </div>
         <br>
-        <?php
-        if ($xxx == 1) {
-            $check_classid = $this->input->post('class_id');
-            if (empty($tabledata) && !empty($check_classid) && empty($attendance_status)) {
-                ?>
+    <?php
+    if ($xxx == 1) {
+        $check_classid = $this->input->post('class_id');
+        if (empty($tabledata) && !empty($check_classid) && empty($attendance_status)) {
+            ?>
                 <table class="table table-striped">
                     <tr class="danger">
                         <td colspan="10" style="color:red;text-align: center;">There are no students enrolled for the class.</td>
                     </tr>
                 </table>
-                <?php
-            }
-            if (!empty($tabledata) || !empty($attendance_status)) {
-                $week_start_date = date_create_from_format("d/m/Y", $week_start);
-                $week_end_date = date_create_from_format("d/m/Y", $week_end);
+            <?php
+        }
+        if (!empty($tabledata) || !empty($attendance_status)) {
+            $week_start_date = date_create_from_format("d/m/Y", $week_start);
+            $week_end_date = date_create_from_format("d/m/Y", $week_end);
 
-                $ifPrevWeekDisabled = $week_start_date <= $start_class;
-                $ifNextWeekDisabled = $week_end_date >= $end_class;
-                ?>
+            $ifPrevWeekDisabled = $week_start_date <= $start_class;
+            $ifNextWeekDisabled = $week_end_date >= $end_class;
+            ?>
                 <div class="row_dim1">                    
                     <div class="add_button space_style">
-                        <?php
-                        //echo $this->session->flashdata('success');
-                        $current_date_time = strtotime(date("Y-m-d H:i:s"));
-                        ?>
+            <?php
+            //echo $this->session->flashdata('success');
+            $current_date_time = strtotime(date("Y-m-d H:i:s"));
+            ?>
                     </div>
                     <div style="clear:both;"></div>
-                    <?php
-                    if (strtotime($class_start_date) <= strtotime(date('Y-m-d')) || $is_report_page) {
-                        ?>
+            <?php
+            if (strtotime($class_start_date) <= strtotime(date('Y-m-d')) || $is_report_page) {
+                ?>
                         <div class="scroll">
                             <table class="table">
                                 <thead>
@@ -593,11 +588,11 @@ if ($value_of_schedule_class <= 0) {
                                 <tbody>
                                     <tr class="sub_head">
                                         <td colspan="2">&nbsp;</td>
-                                        <?php
-                                        $days = array();
+                <?php
+                $days = array();
 
-                                        for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {
-                                            ?>
+                for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {
+                    ?>
                                             <td align="center"><strong>bb<?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
                                             <?php $days[] = clone $curr_day; ?>
 
@@ -607,17 +602,17 @@ if ($value_of_schedule_class <= 0) {
                                         $days_count = count($days);
                                         ?>
                                     </tr>
-                                    <?php
-                                    if (count($tabledata) == 0) {
-                                        echo '<tr><td align="center" colspan="' . ($i + 2) . '" style="color:red">No result found for the search criteria.</td></tr>';
-                                    } else {
-                                        $i = 0;
-                                        $trainees = array();
-                                        foreach ($tabledata as $key => $data) {
-                                            $trainees[] = $key;
+                                        <?php
+                                        if (count($tabledata) == 0) {
+                                            echo '<tr><td align="center" colspan="' . ($i + 2) . '" style="color:red">No result found for the search criteria.</td></tr>';
+                                        } else {
+                                            $i = 0;
+                                            $trainees = array();
+                                            foreach ($tabledata as $key => $data) {
+                                                $trainees[] = $key;
 
-                                            $color = $i % 2 == 0 ? 'white' : 'grey';
-                                            ?>
+                                                $color = $i % 2 == 0 ? 'white' : 'grey';
+                                                ?>
                                             <tr class="<?php echo $color ?>">
                                                 <td>
                                                     <span style=" float:left;"><?php echo $data['record']['tax_code'] ?></span>
@@ -625,46 +620,46 @@ if ($value_of_schedule_class <= 0) {
                                                 <td>
                                                     <span style="float:left;"><?php echo $data['record']['name'] ?></span>
                                                 </td>
-                                                <?php
-                                                for ($day = 0; $day < $days_count; $day++) {
-                                                    ?>
+                        <?php
+                        for ($day = 0; $day < $days_count; $day++) {
+                            ?>
                                                     <td align="center">
-                                                        <?php
-                                                        $cur_date = $days[$day];
-                                                        if (check_class_date_range($start_class, $end_class, $cur_date)) {
-                                                            $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);
-                                                            $ses_date = $cur_date->format('Y-m-d');
-                                                            echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);
-                                                        }
-                                                        ?>
-                                                    </td>
                                                     <?php
-                                                }
-                                                ?>
+                                                    $cur_date = $days[$day];
+                                                    if (check_class_date_range($start_class, $end_class, $cur_date)) {
+                                                        $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);
+                                                        $ses_date = $cur_date->format('Y-m-d');
+                                                        echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);
+                                                    }
+                                                    ?>
+                                                    </td>
+                                                        <?php
+                                                    }
+                                                    ?>
                                             </tr>
-                                            <?php
-                                            $i++;
+                                                <?php
+                                                $i++;
+                                            }
                                         }
-                                    }
-                                    ?>
+                                        ?>
                                 </tbody>
                             </table>
                         </div>            
                         <div style="clear:both;"></div>
                         <br>
-                        <?php
-                    } else {
-                        ?>
+                <?php
+            } else {
+                ?>
                         <div class="scroll"> 
                             <label class="red">This class has not yet started. You will only be able to print the manual attendance sheet for the class at point of time. </label>
                         </div>
-                        <?php
-                    }
-                    ?>
-                </div>
                 <?php
             }
             ?>
+                </div>
+                    <?php
+                }
+                ?>
         </div>
         <div class="modal" id="ex1" style="display:none;">
             <p>
