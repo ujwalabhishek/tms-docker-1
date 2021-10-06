@@ -500,7 +500,7 @@ echo "bbb";
 
                                         for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {
                                             ?>
-                                            <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
+                                            <td align="center"><strong>bb<?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
                                             <?php $days[] = clone $curr_day; ?>
 
                                             <?php
