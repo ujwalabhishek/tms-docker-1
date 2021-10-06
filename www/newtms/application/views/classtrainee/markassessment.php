@@ -312,13 +312,10 @@ if ($value_of_schedule_class <= 0) {
                                     $days = array();
 
                                     for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {
-                                        if ($start_class->format('Y-m-d') == $end_class->format('Y-m-d') && $curr_day->format('Y-m-d') == $start_class->format('Y-m-d')) {
-                                            ?>
-                                            <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
-                                            <?php $days[] = clone $curr_day; ?>
-
-                                            <?php
-                                        }
+                                        ?>
+                                        <td align="center"><strong>gf<?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
+                                        <?php
+                                        $days[] = clone $curr_day;
                                     }
 
                                     $days_count = count($days);
