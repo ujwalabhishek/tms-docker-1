@@ -313,7 +313,7 @@ if ($value_of_schedule_class <= 0) {
                                     $days = array();
 
                                     for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {
-                                        echo print_r($data_arr, true); echo $data_arr['assmnt_date']->format('Y-m-d');
+                                        echo print_r($data_arr, true); echo $curr_day->format('Y-m-d'); echo $data_arr[$curr_day->format('Y-m-d')][0]['assmnt_date'];
                                         
                                         if ($curr_day->format('Y-m-d') == $data_arr[$curr_day->format('Y-m-d')][0]['assmnt_date']) {
                                         ?>                                    
