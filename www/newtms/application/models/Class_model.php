@@ -700,7 +700,17 @@ class Class_Model extends CI_Model {
                 from class_schld where tenant_id='$tenant_id' and class_id='$cid'
                 order by class_date DESC, session_start_time ASC");
         return $result->result_array();
-    }    
+    }
+    
+    /**
+     * this function to get all assessment schedules
+     */    
+    public function get_all_assessment_schedule($tenant_id, $cid) {
+        $result = $this->db->query("select assmnt_date, assmnt_id, assmnt_start_time,assmnt_end_time,tpg_assmnt_id,mode_of_training
+                from class_assmnt_schld where tenant_id='$tenant_id' and class_id='$cid'
+                order by assmnt_date DESC, assmnt_start_time ASC");
+        return $result->result_array();
+    }
 
     public function get_all_class_schedules($tenant_id, $cid) {
         $result = $this->db->query("select tenant_id,course_id,class_id,class_date,session_type_id,tpg_session_id,mode_of_training,session_start_time,session_end_time

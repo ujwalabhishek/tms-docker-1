@@ -32,6 +32,7 @@ $value_of_schedule_class = count($class_schedule);
 $start_class = date_create_from_format("d/m/Y", $class_start);
 $end_class = date_create_from_format("d/m/Y", $class_end);
 if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condition on line no : 526
+    echo "aaa"; exit;
     $attendance_status = $this->input->post('attendance_status');
     $start_class = date_create_from_format("d/m/Y", $class_start);
     $end_class = date_create_from_format("d/m/Y", $class_end);
@@ -152,12 +153,11 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
         $data_arr = array();
         $datas_arr_list = array();
         foreach ($class_schedule as $row) {
-            $data_arr[$row['class_date']][] = array(
-                'session' => $row['session_type_id'],
-                'start' => $row['session_start_time'],
-                'end' => $row['session_end_time']
+            $data_arr[$row['assmnt_date']][] = array(                
+                'start' => $row['assmnt_start_time'],
+                'end' => $row['assmnt_end_time']
             );
-            $datas_arr_list[] = $row['class_date'];
+            $datas_arr_list[] = $row['assmnt_date'];
         }
 
         if (!empty($tabledata) || !empty($attendance_status)) {
@@ -214,20 +214,17 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                     <?php
                                     $days = array();
 
-                                    for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {
-
-                                        if ($data_arr[$curr_day->format('Y-m-d')][0]['session'] == 'S1') {
+                                    for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {                                        
+                                        if ($start_class->format('Y-m-d') == $end_class->format('Y-m-d') && $curr_day->format('Y-m-d') == $start_class->format('Y-m-d')) {
                                             ?>
                                             <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
                                             <?php $days[] = clone $curr_day; ?>
 
                                             <?php
-                                        } elseif ($start_class->format('Y-m-d') == $end_class->format('Y-m-d') && $curr_day->format('Y-m-d') == $start_class->format('Y-m-d')) {
+                                        } else {
                                             ?>
                                             <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
-                                            <?php $days[] = clone $curr_day; ?>
-
-                                            <?php
+                                            <?php $days[] = clone $curr_day; ?>                                            
                                         }
                                     }
 
@@ -261,10 +258,8 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                                     <?php
                                                     //echo $days_count;
                                                     if (check_class_date_range($start_class, $end_class, $cur_date)) {
-                                                        $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);
-                                                        if ($data_arr[$ses_date][0]['session'] == 'S1' || $same_values == 1) {
-                                                            echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);
-                                                        }
+                                                        $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);                                                        
+                                                            echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);                                                        
                                                     }
                                                     ?>
                                                 </td>
@@ -325,7 +320,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
     </div>        
     <?php
 } else {
-
+echo "bbb"; exit;
     $attendance_status = $this->input->post('attendance_status');
     $start_class = date_create_from_format("d/m/Y", $class_start);
     $end_class = date_create_from_format("d/m/Y", $class_end);
