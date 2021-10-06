@@ -27,7 +27,6 @@ $post_course_id = $this->input->post('course_id');
 $post_class_id = $this->input->post('class_id');
 
 $tenant_id = $this->session->userdata('userDetails')->tenant_id;
-$check_attendance = check_attendance_row($tenant_id, $post_course_id, $post_class_id);
 
 $value_of_schedule_class = count($class_schedule);
 $start_class = date_create_from_format("d/m/Y", $class_start);
@@ -187,8 +186,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
             <div class="row_dim1">            
                 <div class="add_button space_style">
                     <?php
-                    $current_date_time = strtotime(date("Y-m-d H:i:s"));
-                    $class_start_date_time = strtotime($class_start_datetime);
+                    $current_date_time = strtotime(date("Y-m-d H:i:s"));                    
                     ?>
                 </div>
                 <div style="clear:both;"></div>
@@ -487,8 +485,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                     <div class="add_button space_style">
                         <?php
                         //echo $this->session->flashdata('success');
-                        $current_date_time = strtotime(date("Y-m-d H:i:s"));
-                        $class_start_date_time = strtotime($class_start_datetime);
+                        $current_date_time = strtotime(date("Y-m-d H:i:s"));                        
                         ?>
                     </div>
                     <div style="clear:both;"></div>

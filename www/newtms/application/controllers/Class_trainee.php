@@ -1995,9 +1995,7 @@ class Class_Trainee extends CI_Controller {
         $this->load->helper('attendance_helper');
 
         $data = get_data_for_renderring_attendance($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order, '');
-        $data['class_schedule'] = $this->class->get_all_class_schedule($tenant_id, $class_id);
-        $att = $this->classtraineemodel->get_attendance_lock_status($tenant_id, $course_id, $class_id);            
-        $data['class_start_datetime'] = $att->class_start_datetime;
+        $data['class_schedule'] = $this->class->get_all_class_schedule($tenant_id, $class_id);        
         $data['user'] = $this->user;
         $data['controllerurl'] = 'class_trainee/mark_assessment';
         $data['page_title'] = 'Class Trainee Enrollment - Mark Assessment';
