@@ -312,10 +312,14 @@ if ($value_of_schedule_class <= 0) {
                                     $days = array();
 
                                     for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {
-                                        ?>
+                                        echo print_r($data_arr, true); exit;
+                                        
+                                        if ($data_arr[$curr_day->format('Y-m-d')][0]['session'] == 'S1') {
+                                        ?>                                    
                                         <td align="center"><strong>gf<?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
                                         <?php
                                         $days[] = clone $curr_day;
+                                        }
                                     }
 
                                     $days_count = count($days);
