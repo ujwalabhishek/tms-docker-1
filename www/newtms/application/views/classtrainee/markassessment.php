@@ -264,21 +264,8 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                                     //echo $days_count;
                                                     if (check_class_date_range($start_class, $end_class, $cur_date)) {
                                                         $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);
-
-                                                        if ($is_report_page) {
-                                                            if ($check_attendance < 1) {
-                                                                echo '<span class="green">P</span>';
-                                                            } else {
-                                                                if ($checkbox_value) {
-                                                                    echo '<span class="green">P</span>';
-                                                                } else {
-                                                                    echo '<span class="red">AB</span>';
-                                                                }
-                                                            }
-                                                        } else {
-                                                            if ($data_arr[$ses_date][0]['session'] == 'S1' || $same_values == 1) {
-                                                                echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);
-                                                            }
+                                                        if ($data_arr[$ses_date][0]['session'] == 'S1' || $same_values == 1) {
+                                                            echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);
                                                         }
                                                     }
                                                     ?>
@@ -288,31 +275,6 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                             ?>
                                         </tr>
                                         <?php
-                                        if ($class_session_day == '2') {
-                                            ?>
-                                            <tr class="<?php echo $color ?>">
-                                                <?php
-                                                for ($day = 0; $day < $days_count; $day++) {
-                                                    $cur_date = $days[$day];
-                                                    $ses_date = $cur_date->format('Y-m-d');
-                                                    //print_r($data_arr);
-                                                    ?>
-                                                    <td align="center"><?php if ($data_arr[$ses_date][1]['session'] == 'S2' || $data_arr[$ses_date][2]['session'] == 'S2' || $same_values == 1) { ?><?php echo ($is_report_page ? '' : 'Session 2') ?> <?php } ?>
-                                                        <?php
-                                                        if (check_class_date_range($start_class, $end_class, $cur_date)) {
-                                                            $checkbox_value = check_for_session_checked($data, $cur_date, FALSE);
-                                                            if ($data_arr[$ses_date][1]['session'] == 'S2' || $data_arr[$ses_date][2]['session'] == 'S2' || $same_values == 1) {
-                                                                echo form_checkbox("mark_attendance[$key][$ses_date][session_02]", '1', $checkbox_value);
-                                                            }
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <?php
-                                                }
-                                                ?>
-                                            </tr>
-                                            <?php
-                                        }
                                         $i++;
                                     }
                                 }
@@ -371,71 +333,17 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
             <?php
         }
         ?>
-
     </div>
-
     <div class="modal" id="ex1" style="display:none;">
         <p>
-        <h2 class="panel_heading_style">Heading Goes Here...</h2>
-        Detail Goes here.  <br>
+            <h2 class="panel_heading_style">Heading Goes Here...</h2>
+            Detail Goes here.  <br>
 
-        <div class="popup_cancel">
-            <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Cancel</button></a></div></p>
-    </div>
-
-    <div class="modal1_052" id="ex3" style="display:none;">
-        <p>
-        <h2 class="panel_heading_style">Attendance Sheet</h2>
-        <div class="scroll_new_popup">
-            <div class="popup_cancel9">
-                <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Print</button></a></div>
-            <img src="<?php echo base_url(); ?>assets/images/excelpopup.png" border="0" width="1070px" height="501px"><br>
-            <div class="popup_cancel9">
-                <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Print</button></a></div></p>
-        </div>
-    </div>
-
-    <div class="modal_991" id="ex5" style="display:none;">
-        <div class="markattendanceexcel"><img src="<?php echo base_url(); ?>assets/images/markattendanceexcel.png" border="0" width="1016px;"></div>
-    </div>
-    <div class="modal-inv" id="ex13" style="display:none;width:25%">
-        <p>
-        <h2 class="panel_heading_style">Select PRINT Orientation:</h2>
-        <div>
-            <?php
-            $data = array('name' => 'select_pdf_print', 'class' => 'select_pdf_print');
-            echo form_radio($data, 'L', TRUE, $extra);
-            echo '&nbsp; &nbsp; Landscape'
-            ?>
-        </div>
-        <div>
-            <?php
-            $data = array('name' => 'select_pdf_print', 'class' => 'select_pdf_print');
-            echo form_radio($data, 'P', FALSE, $extra);
-            echo '&nbsp; &nbsp; Portrait';
-            ?>
-            <span id="with_subsidy_err"></span>
-        </div>
-        <div class="popup_cancel popup_cancel001">
-            <span href="#" rel="modal:close"><button class="btn btn-primary attendance_print" type="button">Print</button></span></div>
-    </p>
-    </div>
-    <script>
-        $(document).ready(function () {
-            $('#export_to_pdf_week_but').click(function () {
-                $('#ex13').modal();
-                return false;
-            })
-            $('.attendance_print').click(function () {
-                $val = $('.select_pdf_print:checked').val();
-                $('input[name=export]').val("pdf_week");
-                var form = $('#search_form');
-                $('#orientation').val($val);
-                form.submit();
-                $('input[name=export]').val("");
-            })
-        });
-    </script>
+            <div class="popup_cancel">
+                <a href="#" rel="modal:close"><button class="btn btn-primary" type="button">Cancel</button></a>
+            </div>
+        </p>
+    </div>        
     <?php
 } else {
 
@@ -640,7 +548,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                         <?php
                         //echo $this->session->flashdata('success');
                         $current_date_time = strtotime(date("Y-m-d H:i:s"));
-                        $class_start_date_time = strtotime($class_start_datetime);                        
+                        $class_start_date_time = strtotime($class_start_datetime);
                         ?>
                     </div>
                     <div style="clear:both;"></div>
@@ -705,20 +613,8 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                                         $cur_date = $days[$day];
                                                         if (check_class_date_range($start_class, $end_class, $cur_date)) {
                                                             $checkbox_value = check_for_session_checked($data, $cur_date, TRUE);
-                                                            $ses_date = $cur_date->format('Y-m-d');
-                                                            if ($is_report_page) {
-                                                                if ($check_attendance < 1) {
-                                                                    echo '<span class="green">P</span>';
-                                                                } else {
-                                                                    if ($checkbox_value) {
-                                                                        echo '<span class="green">P</span>';
-                                                                    } else {
-                                                                        echo '<span class="red">AB</span>';
-                                                                    }
-                                                                }
-                                                            } else {
-                                                                echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);
-                                                            }
+                                                            $ses_date = $cur_date->format('Y-m-d');                                                           
+                                                            echo form_checkbox("mark_attendance[$key][$ses_date][session_01]", '1', $checkbox_value);                                                            
                                                         }
                                                         ?>
                                                     </td>
@@ -726,46 +622,11 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                                                 }
                                                 ?>
                                             </tr>
-                                            <?php
-                                            if ($class_session_day == '2') {
-                                                ?>
-                                                <tr class="<?php echo $color ?>">
-                                                    <?php
-                                                    for ($day = 0; $day < $days_count; $day++) {
-                                                        ?>
-                                                        <td align="center"><?php echo ($is_report_page ? '' : 'Session 2') ?>
-                                                            <?php
-                                                            $cur_date = $days[$day];
-                                                            if (check_class_date_range($start_class, $end_class, $cur_date)) {
-                                                                $checkbox_value = check_for_session_checked($data, $cur_date, FALSE);
-                                                                $ses_date = $cur_date->format('Y-m-d');
-                                                                if ($is_report_page) {
-                                                                    if ($check_attendance < 1) {
-                                                                        echo '<span class="green">P</span>';
-                                                                    } else {
-                                                                        if ($checkbox_value) {
-                                                                            echo '<span class="green">P</span>';
-                                                                        } else {
-                                                                            echo '<span class="red">AB</span>';
-                                                                        }
-                                                                    }
-                                                                } else {
-                                                                    echo form_checkbox("mark_attendance[$key][$ses_date][session_02]", '1', $checkbox_value);
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </tr>
-                                                <?php
-                                            }
+                                            <?php                                            
                                             $i++;
                                         }
                                     }
                                     ?>
-
                                 </tbody>
                             </table>
                         </div>            
@@ -784,9 +645,7 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                 <?php
             }
             ?>
-
         </div>
-
         <div class="modal" id="ex1" style="display:none;">
             <p>
             <h2 class="panel_heading_style">Heading Goes Here...</h2>
