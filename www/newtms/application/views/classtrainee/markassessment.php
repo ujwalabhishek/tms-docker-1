@@ -251,6 +251,7 @@ if ($value_of_schedule_class <= 0) {
         $datas_arr_list = array();
         foreach ($class_schedule as $row) {
             $data_arr[$row['assmnt_date']][] = array(
+                'assmnt_date' => $row['assmnt_date'],
                 'start' => $row['assmnt_start_time'],
                 'end' => $row['assmnt_end_time']
             );
