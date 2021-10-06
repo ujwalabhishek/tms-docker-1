@@ -32,7 +32,7 @@ $value_of_schedule_class = count($class_schedule);
 $start_class = date_create_from_format("d/m/Y", $class_start);
 $end_class = date_create_from_format("d/m/Y", $class_end);
 if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condition on line no : 526
-    echo "aaa"; exit;
+    //echo "aaa"; exit;
     $attendance_status = $this->input->post('attendance_status');
     $start_class = date_create_from_format("d/m/Y", $class_start);
     $end_class = date_create_from_format("d/m/Y", $class_end);
