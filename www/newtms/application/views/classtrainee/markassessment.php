@@ -635,55 +635,12 @@ if ($start_class != $end_class && $value_of_schedule_class > 0) {  // else condi
                     </div>
                     <div style="clear:both;"></div><br>
                 <?php } ?>
-                <div class="row_dim1">
-                    <?php if ($is_report_page) { ?>
-                        <span class="required required_i">AB - Absent &nbsp;&nbsp;&nbsp;<span class="green">P- Present</span></span>
-                    <?php } ?>
+                <div class="row_dim1">                    
                     <div class="add_button space_style">
                         <?php
                         //echo $this->session->flashdata('success');
                         $current_date_time = strtotime(date("Y-m-d H:i:s"));
-                        $class_start_date_time = strtotime($class_start_datetime);
-                        if (!$is_report_page) {
-
-                            if (($user->user_id == 82169) || ($user->user_id == 53401) || ($user->user_id == 82171) || ($user->user_id == 1) || ($user->user_id == 2)) {
-                                if ($lock_status == 0) {
-                                    //echo $this->session->flashdata('success');
-                                    if (strtotime($class_start_date) <= strtotime(date('Y-m-d'))) {
-                                        ?>
-                                        <button id="lock_attendance" class="label label-primary black-btn mar-bot" style="">
-                                            <span class="glyphicon glyphicon-compressed"></span>Lock Attendance
-                                        </button>
-
-                                        <?php
-                                    }
-                                }
-                                if ($lock_status == 1) {
-                                    ?>
-                                    <button id="unlock_attendance" class="label label-primary black-btn mar-bot" style="">
-                                        <span class="glyphicon glyphicon-magnet"></span>&nbsp;Unlock Attendance
-                                    </button><?php
-                                }
-                            }
-                            ?>
-                            <span id="lock_message" style="display:none;">Class atendance is successfully locked</span>
-                            <button id="export_to_pdf_week_but" class="label label-default black-btn mar-bot">
-                                <span class="glyphicon glyphicon-repeat"></span> Generate ManualAttendance Sheet</button>
-                            &nbsp;&nbsp;
-                            <?php if ($user->role_id != 'CRSEMGR') { ?>
-                                <button id="export_to_pdf_week_xls" class="label label-default black-btn mar-bot"><span class="glyphicon glyphicon-repeat"></span> Generate ManualAttendance XLS</button>
-                                &nbsp;&nbsp;
-                            <?php } ?>
-                            <?php
-                        }
-                        if (strtotime($class_start_date) <= strtotime(date('Y-m-d'))) {
-                            ?>
-                            <?php if ($user->role_id != 'CRSEMGR') { ?>
-                                <button id="export_to_xls_but" class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export to XLS</button>
-                                &nbsp;&nbsp;
-                            <?php } ?>
-                            <button id="export_to_pdf_but" class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span> Export to PDF</button>
-                        <?php }
+                        $class_start_date_time = strtotime($class_start_datetime);                        
                         ?>
                     </div>
                     <div style="clear:both;"></div>
