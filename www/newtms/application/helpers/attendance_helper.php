@@ -463,7 +463,7 @@ function get_data_for_renderring_assessment($tenant_id, $course_id, $class_id, $
     $data['class_start_date'] = date('Y-m-d',strtotime($class_details->class_start_datetime));
     $data['class_end_date'] = date('Y-m-d',strtotime($class_details->class_end_datetime));
 
-print_r($data);exit;
+//print_r($data);exit;
 
     return $data;
 
