@@ -564,7 +564,7 @@ class Class_Trainee_Model extends CI_Model {
 
         $date_to = $to_date->format('Y-m-d');
 
-        $this->db->select("tu.tax_code, tu.country_of_residence, tup.nationality ,tup.first_name as name,epd.att_status att, ca.session_01, ca.session_02, ca.class_attdn_date, cc.class_session_day, ce.class_id, ce.course_id, ce.user_id", FALSE);
+        $this->db->select("tu.tax_code, tu.country_of_residence, tup.nationality ,tup.first_name as name,epd.att_status att, ca.assmnt_attdn, ca.class_assmnt_date, cc.class_session_day, ce.class_id, ce.course_id, ce.user_id", FALSE);
         $this->db->select('ce.company_id, cm.company_name');
         $this->db->join('company_master cm', 'cm.company_id=ce.company_id', 'LEFT');
         $this->db->from('class_enrol ce');
