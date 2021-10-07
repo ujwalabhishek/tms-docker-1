@@ -1867,7 +1867,7 @@ class Class_Trainee_Model extends CI_Model {
     
     public function is_assessment_exists($class_id, $user_id, $assmnt_date) {
 
-        $cnt = $this->db->query("select count(*) as cnt from class_assessment where class_id = ? and user_id = ? and class_attdn_date = ?", array($class_id, $user_id, $assmnt_date))->row()->cnt;
+        $cnt = $this->db->query("select count(*) as cnt from class_assessment where class_id = ? and user_id = ? and class_assmnt_date = ?", array($class_id, $user_id, $assmnt_date))->row()->cnt;
 
         return $cnt > 0;
     }
