@@ -948,7 +948,7 @@ class Class_Trainee_Model extends CI_Model {
                 $marked_trainee[] = $trainee_id;
             }
         }
-
+echo "aaa"; exit;
         if (count($data_table) > 0) {
             $insert_array = array();
             foreach ($data_table as $trainee_id => $data_row) {
