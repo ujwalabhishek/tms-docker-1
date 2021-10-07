@@ -111,7 +111,7 @@ if ($value_of_schedule_class <= 0) {
         <br>
         <table class="table table-striped">
             <tr class="danger">
-                <td colspan="10" style="color:red;text-align: center;">There is no assessment schedule.</td>
+                <td colspan="10" style="color:red;text-align: center;">Please, select filters which has assessment schedule.</td>
             </tr>
         </table>
     </div>
