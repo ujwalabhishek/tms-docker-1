@@ -82,7 +82,7 @@ if ($value_of_schedule_class <= 0) {
                     </tr>
                     <tr>
                         <td class="td_heading">Class Name:<span class="required">*</span></td>
-                        <td colspan='3'>
+                        <td>
                             <?php
                             $attr_js = 'id="select_class_id"';
                             echo form_dropdown('class_id', $classes, set_value('class_id'), $attr_js);
@@ -90,7 +90,7 @@ if ($value_of_schedule_class <= 0) {
                         </td>
                     </tr>
                     <tr>                                  
-                        <td>
+                        <td colspan='3'>
                             <?php
                             $attr_js = 'id="input_to_date" style="width:40%;"';
                             ?>
@@ -182,8 +182,7 @@ if ($value_of_schedule_class <= 0) {
                     </tr>
                     <tr>
                         <td class="td_heading">Class Name:<span class="required">*</span></td>
-
-                        <td colspan='3'>
+                        <td>
                             <?php
                             $attr_js = 'id="select_class_id"';
                             echo form_dropdown('class_id', $classes, set_value('class_id'), $attr_js);
@@ -191,7 +190,7 @@ if ($value_of_schedule_class <= 0) {
                         </td>
                     </tr>
                     <tr>                                               
-                        <td>
+                        <td colspan='3'>
                             <?php
                             $attr_js = 'id="input_to_date" style="width:40%;"';
                             ?>
@@ -459,23 +458,15 @@ if ($value_of_schedule_class <= 0) {
 
                         <td class="td_heading">Class Name:<span class="required">*</span></td>
 
-                        <td colspan='3'>
+                        <td>
                             <?php
                             $attr_js = 'id="select_class_id">';
                             echo form_dropdown('class_id', $classes, set_value('class_id'), $attr_js);
                             ?>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="td_heading">Subsidy</td>
-                        <td <?php echo ($is_report_page) ? '' : "colspan='2'"; ?>>                        
-                            <?php
-                            $subsidy_array = array('' => 'All', 'ws' => 'With Subsidy', 'wts' => 'Without Subsidy', 'fr' => 'Foreginer');
-                            $attr_js = 'id="subsidy">';
-                            echo form_dropdown('subsidy', $subsidy_array, $subsidy, $attr_js);
-                            ?>
-                        </td>                        
-                        <td>
+                    <tr>                                               
+                        <td colspan='3'>
                             <?php
                             $attr_js = 'id="input_to_date" style="width:40%;"';
                             ?>
