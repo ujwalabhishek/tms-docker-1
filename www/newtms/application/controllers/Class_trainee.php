@@ -2165,7 +2165,7 @@ class Class_Trainee extends CI_Controller {
                 $message = 'Assessment Attendance has been updated successfully.';
             }
         }
-        $this->mark_attendance($message);
+        $this->mark_assessment($message);
     }
 
     /**
