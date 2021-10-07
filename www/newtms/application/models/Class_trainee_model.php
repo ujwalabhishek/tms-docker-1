@@ -572,7 +572,7 @@ class Class_Trainee_Model extends CI_Model {
         $this->db->join('tms_users_pers tup', 'ce.tenant_id = tup.tenant_id and ce.user_id = tup.user_id');
         $this->db->join('course_class cc', 'cc.tenant_id = ce.tenant_id and cc.course_id = ce.course_id and cc.class_id = ce.class_id');
         $this->db->join('enrol_pymnt_due epd', 'epd.pymnt_due_id = ce.pymnt_due_id and epd.user_id = ce.user_id');      
-        $this->db->join('class_assessment ca', "ca.tenant_id = ce.tenant_id and ca.course_id = ce.course_id and ca.class_id = ce.class_id and ca.user_id = ce.user_id and ca.class_assmnt_date >= '$date_from' and ca.class_attdn_date <= '$date_to'", 'left');        
+        $this->db->join('class_assessment ca', "ca.tenant_id = ce.tenant_id and ca.course_id = ce.course_id and ca.class_id = ce.class_id and ca.user_id = ce.user_id and ca.class_assmnt_date >= '$date_from' and ca.class_assmnt_date <= '$date_to'", 'left');        
 
         $array = array('ce.tenant_id' => $tenant_id, 'ce.course_id' => $course_id, 'ce.class_id' => $class_id);
 
