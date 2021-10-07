@@ -936,6 +936,62 @@ class Class_Trainee_Model extends CI_Model {
 //            return FALSE;
 //        }///////added by shubhranshu end of code////////////////////////////
     }
+    
+    public function update_for_mark_assessment($tenant_id, $course_id, $class_id, $data_table, $trainees) {
+        $is_updated = false;
+        $is_inserted = false;
+        $query = $this->db->query("select * from class_assessment where course_id='$course_id' and class_id='$class_id'");
+
+        if ($query->num_rows() > 0) {
+            $marked_trainee = array();
+            foreach ($data_table as $trainee_id => $data_row) {
+                $marked_trainee[] = $trainee_id;
+            }
+        }
+
+        if (count($data_table) > 0) {
+            $insert_array = array();
+            foreach ($data_table as $trainee_id => $data_row) {
+
+                foreach ($data_row as $date => $data) {
+
+                    if (isset($data['assmnt_attdn'])) {
+
+                        $exists = $this->is_attandance_exists($class_id, $trainee_id, $date);
+                        $update_data = array();
+                        if (isset($data['assmnt_attdn'])) {
+
+                            $update_data['assmnt_attdn'] = $data['assmnt_attdn'];
+                        }                        
+                        $this->db->where('class_id', $class_id);
+                        $this->db->where('course_id', $course_id);
+                        $this->db->where('tenant_id', $tenant_id);
+                        $this->db->where('user_id', $trainee_id);
+                        $this->db->where('class_assmnt_date', $date);
+                        if ($exists) {
+                            $this->db->update('class_assessment', $update_data);
+                            $is_updated = true;
+                        } else {
+                            $insert_array[] = array(
+                                'tenant_id' => $tenant_id,
+                                'course_id' => $course_id,
+                                'class_id' => $class_id,
+                                'user_id' => $trainee_id,
+                                'class_assmnt_date' => $date,
+                                'assmnt_attdn' => $data['assmnt_attdn']
+                            );
+                        }
+                    }
+                }
+            }
+            if (count($insert_array) > 0) {
+
+                $is_inserted = $this->db->insert_batch('class_assessment', $insert_array);
+            }                                    
+        }
+        return $is_inserted || $is_updated; 
+    }
+    
 
     /*
      * add presentee to invoice ..

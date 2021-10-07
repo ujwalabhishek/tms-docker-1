@@ -2145,6 +2145,28 @@ class Class_Trainee extends CI_Controller {
         }
         $this->mark_attendance($message);
     }
+    
+    /**
+     * updates assessment attendance data
+     */
+    public function mark_assessment_update() {
+        //$this->output->enable_profiler(TRUE);
+        $data['sideMenuData'] = fetch_non_main_page_content(); /////added by shubhranshu
+        $tenant_id = $this->tenant_id;
+        $course_id = $this->input->post('course_id');
+        $class_id = $this->input->post('class_id');
+        $data_table = $this->input->post('mark_assessment');
+        $trainees = $this->input->post('trainees');
+        $result = $this->classtraineemodel->update_for_mark_assessment($tenant_id, $course_id, $class_id, $data_table, $trainees);
+
+        $message = NULL;
+        if (!empty($data_table) && count($data_table) > 0) {
+            if ($result == true) {
+                $message = 'Assessment Attendance has been updated successfully.';
+            }
+        }
+        $this->mark_attendance($message);
+    }
 
     /**
      * gets trainee by tax code for auto complete help 

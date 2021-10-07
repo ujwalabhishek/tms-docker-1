@@ -348,7 +348,7 @@ if ($value_of_schedule_class <= 0) {
                     <br>
                     <?php
                     $atr = 'id="update_form" name="update_form"';
-                    echo form_open("class_trainee/mark_attendance_update", $atr);
+                    echo form_open("class_trainee/mark_assessment_update", $atr);
                     echo form_hidden('course_id', set_value('course_id'));
                     echo form_hidden('class_id', set_value('class_id'));
 
@@ -590,7 +590,7 @@ if ($value_of_schedule_class <= 0) {
                     <br>
                     <?php
                     $atr = 'id="update_form" name="update_form"';
-                    echo form_open("class_trainee/mark_attendance_update", $atr);
+                    echo form_open("class_trainee/mark_assessment_update", $atr);
                     echo form_hidden('course_id', set_value('course_id'));
                     echo form_hidden('class_id', set_value('class_id'));
 
