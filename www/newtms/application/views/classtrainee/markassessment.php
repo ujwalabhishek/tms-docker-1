@@ -33,7 +33,6 @@ $start_class = date_create_from_format("d/m/Y", $class_start);
 $end_class = date_create_from_format("d/m/Y", $class_end);
 
 if ($value_of_schedule_class <= 0) {
-    echo "bbbb";
     $attendance_status = $this->input->post('attendance_status');
     $start_class = date_create_from_format("d/m/Y", $class_start);
     $end_class = date_create_from_format("d/m/Y", $class_end);
@@ -117,8 +116,7 @@ if ($value_of_schedule_class <= 0) {
         </table>
     </div>
     <?php
-} else if ($start_class != $end_class) {  // else condition on line no : 526
-    echo "bbbb";
+} else if ($start_class != $end_class) {  // else condition on line no : 526    
     $attendance_status = $this->input->post('attendance_status');
     $start_class = date_create_from_format("d/m/Y", $class_start);
     $end_class = date_create_from_format("d/m/Y", $class_end);
@@ -290,7 +288,7 @@ if ($value_of_schedule_class <= 0) {
 
                                         if ($curr_day->format('Y-m-d') == $data_arr[$curr_day->format('Y-m-d')][0]['assmnt_date']) {
                                             ?>                                    
-                                            <td align="center"><strong>gf<?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
+                                            <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
                                             <?php
                                             $days[] = clone $curr_day;
                                         }
@@ -391,8 +389,7 @@ if ($value_of_schedule_class <= 0) {
     </p>
     </div>        
     <?php
-} else {
-    echo "ccc";
+} else {    
     $attendance_status = $this->input->post('attendance_status');
     $start_class = date_create_from_format("d/m/Y", $class_start);
     $end_class = date_create_from_format("d/m/Y", $class_end);
@@ -534,7 +531,7 @@ if ($value_of_schedule_class <= 0) {
 
                                     for ($curr_day = clone $week_start_date; $curr_day <= $week_end_date; date_add($curr_day, date_interval_create_from_date_string('1 day'))) {
                                         ?>
-                                        <td align="center"><strong>bb<?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
+                                        <td align="center"><strong><?php echo date_format($curr_day, 'j M [D]') ?></strong></td>
                                         <?php $days[] = clone $curr_day; ?>
 
                                         <?php
