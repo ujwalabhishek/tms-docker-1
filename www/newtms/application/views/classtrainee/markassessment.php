@@ -78,9 +78,7 @@ if ($value_of_schedule_class <= 0) {
                         <td class="td_heading">Course Name:<span class="required">*</span></td>
                         <td>
                             <?php echo form_dropdown("course_id", $courses, set_value('course_id'), 'id="select_course_id"') ?>
-                        </td>
-                    </tr>
-                    <tr>
+                        </td>                    
                         <td class="td_heading">Class Name:<span class="required">*</span></td>
                         <td>
                             <?php
@@ -90,7 +88,7 @@ if ($value_of_schedule_class <= 0) {
                         </td>
                     </tr>
                     <tr>                                  
-                        <td colspan='3'>
+                        <td colspan='4'>
                             <?php
                             $attr_js = 'id="input_to_date" style="width:40%;"';
                             ?>
@@ -178,9 +176,7 @@ if ($value_of_schedule_class <= 0) {
                         <td class="td_heading">Course Name:<span class="required">*</span></td>
                         <td>
                             <?php echo form_dropdown("course_id", $courses, set_value('course_id'), 'id="select_course_id"') ?>
-                        </td>
-                    </tr>
-                    <tr>
+                        </td>                    
                         <td class="td_heading">Class Name:<span class="required">*</span></td>
                         <td>
                             <?php
@@ -190,7 +186,7 @@ if ($value_of_schedule_class <= 0) {
                         </td>
                     </tr>
                     <tr>                                               
-                        <td colspan='3'>
+                        <td colspan='4'>
                             <?php
                             $attr_js = 'id="input_to_date" style="width:40%;"';
                             ?>
@@ -448,16 +444,13 @@ if ($value_of_schedule_class <= 0) {
             echo form_hidden('orientation', 'P', 'orientation');
             ?>
             <table class="table table-striped">
-
                 <tbody>
                     <tr>
                         <td class="td_heading">Course Name:<span class="required">*</span></td>
                         <td>
                             <?php echo form_dropdown("course_id", $courses, set_value('course_id'), 'id="select_course_id"') ?>
                         </td>
-
                         <td class="td_heading">Class Name:<span class="required">*</span></td>
-
                         <td>
                             <?php
                             $attr_js = 'id="select_class_id">';
@@ -466,11 +459,10 @@ if ($value_of_schedule_class <= 0) {
                         </td>
                     </tr>
                     <tr>                                               
-                        <td colspan='3'>
+                        <td colspan='4'>
                             <?php
                             $attr_js = 'id="input_to_date" style="width:40%;"';
                             ?>
-
                             <div class="pull-right">
                                 <?php
                                 echo form_hidden('week_start', $week_start);
