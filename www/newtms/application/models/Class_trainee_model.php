@@ -950,7 +950,6 @@ class Class_Trainee_Model extends CI_Model {
         }
 
         if (count($data_table) > 0) {
-            echo "aaa"; exit;
             $insert_array = array();
             foreach ($data_table as $trainee_id => $data_row) {
 
@@ -958,7 +957,7 @@ class Class_Trainee_Model extends CI_Model {
 
                     if (isset($data['assmnt_attdn'])) {
 
-                        $exists = $this->is_attandance_exists($class_id, $trainee_id, $date);
+                        $exists = $this->is_assessment_exists($class_id, $trainee_id, $date);
                         $update_data = array();
                         if (isset($data['assmnt_attdn'])) {
 
@@ -1862,6 +1861,13 @@ class Class_Trainee_Model extends CI_Model {
     public function is_attandance_exists($class_id, $user_id, $assmnt_date) {
 
         $cnt = $this->db->query("select count(*) as cnt from class_attendance where class_id = ? and user_id = ? and class_attdn_date = ?", array($class_id, $user_id, $assmnt_date))->row()->cnt;
+
+        return $cnt > 0;
+    }
+    
+    public function is_assessment_exists($class_id, $user_id, $assmnt_date) {
+
+        $cnt = $this->db->query("select count(*) as cnt from class_assessment where class_id = ? and user_id = ? and class_attdn_date = ?", array($class_id, $user_id, $assmnt_date))->row()->cnt;
 
         return $cnt > 0;
     }
