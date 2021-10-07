@@ -357,7 +357,7 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
 
 }
 
-function get_data_for_renderring_assessment($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order, $attendance_status) {
+function get_data_for_renderring_assessment($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order) {
 
     $CI = & get_instance();
     $CI->load->model('Meta_Values', 'meta');
@@ -452,7 +452,7 @@ function get_data_for_renderring_assessment($tenant_id, $course_id, $class_id, $
 
         $week_end_date = clone $week_start_date;
 
-    $data['tabledata'] = $tabledata = $CI->classtraineemodel->get_class_trainee_list_for_attendance($tenant_id, $course_id, $class_id, $subsidy, $week_start_date, $week_end_date, $sort_by, $sort_order, $attendance_status);    
+    $data['tabledata'] = $tabledata = $CI->classtraineemodel->get_class_trainee_list_for_assessment($tenant_id, $course_id, $class_id, $subsidy, $week_start_date, $week_end_date, $sort_by, $sort_order);    
 
     $data['week_start'] = $week_start_date->format(CLIENT_DATE_FORMAT);
     $data['week_end'] = $week_end_date->format(CLIENT_DATE_FORMAT);

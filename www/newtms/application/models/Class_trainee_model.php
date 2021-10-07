@@ -556,7 +556,74 @@ class Class_Trainee_Model extends CI_Model {
 
         return $grouped_by_trainee;
     }
+    
+    public function get_class_trainee_list_for_assessment($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $sort_by, $sort_order) {
 
+//       $this->output->enable_profiler(TRUE);
+        $date_from = $from_date->format('Y-m-d');
+
+        $date_to = $to_date->format('Y-m-d');
+
+        $this->db->select("tu.tax_code, tu.country_of_residence, tup.nationality ,tup.first_name as name,epd.att_status att, ca.session_01, ca.session_02, ca.class_attdn_date, cc.class_session_day, ce.class_id, ce.course_id, ce.user_id", FALSE);
+        $this->db->select('ce.company_id, cm.company_name');
+        $this->db->join('company_master cm', 'cm.company_id=ce.company_id', 'LEFT');
+        $this->db->from('class_enrol ce');
+        $this->db->join('tms_users tu', 'ce.tenant_id = tu.tenant_id and ce.user_id = tu.user_id');
+        $this->db->join('tms_users_pers tup', 'ce.tenant_id = tup.tenant_id and ce.user_id = tup.user_id');
+        $this->db->join('course_class cc', 'cc.tenant_id = ce.tenant_id and cc.course_id = ce.course_id and cc.class_id = ce.class_id');
+        $this->db->join('enrol_pymnt_due epd', 'epd.pymnt_due_id = ce.pymnt_due_id and epd.user_id = ce.user_id');      
+        $this->db->join('class_assessment ca', "ca.tenant_id = ce.tenant_id and ca.course_id = ce.course_id and ca.class_id = ce.class_id and ca.user_id = ce.user_id and ca.class_assmnt_date >= '$date_from' and ca.class_attdn_date <= '$date_to'", 'left');        
+
+        $array = array('ce.tenant_id' => $tenant_id, 'ce.course_id' => $course_id, 'ce.class_id' => $class_id);
+
+        $this->db->where($array);
+
+        $this->db->where_in("ce.enrol_status", array('ENRLBKD', 'ENRLACT'));
+
+        if ($sort_by) {
+
+            $this->db->order_by($sort_by, $sort_order);
+        }
+
+        if ($this->user->role_id == 'SLEXEC') {
+
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
+        }
+
+        if ($this->user->role_id == 'COMPACT') {
+
+            $this->db->join('tenant_company_users tcu', 'ce.tenant_id = tu.tenant_id and tu.user_id = tcu.user_id');
+
+            $this->db->where('ce.company_id', $this->user->company_id);
+        }
+        if ($sort_by == '') {
+            $this->db->order_by('name', asc); // show all trainee in asc order
+        }
+        $query = $this->db->get();
+
+        $result = $query->result_array();
+
+        //echo $this->db->last_query();exit;
+        $grouped_by_trainee = array();
+
+        foreach ($result as $res) {
+
+            $trainee = $res['user_id'];
+
+            $date = $res['class_assmnt_date'];
+
+            if (!isset($grouped_by_trainee[$trainee])) {
+                $grouped_by_trainee[$trainee] = array();
+                $grouped_by_trainee[$trainee]['record'] = $res;
+            }
+            if (!empty($date)) {
+                $grouped_by_trainee[$trainee][$date]['assmnt_attdn'] = $res['assmnt_attdn'];
+            }
+        }
+
+        return $grouped_by_trainee;
+    }
+    
     /**
 
      * Update attendance for some class

@@ -1994,7 +1994,7 @@ class Class_Trainee extends CI_Controller {
         $week = $this->input->post('week');
         $this->load->helper('attendance_helper');
 
-        $data = get_data_for_renderring_assessment($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order, '');
+        $data = get_data_for_renderring_assessment($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order);
         $data['class_schedule'] = $this->class->get_all_assessment_schedule($tenant_id, $class_id);        
         $data['user'] = $this->user;
         $data['controllerurl'] = 'class_trainee/mark_assessment';
