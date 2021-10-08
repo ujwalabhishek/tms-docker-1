@@ -2368,6 +2368,7 @@ class Class_Model extends CI_Model {
                         'course_id' => $class_course,
                         'class_id' => $class_id,
                         'assmnt_date' => $assmnt_date,
+                        'tpg_assmnt_id' => $crse_ref_no . '-' . $tpg_course_run_id . '-S' . $ct,
                         'mode_of_training' => '8',
                         'assmnt_start_time' => $assmt_start_time,
                         'assmnt_end_time' => $assmt_end_time,
@@ -2376,6 +2377,7 @@ class Class_Model extends CI_Model {
                         'assmnt_type' => 'CUSTOM',
                         'assmnt_venue_oth' => strtoupper($assm_venue_oth),
                     );
+                    $ct +=1;
                     $this->db->insert('class_assmnt_schld', $class_assmnt_data);
                     $assmnt_id = $this->db->insert_id();
                 }
