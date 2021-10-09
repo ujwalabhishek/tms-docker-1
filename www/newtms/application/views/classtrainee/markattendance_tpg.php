@@ -175,27 +175,39 @@
                                 </td>
                                 <td><?php echo $row->tpg_session_id; ?></td>
                                 <td class="name"><?php
-                            if ($row->session_type_id == 'S1') {
-                                if ($row->session_01 == 0) {
-                                    $att_ses_status = '2';
-                                    //echo '2';
-                                    echo "Unconfirmed";
-                                } else {
-                                    $att_ses_status = '1';
-                                    //echo $row->session_01;
-                                    echo "Confirmed";
-                                }
-                            } else {
-                                if ($row->session_02 == 0) {
-                                    $att_ses_status = '2';
-                                    //echo '2';
-                                    echo "Unconfirmed";
-                                } else {
-                                    $att_ses_status = '1';
-                                    //echo $row->session_02;
-                                    echo "Confirmed";
-                                }
-                            }
+                                    if ($row->mode_of_training == '8') {
+                                        if ($row->session_02 == 0) {
+                                            $att_ses_status = '2';
+                                            //echo '2';
+                                            echo "Unconfirmed";
+                                        } else {
+                                            $att_ses_status = '1';
+                                            //echo $row->session_02;
+                                            echo "Confirmed";
+                                        }
+                                    } else {
+                                        if ($row->session_type_id == 'S1') {
+                                            if ($row->session_01 == 0) {
+                                                $att_ses_status = '2';
+                                                //echo '2';
+                                                echo "Unconfirmed";
+                                            } else {
+                                                $att_ses_status = '1';
+                                                //echo $row->session_01;
+                                                echo "Confirmed";
+                                            }
+                                        } else if ($row->session_type_id == 'S2') {
+                                            if ($row->session_02 == 0) {
+                                                $att_ses_status = '2';
+                                                //echo '2';
+                                                echo "Unconfirmed";
+                                            } else {
+                                                $att_ses_status = '1';
+                                                //echo $row->session_02;
+                                                echo "Confirmed";
+                                            }
+                                        }
+                                    }
                                     ?>
                                 </td>
                                 <td><?php echo $row->fullname; ?></td>
@@ -221,7 +233,7 @@
                                 <td><?php echo $row->total_classroom_duration; ?></td>
                                 <td><?php echo $row->survey_language; ?></td>
                                 <td>
-        <?php if ($row->tpg_uploaded_status == 1) { ?>                                                                               
+                                    <?php if ($row->tpg_uploaded_status == 1) { ?>                                                                               
                                         <a href="<?php echo base_url() . 'tp_gateway/retrieve_course_sess_att/' . $row->tpg_course_run_id . '/' . $row->reference_num . '/' . $row->tpg_session_id . '/' . $row->tax_code; ?>"><button class="btnblue">View Session</button></a>
                                         <?php
                                     } else {
@@ -247,30 +259,25 @@
                                         <input type="hidden" name="tax_code" value="<?php echo $row->tax_code; ?>" id="tax_code">
                                         <input type="hidden" name="tpg_course_run_id" value="<?php echo $row->tpg_course_run_id; ?>" id="tpg_course_run_id">
                                         <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
-
-            <?php
-            echo form_close();
-        }
-    }
-    ?>
+                                        <?php
+                                        echo form_close();
+                                    }
+                                }
+                                ?>
                             </td>
                         </tr>
-    <?php
-}
-?>                  
+                        <?php
+                    }
+                    ?>                  
                 </tbody>
             </table>
         </div>
         <div style="clear:both;"></div><br>
         <ul class="pagination pagination_style">
-<?php echo $pagination; ?>
+            <?php echo $pagination; ?>
         </ul>
     </div>
 </div>
-
-
-
-
 
 <div class="modal1_0001" id="view_session_attn" style="display:none;height:370px;min-height: 200px;width:60%">
     <h2 class="panel_heading_style">TPG Retrieve Course Session Attendance</h2>

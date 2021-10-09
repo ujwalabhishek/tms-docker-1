@@ -14529,9 +14529,15 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                     cs.tpg_session_id as tpg_session_id,
                     cs.session_type_id,
                     (CASE 
-                            WHEN cs.session_type_id like '%S1%' THEN ca.session_01_tpg_uploaded_status ELSE ca.session_02_tpg_uploaded_status END
+                        WHEN cs.session_type_id like '%S1%' THEN ca.session_01_tpg_uploaded_status ELSE ca.session_02_tpg_uploaded_status END
                     ) as tpg_uploaded_status,                
                     cs.class_date as class_date,
+                    (CASE 
+                        WHEN cs.session_type_id like '%S1%' THEN ca.session_01 ELSE 0 END
+                    ) as session_01,
+                    (CASE 
+                        WHEN cs.session_type_id like '%S2%' THEN ca.session_02 ELSE 0 END
+                    ) as session_02,
                     tup.nationality as idtype,
                     cs.mode_of_training
                 FROM course_class cc
@@ -14550,24 +14556,26 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 AND date(cc.class_end_datetime) <= '$today_date'
                 UNION ALL 
                 select
-                        tu.user_id,
-                        ce.course_id,
-                        ce.class_id,
-                        c.reference_num,
-                        cc.tpg_course_run_id,
-                        tup.first_name as fullname,
-                        tu.registered_email_id,
-                        tup.contact_number,
-                        ROUND(TIMESTAMPDIFF(second, cas.assmnt_start_time, cas.assmnt_end_time) / 3600, 1) as total_classroom_duration,
-                        cc.survey_language,
-                        tu.tax_code,
-                        tu.tax_code_type,
-                        cas.tpg_assmnt_id as tpg_session_id,
-                        null as session_type_id,
-                        csn.tpg_uploaded_status as tpg_uploaded_status,
-                        cas.assmnt_date as class_date,
-                        tup.nationality as idtype,
-                        cas.mode_of_training
+                    tu.user_id,
+                    ce.course_id,
+                    ce.class_id,
+                    c.reference_num,
+                    cc.tpg_course_run_id,
+                    tup.first_name as fullname,
+                    tu.registered_email_id,
+                    tup.contact_number,
+                    ROUND(TIMESTAMPDIFF(second, cas.assmnt_start_time, cas.assmnt_end_time) / 3600, 1) as total_classroom_duration,
+                    cc.survey_language,
+                    tu.tax_code,
+                    tu.tax_code_type,
+                    cas.tpg_assmnt_id as tpg_session_id,
+                    null as session_type_id,
+                    csn.tpg_uploaded_status as tpg_uploaded_status,
+                    cas.assmnt_date as class_date,
+                    null as session_01,
+                    assmnt_attdn as session_02,
+                    tup.nationality as idtype,
+                    cas.mode_of_training
                 FROM course_class cc
                 JOIN course c ON c.course_id = cc.course_id 
                 JOIN class_enrol ce ON ce.class_id = cc.class_id 
