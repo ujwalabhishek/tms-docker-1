@@ -1821,6 +1821,7 @@ class tp_gateway extends CI_Controller {
         $course_id = $this->input->post('course_id');
         $user_id = $this->input->post('user_id');
         $tax_code = $this->input->post('tax_code');
+        $mode_of_training = $this->input->post('mode_of_training');
         $crs_reference_num = $this->input->post('crs_reference_num');
         $tpg_course_run_id = $this->input->post('tpg_course_run_id');
         $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
@@ -1829,7 +1830,11 @@ class tp_gateway extends CI_Controller {
 
         if ($obj_resp->status == 200) {
             //if(true){
-            $this->classTraineeModel->uploadTmsClassShdl($tenant_id, $course_id, $class_id, $tpg_session_id, $user_id); ///update tms record
+            if($mode_of_training == '8') {
+                $this->classTraineeModel->uploadTmsAssessShdl($tenant_id, $course_id, $class_id, $tpg_session_id, $user_id); ///update tms record
+            } else {
+                $this->classTraineeModel->uploadTmsClassShdl($tenant_id, $course_id, $class_id, $tpg_session_id, $user_id); ///update tms record
+            }            
             $this->session->set_flashdata("success", "Attendance Uploaded Successfully To TPG ");
             
             //redirect($controller);

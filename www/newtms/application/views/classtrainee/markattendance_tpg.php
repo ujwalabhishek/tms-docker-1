@@ -240,8 +240,9 @@
                                         $atr = 'id="submit_attendance_form" name="submit_attendance" method="post"';
                                         echo form_open("tp_gateway/submit_attendance", $atr);
                                         ?>
-                                        <input type="hidden" name="tpg_session_id" value="<?php echo $row->tpg_session_id; ?>" id="tpg_session_id">                                        
-                                        <input type="hidden" name="attn_status_code" value="<?php echo $att_ses_status; ?>" id="attn_status_code">                                                                                                                                                
+                                        <input type="hidden" name="mode_of_training" value="<?php echo $row->mode_of_training; ?>" id="mode_of_training">
+                                        <input type="hidden" name="tpg_session_id" value="<?php echo $row->tpg_session_id; ?>" id="tpg_session_id">
+                                        <input type="hidden" name="attn_status_code" value="<?php echo $att_ses_status; ?>" id="attn_status_code">                                                                                                                                         
                                         <input type="hidden" name="fullname" value="<?php echo $row->fullname; ?>" id="fullname">
                                         <input type="hidden" name="registered_email_id" value="<?php echo $row->registered_email_id; ?>" id="registered_email_id">
                                         <input type="hidden" name="idtype" value="<?php echo $idtypes; ?>" id="idtype">
