@@ -1861,7 +1861,7 @@ class tp_gateway extends CI_Controller {
         $tpg_response = json_decode($response);
 
 
-        echo print_r($tpg_response);
+        //echo print_r($tpg_response);
         //exit;
 
         if ($tpg_response->status == 200) {
@@ -1869,7 +1869,7 @@ class tp_gateway extends CI_Controller {
             $data['courseEndDate'] = date('Y-m-d', strtotime($tpg_response->data->courseRun->courseDates->end));
             $data['courseStartDate'] = date('Y-m-d', strtotime($tpg_response->data->courseRun->courseDates->start));
             $data['externalReferenceNumber'] = $tpg_response->data->courseRun->externalReferenceNumber;
-            $modeOfTraining = $tpg_response->data->courseRun->modeOfTraining;
+            $modeOfTraining = $tpg_response->data->courseRun->sessions[0]->modeOfTraining;
             if ($modeOfTraining == 1) {
                 $modeOfTraining = "Classroom";
             } else if ($modeOfTraining == 2) {
