@@ -14623,6 +14623,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
     }
     
     function uploadTmsAssessShdl($tenant_id,$course_id,$class_id,$tpg_session_id,$user_id){
+        echo "aaaa"; exit;
         $this->db->select('*');
         $this->db->from('class_assmnt_schld');
         $this->db->where('tenant_id', $tenant_id);
