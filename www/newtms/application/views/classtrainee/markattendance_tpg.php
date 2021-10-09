@@ -138,88 +138,91 @@
                             ?>
                             <tr>
                                 <td>
-                                <?php 
-                                if($row->mode_of_training == '1') {
-                                    echo "Classroom";
-                                } else if($row->mode_of_training == '2') {
-                                    echo "Asynchronous eLearning";
-                                } else if($row->mode_of_training == '3') {
-                                    echo "In-house";
-                                } else if($row->mode_of_training == '4') {
-                                    echo "On-the-Job";
-                                } else if($row->mode_of_training == '5') {
-                                    echo "Practical / Practicum";
-                                } else if($row->mode_of_training == '6') {
-                                    echo "Supervised Field";
-                                } else if($row->mode_of_training == '7') {
-                                    echo "Traineeship";
-                                } else if($row->mode_of_training == '8') {
-                                    echo "Assessment";
-                                } else if($row->mode_of_training == '9') {
-                                    echo "Synchronous eLearning";
-                                }
-                                ?>
+                                    <?php
+                                    if ($row->mode_of_training == '1') {
+                                        echo "Classroom";
+                                    } else if ($row->mode_of_training == '2') {
+                                        echo "Asynchronous eLearning";
+                                    } else if ($row->mode_of_training == '3') {
+                                        echo "In-house";
+                                    } else if ($row->mode_of_training == '4') {
+                                        echo "On-the-Job";
+                                    } else if ($row->mode_of_training == '5') {
+                                        echo "Practical / Practicum";
+                                    } else if ($row->mode_of_training == '6') {
+                                        echo "Supervised Field";
+                                    } else if ($row->mode_of_training == '7') {
+                                        echo "Traineeship";
+                                    } else if ($row->mode_of_training == '8') {
+                                        echo "Assessment";
+                                    } else if ($row->mode_of_training == '9') {
+                                        echo "Synchronous eLearning";
+                                    }
+                                    ?>
                                 </td>
                                 <td><?php echo $row->class_date; ?></td>
                                 <td class="name"><?php
-                                    if ($row->session_type_id == 'S1') {
-                                        echo "Session 1";
+                                    if ($row->mode_of_training == '8') {
+                                        echo "-";
                                     } else {
-                                        echo "Session 2";
+                                        if ($row->session_type_id == 'S1') {
+                                            echo "Session 1";
+                                        } else if ($row->session_type_id == 'S2') {
+                                            echo "Session 2";
+                                        }
                                     }
                                     ?>
                                 </td>
                                 <td><?php echo $row->tpg_session_id; ?></td>
                                 <td class="name"><?php
-                                    if ($row->session_type_id == 'S1') {
-                                        if($row->session_01 == 0){
-                                            $att_ses_status = '2';
-                                            //echo '2';
-                                            echo "Unconfirmed";
-                                        }else{
-                                            $att_ses_status = '1';
-                                            //echo $row->session_01;
-                                            echo "Confirmed";
-                                        }
-                                        
-                                    } else {
-                                        if($row->session_02 == 0){
-                                            $att_ses_status = '2';
-                                            //echo '2';
-                                            echo "Unconfirmed";
-                                        }else{
-                                            $att_ses_status = '1';
-                                            //echo $row->session_02;
-                                            echo "Confirmed";
-                                        }
-                                    }
+                            if ($row->session_type_id == 'S1') {
+                                if ($row->session_01 == 0) {
+                                    $att_ses_status = '2';
+                                    //echo '2';
+                                    echo "Unconfirmed";
+                                } else {
+                                    $att_ses_status = '1';
+                                    //echo $row->session_01;
+                                    echo "Confirmed";
+                                }
+                            } else {
+                                if ($row->session_02 == 0) {
+                                    $att_ses_status = '2';
+                                    //echo '2';
+                                    echo "Unconfirmed";
+                                } else {
+                                    $att_ses_status = '1';
+                                    //echo $row->session_02;
+                                    echo "Confirmed";
+                                }
+                            }
                                     ?>
                                 </td>
                                 <td><?php echo $row->fullname; ?></td>
                                 <td><?php echo $row->registered_email_id; ?></td>
                                 <td><?php
-                                    if ($row->tax_code_type = 'SNG_1' && $row->idtype == 'SG') {
-                                        $idtype = 'NRIC(SP)'; ///singaporean pink
-                                        $idtypes = 'SP';
-                                    } elseif ($row->tax_code_type = 'SNG_1' && $row->idtype == 'NS') {
-                                        $idtype = 'NRIC(SB)'; /// permanent residence
-                                        $idtypes = 'SB';
-                                    } else if ($row->tax_code_type = 'SNG_2') {
-                                        $idtype = 'FIN(SO)'; //// FIN
-                                        $idtypes = 'SO';
-                                    } else {
-                                        $idtype = 'Others(OT)'; /////Others
-                                        $idtypes = 'OT';
-                                    }
-                                    echo $idtype
+                            if ($row->tax_code_type = 'SNG_1' && $row->idtype == 'SG') {
+                                $idtype = 'NRIC(SP)'; ///singaporean pink
+                                $idtypes = 'SP';
+                            } elseif ($row->tax_code_type = 'SNG_1' && $row->idtype == 'NS') {
+                                $idtype = 'NRIC(SB)'; /// permanent residence
+                                $idtypes = 'SB';
+                            } else if ($row->tax_code_type = 'SNG_2') {
+                                $idtype = 'FIN(SO)'; //// FIN
+                                $idtypes = 'SO';
+                            } else {
+                                $idtype = 'Others(OT)'; /////Others
+                                $idtypes = 'OT';
+                            }
+                            echo $idtype
                                     ?>
                                 </td>
                                 <td><?php echo $row->contact_number; ?></td>
                                 <td><?php echo $row->total_classroom_duration; ?></td>
                                 <td><?php echo $row->survey_language; ?></td>
                                 <td>
-                                    <?php if ($row->tpg_uploaded_status == 1) { ?>                                                                               
-                                        <a href="<?php echo base_url() . 'tp_gateway/retrieve_course_sess_att/' . $row->tpg_course_run_id . '/' . $row->reference_num . '/' . $row->tpg_session_id. '/' . $row->tax_code; ?>"><button class="btnblue">View Session</button></a>
+        <?php if ($row->tpg_uploaded_status == 1) { ?>                                                                               
+                                        <a href="<?php echo base_url() . 'tp_gateway/retrieve_course_sess_att/' . $row->tpg_course_run_id . '/' . $row->reference_num . '/' . $row->tpg_session_id . '/' . $row->tax_code; ?>"><button class="btnblue">View Session</button></a>
                                         <?php
                                     } else {
                                         $atr = 'id="submit_attendance_form" name="submit_attendance" method="post"';
@@ -244,23 +247,23 @@
                                         <input type="hidden" name="tax_code" value="<?php echo $row->tax_code; ?>" id="tax_code">
                                         <input type="hidden" name="tpg_course_run_id" value="<?php echo $row->tpg_course_run_id; ?>" id="tpg_course_run_id">
                                         <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
-                                        
-                                        <?php echo form_close();
-                                    }
-                                }
-                                
-                                ?>
+
+            <?php
+            echo form_close();
+        }
+    }
+    ?>
                             </td>
                         </tr>
-                        <?php
-                    }
-                    ?>                  
+    <?php
+}
+?>                  
                 </tbody>
             </table>
         </div>
         <div style="clear:both;"></div><br>
         <ul class="pagination pagination_style">
-            <?php echo $pagination; ?>
+<?php echo $pagination; ?>
         </ul>
     </div>
 </div>
