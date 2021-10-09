@@ -14622,8 +14622,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         return $status;
     }
     
-    function uploadTmsAssessShdl($tenant_id,$course_id,$class_id,$tpg_session_id,$user_id){
-        echo "aaaa"; exit;
+    function uploadTmsAssessShdl($tenant_id,$course_id,$class_id,$tpg_session_id,$user_id){        
         $this->db->select('*');
         $this->db->from('class_assmnt_schld');
         $this->db->where('tenant_id', $tenant_id);
@@ -14639,7 +14638,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->where('tenant_id', $tenant_id);
         $this->db->where('course_id', $course_id);
         $this->db->where('class_id', $class_id);
-        $this->db->where('class_assmnt_date', $schd_data->class_date);
+        $this->db->where('class_assmnt_date', $schd_data->assmnt_date);
         $this->db->where('user_id', $user_id);
         $status = $this->db->update('class_assessment', $data);
         return $status;
