@@ -135,7 +135,6 @@
                     if (!empty($tabledata)) {
                         foreach ($tabledata as $row) {
                             ?>
-
                             <tr>   
                                 <td><?php echo $row->class_date; ?></td>
                                 <td class="name"><?php
