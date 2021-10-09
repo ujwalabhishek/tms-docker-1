@@ -113,6 +113,7 @@
                     $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
                     ?>
                     <tr>
+                        <th width="9%" class="th_header">Mode Of Training</th>
                         <th width="9%" class="th_header">Class Date</th>
                         <th width="9%" class="th_header">Session</th>
                         <th width="9%" class="th_header">Session ID</th>
@@ -120,7 +121,7 @@
                         <th width="10%" class="th_header">Name</th>
                         <th width="6%" class="th_header">Email</th>
                         <th width="6%" class="th_header">ID Type</th>
-                        <th width="6%" class="th_header">MobileNo</th>
+                        <th width="4%" class="th_header">MobileNo</th>
                         <th width="10%" class="th_header">No Of Hours</th>
                         <th width="9%" class="th_header">Survey Language</th>
                         <th width="9%" class="th_header">TPG</th>
@@ -135,7 +136,30 @@
                     if (!empty($tabledata)) {
                         foreach ($tabledata as $row) {
                             ?>
-                            <tr>   
+                            <tr>
+                                <td>
+                                <?php 
+                                if($row->mode_of_training == '1') {
+                                    echo "Classroom";
+                                } else if($row->mode_of_training == '2') {
+                                    echo "Asynchronous eLearning";
+                                } else if($row->mode_of_training == '3') {
+                                    echo "In-house";
+                                } else if($row->mode_of_training == '4') {
+                                    echo "On-the-Job";
+                                } else if($row->mode_of_training == '5') {
+                                    echo "Practical / Practicum";
+                                } else if($row->mode_of_training == '6') {
+                                    echo "Supervised Field";
+                                } else if($row->mode_of_training == '7') {
+                                    echo "Traineeship";
+                                } else if($row->mode_of_training == '8') {
+                                    echo "Assessment";
+                                } else if($row->mode_of_training == '9') {
+                                    echo "Synchronous eLearning";
+                                }
+                                ?>
+                                </td>
                                 <td><?php echo $row->class_date; ?></td>
                                 <td class="name"><?php
                                     if ($row->session_type_id == 'S1') {
