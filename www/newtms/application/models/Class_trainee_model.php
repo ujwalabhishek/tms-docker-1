@@ -14552,6 +14552,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 AND cc.class_id = '$class'
                 AND ce.user_id = '$userid'
                 AND cs.session_type_id !='BRK'
+                AND ( ca.session_01 = '1' OR ca.session_02 = '1')
                 AND ce.eid_number != ''
                 AND date(cc.class_end_datetime) <= '$today_date'
                 UNION ALL 
@@ -14587,6 +14588,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 AND c.course_id = '$course'
                 AND cc.class_id = '$class'
                 AND ce.user_id = '$userid'
+                AND csn.assmnt_attdn = '1'    
                 AND ce.eid_number != ''
                 AND date(cc.class_end_datetime) <= '$today_date'";
         
