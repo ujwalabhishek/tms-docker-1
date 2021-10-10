@@ -14513,48 +14513,49 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
     function get_trainee_sessions_data($tenant_id, $course, $class, $userid) {
         $today_date = date('Y-m-d');        
         
-        $sql = "select 
-                    tu.user_id,
-                    ce.course_id,
-                    ce.class_id,
-                    c.reference_num,
-                    cc.tpg_course_run_id,
-                    tup.first_name as fullname,
-                    tu.registered_email_id,
-                    tup.contact_number,
-                    ROUND(TIMESTAMPDIFF(second, cs.session_start_time, cs.session_end_time) / 3600, 1) as total_classroom_duration,
-                    cc.survey_language,
-                    tu.tax_code,
-                    tu.tax_code_type,
-                    cs.tpg_session_id as tpg_session_id,
-                    cs.session_type_id,
-                    (CASE 
-                        WHEN cs.session_type_id like '%S1%' THEN ca.session_01_tpg_uploaded_status ELSE ca.session_02_tpg_uploaded_status END
-                    ) as tpg_uploaded_status,                
-                    cs.class_date as class_date,
-                    (CASE 
-                        WHEN cs.session_type_id like '%S1%' THEN ca.session_01 ELSE 0 END
-                    ) as session_01,
-                    (CASE 
-                        WHEN cs.session_type_id like '%S2%' THEN ca.session_02 ELSE 0 END
-                    ) as session_02,
-                    tup.nationality as idtype,
-                    cs.mode_of_training
-                FROM course_class cc
-                JOIN course c ON c.course_id = cc.course_id 
-                JOIN class_enrol ce ON ce.class_id = cc.class_id 
-                JOIN tms_users tu ON tu.user_id = ce.user_id 
-                left join tms_users_pers tup on tup.user_id =tu.user_id 
-                LEFT JOIN class_schld cs ON cs.class_id = cc.class_id and cs.tenant_id = ce.tenant_id and cs.course_id = c.course_id
-                JOIN class_attendance ca ON ca.class_id = cc.class_id and ca.user_id = ce.user_id and ca.course_id = c.course_id and ca.class_attdn_date = cs.class_date
-                WHERE cc.tenant_id = '$tenant_id'
-                AND c.course_id = '$course'
-                AND cc.class_id = '$class'
-                AND ce.user_id = '$userid'
-                AND cs.session_type_id !='BRK'
-                AND ( ca.session_01 = '1' OR ca.session_02 = '1')
-                AND ce.eid_number != ''
-                AND date(cc.class_end_datetime) <= '$today_date'
+        $sql = "SELECT * from (
+                            select 
+                                    tu.user_id,
+                                    ce.course_id,
+                                    ce.class_id,
+                                    c.reference_num,
+                                    cc.tpg_course_run_id,
+                                    tup.first_name as fullname,
+                                    tu.registered_email_id,
+                                    tup.contact_number,
+                                    ROUND(TIMESTAMPDIFF(second, cs.session_start_time, cs.session_end_time) / 3600, 1) as total_classroom_duration,
+                                    cc.survey_language,
+                                    tu.tax_code,
+                                    tu.tax_code_type,
+                                    cs.tpg_session_id as tpg_session_id,
+                                    cs.session_type_id,
+                                    (CASE 
+                                        WHEN cs.session_type_id like '%S1%' THEN ca.session_01_tpg_uploaded_status ELSE ca.session_02_tpg_uploaded_status END
+                                    ) as tpg_uploaded_status,                
+                                    cs.class_date as class_date,
+                                    (CASE 
+                                        WHEN cs.session_type_id like '%S1%' THEN ca.session_01 ELSE 0 END
+                                    ) as session_01,
+                                    (CASE 
+                                        WHEN cs.session_type_id like '%S2%' THEN ca.session_02 ELSE 0 END
+                                    ) as session_02,
+                                    tup.nationality as idtype,
+                                    cs.mode_of_training
+                                FROM course_class cc
+                                JOIN course c ON c.course_id = cc.course_id 
+                                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                                left join tms_users_pers tup on tup.user_id =tu.user_id 
+                                LEFT JOIN class_schld cs ON cs.class_id = cc.class_id and cs.tenant_id = ce.tenant_id and cs.course_id = c.course_id
+                                JOIN class_attendance ca ON ca.class_id = cc.class_id and ca.user_id = ce.user_id and ca.course_id = c.course_id and ca.class_attdn_date = cs.class_date
+                                WHERE cc.tenant_id = '$tenant_id'
+                                AND c.course_id = '$course'
+                                AND cc.class_id = '$class'
+                                AND ce.user_id = '$userid'
+                                AND cs.session_type_id !='BRK'                                
+                                AND ce.eid_number != ''
+                                AND date(cc.class_end_datetime) <= '$today_date'
+                            ) a where a.session_01 = 1 OR a.session_02 = 1
                 UNION ALL 
                 select
                     tu.user_id,
