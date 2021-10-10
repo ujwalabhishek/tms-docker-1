@@ -556,6 +556,73 @@ class Class_Trainee_Model extends CI_Model {
 
         return $grouped_by_trainee;
     }
+    
+    public function get_class_trainee_list_for_assessment($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $sort_by, $sort_order) {
+
+//       $this->output->enable_profiler(TRUE);
+        $date_from = $from_date->format('Y-m-d');
+
+        $date_to = $to_date->format('Y-m-d');
+
+        $this->db->select("tu.tax_code, tu.country_of_residence, tup.nationality ,tup.first_name as name,epd.att_status att, ca.assmnt_attdn, ca.class_assmnt_date, cc.class_session_day, ce.class_id, ce.course_id, ce.user_id", FALSE);
+        $this->db->select('ce.company_id, cm.company_name');
+        $this->db->join('company_master cm', 'cm.company_id=ce.company_id', 'LEFT');
+        $this->db->from('class_enrol ce');
+        $this->db->join('tms_users tu', 'ce.tenant_id = tu.tenant_id and ce.user_id = tu.user_id');
+        $this->db->join('tms_users_pers tup', 'ce.tenant_id = tup.tenant_id and ce.user_id = tup.user_id');
+        $this->db->join('course_class cc', 'cc.tenant_id = ce.tenant_id and cc.course_id = ce.course_id and cc.class_id = ce.class_id');
+        $this->db->join('enrol_pymnt_due epd', 'epd.pymnt_due_id = ce.pymnt_due_id and epd.user_id = ce.user_id');      
+        $this->db->join('class_assessment ca', "ca.tenant_id = ce.tenant_id and ca.course_id = ce.course_id and ca.class_id = ce.class_id and ca.user_id = ce.user_id and ca.class_assmnt_date >= '$date_from' and ca.class_assmnt_date <= '$date_to'", 'left');        
+
+        $array = array('ce.tenant_id' => $tenant_id, 'ce.course_id' => $course_id, 'ce.class_id' => $class_id);
+
+        $this->db->where($array);
+
+        $this->db->where_in("ce.enrol_status", array('ENRLBKD', 'ENRLACT'));
+
+        if ($sort_by) {
+
+            $this->db->order_by($sort_by, $sort_order);
+        }
+
+        if ($this->user->role_id == 'SLEXEC') {
+
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
+        }
+
+        if ($this->user->role_id == 'COMPACT') {
+
+            $this->db->join('tenant_company_users tcu', 'ce.tenant_id = tu.tenant_id and tu.user_id = tcu.user_id');
+
+            $this->db->where('ce.company_id', $this->user->company_id);
+        }
+        if ($sort_by == '') {
+            $this->db->order_by('name', asc); // show all trainee in asc order
+        }
+        $query = $this->db->get();
+
+        $result = $query->result_array();
+
+        //echo $this->db->last_query();exit;
+        $grouped_by_trainee = array();
+
+        foreach ($result as $res) {
+
+            $trainee = $res['user_id'];
+
+            $date = $res['class_assmnt_date'];
+
+            if (!isset($grouped_by_trainee[$trainee])) {
+                $grouped_by_trainee[$trainee] = array();
+                $grouped_by_trainee[$trainee]['record'] = $res;
+            }
+            if (!empty($date)) {
+                $grouped_by_trainee[$trainee][$date]['assmnt_attdn'] = $res['assmnt_attdn'];
+            }
+        }
+
+        return $grouped_by_trainee;
+    }
 
     /**
 
@@ -869,6 +936,62 @@ class Class_Trainee_Model extends CI_Model {
 //            return FALSE;
 //        }///////added by shubhranshu end of code////////////////////////////
     }
+    
+    public function update_for_mark_assessment($tenant_id, $course_id, $class_id, $data_table, $trainees) {
+        $is_updated = false;
+        $is_inserted = false;
+        $query = $this->db->query("select * from class_assessment where course_id='$course_id' and class_id='$class_id'");
+
+        if ($query->num_rows() > 0) {
+            $marked_trainee = array();
+            foreach ($data_table as $trainee_id => $data_row) {
+                $marked_trainee[] = $trainee_id;
+            }
+        }
+
+        if (count($data_table) > 0) {
+            $insert_array = array();
+            foreach ($data_table as $trainee_id => $data_row) {
+
+                foreach ($data_row as $date => $data) {
+
+                    if (isset($data['assmnt_attdn'])) {
+
+                        $exists = $this->is_assessment_exists($class_id, $trainee_id, $date);
+                        $update_data = array();
+                        if (isset($data['assmnt_attdn'])) {
+
+                            $update_data['assmnt_attdn'] = $data['assmnt_attdn'];
+                        }                        
+                        $this->db->where('class_id', $class_id);
+                        $this->db->where('course_id', $course_id);
+                        $this->db->where('tenant_id', $tenant_id);
+                        $this->db->where('user_id', $trainee_id);
+                        $this->db->where('class_assmnt_date', $date);
+                        if ($exists) {
+                            $this->db->update('class_assessment', $update_data);
+                            $is_updated = true;
+                        } else {
+                            $insert_array[] = array(
+                                'tenant_id' => $tenant_id,
+                                'course_id' => $course_id,
+                                'class_id' => $class_id,
+                                'user_id' => $trainee_id,
+                                'class_assmnt_date' => $date,
+                                'assmnt_attdn' => $data['assmnt_attdn']
+                            );
+                        }
+                    }
+                }
+            }
+            if (count($insert_array) > 0) {
+
+                $is_inserted = $this->db->insert_batch('class_assessment', $insert_array);
+            }                                    
+        }
+        return $is_inserted || $is_updated; 
+    }
+    
 
     /*
      * add presentee to invoice ..
@@ -1738,6 +1861,13 @@ class Class_Trainee_Model extends CI_Model {
     public function is_attandance_exists($class_id, $user_id, $assmnt_date) {
 
         $cnt = $this->db->query("select count(*) as cnt from class_attendance where class_id = ? and user_id = ? and class_attdn_date = ?", array($class_id, $user_id, $assmnt_date))->row()->cnt;
+
+        return $cnt > 0;
+    }
+    
+    public function is_assessment_exists($class_id, $user_id, $assmnt_date) {
+
+        $cnt = $this->db->query("select count(*) as cnt from class_assessment where class_id = ? and user_id = ? and class_assmnt_date = ?", array($class_id, $user_id, $assmnt_date))->row()->cnt;
 
         return $cnt > 0;
     }
@@ -14384,47 +14514,87 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
     //////addded by shubhranshu to get the trainee session data for mark attendance to tpg
     function get_trainee_sessions_data($tenant_id, $course, $class, $userid) {
         $today_date = date('Y-m-d');
-        $sql = "select tu.user_id,
-                ce.course_id,
-                ce.class_id,
-                c.reference_num,
-                cc.tpg_course_run_id,
-                tup.first_name as fullname,
-                tu.registered_email_id,
-                tup.contact_number,
-                ROUND(TIMESTAMPDIFF(second, cs.session_start_time, cs.session_end_time) / 3600, 1) as total_classroom_duration,
-                cc.survey_language,
-                tu.tax_code,
-                tu.tax_code_type,
-                cs.tpg_session_id, 
-                cs.session_type_id,
-                (CASE 
-                    WHEN cs.session_type_id like '%S1%' THEN ca.session_01_tpg_uploaded_status ELSE ca.session_02_tpg_uploaded_status END
-                ) as tpg_uploaded_status,
-                
-                cs.class_date,
-                (CASE 
-                    WHEN cs.session_type_id like '%S1%' THEN ca.session_01 ELSE 0 END
-                ) as session_01,
-                (CASE 
-                    WHEN cs.session_type_id like '%S2%' THEN ca.session_02 ELSE 0 END
-                ) as session_02,
-                tup.nationality as idtype,
-                cc.tpg_course_run_id
+        
+        $sql = "SELECT * from (
+                            select 
+                                    tu.user_id,
+                                    ce.course_id,
+                                    ce.class_id,
+                                    c.reference_num,
+                                    cc.tpg_course_run_id,
+                                    tup.first_name as fullname,
+                                    tu.registered_email_id,
+                                    tup.contact_number,
+                                    ROUND(TIMESTAMPDIFF(second, cs.session_start_time, cs.session_end_time) / 3600, 1) as total_classroom_duration,
+                                    cc.survey_language,
+                                    tu.tax_code,
+                                    tu.tax_code_type,
+                                    cs.tpg_session_id as tpg_session_id,
+                                    cs.session_type_id,
+                                    (CASE 
+                                        WHEN cs.session_type_id like '%S1%' THEN ca.session_01_tpg_uploaded_status ELSE ca.session_02_tpg_uploaded_status END
+                                    ) as tpg_uploaded_status,                
+                                    cs.class_date as class_date,
+                                    (CASE 
+                                        WHEN cs.session_type_id like '%S1%' THEN ca.session_01 ELSE 0 END
+                                    ) as session_01,
+                                    (CASE 
+                                        WHEN cs.session_type_id like '%S2%' THEN ca.session_02 ELSE 0 END
+                                    ) as session_02,
+                                    tup.nationality as idtype,
+                                    cs.mode_of_training
+                                FROM course_class cc
+                                JOIN course c ON c.course_id = cc.course_id 
+                                JOIN class_enrol ce ON ce.class_id = cc.class_id 
+                                JOIN tms_users tu ON tu.user_id = ce.user_id 
+                                left join tms_users_pers tup on tup.user_id =tu.user_id 
+                                LEFT JOIN class_schld cs ON cs.class_id = cc.class_id and cs.tenant_id = ce.tenant_id and cs.course_id = c.course_id
+                                JOIN class_attendance ca ON ca.class_id = cc.class_id and ca.user_id = ce.user_id and ca.course_id = c.course_id and ca.class_attdn_date = cs.class_date
+                                WHERE cc.tenant_id = '$tenant_id'
+                                AND c.course_id = '$course'
+                                AND cc.class_id = '$class'
+                                AND ce.user_id = '$userid'
+                                AND cs.session_type_id !='BRK'                                
+                                AND ce.eid_number != ''
+                                AND date(cc.class_end_datetime) <= '$today_date'
+                            ) a where a.session_01 = 1 OR a.session_02 = 1
+                UNION ALL 
+                select
+                    tu.user_id,
+                    ce.course_id,
+                    ce.class_id,
+                    c.reference_num,
+                    cc.tpg_course_run_id,
+                    tup.first_name as fullname,
+                    tu.registered_email_id,
+                    tup.contact_number,
+                    ROUND(TIMESTAMPDIFF(second, cas.assmnt_start_time, cas.assmnt_end_time) / 3600, 1) as total_classroom_duration,
+                    cc.survey_language,
+                    tu.tax_code,
+                    tu.tax_code_type,
+                    cas.tpg_assmnt_id as tpg_session_id,
+                    null as session_type_id,
+                    csn.tpg_uploaded_status as tpg_uploaded_status,
+                    cas.assmnt_date as class_date,
+                    null as session_01,
+                    assmnt_attdn as session_02,
+                    tup.nationality as idtype,
+                    cas.mode_of_training
                 FROM course_class cc
                 JOIN course c ON c.course_id = cc.course_id 
                 JOIN class_enrol ce ON ce.class_id = cc.class_id 
                 JOIN tms_users tu ON tu.user_id = ce.user_id 
                 left join tms_users_pers tup on tup.user_id =tu.user_id 
-                LEFT JOIN class_schld cs ON cs.class_id = cc.class_id and cs.tenant_id = ce.tenant_id and cs.course_id = c.course_id
-                JOIN class_attendance ca ON ca.class_id = cc.class_id and ca.user_id = ce.user_id and ca.course_id = c.course_id and ca.class_attdn_date = cs.class_date
-                WHERE cc . tenant_id = '$tenant_id'
+                LEFT JOIN class_assmnt_schld cas ON cas.class_id = cc.class_id and cas.tenant_id = ce.tenant_id and cas.course_id = c.course_id
+                JOIN class_assessment csn ON csn.class_id = cc.class_id and csn.user_id = ce.user_id and csn.course_id = c.course_id and csn.class_assmnt_date = cas.assmnt_date
+                WHERE cc.tenant_id = '$tenant_id'
                 AND c.course_id = '$course'
                 AND cc.class_id = '$class'
                 AND ce.user_id = '$userid'
-                AND cs.session_type_id !='BRK'
+                AND csn.assmnt_attdn = '1'    
                 AND ce.eid_number != ''
                 AND date(cc.class_end_datetime) <= '$today_date'";
+        
                 $res = $this->db->query($sql)->result();
         //echo $this->db->last_query();exit;
         return $res;
@@ -14454,6 +14624,28 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->where('class_attdn_date', $schd_data->class_date);
         $this->db->where('user_id', $user_id);
         $status = $this->db->update('class_attendance', $data);
+        return $status;
+    }
+    
+    function uploadTmsAssessShdl($tenant_id,$course_id,$class_id,$tpg_session_id,$user_id){        
+        $this->db->select('*');
+        $this->db->from('class_assmnt_schld');
+        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('tpg_assmnt_id', $tpg_session_id);
+        $this->db->where('class_id', $class_id);
+        $schd_data = $this->db->get()->row();
+        
+            $data = array(
+                'tpg_uploaded_status' => '1'
+            );
+            
+        $this->db->where('tenant_id', $tenant_id);
+        $this->db->where('course_id', $course_id);
+        $this->db->where('class_id', $class_id);
+        $this->db->where('class_assmnt_date', $schd_data->assmnt_date);
+        $this->db->where('user_id', $user_id);
+        $status = $this->db->update('class_assessment', $data);
         return $status;
     }
 

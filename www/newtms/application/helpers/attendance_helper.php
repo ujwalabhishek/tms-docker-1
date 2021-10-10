@@ -357,3 +357,115 @@ function calculate_start_end_date_range(DateTime $from_date, $to_date, $class_st
 
 }
 
+function get_data_for_renderring_assessment($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order) {
+
+    $CI = & get_instance();
+    $CI->load->model('Meta_Values', 'meta');
+    $CI->load->model('Course_Model', 'course');
+    $CI->load->model('Class_Model', 'class');
+    $CI->load->helper('common');
+    
+    $data['courses'] = $CI->course->get_class_courses_all($tenant_id);
+    $data['subsidy'] = $subsidy;
+
+    if (!empty($course_id)) {
+        $data['classes'] = $CI->class->get_course_class($tenant_id, $course_id, 'mark_assessment',1,'classTrainee');
+        if (!empty($class_id)) {
+            $class_details = $CI->class->get_class_by_id($tenant_id, $course_id, $class_id);
+        }
+    }
+
+    if (!$data['courses'])
+        $data['courses'] = array('0' => 'Please Select');
+    else {
+        $crse = $data['courses'];
+        $data['courses'] = array(0 => 'Please Select');
+        foreach ($crse as $key => $val) {
+            $data['courses'][$key] = $val;
+        }
+    }
+
+    if (!$data['classes'])
+        $data['classes'] = array('0' => 'Please Select');
+    else {
+        $class = $data['classes'];
+        $data['classes'] = array(0 => 'Please Select');
+        foreach ($class as $key => $val) {
+            $data['classes'][$key] = $val;
+        }
+    }
+
+    $class_start = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT);
+
+    $class_end = parse_date($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT);
+
+    $data['class_start'] = date_format_singapore($class_details->class_start_datetime);
+
+    $data['class_end'] = date_format_singapore($class_details->class_end_datetime);
+
+    if (empty($from_date) || $from_date < $class_start) {
+        $from_date = $class_start;
+    }
+
+    if (empty($to_date) || $to_date > $class_end) {
+        $to_date = $class_end;
+    }
+
+    if (empty($to_date))
+
+        $to_date = new DateTime();
+
+    if (empty($from_date))
+
+        $from_date = clone $to_date;
+
+   
+//echo $from_date.'--------'.$to_date;exit;
+   
+    list($week_start_date, $week_end_date) = calculate_start_end_date_range($from_date, $to_date, $class_start, $class_end, $week_start_date, $week);
+
+     // skm code start from here
+
+    if ($week_start_date == $week_end_date or $week_start_date < $week_end_date)
+
+    {
+
+         if (empty($week_start_date))
+
+        $week_start_date = new DateTime();
+
+
+
+        if (empty($week_end_date))
+
+        $week_end_date = clone $week_start_date;
+
+    }
+
+    // skm code end here
+
+    if (empty($week_start_date))
+
+        $week_start_date = new DateTime();
+
+    if (empty($week_end_date))
+
+        $week_end_date = clone $week_start_date;
+
+    $data['tabledata'] = $tabledata = $CI->classtraineemodel->get_class_trainee_list_for_assessment($tenant_id, $course_id, $class_id, $subsidy, $week_start_date, $week_end_date, $sort_by, $sort_order);    
+
+    $data['week_start'] = $week_start_date->format(CLIENT_DATE_FORMAT);
+    $data['week_end'] = $week_end_date->format(CLIENT_DATE_FORMAT);
+    $data['class_id'] = $class_id;
+    $data['course_id'] = $course_id;
+    $data['sort_order'] = $sort_order;
+    $data['class_session_day'] = $class_details->class_session_day;
+    $data['class_start_date'] = date('Y-m-d',strtotime($class_details->class_start_datetime));
+    $data['class_end_date'] = date('Y-m-d',strtotime($class_details->class_end_datetime));
+
+//print_r($data);exit;
+
+    return $data;
+
+}
+

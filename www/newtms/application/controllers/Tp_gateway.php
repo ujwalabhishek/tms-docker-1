@@ -1820,16 +1820,22 @@ class tp_gateway extends CI_Controller {
         $course_id = $this->input->post('course_id');
         $user_id = $this->input->post('user_id');
         $tax_code = $this->input->post('tax_code');
+        $mode_of_training = $this->input->post('mode_of_training');
         $crs_reference_num = $this->input->post('crs_reference_num');
         $tpg_course_run_id = $this->input->post('tpg_course_run_id');
         $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
         $obj_resp = $this->tpgModel->submit_attendance_to_tpg($tenant->comp_reg_no, $tpg_course_run_id, $tax_code, $crs_reference_num, $tenant_id, $user_id, $course_id, $class_id, $survey_language, $noOfHours, $tpgCourseId, $tpg_session_id, $attn_status_code, $fullname, $registered_email_id, $idtype, $mobileNo);
         $controller = 'class_trainee/mark_attendance_tpg?course=' . $course_id . '&class=' . $class_id. '&nric=' . $user_id. '&nric_id=' . $tax_code;
 
-        if ($obj_resp->status == 200) {
+        if ($obj_resp->status == 200) {            
             //if(true){
-            $this->classTraineeModel->uploadTmsClassShdl($tenant_id, $course_id, $class_id, $tpg_session_id, $user_id); ///update tms record
+            if($mode_of_training == '8') {
+                $this->classTraineeModel->uploadTmsAssessShdl($tenant_id, $course_id, $class_id, $tpg_session_id, $user_id); ///update tms record
+            } else {
+                $this->classTraineeModel->uploadTmsClassShdl($tenant_id, $course_id, $class_id, $tpg_session_id, $user_id); ///update tms record
+            } 
             $this->session->set_flashdata("success", "Attendance Uploaded Successfully To TPG ");
+            
             //redirect($controller);            
             //Modified by abdulla
             redirect('class_trainee/mark_attendance_tpg?course=' . $course_id . '&class=' . $class_id. '&nric=' . $user_id. '&nric_id=' . $tax_code);
@@ -1862,7 +1868,7 @@ class tp_gateway extends CI_Controller {
             $data['courseEndDate'] = date('Y-m-d', strtotime($tpg_response->data->courseRun->courseDates->end));
             $data['courseStartDate'] = date('Y-m-d', strtotime($tpg_response->data->courseRun->courseDates->start));
             $data['externalReferenceNumber'] = $tpg_response->data->courseRun->externalReferenceNumber;
-            $modeOfTraining = $tpg_response->data->courseRun->modeOfTraining;
+            $modeOfTraining = $tpg_response->data->courseRun->sessions[0]->modeOfTraining;
             if ($modeOfTraining == 1) {
                 $modeOfTraining = "Classroom";
             } else if ($modeOfTraining == 2) {

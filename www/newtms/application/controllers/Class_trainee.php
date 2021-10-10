@@ -1972,6 +1972,42 @@ class Class_Trainee extends CI_Controller {
     }
 
     /*
+     * This function loads the Mark Assessment Attendance form.
+     */
+
+    public function mark_assessment($message = NULL) {
+        
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $tenant_id = $this->tenant_id;
+        $course_id = $this->input->post('course_id');
+        $class_id = $this->input->post('class_id');
+        $subsidy = $this->input->post('subsidy');
+        $sort_by = $this->input->get('b');
+        $sort_order = $this->input->get('o');
+        $class_details = $this->class->get_class_by_id($tenant_id, $course_id, $class_id);
+
+        $from_date = parse_date($class_details->class_start_datetime, SERVER_DATE_TIME_FORMAT); ///added by shubhranshu
+        $to_date = parse_date($class_details->class_end_datetime, SERVER_DATE_TIME_FORMAT); //added by shubhranshu
+        $week_start_date = parse_date($this->input->post('week_start'), CLIENT_DATE_FORMAT); //added by shubhranshu
+        //echo print_r($from_date);print_r($to_date);print_r($week_start_date);exit;
+
+        $week = $this->input->post('week');
+        $this->load->helper('attendance_helper');
+
+        $data = get_data_for_renderring_assessment($tenant_id, $course_id, $class_id, $subsidy, $from_date, $to_date, $week_start_date, $week, $sort_by, $sort_order);
+        $data['class_schedule'] = $this->class->get_all_assessment_schedule($tenant_id, $class_id);        
+        $data['user'] = $this->user;
+        $data['controllerurl'] = 'class_trainee/mark_assessment';
+        $data['page_title'] = 'Class Trainee Enrollment - Mark Assessment';
+        $data['main_content'] = 'classtrainee/markassessment';
+        //$data['week_start'] = $from_date;
+        //$data['sideMenuData'] = $this->sideMenu;
+        if (!empty($message))
+            $data['message'] = $message;
+        $this->load->view('layout', $data);        
+    }
+    
+    /*
      * Upload course session attendance API
      */
 
@@ -2108,6 +2144,28 @@ class Class_Trainee extends CI_Controller {
             }
         }
         $this->mark_attendance($message);
+    }
+    
+    /**
+     * updates assessment attendance data
+     */
+    public function mark_assessment_update() {
+        //$this->output->enable_profiler(TRUE);
+        $data['sideMenuData'] = fetch_non_main_page_content(); /////added by shubhranshu
+        $tenant_id = $this->tenant_id;
+        $course_id = $this->input->post('course_id');
+        $class_id = $this->input->post('class_id');
+        $data_table = $this->input->post('mark_assessment');
+        $trainees = $this->input->post('trainees');
+        $result = $this->classtraineemodel->update_for_mark_assessment($tenant_id, $course_id, $class_id, $data_table, $trainees);
+
+        $message = NULL;
+        if (!empty($data_table) && count($data_table) > 0) {
+            if ($result == true) {
+                $message = 'Assessment Attendance has been updated successfully.';
+            }
+        }
+        $this->mark_assessment($message);
     }
 
     /**
