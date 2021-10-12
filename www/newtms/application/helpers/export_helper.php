@@ -6983,6 +6983,10 @@ function export_enrolment_report_for_tpg_full($result, $tenant_id) {
      */
 function export_class_report_full($result, $tenant_id) {
     $CI = & get_instance();
+       
+    $CI->load->model('Meta_Values', 'meta');    
+    $meta_map = $CI->meta->get_param_map();
+        
     $CI->load->model('course_model', 'course');
     $CI->load->model('class_model', 'class');
     $CI->load->model('company_model', 'company');
@@ -7038,9 +7042,9 @@ function export_class_report_full($result, $tenant_id) {
         $sheet->setCellValue('C' . $rn, $row->TraineeID);
         $sheet->setCellValue('D' . $rn, $row->TraineeName);
         $sheet->setCellValue('E' . $rn, $row->Gender);
-        $sheet->setCellValue('F' . $rn, $row->CountryOfResidence);
+        $sheet->setCellValue('F' . $rn, $meta_map[$row->Nationality]);
         $sheet->setCellValue('G' . $rn, $row->DateofBirth);
-        $sheet->setCellValue('H' . $rn, $row->Race);
+        $sheet->setCellValue('H' . $rn, $meta_map[$row->Race]);
         $sheet->setCellValue('I' . $rn, $row->TraineePhone);
         $sheet->setCellValue('J' . $rn, $row->TraineeEmail);
         $sheet->setCellValue('K' . $rn, $row->SponsorshipType);
