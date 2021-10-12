@@ -7006,22 +7006,20 @@ function export_class_report_full($result, $tenant_id) {
     $sheet->setCellValue('A2', 'Sl#');
     $sheet->setCellValue('B2', 'Trainee ID Type');
     $sheet->setCellValue('C2', 'Trainee ID');
-    $sheet->setCellValue('D2', 'Date of Birth');
-    $sheet->setCellValue('E2', 'Trainee Name');
-    $sheet->setCellValue('F2', 'TPG Course Run ID');
-    $sheet->setCellValue('G2', 'Trainee Email');
-    $sheet->setCellValue('H2', 'Trainee Phone Country Code');
-    $sheet->setCellValue('I2', 'Trainee Phone Area Code');
-    $sheet->setCellValue('J2', 'Trainee Phone');
+    $sheet->setCellValue('D2', 'Trainee Name');
+    $sheet->setCellValue('E2', 'Gender');
+    $sheet->setCellValue('F2', 'Nationality');
+    $sheet->setCellValue('G2', 'Date Of Birth');
+    $sheet->setCellValue('H2', 'Race');
+    $sheet->setCellValue('I2', 'Trainee Contact No.');
+    $sheet->setCellValue('J2', 'Trainee Email');
     $sheet->setCellValue('K2', 'Sponsorship Type');
-    $sheet->setCellValue('L2', 'Employer UEN');
-    $sheet->setCellValue('M2', 'Employer Contact Name');
-    $sheet->setCellValue('N2', 'Employer Phone Country Code');
-    $sheet->setCellValue('O2', 'Employer Phone Area Code');
-    $sheet->setCellValue('P2', 'Employer Phone');
-    $sheet->setCellValue('Q2', 'Employer Contact Email');
-    $sheet->setCellValue('R2', 'Course Fee Discount Amount');
-    $sheet->setCellValue('S2', 'Fee Collection Status');
+    $sheet->setCellValue('L2', 'Employer Name');
+    $sheet->setCellValue('M2', 'Employer UEN');
+    $sheet->setCellValue('N2', 'Registration Date');
+    $sheet->setCellValue('O2', 'Employer Contact Name');
+    $sheet->setCellValue('P2', 'Employer Contact No.');
+    $sheet->setCellValue('Q2', 'Employer Contact Email');    
 
     $sheet->getStyle('A2:Y2')->applyFromArray(
             array('fill' => array(
@@ -7038,22 +7036,20 @@ function export_class_report_full($result, $tenant_id) {
         $sheet->setCellValue('A' . $rn, $rn - 2);
         $sheet->setCellValue('B' . $rn, $row->TraineeIDType);
         $sheet->setCellValue('C' . $rn, $row->TraineeID);
-        $sheet->setCellValue('D' . $rn, $row->DateofBirth);
-        $sheet->setCellValue('E' . $rn, $row->TraineeName);
-        $sheet->setCellValue('F' . $rn, $row->CourseRunid);
-        $sheet->setCellValue('G' . $rn, $row->TraineeEmail);
-        $sheet->setCellValue('H' . $rn, $row->TraineePhoneCountryCode);
-        $sheet->setCellValue('I' . $rn, $row->TraineePhoneAreaCode);
-        $sheet->setCellValue('J' . $rn, $row->TraineePhone);
+        $sheet->setCellValue('D' . $rn, $row->TraineeName);
+        $sheet->setCellValue('E' . $rn, $row->Gender);
+        $sheet->setCellValue('F' . $rn, $row->CountryOfResidence);
+        $sheet->setCellValue('G' . $rn, $row->DateofBirth);
+        $sheet->setCellValue('H' . $rn, $row->Race);
+        $sheet->setCellValue('I' . $rn, $row->TraineePhone);
+        $sheet->setCellValue('J' . $rn, $row->TraineeEmail);
         $sheet->setCellValue('K' . $rn, $row->SponsorshipType);
-        $sheet->setCellValue('L' . $rn, $row->EmployerUEN);
-        $sheet->setCellValue('M' . $rn, $row->EmployerContactName);
-        $sheet->setCellValue('N' . $rn, $row->EmployerPhoneCountryCode);
-        $sheet->setCellValue('O' . $rn, $row->EmployerPhoneAreaCode);
+        $sheet->setCellValue('L' . $rn, $row->EmployerName);
+        $sheet->setCellValue('M' . $rn, $row->EmployerUEN);
+        $sheet->setCellValue('N' . $rn, $row->EmployerRegistrationDate);
+        $sheet->setCellValue('O' . $rn, $row->EmployerContactName);
         $sheet->setCellValue('P' . $rn, $row->EmployerPhone);
-        $sheet->setCellValue('Q' . $rn, $row->EmployerContactEmail);
-        $sheet->setCellValue('R' . $rn, $row->CourseFeeDiscountAmount);
-        $sheet->setCellValue('S' . $rn, $row->FeeCollectionStatus);
+        $sheet->setCellValue('Q' . $rn, $row->EmployerContactEmail);        
         
         $rn++;
     }
