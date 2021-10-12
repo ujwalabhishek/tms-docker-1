@@ -3681,13 +3681,9 @@ SELECT  {$calc_rows} c.crse_name,
     public function class_report($tenant_id,$class_id,$course_id) {
 
         $query = "SELECT
-	(CASE 
-	 WHEN tu.tax_code_type like '%SNG_1%' THEN 'NRIC' 
-	 WHEN tu.tax_code_type like '%SNG_2%' THEN 'FIN' 
-	 WHEN tu.tax_code_type like '%SNG_3%' THEN 'Others'
-	 WHEN tu.tax_code_type like '%SNG_4%' THEN 'Others' ELSE NULL END
-	) as 'TraineeIDType',
+	tu.tax_code_type as 'TraineeIDType',
         tu.tax_code as 'TraineeID',
+        tu.other_identi_type as 'OtherIdentiType',
         DATE_FORMAT(tup.dob,'%d-%m-%Y') as 'DateofBirth',
         tup.first_name as 'TraineeName',
         tup.nationality as 'Nationality',

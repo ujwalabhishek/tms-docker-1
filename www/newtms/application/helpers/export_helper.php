@@ -6983,7 +6983,7 @@ function export_enrolment_report_for_tpg_full($result, $tenant_id) {
 function export_class_report_full($result, $tenant_id) {
     $CI = & get_instance();
        
-    $CI->load->model('Meta_Values', 'meta');    
+    $CI->load->model('Meta_Values', 'meta');
     $meta_map = $CI->meta->get_param_map();
         
     $CI->load->model('course_model', 'course');
@@ -7035,14 +7035,31 @@ function export_class_report_full($result, $tenant_id) {
     $rn = 3;
     foreach ($result as $row) {
         
+        if ($row->TraineeIDType && $row->TraineeID) {
+            if ($row->TraineeIDType != 'SNG_3') {
+                $type = get_param_value($row->TraineeIDType);
+                $taxcode = $type->category_name;
+            }
+        }
+        if ($row->OtherIdentiType != NULL && $row->OtherIdentiType != '') {
+            $tax_code_type = get_param_value($row->TraineeIDType);
+            $type = get_param_value($row->OtherIdentiType);
+            $taxcode = $tax_code_type->category_name . ' - ' . $type->category_name;
+        }
+        
+        $race = "";
+        if($row->Race != NULL && $row->Race != '') {
+            $race = get_catname_by_parm($row->Race);
+        }
+                
         $sheet->setCellValue('A' . $rn, $rn - 2);
-        $sheet->setCellValue('B' . $rn, $row->TraineeIDType);
+        $sheet->setCellValue('B' . $rn, $taxcode);
         $sheet->setCellValue('C' . $rn, $row->TraineeID);
         $sheet->setCellValue('D' . $rn, $row->TraineeName);
         $sheet->setCellValue('E' . $rn, $row->Gender);
         $sheet->setCellValue('F' . $rn, $meta_map[$row->Nationality]);
         $sheet->setCellValue('G' . $rn, $row->DateofBirth);
-        $sheet->setCellValue('H' . $rn, $meta_map[$row->Race]);
+        $sheet->setCellValue('H' . $rn, $race);
         $sheet->setCellValue('I' . $rn, $row->TraineePhone);
         $sheet->setCellValue('J' . $rn, $row->TraineeEmail);
         $sheet->setCellValue('K' . $rn, $row->SponsorshipType);
