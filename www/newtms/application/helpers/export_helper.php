@@ -7036,9 +7036,20 @@ function export_class_report_full($result, $tenant_id) {
     $rn = 3;
     foreach ($result as $row) {
         
-
+        if ($row->TraineeIDType && $row->TraineeID) {
+            if ($row->TraineeIDType != 'SNG_3') {
+                $type = get_param_value($row->TraineeIDType);
+                $taxcode = $type->category_name;
+            }
+        }
+        if ($row->OtherIdentiType != NULL && $row->OtherIdentiType != '') {
+            $tax_code_type = get_param_value($row->TraineeIDType);
+            $type = get_param_value($row->OtherIdentiType);
+            $taxcode = $tax_code_type->category_name . ' - ' . $type->category_name;
+        }
+                
         $sheet->setCellValue('A' . $rn, $rn - 2);
-        $sheet->setCellValue('B' . $rn, $row->TraineeIDType);
+        $sheet->setCellValue('B' . $rn, $taxcode);
         $sheet->setCellValue('C' . $rn, $row->TraineeID);
         $sheet->setCellValue('D' . $rn, $row->TraineeName);
         $sheet->setCellValue('E' . $rn, $row->Gender);
