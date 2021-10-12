@@ -7005,7 +7005,7 @@ function export_class_report_full($result, $tenant_id) {
     $sheet->setCellValue('A1', '');
     $sheet->mergeCells('B1:Y1');
     $sheet->getStyle('B1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment:: HORIZONTAL_LEFT);
-    $sheet->setCellValue('B1', 'List of all Enrolment Report As On ' . date('M j Y, l'));
+    $sheet->setCellValue('B1', 'List of all Class Report As On ' . date('M j Y, l'));
     $sheet->getStyle('A1:Y1')->getFont()->setBold(true);
     $sheet->setCellValue('A2', 'Sl#');
     $sheet->setCellValue('B2', 'Trainee ID Type');
