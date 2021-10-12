@@ -117,7 +117,8 @@
                             ?>
                         <tr>
                             <td>
-                            <?php                             
+                            <?php
+                                $other_identi_type = "";
                                 if ($row->OtherIdentiType != NULL && $row->OtherIdentiType != '')
                                 {
                                     $other_identi_type = get_param_value($row->OtherIdentiType);
