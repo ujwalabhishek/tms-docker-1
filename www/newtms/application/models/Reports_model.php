@@ -3690,7 +3690,7 @@ SELECT  {$calc_rows} c.crse_name,
         tu.tax_code as 'TraineeID',
         DATE_FORMAT(tup.dob,'%d-%m-%Y') as 'DateofBirth',
         tup.first_name as 'TraineeName',
-        tu.country_of_residence as 'CountryOfResidence'
+        tu.country_of_residence as 'CountryOfResidence',
         tu.registered_email_id as 'TraineeEmail',
         '65' as 'TraineePhoneCountryCode',            
         ' ' as 'TraineePhoneAreaCode',
