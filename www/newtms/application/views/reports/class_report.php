@@ -118,9 +118,9 @@
                         <tr>
                             <td>
                             <?php                             
-                                if ($row->other_identi_type != NULL && $row->other_identi_type != '')
+                                if ($row->OtherIdentiType != NULL && $row->OtherIdentiType != '')
                                 {
-                                    $other_identi_type = get_param_value($row->other_identi_type);
+                                    $other_identi_type = get_param_value($row->OtherIdentiType);
                                     $other_identi_type= " (" . $other_identi_type->category_name . " )";
                                 }
                                 echo get_catname_by_parm($row->TraineeIDType) . $other_identi_type;
