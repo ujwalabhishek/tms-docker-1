@@ -6974,3 +6974,95 @@ function export_enrolment_report_for_tpg_full($result, $tenant_id) {
     $objWriter->save('php://output');
 }
 
+    /**
+     * Tenant : Fonda
+     * Requested on 12-10-2021
+     * Developed by : Abdulla Nofal
+     * Export : XLS format
+     * 
+     */
+function export_class_report_full($result, $tenant_id) {
+    $CI = & get_instance();
+    $CI->load->model('course_model', 'course');
+    $CI->load->model('class_model', 'class');
+    $CI->load->model('company_model', 'company');
+    $CI->load->model('class_trainee_model', 'classtraineemodel');
+
+    $CI->load->library('excel');
+    $CI->excel->setActiveSheetIndex(0);
+    $CI->excel->getActiveSheet()->setTitle('Class Report');
+
+    $sheet = $CI->excel->getActiveSheet();
+    foreach (range('A', 'Y') as $columnID) {
+        $CI->excel->getActiveSheet()->getColumnDimension($columnID)
+                ->setAutoSize(true);
+    }
+
+    $sheet->setCellValue('A1', '');
+    $sheet->mergeCells('B1:Y1');
+    $sheet->getStyle('B1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment:: HORIZONTAL_LEFT);
+    $sheet->setCellValue('B1', 'List of all Enrolment Report As On ' . date('M j Y, l'));
+    $sheet->getStyle('A1:Y1')->getFont()->setBold(true);
+    $sheet->setCellValue('A2', 'Sl#');
+    $sheet->setCellValue('B2', 'Trainee ID Type');
+    $sheet->setCellValue('C2', 'Trainee ID');
+    $sheet->setCellValue('D2', 'Date of Birth');
+    $sheet->setCellValue('E2', 'Trainee Name');
+    $sheet->setCellValue('F2', 'TPG Course Run ID');
+    $sheet->setCellValue('G2', 'Trainee Email');
+    $sheet->setCellValue('H2', 'Trainee Phone Country Code');
+    $sheet->setCellValue('I2', 'Trainee Phone Area Code');
+    $sheet->setCellValue('J2', 'Trainee Phone');
+    $sheet->setCellValue('K2', 'Sponsorship Type');
+    $sheet->setCellValue('L2', 'Employer UEN');
+    $sheet->setCellValue('M2', 'Employer Contact Name');
+    $sheet->setCellValue('N2', 'Employer Phone Country Code');
+    $sheet->setCellValue('O2', 'Employer Phone Area Code');
+    $sheet->setCellValue('P2', 'Employer Phone');
+    $sheet->setCellValue('Q2', 'Employer Contact Email');
+    $sheet->setCellValue('R2', 'Course Fee Discount Amount');
+    $sheet->setCellValue('S2', 'Fee Collection Status');
+
+    $sheet->getStyle('A2:Y2')->applyFromArray(
+            array('fill' => array(
+                    'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array('argb' => 'FFCCCCCC'))
+            )
+    );
+    $sheet->getStyle('A2:Y2')->getFont()->setBold(true);
+
+    $rn = 3;
+    foreach ($result as $row) {
+        
+
+        $sheet->setCellValue('A' . $rn, $rn - 2);
+        $sheet->setCellValue('B' . $rn, $row->TraineeIDType);
+        $sheet->setCellValue('C' . $rn, $row->TraineeID);
+        $sheet->setCellValue('D' . $rn, $row->DateofBirth);
+        $sheet->setCellValue('E' . $rn, $row->TraineeName);
+        $sheet->setCellValue('F' . $rn, $row->CourseRunid);
+        $sheet->setCellValue('G' . $rn, $row->TraineeEmail);
+        $sheet->setCellValue('H' . $rn, $row->TraineePhoneCountryCode);
+        $sheet->setCellValue('I' . $rn, $row->TraineePhoneAreaCode);
+        $sheet->setCellValue('J' . $rn, $row->TraineePhone);
+        $sheet->setCellValue('K' . $rn, $row->SponsorshipType);
+        $sheet->setCellValue('L' . $rn, $row->EmployerUEN);
+        $sheet->setCellValue('M' . $rn, $row->EmployerContactName);
+        $sheet->setCellValue('N' . $rn, $row->EmployerPhoneCountryCode);
+        $sheet->setCellValue('O' . $rn, $row->EmployerPhoneAreaCode);
+        $sheet->setCellValue('P' . $rn, $row->EmployerPhone);
+        $sheet->setCellValue('Q' . $rn, $row->EmployerContactEmail);
+        $sheet->setCellValue('R' . $rn, $row->CourseFeeDiscountAmount);
+        $sheet->setCellValue('S' . $rn, $row->FeeCollectionStatus);
+        
+        $rn++;
+    }
+    ob_end_clean();
+
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment;filename="enrolment_report_tpg.xls"');
+    header('Cache-Control: max-age=0');
+
+    $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
+    $objWriter->save('php://output');
+}

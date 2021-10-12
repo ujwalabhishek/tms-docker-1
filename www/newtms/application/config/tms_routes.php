@@ -54,7 +54,8 @@ $tms_route['RPTS']['ops'] = array(
     'MENRLCT'=>'monthly_enrollment_count',
     'SCNRPT' => 'search_company_name',
     'CRTD'=>'certificate_distribution',
-    'ERFS'=>'enrolment_report_for_tpg'
+    'ERFS'=>'enrolment_report_for_tpg',
+    'CRFS'=>'class_report'
     );
 //------------------------ Settings mapping -------------------------------------
 $tms_route['SETTG']['controller_name'] = 'settings';
