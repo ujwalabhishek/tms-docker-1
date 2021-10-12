@@ -3671,5 +3671,69 @@ SELECT  {$calc_rows} c.crse_name,
 
         return $result;
     }
+    
+    /**
+     * Tenant : Fonda
+     * Requested on 12-10-2021
+     * Developed by : Abdulla Nofal
+     * 
+     */
+    public function class_report($tenant_id,$class_id,$course_id) {
 
+        $query = "SELECT
+	(CASE 
+	 WHEN tu.tax_code_type like '%SNG_1%' THEN 'NRIC' 
+	 WHEN tu.tax_code_type like '%SNG_2%' THEN 'FIN' 
+	 WHEN tu.tax_code_type like '%SNG_3%' THEN 'Others'
+	 WHEN tu.tax_code_type like '%SNG_4%' THEN 'Others' ELSE NULL END
+	) as 'TraineeIDType',
+        tu.tax_code as 'TraineeID',
+        DATE_FORMAT(tup.dob,'%d-%m-%Y') as 'DateofBirth',
+        tup.first_name as 'TraineeName',
+        tup.nationality as 'Nationality',
+        tu.registered_email_id as 'TraineeEmail',
+        '65' as 'TraineePhoneCountryCode',            
+        ' ' as 'TraineePhoneAreaCode',
+        tup.gender as 'Gender',
+        tup.race as 'Race',
+        tup.contact_number as 'TraineePhone',			
+        (CASE 
+        WHEN ei.inv_type like '%INVINDV%' THEN 'Individual' 
+        WHEN ei.inv_type like '%INVCOMALL%' THEN 'Employer' 
+        ELSE NULL END
+        ) as 'SponsorshipType',
+        COALESCE(cm.company_name,'') as 'EmployerName',
+        COALESCE(cm.comp_regist_num,'') as 'EmployerUEN',
+        COALESCE(cm.comp_attn,'') as 'EmployerContactName',
+        DATE_FORMAT(cm.created_on,'%d-%m-%Y') as 'EmployerRegistrationDate',
+        (CASE 
+        WHEN ei.inv_type like '%INVINDV%' THEN ' ' 
+        WHEN ei.inv_type like '%INVCOMALL%' THEN '65' 
+        ELSE NULL END
+        ) as 'EmployerPhoneCountryCode',
+        ' ' as 'EmployerPhoneAreaCode',
+        COALESCE(cm.comp_phone,'') as 'EmployerPhone',
+        COALESCE(cm.comp_email,'') as 'EmployerContactEmail',
+        ei.total_inv_discnt as 'CourseFeeDiscountAmount',
+        (CASE 
+         WHEN ce.payment_status like 'PARTPAID' THEN 'Partial Payment' 
+         WHEN ce.payment_status like 'PAID' THEN 'Full Payment' 
+         WHEN ce.payment_status like 'NOTPAID' THEN 'Pending Payment' ELSE NULL END
+        ) as 'FeeCollectionStatus'
+
+        FROM ( course_class cc)
+        JOIN course c ON c.course_id = cc.course_id 
+        JOIN class_enrol ce ON ce.class_id = cc.class_id 
+        JOIN enrol_pymnt_due due ON ce.pymnt_due_id = due.pymnt_due_id and ce.user_id = due.user_id 
+        join enrol_invoice ei on ei.pymnt_due_id and due.pymnt_due_id and ei.pymnt_due_id=ce.pymnt_due_id
+        JOIN tms_users tu ON tu.user_id = ce.user_id 
+        left join tms_users_pers tup on tup.user_id =ce.user_id and tup.user_id= due.user_id
+        left join company_master cm on cm.company_id=ce.company_id
+        WHERE cc . tenant_id = '$tenant_id' AND ce . enrol_status IN ('ENRLBKD', 'ENRLACT')                    
+        AND c.course_id ='$course_id'
+        AND cc.class_id = '$class_id'";
+        $result = $this->db->query($query)->result();
+
+        return $result;
+    }
 }
