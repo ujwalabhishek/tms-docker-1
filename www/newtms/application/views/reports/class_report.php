@@ -120,7 +120,7 @@
                             <td><?php echo $row->TraineeID ;?></td>
                             <td><?php echo $row->TraineeName ;?></td>
                             <td><?php echo $row->Gender;?></td>
-                            <td><?php echo $row->nationality; ?></td>
+                            <td><?php echo ($row->Nationality) ? get_catname_by_parm($row->Nationality) : ' - '; ?></td>
                             <td><?php echo $row->DateofBirth;?></td>
                             <td><?php echo ($row->Race) ? get_catname_by_parm($row->Race) : ' - '; ?></td>
                             <td><?php echo $row->TraineePhone;?></td>
