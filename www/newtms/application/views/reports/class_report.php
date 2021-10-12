@@ -120,18 +120,18 @@
                             <td><?php echo $row->TraineeID ;?></td>
                             <td><?php echo $row->TraineeName ;?></td>
                             <td><?php echo $row->Gender;?></td>
-                            <td><?php echo ($row->CountryOfResidence) ? get_catname_by_parm($row->CountryOfResidence) : ''; ?></td>
+                            <td><?php echo ($row->CountryOfResidence) ? get_catname_by_parm($row->CountryOfResidence) : ' - '; ?></td>
                             <td><?php echo $row->DateofBirth;?></td>
-                            <td><?php echo ($row->Race) ? get_catname_by_parm($row->Race) : ''; ?></td>
+                            <td><?php echo ($row->Race) ? get_catname_by_parm($row->Race) : ' - '; ?></td>
                             <td><?php echo $row->TraineePhone;?></td>
                             <td><?php echo $row->TraineeEmail ;?></td>
                             <td><?php echo $row->SponsorshipType;?></td>
-                            <td><?php echo $row->EmployerName;?></td>
-                            <td><?php echo $row->EmployerUEN;?></td>
-                            <td><?php echo $row->EmployerRegistrationDate;?></td>
-                            <td><?php echo $row->EmployerContactName;?></td>                            
-                            <td><?php echo $row->EmployerPhone;?></td>
-                            <td><?php echo $row->EmployerContactEmail;?></td>                           
+                            <td><?php echo ($row->EmployerName) ? $row->EmployerName : ' - ';?></td>
+                            <td><?php echo ($row->EmployerUEN) ? $row->EmployerUEN : ' - ';?></td>
+                            <td><?php echo ($row->EmployerRegistrationDate) ? $row->EmployerRegistrationDate : ' - ';?></td>
+                            <td><?php echo ($row->EmployerContactName) ? $row->EmployerContactName : ' - ';?></td>                            
+                            <td><?php echo ($row->EmployerPhone) ? $row->EmployerPhone : ' - ';?></td>
+                            <td><?php echo ($row->EmployerContactEmail) ? $row->EmployerContactEmail : ' - ';?></td>
                         </tr>
                        <?php }
                     } 
