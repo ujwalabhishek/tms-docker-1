@@ -12,6 +12,7 @@
 </style>
 <div class="col-md-10">
     <?php
+    $this->load->helper('common_helper');
     $class_status = $this->input->get('class_status');
     if ($this->session->flashdata('success')) {
         echo '<div class="success">' . $this->session->flashdata('success') . '</div>';
@@ -119,9 +120,9 @@
                             <td><?php echo $row->TraineeID ;?></td>
                             <td><?php echo $row->TraineeName ;?></td>
                             <td><?php echo $row->Gender;?></td>
-                            <td><?php echo $row->CountryOfResidence;?></td>
+                            <td><?php echo ($row->CountryOfResidence) ? get_catname_by_parm($row->CountryOfResidence) : ''; ?></td>
                             <td><?php echo $row->DateofBirth;?></td>
-                            <td><?php echo $row->Race;?></td>                                                      
+                            <td><?php echo ($row->Race) ? get_catname_by_parm($row->Race) : ''; ?></td>
                             <td><?php echo $row->TraineePhone;?></td>
                             <td><?php echo $row->TraineeEmail ;?></td>
                             <td><?php echo $row->SponsorshipType;?></td>
