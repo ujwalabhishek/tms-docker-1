@@ -130,7 +130,20 @@
                             <td><?php echo $row->TraineeID ;?></td>
                             <td><?php echo $row->TraineeName ;?></td>
                             <td><?php echo $row->Gender;?></td>
-                            <td><?php echo ($row->Nationality) ? get_catname_by_parm($row->Nationality) : ' - '; ?></td>
+                            <td>
+                                <?php 
+                                    $nationalityLabel = '';
+                                    $nationality = fetch_metavalues_by_category_id(Meta_Values::NATIONALITY);
+                                    foreach ($nationality as $item):
+                                        if ($item['parameter_id'] == $row->Nationality) {
+                                            $nationalityLabel = $item['category_name'];
+                                            break;
+                                        }
+                                    endforeach;
+
+                                    echo ($nationalityLabel);
+                                ?>
+                            </td>
                             <td><?php echo $row->DateofBirth;?></td>
                             <td><?php echo ($row->Race) ? get_catname_by_parm($row->Race) : ' - '; ?></td>
                             <td><?php echo $row->TraineePhone;?></td>
