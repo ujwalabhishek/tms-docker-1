@@ -7060,7 +7060,7 @@ function export_class_report_full($result, $tenant_id) {
     ob_end_clean();
 
     header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment;filename="enrolment_report_tpg.xls"');
+    header('Content-Disposition: attachment;filename="class_report.xls"');
     header('Cache-Control: max-age=0');
 
     $objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');
