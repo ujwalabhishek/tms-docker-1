@@ -94,14 +94,14 @@
                         <th width="5%" class="">Trainee Name</th>
                         <th width="5%" class="">Gender</th>
                         <th width="5%" class="">Nationality</th>
-                        <th width="5%" class="">Date Of Birth</th>
+                        <th width="8%" class="">Date Of Birth</th>
                         <th width="5%" class="">Race</th>
                         <th width="5%" class="">Trainee Contact No.</th>
                         <th width="5%" class="">Trainee Email</th>
                         <th width="5%" class="">Sponsorship Type</th>
                         <th width="5%" class="">Employer Name</th>
                         <th width="5%" class="">Employer UEN</th>
-                        <th width="5%" class="">Registration Date</th>
+                        <th width="8%" class="">Registration Date</th>
                         <th width="5%" class="">Employer Contact Name</th>                                             
                         <th width="5%" class="">Employer Contact No.</th>
                         <th width="5%" class="">Employer Contact Email</th>                        
