@@ -79,8 +79,7 @@ $(document).ready(function() {
             company_contact_form_clear_errors();
         },
         rules: {
-            "country_of_residence": "required",
-            "business_s": "required",
+            "country_of_residence": "required",            
             "business_type": "required",
             company_name: {
                 required: true,
@@ -221,8 +220,7 @@ $(document).ready(function() {
             },
             zipcode: {
             },
-            "country_of_residence": "[required]",
-            "business_s": "[required]",
+            "country_of_residence": "[required]",            
             "business_type": "[required]",
             "fname[]": {
                 required: "[required]",
