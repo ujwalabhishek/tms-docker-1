@@ -43,6 +43,7 @@
             }
         }); 
     });
+    $tenant_id ='<?php echo $this->session->userdata('userDetails')->tenant_id; ?>';
 </script>
 <?php 
 if (!empty($tax_error)) { 
@@ -51,7 +52,11 @@ if (!empty($tax_error)) {
 ?>
 <div class="col-md-10">
     <?php
-    $atr = 'id="companyForm" name="companyForm" '; 
+    if($tenant_id != 'T25') {
+        $atr = 'id="companyForm" name="companyForm" ';
+    } else {
+        $atr = 'id="companyFondaForm" name="companyForm" ';
+    }    
     ?>
     <?php echo form_open("company/add_new_company", $atr); ?>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/company.png" /> Company - Add New</h2>

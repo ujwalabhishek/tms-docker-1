@@ -105,6 +105,7 @@
            }
         }); //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM///////////////////////
     });
+    $tenant_id ='<?php echo $this->session->userdata('userDetails')->tenant_id; ?>';
 </script>
 <?php 
 if (!empty($tax_error)) { 
@@ -145,7 +146,12 @@ if (!empty($tax_error)) {
     </div><br>
 
     <?php
-    $atr = 'id="companyEditForm" name="companyEditForm"  ' . $form_style_attr; 
+    
+    if($tenant_id != 'T25') {
+        $atr = 'id="companyEditForm" name="companyEditForm"  ' . $form_style_attr; 
+    } else {
+        $atr = 'id="companyFondaEditForm" name="companyFondaEditForm"  ' . $form_style_attr; 
+    }            
     echo form_open("company/edit_company", $atr);
     ?>
     <?php ?>
@@ -1088,8 +1094,11 @@ if (!empty($tax_error)) {
     <span class="required_i red">*Required Field</span>
     <div class="popup_cancel9">
         <div rel="modal:close">
-            <a onclick="javscript:validate_deactivate_company_user_form
-                            ();"><button class="btn btn-primary">Yes</button></a>&nbsp;&nbsp;
+            <?php if($tenant_id != 'T25') { ?>
+                    <a onclick="javscript:validate_deactivate_company_user_form();"><button class="btn btn-primary">Yes</button></a>&nbsp;&nbsp;
+            <?php } else { ?>
+                    <a onclick="javscript:validate_deactivate_fonda_company_user_form();"><button class="btn btn-primary">Yes</button></a>&nbsp;&nbsp;          
+            <?php } ?>
             <a rel="modal:close" onclick="javascript:unset_deactivate_company_user_id
                             ();"><button class="btn btn-primary" type="button">No</button></a>
         </div>
