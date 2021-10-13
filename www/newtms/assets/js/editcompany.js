@@ -73,7 +73,7 @@ $(document).ready(function() {
         },
         rules: {
             "country_of_residence": "required",
-            "business_s": "required",
+            "business_s": "",
             "business_type": "required",
             company_name: {
                 required: true,

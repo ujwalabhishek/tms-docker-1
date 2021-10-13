@@ -87,7 +87,7 @@ class Company extends CI_Controller {
         //$this->output->enable_profiler(true);
         $data['sideMenuData'] = fetch_non_main_page_content();
         $user = $this->session->userdata('userDetails');
-        $tenant_id = $user->tenant_id;
+        $data['tenant_id'] = $tenant_id = $user->tenant_id;
         $this->load->library('form_validation');
         $data['page_title'] = 'Add New Company';
         $this->load->model('course_model', 'course');
@@ -103,7 +103,9 @@ class Company extends CI_Controller {
                 $this->form_validation->set_rules('regno', 'Registration Number', 'required');
             }
             $this->form_validation->set_rules('business_type', 'Business Type', 'required');
-            $this->form_validation->set_rules('business_s', 'Business Size', 'required');
+            if ($tenant_id != 'T25') {
+                $this->form_validation->set_rules('business_s', 'Business Size', 'required');   
+            }
             $this->form_validation->set_rules('phoneno', 'Phone Number', 'required');
             $this->form_validation->set_rules('country_of_residence', 'Country', 'required');
             $this->form_validation->set_rules('comp_attn', 'Company Attn.', 'required');
@@ -192,7 +194,9 @@ class Company extends CI_Controller {
                     $this->form_validation->set_rules('regno', 'Registration Number', 'required');
                 }                
                 $this->form_validation->set_rules('business_type', 'Business Type', 'required');
-                $this->form_validation->set_rules('business_s', 'Business Size', 'required');
+                if ($tenant_id != 'T25') {
+                    $this->form_validation->set_rules('business_s', 'Business Size', 'required');
+                }                
                 $this->form_validation->set_rules('phoneno', 'Phone Number', 'required');
                 $this->form_validation->set_rules('country_of_residence', 'Company Country', 'required');
                 $this->form_validation->set_rules('comp_attn', 'Company Attn.', 'required');

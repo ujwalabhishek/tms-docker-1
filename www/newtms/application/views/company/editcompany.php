@@ -225,7 +225,7 @@ if (!empty($tax_error)) {
                         </td>  
                     </tr>
                     <tr>
-                        <td class="td_heading">Size:<span class="required">*</span></td>
+                        <td class="td_heading">Size:<?php if($tenant_id != 'T25') { ?><span class="required">*</span><?php } ?></td>
                         <td>
                             <?php
                             $business = fetch_metavalues_by_category_id(Meta_Values::BUSINESS_SIZE);
