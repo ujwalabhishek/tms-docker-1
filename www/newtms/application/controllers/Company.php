@@ -87,7 +87,7 @@ class Company extends CI_Controller {
         //$this->output->enable_profiler(true);
         $data['sideMenuData'] = fetch_non_main_page_content();
         $user = $this->session->userdata('userDetails');
-        $tenant_id = $user->tenant_id;
+        $data['tenant_id'] = $tenant_id = $user->tenant_id;
         $this->load->library('form_validation');
         $data['page_title'] = 'Add New Company';
         $this->load->model('course_model', 'course');
