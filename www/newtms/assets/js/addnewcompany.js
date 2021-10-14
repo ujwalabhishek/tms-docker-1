@@ -267,12 +267,210 @@ $(document).ready(function() {
 
         },
     });
+    
+    $("#companyFondaForm").validate({
+        onkeyup: function(element, event) {
+            company_contact_form_clear_errors();
+        },
+        rules: {
+            "country_of_residence": "required",            
+            "business_type": "required",
+            company_name: {
+                required: true,
+            },
+            regno: {
+                required: {
+                    depends: function() {
+                        $(this).val($.trim($(this).val()));
+                        return true;
+                    }
+                },
+            },
+            phoneno: {
+                required: {
+                    depends: function() {
+                        $(this).val($.trim($(this).val()));
+                        return true;
+                    }
+                },
+                accept: "[0-9-+.,()]+"
+            },
+            faxno: {
+                valid_fax_number: true,
+            },
+            localdiscount: {
+                number: true,
+                min: 0,
+                max: 100,
+            },
+            foreigndiscount: {
+                number: true,
+                min: 0,
+                max: 100,
+            },
+            comp_attn: {
+                required: {
+                    depends: function() {
+                        $(this).val($.trim($(this).val()));
+                        return true;
+                    }
+                },
+            },
+            comp_email: {
+                required: {
+                    depends: function() {
+                        $(this).val($.trim($(this).val()));
+                        return true;
+                    }
+                },
+                email: true,
+            },
+            zipcode: {
+                valid_zipcode: true,
+            },
+            "fname[]": {
+                required: {
+                    depends: function() {
+                        $(this).val($.trim($(this).val()));
+                        return true;
+                    }
+                },
+            },
+            "contactno[]": {
+                required: {
+                    depends: function() {
+                        $(this).val($.trim($(this).val()));
+                        return true;
+                    }
+                },
+                valid_contact_number: true,
+            },
+            "mobileno[]": {
+                valid_mobile_number: {
+                    depends: function() {
+                        $(this).val($.trim($(this).val()));
+                        return true;
+                    }
+                },
+            },
+            "email_01[]": {
+                required: {
+                    depends: function() {
+                        $(this).val($.trim($(this).val()));
+                        return true;
+                    }
+                },
+                email: true,
+            },
+            "email_02[]": {
+                email: {
+                    depends: function() {
+                        $(this).val($.trim($(this).val()));
+                        return true;
+                    }
+                },
+            },
+            "username[]": {
+                required: {
+                    depends: function() {
+                        $(this).val($.trim($(this).val()));
+                        return true;
+                    }
+                },
+                accept: "[a-zA-Z0-9.-_]+",
+                check_contact_usernames: true,
+            },
+        },
+        messages: {
+            company_name: {
+                required: "[required]",
+            },
+            regno: {
+                required: "[required]",
+            },
+            phoneno: {
+                required: "[required]",
+                accept: "[invalid]"
+            },
+            faxno: {
+                accept: "[invalid]"
+            },
+            localdiscount: {
+                number: "[invalid]",
+                min: "[invalid]",
+                max: "[invalid]",
+            },
+            foreigndiscount: {
+                number: "[invalid]",
+                min: "[invalid]",
+                max: "[invalid]",
+            },
+            comp_attn: {
+                required: "[required]",
+            },
+            comp_email: {
+                required: "[required]",
+                email: "[invalid]",
+            },
+            zipcode: {
+            },
+            "country_of_residence": "[required]",            
+            "business_type": "[required]",
+            "fname[]": {
+                required: "[required]",
+                accept: "[invalid]"
+            },
+            "lname[]": {
+                required: "[required]",
+                accept: "[invalid]"
+            },
+            "contactno[]": {
+                required: "[required]",
+                accept: "[invalid]"
+            },
+            "mobileno[]": {
+                accept: "[invalid]"
+            },
+            "email_01[]": {
+                required: "[required]",
+                email: "[invalid]"
+            },
+            "email_02[]": {
+                email: "[invalid]",
+            },
+            "username[]": {
+                required: "[required]",
+                accept: "[invalid]"
+            },
+        },
+        submitHandler: function(form) {
+            if ($('span').hasClass('error')) {
+                return false;
+            }
+            else {
+                //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 28/11/2018 AT 3:45PM/////////////
+                var self = $("#companyFondaForm"),
+                button = self.find('input[type="submit"],button'),
+                submitValue = button.data('submit-value');
+                button.attr('disabled','disabled').val('Please Wait..');
+                //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 28/11/2018 AT 3:45PM/////////////
+                form.submit();
+            }
+
+        },
+    });    
 
 });
 
 
 function validate_company_form() {
-    var r1 = $("#companyForm").valid();    
+    var r1;
+    if($tenant_id != 'T25') {
+        r1 = $("#companyForm").valid();
+    } else {
+        r1 = $("#companyFondaForm").valid();
+    }
+    
     if (r1 == true) {
         return true;
     } else {
