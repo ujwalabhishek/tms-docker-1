@@ -49,6 +49,24 @@ $(document).ready(function () {
                 });
             }
         });
+        
+        $.ajax({
+            type: 'post',
+            url: $baseurl + 'class_trainee/count_enrolled_trainee',
+            data: {course_id: $('#course').val(),class_id: $('#class').val()},
+            dataType: "json",
+            beforeSend: function () {
+                $('span.nric_count').text('-');
+            },
+            success: function (res) {
+                if (res != '') {
+                    $('span.nric_count').text(res);
+                } else {
+                    $('span.nric_count').text('-');
+                }                
+            }
+        });
+        
     });
     
     //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////

@@ -104,6 +104,7 @@
     <?php ?>
     <div class="bs-example">
         <div class="table-responsive">
+            <b>No. of Trainees in the class :</b><span class="nric_count"> <b><?php echo !empty($nric_count) ? $nric_count : '-'; ?></b></span>
             <div style="clear:both;"></div>
             <div style='color:grey'><b>Attn Status Code:</b> 1-Confirmed,2-Unconfirmed,3-Rejected ,4-TP Voided</div>
             <div style='color:grey'><b>ID Type:</b> SB-Singapore Blue Identification Card, SP-Singapore Pink Identification Card, SO-Fin/Work Permit/SAF 11B, OT-Others</div>
