@@ -40,18 +40,33 @@ $(document).ready(function () {
                 if (res != '') {
                     $nric.html('<option value="">All</option>');
                     $nric.removeAttr('disabled');
-                    alert(res.nric_count);
-                    $('#nric_count').val(res.nric_count);
                 } else {
                     $nric.html('<option value="">Select</option>');
                     $nric.attr('disabled', 'disabled');
                 }
-                
                 $.each(res, function (i, item) {
                     $nric.append('<option value="' + item.key + '">' + item.value + '</option>');
                 });
             }
         });
+        
+        $.ajax({
+            type: 'post',
+            url: $baseurl + 'class_trainee/count_enrolled_trainee',
+            data: {course_id: $('#course').val(),class_id: $('#class').val()},
+            dataType: "json",
+            beforeSend: function () {
+                $('#nric_count').val("-");
+            },
+            success: function (res) {
+                if (res != '') {
+                    $('#nric_count').val(res);
+                } else {
+                    $('#nric_count').val("-");
+                }                
+            }
+        });
+        
     });
     
     //////////////////////////////////////shubhranshu fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////

@@ -2040,9 +2040,17 @@ class Class_Trainee extends CI_Controller {
         $classes_arr = array();
         foreach ($res as $k => $v) {
             $classes_arr[] = array('key' => $k, 'value' => $v);
-        }
-        $classes_arr['nric_count'] = count($res);
+        }        
         echo json_encode($classes_arr);
+    }
+    
+    public function count_enrolled_trainee() {
+        $courseID = $this->input->post('course_id');
+        $classID = $this->input->post('class_id');
+        $tenant_id = $this->tenant_id;
+        $res = $this->classtraineemodel->get_enrolled_trainee($tenant_id, $courseID, $classID);        
+               
+        echo json_encode(count($res));
     }
 
     /* locking class attendance 
