@@ -2041,7 +2041,7 @@ class Class_Trainee extends CI_Controller {
         foreach ($res as $k => $v) {
             $classes_arr[] = array('key' => $k, 'value' => $v);
         }
-        $arrayname['nric_count'] = count($res);
+        $classes_arr['nric_count'] = count($res);
         echo json_encode($classes_arr);
     }
 
