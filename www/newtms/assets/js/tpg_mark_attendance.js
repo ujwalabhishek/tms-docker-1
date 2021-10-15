@@ -40,8 +40,8 @@ $(document).ready(function () {
                 if (res != '') {
                     $nric.html('<option value="">All</option>');
                     $nric.removeAttr('disabled');
-                    alert(res.nric_count);
-                    $('#nric_count').val(res.nric_count);
+                    alert(res);
+                    //$('#nric_count').val(res.nric_count);
                 } else {
                     $nric.html('<option value="">Select</option>');
                     $nric.attr('disabled', 'disabled');

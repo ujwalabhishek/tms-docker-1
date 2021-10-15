@@ -2036,12 +2036,12 @@ class Class_Trainee extends CI_Controller {
         $courseID = $this->input->post('course_id');
         $classID = $this->input->post('class_id');
         $tenant_id = $this->tenant_id;
-        $res = $this->classtraineemodel->get_enrolled_trainee($tenant_id, $courseID, $classID);
-        $count_nric = count($res);
+        $res = $this->classtraineemodel->get_enrolled_trainee($tenant_id, $courseID, $classID);        
         $classes_arr = array();
         foreach ($res as $k => $v) {
-            $classes_arr[] = array('key' => $k, 'value' => $v, 'nric_count' => $count_nric);
+            $classes_arr[] = array('key' => $k, 'value' => $v);
         }
+        $arrayname['nric_count'] = count($res);
         echo json_encode($classes_arr);
     }
 
