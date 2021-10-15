@@ -56,13 +56,13 @@ $(document).ready(function () {
             data: {course_id: $('#course').val(),class_id: $('#class').val()},
             dataType: "json",
             beforeSend: function () {
-                $('#nric_count').val("-");
+                $('div.nric_count').text('-');
             },
             success: function (res) {
                 if (res != '') {
-                    $('#nric_count').val(res);
+                    $('div.nric_count').text(res);
                 } else {
-                    $('#nric_count').val("-");
+                    $('div.nric_count').text('-');
                 }                
             }
         });
