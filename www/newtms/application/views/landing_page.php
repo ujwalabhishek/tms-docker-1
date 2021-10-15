@@ -97,8 +97,8 @@ echo $timezone = date_default_timezone_get() . " / " . date('m/d/Y h:i:s a', tim
                             <div class="col-sm-4 col-desg">
                                 <a href="<?php echo 'http://' . $client['tenant_url']; ?>">
                                     <p class="col-desg-tlt"><?php echo $client['tenant_name']; ?></p>
-                                    <?php if ($client['tenant_id'] == "T25") { ?>
-                                        <img src="<?php echo base_url() ?>logos/<?php echo $client['tenant_logo']; ?>"  width='60px' height="60px" alt="Image">
+                                    <?php if ($client['tenant_id'] == "T25" || $client['tenant_id'] == "T27") { ?>
+                                        <img src="<?php echo base_url() ?>logos/<?php echo $client['tenant_logo']; ?>"  width='70px' height="70px" alt="Image">
                                     <?php } else if ($client['tenant_id'] == "T03") { ?>
                                         <img src="<?php echo base_url() ?>logos/<?php echo $client['tenant_logo']; ?>"  width='100px' alt="Image">
                                     <?php } else { ?>
