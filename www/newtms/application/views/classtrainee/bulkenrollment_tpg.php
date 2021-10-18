@@ -43,7 +43,7 @@
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <td class="td_heading">Course Name:</td>
+                    <td class="td_heading" width="15%">Course Name:</td>
                     <td colspan="3">
                         <?php
                         $options = array();
