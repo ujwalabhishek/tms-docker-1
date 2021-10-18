@@ -1616,7 +1616,7 @@ class Class_Trainee extends CI_Controller {
 
             //      $records_per_page = RECORDS_PER_PAGE;
             $records_per_page = 25;
-            $baseurl = base_url() . 'class_trainee/';
+            $baseurl = base_url() . 'class_trainee/bulk_enrollment_tpg';
             $pageno = ($this->uri->segment(2)) ? $this->uri->segment(2) : 1;
             $offset = ($pageno * $records_per_page);
             $data['tenant'] = $tenant_id;
@@ -1747,7 +1747,7 @@ class Class_Trainee extends CI_Controller {
             $this->db->cache_off();
             $data['tabledata'] = $new_tabledata;
             $data['sort_order'] = $order_by;
-            $data['controllerurl'] = 'class_trainee/';
+            $data['controllerurl'] = 'class_trainee/bulk_enrollment_tpg';
             $this->load->helper('pagination');
             if ($sort_url) {
                 $pag_sort = $order_by . '&' . $sort_url;
