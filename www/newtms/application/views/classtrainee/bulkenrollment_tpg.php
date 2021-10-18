@@ -73,7 +73,7 @@
                     </td>
                 </tr>                
                 <tr>
-                    <td colspan="" width="30%">
+                    <td colspan="3" width="30%">
                         <span class="pull-right">
                             <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
                         </span>
