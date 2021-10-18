@@ -39,8 +39,7 @@
     echo form_open("class_trainee", $atr);
     ?>  
     <div class="table-responsive">
-        <h5  class="sub_panel_heading_style"><span class="glyphicon glyphicon-search"></span> Search By</h5>
-
+        <h5 class="sub_panel_heading_style"><span class="glyphicon glyphicon-search"></span> Search By</h5>
         <table class="table table-striped">
             <tbody>
                 <tr>
@@ -73,11 +72,13 @@
                         ?>
                     </td>
                 </tr>                
-                <tr>                    
-            <span class="pull-right">
-                <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
-            </span>                    
-            </tr>
+                <tr>
+                    <td colspan="" width="30%">
+                        <span class="pull-right">
+                            <button type="submit" value="Search" class="btn btn-xs btn-primary no-mar" title="Search" /><span class="glyphicon glyphicon-search"></span> Search</button>
+                        </span>
+                    </td>                    
+                </tr>
             </tbody>
         </table>
     </div><br>
