@@ -1565,9 +1565,10 @@ class Class_Model extends CI_Model {
                 return FALSE;
             } else {
                 if (!empty($mail_arr) && $tenantId != 'T02') {
-                    foreach ($mail_arr as $mail_row) {
-                        $this->class_update_send_email($mail_row['email'], $mail_row['content'], $mail_row['subject'], $mail_row['footer']);
-                    }
+                    //Deactivated the mail functionality by Abdulla
+                    //foreach ($mail_arr as $mail_row) {
+                    //    $this->class_update_send_email($mail_row['email'], $mail_row['content'], $mail_row['subject'], $mail_row['footer']);
+                    //}
                 }
             }
 
@@ -1798,9 +1799,10 @@ class Class_Model extends CI_Model {
                 return FALSE;
             } else {
                 if (!empty($mail_arr) && $tenantId != 'T02') {
-                    foreach ($mail_arr as $mail_row) {
-                        $this->class_update_send_email($mail_row['email'], $mail_row['content'], $mail_row['subject'], $mail_row['footer']);
-                    }
+                    //Deactivated the mail functionality by Abdulla
+                    //foreach ($mail_arr as $mail_row) {
+                    //    $this->class_update_send_email($mail_row['email'], $mail_row['content'], $mail_row['subject'], $mail_row['footer']);
+                    //}
                 }
             }
 
