@@ -7323,7 +7323,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
             $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
-        //echo $this->db->last_query();  exit;
+        echo $this->db->last_query();  exit;
         //$query = $this->db->get();   
         //$query1 = $this->db->last_query();  exit;
         // $query1 = $this->db->return_query_clear(); //commented by shubhranshu
