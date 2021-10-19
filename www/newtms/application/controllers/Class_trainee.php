@@ -81,9 +81,6 @@ class Class_Trainee extends CI_Controller {
             $baseurl = base_url() . 'class_trainee/';
             $pageno = ($this->uri->segment(2)) ? $this->uri->segment(2) : 1;
             $offset = ($pageno * $records_per_page);
-            echo "<pre>"; echo " Baseurl : ".$baseurl;
-            echo "<pre>"; echo " Page No. : ".$pageno;
-            echo "<pre>"; echo " Offset : ".$offset;
             $data['tenant'] = $tenant_id;
             $company_id = $this->input->get('company_id');
             $this->db->cache_on();
@@ -1621,17 +1618,12 @@ class Class_Trainee extends CI_Controller {
             $records_per_page = 25;
             $baseurl = base_url() . 'class_trainee/bulk_enrollment_tpg';
             $pageno = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
-            $offset = ($pageno * $records_per_page);
-            echo "<pre>"; echo " Baseurl : ".$baseurl;
-            echo "<pre>"; echo " Page No. : ".$pageno;
-            echo "<pre>"; echo " Offset : ".$offset;
+            $offset = ($pageno * $records_per_page);           
             $data['tenant'] = $tenant_id;
             $company_id = $this->input->get('company_id');
             $this->db->cache_on();
             $tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
-echo "<pre>"; echo "Tabledata : ".print_r($tabledata, true); 
             $totalrows = $this->classtraineemodel->get_all_classtrainee_count_by_tenant_id($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
-echo "<pre>"; echo "Tablerows : ".print_r($totalrows, true); exit;
             $new_tabledata = array();
             $role_array = array("TRAINER", "COMPACT", "SLEXEC");
             foreach ($tabledata as $k => $row) {
