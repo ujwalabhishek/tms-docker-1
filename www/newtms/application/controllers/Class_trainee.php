@@ -1606,6 +1606,7 @@ class Class_Trainee extends CI_Controller {
             $data['sort_url'] = '?' . $sort_url;
             $course = ($this->input->get('course')) ? $this->input->get('course') : '';
             $class = ($this->input->get('class')) ? $this->input->get('class') : '';
+            echo $course.' '.$class;
             $class_status = ($this->input->get('class_status')) ? $this->input->get('class_status') : '';
             $search_select = ($this->input->get('search_select')) ? $this->input->get('search_select') : '';
             $taxcode_id = ($this->input->get('taxcode_id')) ? $this->input->get('taxcode_id') : '';
@@ -1623,7 +1624,7 @@ class Class_Trainee extends CI_Controller {
             $company_id = $this->input->get('company_id');
             $this->db->cache_on();
             $tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
-
+            echo print_r($tabledata, true);
             $totalrows = $this->classtraineemodel->get_all_classtrainee_count_by_tenant_id($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
 
             $new_tabledata = array();
@@ -1745,7 +1746,7 @@ class Class_Trainee extends CI_Controller {
                 $new_tabledata[$k]['referrer'] = $row['referral_details'];
             }
             $this->db->cache_off();
-            echo print_r($new_tabledata, true); exit;
+            echo "<pre>"; print_r($new_tabledata, true); exit;
             $data['tabledata'] = $new_tabledata;
             $data['sort_order'] = $order_by;
             $data['controllerurl'] = 'class_trainee/bulk_enrollment_tpg';
