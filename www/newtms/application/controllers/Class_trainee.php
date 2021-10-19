@@ -1620,7 +1620,7 @@ class Class_Trainee extends CI_Controller {
             //      $records_per_page = RECORDS_PER_PAGE;
             $records_per_page = 25;
             $baseurl = base_url() . 'class_trainee/bulk_enrollment_tpg';
-            $pageno = ($this->uri->segment(2)) ? $this->uri->segment(2) : 1;
+            $pageno = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
             $offset = ($pageno * $records_per_page);
             echo "<pre>"; echo " Baseurl : ".$baseurl;
             echo "<pre>"; echo " Page No. : ".$pageno;
