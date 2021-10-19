@@ -1576,7 +1576,7 @@ class Class_Trainee extends CI_Controller {
         $data['sideMenuData'] = fetch_non_main_page_content();
         $tenant_id = $this->tenant_id;
         extract($_GET);
-        $data['courses'] = $courses = $this->course->get_active_course_list_by_tenant($tenant_id, 'classTrainee');
+        $data['courses'] = $courses = $this->course->get_active_course_list_all_tpg($tenant_id, 'classTrainee');
         if ($course) {
 
             $course_classes = $this->class->get_course_class($tenant_id, $course, "", "", "classTrainee");
@@ -1735,74 +1735,9 @@ class Class_Trainee extends CI_Controller {
                 $EIDNO = !empty($row['eid_number']) ? $row['eid_number'] : "NA";
                 $TGNOBR = !empty($row['tg_number']) ? "<br>" : "";
                 $data['trainee_feedback'] = $this->reportsModel->get_trainee_feedback_by_user_id($tenant_id, $new_tabledata[$k]['course_id'], $new_tabledata[$k]['class_id'], $new_tabledata[$k]['user_id']);
-                $linkStr = '';
-                if ($row['account_status'] == 'PENDACT') {
-                    $linkStr = '<span style="color:red;">Account not yet activated.</span>';
-                } else if ($row['account_status'] == 'INACTIV') {
-                    $linkStr = get_links($row['enrolment_mode'], $row['payment_status'], $row['invoice_id'], $row['user_id'], $row['pymnt_due_id'], $row['class_id'], $this, $row['account_status'], $row['cc_class_status'], $row['company_id'], $row['att_status']);
-                } else {
-                    $linkStr = '';
-                    $cur_date = strtotime(date('Y-m-d'));
-                    $class_end_datetime = date("Y-m-d", strtotime($row['class_end_datetime']));
-                    $class_end_datetime_str = strtotime($class_end_datetime);
-                    if ($cur_date >= $class_end_datetime_str) {
-                        $check_attendance = $this->classtraineemodel->check_attendance_row($tenant_id, $row['course_id'], $row['class_id']);
-                        $check_competent = $this->classtraineemodel->check_competent($tenant_id, $row['course_id'], $row['class_id'], $row['user_id']);
-                        $linkStr = '';
-                        if ($this->user->role_id == 'ADMN' || $this->user->role_id == 'CRSEMGR') {
-                            $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
-                            if ($status == 'Completed') {
-                                if ($check_attendance > 0) {
-                                    $linkStr .= ' <a href="#ex7" rel="modal:open" data-course="' . $row['course_id'] . '" '
-                                            . 'data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '"data-payment="' . $row['pymnt_due_id'] . '"class="training_update small_text1">Trainer Feedback</a><br/>';
-                                    if ($check_competent > 0) {
-                                        $linkStr .= ' <a  href="#ex6" rel="modal:open" data-course="' . $row['course_id'] . '" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '" class="training_update small_text1"><span>Trainee Feedback</span></a><br/>';
-                                    }
-                                } else {
-                                    $linkStr.='<form action="' . base_url() . 'class_trainee/mark_attendance" method="post" name="maarkatt[]"><input type="hidden" name="course_id" value="' . $row['course_id'] . '" /><input type="hidden" name="class_id" value="' . $row['class_id'] . '" /><input type="submit" class="red" value ="Mark Attendance" /></form><br />';
-                                }
-                            }
-                        }
-                        if ($row['payment_status'] != 'PYNOTREQD' && $this->user->role_id == 'ADMN' || $row['payment_status'] != 'PYNOTREQD' && $this->user->role_id == 'CRSEMGR') {
-                            $linkStr .= '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">' . $TGNO . ' </span> </a>';
-
-                            $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> ' . $TGAMT . ' </span> </a><br/>';
-                        }
-
-
-                        // if($check_attendance<=0 || $check_competent>0)
-                        if ($check_competent > 0) {
-                            $wsq_courses_array = $this->config->item('wsq_courses'); // wsq courses modified by shubhranshu
-                            $tenant_array = array('T02', 'T12'); // xp and xp2 
-                            $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/' . $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
-                            //////added by shubhranshu for wablab and everest TCS for all courses
-                            if ($tenant_id == 'T20' || $tenant_id == 'T17') {
-                                $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' . $row['course_id'] . '/' . $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>';
-                            } else {
-                                if (in_array($row['course_id'], $wsq_courses_array) && in_array($tenant_id, $tenant_array)) {
-                                    $linkStr .= '<a href="' . base_url() . 'trainee/print_wsq_loc/' . $row['course_id'] . '/' . $row['class_id'] . '/' . $row['user_id'] . '">TCS</a><br/>';
-                                }
-                            }
-
-
-
-                            //                        $linkStr .= '<a href="' . base_url() . 'trainee/print_loc/' . $row['class_id'] . '/' . $row['user_id'] . '">LOC</a><br/>';
-                        }
-                    } else {
-                        if ($row['payment_status'] != 'PYNOTREQD' &&
-                                $this->user->role_id == 'ADMN') {
-                            $linkStr = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">TG No: <span style="font-weight:normal;color:#000">' . $TGNO . ' </span> </a>';
-
-                            $linkStr .= '<br><a href="#"> TG Amt : <span style="font-weight:normal;color:#000"> ' . $TGAMT . ' </span> </a><br/>';
-                        }
-                    }
-                    $linkStr .= get_links($row['enrolment_mode'], $row['payment_status'], $row['invoice_id'], $row['user_id'], $row['pymnt_due_id'], $row['class_id'], $this, $row['account_status'], $row['cc_class_status'], $row['company_id'], $row['att_status']);
-                }
-                //////add by shubhranshu to save enrollment id on 18/03/2021
-                //Commented by abdulla nofal - Since, it's being updated from TPG.
-                //$linkStr .= '<a href="javascript:;" class="get_update_eid" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">EID No: <span style="font-weight:normal;color:#000">' . $EIDNO . ' </span> </a><br/>';
+                $linkStr = '';                
                 if($row['tpg_crse']) {
-                    $linkStr .= 'EID No: <span style="font-weight:normal;color:#000">' . $EIDNO . ' </span><br/>';    
+                    $linkStr = 'EID No: <span style="font-weight:normal;color:#000">' . $EIDNO . ' </span><br/>';    
                 }                                
                 $new_tabledata[$k]['action_link'] = $linkStr;
                 $new_tabledata[$k]['referrer'] = $row['referral_details'];

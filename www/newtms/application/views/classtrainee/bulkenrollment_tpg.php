@@ -95,6 +95,14 @@
                 echo form_dropdown('class_status', $cls_status_options, $this->input->get('class_status'), 'id="class_status"');
             }
             ?>
+                
+            <?php if (count($tabledata) > 0) { ?>                    
+                <div class="add_button98 pull-right">
+                    <a href="<?php echo base_url(); ?>class_trainee/export_classtrainee_page<?php echo $export_url; ?>" class="small_text1" onclick="return exportValidate()">
+                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Bulk Upload</span>
+                    </a>
+                </div>                  
+            <?php } ?>                
         </div>
     </div>
     <?php echo form_close(); ?>
@@ -151,8 +159,9 @@
                             $name = json_decode($row['referrer']);
                             ?>                                                                                                  
                             <tr>
-                                <td><input type="checkbox" class="custom-control-input" id="customCheck1" checked>
-                  <label class="custom-control-label" for="customCheck1">1</label></td>
+                                <td>
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked>                                
+                                </td>
                                 <td><?php echo $row['taxcode']; ?></td>
                                 <td class="name">                                    
                                     <?php echo $row['name']; ?> <br /> <br />
