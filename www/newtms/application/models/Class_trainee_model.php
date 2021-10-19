@@ -7206,7 +7206,7 @@ class Class_Trainee_Model extends CI_Model {
 
      */
     public function list_all_classtrainee_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0, $eid = 0) {
-
+echo "bbbaaa"; 
         $user_id = '';
 
         if ($search_select == 1) {
