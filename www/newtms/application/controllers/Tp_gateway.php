@@ -2011,4 +2011,8 @@ class tp_gateway extends CI_Controller {
     public function sfc_payment_response() {
         
     }
+    
+    public function bulk_enrollment_tpg() {
+        
+    }
 }

@@ -95,12 +95,21 @@
                 echo form_dropdown('class_status', $cls_status_options, $this->input->get('class_status'), 'id="class_status"');
             }
             ?>
-                
             <?php if (count($tabledata) > 0) { ?>                    
                 <div class="add_button98 pull-right">
-                    <a href="<?php echo base_url(); ?>class_trainee/export_classtrainee_page<?php echo $export_url; ?>" class="small_text1" onclick="return exportValidate()">
+                    <?php
+                    $atr = 'id="tpg_form" name="tpg_form" method="post"';
+                    echo form_open("tp_gateway/send_trainee_enrolment_data_tpg", $atr);
+                    ?>
+                    <button type="submit" value="Submit" class="btnblue" title="Submit" />
                         <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Bulk Upload</span>
-                    </a>
+                    </button>
+                    <input type="hidden" name="courseRunId" value="<?php echo $row['tpg_course_run_id']; ?>" id="courseRunId">
+                    <input type="hidden" name="courseReferenceNumber" value="<?php echo $row['reference_num']; ?>" id="courseReferenceNumber">                    
+                    <input type="hidden" name="courseId" value="<?php echo $row['course_id']; ?>" id="courseId">
+                    <input type="hidden" name="classId" value="<?php echo $row['class_id']; ?>" id="classId">
+                    <?php echo form_close();
+                    ?>
                 </div>                  
             <?php } ?>                
         </div>
