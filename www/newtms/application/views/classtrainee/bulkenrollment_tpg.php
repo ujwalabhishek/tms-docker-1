@@ -82,39 +82,25 @@
             </tbody>
         </table>
     </div><br>
+    <?php echo form_close(); ?>
     <div class="bs-example">
-        <div class="table-responsive">
-            <?php if (!empty($tabledata) || !empty($class_status)) { ?>
-                <strong>Filter by Class Status:</strong>
-                <?php
-                $cls_status_options[''] = 'All';
-                $cls_status = fetch_metavalues_by_category_id(Meta_Values::CLASS_TRAINEE_FILTER);
-                foreach ($cls_status as $val):
-                    $cls_status_options[$val['parameter_id']] = $val['category_name'];
-                endforeach;
-                echo form_dropdown('class_status', $cls_status_options, $this->input->get('class_status'), 'id="class_status"');
-            }
-            ?>
+        <div class="table-responsive">            
             <?php if (count($tabledata) > 0) { ?>                    
                 <div class="add_button98 pull-right">
                     <?php
                     $atr = 'id="tpg_form" name="tpg_form" method="post"';
                     echo form_open("tp_gateway/bulk_enrollment_tpg", $atr);
                     ?>
-                    <button type="submit" value="Submit" class="label label-default black-btn glyphicon glyphicon-export" title="Submit" />Bulk Upload
-                    </button>
+                    <button type="submit" value="Submit" class="label label-default black-btn" title="Submit" />Bulk Upload</button>
                     <input type="hidden" name="courseRunId" value="<?php echo $tpg_course_run_id; ?>" id="courseRunId">
                     <input type="hidden" name="courseReferenceNumber" value="<?php echo $reference_num; ?>" id="courseReferenceNumber">                    
                     <input type="hidden" name="courseId" value="<?php echo $course_id; ?>" id="courseId">
                     <input type="hidden" name="classId" value="<?php echo $class_id; ?>" id="classId">
-                    <?php echo form_close();
-                    ?>
+                    <?php echo form_close(); ?>
                 </div>                  
             <?php } ?>                
         </div>
     </div>
-    <?php echo form_close(); ?>
-    <?php ?>
     <div class="bs-example">
         <div class="table-responsive">
             <div style="clear:both;"></div>
