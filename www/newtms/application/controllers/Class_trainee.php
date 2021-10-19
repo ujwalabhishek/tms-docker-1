@@ -1626,6 +1626,11 @@ class Class_Trainee extends CI_Controller {
             $totalrows = $this->classtraineemodel->get_all_classtrainee_count_by_tenant_id($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
             $new_tabledata = array();
             $role_array = array("TRAINER", "COMPACT", "SLEXEC");
+            $data['tpg_course_run_id'] = $tabledata['tpg_course_run_id'];
+            $data['reference_num'] = $tabledata['reference_num'];
+            $data['course_id'] = $tabledata['course_id'];
+            $data['class_id'] = $tabledata['class_id'];
+                        
             foreach ($tabledata as $k => $row) {
                 if ($row['enrolment_mode'] == 'COMPSPON') {
                     if ($row['company_id'][0] == 'T') {
