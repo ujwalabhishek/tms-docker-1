@@ -109,6 +109,7 @@
                     $pageurl = 'class_trainee';
                     ?>
                     <tr>
+                        <th width="5%" class="th_header">Select Day</th>
                         <th width="9%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=tu.tax_code&o=" . $ancher; ?>">NRIC/FIN No.</a></th>
                         <th width="8%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=tup.first_name&o=" . $ancher; ?>">Name</a></th>
                         <th width="15%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=c.crse_name&o=" . $ancher; ?>">Course / Class Detail</a></th>
@@ -149,7 +150,9 @@
                             }
                             $name = json_decode($row['referrer']);
                             ?>                                                                                                  
-                            <tr>                        
+                            <tr>
+                                <td><input type="checkbox" class="custom-control-input" id="customCheck1" checked>
+                  <label class="custom-control-label" for="customCheck1">1</label></td>
                                 <td><?php echo $row['taxcode']; ?></td>
                                 <td class="name">                                    
                                     <?php echo $row['name']; ?> <br /> <br />
