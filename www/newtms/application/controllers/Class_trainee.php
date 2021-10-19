@@ -1606,7 +1606,7 @@ class Class_Trainee extends CI_Controller {
             $data['sort_url'] = '?' . $sort_url;
             $course = ($this->input->get('course')) ? $this->input->get('course') : '';
             $class = ($this->input->get('class')) ? $this->input->get('class') : '';
-            echo $course.' '.$class;
+            echo $course.' '.$class.' '.$tenant_id;
             $class_status = ($this->input->get('class_status')) ? $this->input->get('class_status') : '';
             $search_select = ($this->input->get('search_select')) ? $this->input->get('search_select') : '';
             $taxcode_id = ($this->input->get('taxcode_id')) ? $this->input->get('taxcode_id') : '';
