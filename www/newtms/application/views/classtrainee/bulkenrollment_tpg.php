@@ -101,8 +101,7 @@
                     $atr = 'id="tpg_form" name="tpg_form" method="post"';
                     echo form_open("tp_gateway/bulk_enrollment_tpg", $atr);
                     ?>
-                    <button type="submit" value="Submit" class="btnblue" title="Submit" />
-                        <span class="label label-default black-btn"><span class="glyphicon glyphicon-export"></span>Bulk Upload</span>
+                    <button type="submit" value="Submit" class="label label-default black-btn glyphicon glyphicon-export" title="Submit" />Bulk Upload
                     </button>
                     <input type="hidden" name="courseRunId" value="<?php echo $tpg_course_run_id; ?>" id="courseRunId">
                     <input type="hidden" name="courseReferenceNumber" value="<?php echo $reference_num; ?>" id="courseReferenceNumber">                    
