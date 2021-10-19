@@ -81,9 +81,9 @@ class Class_Trainee extends CI_Controller {
             $baseurl = base_url() . 'class_trainee/';
             $pageno = ($this->uri->segment(2)) ? $this->uri->segment(2) : 1;
             $offset = ($pageno * $records_per_page);
-            echo "<pre>"; " Baseurl : ".$baseurl;
-            echo "<pre>"; " Page No. : ".$pageno;
-            echo "<pre>"; " Offset : ".$offset;
+            echo "<pre>"; echo " Baseurl : ".$baseurl;
+            echo "<pre>"; echo " Page No. : ".$pageno;
+            echo "<pre>"; echo " Offset : ".$offset;
             $data['tenant'] = $tenant_id;
             $company_id = $this->input->get('company_id');
             $this->db->cache_on();
@@ -1622,9 +1622,9 @@ class Class_Trainee extends CI_Controller {
             $baseurl = base_url() . 'class_trainee/bulk_enrollment_tpg';
             $pageno = ($this->uri->segment(2)) ? $this->uri->segment(2) : 1;
             $offset = ($pageno * $records_per_page);
-            echo "<pre>"; " Baseurl : ".$baseurl;
-            echo "<pre>"; " Page No. : ".$pageno;
-            echo "<pre>"; " Offset : ".$offset;
+            echo "<pre>"; echo " Baseurl : ".$baseurl;
+            echo "<pre>"; echo " Page No. : ".$pageno;
+            echo "<pre>"; echo " Offset : ".$offset;
             $data['tenant'] = $tenant_id;
             $company_id = $this->input->get('company_id');
             $this->db->cache_on();
