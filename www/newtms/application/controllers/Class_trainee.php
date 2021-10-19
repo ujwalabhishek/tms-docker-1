@@ -1745,6 +1745,7 @@ class Class_Trainee extends CI_Controller {
                 $new_tabledata[$k]['referrer'] = $row['referral_details'];
             }
             $this->db->cache_off();
+            echo print_r($new_tabledata, true); exit;
             $data['tabledata'] = $new_tabledata;
             $data['sort_order'] = $order_by;
             $data['controllerurl'] = 'class_trainee/bulk_enrollment_tpg';
