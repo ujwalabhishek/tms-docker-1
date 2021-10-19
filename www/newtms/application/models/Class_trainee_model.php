@@ -7323,7 +7323,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
 
             $this->db->where('ce.sales_executive_id', $this->user->user_id);
         }
-        echo $this->db->last_query();  exit;
+        //echo $this->db->last_query();  exit;
         //$query = $this->db->get();   
         //$query1 = $this->db->last_query();  exit;
         // $query1 = $this->db->return_query_clear(); //commented by shubhranshu
@@ -7352,8 +7352,11 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         }
 
         $query3 = $this->db->query("(" . $query1 . ") UNION (" . $query2 . ") order by $union_sort_by $sort_order $union_limit");
+        
+        $query3->result_array();
+        
 echo $this->db->last_query();  exit;
-        return $query3->result_array();
+        //return 
     }
 
     /* List of public poratl enrolled trainee skm start */
