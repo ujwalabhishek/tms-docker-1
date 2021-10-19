@@ -1630,7 +1630,7 @@ class Class_Trainee extends CI_Controller {
             $data['reference_num'] = $tabledata['reference_num'];
             $data['course_id'] = $tabledata['course_id'];
             $data['class_id'] = $tabledata['class_id'];
-                        
+                        echo print_r($tabledata, true); 
             foreach ($tabledata as $k => $row) {
                 if ($row['enrolment_mode'] == 'COMPSPON') {
                     if ($row['company_id'][0] == 'T') {
