@@ -14598,7 +14598,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         return $res;
     }
     
-    function uploadTmsClassShdl($tenant_id,$course_id,$class_id,$tpg_session_id,$user_id){
+    function uploadTmsClassShdl($tenant_id,$course_id,$class_id,$tpg_session_id,$user_id,$session_type_id){
         $this->db->select('*');
         $this->db->from('class_schld');
         $this->db->where('tenant_id', $tenant_id);
@@ -14606,16 +14606,17 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->where('tpg_session_id', $tpg_session_id);
         $this->db->where('class_id', $class_id);
         $schd_data = $this->db->get()->row();
-
-        if ((strpos($tpg_session_id, 'S1') !== false) || (strpos($tpg_session_id, 'S3') !== false) || (strpos($tpg_session_id, 'S5') !== false) || (strpos($tpg_session_id, 'S7') !== false)) {
+        
+        if ($session_type_id == 'S1') {
             $data = array(
                 'session_01_tpg_uploaded_status' => '1'
             );
-        }else if((strpos($tpg_session_id, 'S2') !== false) || (strpos($tpg_session_id, 'S4') !== false) || (strpos($tpg_session_id, 'S6') !== false) || (strpos($tpg_session_id, 'S8') !== false)){
+        } else if($session_type_id == 'S2') {
             $data = array(
                 'session_02_tpg_uploaded_status' => '1'
             );
-        }
+        }        
+        
         $this->db->where('tenant_id', $tenant_id);
         $this->db->where('course_id', $course_id);
         $this->db->where('class_id', $class_id);

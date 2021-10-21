@@ -1809,6 +1809,7 @@ class tp_gateway extends CI_Controller {
     function submit_attendance() {
         $tenant_id = $this->tenant_id;
         $tpg_session_id = $this->input->post('tpg_session_id');
+        $session_type_id = $this->input->post('session_type_id');
         $attn_status_code = $this->input->post('attn_status_code');
         $fullname = $this->input->post('fullname');
         $registered_email_id = $this->input->post('registered_email_id');
@@ -1833,7 +1834,7 @@ class tp_gateway extends CI_Controller {
             if($mode_of_training == '8') {
                 $this->classTraineeModel->uploadTmsAssessShdl($tenant_id, $course_id, $class_id, $tpg_session_id, $user_id); ///update tms record
             } else {
-                $this->classTraineeModel->uploadTmsClassShdl($tenant_id, $course_id, $class_id, $tpg_session_id, $user_id); ///update tms record
+                $this->classTraineeModel->uploadTmsClassShdl($tenant_id, $course_id, $class_id, $tpg_session_id, $user_id, $session_type_id); ///update tms record
             }            
             $this->session->set_flashdata("success", "Attendance Uploaded Successfully To TPG ");
             
