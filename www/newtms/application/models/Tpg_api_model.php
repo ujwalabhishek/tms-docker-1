@@ -1020,6 +1020,7 @@ class Tpg_api_Model extends CI_Model {
                         "startTime" => "$starttime",
                         "endTime" => "$endtime",
                         "modeOfTraining" => "$modeoftraining",
+                        "action" => "update",
                         "venue" => array
                             (
                             "block" => "$venue_block",
@@ -1050,6 +1051,7 @@ class Tpg_api_Model extends CI_Model {
                     "startTime" => "$assstarttime",
                     "endTime" => "$assendtime",
                     "modeOfTraining" => "8",
+                    "action" => "update",
                     "venue" => array
                         (
                         "block" => "$venue_block",
