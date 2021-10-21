@@ -1033,7 +1033,7 @@ class Tpg_api_Model extends CI_Model {
                             "postalCode" => "$venue_postalcode",
                             "room" => "$venue_room",
                             "wheelChairAccess" => "$wheel_chair_access",
-                            "primaryVenue" => false,
+                            "primaryVenue" => true,
                         ),
                     );
                 }
@@ -1065,7 +1065,7 @@ class Tpg_api_Model extends CI_Model {
                         "postalCode" => "$venue_postalcode",
                         "room" => "$venue_room",
                         "wheelChairAccess" => "$wheel_chair_access",
-                        "primaryVenue" => false,
+                        "primaryVenue" => true,
                     ),
                 );
             }
