@@ -2024,6 +2024,7 @@ class Class_Trainee extends CI_Controller {
             $data['classes'] = $this->class->get_course_class($tenant_id, $course, $mark_attendance, "", "classTrainee");
             $data['tabledata'] = $this->classtraineemodel->get_trainee_sessions_data($tenant_id, $course, $class, $userid);
             $data['nric'] = $this->classtraineemodel->get_enrolled_trainee($tenant_id, $course, $class);
+            $data['nric_count'] = count($data['nric']);
         }
 
         $data['main_content'] = 'classtrainee/markattendance_tpg';
