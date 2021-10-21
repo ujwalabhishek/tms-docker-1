@@ -713,7 +713,9 @@ if (!empty($tax_error)) {
                                     $data_arr[$row['class_date']][] = array(
                                         'session' => $row['session_type_id'],                                        
                                         'start' => $row['session_start_time'],
-                                        'end' => $row['session_end_time']
+                                        'end' => $row['session_end_time'],
+                                        'tpg_session_id' => $row['tpg_session_id'],
+                                        'mode_of_training' => $row['mode_of_training']
                                     );
                                 }
                                 $d_cnt = 1;
@@ -730,6 +732,8 @@ if (!empty($tax_error)) {
                                     <input type = "hidden" value = "' . $r['session'] . '" name = "schlded_session_type[]" class = "schlded_session_type">                                    
                                     <input type = "hidden" value = "' . $start_time . '" name = "schlded_start_time[]" class = "schlded_start_time">
                                     <input type = "hidden" value = "' . $end_time . '" name = "schlded_end_time[]" class = "schlded_end_time">
+                                    <input type = "hidden" value = "' . $r['tpg_session_id'] . '" name = "tpg_session_id[]" class = "tpg_session_id">                                    
+                                    <input type = "hidden" value = "' . $r['mode_of_training'] . '" name = "mode_of_training[]" class = "mode_of_training">
                                     ' . $rowspan_td . '
                                     <td>' . $session_arr[$r['session']] . ' </td>
                                     <td>' . $start_time . ' </td>
@@ -798,7 +802,7 @@ if (!empty($tax_error)) {
                                         <input type="hidden" value="<?php echo implode(',', $row['trainee_id']); ?>" name="assmnt_trainee[]" class="assmnt_trainee">
                                         <input type="hidden" value="<?php echo $row['assessor_id']; ?>" name="assmnt_assessor[]" class="assmnt_assessor">
                                         <input type="hidden" value="<?php echo $row['assmnt_venue']; ?>" name="ass_venue[]" class="ass_venue">
-
+                                        <input type="hidden" value="<?php echo $row['tpg_assmnt_id']; ?>" name="tpg_assmnt_id[]" class="tpg_assmnt_id">
                                         <input type="hidden" value="<?php echo $row['assmnt_venue_oth']; ?>" name="ass_venue_oth[]" class="ass_venue_oth">                                        
                                         <td><?php echo $assess_date; ?></td>                                        
                                         <td><?php echo $row['DefAssId']; ?></td>
