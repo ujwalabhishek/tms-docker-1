@@ -487,6 +487,7 @@ class Classes extends CI_Controller {
                         $assmnt[$row->assmnt_id]['trainee_id'][] = $row->user_id;
                         $assmnt[$row->assmnt_id]['assmnt_start_time'] = $row->assmnt_start_time;
                         $assmnt[$row->assmnt_id]['assmnt_end_time'] = $row->assmnt_end_time;
+                        $assmnt[$row->assmnt_id]['tpg_assmnt_id'] = $row->tpg_assmnt_id;
                     }
                     $cdef_assmnt = $assmnt;
                 }
