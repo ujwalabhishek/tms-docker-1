@@ -779,7 +779,7 @@ if (!empty($tax_error)) {
                                     <input type="hidden" value="<?php echo $end_date; ?>" name="def_schlded_end_time" class="def_schlded_end_time">
                                     <input type="hidden" value="<?php echo $def_assessment->assessor_id; ?>" name="def_schlded_assessor" class="def_schlded_assessor">
                                     <input type="hidden" value="<?php echo $def_assessment->assmnt_venue; ?>" name="def_schlded_venue" class="def_schlded_venue">
-                                    <input type="hidden" value="<?php echo $def_assessment->assmnt_venue_oth; ?>" name="def_schlded_venue_oth" class="def_schlded_venue_oth">                                    
+                                    <input type="hidden" value="<?php echo $def_assessment->assmnt_venue_oth; ?>" name="def_schlded_venue_oth" class="def_schlded_venue_oth">                                  
                                     <td><?php echo $assess_date; ?></td>                                    
                                     <td><?php echo $DefAssId; ?></td>
                                     <td><?php echo $start_time . ' - ' . $end_date; ?></td>
