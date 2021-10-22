@@ -556,3 +556,6 @@ $config['TPG_KEY_T26'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
 
 //Key for ARIUM Tenant
 $config['TPG_KEY_T27'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
+
+//Key for MCLS Tenant
+$config['TPG_KEY_T28'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
