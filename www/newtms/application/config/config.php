@@ -548,3 +548,6 @@ $config['TPG_KEY_T24'] = "1DK5t7WvWjr4GiEBQC3KquA3dt8yHJoOEUwl9zpysNg=";
 
 //Key for FONDA GLOBAL Tenant
 $config['TPG_KEY_T25'] = "1FB65Prs/602t9KV3vFs1Ogl7DiQoY63WP/QtjbDF3I=";
+
+//Key for CHINESE EDGE Tenant
+$config['TPG_KEY_T26'] = "kY3flxGT2rcRXezm063Z1+TAmcK3O8MeU4Wh4eOCTuE=";
