@@ -551,3 +551,12 @@ $config['TPG_KEY_T25'] = "1FB65Prs/602t9KV3vFs1Ogl7DiQoY63WP/QtjbDF3I=";
 
 //Key for CHINESE EDGE Tenant
 $config['TPG_KEY_T26'] = "kY3flxGT2rcRXezm063Z1+TAmcK3O8MeU4Wh4eOCTuE=";
+
+//Key for ARIUM Tenant
+$config['TPG_KEY_T27'] = "1CjtzeTVthgyIP9grhDZzAqTHn/YIfPKA3ptvSjHOmI=";
+
+//Key for MCLS Tenant
+$config['TPG_KEY_T28'] = "bfUsPCdfv8jyKviqrTVdkhnXnzpQ+LaPlj+kE0Q9F9w=";
+
+//Key for A+B Tenant
+$config['TPG_KEY_T29'] = "kcfcYukOwsukcz2StBk8n3YV0+1ucayTSK6zNT9QbBs=";
