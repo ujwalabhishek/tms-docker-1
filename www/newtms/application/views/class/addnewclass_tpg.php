@@ -648,7 +648,7 @@ echo form_open("classes/add_new_tpg_class", $atr);
         </div>
         <div class="col-lg-6">
             <h4 class="sub_panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/schedule.png"> Assessment Schedule 
-                <span class="label label-default push_right black-btn"><a href="#ex2" rel="modal:open" id="ab_asses" class="small_text add_def_schld_form alert_message1"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Assessment Schedule</a></span>
+                <span class="label label-default push_right black-btn"><a href="#ex2" rel="modal:open" id="ab_asses" class="small_text add_def_schld_form alert_message"><span class="glyphicon glyphicon-plus glyphicon1"></span> Add Assessment Schedule</a></span>
                 &nbsp;&nbsp;</h4>
             <div class="scroll_schedule1 def_schld_div">
                 <div class="table-responsive  table-scroll-x">
