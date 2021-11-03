@@ -766,7 +766,7 @@ echo form_open("classes/add_new_tpg_class", $atr);
     <div class="button_class"><a href="#" rel="modal:close"><button class="btn btn-primary schld_save" type="button"><span class="glyphicon glyphicon-saved"></span>&nbsp;Save</button></a> &nbsp; &nbsp; <a href="#" rel="modal:close"><button class="btn btn-primary schld_cancel" type="button"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel/ Delete</button></a></div>
 </p></div>
 
-<div class="modalassessment" id="ex2" style="display:none;">
+<div class="modalassessment" id="ex2" style="display:none;height:600px;">
     <p>
     <h2 class="panel_heading_style">Assessment Schedule</h2>
     <table class="table table-striped">
@@ -847,7 +847,6 @@ echo form_open("classes/add_new_tpg_class", $atr);
                     ?>
                     <span id="ass_venue_err"></span>
                     <br/>
-
                     &nbsp; &nbsp; &nbsp; &nbsp; 
                     <span class="assven_oth_span" style="display:none;">
                         <?php
