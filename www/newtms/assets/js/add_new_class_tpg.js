@@ -211,6 +211,16 @@ $(document).ready(function () {
             $div.hide();
         }
     });
+    $('#ass_venue').change(function () {
+        $val = $(this).val();
+        $div = $('.assven_oth_span');
+        if ($val == 'OTH') {
+            $div.show();
+        } else {
+            $('#ass_venue_oth').val('');
+            $div.hide();
+        }
+    });        
     $('#class_course').change(function () {
         $lang = $('#languages');
         $salesexec = $('#control_4');
@@ -1235,14 +1245,3 @@ function assmnt_data_clear() {
     $('.assven_oth_span').hide();
     $('#ass_venue_oth').val('');
 }
-
-$('#ass_venue').change(function() {
-        $val = $(this).val();
-        $div = $('.assven_oth_span');
-        if ($val == 'OTH') {
-            $div.show();
-        } else {
-            $('#ass_venue_oth').val('');
-            $div.hide();
-        }
-    });
