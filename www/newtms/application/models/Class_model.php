@@ -2365,7 +2365,6 @@ class Class_Model extends CI_Model {
                     $assmt_start_time = $assmnt_start_time[$k] . ':00';
                     $assmt_end_time = $assmnt_end_time[$k] . ':00';
                     $assm_venue_oth = (empty($ass_venue_oth[$k])) ? NULL : $ass_venue_oth[$k];
-                    echo "qqq".print_r($assm_venue_oth, true); exit;
                     $class_assmnt_data = array(
                         'tenant_id' => $tenantId,
                         'course_id' => $class_course,
@@ -2380,6 +2379,7 @@ class Class_Model extends CI_Model {
                         'assmnt_type' => 'CUSTOM',
                         'assmnt_venue_oth' => strtoupper($assm_venue_oth)
                     );
+                    echo "qqq ".print_r($class_assmnt_data, true); exit;
                     $ct +=1;
                     $this->db->insert('class_assmnt_schld', $class_assmnt_data);
                     $assmnt_id = $this->db->insert_id();
