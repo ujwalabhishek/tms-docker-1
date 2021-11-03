@@ -1194,7 +1194,7 @@ function ass_attach() {
     $ass_venue = $('#ass_venue').val();
     $ass_venue_text = $('#ass_venue option[value="' + $ass_venue + '"]').text();
     $ass_venue_oth = $('#ass_venue_oth').val();
-    if ($ass_venue == 'OTH') {
+    if ($ass_venue_oth == 'OTH') {
         $ass_venue_text += "(" + $ass_venue_oth + ")";
     }
     $html1 = '<tr class="ass_tr' + $count + '">';
