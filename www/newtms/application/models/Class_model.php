@@ -2363,9 +2363,8 @@ class Class_Model extends CI_Model {
                 foreach ($assmnt_date as $k => $v) {
                     $assmnt_date = date('Y-m-d', strtotime($v));
                     $assmt_start_time = $assmnt_start_time[$k] . ':00';
-                    $assmt_end_time = $assmnt_end_time[$k] . ':00';
-                    echo $ass_venue_oth[$k]. ' bbb '.$ass_venue_oth[$v];
-                    $assm_venue_oth = (empty($ass_venue_oth[$k])) ? NULL : $ass_venue_oth[$k];
+                    $assmt_end_time = $assmnt_end_time[$k] . ':00';                    
+                    $assm_venue_oth = (empty($assmnt_venue_oth[$k])) ? NULL : $assmnt_venue_oth[$k];
                     $class_assmnt_data = array(
                         'tenant_id' => $tenantId,
                         'course_id' => $class_course,
@@ -2379,8 +2378,7 @@ class Class_Model extends CI_Model {
                         'assmnt_venue' => $ass_venues[$k],
                         'assmnt_type' => 'CUSTOM',
                         'assmnt_venue_oth' => strtoupper($assm_venue_oth)
-                    );
-                    echo " qqq ".print_r($class_assmnt_data, true); exit;
+                    );                    
                     $ct +=1;
                     $this->db->insert('class_assmnt_schld', $class_assmnt_data);
                     $assmnt_id = $this->db->insert_id();

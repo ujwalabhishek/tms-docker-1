@@ -1214,7 +1214,7 @@ function ass_attach() {
                 <input type="hidden" value="' + $ass_end_time + '" name="assmnt_end_time[]" class="assmnt_end_time">\
                 <input type="hidden" value="' + $assessor + '" name="assmnt_assessor[]" class="assmnt_assessor">\
                 <input type="hidden" value="' + $ass_venue + '" name="ass_venues[]" class="ass_venue">\
-                <input type="hidden" value="' + $ass_venue_oth + '" name="ass_venue_oth[]" class="ass_venue_oth">\
+                <input type="hidden" value="' + $ass_venue_oth + '" name="assmnt_venue_oth[]" class="assmnt_venue_oth">\
                  <td class="a_button">\
                     <a href="#ex9" rel="modal:open" class="small_text delete_color ass_delete">\
                         <input type="button" data-del="' + $count + '" value="Delete" style="color:#000000; text-decoration:none;" />\
