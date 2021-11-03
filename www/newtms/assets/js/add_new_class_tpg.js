@@ -1236,3 +1236,13 @@ function assmnt_data_clear() {
     $('#ass_venue_oth').val('');
 }
 
+$('#ass_venue').change(function() {
+        $val = $(this).val();
+        $div = $('.assven_oth_span');
+        if ($val == 'OTH') {
+            $div.show();
+        } else {
+            $('#ass_venue_oth').val('');
+            $div.hide();
+        }
+    });
