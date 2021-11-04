@@ -1685,6 +1685,7 @@ class Class_Trainee extends CI_Controller {
                 $new_tabledata[$k]['class_id'] = $row['class_id'];
                 $new_tabledata[$k]['user_id'] = $row['user_id'];
                 $new_tabledata[$k]['feedback_answer'] = $row['feedback_answer'];
+                $new_tabledata[$k]['tax_code'] = $row['tax_code'];
 
                 //Added by abdulla for TPG
                 $new_tabledata[$k]['tpg_crse'] = $row['tpg_crse'];
