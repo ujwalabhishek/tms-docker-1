@@ -170,7 +170,7 @@
                             ?>                                                                                                  
                             <tr>
                                 <td>
-                                    <input type="checkbox" id="chk" name="chk[]" value='<?php echo $row['tax_code']; ?>' >
+                                    <input type="checkbox" id="chk" name="chk" value='<?php echo $row['tax_code']; ?>' >
                                 </td>
                                 <td><?php echo $row['taxcode']; ?></td>
                                 <td class="name">                                    
