@@ -26,7 +26,7 @@
 </style>
 <script>
     function selects(){
-        var ele=document.getElementsByName('chk');
+        var ele=document.getElementsById('chk');
         for(var i=0; i<ele.length; i++){
             if(ele[i].type=='checkbox')
                 ele[i].checked=true;
@@ -170,7 +170,7 @@
                             ?>                                                                                                  
                             <tr>
                                 <td>
-                                    <input type="checkbox" id="chk" name="chk" value='<?php echo $row['tax_code']; ?>' >
+                                    <input type="checkbox" id="chk" name="chk[]" value='<?php echo $row['tax_code']; ?>' >
                                 </td>
                                 <td><?php echo $row['taxcode']; ?></td>
                                 <td class="name">                                    
