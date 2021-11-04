@@ -3,7 +3,24 @@
     $baseurl = '<?php echo base_url(); ?>';
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
-    var CLIENT_DATE_FORMAT = 'yy-mm-dd';</script>
+    var CLIENT_DATE_FORMAT = 'yy-mm-dd';
+    
+    function selects(){  
+                var ele=document.getElementsByName('chk');  
+                for(var i=0; i<ele.length; i++){  
+                    if(ele[i].type=='checkbox')  
+                        ele[i].checked=true;  
+                }  
+            }
+    function deSelect(){  
+        var ele=document.getElementsByName('chk');  
+        for(var i=0; i<ele.length; i++){  
+            if(ele[i].type=='checkbox')  
+                ele[i].checked=false;  
+
+        }  
+    }    
+</script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?1.007"></script>
 <style>
     table td{
@@ -111,7 +128,7 @@
                     $pageurl = 'class_trainee';
                     ?>
                     <tr>
-                        <th width="5%" class="th_header">Select Day</th>
+                        <th width="5%"><input type="button" onclick='selects()' value="Select All"/></th>
                         <th width="9%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=tu.tax_code&o=" . $ancher; ?>">NRIC/FIN No.</a></th>
                         <th width="8%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=tup.first_name&o=" . $ancher; ?>">Name</a></th>
                         <th width="15%" class="th_header"><a href="<?php echo base_url() . $pageurl . $sort_url . "&f=c.crse_name&o=" . $ancher; ?>">Course / Class Detail</a></th>
@@ -154,7 +171,7 @@
                             ?>                                                                                                  
                             <tr>
                                 <td>
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked>                                
+                                    <input type="checkbox" class="custom-control-input" id="check" name="check" checked>                                
                                 </td>
                                 <td><?php echo $row['taxcode']; ?></td>
                                 <td class="name">                                    
