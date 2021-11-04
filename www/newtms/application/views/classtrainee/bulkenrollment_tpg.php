@@ -3,23 +3,7 @@
     $baseurl = '<?php echo base_url(); ?>';
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
-    var CLIENT_DATE_FORMAT = 'yy-mm-dd';
-    
-    function selects(){  
-                var ele=document.getElementsByName('chk');  
-                for(var i=0; i<ele.length; i++){  
-                    if(ele[i].type=='checkbox')  
-                        ele[i].checked=true;  
-                }  
-            }
-    function deSelect(){  
-        var ele=document.getElementsByName('chk');  
-        for(var i=0; i<ele.length; i++){  
-            if(ele[i].type=='checkbox')  
-                ele[i].checked=false;  
-
-        }  
-    }    
+    var CLIENT_DATE_FORMAT = 'yy-mm-dd';           
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/classtraineelist.js?1.007"></script>
 <style>
@@ -40,6 +24,22 @@
         border-radius: 3px;
     }
 </style>
+<script>
+    function selects(){
+        var ele=document.getElementsByName('chk');
+        for(var i=0; i<ele.length; i++){
+            if(ele[i].type=='checkbox')
+                ele[i].checked=true;
+        }
+    }
+    function deSelect(){  
+        var ele=document.getElementsByName('chk');
+        for(var i=0; i<ele.length; i++){
+            if(ele[i].type=='checkbox')
+                ele[i].checked=false;
+        }
+    }
+</script>
 <div class="col-md-10">
     <?php
     $class_status = $this->input->get('class_status');
