@@ -2014,6 +2014,11 @@ class tp_gateway extends CI_Controller {
     }
     
     public function bulk_enrollment_tpg() {
-        
+        $chkbox = $_POST['chk'];
+        $i = 0;
+        While($i < sizeof($chkbox)) 
+            {
+                echo "CheckBox Selected Values = " . $chkbox[$i] . '</br>'; $i++;
+            }
     }
 }

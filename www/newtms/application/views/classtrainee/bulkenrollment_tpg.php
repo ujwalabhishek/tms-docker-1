@@ -100,20 +100,19 @@
         </table>
     </div><br>
     <?php echo form_close(); ?>
+    <?php
+        $atr = 'id="tpg_form" name="tpg_form" method="post"';
+        echo form_open("tp_gateway/bulk_enrollment_tpg", $atr);
+    ?>
     <div class="bs-example">
         <div class="table-responsive">            
             <?php if (count($tabledata) > 0) { ?>                    
-                <div class="add_button98 pull-right">
-                    <?php
-                    $atr = 'id="tpg_form" name="tpg_form" method="post"';
-                    echo form_open("tp_gateway/bulk_enrollment_tpg", $atr);
-                    ?>
+                <div class="add_button98 pull-right">                    
                     <button type="submit" value="Submit" class="label label-default black-btn" title="Submit" />Bulk Upload</button>
                     <input type="hidden" name="courseRunId" value="<?php echo $tpg_course_run_id; ?>" id="courseRunId">
                     <input type="hidden" name="courseReferenceNumber" value="<?php echo $reference_num; ?>" id="courseReferenceNumber">                    
                     <input type="hidden" name="courseId" value="<?php echo $course_id; ?>" id="courseId">
                     <input type="hidden" name="classId" value="<?php echo $class_id; ?>" id="classId">
-                    <?php echo form_close(); ?>
                 </div>                  
             <?php } ?>                
         </div>
@@ -171,7 +170,7 @@
                             ?>                                                                                                  
                             <tr>
                                 <td>
-                                    <input type="checkbox" id="chk" name="chk" value='<?php echo $row['taxcode']; ?>' >
+                                    <input type="checkbox" id="chk" name="chk[]" value='<?php echo $row['taxcode']; ?>' >
                                 </td>
                                 <td><?php echo $row['taxcode']; ?></td>
                                 <td class="name">                                    
@@ -237,6 +236,7 @@
             <?php echo $pagination; ?>
         </ul>
     </div>
+    <?php echo form_close(); ?>
 </div>
 <div class="modal_3" id="ex8" style="display:none;">
     <h2 class="panel_heading_style">Total Payment Received Details</h2>
