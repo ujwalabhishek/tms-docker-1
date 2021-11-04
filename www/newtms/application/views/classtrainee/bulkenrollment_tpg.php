@@ -26,8 +26,7 @@
 </style>
 <script>
     function selects(){
-        //var ele=document.getElementsByName('chk');
-        var ele=document.getElementById('chk');
+        var ele=document.getElementsByName('chk[]');
         for(var i=0; i<ele.length; i++){
             if(ele[i].type=='checkbox')
                 ele[i].checked=true;
