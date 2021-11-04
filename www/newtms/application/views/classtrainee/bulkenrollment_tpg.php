@@ -171,7 +171,7 @@
                             ?>                                                                                                  
                             <tr>
                                 <td>
-                                    <input type="checkbox" class="custom-control-input" id="check" name="check">                                
+                                    <input type="checkbox" id="chk" name="chk">
                                 </td>
                                 <td><?php echo $row['taxcode']; ?></td>
                                 <td class="name">                                    
