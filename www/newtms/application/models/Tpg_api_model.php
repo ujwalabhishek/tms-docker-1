@@ -709,7 +709,7 @@ class Tpg_api_Model extends CI_Model {
     ///added by shubhranshu to fetch the latest ssg sessions
     public function fetch_ssg_session($tenant_id, $CourseRunId, $classId, $tp_uen, $crse_ref_no) {
         
-        echo $CourseRunId.' '.$tp_uen;
+        echo $CourseRunId.' '.$tp_uen.' '.$crse_ref_no;
         $retun = $this->correct_live_dev_api_data($crse_ref_no, $tp_uen);
         $api_version = 'v1.3';
         $url = "https://" . $retun[domain] . "/courses/runs/" . $CourseRunId . '/sessions?uen=' . $retun[tp_uen] . '&courseReferenceNumber=' . $retun[ref_no];
