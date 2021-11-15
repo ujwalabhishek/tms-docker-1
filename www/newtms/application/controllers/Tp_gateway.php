@@ -2014,11 +2014,155 @@ class tp_gateway extends CI_Controller {
     }
     
     public function bulk_enrollment_tpg() {
+        
+        //Course and class details
+        $courseRunId = $this->input->post('courseRunId');
+        $courseReferenceNumber = $this->input->post('courseReferenceNumber');
+        $courseId = $this->input->post('courseId');
+        $classId = $this->input->post('classId');
+        $tenant_id = $this->tenant_id;
+        
+        
         $chkbox = $_POST['chk'];
         $i = 0;
         While($i < sizeof($chkbox)) 
             {
                 echo "CheckBox Selected Values = " . $chkbox[$i] . '</br>'; $i++;
             }
+            
+        
+        
+        
+        
+        
+        
+        //Trainee
+        $userId = $this->input->post('userId');
+        $traineeDetails = $this->classTraineeModel->get_full_trainee_details($userId);
+
+        $traineeId = $traineeDetails['tax_code'];
+
+        if ($traineeDetails['tax_code_type'] == 'SNG_1') {
+            $traineeIdType = "NRIC";
+        } else if ($traineeDetails['tax_code_type'] == 'SNG_2') {
+            $traineeIdType = "FIN";
+        } else if ($traineeDetails['tax_code_type'] == 'SNG_3') {
+            $traineeIdType = "Others";
+        } else if ($traineeDetails['tax_code_type'] == 'SNG_4') {
+            $traineeIdType = "Others";
+        }
+
+        $traineeFullName = htmlentities($traineeDetails['first_name'], ENT_QUOTES);
+        $traineeDateOfBirth = $traineeDetails['dob'];
+        $traineeEmailAddress = $traineeDetails['registered_email_id'];
+        $traineeContactNumber = $traineeDetails['contact_number'];
+        $traineeEnrolmentDate = date("Y-m-d");
+
+        $enrolmentMode = $this->input->post('enrolmentMode');
+        
+        $companyId = $this->input->post('companyId');
+        if ($enrolmentMode == 'COMPSPON') {
+            $traineeSponsorshipType = "EMPLOYER";
+
+            $company = $this->companyModel->get_company_details($tenant_id, $companyId);
+
+            //Employer
+            $employerUEN = $company[0]->comp_regist_num;
+            $emploerFullName = $company[0]->comp_attn;
+            $employerEmailAddress = $company[0]->comp_email;
+            $employerContactNumber = $company[0]->comp_phone;
+        } else {
+            $traineeSponsorshipType = "INDIVIDUAL";
+
+            //Individual
+            $employerUEN = "";
+            $emploerFullName = "";
+            $employerEmailAddress = "";
+            $employerContactNumber = "";
+        }
+
+        $feeDiscountAmount = $this->input->post('feeDiscountAmount');
+        $paymentStatus = $this->input->post('paymentStatus');
+        if ($paymentStatus == 'PAID') {
+            $feeCollectionStatus = "Full Payment";
+        } else if ($paymentStatus == 'NOTPAID') {
+            $feeCollectionStatus = "Pending Payment";
+        } else if ($paymentStatus == 'PARTPAID') {
+            $feeCollectionStatus = "Partial Payment";
+        } else if ($paymentStatus == 'PYNOTREQD') {
+            $feeCollectionStatus = "Pending Payment";
+        }
+
+        //Training Partner
+        $tenant_details = fetch_tenant_details($tenant_id);
+        $trainingPartnerUEN = $tenant_details->comp_reg_no;
+        $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        $tpg_enrolment_json = array(
+            "enrolment" => array(
+                "trainingPartner" => array(
+                    "code" => $trainingPartnerCode,
+                    "uen" => $trainingPartnerUEN
+                ),
+                "course" => array(
+                    "referenceNumber" => $courseReferenceNumber,
+                    "run" => array(
+                        "id" => $courseRunId
+                    )
+                ),
+                "trainee" => array(
+                    "idType" => array(
+                        "type" => $traineeIdType
+                    ),
+                    "id" => $traineeId,
+                    "dateOfBirth" => $traineeDateOfBirth,
+                    "fullName" => $traineeFullName,
+                    "contactNumber" => array(
+                        "countryCode" => "+65",
+                        "areaCode" => "",
+                        "phoneNumber" => $traineeContactNumber
+                    ),
+                    "emailAddress" => $traineeEmailAddress,
+                    "sponsorshipType" => $traineeSponsorshipType,
+                    "employer" => array(
+                        "uen" => $employerUEN,
+                        "contact" => array(
+                            "fullName" => $emploerFullName,
+                            "contactNumber" => array(
+                                "countryCode" => "+65",
+                                "areaCode" => "",
+                                "phoneNumber" => $employerContactNumber
+                            ),
+                            "emailAddress" => $employerEmailAddress
+                        )
+                    ),
+                    "fees" => array(
+                        "discountAmount" => $feeDiscountAmount,
+                        "collectionStatus" => $feeCollectionStatus
+                    ),
+                    "enrolmentDate" => $traineeEnrolmentDate
+                )
+            )
+        );
+
+        $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
+        
+        
+        
+        
+        
+        
+        
+            
+            
+            
     }
 }

@@ -7512,6 +7512,49 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
     /* END */
 
+    //Get enrolment mode and company ID of class trainee
+    
+    public function get_class_trainee_dat() {
+        
+        $this->db->select('c.course_id , c.crse_name, c.tpg_crse,
+ cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
+ ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode,ce.referral_details,ce.eid_number, ce.company_id, ce.certificate_coll_on, ce.payment_status,  
+ tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
+tu . user_id ,tu.tenant_id, tu. account_type, tu.tax_code, tu.account_status,
+tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number, ce.sales_executive_id, c.reference_num, c.external_reference_number, cc.tpg_course_run_id, due.class_fees, due.discount_rate, ce.tpg_enrolment_status');
+
+        $this->db->from('course_class cc');
+
+        $this->db->join('course c', 'c.course_id=cc.course_id');
+
+        $this->db->join('class_enrol ce', 'ce.class_id=cc.class_id');
+
+        $this->db->join('enrol_pymnt_due due', 'ce.pymnt_due_id=due.pymnt_due_id and ce.user_id = due.user_id');
+
+        $this->db->join('tms_users tu', 'tu.user_id=ce.user_id');
+
+        $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
+
+        $this->db->where('cc.tenant_id', $tenant_id);
+
+        $this->db->join('trainer_feedback tf', 'tf.tenant_id=ce.tenant_id and tf.course_id=ce.course_id and tf.class_id=ce.class_id and tf.user_id=ce.user_id and tf.feedback_question_id="COMYTCOM"', 'LEFT');
+
+        $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
+        
+        
+
+            $this->db->where('cc.course_id', $course_id);
+    
+
+        
+
+            $this->db->where('cc.class_id', $class_id);
+       
+        
+        
+    }
+    
+    
     /* This method gets the friend details skm start */
 
     public function get_friend_details($tenant_id, $course_id, $class_id, $user_id, $friend_id) {
