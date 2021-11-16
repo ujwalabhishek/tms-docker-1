@@ -2145,7 +2145,7 @@ class tp_gateway extends CI_Controller {
         
         $i++;
     }
-     echo $temp_array; exit;
+    // echo $temp_array; exit;
         
     
     
@@ -2153,7 +2153,7 @@ class tp_gateway extends CI_Controller {
     $data['courseId'] = $courseId;
     $data['classId'] = $classId;    
 
-    $data['tpg_json_data'] = $tpg_enrolment_json_data;
+    $data['tpg_json_data'] = $temp_array;
     $data['sideMenuData'] = fetch_non_main_page_content();
     $data['page_title'] = 'TPG New Trainee Enrolment';
     $data['main_content'] = 'classtrainee/enrol_bulk_trainee_tpg';
