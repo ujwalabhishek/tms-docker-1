@@ -2091,7 +2091,7 @@ class tp_gateway extends CI_Controller {
             $feeCollectionStatus = "Pending Payment";
         }                                                                                      
         
-        $tpg_trainees = array(
+        $tpg_trainees[] = array(
             "trainee" => array(
                     "idType" => array(
                         "type" => $traineeIdType
@@ -2126,8 +2126,8 @@ class tp_gateway extends CI_Controller {
                 )
         );
         
-        $tpg_trainees_json_data = json_encode($tpg_trainees);
-        $temp_trainees_array .= $tpg_trainees_json_data;
+        //$tpg_trainees_json_data = json_encode($tpg_trainees);
+        //$temp_trainees_array .= $tpg_trainees_json_data;
         
         //array_push($temp_array, $tpg_enrolment_json);
         
@@ -2149,7 +2149,7 @@ class tp_gateway extends CI_Controller {
                     "referenceNumber" => $courseReferenceNumber,
                     "run" => array(
                         "id" => $courseRunId
-                    ).' '.$temp_trainees_array
+                    ).' '.$tpg_trainees
                 )
             )
         );
