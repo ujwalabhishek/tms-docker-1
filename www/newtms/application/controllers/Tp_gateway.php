@@ -2038,7 +2038,7 @@ class tp_gateway extends CI_Controller {
         
         
         //Trainee
-        $userId = $this->input->post($chkbox[$i]);
+        $userId = $chkbox[$i];
         $traineeDetails = $this->classTraineeModel->get_full_trainee_details($userId);
         
         echo print_r($traineeDetails, true); exit;
