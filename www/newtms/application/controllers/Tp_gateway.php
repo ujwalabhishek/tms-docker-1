@@ -2021,7 +2021,7 @@ class tp_gateway extends CI_Controller {
         $courseId = $this->input->post('courseId');
         $classId = $this->input->post('classId');
         $tenant_id = $this->tenant_id;
-        $temp_array = array();
+        $tpg_enrolment_json = array();
         
         
         $chkbox = $_POST['chk'];
@@ -2094,7 +2094,7 @@ class tp_gateway extends CI_Controller {
         $trainingPartnerUEN = $tenant_details->comp_reg_no;
         $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';                                                                
         
-        $tpg_enrolment_json = array(
+        $tpg_enrolment_json .= array(
             "enrolment" => array(
                 "trainingPartner" => array(
                     "code" => $trainingPartnerCode,
