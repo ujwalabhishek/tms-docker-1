@@ -2167,6 +2167,7 @@ class tp_gateway extends CI_Controller {
                     "code": "' . $trainingPartnerCode . '"
                   },' . json_encode($tpg_trainees) . '
                 }
+              }
               }';
     
     
