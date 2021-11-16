@@ -2126,9 +2126,7 @@ class tp_gateway extends CI_Controller {
        
         
         //$tpg_trainees_json_data = json_encode($tpg_trainees);
-        //$temp_trainees_array .= $tpg_trainees_json_data;
-        
-        //array_push($temp_array, $tpg_enrolment_json);
+        //$temp_trainees_array .= $tpg_trainees_json_data;                
         
         $i++;
     }
@@ -2150,13 +2148,10 @@ class tp_gateway extends CI_Controller {
                         "id" => $courseRunId
                     )
                 ),
-                "trainee" => array(' .$tpg_trainees. ')
+                "trainee" => array(''.$tpg_trainees.'')
             )
         );
-    
-    
-    
-    
+                
     
     $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);    
                                 
