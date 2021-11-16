@@ -2142,18 +2142,17 @@ class tp_gateway extends CI_Controller {
                 )
             )
         );
-        //$tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-        $temp_array .= $tpg_enrolment_json;
+        $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
+        $temp_array .= $tpg_enrolment_json_data;
         //array_push($temp_array, $tpg_enrolment_json);
         
         $i++;
     }
-    $tpg_enrolment_json_data = json_encode($temp_array);
-    //echo $tpg_enrolment_json_data; exit;
+    //echo $temp_array; exit;
     $data['courseId'] = $courseId;
     $data['classId'] = $classId;
 
-    $data['tpg_json_data'] = $tpg_enrolment_json_data;
+    $data['tpg_json_data'] = $temp_array;
     $data['sideMenuData'] = fetch_non_main_page_content();
     $data['page_title'] = 'TPG Bulk Trainee Enrolment';
     $data['main_content'] = 'classtrainee/enrol_bulk_trainee_tpg';
