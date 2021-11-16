@@ -2091,38 +2091,40 @@ class tp_gateway extends CI_Controller {
             $feeCollectionStatus = "Pending Payment";
         }                                                                                      
         
-        $tpg_trainees[] = array(
-                    "idType" => array(
-                        "type" => $traineeIdType
-                    ),
-                    "id" => $traineeId,
-                    "dateOfBirth" => $traineeDateOfBirth,
-                    "fullName" => $traineeFullName,
-                    "contactNumber" => array(
-                        "countryCode" => "+65",
-                        "areaCode" => "",
-                        "phoneNumber" => $traineeContactNumber
-                    ),
-                    "emailAddress" => $traineeEmailAddress,
-                    "sponsorshipType" => $traineeSponsorshipType,
-                    "employer" => array(
-                        "uen" => $employerUEN,
-                        "contact" => array(
-                            "fullName" => $emploerFullName,
-                            "contactNumber" => array(
-                                "countryCode" => "+65",
-                                "areaCode" => "",
-                                "phoneNumber" => $employerContactNumber
-                            ),
-                            "emailAddress" => $employerEmailAddress
-                        )
-                    ),
-                    "fees" => array(
-                        "discountAmount" => $feeDiscountAmount,
-                        "collectionStatus" => $feeCollectionStatus
-                    ),
-                    "enrolmentDate" => $traineeEnrolmentDate
-                );
+        $tpg_trainees[] = array( 
+                        "trainee" => array(
+                                "idType" => array(
+                                    "type" => $traineeIdType
+                                ),
+                                "id" => $traineeId,
+                                "dateOfBirth" => $traineeDateOfBirth,
+                                "fullName" => $traineeFullName,
+                                "contactNumber" => array(
+                                    "countryCode" => "+65",
+                                    "areaCode" => "",
+                                    "phoneNumber" => $traineeContactNumber
+                                ),
+                                "emailAddress" => $traineeEmailAddress,
+                                "sponsorshipType" => $traineeSponsorshipType,
+                                "employer" => array(
+                                    "uen" => $employerUEN,
+                                    "contact" => array(
+                                        "fullName" => $emploerFullName,
+                                        "contactNumber" => array(
+                                            "countryCode" => "+65",
+                                            "areaCode" => "",
+                                            "phoneNumber" => $employerContactNumber
+                                        ),
+                                        "emailAddress" => $employerEmailAddress
+                                    )
+                                ),
+                                "fees" => array(
+                                    "discountAmount" => $feeDiscountAmount,
+                                    "collectionStatus" => $feeCollectionStatus
+                                ),
+                                "enrolmentDate" => $traineeEnrolmentDate
+                            )
+                        );
        
         
 //        $tpg_trainees_json_data = ($tpg_trainees);
@@ -2163,8 +2165,7 @@ class tp_gateway extends CI_Controller {
                   "trainingPartner": {
                     "uen": "' . $trainingPartnerUEN . '",
                     "code": "' . $trainingPartnerCode . '"
-                  },
-                  "trainee": ' . json_encode($tpg_trainees) . '
+                  },' . json_encode($tpg_trainees) . '
                 }
               }';
     
