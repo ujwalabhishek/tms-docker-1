@@ -2138,7 +2138,7 @@ class tp_gateway extends CI_Controller {
                 )
             )
         );
-        echo print_r($tpg_enrolment_json);
+        echo print_r($tpg_enrolment_json, true);
         $i++;
     }
      exit;
