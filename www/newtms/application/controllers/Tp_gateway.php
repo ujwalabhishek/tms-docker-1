@@ -2159,7 +2159,7 @@ class tp_gateway extends CI_Controller {
     
     public function bulk_trainee_enrolment_data_tpg() {
         $encrypted_data = $this->input->post('tpg_data');
-        echo "Encrypted data".print_r($encrypted_data, true); exit;
+        //echo "Encrypted data".print_r($encrypted_data, true); exit;
         $course_id = $this->input->post('courseId');
         $class_id = $this->input->post('classId');
         //$user_id = $this->input->post('userId');
