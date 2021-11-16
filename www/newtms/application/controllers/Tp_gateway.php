@@ -2091,8 +2091,7 @@ class tp_gateway extends CI_Controller {
             $feeCollectionStatus = "Pending Payment";
         }                                                                                      
         
-        $tpg_trainees = array( 
-                        "trainee" => array(
+        $tpg_trainees = array(                        
                                 "idType" => array(
                                     "type" => $traineeIdType
                                 ),
@@ -2123,7 +2122,7 @@ class tp_gateway extends CI_Controller {
                                     "collectionStatus" => $feeCollectionStatus
                                 ),
                                 "enrolmentDate" => $traineeEnrolmentDate
-                            )
+                           
                         );
        
         
@@ -2155,8 +2154,8 @@ class tp_gateway extends CI_Controller {
 //        );
     
     $tpg_enrolment_json = '{
-        "enrolment": {
-                  "course": {
+        "enrolment":{
+            "course":{
                     "run": {
                       "id": "' . $courseRunId . '"
                     },
@@ -2165,7 +2164,8 @@ class tp_gateway extends CI_Controller {
                   "trainingPartner": {
                     "uen": "' . $trainingPartnerUEN . '",
                     "code": "' . $trainingPartnerCode . '"
-                  },' . json_encode($tpg_trainees) . '
+                  },
+                  "trainee": ' . json_encode($tpg_trainees) . '
                 }
               }';
     
