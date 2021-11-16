@@ -2148,7 +2148,7 @@ class tp_gateway extends CI_Controller {
         
         $i++;
     }
-    
+    echo $temp_array; exit;
     $data['courseId'] = $courseId;
     $data['classId'] = $classId;
 
