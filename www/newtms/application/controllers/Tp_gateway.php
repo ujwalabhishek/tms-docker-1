@@ -2136,24 +2136,43 @@ class tp_gateway extends CI_Controller {
     $trainingPartnerUEN = $tenant_details->comp_reg_no;
     $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';
     //echo print_r($tpg_trainees, true); exit;
-    $tpg_enrolment_json = array(
-            "enrolment" => array(
-                "trainingPartner" => array(
-                    "code" => $trainingPartnerCode,
-                    "uen" => $trainingPartnerUEN
-                ),
-                "course" => array(
-                    "referenceNumber" => $courseReferenceNumber,
-                    "run" => array(
-                        "id" => $courseRunId
-                    )
-                ),
-                "trainee" => json_encode($tpg_trainees)
-            )
-        );
+//    $tpg_enrolment_json = array(
+//            "enrolment" => array(
+//                "trainingPartner" => array(
+//                    "code" => $trainingPartnerCode,
+//                    "uen" => $trainingPartnerUEN
+//                ),
+//                "course" => array(
+//                    "referenceNumber" => $courseReferenceNumber,
+//                    "run" => array(
+//                        "id" => $courseRunId
+//                    )
+//                ),
+//                "trainee" => json_encode($tpg_trainees)
+//            )
+//        );
+    
+    $tpg_enrolment_json = '{
+                "enrolment": {
+                  "course": {
+                    "run": {
+                      "id": "' . $courseRunId . '"
+                    },
+                    "referenceNumber": "' . $courseReferenceNumber . '"
+                  },                 
+                  "trainingPartner": {
+                    "uen": "' . $trainingPartnerUEN . '",
+                    "code": "' . $trainingPartnerCode . '"
+                  }
+                  "trainee": ' . json_encode($tpg_trainees) . '
+                }
+              }';
+    
+    
+    
                 
     
-    $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);    
+    $tpg_enrolment_json_data = ($tpg_enrolment_json);    
                                 
     //echo $tpg_enrolment_json_data; exit;
     $data['courseId'] = $courseId;
