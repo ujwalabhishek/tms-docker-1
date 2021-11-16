@@ -2155,7 +2155,7 @@ class tp_gateway extends CI_Controller {
 //        );
     
     $tpg_enrolment_json = '{
-                "enrolment": {
+        "enrolment": {
                   "course": {
                     "run": {
                       "id": "' . $courseRunId . '"
@@ -2167,7 +2167,6 @@ class tp_gateway extends CI_Controller {
                     "code": "' . $trainingPartnerCode . '"
                   },' . json_encode($tpg_trainees) . '
                 }
-              }
               }';
     
     
