@@ -2135,7 +2135,7 @@ class tp_gateway extends CI_Controller {
     $tenant_details = fetch_tenant_details($tenant_id);
     $trainingPartnerUEN = $tenant_details->comp_reg_no;
     $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';
-    
+    echo print_r($tpg_trainees, true); exit;
     $tpg_enrolment_json = array(
             "enrolment" => array(
                 "trainingPartner" => array(
