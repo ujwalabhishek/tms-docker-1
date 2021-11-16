@@ -2089,26 +2089,10 @@ class tp_gateway extends CI_Controller {
             $feeCollectionStatus = "Partial Payment";
         } else if ($paymentStatus == 'PYNOTREQD') {
             $feeCollectionStatus = "Pending Payment";
-        }
-
-        //Training Partner
-        $tenant_details = fetch_tenant_details($tenant_id);
-        $trainingPartnerUEN = $tenant_details->comp_reg_no;
-        $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';                                                                
+        }                                                                                      
         
-        $tpg_enrolment_json = array(
-            "enrolment" => array(
-                "trainingPartner" => array(
-                    "code" => $trainingPartnerCode,
-                    "uen" => $trainingPartnerUEN
-                ),
-                "course" => array(
-                    "referenceNumber" => $courseReferenceNumber,
-                    "run" => array(
-                        "id" => $courseRunId
-                    )
-                ),
-                "trainee" => array(
+        $tpg_trainees = array(
+            "trainee" => array(
                     "idType" => array(
                         "type" => $traineeIdType
                     ),
@@ -2140,19 +2124,47 @@ class tp_gateway extends CI_Controller {
                     ),
                     "enrolmentDate" => $traineeEnrolmentDate
                 )
-            )
         );
-        $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-        $temp_array .= $tpg_enrolment_json_data;
+        
+        $tpg_trainees_json_data = json_encode($tpg_trainees);
+        $temp_trainees_array .= $tpg_trainees_json_data;
+        
         //array_push($temp_array, $tpg_enrolment_json);
         
         $i++;
     }
-    //echo $temp_array; exit;
+    
+    //Training Partner
+    $tenant_details = fetch_tenant_details($tenant_id);
+    $trainingPartnerUEN = $tenant_details->comp_reg_no;
+    $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';
+    
+    $tpg_enrolment_json = array(
+            "enrolment" => array(
+                "trainingPartner" => array(
+                    "code" => $trainingPartnerCode,
+                    "uen" => $trainingPartnerUEN
+                ),
+                "course" => array(
+                    "referenceNumber" => $courseReferenceNumber,
+                    "run" => array(
+                        "id" => $courseRunId
+                    ).' '.$temp_trainees_array
+                )
+            )
+        );
+    
+    
+    
+    
+    
+    $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);    
+                                
+    echo $tpg_enrolment_json_data; exit;
     $data['courseId'] = $courseId;
     $data['classId'] = $classId;
 
-    $data['tpg_json_data'] = $temp_array;
+    $data['tpg_json_data'] = $tpg_enrolment_json_data;
     $data['sideMenuData'] = fetch_non_main_page_content();
     $data['page_title'] = 'TPG Bulk Trainee Enrolment';
     $data['main_content'] = 'classtrainee/enrol_bulk_trainee_tpg';
