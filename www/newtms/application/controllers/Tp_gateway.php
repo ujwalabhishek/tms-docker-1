@@ -2149,7 +2149,7 @@ class tp_gateway extends CI_Controller {
         $i++;
     }
     $tpg_enrolment_json_data = json_encode($temp_array);
-    //echo $temp_array; exit;
+    echo $tpg_enrolment_json_data; exit;
     $data['courseId'] = $courseId;
     $data['classId'] = $classId;
 
