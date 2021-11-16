@@ -2091,7 +2091,7 @@ class tp_gateway extends CI_Controller {
             $feeCollectionStatus = "Pending Payment";
         }                                                                                      
         
-        $tpg_trainees = array(
+        $tpg_trainees[] = array(
                     "idType" => array(
                         "type" => $traineeIdType
                     ),
