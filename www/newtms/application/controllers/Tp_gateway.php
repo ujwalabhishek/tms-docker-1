@@ -2034,7 +2034,7 @@ class tp_gateway extends CI_Controller {
         $traineeDetails = $this->classTraineeModel->get_full_trainee_details($userId);
         $traineeDat = $this->classTraineeModel->get_class_trainee_dat($tenant_id, $courseId, $classId, $userId);
         
-        echo print_r($traineeDat, true); exit;
+        //echo print_r($traineeDat, true); exit;
 
         $traineeId = $traineeDetails['tax_code'];
 
@@ -2054,9 +2054,9 @@ class tp_gateway extends CI_Controller {
         $traineeContactNumber = $traineeDetails['contact_number'];
         $traineeEnrolmentDate = date("Y-m-d");
 
-        $enrolmentMode = $this->input->post('enrolmentMode');
+        $enrolmentMode = $traineeDat['enrolment_mode'];
         
-        $companyId = $this->input->post('companyId');
+        $companyId = $traineeDat['company_id'];
         
         if ($enrolmentMode == 'COMPSPON') {
             $traineeSponsorshipType = "EMPLOYER";
@@ -2078,8 +2078,8 @@ class tp_gateway extends CI_Controller {
             $employerContactNumber = "";
         }
 
-        $feeDiscountAmount = $this->input->post('feeDiscountAmount');
-        $paymentStatus = $this->input->post('paymentStatus');
+        $feeDiscountAmount = round((($traineeDat['discount_rate'] / 100) * $traineeDat['class_fees']), 2);
+        $paymentStatus = $traineeDat['payment_status'];
         
         if ($paymentStatus == 'PAID') {
             $feeCollectionStatus = "Full Payment";
