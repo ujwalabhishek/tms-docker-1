@@ -2150,7 +2150,7 @@ class tp_gateway extends CI_Controller {
                         "id" => $courseRunId
                     )
                 ),
-                "trainee" => array(''.$tpg_trainees.'')
+                "trainee" => array(' .$tpg_trainees. ')
             )
         );
     
