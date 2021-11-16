@@ -2028,20 +2028,11 @@ class tp_gateway extends CI_Controller {
         $i = 0;
         While($i < sizeof($chkbox)) 
             {
-                echo "CheckBox Selected Values = " . $chkbox[$i] . '</br>';
-            
-            
-        
-        
-        
-        
-        
+                echo "CheckBox Selected Values = " . $chkbox[$i] . '</br>';                                                                
         
         //Trainee
         $userId = $chkbox[$i];
-        $traineeDetails = $this->classTraineeModel->get_full_trainee_details($userId);
-        
-        echo print_r($traineeDetails, true); exit;
+        $traineeDetails = $this->classTraineeModel->get_full_trainee_details($userId);        
 
         $traineeId = $traineeDetails['tax_code'];
 
