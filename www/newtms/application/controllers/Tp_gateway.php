@@ -2040,6 +2040,8 @@ class tp_gateway extends CI_Controller {
         //Trainee
         $userId = $this->input->post($chkbox[$i]);
         $traineeDetails = $this->classTraineeModel->get_full_trainee_details($userId);
+        
+        echo print_r($traineeDetails, true); exit;
 
         $traineeId = $traineeDetails['tax_code'];
 
@@ -2099,7 +2101,7 @@ class tp_gateway extends CI_Controller {
         $trainingPartnerUEN = $tenant_details->comp_reg_no;
         $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';                                                                
         
-        $tpg_enrolment_json = array(
+        $tpg_enrolment_json .= array(
             "enrolment" => array(
                 "trainingPartner" => array(
                     "code" => $trainingPartnerCode,
