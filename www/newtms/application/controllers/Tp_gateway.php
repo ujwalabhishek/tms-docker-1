@@ -2027,11 +2027,14 @@ class tp_gateway extends CI_Controller {
         $i = 0;
         While($i < sizeof($chkbox)) 
             {
-                echo "CheckBox Selected Values = " . $chkbox[$i] . '</br>';                                                                
+                //echo "CheckBox Selected Values = " . $chkbox[$i] . '</br>';                                                                
         
         //Trainee
         $userId = $chkbox[$i];
-        $traineeDetails = $this->classTraineeModel->get_full_trainee_details($userId);        
+        $traineeDetails = $this->classTraineeModel->get_full_trainee_details($userId);
+        $traineeDat = $this->classTraineeModel->get_class_trainee_dat($tenant_id, $courseId, $classId, $userId);
+        
+        echo print_r($traineeDat, true); exit;
 
         $traineeId = $traineeDetails['tax_code'];
 
@@ -2145,19 +2148,15 @@ class tp_gateway extends CI_Controller {
         
         $i++;
     }
-    // echo $temp_array; exit;
-        
-    
-    
     
     $data['courseId'] = $courseId;
-    $data['classId'] = $classId;    
+    $data['classId'] = $classId;
 
     $data['tpg_json_data'] = $temp_array;
     $data['sideMenuData'] = fetch_non_main_page_content();
-    $data['page_title'] = 'TPG New Trainee Enrolment';
+    $data['page_title'] = 'TPG Bulk Trainee Enrolment';
     $data['main_content'] = 'classtrainee/enrol_bulk_trainee_tpg';
-    $this->load->view('layout', $data);                                                                    
+    $this->load->view('layout', $data);
     }
     
     public function bulk_trainee_enrolment_data_tpg() {

@@ -7514,7 +7514,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
     //Get enrolment mode and company ID of class trainee
     
-    public function get_class_trainee_dat() {
+    public function get_class_trainee_dat($tenant_id, $course_id, $class_id, $user_id) {
         
         $this->db->select('c.course_id , c.crse_name, c.tpg_crse,
  cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
@@ -7540,18 +7540,14 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->join('trainer_feedback tf', 'tf.tenant_id=ce.tenant_id and tf.course_id=ce.course_id and tf.class_id=ce.class_id and tf.user_id=ce.user_id and tf.feedback_question_id="COMYTCOM"', 'LEFT');
 
         $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
+                
+        $this->db->where('cc.course_id', $course_id);           
+        $this->db->where('cc.class_id', $class_id);
+        $this->db->where('ce.user_id', $user_id);
         
-        
+        $results = $this->db->get()->result_array();
 
-            $this->db->where('cc.course_id', $course_id);
-    
-
-        
-
-            $this->db->where('cc.class_id', $class_id);
-       
-        
-        
+        return $results[0];
     }
     
     
