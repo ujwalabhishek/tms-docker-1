@@ -2055,6 +2055,7 @@ class tp_gateway extends CI_Controller {
         $enrolmentMode = $this->input->post('enrolmentMode');
         
         $companyId = $this->input->post('companyId');
+        
         if ($enrolmentMode == 'COMPSPON') {
             $traineeSponsorshipType = "EMPLOYER";
 
@@ -2077,6 +2078,7 @@ class tp_gateway extends CI_Controller {
 
         $feeDiscountAmount = $this->input->post('feeDiscountAmount');
         $paymentStatus = $this->input->post('paymentStatus');
+        
         if ($paymentStatus == 'PAID') {
             $feeCollectionStatus = "Full Payment";
         } else if ($paymentStatus == 'NOTPAID') {
@@ -2138,13 +2140,13 @@ class tp_gateway extends CI_Controller {
                 )
             )
         );
-        array_push($temp_array, $tpg_enrolment_json);
+        //array_push($temp_array, $tpg_enrolment_json);
         
         $i++;
     }
      //echo print_r($temp_array, true); exit;
         
-    $tpg_enrolment_json_data = json_encode($temp_array);                   
+    $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
     
     
     $data['courseId'] = $courseId;
