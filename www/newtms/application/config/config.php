@@ -562,3 +562,9 @@ $config['TPG_KEY_T28'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
 
 //Key for A+B Tenant
 $config['TPG_KEY_T29'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
+
+//Key for Wine Resources Tenant
+$config['TPG_KEY_T30'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";
+
+//Key for Linda Mandarin Tenant
+$config['TPG_KEY_T31'] = "DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=";

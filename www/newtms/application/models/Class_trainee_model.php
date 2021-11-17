@@ -12923,9 +12923,9 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
 
         //$date_array = explode("-",$class_start_date);
 
-        $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.", "T16" => "XPR.B.", "T17" => "EVI", "T20" => "WABLAB", "T23" => "DEMO", "T24" => "RLIS" , "T18" => "SSI", "T25" => "FGE", "T26" => "CHIE", "T27" => "ASAS", "T28" => "MCLS", "T29" => "ABTTH");
+        $pre_fix_array = array("T01" => "T01", "T02" => "XPR", "T03" => "CAI", "T04" => "FL", "T12" => "XPR.A.", "T16" => "XPR.B.", "T17" => "EVI", "T20" => "WABLAB", "T23" => "DEMO", "T24" => "RLIS" , "T18" => "SSI", "T25" => "FGE", "T26" => "CHIE", "T27" => "ASAS", "T28" => "MCLS", "T29" => "ABTTH", "T30" => "WRS", "T31" => "LMN");
 
-        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id", "T16" => "xprienz3_invoice_id", "T17" => "ei_new_invoice_id", "T20" => "wablab_invoice_id", "T23" => "demo_invoice_id", "T24" => "rlis_invoice_id", "T18" => "ssi_invoice_id", "T25" => "fge_invoice_id", "T26" => "chie_invoice_id", "T27" => "arium_invoice_id", "T28" => "mcls_invoice_id", "T29" => "ab_invoice_id");
+        $lookup_table = array("T01" => "test_invoice_id", "T02" => "xprienz_invoice_id", "T03" => "carrie_invoice_id", "T04" => "focus_invoice_id", "T12" => "xprienz2_invoice_id", "T16" => "xprienz3_invoice_id", "T17" => "ei_new_invoice_id", "T20" => "wablab_invoice_id", "T23" => "demo_invoice_id", "T24" => "rlis_invoice_id", "T18" => "ssi_invoice_id", "T25" => "fge_invoice_id", "T26" => "chie_invoice_id", "T27" => "arium_invoice_id", "T28" => "mcls_invoice_id", "T29" => "ab_invoice_id", "T30" => "wrs_invoice_id", "T31" => "lmn_invoice_id");
 
         $tenant_id = $this->tenant_id;
 
