@@ -2166,11 +2166,11 @@ class tp_gateway extends CI_Controller {
                     var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);                    
                     return encrypted;
               }
-              document.cookie='profile_viewer_uid=vall_a';
+              sessionStorage.setItem('encrypted', vall_a);
               
               </script>";
         
-        $encrypted_data = $_COOKIE['profile_viewer_uid'];;
+        $encrypted_data = $_SESSION['encrypted'];
         echo "aa ".$encrypted_data; exit;
         
         $api_version = 'v1';
