@@ -2164,11 +2164,12 @@ class tp_gateway extends CI_Controller {
                         padding: CryptoJS.pad.Pkcs7
                     });
                     var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
-                    alert(encrypted);
+                    ". $aaa ." = encrypted; ". '' ."
+                    
               }
               </script>";
         
-        $encrypted_data = $_SESSION["encrypted_data"];
+        $encrypted_data = $aaa;
         echo "aa ".$encrypted_data; exit;
         
         $api_version = 'v1';
