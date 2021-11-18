@@ -2091,7 +2091,7 @@ class tp_gateway extends CI_Controller {
             $feeCollectionStatus = "Pending Payment";
         }                                                                                      
         
-        $tpg_trainees = array(                        
+        $tpg_trainees[] = array(                        
                                 "idType" => array(
                                     "type" => $traineeIdType
                                 ),
@@ -2126,12 +2126,12 @@ class tp_gateway extends CI_Controller {
                         );
        
         
-        $tpg_trainees_json_data = ($tpg_trainees);
-        $temp_trainees_array += $tpg_trainees_json_data;                
+//        $tpg_trainees_json_data = ($tpg_trainees);
+//        $temp_trainees_array .= $tpg_trainees_json_data;                
         
         $i++;
     }
-    echo print_r($temp_trainees_array); exit;
+    echo print_r($tpg_trainees); exit;
     //Training Partner
     $tenant_details = fetch_tenant_details($tenant_id);
     $trainingPartnerUEN = $tenant_details->comp_reg_no;
