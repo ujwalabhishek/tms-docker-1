@@ -2166,7 +2166,7 @@ class tp_gateway extends CI_Controller {
                     var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);                    
                     return encrypted;
               }
-              $.post('http://ssi.xprienz.net/tp_gateway/bulk_enrollment_tpg', {encrypted:vall_a});
+              $.post('http://ssi.xprienz.net/tp_gateway/bulk_trainee_enrolment_data_tpg', {encrypted:vall_a});
               
               </script>";
         
@@ -2217,6 +2217,10 @@ class tp_gateway extends CI_Controller {
     }
     
     public function bulk_trainee_enrolment_data_tpg() {
+        
+        $encrypted_data = $_POST['encrypted'];
+        echo "aab ".$encrypted_data; exit;
+        
         $encrypted_data = $this->input->post('tpg_data');
         echo "Encrypted data".print_r($encrypted_data, true); exit;
         $course_id = $this->input->post('courseId');
