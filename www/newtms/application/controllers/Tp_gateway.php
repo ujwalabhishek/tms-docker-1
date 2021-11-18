@@ -2131,7 +2131,7 @@ class tp_gateway extends CI_Controller {
         
         $i++;
     }
-    echo print_r($tpg_trainees); exit;
+    //echo print_r($tpg_trainees); exit;
     //Training Partner
     $tenant_details = fetch_tenant_details($tenant_id);
     $trainingPartnerUEN = $tenant_details->comp_reg_no;
@@ -2175,7 +2175,7 @@ class tp_gateway extends CI_Controller {
     
     $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
                                 
-    //echo $tpg_enrolment_json_data; exit;
+    echo $tpg_enrolment_json_data; exit;
     $data['courseId'] = $courseId;
     $data['classId'] = $classId;
 
