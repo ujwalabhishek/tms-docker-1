@@ -2145,8 +2145,8 @@ class tp_gateway extends CI_Controller {
         
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
         
-        echo "<div id='out'>ABD - </div>";
-        echo "
+        //echo "<div id='out'></div>";
+        echo "<div id='out'></div>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
             <script>
@@ -2169,7 +2169,9 @@ class tp_gateway extends CI_Controller {
               }
               </script>";
         
-        exit;
+        $encrypted_data = "<script> alert(document.getElementById('out').val); </script>";
+        echo "aa ".$encrypted_data; exit;
+        
         $api_version = 'v1';
 
         $url = "https://" . TPG_URL . "/tpg/enrolments";
