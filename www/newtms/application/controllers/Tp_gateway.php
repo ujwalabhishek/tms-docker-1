@@ -2162,6 +2162,7 @@ class tp_gateway extends CI_Controller {
                         padding: CryptoJS.pad.Pkcs7
                     });
                     var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
+                    alert(encrypted);
                     $('#out').html(encrypted);
               }
               </script>";
