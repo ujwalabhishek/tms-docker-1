@@ -2193,7 +2193,7 @@ class tp_gateway extends CI_Controller {
     $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
     
     $tpg_enrolment_json_data = str_replace(array('[',']'),'',$tpg_enrolment_json_data);
-    $tpg_enrolment_json_data = '{"enrolment":{"trainingPartner":{"code":"201000372W-03","uen":"201000372W"},"course":{"referenceNumber":"TGS-2020002096","run":{"id":"278528"}},"trainee":{"idType":{"type":"NRIC"},"id":"S8195288D","dateOfBirth":"1981-01-10","fullName":"TESTDATA1","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":"98547112"},"emailAddress":"testdata1@yopmail.com","sponsorshipType":"INDIVIDUAL","employer":{"uen":"","contact":{"fullName":"","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":""},"emailAddress":""}},"fees":{"discountAmount":0,"collectionStatus":"Pending Payment"},"enrolmentDate":"2021-11-19"}{"idType":{"type":"NRIC"},"id":"S9836430G","dateOfBirth":"1998-03-21","fullName":"TESTDATA3","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":"98547112"},"emailAddress":"testdata3@yopmail.com","sponsorshipType":"EMPLOYER","employer":{"uen":"201000372W","contact":{"fullName":"WEW","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":"98765432"},"emailAddress":"mail@mailinator.com"}},"fees":{"discountAmount":0,"collectionStatus":"Pending Payment"},"enrolmentDate":"2021-11-19"}}}';
+    //$tpg_enrolment_json_data = '{"enrolment":{"trainingPartner":{"code":"201000372W-03","uen":"201000372W"},"course":{"referenceNumber":"TGS-2020002096","run":{"id":"278528"}},"trainee":{"idType":{"type":"NRIC"},"id":"S8195288D","dateOfBirth":"1981-01-10","fullName":"TESTDATA1","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":"98547112"},"emailAddress":"testdata1@yopmail.com","sponsorshipType":"INDIVIDUAL","employer":{"uen":"","contact":{"fullName":"","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":""},"emailAddress":""}},"fees":{"discountAmount":0,"collectionStatus":"Pending Payment"},"enrolmentDate":"2021-11-19"}{"idType":{"type":"NRIC"},"id":"S9836430G","dateOfBirth":"1998-03-21","fullName":"TESTDATA3","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":"98547112"},"emailAddress":"testdata3@yopmail.com","sponsorshipType":"EMPLOYER","employer":{"uen":"201000372W","contact":{"fullName":"WEW","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":"98765432"},"emailAddress":"mail@mailinator.com"}},"fees":{"discountAmount":0,"collectionStatus":"Pending Payment"},"enrolmentDate":"2021-11-19"}}}';
     //echo $tpg_enrolment_json_data; exit;
     $data['courseId'] = $courseId;
     $data['classId'] = $classId;
@@ -2207,7 +2207,7 @@ class tp_gateway extends CI_Controller {
     
     public function bulk_trainee_enrolment_data_tpg() {
         $encrypted_data = $this->input->post('tpg_data');
-        //echo "Encrypted data".print_r($encrypted_data, true); exit;
+        echo "Encrypted data".print_r($encrypted_data, true); exit;
         $course_id = $this->input->post('courseId');
         $class_id = $this->input->post('classId');
         //$user_id = $this->input->post('userId');
@@ -2230,7 +2230,7 @@ class tp_gateway extends CI_Controller {
 
         if ($tpg_response->status == 200) {
 
-            print_r($tpg_response); exit;
+            print_r($tpg_response);
             $enrolmentReferenceNumber = $tpg_response->data->enrolment->referenceNumber;
             $enrolmentReferenceStatus = $tpg_response->data->enrolment->status;
 
