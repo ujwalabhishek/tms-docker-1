@@ -2207,30 +2207,40 @@ class tp_gateway extends CI_Controller {
     
     public function bulk_trainee_enrolment_data_tpg() {
         $encrypted_data = $this->input->post('tpg_data');
-        echo "Encrypted data".print_r($encrypted_data, true); exit;
+        //echo "Encrypted data".print_r($encrypted_data, true); exit;
         $course_id = $this->input->post('courseId');
         $class_id = $this->input->post('classId');
         //$user_id = $this->input->post('userId');
-        $api_version = 'v1';
+        
+        $i = 0;
+        While($i < 2) 
+            {
+                                
+            $api_version = 'v1';
 
-        $url = "https://" . TPG_URL . "/tpg/enrolments";
-        $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
+            $url = "https://" . TPG_URL . "/tpg/enrolments";
+            $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
 
-        //$output = false;
-        $encrypt_method = "AES-256-CBC";
+            //$output = false;
+            $encrypt_method = "AES-256-CBC";
 
-        $tenant_id = $this->tenant_id;
-        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
+            $tenant_id = $this->tenant_id;
+            $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
 
-        $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
+            $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
 
-        $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+            $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
-        $tpg_response = json_decode($tpg_enrolment_decoded);
-
+            $tpg_response = json_decode($tpg_enrolment_decoded);
+            
+            print_r($tpg_response);
+            
+            $i++;
+        }
+        
         if ($tpg_response->status == 200) {
 
-            print_r($tpg_response);
+            
             $enrolmentReferenceNumber = $tpg_response->data->enrolment->referenceNumber;
             $enrolmentReferenceStatus = $tpg_response->data->enrolment->status;
 
