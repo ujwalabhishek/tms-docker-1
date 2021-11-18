@@ -2174,7 +2174,84 @@ class tp_gateway extends CI_Controller {
                 
     
     //$tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-    $tpg_enrolment_json_data = '{"enrolment":{"course":{"referenceNumber":"TGS-2020002096","run":{"id":"279835"}},{"trainee":{"idType":{"type":"NRIC"},"id":"S8190860E","dateOfBirth":"1981-08-14","fullName":"TESTDATA2","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":"98522112"},"emailAddress":"testdata2@yopmail.com","sponsorshipType":"INDIVIDUAL","employer":{"uen":"","contact":{"fullName":"","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":""},"emailAddress":""}},"fees":{"discountAmount":0,"collectionStatus":"Pending Payment"},"enrolmentDate":"2021-11-18"}},{"trainee":{"idType":{"type":"NRIC"},"id":"S8195288D","dateOfBirth":"1981-01-10","fullName":"TESTDATA1","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":"98562514"},"emailAddress":"testdata1@yopmail.com","sponsorshipType":"INDIVIDUAL","employer":{"uen":"","contact":{"fullName":"","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":""},"emailAddress":""}},"fees":{"discountAmount":0,"collectionStatus":"Pending Payment"},"enrolmentDate":"2021-11-18"}},{"trainingPartner":{"code":"201000372W-03","uen":"201000372W"}}}';
+    $tpg_enrolment_json_data = '{
+  "enrolment": {
+    "course": {
+      "run": {
+        "id": "10026"
+      },
+      "referenceNumber": "TGS-0026008-ES"
+    },
+    "trainee": {
+      "id": "S0118316H",
+      "fees": {
+        "discountAmount": 50.25,
+        "collectionStatus": "Full Payment"
+      },
+      "idType": {
+        "type": "NRIC"
+      },
+      "employer": {
+        "uen": "G01234567S",
+        "contact": {
+          "fullName": "Stephen Chua",
+          "emailAddress": "abc@abc.com",
+          "contactNumber": {
+            "areaCode": "00",
+            "countryCode": "60",
+            "phoneNumber": "88881234"
+          }
+        }
+      },
+      "fullName": "Jon Chua",
+      "dateOfBirth": "1950-10-16",
+      "emailAddress": "abc@abc.com",
+      "contactNumber": {
+        "areaCode": "00",
+        "countryCode": "60",
+        "phoneNumber": "88881234"
+      },
+      "enrolmentDate": "2020-05-15",
+      "sponsorshipType": "EMPLOYER"
+    },
+	"trainee": {
+      "id": "S0118316H",
+      "fees": {
+        "discountAmount": 50.25,
+        "collectionStatus": "Full Payment"
+      },
+      "idType": {
+        "type": "NRIC"
+      },
+      "employer": {
+        "uen": "G01234567S",
+        "contact": {
+          "fullName": "Stephen Chua",
+          "emailAddress": "abc@abc.com",
+          "contactNumber": {
+            "areaCode": "00",
+            "countryCode": "60",
+            "phoneNumber": "88881234"
+          }
+        }
+      },
+      "fullName": "Jon Chua",
+      "dateOfBirth": "1950-10-16",
+      "emailAddress": "abc@abc.com",
+      "contactNumber": {
+        "areaCode": "00",
+        "countryCode": "60",
+        "phoneNumber": "88881234"
+      },
+      "enrolmentDate": "2020-05-15",
+      "sponsorshipType": "EMPLOYER"
+    },
+    "trainingPartner": {
+      "uen": "T16GB0003C",
+      "code": "T16GB0003C-01"
+    }
+  }
+}';
                                 
     //echo $tpg_enrolment_json_data; exit;
     $data['courseId'] = $courseId;
