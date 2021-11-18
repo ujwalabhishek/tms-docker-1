@@ -2174,23 +2174,7 @@ class tp_gateway extends CI_Controller {
                 
     
     //$tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-    $tpg_enrolment_json_data = '{
-  "enrolment": {
-    "course": {
-      "run": {
-        "id": "10026"
-      },
-      "referenceNumber": "TGS-0026008-ES"
-    },
-    "trainee": {
-      "id": "S0118316H",
-      "fees": {
-        "discountAmount": 50.25,
-        "collectionStatus": "Full Payment"
-      },
-      "idType": {
-        "type": "NRIC"
-      },
+    $tpg_enrolment_json_data = '{"enrolment": {"course": {"run": {"id": "10026"},"referenceNumber": "TGS-0026008-ES"},"trainee": {"id": "S0118316H","fees": {"discountAmount": 50.25,"collectionStatus": "Full Payment"},"idType": {"type": "NRIC"},
       "employer": {
         "uen": "G01234567S",
         "contact": {
@@ -2245,13 +2229,7 @@ class tp_gateway extends CI_Controller {
       },
       "enrolmentDate": "2020-05-15",
       "sponsorshipType": "EMPLOYER"
-    },
-    "trainingPartner": {
-      "uen": "T16GB0003C",
-      "code": "T16GB0003C-01"
-    }
-  }
-}';
+    },"trainingPartner": {"uen": "T16GB0003C","code": "T16GB0003C-01"}}}';
                                 
     //echo $tpg_enrolment_json_data; exit;
     $data['courseId'] = $courseId;
