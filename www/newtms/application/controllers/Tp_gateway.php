@@ -2091,7 +2091,7 @@ class tp_gateway extends CI_Controller {
             $feeCollectionStatus = "Pending Payment";
         }                                                                                      
         
-        $tpg_trainees[] = array(                        
+        $tpg_trainees[] = array("trainee" => array(
                                 "idType" => array(
                                     "type" => $traineeIdType
                                 ),
@@ -2122,7 +2122,7 @@ class tp_gateway extends CI_Controller {
                                     "collectionStatus" => $feeCollectionStatus
                                 ),
                                 "enrolmentDate" => $traineeEnrolmentDate
-                           
+                           )
                         );
        
         
@@ -2149,7 +2149,7 @@ class tp_gateway extends CI_Controller {
                         "id" => $courseRunId
                     )
                 ),
-                "trainee" => ($tpg_trainees)
+                $tpg_trainees
             )
         );
     
