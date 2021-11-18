@@ -2125,7 +2125,7 @@ class tp_gateway extends CI_Controller {
                            
                         );
        
-        echo $tpg_trainees; exit;
+        echo print_r($tpg_trainees); exit;
         $tpg_trainees_json_data = ($tpg_trainees);
         $temp_trainees_array .= $tpg_trainees_json_data;                
         
