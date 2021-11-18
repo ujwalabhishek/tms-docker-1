@@ -2164,7 +2164,8 @@ class tp_gateway extends CI_Controller {
                         padding: CryptoJS.pad.Pkcs7
                     });
                     var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
-                    sessionStorage.setItem(encrypted_data, encrypted);                    
+                    '<%Session['encrypted_data'] = ' + encrypted + '; %>';        
+                    alert('<%=Session['encrypted_data'] %>');
               }
               </script>";
         
