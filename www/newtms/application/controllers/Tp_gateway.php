@@ -2169,7 +2169,7 @@ class tp_gateway extends CI_Controller {
               }
               </script>";
         
-        $encrypted_data = "<script> alert(document.getElementById('out').val); </script>";
+        $encrypted_data = "<script> alert(encrypted); </script>";
         echo "aa ".$encrypted_data; exit;
         
         $api_version = 'v1';
