@@ -2144,7 +2144,7 @@ class tp_gateway extends CI_Controller {
         );
         
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-        
+        $aaa = "abd";
         //echo "<div id='out'></div>";
         echo "
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
@@ -2163,7 +2163,7 @@ class tp_gateway extends CI_Controller {
                         keySize: 256 / 32,
                         padding: CryptoJS.pad.Pkcs7
                     });
-                    var encrypted = '$aaa' = CryptoJS.enc.Base64.stringify(cipher.ciphertext);                    
+                    var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);                    
                     alert($aaa);
               }
               </script>";
