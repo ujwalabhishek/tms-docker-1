@@ -2023,6 +2023,11 @@ class tp_gateway extends CI_Controller {
         $tenant_id = $this->tenant_id;
         $temp_trainees_array = "";
         
+        //Training Partner
+        $tenant_details = fetch_tenant_details($tenant_id);
+        $trainingPartnerUEN = $tenant_details->comp_reg_no;
+        $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';
+        
         $chkbox = $_POST['chk'];
         $i = 0;
         While($i < sizeof($chkbox)) 
@@ -2091,53 +2096,7 @@ class tp_gateway extends CI_Controller {
             $feeCollectionStatus = "Pending Payment";
         }                                                                                      
         
-        $tpg_trainees[] = array("trainee" => array(
-                                "idType" => array(
-                                    "type" => $traineeIdType
-                                ),
-                                "id" => $traineeId,
-                                "dateOfBirth" => $traineeDateOfBirth,
-                                "fullName" => $traineeFullName,
-                                "contactNumber" => array(
-                                    "countryCode" => "+65",
-                                    "areaCode" => "",
-                                    "phoneNumber" => $traineeContactNumber
-                                ),
-                                "emailAddress" => $traineeEmailAddress,
-                                "sponsorshipType" => $traineeSponsorshipType,
-                                "employer" => array(
-                                    "uen" => $employerUEN,
-                                    "contact" => array(
-                                        "fullName" => $emploerFullName,
-                                        "contactNumber" => array(
-                                            "countryCode" => "+65",
-                                            "areaCode" => "",
-                                            "phoneNumber" => $employerContactNumber
-                                        ),
-                                        "emailAddress" => $employerEmailAddress
-                                    )
-                                ),
-                                "fees" => array(
-                                    "discountAmount" => $feeDiscountAmount,
-                                    "collectionStatus" => $feeCollectionStatus
-                                ),
-                                "enrolmentDate" => $traineeEnrolmentDate
-                           )
-                        );
-       
-        
-//        $tpg_trainees_json_data = ($tpg_trainees);
-//        $temp_trainees_array .= $tpg_trainees_json_data;                
-        
-        $i++;
-    }
-    //echo print_r($tpg_trainees); exit;
-    //Training Partner
-    $tenant_details = fetch_tenant_details($tenant_id);
-    $trainingPartnerUEN = $tenant_details->comp_reg_no;
-    $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';
-    //echo print_r($tpg_trainees, true); exit;
-    $tpg_enrolment_json = array(
+        $tpg_enrolment_json[] = array(
             "enrolment" => array(
                 "trainingPartner" => array(
                     "code" => $trainingPartnerCode,
@@ -2149,9 +2108,67 @@ class tp_gateway extends CI_Controller {
                         "id" => $courseRunId
                     )
                 ),
-                $tpg_trainees
+                "trainee" => array(
+                    "idType" => array(
+                        "type" => $traineeIdType
+                    ),
+                    "id" => $traineeId,
+                    "dateOfBirth" => $traineeDateOfBirth,
+                    "fullName" => $traineeFullName,
+                    "contactNumber" => array(
+                        "countryCode" => "+65",
+                        "areaCode" => "",
+                        "phoneNumber" => $traineeContactNumber
+                    ),
+                    "emailAddress" => $traineeEmailAddress,
+                    "sponsorshipType" => $traineeSponsorshipType,
+                    "employer" => array(
+                        "uen" => $employerUEN,
+                        "contact" => array(
+                            "fullName" => $emploerFullName,
+                            "contactNumber" => array(
+                                "countryCode" => "+65",
+                                "areaCode" => "",
+                                "phoneNumber" => $employerContactNumber
+                            ),
+                            "emailAddress" => $employerEmailAddress
+                        )
+                    ),
+                    "fees" => array(
+                        "discountAmount" => $feeDiscountAmount,
+                        "collectionStatus" => $feeCollectionStatus
+                    ),
+                    "enrolmentDate" => $traineeEnrolmentDate
+                )
             )
         );
+
+        
+       
+        
+//        $tpg_trainees_json_data = ($tpg_trainees);
+//        $temp_trainees_array .= $tpg_trainees_json_data;                
+        
+        $i++;
+    }
+    //echo print_r($tpg_trainees); exit;
+    
+    //echo print_r($tpg_trainees, true); exit;
+//    $tpg_enrolment_json = array(
+//            "enrolment" => array(
+//                "trainingPartner" => array(
+//                    "code" => $trainingPartnerCode,
+//                    "uen" => $trainingPartnerUEN
+//                ),
+//                "course" => array(
+//                    "referenceNumber" => $courseReferenceNumber,
+//                    "run" => array(
+//                        "id" => $courseRunId
+//                    )
+//                ),
+//                $tpg_trainees
+//            )
+//        );
     
 //    $tpg_enrolment_json = '{
 //        "enrolment":{
@@ -2173,63 +2190,7 @@ class tp_gateway extends CI_Controller {
     
                 
     
-    //$tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-    $tpg_enrolment_json_data = '{"enrolment":{"course":{"run":{"id":"10026"},"referenceNumber":"TGS-0026008-ES"},"trainee":{"id": "S0118316H","fees":{"discountAmount":50.25,"collectionStatus":"Full Payment"},"idType":{"type":"NRIC"},
-      "employer": {
-        "uen": "G01234567S",
-        "contact": {
-          "fullName": "Stephen Chua",
-          "emailAddress": "abc@abc.com",
-          "contactNumber": {
-            "areaCode": "00",
-            "countryCode": "60",
-            "phoneNumber": "88881234"
-          }
-        }
-      },
-      "fullName": "Jon Chua",
-      "dateOfBirth": "1950-10-16",
-      "emailAddress": "abc@abc.com",
-      "contactNumber": {
-        "areaCode": "00",
-        "countryCode": "60",
-        "phoneNumber": "88881234"
-      },
-      "enrolmentDate": "2020-05-15",
-      "sponsorshipType": "EMPLOYER"
-    },
-	"trainee": {
-      "id": "S0118316H",
-      "fees": {
-        "discountAmount": 50.25,
-        "collectionStatus": "Full Payment"
-      },
-      "idType": {
-        "type": "NRIC"
-      },
-      "employer": {
-        "uen": "G01234567S",
-        "contact": {
-          "fullName": "Stephen Chua",
-          "emailAddress": "abc@abc.com",
-          "contactNumber": {
-            "areaCode": "00",
-            "countryCode": "60",
-            "phoneNumber": "88881234"
-          }
-        }
-      },
-      "fullName": "Jon Chua",
-      "dateOfBirth": "1950-10-16",
-      "emailAddress": "abc@abc.com",
-      "contactNumber": {
-        "areaCode": "00",
-        "countryCode": "60",
-        "phoneNumber": "88881234"
-      },
-      "enrolmentDate": "2020-05-15",
-      "sponsorshipType": "EMPLOYER"
-    },"trainingPartner": {"uen": "T16GB0003C","code": "T16GB0003C-01"}}}';
+    $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
                                 
     //echo $tpg_enrolment_json_data; exit;
     $data['courseId'] = $courseId;
