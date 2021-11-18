@@ -2151,7 +2151,7 @@ class tp_gateway extends CI_Controller {
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
             <script>
             
-            var vall = '$aaa' =  encrypt();            
+            var vall_a =  encrypt();            
             function encrypt() {
                     var tpgraw = '$tpg_enrolment_json_data';
                     var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
@@ -2164,9 +2164,10 @@ class tp_gateway extends CI_Controller {
                         padding: CryptoJS.pad.Pkcs7
                     });
                     var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);                    
-                    alert(encrypted);
                     return encrypted;
               }
+              alert('hi');
+              alert(vall_a);
               </script>";
         
         $encrypted_data = $aaa;
