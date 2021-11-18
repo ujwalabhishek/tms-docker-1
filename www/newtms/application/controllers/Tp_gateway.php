@@ -2096,7 +2096,7 @@ class tp_gateway extends CI_Controller {
             $feeCollectionStatus = "Pending Payment";
         }                                                                                      
         
-        $tpg_enrolment_json[] = array(
+        $tpg_enrolment_json = array(
             "enrolment" => array(
                 "trainingPartner" => array(
                     "code" => $trainingPartnerCode,
@@ -2142,59 +2142,62 @@ class tp_gateway extends CI_Controller {
                 )
             )
         );
+        
+        $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
+        
+        echo "<script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
+            <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
+            <script>
+            encrypt();
+            function encrypt() {
+                    var tpgraw = '$tpg_enrolment_json_data';
+                    var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+                    var cipher = CryptoJS.AES.encrypt(
+                            tpgraw,
+                            CryptoJS.enc.Base64.parse(key), {
+                        iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+                        mode: CryptoJS.mode.CBC,
+                        keySize: 256 / 32,
+                        padding: CryptoJS.pad.Pkcs7
+                    });
+                    var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
+                    $('#out').html(encrypted);
+              }
+              </script>";       
+    exit;
+        $api_version = 'v1';
 
-        
-       
-        
-//        $tpg_trainees_json_data = ($tpg_trainees);
-//        $temp_trainees_array .= $tpg_trainees_json_data;                
+        $url = "https://" . TPG_URL . "/tpg/enrolments";
+        $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
+
+        //$output = false;
+        $encrypt_method = "AES-256-CBC";
+
+        $tenant_id = $this->tenant_id;
+        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
+
+        $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
+
+        $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+
+        $tpg_response = json_decode($tpg_enrolment_decoded);
+
+        print_r($tpg_response);
         
         $i++;
     }
-    //echo print_r($tpg_trainees); exit;
     
-    //echo print_r($tpg_trainees, true); exit;
-//    $tpg_enrolment_json = array(
-//            "enrolment" => array(
-//                "trainingPartner" => array(
-//                    "code" => $trainingPartnerCode,
-//                    "uen" => $trainingPartnerUEN
-//                ),
-//                "course" => array(
-//                    "referenceNumber" => $courseReferenceNumber,
-//                    "run" => array(
-//                        "id" => $courseRunId
-//                    )
-//                ),
-//                $tpg_trainees
-//            )
-//        );
+                                        
     
-//    $tpg_enrolment_json = '{
-//        "enrolment":{
-//            "course":{
-//                    "run": {
-//                      "id": "' . $courseRunId . '"
-//                    },
-//                    "referenceNumber": "' . $courseReferenceNumber . '"
-//                  },                 
-//                  "trainingPartner": {
-//                    "uen": "' . $trainingPartnerUEN . '",
-//                    "code": "' . $trainingPartnerCode . '"
-//                  },
-//                  "trainee": ' . json_encode($tpg_trainees) . '
-//                }
-//              }';
+    
+    //$tpg_enrolment_json_data = str_replace(array('[',']'),'',$tpg_enrolment_json_data);
+                   
     
     
     
-                
     
-    $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
     
-    $tpg_enrolment_json_data = str_replace(array('[',']'),'',$tpg_enrolment_json_data);
-    //$tpg_enrolment_json_data = '{"enrolment":{"trainingPartner":{"code":"201000372W-03","uen":"201000372W"},"course":{"referenceNumber":"TGS-2020002096","run":{"id":"278528"}},"trainee":{"idType":{"type":"NRIC"},"id":"S8195288D","dateOfBirth":"1981-01-10","fullName":"TESTDATA1","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":"98547112"},"emailAddress":"testdata1@yopmail.com","sponsorshipType":"INDIVIDUAL","employer":{"uen":"","contact":{"fullName":"","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":""},"emailAddress":""}},"fees":{"discountAmount":0,"collectionStatus":"Pending Payment"},"enrolmentDate":"2021-11-19"}{"idType":{"type":"NRIC"},"id":"S9836430G","dateOfBirth":"1998-03-21","fullName":"TESTDATA3","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":"98547112"},"emailAddress":"testdata3@yopmail.com","sponsorshipType":"EMPLOYER","employer":{"uen":"201000372W","contact":{"fullName":"WEW","contactNumber":{"countryCode":"+65","areaCode":"","phoneNumber":"98765432"},"emailAddress":"mail@mailinator.com"}},"fees":{"discountAmount":0,"collectionStatus":"Pending Payment"},"enrolmentDate":"2021-11-19"}}}';
-    //echo $tpg_enrolment_json_data; exit;
+    
     $data['courseId'] = $courseId;
     $data['classId'] = $classId;
 
@@ -2211,6 +2214,7 @@ class tp_gateway extends CI_Controller {
         $course_id = $this->input->post('courseId');
         $class_id = $this->input->post('classId');
         //$user_id = $this->input->post('userId');
+        
         
         $i = 0;
         While($i < 2) 
