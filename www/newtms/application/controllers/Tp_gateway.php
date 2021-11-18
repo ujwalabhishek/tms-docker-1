@@ -2166,11 +2166,11 @@ class tp_gateway extends CI_Controller {
                     var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);                    
                     return encrypted;
               }
-              sessionStorage.setItem('encrypted', vall_a);
+              $.post('http://ssi.xprienz.net/tp_gateway/bulk_enrollment_tpg', {encrypted:vall_a});
               
               </script>";
         
-        $encrypted_data = $_SESSION['encrypted'];
+        $encrypted_data = $_POST['encrypted'];
         echo "aa ".$encrypted_data; exit;
         
         $api_version = 'v1';
