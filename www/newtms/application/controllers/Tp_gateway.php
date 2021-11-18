@@ -2146,14 +2146,12 @@ class tp_gateway extends CI_Controller {
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
         
         
-        echo "
+        echo "<div id='out'></div>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
             <script>
             
-            var x = encrypt();
-            document.getElementById('demo').innerHTML = x;
-            
+            encrypt();            
             function encrypt() {
                     var tpgraw = '$tpg_enrolment_json_data';
                     var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
@@ -2166,12 +2164,11 @@ class tp_gateway extends CI_Controller {
                         padding: CryptoJS.pad.Pkcs7
                     });
                     var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);
-                    alert(encrypted);
-                    return encrypted;
+                    
+                    $('#out').html(encrypted);
               }
               </script>";
-        
-    echo "<div id='demo'></div>"; exit;
+        exit;
         $api_version = 'v1';
 
         $url = "https://" . TPG_URL . "/tpg/enrolments";
