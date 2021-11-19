@@ -2213,7 +2213,7 @@ class tp_gateway extends CI_Controller {
 
         $tpg_response = json_decode($tpg_enrolment_decoded);
 
-        echo print_r($tpg_response);                
+        echo print_r($tpg_response,true);
         
     }
     
