@@ -2149,6 +2149,7 @@ class tp_gateway extends CI_Controller {
         echo "
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
+            <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
             <script>
             
             encrypt();            
@@ -2231,7 +2232,7 @@ class tp_gateway extends CI_Controller {
     }
     
     public function json_data_val() {
-        
+        echo "cccccccccc";
         $encrypted = $_POST['encrypted'];
         
         return $encrypted;
