@@ -2232,7 +2232,7 @@ class tp_gateway extends CI_Controller {
     }
     
     public function json_data_val() {
-        echo "cccccccccc";
+        echo "cccccccccc".$_POST['encrypted'];
         $encrypted = $_POST['encrypted'];
         
         return $encrypted;
