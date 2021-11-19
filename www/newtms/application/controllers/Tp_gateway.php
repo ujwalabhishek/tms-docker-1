@@ -2180,32 +2180,8 @@ class tp_gateway extends CI_Controller {
                     success: function(data) {
                        
                     }
-                });
-              
-              
-              </script>";
-        
-        $encrypted_data = $this->json_data_val();
-        echo "aa ".$encrypted_data; exit;
-        
-        $api_version = 'v1';
-
-        $url = "https://" . TPG_URL . "/tpg/enrolments";
-        $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
-
-        //$output = false;
-        $encrypt_method = "AES-256-CBC";
-
-        $tenant_id = $this->tenant_id;
-        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
-
-        $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
-
-        $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
-
-        $tpg_response = json_decode($tpg_enrolment_decoded);
-
-        print_r($tpg_response);
+                });                            
+              </script>";                                
         
         $i++;
     }
@@ -2231,11 +2207,27 @@ class tp_gateway extends CI_Controller {
     $this->load->view('layout', $data);
     }
     
-    public function json_data_val() {
-        echo "cccccccccc ".$_POST['encrypted'];
-        $encrypted = $_POST['encrypted'];
+    public function json_data_val() {        
+        $encrypted_data = $_POST['encrypted'];
         
-        return $encrypted;
+        $api_version = 'v1';
+
+        $url = "https://" . TPG_URL . "/tpg/enrolments";
+        $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
+
+        //$output = false;
+        $encrypt_method = "AES-256-CBC";
+
+        $tenant_id = $this->tenant_id;
+        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
+
+        $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
+
+        $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+
+        $tpg_response = json_decode($tpg_enrolment_decoded);
+
+        return print_r($tpg_response);                
         
     }
     
