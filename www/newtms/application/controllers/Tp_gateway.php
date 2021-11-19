@@ -2190,21 +2190,7 @@ class tp_gateway extends CI_Controller {
     
     
     //$tpg_enrolment_json_data = str_replace(array('[',']'),'',$tpg_enrolment_json_data);
-                   
-    
-    
-    
-    
-    
-    
-    $data['courseId'] = $courseId;
-    $data['classId'] = $classId;
-
-    $data['tpg_json_data'] = $tpg_enrolment_json_data;
-    $data['sideMenuData'] = fetch_non_main_page_content();
-    $data['page_title'] = 'TPG Bulk Trainee Enrolment';
-    $data['main_content'] = 'classtrainee/enrol_bulk_trainee_tpg';
-    $this->load->view('layout', $data);
+                                               
     }
     
     public function json_data_val() {        
@@ -2227,7 +2213,7 @@ class tp_gateway extends CI_Controller {
 
         $tpg_response = json_decode($tpg_enrolment_decoded);
 
-        return print_r($tpg_response);                
+        echo print_r($tpg_response);                
         
     }
     
