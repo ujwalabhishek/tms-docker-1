@@ -2174,7 +2174,7 @@ class tp_gateway extends CI_Controller {
                     dataType: 'json',
                     async: false,
                     data: {
-                        encrypted:$('#out').val()
+                        encrypted:$('#out').html(encrypted)
                     },
                     success: function(data) {
                        
@@ -2234,7 +2234,7 @@ class tp_gateway extends CI_Controller {
     }
     
     public function json_data_val() {
-        echo "cccccccccc".$_POST['encrypted'];
+        echo "cccccccccc ".$_POST['encrypted'];
         $encrypted = $_POST['encrypted'];
         
         return $encrypted;
