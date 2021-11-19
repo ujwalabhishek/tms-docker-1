@@ -2166,12 +2166,12 @@ class tp_gateway extends CI_Controller {
                     var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);                    
                     
                     $.ajax({
-                    url: '<?php echo base_url(); ?>' + 'tp_gateway/json_data_val',
+                    url: 'http://carrie.xprienz.net/tp_gateway/json_data_val',
                     type: 'post',
                     dataType: 'json',
                     async: false,
                     data: {
-                        encrypted:encrypted                        
+                        encrypted:encrypted
                     },
                     success: function(data) {
                        
