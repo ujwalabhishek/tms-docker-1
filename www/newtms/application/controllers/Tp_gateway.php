@@ -2146,13 +2146,13 @@ class tp_gateway extends CI_Controller {
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
         $aaa = "abd";
         //echo "<div id='out'></div>";
-        echo "<div id='out'></div>
+        echo "
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
             <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
             <script>
             
-            encrypt();            
+           var x = encrypt();            
             function encrypt() {
                     var tpgraw = '$tpg_enrolment_json_data';
                     var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
@@ -2165,24 +2165,22 @@ class tp_gateway extends CI_Controller {
                         padding: CryptoJS.pad.Pkcs7
                     });
                     var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);                    
-                    $('#out').html(encrypted);
-
-
-                    $.ajax({
+                    
+                    return encrypted;
+              }
+              
+              $.ajax({
                     url: 'http://carrie.xprienz.net/tp_gateway/json_data_val',
                     type: 'post',
                     dataType: 'json',
                     async: false,
                     data: {
-                        encrypted:$('#out').html(encrypted)
+                        encrypted:x
                     },
                     success: function(data) {
                        
                     }
                 });
-
-
-              }
               
               
               </script>";
