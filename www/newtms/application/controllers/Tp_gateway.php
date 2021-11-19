@@ -2164,13 +2164,27 @@ class tp_gateway extends CI_Controller {
                         padding: CryptoJS.pad.Pkcs7
                     });
                     var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);                    
-                    $.post('http://ssi.xprienz.net/tp_gateway/bulk_trainee_enrolment_data_tpg', {encrypted:encrypted});
+                    
+                    $.ajax({
+                    url: '<?php echo base_url(); ?>' + 'tp_gateway/json_data_val',
+                    type: 'post',
+                    dataType: 'json',
+                    async: false,
+                    data: {
+                        encrypted:encrypted                        
+                    },
+                    success: function(data) {
+                       
+                    }
+                });
+
+
               }
               
               
               </script>";
         
-        $encrypted_data = $_POST['encrypted'];
+        $encrypted_data = $this->json_data_val();
         echo "aa ".$encrypted_data; exit;
         
         $api_version = 'v1';
@@ -2214,6 +2228,14 @@ class tp_gateway extends CI_Controller {
     $data['page_title'] = 'TPG Bulk Trainee Enrolment';
     $data['main_content'] = 'classtrainee/enrol_bulk_trainee_tpg';
     $this->load->view('layout', $data);
+    }
+    
+    public function json_data_val() {
+        
+        $encrypted = $_POST['encrypted'];
+        
+        return $encrypted;
+        
     }
     
     public function bulk_trainee_enrolment_data_tpg() {
