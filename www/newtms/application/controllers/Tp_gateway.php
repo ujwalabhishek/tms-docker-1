@@ -2029,10 +2029,7 @@ class tp_gateway extends CI_Controller {
         
         $chkbox = $_POST['chk'];
         $i = 0;
-        While($i < sizeof($chkbox)) 
-            {
-                //echo "CheckBox Selected Values = " . $chkbox[$i] . '</br>';                                                                
-        
+        While($i < sizeof($chkbox)) {
         //Trainee
         $userId = $chkbox[$i];
         $traineeDetails = $this->classTraineeModel->get_full_trainee_details($userId);
@@ -2186,13 +2183,8 @@ class tp_gateway extends CI_Controller {
         
         $i++;
     }
-    
         
-        $data['sideMenuData'] = fetch_non_main_page_content();
-        $data['page_title'] = 'Class Trainee';
-        $data['main_content'] = 'classtrainee/bulkenrollment_tpg';
-        
-        $this->load->view('layout', $data);
+    redirect('class_trainee?course=' . $courseId . '&class=' . $classId);
                                                           
     }
     
