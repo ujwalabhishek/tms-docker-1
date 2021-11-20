@@ -2170,7 +2170,7 @@ class tp_gateway extends CI_Controller {
               }
               
               $.ajax({
-                    url: '$baseurl',
+                    url: $baseurl,
                     type: 'post',
                     dataType: 'json',
                     async: false,
