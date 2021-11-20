@@ -2028,8 +2028,9 @@ class tp_gateway extends CI_Controller {
         $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';
         
         $chkbox = $_POST['chk'];
-        $i = 0;
-        While($i < sizeof($chkbox)) {
+        $i = 1;
+        $siz = sizeof($chkbox);
+        While($i <= sizeof($chkbox)) {
         //Trainee
         $userId = $chkbox[$i];
         $traineeDetails = $this->classTraineeModel->get_full_trainee_details($userId);
@@ -2140,7 +2141,7 @@ class tp_gateway extends CI_Controller {
         );
         
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-        
+        $baseurl = base_url();
         echo "
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
@@ -2165,7 +2166,7 @@ class tp_gateway extends CI_Controller {
               }
               
               $.ajax({
-                    url: 'http://carrie.xprienz.net/tp_gateway/json_data_val',
+                    url: $baseurl + 'tp_gateway/json_data_val',
                     type: 'post',
                     dataType: 'json',
                     async: false,
@@ -2176,7 +2177,9 @@ class tp_gateway extends CI_Controller {
                         user_id:'$userId'
                     },
                     success: function(data) {
-                       
+                       if($i == $siz) {
+                           window.location.href = 'class_trainee?course=' . $courseId . '&class=' . $classId';
+                       }
                     }
                 });                            
               </script>";                                
@@ -2184,7 +2187,7 @@ class tp_gateway extends CI_Controller {
         $i++;
     }
         
-    redirect('class_trainee?course=' . $courseId . '&class=' . $classId);
+    //redirect('class_trainee?course=' . $courseId . '&class=' . $classId);
                                                           
     }
     
