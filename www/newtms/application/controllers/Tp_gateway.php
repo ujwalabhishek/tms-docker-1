@@ -2015,6 +2015,9 @@ class tp_gateway extends CI_Controller {
     
     public function bulk_enrollment_tpg() {
         
+        $baseurl = base_url();
+        echo "bbbase".$baseurl; exit;
+        
         //Course and class details
         $courseRunId = $this->input->post('courseRunId');
         $courseReferenceNumber = $this->input->post('courseReferenceNumber');
@@ -2141,8 +2144,7 @@ class tp_gateway extends CI_Controller {
         );
         
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-        $baseurl = base_url();
-        echo "bbbase".$baseurl; exit;
+        
         echo "
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
