@@ -2021,7 +2021,6 @@ class tp_gateway extends CI_Controller {
         $courseId = $this->input->post('courseId');
         $classId = $this->input->post('classId');
         $tenant_id = $this->tenant_id;
-        $temp_trainees_array = "";
         
         //Training Partner
         $tenant_details = fetch_tenant_details($tenant_id);
@@ -2144,8 +2143,7 @@ class tp_gateway extends CI_Controller {
         );
         
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-        $aaa = "abd";
-        //echo "<div id='out'></div>";
+        
         echo "
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
@@ -2175,7 +2173,10 @@ class tp_gateway extends CI_Controller {
                     dataType: 'json',
                     async: false,
                     data: {
-                        encrypted:x
+                        encrypted:x,
+                        course_id:'$courseId',
+                        class_id:'$classId',
+                        user_id:'$userId'
                     },
                     success: function(data) {
                        
@@ -2185,16 +2186,20 @@ class tp_gateway extends CI_Controller {
         
         $i++;
     }
+                                                            
+    $this->session->set_flashdata("success", "Enrolment has been created");
+            
+    redirect('class_trainee?course=' . $courseId . '&class=' . $classId);
     
-                                        
-    
-    
-    //$tpg_enrolment_json_data = str_replace(array('[',']'),'',$tpg_enrolment_json_data);
-                                               
+    //$tpg_enrolment_json_data = str_replace(array('[',']'),'',$tpg_enrolment_json_data);                                               
     }
     
-    public function json_data_val() {        
+    public function json_data_val() {
+        
         $encrypted_data = $_POST['encrypted'];
+        $course_id = $_POST['course_id'];
+        $class_id = $_POST['class_id'];
+        $user_id = $_POST['user_id'];
         
         $api_version = 'v1';
 
@@ -2213,7 +2218,32 @@ class tp_gateway extends CI_Controller {
 
         $tpg_response = json_decode($tpg_enrolment_decoded);
 
-        echo print_r($tpg_response,true);
+        if ($tpg_response->status == 200) {
+
+            
+            $enrolmentReferenceNumber = $tpg_response->data->enrolment->referenceNumber;
+            $enrolmentReferenceStatus = $tpg_response->data->enrolment->status;
+
+            $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber, $enrolmentReferenceStatus);
+
+//            if ($updated) {
+//                $this->session->set_flashdata("success", "Enrolment has been created with reference number - " . $enrolmentReferenceNumber);
+//            }
+            //redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
+        } else {
+            if ($tpg_response->status == 400) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 403) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 404) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } elseif ($tpg_response->status == 500) {
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
+            } else {
+                $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
+            }
+            redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
+        }
         
     }
     
