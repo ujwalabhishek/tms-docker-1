@@ -2180,9 +2180,7 @@ class tp_gateway extends CI_Controller {
                         class_id:'$classId',
                         user_id:'$userId'
                     },
-                    success: function(data) {
-                       
-                           window.location.href = '$location';
+                    success: function(data) {                                                  
                        
                     }
                 });                            
@@ -2190,7 +2188,10 @@ class tp_gateway extends CI_Controller {
         
         $i++;
     }
-        
+    echo ("<script LANGUAGE='JavaScript'>
+          window.alert('Already Rated!')
+          window.location.href='$location';
+          </script>"); 
     //redirect('class_trainee?course=' . $courseId . '&class=' . $classId);
                                                           
     }
