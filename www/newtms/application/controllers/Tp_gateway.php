@@ -2182,7 +2182,7 @@ class tp_gateway extends CI_Controller {
                     },
                     success: function(data) {
                        if($i == $siz) {
-                           window.location.href = $location;
+                           window.location.href = '$location';
                        }
                     }
                 });                            
