@@ -2015,8 +2015,7 @@ class tp_gateway extends CI_Controller {
     
     public function bulk_enrollment_tpg() {
         
-        $baseurl = base_url();
-        echo "bbbase".$baseurl; exit;
+        $baseurl = base_url();        
         
         //Course and class details
         $courseRunId = $this->input->post('courseRunId');
