@@ -2032,9 +2032,9 @@ class tp_gateway extends CI_Controller {
         $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';
         
         $chkbox = $_POST['chk'];
-        $i = 1;
+        $i = 0;
         $siz = sizeof($chkbox);
-        While($i <= sizeof($chkbox)) {
+        While($i < sizeof($chkbox)) {
         //Trainee
         $userId = $chkbox[$i];
         $traineeDetails = $this->classTraineeModel->get_full_trainee_details($userId);
@@ -2181,9 +2181,9 @@ class tp_gateway extends CI_Controller {
                         user_id:'$userId'
                     },
                     success: function(data) {
-                       if($i == $siz) {
+                       
                            window.location.href = '$location';
-                       }
+                       
                     }
                 });                            
               </script>";                                
