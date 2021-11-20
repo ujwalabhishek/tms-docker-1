@@ -2024,6 +2024,8 @@ class tp_gateway extends CI_Controller {
         $classId = $this->input->post('classId');
         $tenant_id = $this->tenant_id;
         
+        $location = "class_trainee?course=' . $courseId . '&class=' . $classId";
+            
         //Training Partner
         $tenant_details = fetch_tenant_details($tenant_id);
         $trainingPartnerUEN = $tenant_details->comp_reg_no;
@@ -2180,7 +2182,7 @@ class tp_gateway extends CI_Controller {
                     },
                     success: function(data) {
                        if($i == $siz) {
-                           window.location.href = 'class_trainee?course=' . $courseId . '&class=' . $classId';
+                           window.location.href = '$location';
                        }
                     }
                 });                            
