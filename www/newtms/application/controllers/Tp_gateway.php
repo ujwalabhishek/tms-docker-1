@@ -2015,7 +2015,7 @@ class tp_gateway extends CI_Controller {
     
     public function bulk_enrollment_tpg() {
         
-        $baseurl = base_url();        
+        $baseurl = base_url().'tp_gateway/json_data_val';
         
         //Course and class details
         $courseRunId = $this->input->post('courseRunId');
@@ -2168,7 +2168,7 @@ class tp_gateway extends CI_Controller {
               }
               
               $.ajax({
-                    url: $baseurl.'tp_gateway/json_data_val',
+                    url: $baseurl,
                     type: 'post',
                     dataType: 'json',
                     async: false,
