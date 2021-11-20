@@ -2024,7 +2024,7 @@ class tp_gateway extends CI_Controller {
         $classId = $this->input->post('classId');
         $tenant_id = $this->tenant_id;
         
-        $location = "class_trainee?course=' . $courseId . '&class=' . $classId";
+        $location = "class_trainee?course=$courseId&class=$classId";
         echo $location; exit;
         //Training Partner
         $tenant_details = fetch_tenant_details($tenant_id);
