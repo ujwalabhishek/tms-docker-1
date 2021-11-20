@@ -2186,12 +2186,14 @@ class tp_gateway extends CI_Controller {
         
         $i++;
     }
-                                                            
-    $this->session->set_flashdata("success", "Enrolment has been created");
-            
-    redirect('class_trainee?course=' . $courseId . '&class=' . $classId);
     
-    //$tpg_enrolment_json_data = str_replace(array('[',']'),'',$tpg_enrolment_json_data);                                               
+        
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $data['page_title'] = 'Class Trainee';
+        $data['main_content'] = 'classtrainee/bulkenrollment_tpg';
+        
+        $this->load->view('layout', $data);
+                                                          
     }
     
     public function json_data_val() {
@@ -2219,7 +2221,6 @@ class tp_gateway extends CI_Controller {
         $tpg_response = json_decode($tpg_enrolment_decoded);
 
         if ($tpg_response->status == 200) {
-
             
             $enrolmentReferenceNumber = $tpg_response->data->enrolment->referenceNumber;
             $enrolmentReferenceStatus = $tpg_response->data->enrolment->status;
@@ -2242,76 +2243,7 @@ class tp_gateway extends CI_Controller {
             } else {
                 $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
             }
-            redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
-        }
-        
-    }
-    
-    public function bulk_trainee_enrolment_data_tpg() {
-        
-        $encrypted_data = $_POST['encrypted'];
-        echo "aab ".$encrypted_data; exit;
-        
-        $encrypted_data = $this->input->post('tpg_data');
-        echo "Encrypted data".print_r($encrypted_data, true); exit;
-        $course_id = $this->input->post('courseId');
-        $class_id = $this->input->post('classId');
-        //$user_id = $this->input->post('userId');
-        
-        
-        $i = 0;
-        While($i < 2) 
-            {
-                                
-            $api_version = 'v1';
-
-            $url = "https://" . TPG_URL . "/tpg/enrolments";
-            $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
-
-            //$output = false;
-            $encrypt_method = "AES-256-CBC";
-
-            $tenant_id = $this->tenant_id;
-            $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
-
-            $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
-
-            $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
-
-            $tpg_response = json_decode($tpg_enrolment_decoded);
-            
-            print_r($tpg_response);
-            
-            $i++;
-        }
-        
-        if ($tpg_response->status == 200) {
-
-            
-            $enrolmentReferenceNumber = $tpg_response->data->enrolment->referenceNumber;
-            $enrolmentReferenceStatus = $tpg_response->data->enrolment->status;
-
-            //$updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber, $enrolmentReferenceStatus);
-
-            if ($updated) {
-                $this->session->set_flashdata("success", "Enrolment has been created with reference number - " . $enrolmentReferenceNumber);
-            }
-            redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
-        } else {
-            if ($tpg_response->status == 400) {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
-            } elseif ($tpg_response->status == 403) {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
-            } elseif ($tpg_response->status == 404) {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
-            } elseif ($tpg_response->status == 500) {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message);
-            } else {
-                $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
-            }
-            redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
-        }
-    }
-    
-    
+            //redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
+        }        
+    }                
 }
