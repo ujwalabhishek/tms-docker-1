@@ -146,7 +146,7 @@ $(document).ready(function() {
             $('#company_name_err').addClass('error').text('Please, select filter to perform search operation.');
             $retval = false;
         } else if(cls == '') {
-            $('#company_name_err').addClass('error').text('Please, select class filter to display the data.');
+            $('#company_name_err').addClass('error').text('Please, select class to display the data.');
             $retval = false;
         } else {
                 $('#company_name_err').removeClass('error').text('');
