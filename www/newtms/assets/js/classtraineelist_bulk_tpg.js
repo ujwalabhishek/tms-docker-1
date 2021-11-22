@@ -140,15 +140,7 @@ $(document).ready(function() {
     
     function form_validate($retval) {
         var crse = $('#course').val();
-                       
-        $trainee = $('#trainee').val();
-        $trainee_id = $('#trainee_id').val();
-        if ($trainee.length > 0 && $trainee_id.length == 0) {
-            disp_err('#trainee', '[Select Trainee Id from auto-help]');
-            $retval = false;
-        } else {
-            remove_err('#trainee');
-        }               
+        
         if(crse == '' && ($('.search_select:checked').val() == undefined)){
                 
                 $('#company_name_err').addClass('error').text('Oops!Please select atleast one filter to perform search operation');
