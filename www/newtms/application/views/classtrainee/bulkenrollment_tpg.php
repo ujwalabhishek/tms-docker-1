@@ -80,7 +80,7 @@
                     <td colspan='3'>
                         <?php
                         $options = array();
-                        $options[''] = 'Select';
+                        //$options[''] = 'Select';
                         foreach ($classes as $k => $v) {
                             $options[$k] = $v;
                         }
