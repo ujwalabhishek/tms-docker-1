@@ -374,7 +374,7 @@ $(document).ready(function() {
             },
             success: function(res) {
                 if (res != '') {
-                    $class.html('<option value="">All</option>');
+                    //$class.html('<option value="">All</option>');
                     $class.removeAttr('disabled');
                 } else {
                     $class.html('<option value="">Select</option>');
