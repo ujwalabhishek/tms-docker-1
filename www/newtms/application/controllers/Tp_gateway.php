@@ -2188,11 +2188,9 @@ class tp_gateway extends CI_Controller {
         
         $i++;
     }
-    echo ("<script LANGUAGE='JavaScript'>
-          window.alert('Already Rated!')
+    echo ("<script LANGUAGE='JavaScript'>          
           window.location.href='$location';
-          </script>"); 
-    //redirect('class_trainee?course=' . $courseId . '&class=' . $classId);
+          </script>");    
                                                           
     }
     
