@@ -143,10 +143,10 @@ $(document).ready(function() {
         var cls = $('#class').val();
         
         if(crse == '' && ($('.search_select:checked').val() == undefined)){                
-            $('#company_name_err').addClass('error').text('Oops!Please select filter to perform search operation');
+            $('#company_name_err').addClass('error').text('Please, select filter to perform search operation.');
             $retval = false;
         } else if(cls == '') {
-            $('#company_name_err').addClass('error').text('Oops!Please select class filter to perform search operation');
+            $('#company_name_err').addClass('error').text('Please, select class filter to display the data.');
             $retval = false;
         } else {
                 $('#company_name_err').removeClass('error').text('');
