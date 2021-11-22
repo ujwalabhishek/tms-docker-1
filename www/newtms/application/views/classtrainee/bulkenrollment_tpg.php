@@ -87,7 +87,7 @@
                         $js = 'id="class" ';
                         echo form_dropdown('class', $options, $this->input->get('class'), $js);
                         ?>
-                        <span id="company_name_err"></span>
+                        <div id="company_name_err"></div>
                     </td>
                 </tr>                
                 <tr>
