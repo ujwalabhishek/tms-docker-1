@@ -197,7 +197,9 @@
                 </tr>
             </tbody>
         </table>
-    </div><br>
+    </div><br>    
+    <p>For Bulk Enrolment to TPG, please <a href="<?php echo base_url() ."class_trainee/bulk_enrollment_tpg" ?>">Click Here</a></p>
+    <br>
     <div class="bs-example">
         <div class="table-responsive">
             <?php if (!empty($tabledata) || !empty($class_status)) { ?>
