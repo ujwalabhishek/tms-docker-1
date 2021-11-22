@@ -142,11 +142,13 @@ $(document).ready(function() {
         var crse = $('#course').val();
         var cls = $('#class').val();
         
-        if(crse == '' && cls == '' && ($('.search_select:checked').val() == undefined)){
-                
-                $('#company_name_err').addClass('error').text('Oops!Please select atleast one filter to perform search operation');
-                $retval = false;
-            }else{
+        if(crse == '' && ($('.search_select:checked').val() == undefined)){                
+            $('#company_name_err').addClass('error').text('Oops!Please select filter to perform search operation');
+            $retval = false;
+        } else if(cls == '') {
+            $('#company_name_err').addClass('error').text('Oops!Please select class filter to perform search operation');
+            $retval = false;
+        } else {
                 $('#company_name_err').removeClass('error').text('');
         }
         //check_remove_id();////added by shubhranshu to removed the ids if field remove
