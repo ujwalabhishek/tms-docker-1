@@ -140,8 +140,9 @@ $(document).ready(function() {
     
     function form_validate($retval) {
         var crse = $('#course').val();
+        var cls = $('#class').val();
         
-        if(crse == '' && ($('.search_select:checked').val() == undefined)){
+        if(crse == '' && cls == '' && ($('.search_select:checked').val() == undefined)){
                 
                 $('#company_name_err').addClass('error').text('Oops!Please select atleast one filter to perform search operation');
                 $retval = false;
