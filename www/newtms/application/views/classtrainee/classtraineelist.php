@@ -33,7 +33,7 @@
         echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
     }
     
-    if($_SESSION['cart']) {
+    if(!empty($_SESSION['cart'])) {
         echo "aaa";
         $max=sizeof($_SESSION['cart']);
         for($i=0; $i<$max; $i++) { 
