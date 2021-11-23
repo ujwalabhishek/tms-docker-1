@@ -2240,17 +2240,16 @@ class tp_gateway extends CI_Controller {
             
         } else {
             if ($tpg_response->status == 400) {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message.'</br> NRIC : '.$nric.'</br>Trainee Name : '.$trainee_name);
+                array_push($_SESSION['cart'],'Failure - NRIC : '.$nric.' Trainee Name : '.$trainee_name.' '.$tpg_response->error->details[0]->message); 
             } elseif ($tpg_response->status == 403) {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message.'</br> NRIC : '.$nric.'</br>Trainee Name : '.$trainee_name);
+                array_push($_SESSION['cart'],'Failure - NRIC : '.$nric.' Trainee Name : '.$trainee_name.' '.$tpg_response->error->details[0]->message); 
             } elseif ($tpg_response->status == 404) {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message.'</br> NRIC : '.$nric.'</br>Trainee Name : '.$trainee_name);
+                array_push($_SESSION['cart'],'Failure - NRIC : '.$nric.' Trainee Name : '.$trainee_name.' '.$tpg_response->error->details[0]->message); 
             } elseif ($tpg_response->status == 500) {
-                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message.'</br> NRIC : '.$nric.'</br>Trainee Name : '.$trainee_name);
+                array_push($_SESSION['cart'],'Failure - NRIC : '.$nric.' Trainee Name : '.$trainee_name.' '.$tpg_response->error->details[0]->message); 
             } else {
-                $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
-            }            
-            array_push($_SESSION['cart'],'Failure - NRIC : '.$nric.' Trainee Name : '.$trainee_name.' '.$tpg_response->error->details[0]->message.'</br>');                        
+                array_push($_SESSION['cart'],'Failure - NRIC : '.$nric.' Trainee Name : '.$trainee_name.' TPG is not responding. Please, check back again.'); 
+            }                                   
         }
     }                
 }
