@@ -62,7 +62,7 @@ $(document).ready(function() {
     //////////////////////////////////////Abdulla fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////
     $('#tpg_form').on('submit',function() {
         
-        //alert("form click");
+        alert("form click");
         
         var ele=document.getElementsByName('chk[]');
         
