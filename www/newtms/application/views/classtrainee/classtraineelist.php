@@ -36,10 +36,13 @@
     if(!empty($_SESSION['cart'])) {             
         $array_a = $_SESSION['cart'];        
         foreach ($array_a as $key => $value) {            
-            echo '<div class="success">' . $value . '<br /></div>';
-        }        
+            if (strpos($value, 'Success') !== false) {
+                echo '<div class="success">' . $value . '<br /></div>';
+            } else {
+                echo '<div class="error1">' . $value . '<br /></div>';
+            }               
+        }
     }
-    
     ?>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class-trainee.png"/> Class Trainee Enrollment List</h2>
     <?php
