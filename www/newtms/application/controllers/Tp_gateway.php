@@ -2184,10 +2184,7 @@ class tp_gateway extends CI_Controller {
                     },                    
                     success: function(data) {                                                  
                        
-                    },
-                    error: function() {
-                        $('#ack_receipt').html('error!!!');
-                    }                    
+                    }                   
                 });                            
               </script>";                                
         
@@ -2224,9 +2221,7 @@ class tp_gateway extends CI_Controller {
 
         $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
 
-        $tpg_response = json_decode($tpg_enrolment_decoded);
-
-        $trainee_array = array();
+        $tpg_response = json_decode($tpg_enrolment_decoded);       
         
         if ($tpg_response->status == 200) {
             
@@ -2252,7 +2247,7 @@ class tp_gateway extends CI_Controller {
             $location = base_url()."class_trainee?course=$course_id&class=$class_id";
             
             echo ("<script LANGUAGE='JavaScript'>alert('hi');window.location.href='$location';</script>");
-            
+            exit();
             //redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
     }                
