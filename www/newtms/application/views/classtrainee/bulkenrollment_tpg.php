@@ -107,9 +107,9 @@
     ?>
     <div class="bs-example">
         <div class="table-responsive">            
-            <?php if (count($tabledata) > 0) { ?>                    
-                <div class="add_button98 pull-right">
-                    <div id="bulk_upload_err"></div>
+            <?php if (count($tabledata) > 0) { ?>
+                <div id="bulk_upload_err"></div>
+                <div class="add_button98 pull-right">                    
                     <button type="submit" value="Submit" class="label label-default black-btn" title="Submit" />Bulk Upload</button>
                     <input type="hidden" name="courseRunId" value="<?php echo $tpg_course_run_id; ?>" id="courseRunId">
                     <input type="hidden" name="courseReferenceNumber" value="<?php echo $reference_num; ?>" id="courseReferenceNumber">                    
