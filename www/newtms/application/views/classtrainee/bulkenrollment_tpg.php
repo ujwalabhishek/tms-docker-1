@@ -23,6 +23,13 @@
         background-image:-webkit-linear-gradient(top, #107ac6, #097d91);
         border-radius: 3px;
     }
+    #load{
+        width:100%;
+        height:100%;
+        position:fixed;
+        z-index:9999;
+        background:url("https://www.creditmutuel.fr/cmne/fr/banques/webservices/nswr/images/loading.gif") no-repeat center center rgba(0,0,0,0.25)
+    }            
 </style>
 <script>
     function selects(){
@@ -39,7 +46,15 @@
                 ele[i].checked=false;
         }
     }
+    document.onreadystatechange = function () {
+        var state = document.readyState
+        if (state == 'complete') {
+               document.getElementById('interactive');
+               document.getElementById('load').style.visibility="hidden";
+        }
+      }
 </script>
+<div id="load">
 <div class="col-md-10">
     <?php
     $class_status = $this->input->get('class_status');
@@ -240,6 +255,8 @@
     </div>
     <?php echo form_close(); ?>
 </div>
+    
+</div>    
 <div class="modal_3" id="ex8" style="display:none;">
     <h2 class="panel_heading_style">Total Payment Received Details</h2>
     <table class="no_border_table">
