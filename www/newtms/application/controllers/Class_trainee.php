@@ -1566,6 +1566,206 @@ class Class_Trainee extends CI_Controller {
         return $insert_status;
     }
 
+    /*
+     * This function for bulk upoad to TPG.
+     */
+
+    public function bulk_enrollment_tpg() {
+        //ini_set('max_execution_time', 0);
+        //$this->output->enable_profiler(TRUE);
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $tenant_id = $this->tenant_id;
+        extract($_GET);
+        $data['courses'] = $courses = $this->course->get_active_course_list_all_tpg($tenant_id, 'classTrainee');
+        if ($course) {
+
+            $course_classes = $this->class->get_course_class($tenant_id, $course, "", "", "classTrainee");
+            $data['classes'] = $course_classes;
+        }
+        $export_url = '';
+        $sort_url = '';
+        $data['error_msg'] = 'Kindly apply filter to fetch the trainees'; ////ssp/////
+        if (!empty($_GET)) { /// added by shubhranshu to remove the classtrainee list on 26/11/2018
+            if (!empty($_GET)) {
+                $export_url = '?';
+                foreach ($_GET as $k => $v) {
+                    if (!empty($v)) {
+                        $export_url .="$k=$v&";
+                    }
+                    if ($k != 'f' && $k != 'o') {
+                        if (!empty($v)) {
+                            $sort_url .="$k=$v&";
+                        }
+                    }
+                }
+            }
+            $data['error_msg'] = ''; ////ssp/////
+            $export_url = rtrim($export_url, '&');
+            $sort_url = rtrim($sort_url, '&');
+            $data['export_url'] = $export_url;
+            $data['sort_url'] = '?' . $sort_url;
+            $course = ($this->input->get('course')) ? $this->input->get('course') : '';
+            $class = ($this->input->get('class')) ? $this->input->get('class') : '';
+            $class_status = ($this->input->get('class_status')) ? $this->input->get('class_status') : '';
+            $search_select = ($this->input->get('search_select')) ? $this->input->get('search_select') : '';
+            $taxcode_id = ($this->input->get('taxcode_id')) ? $this->input->get('taxcode_id') : '';
+            $trainee_id = ($this->input->get('trainee_id')) ? $this->input->get('trainee_id') : '';
+            $eid = ($this->input->get('eid')) ? $this->input->get('eid') : '';
+            $field = ($this->input->get('f')) ? $this->input->get('f') : 'ce.pymnt_due_id';
+            $order_by = ($this->input->get('o')) ? $this->input->get('o') : 'desc';
+
+            //      $records_per_page = RECORDS_PER_PAGE;
+            $records_per_page = 25;
+            $baseurl = base_url() . 'class_trainee/bulk_enrollment_tpg/';
+            $pageno = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
+            $offset = ($pageno * $records_per_page);           
+            $data['tenant'] = $tenant_id;
+            $company_id = $this->input->get('company_id');
+            $this->db->cache_on();
+            $tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id_blk($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
+            $totalrows = $this->classtraineemodel->get_all_classtrainee_count_by_tenant_id_blk($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
+            $new_tabledata = array();
+            $role_array = array("TRAINER", "COMPACT", "SLEXEC");
+            $data['tpg_course_run_id'] = $tabledata[0]['tpg_course_run_id'];
+            $data['reference_num'] = $tabledata[0]['reference_num'];
+            $data['course_id'] = $tabledata[0]['course_id'];
+            $data['class_id'] = $tabledata[0]['class_id'];
+            //echo print_r($tabledata, true); 
+            foreach ($tabledata as $k => $row) {
+                if ($row['enrolment_mode'] == 'COMPSPON') {
+                    if ($row['company_id'][0] == 'T') {
+                        $tenant_details = fetch_tenant_details($row['company_id']);
+                        $company[0]->company_name = $tenant_details->tenant_name;
+                    } else {
+                        $company = $this->company->get_company_details($tenant_id, $row['company_id']);
+                    }
+                    $new_tabledata[$k]['enroll_mode'] = $company[0]->company_name;
+                } else {
+                    $new_tabledata[$k]['enroll_mode'] = 'Individual';
+                }
+                $paidlabel = rtrim($this->course->get_metadata_on_parameter_id($row['payment_status']), ', ');
+                if ($row['payment_status'] == 'PAID') {
+                    $new_tabledata[$k]['paid'] = '<a href="javascript:;" class="small_text1 paid_href" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">' . $paidlabel . '<br> $' . number_format($row['total_amount_due'], 2, '.', '') . '</span></a>';
+                } else if ($row['payment_status'] == 'PYNOTREQD') {
+                    $new_tabledata[$k]['paid'] = '<span style="color:#ffcc66;">' . $paidlabel . '</span>';
+                } else if (in_array($this->session->userdata('userDetails')->role_id, $role_array)) {
+                    $new_tabledata[$k]['paid'] = '<span class="error">' . $paidlabel . '</span>';
+                } else {
+                    $enrol_mode = ($row['enrolment_mode'] == 'COMPSPON') ? 'company&company_id=' . $row['company_id'] : 'individual';
+                    $invoice_id = $this->classtraineemodel->get_invoice_id_for_class_trainee($row['class_id'], $row['user_id']);
+                    $get_data = '?invoice_id=' . $invoice_id . '&enrol_mode=' . $enrol_mode;
+                    $new_tabledata[$k]['paid'] = '<a href="' . base_url() . 'accounting/update_payment' . $get_data . '"><span class="error">' . $paidlabel . '<br> $' . number_format($row['total_amount_due'], 2, '.', '') . '</span></a>';
+                }
+                $status = $this->class->get_class_status($row['class_id'], $this->input->get('class_status'));
+                $class_end_date = $this->class->get_end_date($row['class_id']);
+                if ($status == 'Completed') {
+                    $new_tabledata[$k]['status_text'] = '<span class="red">' . $status . '</span>';
+                } elseif ($status == 'Yet to Start') {
+                    $new_tabledata[$k]['status_text'] = '<span class="green">' . $status . '</span>';
+                } elseif ($status == 'In-Progress') {
+                    $cur_date = strtotime(date("Y-m-d"));
+                    $new_tabledata[$k]['status_text'] = '<span style="color:blue;">' . $status . '</span>';
+                    if ($class_end_date == $cur_date) {
+                        $new_tabledata[$k]['end_class'] = '<form name="end_class" method="get" action="' . base_url() . 'classes/end_class">'
+                                . '<input type="hidden" name="end_class" value="' . $row['class_id'] . '">'
+                                . '<button style="color:blue;" >End Class</button></form>';
+                    }
+                } else {
+                    $new_tabledata[$k]['status_text'] = $status;
+                }
+                if ($row['account_type'] == 'INTUSR') {
+                    $new_tabledata[$k]['taxcode'] = '<a href="' . base_url() . 'internal_user/view_user/' . $row['user_id'] . '">' . $row['tax_code'] . '</a>';
+                } else {
+                    $new_tabledata[$k]['taxcode'] = '<a href="' . base_url() . 'trainee/view_trainee/' . $row['user_id'] . '">' . $row['tax_code'] . '</a>';
+                }
+                $new_tabledata[$k]['name'] = $row['first_name'] . ' ' . $row['last_name'];
+                $new_tabledata[$k]['certi_coll'] = !empty($row['certificate_coll_on']) ? date('d/m/Y', strtotime($row['certificate_coll_on'])) : '';
+                $new_tabledata[$k]['class_end_datetime'] = $row['class_end_datetime'];
+                $new_tabledata[$k]['course_id'] = $row['course_id'];
+                $new_tabledata[$k]['class_id'] = $row['class_id'];
+                $new_tabledata[$k]['user_id'] = $row['user_id'];
+                $new_tabledata[$k]['feedback_answer'] = $row['feedback_answer'];
+                $new_tabledata[$k]['tax_code'] = $row['tax_code'];
+
+                //Added by abdulla for TPG
+                $new_tabledata[$k]['tpg_crse'] = $row['tpg_crse'];
+                $new_tabledata[$k]['enrolment_mode'] = $row['enrolment_mode'];
+                $new_tabledata[$k]['company_id'] = $row['company_id'];
+                $new_tabledata[$k]['payment_status'] = $row['payment_status'];
+                $new_tabledata[$k]['reference_num'] = $row['reference_num'];
+                $new_tabledata[$k]['external_reference_number'] = $row['external_reference_number'];
+                $new_tabledata[$k]['tpg_course_run_id'] = $row['tpg_course_run_id'];
+                $new_tabledata[$k]['feeDiscountAmount'] = round((($row['discount_rate'] / 100) * $row['class_fees']), 2);
+
+                if ($row['payment_status'] == 'PAID') {
+                    $feeCollectionStatus_options[''] = 'Select';
+                    $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
+                    $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
+                    $feeCollectionStatus_options['Full Payment'] = 'Full Payment';
+                    $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
+                } else {
+                    $feeCollectionStatus_options[''] = 'Select';
+                    $feeCollectionStatus_options['Pending Payment'] = 'Pending Payment';
+                    $feeCollectionStatus_options['Partial Payment'] = 'Partial Payment';
+                    $feeCollectionStatus_options['Cancelled'] = 'Cancelled';
+                }
+                $new_tabledata[$k]['feecollectionStatus_options'] = $feeCollectionStatus_options;
+
+                if ($row['payment_status'] == 'PAID') {
+                    $feecollectionStatus_val = "Full Payment";
+                } else if ($row['payment_status'] == 'NOTPAID') {
+                    $feecollectionStatus_val = "Pending Payment";
+                } else if ($row['payment_status'] == 'PARTPAID') {
+                    $feecollectionStatus_val = "Partial Payment";
+                } else if ($paymentStatus == 'PYNOTREQD') {
+                    $feecollectionStatus_val = "Pending Payment";
+                }
+                $new_tabledata[$k]['feecollectionStatus_val'] = $feecollectionStatus_val;
+
+                $editEnrolmentAction_options[''] = 'Select';
+                $editEnrolmentAction_options['Update'] = 'Update';
+                $editEnrolmentAction_options['Cancel'] = 'Cancel';
+                $new_tabledata[$k]['editEnrolmentAction'] = $editEnrolmentAction_options;
+
+                $new_tabledata[$k]['enrolmentReferenceNumber'] = $row['eid_number'];
+                $new_tabledata[$k]['enrolmentStatus'] = $row['tpg_enrolment_status'];
+
+                //$new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'],$row['sales_executive_id']);
+                $new_tabledata[$k]['SalesExec'] = $this->class->get_class_salesexec1($tenant_id, $row['course_id'], $row['class_id'], $row['user_id']);
+
+                $new_tabledata[$k]['course_class'] = $row['crse_name'] . ' - ' . $row['class_name'];
+                $new_tabledata[$k]['duration'] = date('d/m/Y', strtotime($row['class_start_datetime'])) . ' - ' . date('d/m/Y', strtotime($row['class_end_datetime']));
+                $new_tabledata[$k]['subsidy'] = '<a href="javascript:;" class="get_update" data-class="' . $row['class_id'] . '" data-user="' . $row['user_id'] . '">Update</a>';
+                $TGAMT = !empty($row['subsidy_amount']) ? "$" . $row['subsidy_amount'] : "NA";
+                $TGNO = !empty($row['tg_number']) ? $row['tg_number'] : "NA";
+                $EIDNO = !empty($row['eid_number']) ? $row['eid_number'] : "NA";
+                $TGNOBR = !empty($row['tg_number']) ? "<br>" : "";
+                $data['trainee_feedback'] = $this->reportsModel->get_trainee_feedback_by_user_id($tenant_id, $new_tabledata[$k]['course_id'], $new_tabledata[$k]['class_id'], $new_tabledata[$k]['user_id']);
+                $linkStr = '';                
+                if($row['tpg_crse']) {
+                    $linkStr = 'EID No: <span style="font-weight:normal;color:#000">' . $EIDNO . ' </span><br/>';    
+                }                                
+                $new_tabledata[$k]['action_link'] = $linkStr;
+                $new_tabledata[$k]['referrer'] = $row['referral_details'];
+            }
+            $this->db->cache_off();
+            $data['tabledata'] = $new_tabledata;
+            //echo "<pre>"; print_r($new_tabledata);exit;
+            $data['sort_order'] = $order_by;
+            $data['controllerurl'] = 'class_trainee/bulk_enrollment_tpg/';
+            $this->load->helper('pagination');
+            if ($sort_url) {
+                $pag_sort = $order_by . '&' . $sort_url;
+            } else {
+                $pag_sort = $order_by;
+            }
+            $data['pagination'] = get_pagination($records_per_page, $pageno, $baseurl, $totalrows, $field, $pag_sort);
+        }
+        $data['page_title'] = 'Class Trainee';
+        $data['main_content'] = 'classtrainee/bulkenrollment_tpg';
+        $this->load->view('layout', $data);
+    }
+    
     /**
      * This method checks if the mandatory fields in XLS are empty or not
      */

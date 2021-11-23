@@ -7356,6 +7356,189 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         return $query3->result_array();
     }
 
+    /**
+
+     * Used by Class Trainee List View Page
+
+     * @param type $tenant_id
+
+     * @param type $limit
+
+     * @param type $offset
+
+     * @param type $sort_by
+
+     * @param type $sort_order
+
+     * @param type $course_id
+
+     * @param type $class_id
+
+     * @param type $class_status
+
+     * @param type $search_select
+
+     * @param type $taxcode_id
+
+     * @param type $trainee_id
+
+     * @return type
+
+     */
+    public function list_all_classtrainee_by_tenant_id_blk($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0, $eid = 0) {
+
+        $user_id = '';
+
+        if ($search_select == 1) {
+
+            $user_id = (!empty($taxcode_id)) ? $taxcode_id : '';
+        } else {
+
+            $user_id = (!empty($trainee_id)) ? $trainee_id : '';
+        }
+
+        $cur_date = date('Y-m-d');
+
+        if ($offset <= 0 || empty($tenant_id)) {
+
+            return;
+        }
+        $query2 = $this->list_all_pymt_not_required_classtrainee_by_tenant_id_blk($tenant_id, $limit, $offset, $sort_by, $sort_order, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
+
+        //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
+        $this->db->select('c.course_id , c.crse_name, c.tpg_crse,
+ cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
+ ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode,ce.referral_details,ce.eid_number, ce.company_id, ce.certificate_coll_on, ce.payment_status,  
+ tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
+tu . user_id ,tu.tenant_id, tu. account_type, tu.tax_code, tu.account_status,
+tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number, ce.sales_executive_id, c.reference_num, c.external_reference_number, cc.tpg_course_run_id, due.class_fees, due.discount_rate, ce.tpg_enrolment_status');
+
+        $this->db->from('course_class cc');
+
+        $this->db->join('course c', 'c.course_id=cc.course_id');
+
+        $this->db->join('class_enrol ce', 'ce.class_id=cc.class_id');
+
+        $this->db->join('enrol_pymnt_due due', 'ce.pymnt_due_id=due.pymnt_due_id and ce.user_id = due.user_id');
+
+        $this->db->join('tms_users tu', 'tu.user_id=ce.user_id');
+
+        $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
+
+        $this->db->where('cc.tenant_id', $tenant_id);
+
+        $this->db->join('trainer_feedback tf', 'tf.tenant_id=ce.tenant_id and tf.course_id=ce.course_id and tf.class_id=ce.class_id and tf.user_id=ce.user_id and tf.feedback_question_id="COMYTCOM"', 'LEFT');
+
+        $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
+        
+        //Added by Abdulla
+        $this->db->where('ce.eid_number IS NULL', NULL, FALSE);
+
+        if (!empty($company_id)) {
+
+            $this->db->where('ce.company_id', $company_id);
+        }
+
+        if (!empty($course_id)) {
+
+            $this->db->where('cc.course_id', $course_id);
+        }
+
+        if (!empty($class_id)) {
+
+            $this->db->where('cc.class_id', $class_id);
+        }
+
+        if (!empty($eid)) {
+
+            $this->db->where('ce.eid_number', $eid);
+        }
+        if (!empty($class_status)) {
+
+            switch ($class_status) {
+
+                case 'IN_PROG':
+
+                    $this->db->where('date(cc.class_start_datetime) <=', $cur_date);
+
+                    $this->db->where('date(cc.class_end_datetime) >=', $cur_date);
+
+                    break;
+
+                case 'COMPLTD':
+
+                    $this->db->where('date(cc.class_end_datetime) <', $cur_date);
+
+                    break;
+
+                case 'YTOSTRT':
+
+                    $this->db->where('date(cc.class_start_datetime) >', $cur_date);
+
+                    break;
+            }
+
+            $this->db->where_not_in('cc.class_status', 'INACTIV');
+        }
+
+        if ($user_id) {
+
+            $this->db->where('ce.user_id', $user_id);
+        }
+
+        if ($this->user->role_id == 'COMPACT') {
+
+            $this->db->where('ce.company_id', $this->user->company_id);
+        }
+
+        if ($this->user->role_id == 'CRSEMGR') {
+
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
+        }
+
+        if ($this->user->role_id == 'TRAINER') {
+
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",cc.classroom_trainer) !=", 0);
+        }
+
+
+        if ($this->user->role_id == 'SLEXEC') {
+
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
+        }
+        //echo $this->db->last_query();  exit;
+        //$query = $this->db->get();   
+        //$query1 = $this->db->last_query();  exit;
+        // $query1 = $this->db->return_query_clear(); //commented by shubhranshu
+        $query1 = $this->db->get_compiled_select();  ///added by shubhranshu
+        $query1 = str_replace('`', " ", $query1);
+
+
+        if ($sort_by) {
+
+            $sort_by_arr = explode('.', $sort_by);
+
+            $union_sort_by = end($sort_by_arr);
+        } else {
+
+            $union_sort_by = 'class_id';
+        }
+
+        if ($limit == $offset) {
+
+            $union_limit = "LIMIT $offset";
+        } else if ($limit > 0) {
+
+            $limitvalue = $offset - $limit;
+
+            $union_limit = "LIMIT $limitvalue, $limit";
+        }
+
+        $query3 = $this->db->query("(" . $query1 . ") UNION (" . $query2 . ") order by $union_sort_by $sort_order $union_limit");
+
+        return $query3->result_array();
+    }
+    
     /* List of public poratl enrolled trainee skm start */
 
     public function online_list_classtrainee_by_tenant_id($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0) {
@@ -7511,6 +7694,44 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
     }
 
     /* END */
+    
+    //Get enrolment mode and company ID of class trainee
+    
+    public function get_class_trainee_dat($tenant_id, $course_id, $class_id, $user_id) {
+        
+        $this->db->select('c.course_id , c.crse_name, c.tpg_crse,
+ cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
+ ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode,ce.referral_details,ce.eid_number, ce.company_id, ce.certificate_coll_on, ce.payment_status,  
+ tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
+tu . user_id ,tu.tenant_id, tu. account_type, tu.tax_code, tu.account_status,
+tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number, ce.sales_executive_id, c.reference_num, c.external_reference_number, cc.tpg_course_run_id, due.class_fees, due.discount_rate, ce.tpg_enrolment_status');
+
+        $this->db->from('course_class cc');
+
+        $this->db->join('course c', 'c.course_id=cc.course_id');
+
+        $this->db->join('class_enrol ce', 'ce.class_id=cc.class_id');
+
+        $this->db->join('enrol_pymnt_due due', 'ce.pymnt_due_id=due.pymnt_due_id and ce.user_id = due.user_id');
+
+        $this->db->join('tms_users tu', 'tu.user_id=ce.user_id');
+
+        $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
+
+        $this->db->where('cc.tenant_id', $tenant_id);
+
+        $this->db->join('trainer_feedback tf', 'tf.tenant_id=ce.tenant_id and tf.course_id=ce.course_id and tf.class_id=ce.class_id and tf.user_id=ce.user_id and tf.feedback_question_id="COMYTCOM"', 'LEFT');
+
+        $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
+                
+        $this->db->where('cc.course_id', $course_id);           
+        $this->db->where('cc.class_id', $class_id);
+        $this->db->where('ce.user_id', $user_id);
+        
+        $results = $this->db->get()->result_array();
+
+        return $results[0];
+    }
 
     /* This method gets the friend details skm start */
 
@@ -8138,6 +8359,152 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         return $query3;
     }
 
+    /**
+
+     * Used by Class Trainee - List View Page - Pagination
+
+     * @param type $tenant_id
+
+     * @param type $course_id
+
+     * @param type $class_id
+
+     * @param type $class_status
+
+     * @param type $search_select
+
+     * @param type $taxcode_id
+
+     * @param type $trainee_id
+
+     * @return int
+
+     */
+    public function get_all_classtrainee_count_by_tenant_id_blk($tenant_id, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id = 0) {
+
+        $user_id = '';
+
+        if ($search_select == 1) {
+
+            $user_id = (!empty($taxcode_id)) ? $taxcode_id : '';
+        } else {
+
+            $user_id = (!empty($trainee_id)) ? $trainee_id : '';
+
+            ;
+        }
+
+        $cur_date = date('Y-m-d');
+
+        if (empty($tenant_id)) {
+
+            return 0;
+        }
+
+        $this->db->select('ce.user_id');
+
+        $this->db->from('course_class cc');
+
+        $this->db->join('course c', 'c.course_id=cc.course_id');
+
+        $this->db->join('class_enrol ce', 'ce.class_id=cc.class_id');
+
+        $this->db->join('enrol_pymnt_due due', 'ce.pymnt_due_id=due.pymnt_due_id and ce.user_id = due.user_id');
+
+        $this->db->join('tms_users tu', 'tu.user_id=ce.user_id');
+
+        $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
+
+        $this->db->where('cc.tenant_id', $tenant_id);
+
+        $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
+        
+        //Added by Abdulla
+        $this->db->where('ce.eid_number IS NULL', NULL, FALSE);
+
+        if (!empty($company_id)) {
+
+            $this->db->where('ce.company_id', $company_id);
+        }
+
+        if (!empty($course_id)) {
+
+            $this->db->where('cc.course_id', $course_id);
+        }
+
+        if (!empty($class_id)) {
+
+            $this->db->where('cc.class_id', $class_id);
+        }
+
+        if (!empty($class_status)) {
+
+            switch ($class_status) {
+
+                case 'IN_PROG':
+
+                    $this->db->where('date(cc.class_start_datetime) <=', $cur_date);
+
+                    $this->db->where('date(cc.class_end_datetime) >=', $cur_date);
+
+                    break;
+
+                case 'COMPLTD':
+
+                    $this->db->where('date(cc.class_end_datetime) <', $cur_date);
+
+                    break;
+
+                case 'YTOSTRT':
+
+                    $this->db->where('date(cc.class_start_datetime) >', $cur_date);
+
+                    break;
+
+
+
+                default:
+
+                    break;
+            }
+        }
+
+        if (!empty($user_id)) {
+
+            $this->db->where('ce.user_id', $user_id);
+        }
+
+        if ($this->user->role_id == 'COMPACT') {
+
+            $this->db->where('ce.company_id', $this->user->company_id);
+        }
+
+        if ($this->user->role_id == 'CRSEMGR') {
+
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
+        }
+
+        if ($this->user->role_id == 'SLEXEC') {
+
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
+        }
+
+        if ($this->user->role_id == 'TRAINER') {
+
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",cc.classroom_trainer) !=", 0);
+        }
+
+        $query = $this->db->get();
+
+        $query1 = $query->num_rows();
+
+        $query2 = $this->get_all_pymt_not_required_classtrainee_by_tenant_id_blk($tenant_id, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id);
+
+        $query3 = $query1 + $query2;
+
+        return $query3;
+    }    
+    
     /* this funcatin get the trainer feedback of previous data for activity log skm start */
 
     public function get_trainer_feedback($user_id, $course_id, $class_id) {
@@ -13148,6 +13515,140 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         return $query2;
     }
 
+    public function list_all_pymt_not_required_classtrainee_by_tenant_id_blk($tenant_id, $limit = NULL, $offset = NULL, $sort_by = 'ce.pymnt_due_id', $sort_order = 'DESC', $course_id = '', $class_id = '', $class_status = '', $search_select, $taxcode_id = '', $trainee_id = '', $company_id = 0, $eid = 0) {
+
+        $user_id = '';
+
+        if ($search_select == 1) {
+
+            $user_id = (!empty($taxcode_id)) ? $taxcode_id : '';
+        } else {
+
+            $user_id = (!empty($trainee_id)) ? $trainee_id : '';
+        }
+
+        $cur_date = date('Y-m-d');
+
+        if ($offset <= 0 || empty($tenant_id)) {
+
+            return;
+        }
+
+        //$this->db->select('cc.*, c.*, ce.*, tu.*, tup.*, tf.feedback_answer, cc.class_status as cc_class_status');
+        $this->db->select('c.course_id , c.crse_name, c.tpg_crse,
+ cc . class_id, cc. class_name, cc.class_start_datetime,cc.class_end_datetime, cc.certi_coll_date,cc . class_status  as cc_class_status, 
+ ce . pymnt_due_id ,ce.enrolment_type, ce.enrolment_mode, ce.company_id,ce.referral_details,ce.eid_number, ce.certificate_coll_on, ce.payment_status,  
+ tf.feedback_question_id,tf.feedback_question_id, tf.feedback_answer,
+tu . user_id ,tu.tenant_id, tu. account_type, tu.tax_code, tu.account_status,
+tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.subsidy_amount, ce.tg_number,ce.eid_number,cc.sales_executive, c.reference_num, c.external_reference_number, cc.tpg_course_run_id, due.class_fees, due.discount_rate, ce.tpg_enrolment_status');
+
+        $this->db->from('course_class cc');
+
+        $this->db->join('course c', 'c.course_id=cc.course_id');
+
+        $this->db->join('class_enrol ce', 'ce.class_id=cc.class_id and ce.payment_status="PYNOTREQD" ');
+
+        $this->db->join('tms_users tu', 'tu.user_id=ce.user_id');
+
+        $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
+
+        $this->db->where('cc.tenant_id', $tenant_id);
+
+        $this->db->join('enrol_pymnt_due due', 'ce.pymnt_due_id = due.pymnt_due_id', 'LEFT');
+        $this->db->join('trainer_feedback tf', 'tf.tenant_id=ce.tenant_id and tf.course_id=ce.course_id and tf.class_id=ce.class_id and tf.user_id=ce.user_id and tf.feedback_question_id="COMYTCOM"', 'LEFT');
+
+        $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
+        
+        //Added by Abdulla
+        $this->db->where('ce.eid_number IS NULL', NULL, FALSE);
+
+        if (!empty($company_id)) {
+
+            $this->db->where('ce.company_id', $company_id);
+        }
+
+        if (!empty($course_id)) {
+
+            $this->db->where('cc.course_id', $course_id);
+        }
+
+        if (!empty($class_id)) {
+
+            $this->db->where('cc.class_id', $class_id);
+        }
+
+        if (!empty($eid)) {
+
+            $this->db->where('ce.eid_number', $eid);
+        }
+
+        if (!empty($class_status)) {
+
+            switch ($class_status) {
+
+                case 'IN_PROG':
+
+                    $this->db->where('date(cc.class_start_datetime) <=', $cur_date);
+
+                    $this->db->where('date(cc.class_end_datetime) >=', $cur_date);
+
+                    break;
+
+                case 'COMPLTD':
+
+                    $this->db->where('date(cc.class_end_datetime) <', $cur_date);
+
+                    break;
+
+                case 'YTOSTRT':
+
+                    $this->db->where('date(cc.class_start_datetime) >', $cur_date);
+
+                    break;
+            }
+
+            $this->db->where_not_in('cc.class_status', 'INACTIV');
+        }
+
+        if ($user_id) {
+
+            $this->db->where('ce.user_id', $user_id);
+        }
+
+        if ($this->user->role_id == 'COMPACT') {
+
+            $this->db->where('ce.company_id', $this->user->company_id);
+        }
+
+        if ($this->user->role_id == 'CRSEMGR') {
+
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
+        }
+
+        if ($this->user->role_id == 'TRAINER') {
+
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",cc.classroom_trainer) !=", 0);
+        }
+
+
+
+        if ($this->user->role_id == 'SLEXEC') {
+
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
+        }
+
+        //$query = $this->db->get();        
+        ///$query2 = $this->db->return_query_clear(); commented by shubhranshu
+
+        $query2 = $this->db->get_compiled_select();   ///added by shubhranshu
+
+        $query2 = str_replace('`', " ", $query2);
+
+        $query2 = str_replace('( course_class  cc)', 'course_class cc', $query2);
+
+        return $query2;
+    }
+    
     public function get_all_pymt_not_required_classtrainee_by_tenant_id($tenant_id, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id = 0) {
 
         $user_id = '';
@@ -13262,6 +13763,123 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         return $query->num_rows();
     }
 
+    public function get_all_pymt_not_required_classtrainee_by_tenant_id_blk($tenant_id, $course_id, $class_id, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id = 0) {
+
+        $user_id = '';
+
+        if ($search_select == 1) {
+
+            $user_id = (!empty($taxcode_id)) ? $taxcode_id : '';
+        } else {
+
+            $user_id = (!empty($trainee_id)) ? $trainee_id : '';
+
+            ;
+        }
+
+        $cur_date = date('Y-m-d');
+
+        if (empty($tenant_id)) {
+
+            return 0;
+        }
+
+        $this->db->select('ce.user_id');
+
+        $this->db->from('course_class cc');
+
+        $this->db->join('course c', 'c.course_id=cc.course_id');
+
+        $this->db->join('class_enrol ce', 'ce.class_id=cc.class_id and ce.payment_status="PYNOTREQD" ');
+
+        $this->db->join('tms_users tu', 'tu.user_id=ce.user_id');
+
+        $this->db->join('tms_users_pers tup', 'tup.user_id=tu.user_id');
+
+        $this->db->where('cc.tenant_id', $tenant_id);
+
+        $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
+        
+        //Added by Abdulla
+        $this->db->where('ce.eid_number IS NULL', NULL, FALSE);
+
+        if (!empty($company_id)) {
+
+            $this->db->where('ce.company_id', $company_id);
+        }
+
+        if (!empty($course_id)) {
+
+            $this->db->where('cc.course_id', $course_id);
+        }
+
+        if (!empty($class_id)) {
+
+            $this->db->where('cc.class_id', $class_id);
+        }
+
+        if (!empty($class_status)) {
+
+            switch ($class_status) {
+
+                case 'IN_PROG':
+
+                    $this->db->where('date(cc.class_start_datetime) <=', $cur_date);
+
+                    $this->db->where('date(cc.class_end_datetime) >=', $cur_date);
+
+                    break;
+
+                case 'COMPLTD':
+
+                    $this->db->where('date(cc.class_end_datetime) <', $cur_date);
+
+                    break;
+
+                case 'YTOSTRT':
+
+                    $this->db->where('date(cc.class_start_datetime) >', $cur_date);
+
+                    break;
+
+
+
+                default:
+
+                    break;
+            }
+        }
+
+        if (!empty($user_id)) {
+
+            $this->db->where('ce.user_id', $user_id);
+        }
+
+        if ($this->user->role_id == 'COMPACT') {
+
+            $this->db->where('ce.company_id', $this->user->company_id);
+        }
+
+        if ($this->user->role_id == 'CRSEMGR') {
+
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",c.crse_manager) !=", 0);
+        }
+
+        if ($this->user->role_id == 'SLEXEC') {
+
+            $this->db->where('ce.sales_executive_id', $this->user->user_id);
+        }
+
+        if ($this->user->role_id == 'TRAINER') {
+
+            $this->db->where("FIND_IN_SET(" . $this->user->user_id . ",cc.classroom_trainer) !=", 0);
+        }
+
+        $query = $this->db->get();
+
+        return $query->num_rows();
+    }
+    
     /**
 
      * this method used for get_notpaid_notrequired_taxcode in change enrollment mode

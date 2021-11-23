@@ -32,6 +32,30 @@
     if ($this->session->flashdata('error')) {
         echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
     }
+    
+    if(!empty($_SESSION['cart'])) {             
+        $array_a = $_SESSION['cart'];
+        $max = sizeof($_SESSION['cart']);
+        $failure = 0;
+        $success = 0;
+        foreach ($array_a as $key => $value) {
+            if (strpos($value, 'Failure') !== false) {
+                $failure++;
+            } else {
+                $success++;
+            }
+        }
+        
+        echo '<div class="success">Total Trainees : ' . $max . '</div>';
+        echo '<div class="success">Success : ' . $success . '</div>';
+        echo '<div class="error1">Failure : ' . $failure . '</div>';
+        foreach ($array_a as $key => $value) {            
+            if (strpos($value, 'Failure') !== false) {
+                echo '<div class="error1">' . $value . '<br /></div>';
+            }              
+        }
+        unset($_SESSION['cart']);
+    }    
     ?>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class-trainee.png"/> Class Trainee Enrollment List</h2>
     <?php
@@ -198,6 +222,10 @@
             </tbody>
         </table>
     </div><br>
+    <?php if(TENANT_ID != 'T20') { ?>
+        <p>For Bulk Enrolment to TPG, please <a href="<?php echo base_url() ."class_trainee/bulk_enrollment_tpg" ?>">Click Here</a></p>
+        <br>
+    <?php } ?>
     <div class="bs-example">
         <div class="table-responsive">
             <?php if (!empty($tabledata) || !empty($class_status)) { ?>

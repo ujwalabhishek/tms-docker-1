@@ -2011,4 +2011,244 @@ class tp_gateway extends CI_Controller {
     public function sfc_payment_response() {
         
     }
+    
+    public function bulk_enrollment_tpg() {
+        
+        // begin the session
+        session_start();
+        
+        // create an array
+        $_SESSION['cart']=array();
+        
+        $baseurl = base_url().'tp_gateway/json_data_val';
+        
+        //Course and class details
+        $courseRunId = $this->input->post('courseRunId');
+        $courseReferenceNumber = $this->input->post('courseReferenceNumber');
+        $courseId = $this->input->post('courseId');
+        $classId = $this->input->post('classId');
+        $tenant_id = $this->tenant_id;
+        
+        $location = base_url()."class_trainee?course=$courseId&class=$classId";
+        
+        //Training Partner
+        $tenant_details = fetch_tenant_details($tenant_id);
+        $trainingPartnerUEN = $tenant_details->comp_reg_no;
+        $trainingPartnerCode = $tenant_details->comp_reg_no . '-03';
+        
+        $chkbox = $_POST['chk'];
+        $i = 0;
+        $siz = sizeof($chkbox);
+        While($i < sizeof($chkbox)) {
+        //Trainee
+        $userId = $chkbox[$i];
+        $traineeDetails = $this->classTraineeModel->get_full_trainee_details($userId);
+        $traineeDat = $this->classTraineeModel->get_class_trainee_dat($tenant_id, $courseId, $classId, $userId);
+        
+        //echo print_r($traineeDat, true); exit;
+
+        $traineeId = $traineeDetails['tax_code'];
+
+        if ($traineeDetails['tax_code_type'] == 'SNG_1') {
+            $traineeIdType = "NRIC";
+        } else if ($traineeDetails['tax_code_type'] == 'SNG_2') {
+            $traineeIdType = "FIN";
+        } else if ($traineeDetails['tax_code_type'] == 'SNG_3') {
+            $traineeIdType = "Others";
+        } else if ($traineeDetails['tax_code_type'] == 'SNG_4') {
+            $traineeIdType = "Others";
+        }
+
+        $traineeFullName = htmlentities($traineeDetails['first_name'], ENT_QUOTES);
+        $traineeDateOfBirth = $traineeDetails['dob'];
+        $traineeEmailAddress = $traineeDetails['registered_email_id'];
+        $traineeContactNumber = $traineeDetails['contact_number'];
+        $traineeEnrolmentDate = date("Y-m-d");
+
+        $enrolmentMode = $traineeDat['enrolment_mode'];
+        
+        $companyId = $traineeDat['company_id'];
+        
+        if ($enrolmentMode == 'COMPSPON') {
+            $traineeSponsorshipType = "EMPLOYER";
+
+            $company = $this->companyModel->get_company_details($tenant_id, $companyId);
+
+            //Employer
+            $employerUEN = $company[0]->comp_regist_num;
+            $emploerFullName = $company[0]->comp_attn;
+            $employerEmailAddress = $company[0]->comp_email;
+            $employerContactNumber = $company[0]->comp_phone;
+        } else {
+            $traineeSponsorshipType = "INDIVIDUAL";
+
+            //Individual
+            $employerUEN = "";
+            $emploerFullName = "";
+            $employerEmailAddress = "";
+            $employerContactNumber = "";
+        }
+
+        $feeDiscountAmount = round((($traineeDat['discount_rate'] / 100) * $traineeDat['class_fees']), 2);
+        $paymentStatus = $traineeDat['payment_status'];
+        
+        if ($paymentStatus == 'PAID') {
+            $feeCollectionStatus = "Full Payment";
+        } else if ($paymentStatus == 'NOTPAID') {
+            $feeCollectionStatus = "Pending Payment";
+        } else if ($paymentStatus == 'PARTPAID') {
+            $feeCollectionStatus = "Partial Payment";
+        } else if ($paymentStatus == 'PYNOTREQD') {
+            $feeCollectionStatus = "Pending Payment";
+        }                                                                                      
+        
+        $tpg_enrolment_json = array(
+            "enrolment" => array(
+                "trainingPartner" => array(
+                    "code" => $trainingPartnerCode,
+                    "uen" => $trainingPartnerUEN
+                ),
+                "course" => array(
+                    "referenceNumber" => $courseReferenceNumber,
+                    "run" => array(
+                        "id" => $courseRunId
+                    )
+                ),
+                "trainee" => array(
+                    "idType" => array(
+                        "type" => $traineeIdType
+                    ),
+                    "id" => $traineeId,
+                    "dateOfBirth" => $traineeDateOfBirth,
+                    "fullName" => $traineeFullName,
+                    "contactNumber" => array(
+                        "countryCode" => "+65",
+                        "areaCode" => "",
+                        "phoneNumber" => $traineeContactNumber
+                    ),
+                    "emailAddress" => $traineeEmailAddress,
+                    "sponsorshipType" => $traineeSponsorshipType,
+                    "employer" => array(
+                        "uen" => $employerUEN,
+                        "contact" => array(
+                            "fullName" => $emploerFullName,
+                            "contactNumber" => array(
+                                "countryCode" => "+65",
+                                "areaCode" => "",
+                                "phoneNumber" => $employerContactNumber
+                            ),
+                            "emailAddress" => $employerEmailAddress
+                        )
+                    ),
+                    "fees" => array(
+                        "discountAmount" => $feeDiscountAmount,
+                        "collectionStatus" => $feeCollectionStatus
+                    ),
+                    "enrolmentDate" => $traineeEnrolmentDate
+                )
+            )
+        );
+        
+        $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);                
+        
+        echo "
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
+            <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>
+            <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+            <script>
+            
+           var x = encrypt();            
+            function encrypt() {
+                    var tpgraw = '$tpg_enrolment_json_data';
+                    var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+                    var cipher = CryptoJS.AES.encrypt(
+                            tpgraw,
+                            CryptoJS.enc.Base64.parse(key), {
+                        iv: CryptoJS.enc.Utf8.parse('SSGAPIInitVector'),
+                        mode: CryptoJS.mode.CBC,
+                        keySize: 256 / 32,
+                        padding: CryptoJS.pad.Pkcs7
+                    });
+                    var encrypted = CryptoJS.enc.Base64.stringify(cipher.ciphertext);                    
+                    
+                    return encrypted;
+              }
+              
+              $.ajax({
+                    url: '$baseurl',
+                    type: 'post',
+                    dataType: 'json',
+                    async: false,
+                    data: {
+                        encrypted:x,
+                        course_id:'$courseId',
+                        class_id:'$classId',
+                        user_id:'$userId',
+                        nric:'$traineeId',
+                        trainee_name:'$traineeFullName'
+                    },                    
+                    success: function(data) {                                                  
+                       
+                    }                   
+                });                            
+              </script>";                                
+        
+        $i++;
+    }
+    echo ("<script LANGUAGE='JavaScript'>          
+          window.location.href='$location';
+          </script>");
+                                                          
+    }
+    
+    public function json_data_val() {
+        
+        $encrypted_data = $_POST['encrypted'];
+        $course_id = $_POST['course_id'];
+        $class_id = $_POST['class_id'];
+        $user_id = $_POST['user_id'];
+        
+        $nric = $_POST['nric'];
+        $trainee_name = $_POST['trainee_name'];
+        
+        $api_version = 'v1';
+
+        $url = "https://" . TPG_URL . "/tpg/enrolments";
+        $request = $this->curl_request('POST', $url, $encrypted_data, $api_version);
+
+        //$output = false;
+        $encrypt_method = "AES-256-CBC";
+
+        $tenant_id = $this->tenant_id;
+        $key = base64_decode($this->config->item(TPG_KEY_ . $tenant_id));  // don't hash to derive the (32 bytes) key
+
+        $iv = 'SSGAPIInitVector';                                              // don't hash to derive the (16 bytes) IV
+
+        $tpg_enrolment_decoded = openssl_decrypt($request, $encrypt_method, $key, 0, $iv); // remove explicit Base64 decoding (alternatively set OPENSSL_RAW_DATA)
+
+        $tpg_response = json_decode($tpg_enrolment_decoded);       
+        
+        if ($tpg_response->status == 200) {
+            
+            $enrolmentReferenceNumber = $tpg_response->data->enrolment->referenceNumber;
+            $enrolmentReferenceStatus = $tpg_response->data->enrolment->status;
+
+            $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber, $enrolmentReferenceStatus);            
+            
+            array_push($_SESSION['cart'],"Success - ".'NRIC : '.$nric.' Trainee Name : '.$trainee_name.'</br>');
+            
+        } else {
+            if ($tpg_response->status == 400) {
+                array_push($_SESSION['cart'],'Failure - NRIC : '.$nric.' Trainee Name : '.$trainee_name.' '.$tpg_response->error->details[0]->message); 
+            } elseif ($tpg_response->status == 403) {
+                array_push($_SESSION['cart'],'Failure - NRIC : '.$nric.' Trainee Name : '.$trainee_name.' '.$tpg_response->error->details[0]->message); 
+            } elseif ($tpg_response->status == 404) {
+                array_push($_SESSION['cart'],'Failure - NRIC : '.$nric.' Trainee Name : '.$trainee_name.' '.$tpg_response->error->details[0]->message); 
+            } elseif ($tpg_response->status == 500) {
+                array_push($_SESSION['cart'],'Failure - NRIC : '.$nric.' Trainee Name : '.$trainee_name.' '.$tpg_response->error->details[0]->message); 
+            } else {
+                array_push($_SESSION['cart'],'Failure - NRIC : '.$nric.' Trainee Name : '.$trainee_name.' TPG is not responding. Please, check back again.'); 
+            }                                   
+        }
+    }
 }
