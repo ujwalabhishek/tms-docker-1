@@ -2247,6 +2247,6 @@ class tp_gateway extends CI_Controller {
                 $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
             }
             //redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
-        }        
+        }      
     }                
 }

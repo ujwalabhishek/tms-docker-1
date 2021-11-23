@@ -22,9 +22,32 @@
         color:white;
         background-image:-webkit-linear-gradient(top, #107ac6, #097d91);
         border-radius: 3px;
-    }             
+    }
+    
+    #loading-img {
+    background: url(http://preloaders.net/preloaders/360/Velocity.gif) center center no-repeat;
+    height: 100%;
+    z-index: 20;
+}
+
+.overlay {
+    background: #e9e9e9;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.5;
+}
+    
+    
 </style>
 <script>
+    $("#button").click(function () {
+        $(".overlay").show();
+    });
+    
     function selects(){
         var ele=document.getElementsByName('chk[]');
         for(var i=0; i<ele.length; i++){
@@ -40,6 +63,9 @@
         }
     }    
 </script>
+<div class="overlay">
+    <div id="loading-img"></div>
+</div>
 <div class="col-md-10">
     <?php
     $class_status = $this->input->get('class_status');
@@ -110,7 +136,7 @@
             <?php if (count($tabledata) > 0) { ?>
                 <div id="bulk_upload_err"></div>
                 <div class="add_button98 pull-right">                    
-                    <button type="submit" value="Submit" class="label label-default black-btn" title="Submit" />Bulk Upload</button>
+                    <button type="submit" id="button" value="Submit" class="label label-default black-btn" title="Submit" />Bulk Upload</button>
                     <input type="hidden" name="courseRunId" value="<?php echo $tpg_course_run_id; ?>" id="courseRunId">
                     <input type="hidden" name="courseReferenceNumber" value="<?php echo $reference_num; ?>" id="courseReferenceNumber">                    
                     <input type="hidden" name="courseId" value="<?php echo $course_id; ?>" id="courseId">
