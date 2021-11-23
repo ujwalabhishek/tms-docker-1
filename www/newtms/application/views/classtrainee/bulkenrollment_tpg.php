@@ -54,7 +54,7 @@
         }
       }
 </script>
-<div id="load">
+<div id="load"></div> 
 <div class="col-md-10">
     <?php
     $class_status = $this->input->get('class_status');
@@ -254,9 +254,7 @@
         </ul>
     </div>
     <?php echo form_close(); ?>
-</div>
-    
-</div>    
+</div>       
 <div class="modal_3" id="ex8" style="display:none;">
     <h2 class="panel_heading_style">Total Payment Received Details</h2>
     <table class="no_border_table">
