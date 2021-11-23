@@ -2243,10 +2243,11 @@ class tp_gateway extends CI_Controller {
             } else {
                 $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
             }
+            
             $location = base_url()."class_trainee?course=$course_id&class=$class_id";
-            echo ("<script LANGUAGE='JavaScript'>          
-          window.location.href='$location';
-          </script>");
+            
+            echo ("<script LANGUAGE='JavaScript'>window.location.href='$location';</script>");
+            
             //redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
     }                
