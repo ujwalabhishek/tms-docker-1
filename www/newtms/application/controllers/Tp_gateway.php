@@ -2231,7 +2231,7 @@ class tp_gateway extends CI_Controller {
             $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber, $enrolmentReferenceStatus);
 
 //            if ($updated) {
-//                $this->session->set_flashdata("success", "Enrolment has been created with reference number - " . $enrolmentReferenceNumber);
+                $this->session->set_flashdata("success", "Bulk Enrolment has been created.");
 //            }
             //redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         } else {
