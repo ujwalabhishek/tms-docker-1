@@ -37,12 +37,18 @@
         echo "aaa";
         $max=sizeof($_SESSION['cart']);
         echo " aaa".$max;
-        for($i=0; $i<$max; $i++) { 
-            while (list ($key, $val) = each ($_SESSION['cart'][$i])) { 
-                echo "$key -> $val ,"; 
-            } // inner array while loop
-            echo "<br>";
+        $array_a = $_SESSION['cart'];
+//        for($i=0; $i<$max; $i++) { 
+//            while (list ($key, $val) = each ($_SESSION['cart'][$i])) { 
+//                echo "$key -> $val ,"; 
+//            } // inner array while loop
+//            echo "<br>";
+//        }
+        
+        foreach ($array_a as $key => $value) {
+            echo $value . "<br />";
         }
+        
     }
     
     ?>
