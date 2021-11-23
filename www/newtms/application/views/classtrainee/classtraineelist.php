@@ -54,6 +54,7 @@
                 echo '<div class="error1">' . $value . '<br /></div>';
             }              
         }
+        unset($_SESSION['cart']);
     }
     ?>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class-trainee.png"/> Class Trainee Enrollment List</h2>
