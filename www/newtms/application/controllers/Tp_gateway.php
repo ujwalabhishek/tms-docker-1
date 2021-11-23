@@ -2192,7 +2192,7 @@ class tp_gateway extends CI_Controller {
     }
     echo ("<script LANGUAGE='JavaScript'>          
           window.location.href='$location';
-          </script>");    
+          </script>");
                                                           
     }
     
