@@ -34,13 +34,25 @@
     }
     
     if(!empty($_SESSION['cart'])) {             
-        $array_a = $_SESSION['cart'];        
-        foreach ($array_a as $key => $value) {            
-            if (strpos($value, 'Success') !== false) {
-                echo '<div class="success">' . $value . '<br /></div>';
+        $array_a = $_SESSION['cart'];
+        $max = sizeof($_SESSION['cart']);
+        $failure = 0;
+        $success = 0;
+        foreach ($array_a as $key => $value) {
+            if (strpos($value, 'Failure') !== false) {
+                $failure++;
             } else {
+                $success++;
+            }
+        }
+        
+        echo '<div class="success">Total Trainees : ' . $max . '</div>';
+        echo '<div class="success">Success : ' . $success . '</div>';
+        echo '<div class="error1">Failure : ' . $failure . '</div>';
+        foreach ($array_a as $key => $value) {            
+            if (strpos($value, 'Failure') !== false) {
                 echo '<div class="error1">' . $value . '<br /></div>';
-            }               
+            }              
         }
     }
     ?>
