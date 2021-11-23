@@ -2144,11 +2144,7 @@ class tp_gateway extends CI_Controller {
             )
         );
         
-        $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
-        
-        echo "<div id='loader' style='display: none;'>
-                <img src='https://flevix.com/wp-content/uploads/2019/07/Bar-Preloader-1.gif' width='32px' height='32px'>
-              </div>";
+        $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);                
         
         echo "
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
@@ -2185,13 +2181,7 @@ class tp_gateway extends CI_Controller {
                         user_id:'$userId',
                         nric:'$traineeId',
                         trainee_name:'$traineeFullName'
-                    },
-                    beforeSend: function(){    
-                        $('#loader').show();
-                    },
-                    complete:function(data){    
-                        $('#loader').hide();
-                    }
+                    },                    
                     success: function(data) {                                                  
                        
                     }
