@@ -60,13 +60,11 @@ $(document).ready(function() {
     })
     
     //////////////////////////////////////Abdulla fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////
-    $('#tpg_form').on('submit',function() {
+    $('#tpg_form').on('submit',function() {                        
         
-        alert("form click");                
+        var len = $('input[name="chk[]"]:checked').length;
         
-        var len = $('input[name="chk[]"]:checked').length;                           
-        
-        if(len === 0) {            
+        if(len === 0) {
             $('#bulk_upload_err').addClass('error').text('Please, select atleast one trainee to submit to TPG.');
             return false;                                    
         } else {
