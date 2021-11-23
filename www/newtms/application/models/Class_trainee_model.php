@@ -7732,8 +7732,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $results = $this->db->get()->result_array();
 
         return $results[0];
-    }
-    
+    }    
     
     /* This method gets the friend details skm start */
 

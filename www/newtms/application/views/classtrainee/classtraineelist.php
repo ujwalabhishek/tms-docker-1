@@ -222,7 +222,7 @@
             </tbody>
         </table>
     </div><br>
-    <?php if(TENANT_ID != 'T20') { ?>
+    <?php if(TENANT_ID != 'T20' && $this->session->userdata('userDetails')->role_id == 'ADMN') { ?>
         <p>For Bulk Enrolment to TPG, please <a href="<?php echo base_url() ."class_trainee/bulk_enrollment_tpg" ?>">Click Here</a></p>
         <br>
     <?php } ?>
