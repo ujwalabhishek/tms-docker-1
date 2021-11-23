@@ -7432,7 +7432,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
         
         //Added by Abdulla
-        $this->db->where('ce.eid_number NOT NULL', NULL, FALSE);
+        $this->db->where('ce.eid_number IS NOT NULL', NULL, FALSE);
 
         if (!empty($company_id)) {
 
@@ -8422,7 +8422,7 @@ tup . first_name , tup . last_name, due.total_amount_due,due.subsidy_amount, ce.
         $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
         
         //Added by Abdulla
-        $this->db->where('ce.eid_number NOT NULL', NULL, FALSE);
+        $this->db->where('ce.eid_number IS NOT NULL', NULL, FALSE);
 
         if (!empty($company_id)) {
 
@@ -13562,7 +13562,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
         
         //Added by Abdulla
-        $this->db->where('ce.eid_number NOT NULL', NULL, FALSE);
+        $this->db->where('ce.eid_number IS NOT NULL', NULL, FALSE);
 
         if (!empty($company_id)) {
 
@@ -13803,7 +13803,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
         $this->db->where_in('ce.enrol_status', array('ENRLBKD', 'ENRLACT'));
         
         //Added by Abdulla
-        $this->db->where('ce.eid_number NOT NULL', NULL, FALSE);
+        $this->db->where('ce.eid_number IS NOT NULL', NULL, FALSE);
 
         if (!empty($company_id)) {
 
