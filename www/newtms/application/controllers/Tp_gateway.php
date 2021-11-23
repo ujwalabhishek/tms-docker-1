@@ -2146,6 +2146,10 @@ class tp_gateway extends CI_Controller {
         
         $tpg_enrolment_json_data = json_encode($tpg_enrolment_json);
         
+        echo "<div id='loader' style='display: none;'>
+                <img src='https://flevix.com/wp-content/uploads/2019/07/Bar-Preloader-1.gif' width='32px' height='32px'>
+              </div>";
+        
         echo "
             <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js'></script>
             <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous'></script>

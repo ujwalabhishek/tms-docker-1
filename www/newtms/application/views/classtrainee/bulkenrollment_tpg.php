@@ -40,9 +40,6 @@
         }
     }    
 </script>
-<div id='loader' style='display: none;'>
-  <img src='https://flevix.com/wp-content/uploads/2019/07/Bar-Preloader-1.gif' width='32px' height='32px'>
-</div>
 <div class="col-md-10">
     <?php
     $class_status = $this->input->get('class_status');
