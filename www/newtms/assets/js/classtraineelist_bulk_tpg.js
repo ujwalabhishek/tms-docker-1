@@ -58,6 +58,30 @@ $(document).ready(function() {
             return form_validate(false);
         }
     })
+    
+    //////////////////////////////////////Abdulla fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////
+    $('#tpg_form').on('submit',function() {
+        
+        //alert("form click");
+        
+        var ele=document.getElementsByName('chk[]');
+        
+        if(ele.length > 0) {
+            
+            var self = $(this),
+            button = self.find('input[type="submit"],button'),
+            submitValue = button.data('submit-value');
+            button.attr('disabled','disabled').html('Please Wait..');
+            
+            return true;
+            
+        } else {
+            $('#bulk_upload_err').addClass('error').text('Please, select atleast one trainee to submit to TPG.');
+            return false;
+        }                        
+    }); //////////////////////////////////////Abdulla fixed to prevent multiple clicks 14/11/2018 AT 3:45PM///////////////////////
+    
+    
     $('.subsidy_save').click(function() {
         $retVal = true;
         $tg_number = $('#tg_number').val();
