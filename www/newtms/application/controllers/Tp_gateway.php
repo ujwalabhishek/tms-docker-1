@@ -2182,6 +2182,12 @@ class tp_gateway extends CI_Controller {
                         nric:'$traineeId',
                         trainee_name:'$traineeFullName'
                     },
+                    beforeSend: function(){    
+                        $('#loader').show();
+                    },
+                    complete:function(data){    
+                        $('#loader').hide();
+                    }
                     success: function(data) {                                                  
                        
                     }

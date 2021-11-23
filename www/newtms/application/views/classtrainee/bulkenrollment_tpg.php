@@ -22,14 +22,7 @@
         color:white;
         background-image:-webkit-linear-gradient(top, #107ac6, #097d91);
         border-radius: 3px;
-    }
-    #load{
-        width:100%;
-        height:100%;
-        position:fixed;
-        z-index:9999;
-        background:url("https://www.creditmutuel.fr/cmne/fr/banques/webservices/nswr/images/loading.gif") no-repeat center center rgba(0,0,0,0.25)
-    }            
+    }             
 </style>
 <script>
     function selects(){
@@ -45,16 +38,11 @@
             if(ele[i].type=='checkbox')
                 ele[i].checked=false;
         }
-    }
-    document.onreadystatechange = function () {
-        var state = document.readyState
-        if (state == 'complete') {
-               document.getElementById('interactive');
-               document.getElementById('load').style.visibility="hidden";
-        }
-      }
+    }    
 </script>
-<div id="load"></div> 
+<div id='loader' style='display: none;'>
+  <img src='reload.gif' width='32px' height='32px'>
+</div>
 <div class="col-md-10">
     <?php
     $class_status = $this->input->get('class_status');
