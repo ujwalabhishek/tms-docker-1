@@ -1622,8 +1622,8 @@ class Class_Trainee extends CI_Controller {
             $data['tenant'] = $tenant_id;
             $company_id = $this->input->get('company_id');
             $this->db->cache_on();
-            $tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
-            $totalrows = $this->classtraineemodel->get_all_classtrainee_count_by_tenant_id($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
+            $tabledata = $this->classtraineemodel->list_all_classtrainee_by_tenant_id_blk($tenant_id, $records_per_page, $offset, $field, $order_by, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
+            $totalrows = $this->classtraineemodel->get_all_classtrainee_count_by_tenant_id_blk($tenant_id, $course, $class, $class_status, $search_select, $taxcode_id, $trainee_id, $company_id, $eid);
             $new_tabledata = array();
             $role_array = array("TRAINER", "COMPACT", "SLEXEC");
             $data['tpg_course_run_id'] = $tabledata[0]['tpg_course_run_id'];
