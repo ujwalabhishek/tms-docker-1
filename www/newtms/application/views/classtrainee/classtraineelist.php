@@ -221,9 +221,11 @@
                 </tr>
             </tbody>
         </table>
-    </div><br>    
+    </div><br>
+    <?php if($tenant_id != 'T12' || $tenant_id != 'T20') { ?>
     <p>For Bulk Enrolment to TPG, please <a href="<?php echo base_url() ."class_trainee/bulk_enrollment_tpg" ?>">Click Here</a></p>
     <br>
+    <?php } ?>
     <div class="bs-example">
         <div class="table-responsive">
             <?php if (!empty($tabledata) || !empty($class_status)) { ?>
