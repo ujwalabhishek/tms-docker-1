@@ -22,14 +22,12 @@
         color:white;
         background-image:-webkit-linear-gradient(top, #107ac6, #097d91);
         border-radius: 3px;
-    }
-    
+    }    
     #loading-img {
         background: background: url(assets/images/loading_1.gif) center center no-repeat;
         height: 100%;
         z-index: 20;
     }
-
     .overlay {
         background: #e9e9e9;
         display: none;
@@ -39,7 +37,7 @@
         bottom: 0;
         left: 0;
         opacity: 0.5;
-    }        
+    }
 </style>
 <script>    
     function selects(){

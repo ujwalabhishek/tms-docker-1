@@ -2230,10 +2230,7 @@ class tp_gateway extends CI_Controller {
 
             $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber, $enrolmentReferenceStatus);
 
-//            if ($updated) {
-                $this->session->set_flashdata("success", "Bulk Enrolment has been created.");
-//            }
-            //redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
+            $this->session->set_flashdata("success", "Bulk Enrolment has been created.");
         } else {
             if ($tpg_response->status == 400) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message.'</br> NRIC : '.$nric.'</br>Trainee Name : '.$trainee_name);
@@ -2246,7 +2243,7 @@ class tp_gateway extends CI_Controller {
             } else {
                 $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
             }
-            //redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
-        }      
+            redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
+        }
     }                
 }
