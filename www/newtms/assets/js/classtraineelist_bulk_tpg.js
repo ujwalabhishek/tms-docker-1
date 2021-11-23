@@ -57,7 +57,7 @@ $(document).ready(function() {
         if (form_check == 1) {
             return form_validate(false);
         }
-    })
+    })        
     
     //////////////////////////////////////Abdulla fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////
     $('#tpg_form').on('submit',function() {                        
@@ -72,7 +72,7 @@ $(document).ready(function() {
             button = self.find('input[type="submit"],button'),
             submitValue = button.data('submit-value');
             button.attr('disabled','disabled').html('Please Wait..');
-            
+            $(".overlay").show();
             return true;
         }                        
     }); //////////////////////////////////////Abdulla fixed to prevent multiple clicks 14/11/2018 AT 3:45PM///////////////////////

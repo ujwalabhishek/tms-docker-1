@@ -41,12 +41,7 @@
         opacity: 0.5;
     }        
 </style>
-<script>
-    $("#button").click(function () {
-        alert('aa');
-        $(".overlay").show();
-    });
-    
+<script>    
     function selects(){
         var ele=document.getElementsByName('chk[]');
         for(var i=0; i<ele.length; i++){
