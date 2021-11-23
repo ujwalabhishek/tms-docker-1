@@ -33,22 +33,11 @@
         echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
     }
     
-    if(!empty($_SESSION['cart'])) {
-        echo "aaa";
-        $max=sizeof($_SESSION['cart']);
-        echo " aaa".$max;
-        $array_a = $_SESSION['cart'];
-//        for($i=0; $i<$max; $i++) { 
-//            while (list ($key, $val) = each ($_SESSION['cart'][$i])) { 
-//                echo "$key -> $val ,"; 
-//            } // inner array while loop
-//            echo "<br>";
-//        }
-        
-        foreach ($array_a as $key => $value) {
-            echo $value . "<br />";
-        }
-        
+    if(!empty($_SESSION['cart'])) {             
+        $array_a = $_SESSION['cart'];        
+        foreach ($array_a as $key => $value) {            
+            echo '<div class="success">' . $value . '<br /></div>';
+        }        
     }
     
     ?>
