@@ -62,22 +62,20 @@ $(document).ready(function() {
     //////////////////////////////////////Abdulla fixed to prevent multiple clicks 14/11/2018 AT 3:45PM////////////////////////////////////
     $('#tpg_form').on('submit',function() {
         
-        alert("form click");
+        alert("form click");                
         
-        var ele=document.getElementsByName('chk[]');
+        var len = $('input[name="chk[]"]:checked').length;                           
         
-        if(ele.length > 0) {
-            
+        if(len === 0) {            
+            $('#bulk_upload_err').addClass('error').text('Please, select atleast one trainee to submit to TPG.');
+            return false;                                    
+        } else {
             var self = $(this),
             button = self.find('input[type="submit"],button'),
             submitValue = button.data('submit-value');
             button.attr('disabled','disabled').html('Please Wait..');
             
             return true;
-            
-        } else {
-            $('#bulk_upload_err').addClass('error').text('Please, select atleast one trainee to submit to TPG.');
-            return false;
         }                        
     }); //////////////////////////////////////Abdulla fixed to prevent multiple clicks 14/11/2018 AT 3:45PM///////////////////////
     
