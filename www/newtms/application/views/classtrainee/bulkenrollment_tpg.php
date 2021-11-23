@@ -41,7 +41,7 @@
     }    
 </script>
 <div id='loader' style='display: none;'>
-  <img src='reload.gif' width='32px' height='32px'>
+  <img src='https://flevix.com/wp-content/uploads/2019/07/Bar-Preloader-1.gif' width='32px' height='32px'>
 </div>
 <div class="col-md-10">
     <?php
