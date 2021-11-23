@@ -2246,8 +2246,10 @@ class tp_gateway extends CI_Controller {
             
             $location = base_url()."class_trainee?course=$course_id&class=$class_id";
             
-            echo ("<script LANGUAGE='JavaScript'>alert('hi');window.location.href='$location';</script>");
-            exit();
+            //echo ("<script LANGUAGE='JavaScript'>window.location.href='$location';</script>");
+            
+            exit(header("Location: $location"));
+            //exit();
             //redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
     }                
