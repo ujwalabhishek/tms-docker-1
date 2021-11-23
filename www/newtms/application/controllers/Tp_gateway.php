@@ -2236,13 +2236,13 @@ class tp_gateway extends CI_Controller {
             //redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         } else {
             if ($tpg_response->status == 400) {
-                $this->session->set_flashdata('error', 'NRIC : '.$nric.' </br>Trainee Name : '.$trainee_name.'</br>'.$tpg_response->error->details[0]->message);
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message.'</br> NRIC : '.$nric.'</br>Trainee Name : '.$trainee_name);
             } elseif ($tpg_response->status == 403) {
-                $this->session->set_flashdata('error', 'NRIC : '.$nric.' </br>Trainee Name : '.$trainee_name.'</br>'.$tpg_response->error->details[0]->message);
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message.'</br> NRIC : '.$nric.'</br>Trainee Name : '.$trainee_name);
             } elseif ($tpg_response->status == 404) {
-                $this->session->set_flashdata('error', 'NRIC : '.$nric.' </br>Trainee Name : '.$trainee_name.'</br>'.$tpg_response->error->details[0]->message);
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message.'</br> NRIC : '.$nric.'</br>Trainee Name : '.$trainee_name);
             } elseif ($tpg_response->status == 500) {
-                $this->session->set_flashdata('error', 'NRIC : '.$nric.' </br>Trainee Name : '.$trainee_name.'</br>'.$tpg_response->error->details[0]->message);
+                $this->session->set_flashdata('error', $tpg_response->error->details[0]->message.'</br> NRIC : '.$nric.'</br>Trainee Name : '.$trainee_name);
             } else {
                 $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
             }
