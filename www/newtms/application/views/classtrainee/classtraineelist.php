@@ -32,6 +32,17 @@
     if ($this->session->flashdata('error')) {
         echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
     }
+    
+    if($_SESSION['cart']) {
+        $max=sizeof($_SESSION['cart']);
+        for($i=0; $i<$max; $i++) { 
+            while (list ($key, $val) = each ($_SESSION['cart'][$i])) { 
+                echo "$key -> $val ,"; 
+            } // inner array while loop
+            echo "<br>";
+        }
+    }
+    
     ?>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class-trainee.png"/> Class Trainee Enrollment List</h2>
     <?php

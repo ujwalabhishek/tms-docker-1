@@ -2015,6 +2015,12 @@ class tp_gateway extends CI_Controller {
     
     public function bulk_enrollment_tpg() {
         
+        // begin the session
+        session_start();
+        
+        // create an array
+        $_SESSION['cart']=array();
+        
         $baseurl = base_url().'tp_gateway/json_data_val';
         
         //Course and class details
@@ -2231,6 +2237,9 @@ class tp_gateway extends CI_Controller {
             $updated = $this->tpgModel->updateEnrolmentReferenceNumber($course_id, $class_id, $user_id, $enrolmentReferenceNumber, $enrolmentReferenceStatus);
 
             $this->session->set_flashdata("success", "Bulk Enrolment has been created.");
+            
+            array_push($_SESSION['cart'],"Success - ".'NRIC : '.$nric.' Trainee Name : '.$trainee_name.'</br>');
+            
         } else {
             if ($tpg_response->status == 400) {
                 $this->session->set_flashdata('error', $tpg_response->error->details[0]->message.'</br> NRIC : '.$nric.'</br>Trainee Name : '.$trainee_name);
@@ -2244,11 +2253,13 @@ class tp_gateway extends CI_Controller {
                 $this->session->set_flashdata('error', "TPG is not responding. Please, check back again.");
             }
             
-            $location = base_url()."class_trainee?course=$course_id&class=$class_id";
+            array_push($_SESSION['cart'],"Failure - ".'NRIC : '.$nric.' Trainee Name : '.$trainee_name.'</br>');
+            
+            //$location = base_url()."class_trainee?course=$course_id&class=$class_id";
             
             //echo ("<script LANGUAGE='JavaScript'>window.location.href='$location';</script>");
             
-            exit(header("Location: '$location'"));
+            //exit(header("Location: '$location'"));
             //exit();
             //redirect('class_trainee?course=' . $course_id . '&class=' . $class_id);
         }
