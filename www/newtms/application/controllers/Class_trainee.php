@@ -2231,7 +2231,40 @@ class Class_Trainee extends CI_Controller {
 
         $this->load->view('layout', $data);
     }
+    
+    /*
+     * 
+     */
 
+    public function mark_assessment_blk_tpg() {
+        $data['sideMenuData'] = fetch_non_main_page_content();
+        $tenant_id = $this->tenant_id;
+        $data['page_title'] = 'Bulk - Mark Assessment TPG';
+        $data['courses'] = $this->course->get_active_course_list_all_tpg($tenant_id, 'classTrainee');
+        $course = $this->input->get('course');
+        $class = $this->input->get('class');
+        $userid = $this->input->get('nric');
+
+        if (!empty($course) && !empty($class) && !empty($userid)) {
+            $data['classes'] = $this->class->get_course_class($tenant_id, $course, $mark_attendance, "", "classTrainee");
+            $data['tabledata'] = $this->classtraineemodel->get_trainee_assessment_data($tenant_id, $course, $class, $userid);
+            $data['nric'] = $this->classtraineemodel->get_enrolled_trainee($tenant_id, $course, $class);
+            $data['nric_count'] = count($data['nric']);
+        }
+
+        $data['main_content'] = 'classtrainee/mark_assessment_blk_tpg';
+
+        $this->load->view('layout', $data);
+    }
+    
+    /*
+     * 
+     */
+
+    public function mark_attendance_blk_tpg() {
+        
+    }
+    
     public function get_enrolled_trainee() {
         $courseID = $this->input->post('course_id');
         $classID = $this->input->post('class_id');
