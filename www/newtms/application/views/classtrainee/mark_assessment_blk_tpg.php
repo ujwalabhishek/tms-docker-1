@@ -4,7 +4,7 @@
     $role_check = '<?php echo $this->data['user']->role_id; ?>';
     $tenant_id = '<?php echo $this->data['user']->tenant_id; ?>';
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tpg_mark_attendance.js?0.11"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/mark_assessment_blk_tpg.js?0.11"></script>
 <style>
     table td{
         font-size: 11px;
@@ -69,25 +69,7 @@
                         ?>
                         <span id="class_err"></span>
                     </td>
-                </tr>
-                <tr>
-                    <td class="td_heading">Trainee NRIC:</td>
-                    <td>
-                        <?php
-                        $options = array();
-                        $options[''] = 'Select';
-                        foreach ($nric as $k => $v) {
-                            $options[$k] = $v;
-                        }
-                        $js = 'id="nric" ';
-                        echo form_dropdown('nric', $options, $this->input->get('nric'), $js);
-                        ?>
-                        <input type='hidden' name='nric_id' id='nric_id' value>
-                        <span id="nric_err"></span>
-                    </td>
-
-                </tr>
-
+                </tr>                
                 <tr>
                     <td colspan='4'>
                         <span class="pull-right">
@@ -103,11 +85,7 @@
     <?php echo form_close(); ?>
     <?php ?>
     <div class="bs-example">
-        <div class="table-responsive">
-            <b>No. of Trainees in the class :</b><span class="nric_count"> <b><?php echo !empty($nric_count) ? $nric_count : '-'; ?></b></span>
-            <div style="clear:both;"></div>            
-            <div style='color:grey'><b>Attn Status Code:</b> 1-Confirmed,2-Unconfirmed,3-Rejected ,4-TP Voided</div>
-            <div style='color:grey'><b>ID Type:</b> SB-Singapore Blue Identification Card, SP-Singapore Pink Identification Card, SO-Fin/Work Permit/SAF 11B, OT-Others</div>
+        <div class="table-responsive">            
             <table class="table table-striped">
                 <thead>
                     <?php
