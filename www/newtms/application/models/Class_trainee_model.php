@@ -15218,7 +15218,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
     }
     
     //////addded by abdulla to get the trainee session data for mark attendance to tpg
-    function get_trainee_assessment_data($tenant_id, $course, $class, $userid) {
+    function get_trainee_assessment_data($tenant_id, $course, $class) {
         $today_date = date('Y-m-d');        
         
         $sql = "select
@@ -15251,8 +15251,7 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 JOIN class_assessment csn ON csn.class_id = cc.class_id and csn.user_id = ce.user_id and csn.course_id = c.course_id and csn.class_assmnt_date = cas.assmnt_date
                 WHERE cc.tenant_id = '$tenant_id'
                 AND c.course_id = '$course'
-                AND cc.class_id = '$class'
-                AND ce.user_id = '$userid'
+                AND cc.class_id = '$class'                
                 AND csn.assmnt_attdn = '1'    
                 AND ce.eid_number != ''
                 AND date(cc.class_end_datetime) <= '$today_date'";
