@@ -99,7 +99,24 @@
     </div><br>
 
     <?php echo form_close(); ?>
-    <?php ?>
+    <div class="bs-example">
+        <div class="table-responsive">            
+            <?php if (count($tabledata) > 0) { ?>
+                <div id="bulk_upload_err"></div>
+                <div class="add_button98 pull-right">                    
+                    <button type="submit" id="button" value="Submit" class="label label-default black-btn" title="Submit" />Bulk Upload</button>
+                    <input type="hidden" name="mode_of_training" value="<?php echo $row->mode_of_training; ?>" id="mode_of_training">
+                    <input type="hidden" name="tpg_session_id" value="<?php echo $row->tpg_session_id; ?>" id="tpg_session_id">                                                         
+                    <input type="hidden" name="noOfHours" value="<?php echo $row->total_classroom_duration; ?>" id="noOfHours">
+                    <input type="hidden" name="survey_language" value="<?php echo $row->survey_language; ?>" id="survey_language">
+                    <input type="hidden" name="class_id" value="<?php echo $row->class_id; ?>" id="class_id">
+                    <input type="hidden" name="course_id" value="<?php echo $row->course_id; ?>" id="course_id">                                        
+                    <input type="hidden" name="crs_reference_num" value="<?php echo $row->reference_num; ?>" id="crs_reference_num">                                        
+                    <input type="hidden" name="tpg_course_run_id" value="<?php echo $row->tpg_course_run_id; ?>" id="tpg_course_run_id">
+                </div>                  
+            <?php } ?>                
+        </div>
+    </div>
     <div class="bs-example">
         <div class="table-responsive">            
             <table class="table table-striped">
@@ -219,36 +236,6 @@
                                 <td><?php echo $row->contact_number; ?></td>
                                 <td><?php echo $row->total_classroom_duration; ?></td>
                                 <td><?php echo $row->survey_language; ?></td>
-<!--                                <td>
-                                    <?php if ($row->tpg_uploaded_status == 1) { ?>                                                                               
-                                        <a href="<?php echo base_url() . 'tp_gateway/retrieve_course_sess_att/' . $row->tpg_course_run_id . '/' . $row->reference_num . '/' . $row->tpg_session_id . '/' . $row->tax_code; ?>"><button class="btnblue">View Session</button></a>
-                                        <?php
-                                    } else {
-                                        $atr = 'id="submit_attendance_form" name="submit_attendance" method="post"';
-                                        echo form_open("tp_gateway/submit_attendance", $atr);
-                                        ?>
-                                        <input type="hidden" name="mode_of_training" value="<?php echo $row->mode_of_training; ?>" id="mode_of_training">
-                                        <input type="hidden" name="tpg_session_id" value="<?php echo $row->tpg_session_id; ?>" id="tpg_session_id">
-                                        <input type="hidden" name="session_type_id" value="<?php echo $row->session_type_id; ?>" id="session_type_id">
-                                        <input type="hidden" name="attn_status_code" value="<?php echo $att_ses_status; ?>" id="attn_status_code">                                                                                                                                         
-                                        <input type="hidden" name="fullname" value="<?php echo $row->fullname; ?>" id="fullname">
-                                        <input type="hidden" name="registered_email_id" value="<?php echo $row->registered_email_id; ?>" id="registered_email_id">
-                                        <input type="hidden" name="idtype" value="<?php echo $idtypes; ?>" id="idtype">
-                                        <input type="hidden" name="mobileNo" value="<?php echo $row->contact_number; ?>" id="mobileNo">
-                                        <input type="hidden" name="noOfHours" value="<?php echo $row->total_classroom_duration; ?>" id="noOfHours">
-                                        <input type="hidden" name="survey_language" value="<?php echo $row->survey_language; ?>" id="survey_language">
-                                        <input type="hidden" name="class_id" value="<?php echo $row->class_id; ?>" id="class_id">
-                                        <input type="hidden" name="course_id" value="<?php echo $row->course_id; ?>" id="course_id">
-                                        <input type="hidden" name="user_id" value="<?php echo $row->user_id; ?>" id="user_id">
-                                        <input type="hidden" name="crs_reference_num" value="<?php echo $row->reference_num; ?>" id="crs_reference_num">
-                                        <input type="hidden" name="tax_code" value="<?php echo $row->tax_code; ?>" id="tax_code">
-                                        <input type="hidden" name="tpg_course_run_id" value="<?php echo $row->tpg_course_run_id; ?>" id="tpg_course_run_id">
-                                        <button type="submit" value="Submit" class="btnblue" title="Submit" />Submit To TPG</button>
-                                        <?php
-                                        echo form_close();
-                                    }
-                                    ?>
-                                </td>-->
                             <?php }
                             ?>                            
                         </tr>
