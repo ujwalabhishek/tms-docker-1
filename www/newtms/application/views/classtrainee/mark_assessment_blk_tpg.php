@@ -92,9 +92,9 @@
                     $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
                     ?>
                     <tr>
+                        <th width="9%" class="th_header">NRIC</th>
                         <th width="9%" class="th_header">Mode Of Training</th>
-                        <th width="9%" class="th_header">Class Date</th>
-                        <th width="9%" class="th_header">Session</th>
+                        <th width="9%" class="th_header">Class Date</th>                        
                         <th width="9%" class="th_header">Session ID</th>
                         <th width="10%" class="th_header">Attn Status Code</th>
                         <th width="10%" class="th_header">Name</th>
@@ -117,6 +117,7 @@
                             ?>
                             <tr>
                                 <td>
+                                    <td><?php echo $row->tax_code; ?></td>   
                                     <?php
                                     if ($row->mode_of_training == '1') {
                                         echo "Classroom";
@@ -139,19 +140,7 @@
                                     }
                                     ?>
                                 </td>
-                                <td><?php echo $row->class_date; ?></td>
-                                <td class="name"><?php
-                                    if ($row->mode_of_training == '8') {
-                                        echo "-";
-                                    } else {
-                                        if ($row->session_type_id == 'S1') {
-                                            echo "Session 1";
-                                        } else if ($row->session_type_id == 'S2') {
-                                            echo "Session 2";
-                                        }
-                                    }
-                                    ?>
-                                </td>
+                                <td><?php echo $row->class_date; ?></td>                                
                                 <td><?php echo $row->tpg_session_id; ?></td>
                                 <td class="name"><?php
                                     if ($row->mode_of_training == '8') {
