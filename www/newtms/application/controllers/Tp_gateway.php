@@ -2029,7 +2029,7 @@ class tp_gateway extends CI_Controller {
         $courseId = $this->input->post('courseId');
         $classId = $this->input->post('classId');
         $tenant_id = $this->tenant_id;
-        
+        $tpg_key = $this->config->item(TPG_KEY_.$tenant_id);
         $location = base_url()."class_trainee?course=$courseId&class=$classId";
         
         //Training Partner
@@ -2161,7 +2161,7 @@ class tp_gateway extends CI_Controller {
            var x = encrypt();            
             function encrypt() {
                     var tpgraw = '$tpg_enrolment_json_data';
-                    var key = 'DLTmpjTcZcuIJEYixeqYU4BvE+8Sh4jDtDBDT3yA8D0=';
+                    var key = '$tpg_key';
                     var cipher = CryptoJS.AES.encrypt(
                             tpgraw,
                             CryptoJS.enc.Base64.parse(key), {
