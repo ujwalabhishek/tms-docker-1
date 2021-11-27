@@ -92,6 +92,7 @@
                     $ancher = (($sort_order == 'asc') ? 'desc' : 'asc');
                     ?>
                     <tr>
+                        <th width="5%"><input type="button" onclick='selects()' value="Select All"/></th>
                         <th width="9%" class="th_header">NRIC</th>
                         <th width="9%" class="th_header">Mode Of Training</th>
                         <th width="9%" class="th_header">Class Date</th>                        
@@ -102,8 +103,7 @@
                         <th width="6%" class="th_header">ID Type</th>
                         <th width="4%" class="th_header">MobileNo</th>
                         <th width="10%" class="th_header">No Of Hours</th>
-                        <th width="9%" class="th_header">Survey Language</th>
-                        <th width="9%" class="th_header">TPG</th>
+                        <th width="9%" class="th_header">Survey Language</th>                        
                     </tr>
                 </thead>
                 <tbody>
@@ -116,6 +116,9 @@
                         foreach ($tabledata as $row) {
                             ?>
                             <tr>
+                                <td>
+                                    <input type="checkbox" id="chk" name="chk[]" value='<?php echo $row->user_id; ?>' >
+                                </td>
                                 <td><?php echo $row->tax_code; ?></td>
                                 <td>
                                     <?php
@@ -181,26 +184,26 @@
                                 <td><?php echo $row->fullname; ?></td>
                                 <td><?php echo $row->registered_email_id; ?></td>
                                 <td><?php
-                            if ($row->tax_code_type = 'SNG_1' && $row->idtype == 'SG') {
-                                $idtype = 'NRIC(SP)'; ///singaporean pink
-                                $idtypes = 'SP';
-                            } elseif ($row->tax_code_type = 'SNG_1' && $row->idtype == 'NS') {
-                                $idtype = 'NRIC(SB)'; /// permanent residence
-                                $idtypes = 'SB';
-                            } else if ($row->tax_code_type = 'SNG_2') {
-                                $idtype = 'FIN(SO)'; //// FIN
-                                $idtypes = 'SO';
-                            } else {
-                                $idtype = 'Others(OT)'; /////Others
-                                $idtypes = 'OT';
-                            }
-                            echo $idtype
+                                        if ($row->tax_code_type = 'SNG_1' && $row->idtype == 'SG') {
+                                            $idtype = 'NRIC(SP)'; ///singaporean pink
+                                            $idtypes = 'SP';
+                                        } elseif ($row->tax_code_type = 'SNG_1' && $row->idtype == 'NS') {
+                                            $idtype = 'NRIC(SB)'; /// permanent residence
+                                            $idtypes = 'SB';
+                                        } else if ($row->tax_code_type = 'SNG_2') {
+                                            $idtype = 'FIN(SO)'; //// FIN
+                                            $idtypes = 'SO';
+                                        } else {
+                                            $idtype = 'Others(OT)'; /////Others
+                                            $idtypes = 'OT';
+                                        }
+                                        echo $idtype
                                     ?>
                                 </td>
                                 <td><?php echo $row->contact_number; ?></td>
                                 <td><?php echo $row->total_classroom_duration; ?></td>
                                 <td><?php echo $row->survey_language; ?></td>
-                                <td>
+<!--                                <td>
                                     <?php if ($row->tpg_uploaded_status == 1) { ?>                                                                               
                                         <a href="<?php echo base_url() . 'tp_gateway/retrieve_course_sess_att/' . $row->tpg_course_run_id . '/' . $row->reference_num . '/' . $row->tpg_session_id . '/' . $row->tax_code; ?>"><button class="btnblue">View Session</button></a>
                                         <?php
@@ -230,7 +233,7 @@
                                     }
                                 }
                                 ?>
-                            </td>
+                            </td>-->
                         </tr>
                         <?php
                     }
