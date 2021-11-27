@@ -31,7 +31,7 @@
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class-trainee.png"/> Bulk - Mark Assessment TPG</h2>
     <?php
     $atr = 'id="search_form" name="search_form" method="get"';
-    echo form_open("class_trainee/mark_attendance_tpg", $atr);
+    echo form_open("class_trainee/mark_assessment_blk_tpg", $atr);
     ?>  
     <div class="table-responsive">
         <h5  class="sub_panel_heading_style"><span class="glyphicon glyphicon-search"></span> Search By</h5>
