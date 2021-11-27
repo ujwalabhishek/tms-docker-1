@@ -10,6 +10,22 @@
         font-size: 11px;
     }
 </style>
+<script>    
+    function selects(){
+        var ele=document.getElementsByName('chk[]');
+        for(var i=0; i<ele.length; i++){
+            if(ele[i].type=='checkbox')
+                ele[i].checked=true;
+        }
+    }
+    function deSelect(){  
+        var ele=document.getElementsByName('chk');
+        for(var i=0; i<ele.length; i++){
+            if(ele[i].type=='checkbox')
+                ele[i].checked=false;
+        }
+    }    
+</script>
 <div class="col-md-10">
     <?php
     if ($this->session->flashdata('success')) {
