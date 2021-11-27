@@ -184,20 +184,20 @@
                                 <td><?php echo $row->fullname; ?></td>
                                 <td><?php echo $row->registered_email_id; ?></td>
                                 <td><?php
-                                        if ($row->tax_code_type = 'SNG_1' && $row->idtype == 'SG') {
-                                            $idtype = 'NRIC(SP)'; ///singaporean pink
-                                            $idtypes = 'SP';
-                                        } elseif ($row->tax_code_type = 'SNG_1' && $row->idtype == 'NS') {
-                                            $idtype = 'NRIC(SB)'; /// permanent residence
-                                            $idtypes = 'SB';
-                                        } else if ($row->tax_code_type = 'SNG_2') {
-                                            $idtype = 'FIN(SO)'; //// FIN
-                                            $idtypes = 'SO';
-                                        } else {
-                                            $idtype = 'Others(OT)'; /////Others
-                                            $idtypes = 'OT';
-                                        }
-                                        echo $idtype
+                                    if ($row->tax_code_type = 'SNG_1' && $row->idtype == 'SG') {
+                                        $idtype = 'NRIC(SP)'; ///singaporean pink
+                                        $idtypes = 'SP';
+                                    } elseif ($row->tax_code_type = 'SNG_1' && $row->idtype == 'NS') {
+                                        $idtype = 'NRIC(SB)'; /// permanent residence
+                                        $idtypes = 'SB';
+                                    } else if ($row->tax_code_type = 'SNG_2') {
+                                        $idtype = 'FIN(SO)'; //// FIN
+                                        $idtypes = 'SO';
+                                    } else {
+                                        $idtype = 'Others(OT)'; /////Others
+                                        $idtypes = 'OT';
+                                    }
+                                    echo $idtype
                                     ?>
                                 </td>
                                 <td><?php echo $row->contact_number; ?></td>
@@ -231,9 +231,10 @@
                                         <?php
                                         echo form_close();
                                     }
-                                }
-                                ?>
-                            </td>-->
+                                    ?>
+                                </td>-->
+                            <?php }
+                            ?>                            
                         </tr>
                         <?php
                     }
@@ -243,7 +244,7 @@
         </div>
         <div style="clear:both;"></div><br>
         <ul class="pagination pagination_style">
-            <?php echo $pagination; ?>
+<?php echo $pagination; ?>
         </ul>
     </div>
 </div>
