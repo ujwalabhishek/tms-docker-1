@@ -116,8 +116,8 @@
                         foreach ($tabledata as $row) {
                             ?>
                             <tr>
+                                <td><?php echo $row->tax_code; ?></td>
                                 <td>
-                                    <td><?php echo $row->tax_code; ?></td>   
                                     <?php
                                     if ($row->mode_of_training == '1') {
                                         echo "Classroom";
@@ -140,7 +140,7 @@
                                     }
                                     ?>
                                 </td>
-                                <td><?php echo $row->class_date; ?></td>                                
+                                <td><?php echo $row->class_date; ?></td>
                                 <td><?php echo $row->tpg_session_id; ?></td>
                                 <td class="name"><?php
                                     if ($row->mode_of_training == '8') {
