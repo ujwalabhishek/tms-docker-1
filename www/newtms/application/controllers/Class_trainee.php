@@ -2243,9 +2243,9 @@ class Class_Trainee extends CI_Controller {
         $data['courses'] = $this->course->get_active_course_list_all_tpg($tenant_id, 'classTrainee');
         $course = $this->input->get('course');
         $class = $this->input->get('class');
-        $userid = $this->input->get('nric');
+        //$userid = $this->input->get('nric');
 
-        if (!empty($course) && !empty($class) && !empty($userid)) {
+        if (!empty($course) && !empty($class)) {
             $data['classes'] = $this->class->get_course_class($tenant_id, $course, $mark_attendance, "", "classTrainee");
             $data['tabledata'] = $this->classtraineemodel->get_trainee_assessment_data($tenant_id, $course, $class);
             //$data['nric'] = $this->classtraineemodel->get_enrolled_trainee($tenant_id, $course, $class);
