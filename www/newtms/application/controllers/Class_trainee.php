@@ -2249,7 +2249,7 @@ class Class_Trainee extends CI_Controller {
             $data['classes'] = $this->class->get_course_class($tenant_id, $course, $mark_attendance, "", "classTrainee");
             $data['tabledata'] = $tabledata = $this->classtraineemodel->get_trainee_assessment_data($tenant_id, $course, $class);
             
-            echo "<pre>"; echo print_r($tabledata, true); echo "</pre>"; exit;
+            echo "<pre>"; echo print_r($tabledata, true); echo "</pre>"; echo $tabledata[0]->course_id; exit;
             //$data['nric'] = $this->classtraineemodel->get_enrolled_trainee($tenant_id, $course, $class);
             //$data['nric_count'] = count($data['nric']);
         }
