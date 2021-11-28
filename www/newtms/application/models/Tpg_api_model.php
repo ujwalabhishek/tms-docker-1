@@ -1174,4 +1174,53 @@ class Tpg_api_Model extends CI_Model {
         
         return $obj;                       
     }
+    
+    /*
+     * Bulk Assessment Attendance To TPG
+     * Created by Abdulla
+     */    
+    function blk_submit_attendance_to_tpg($tp_uen, $tpg_course_run_id, $tax_code, $crs_reference_num, $survey_language, $noOfHours, $tpg_session_id, $attn_status_code, $fullname, $registered_email_id, $idtype, $mobileNo) {
+
+        $retun = $this->correct_live_dev_api_data($crs_reference_num, $tp_uen);
+
+        $tpg_attn_json_data = '{"uen": "' . $retun[tp_uen] . '",
+                                        "course": {
+                                          "sessionID": "' . $tpg_session_id . '",
+                                          "attendance": {
+                                            "status": {
+                                              "code": ' . $attn_status_code . '
+                                            },
+                                            "trainee": {
+                                              "id": "' . $tax_code . '",
+                                              "name": "' . $fullname . '",
+                                              "email": "' . $registered_email_id . '",
+                                              "idType": {
+                                                "code": "' . $idtype . '"
+                                              },
+                                              "contactNumber": {
+                                                "mobile": "' . $mobileNo . '",
+                                                "areaCode": null,
+                                                "countryCode": 65
+                                              },
+                                              "numberOfHours": ' . $noOfHours . ',
+                                              "surveyLanguage": {
+                                                "code": "' . $survey_language . '"
+                                              }
+                                            }
+                                          },
+                                          "referenceNumber": "' . $retun[ref_no] . '"
+                                        },
+                                        "corppassId": "' . $retun[corpassid] . '"
+                                      }';
+
+        $encrypted_data = $this->encrypt_decrypt('encrypt', $tpg_attn_json_data);
+        
+        $api_version = 'v1.3';
+        $url = "https://" . $retun[domain] . "/courses/runs/" . $tpg_course_run_id . "/sessions/attendance";
+        $response = $this->curl_request('POST', $url, $encrypted_data, $api_version);
+        
+        $attn_resp = json_decode($response);
+        
+        return $attn_resp;
+    }
 }

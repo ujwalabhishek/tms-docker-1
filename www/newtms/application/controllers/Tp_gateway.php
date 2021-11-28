@@ -2251,5 +2251,79 @@ class tp_gateway extends CI_Controller {
                 array_push($_SESSION['cart'],'Failure - NRIC : '.$nric.' Trainee Name : '.$trainee_name.' TPG is not responding. Please, check back again.'); 
             }                                   
         }
-    }                
+    }
+    
+    /*
+     * Bulk Assessment Data to TPG
+     * 
+     */
+    
+    public function mark_assessment_blk_tpg() {
+        
+        // begin the session
+        session_start();
+        
+        // create an array
+        $_SESSION['blk_assess']=array();
+        
+        $tenant_id = $this->tenant_id;
+        $tenant = $this->classTraineeModel->get_tenant_masters($tenant_id);
+        
+        $class_id = $this->input->post('class_id');
+        $course_id = $this->input->post('course_id');
+        $tpg_session_id = $this->input->post('tpg_session_id');
+        $noOfHours = $this->input->post('noOfHours');
+        $survey_language = $this->input->post('survey_language');        
+        $crs_reference_num = $this->input->post('crs_reference_num');
+        $tpg_course_run_id = $this->input->post('tpg_course_run_id');                                            
+        
+        $chkbox = $_POST['chk'];
+        $i = 0;
+        
+        While($i < sizeof($chkbox)) {
+            //Trainee
+            $user_id = $chkbox[$i];
+            $traineeDetails = $this->classTraineeModel->get_full_trainee_details($user_id);
+                        
+            $tax_code = $traineeDetails['tax_code'];
+            $fullname = htmlentities($traineeDetails['first_name'], ENT_QUOTES);            
+            $registered_email_id = $traineeDetails['registered_email_id'];
+            $mobileNo = $traineeDetails['contact_number'];                        
+            
+            if ($traineeDetails['tax_code_type'] == 'SNG_1' && $traineeDetails['idtype'] == 'SG') {
+                $idtype = 'SP'; ///singaporean pink                
+            } elseif ($traineeDetails['tax_code_type'] == 'SNG_1' && $traineeDetails['idtype'] == 'NS') {
+                $idtype = 'SB'; /// permanent residence                
+            } else if ($traineeDetails['tax_code_type'] == 'SNG_2') {
+                $idtype = 'SO'; //// FIN                
+            } else {
+                $idtype = 'OT'; /////Others
+            }
+                        
+            //$attn_status_code = $this->input->post('attn_status_code');
+                        
+            $obj_resp = $this->tpgModel->blk_submit_attendance_to_tpg($tenant->comp_reg_no, $tpg_course_run_id, $tax_code, $crs_reference_num, $survey_language, $noOfHours, $tpg_session_id, $attn_status_code, $fullname, $registered_email_id, $idtype, $mobileNo);            
+
+            if ($obj_resp->status == 200) {
+
+                $this->classTraineeModel->uploadTmsAssessShdl($tenant_id, $course_id, $class_id, $tpg_session_id, $user_id); ///update tms record
+
+                array_push($_SESSION['blk_assess'],"Success - ".'NRIC : '.$tax_code.' Trainee Name : '.$fullname.'</br>');                
+            } else {
+                if ($obj_resp->status == 400) {
+                    array_push($_SESSION['blk_assess'],'Failure - NRIC : '.$tax_code.' Trainee Name : '.$fullname.' '.$obj_resp->error->details[0]->message);
+                } elseif ($obj_resp->status == 403) {
+                    array_push($_SESSION['blk_assess'],'Failure - NRIC : '.$tax_code.' Trainee Name : '.$fullname.' '.$obj_resp->error->details[0]->message);
+                } elseif ($obj_resp->status == 404) {
+                    array_push($_SESSION['blk_assess'],'Failure - NRIC : '.$tax_code.' Trainee Name : '.$fullname.' '.$obj_resp->error->details[0]->message);
+                } elseif ($obj_resp->status == 500) {
+                    array_push($_SESSION['blk_assess'],'Failure - NRIC : '.$tax_code.' Trainee Name : '.$fullname.' '.$obj_resp->error->details[0]->message);
+                } else {
+                    array_push($_SESSION['blk_assess'],'Failure - NRIC : '.$tax_code.' Trainee Name : '.$fullname.' TPG is not responding. Please, check back again.');
+                }                
+            }
+            $i++;
+        }
+        redirect('class_trainee/mark_assessment_blk_tpg?course=' . $course_id . '&class=' . $class_id);
+    }
 }

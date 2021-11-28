@@ -34,15 +34,31 @@
     if ($this->session->flashdata('error')) {
         echo '<div class="error1">' . $this->session->flashdata('error') . '</div>';
     }
-    /////display if any error from TPG site
-    if (!empty($this->session->flashdata('resp_error'))) {
-        foreach ($this->session->flashdata('resp_error') as $err) {
-
-            echo '<div class="alert alert-danger dang">
-            <strong>' . $err->field . ': </strong>' . $err->message . '
-        </div>';
+    
+    if(!empty($_SESSION['blk_assess'])) {
+        $array_a = $_SESSION['blk_assess'];
+        $max = sizeof($_SESSION['blk_assess']);
+        $failure = 0;
+        $success = 0;
+        foreach ($array_a as $key => $value) {
+            if (strpos($value, 'Failure') !== false) {
+                $failure++;
+            } else {
+                $success++;
+            }
         }
-    }
+        
+        echo '<div class="success">Total Trainees : ' . $max . '</div>';
+        echo '<div class="success">Success : ' . $success . '</div>';
+        echo '<div class="error1">Failure : ' . $failure . '</div>';
+        
+        foreach ($array_a as $key => $value) {            
+            if (strpos($value, 'Failure') !== false) {
+                echo '<div class="error1">' . $value . '<br /></div>';
+            }              
+        }
+        unset($_SESSION['blk_assess']);
+    }    
     ?>
     <h2 class="panel_heading_style"><img src="<?php echo base_url(); ?>/assets/images/class-trainee.png"/> Bulk - Mark Assessment TPG</h2>
     <?php
@@ -97,15 +113,17 @@
             </tbody>
         </table>
     </div><br>
-
     <?php echo form_close(); ?>
+    <?php
+        $atr = 'id="tpg_form" name="tpg_form" method="post"';
+        echo form_open("tp_gateway/mark_assessment_blk_tpg", $atr);
+    ?>
     <div class="bs-example">
         <div class="table-responsive">            
             <?php if (count($tabledata) > 0) { ?>
                 <div id="bulk_upload_err"></div>
                 <div class="add_button98 pull-right">                    
-                    <button type="submit" id="button" value="Submit" class="label label-default black-btn" title="Submit" />Bulk Upload</button>
-                    <input type="hidden" name="mode_of_training" value="<?php echo $mode_of_training; ?>" id="mode_of_training">
+                    <button type="submit" id="button" value="Submit" class="label label-default black-btn" title="Submit" />Bulk Upload</button>                    
                     <input type="hidden" name="tpg_session_id" value="<?php echo $tpg_session_id; ?>" id="tpg_session_id">                                                         
                     <input type="hidden" name="noOfHours" value="<?php echo $total_classroom_duration; ?>" id="noOfHours">
                     <input type="hidden" name="survey_language" value="<?php echo $survey_language; ?>" id="survey_language">
@@ -247,9 +265,10 @@
         </div>
         <div style="clear:both;"></div><br>
         <ul class="pagination pagination_style">
-<?php echo $pagination; ?>
+            <?php echo $pagination; ?>
         </ul>
     </div>
+    <?php echo form_close(); ?>
 </div>
 
 <div class="modal1_0001" id="view_session_attn" style="display:none;height:370px;min-height: 200px;width:60%">
