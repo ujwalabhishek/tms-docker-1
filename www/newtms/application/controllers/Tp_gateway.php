@@ -2284,8 +2284,11 @@ class tp_gateway extends CI_Controller {
             //Trainee
             $user_id = $chkbox[$i];
             $traineeDetails = $this->classTraineeModel->get_full_trainee_details($user_id);
+            
+            $trainee_data = $this->classTraineeModel->get_user_assessment_data($tenant_id, $course_id, $class_id, $user_id);
+            echo "<pre>"; echo print_r($trainee_data, true); echo $trainee_data[0]->tax_code; exit;
                         
-            $tax_code = $traineeDetails['tax_code'];
+            $tax_code = $trainee_data[0]->tax_code;
             $fullname = htmlentities($traineeDetails['first_name'], ENT_QUOTES);            
             $registered_email_id = $traineeDetails['registered_email_id'];
             $mobileNo = $traineeDetails['contact_number'];                        
@@ -2300,8 +2303,7 @@ class tp_gateway extends CI_Controller {
                 $idtype = 'OT'; //Others
             }
             
-            $trainee_data = $this->classTraineeModel->get_user_assessment_data($tenant_id, $course_id, $class_id, $user_id);
-            echo print_r($trainee_data, true); exit;
+            
             
             if ($row->session_02 == 0) {
                 $attn_status_code = '2';                
