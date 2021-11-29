@@ -253,6 +253,9 @@
                             ?>                            
                         </tr>
                         <?php
+                    } else {
+                        $err_msg = $error_msg ? $error_msg : $err_msg;
+                        echo '<tr><td colspan="12" class="error" style="text-align: center">' . $err_msg . '</td></tr>';
                     }
                     ?>                  
                 </tbody>
