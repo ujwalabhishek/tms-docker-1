@@ -2291,17 +2291,24 @@ class tp_gateway extends CI_Controller {
             $mobileNo = $traineeDetails['contact_number'];                        
             
             if ($traineeDetails['tax_code_type'] == 'SNG_1' && $traineeDetails['idtype'] == 'SG') {
-                $idtype = 'SP'; ///singaporean pink                
+                $idtype = 'SP'; //singaporean pink                
             } elseif ($traineeDetails['tax_code_type'] == 'SNG_1' && $traineeDetails['idtype'] == 'NS') {
-                $idtype = 'SB'; /// permanent residence                
+                $idtype = 'SB'; //permanent residence                
             } else if ($traineeDetails['tax_code_type'] == 'SNG_2') {
-                $idtype = 'SO'; //// FIN                
+                $idtype = 'SO'; //FIN                
             } else {
-                $idtype = 'OT'; /////Others
+                $idtype = 'OT'; //Others
             }
-                        
-            //$attn_status_code = $this->input->post('attn_status_code');
-                        
+            
+            $trainee_data = $this->classTraineeModel->get_user_assessment_data($tenant_id, $course_id, $class_id, $user_id);
+            echo print_r($trainee_data, true); exit;
+            
+            if ($row->session_02 == 0) {
+                $attn_status_code = '2';                
+            } else {
+                $attn_status_code = '1';
+            }
+            
             $obj_resp = $this->tpgModel->blk_submit_attendance_to_tpg($tenant->comp_reg_no, $tpg_course_run_id, $tax_code, $crs_reference_num, $survey_language, $noOfHours, $tpg_session_id, $attn_status_code, $fullname, $registered_email_id, $idtype, $mobileNo);            
 
             if ($obj_resp->status == 200) {
