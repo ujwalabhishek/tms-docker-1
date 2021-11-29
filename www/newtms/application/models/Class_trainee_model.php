@@ -15252,7 +15252,8 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 WHERE cc.tenant_id = '$tenant_id'
                 AND c.course_id = '$course'
                 AND cc.class_id = '$class'                
-                AND csn.assmnt_attdn = '1'    
+                AND csn.assmnt_attdn = '1'
+                AND csn.tpg_uploaded_status = '0'
                 AND ce.eid_number != ''
                 AND date(cc.class_end_datetime) <= '$today_date'";
         
@@ -15297,7 +15298,8 @@ tup . first_name , tup . last_name, due.att_status, due.total_amount_due,due.sub
                 AND c.course_id = '$course'
                 AND cc.class_id = '$class'
                 AND ce.user_id = '$userid'
-                AND csn.assmnt_attdn = '1'    
+                AND csn.assmnt_attdn = '1' 
+                AND csn.tpg_uploaded_status = '0'
                 AND ce.eid_number != ''
                 AND date(cc.class_end_datetime) <= '$today_date'";
         
