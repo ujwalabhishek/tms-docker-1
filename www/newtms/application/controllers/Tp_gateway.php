@@ -2271,41 +2271,39 @@ class tp_gateway extends CI_Controller {
         
         $class_id = $this->input->post('class_id');
         $course_id = $this->input->post('course_id');
-        $tpg_session_id = $this->input->post('tpg_session_id');
-        $noOfHours = $this->input->post('noOfHours');
-        $survey_language = $this->input->post('survey_language');        
-        $crs_reference_num = $this->input->post('crs_reference_num');
-        $tpg_course_run_id = $this->input->post('tpg_course_run_id');                                            
-        
+                                                                   
         $chkbox = $_POST['chk'];
         $i = 0;
         
         While($i < sizeof($chkbox)) {
             //Trainee
-            $user_id = $chkbox[$i];
-            $traineeDetails = $this->classTraineeModel->get_full_trainee_details($user_id);
+            $user_id = $chkbox[$i];            
             
-            $trainee_data = $this->classTraineeModel->get_user_assessment_data($tenant_id, $course_id, $class_id, $user_id);
-            echo "<pre>"; echo print_r($trainee_data, true); echo $trainee_data[0]->tax_code; exit;
-                        
+            $trainee_data = $this->classTraineeModel->get_user_assessment_data($tenant_id, $course_id, $class_id, $user_id);            
+            
+            //Trainee Details
             $tax_code = $trainee_data[0]->tax_code;
-            $fullname = htmlentities($traineeDetails['first_name'], ENT_QUOTES);            
-            $registered_email_id = $traineeDetails['registered_email_id'];
-            $mobileNo = $traineeDetails['contact_number'];                        
+            $fullname = $trainee_data[0]->fullname;
+            $registered_email_id = $trainee_data[0]->registered_email_id;
+            $mobileNo = $trainee_data[0]->contact_number;
             
-            if ($traineeDetails['tax_code_type'] == 'SNG_1' && $traineeDetails['idtype'] == 'SG') {
+            $tpg_session_id = $trainee_data[0]->tpg_session_id;
+            $noOfHours = $trainee_data[0]->total_classroom_duration;
+            $survey_language = $trainee_data[0]->survey_language;
+            $crs_reference_num = $trainee_data[0]->reference_num;
+            $tpg_course_run_id = $trainee_data[0]->tpg_course_run_id;
+            
+            if ($trainee_data[0]->tax_code_type == 'SNG_1' && $trainee_data[0]->idtype == 'SG') {
                 $idtype = 'SP'; //singaporean pink                
-            } elseif ($traineeDetails['tax_code_type'] == 'SNG_1' && $traineeDetails['idtype'] == 'NS') {
+            } elseif ($trainee_data[0]->tax_code_type == 'SNG_1' && $trainee_data[0]->idtype == 'NS') {
                 $idtype = 'SB'; //permanent residence                
-            } else if ($traineeDetails['tax_code_type'] == 'SNG_2') {
+            } else if ($trainee_data[0]->tax_code_type == 'SNG_2') {
                 $idtype = 'SO'; //FIN                
             } else {
                 $idtype = 'OT'; //Others
             }
-            
-            
-            
-            if ($row->session_02 == 0) {
+                                    
+            if ($trainee_data[0]->session_02 == 0) {
                 $attn_status_code = '2';                
             } else {
                 $attn_status_code = '1';

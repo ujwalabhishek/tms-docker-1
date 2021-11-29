@@ -124,13 +124,8 @@
                 <div id="bulk_upload_err"></div>
                 <div class="add_button98 pull-right">                    
                     <button type="submit" id="button" value="Submit" class="label label-default black-btn" title="Submit" />Bulk Upload</button>                    
-                    <input type="hidden" name="tpg_session_id" value="<?php echo $tpg_session_id; ?>" id="tpg_session_id">                                                         
-                    <input type="hidden" name="noOfHours" value="<?php echo $total_classroom_duration; ?>" id="noOfHours">
-                    <input type="hidden" name="survey_language" value="<?php echo $survey_language; ?>" id="survey_language">
                     <input type="hidden" name="class_id" value="<?php echo $class_id; ?>" id="class_id">
-                    <input type="hidden" name="course_id" value="<?php echo $course_id; ?>" id="course_id">                                        
-                    <input type="hidden" name="crs_reference_num" value="<?php echo $crs_reference_num; ?>" id="crs_reference_num">                                        
-                    <input type="hidden" name="tpg_course_run_id" value="<?php echo $tpg_course_run_id; ?>" id="tpg_course_run_id">
+                    <input type="hidden" name="course_id" value="<?php echo $course_id; ?>" id="course_id">
                 </div>                  
             <?php } ?>                
         </div>
